@@ -9,7 +9,7 @@ static int keyid_by_name (const char *n);
 
 #define SCRIPT_END	0
 #define SCRIPT_CLICK	1
-#define SCRIPT_SHOT	2
+#define SCRIPT_SHOOT	2
 #define SCRIPT_SLEEP	3
 #define SCRIPT_PRESS	4
 #define SCRIPT_RELEASE	5
@@ -50,7 +50,7 @@ static void kbd_sched_click(long key)
     KBD_STACK_PUSH(SCRIPT_PRESS);
 }
 
-void kbd_sched_shot()
+void kbd_sched_shoot()
 {
 // WARNING stack program flow is reversed
 
@@ -58,12 +58,12 @@ void kbd_sched_shot()
 
     KBD_STACK_PUSH(SCRIPT_WAIT_SAVE);
 
-    KBD_STACK_PUSH(KEY_SHOT_FULL);
+    KBD_STACK_PUSH(KEY_SHOOT_FULL);
     KBD_STACK_PUSH(SCRIPT_RELEASE);
 
     kbd_sched_delay(20);
 
-    KBD_STACK_PUSH(KEY_SHOT_FULL);
+    KBD_STACK_PUSH(KEY_SHOOT_FULL);
     KBD_STACK_PUSH(SCRIPT_PRESS);
 
     KBD_STACK_PUSH(SCRIPT_PR_WAIT_SAVE);
@@ -151,15 +151,15 @@ void ubasic_camera_sleep(long v)
     kbd_sched_delay(v);
 }
 
-void ubasic_camera_shot()
+void ubasic_camera_shoot()
 {
-    kbd_sched_shot();
+    kbd_sched_shoot();
 }
 
 long kbd_process()
 {
 /* Alternative keyboard mode stated/exited by pressing print key.
- * While running Alt. mode shot key will start a script execution.
+ * While running Alt. mode shoot key will start a script execution.
  */
 
     if (kbd_blocked){
@@ -176,7 +176,7 @@ long kbd_process()
 	    return 1;
 	}
 
-	if (kbd_is_key_pressed(KEY_SHOT_FULL)){
+	if (kbd_is_key_pressed(KEY_SHOOT_FULL)){
 	    key_pressed = 1;
 	    if (!state_kbd_script_run){
 		script_start();
@@ -215,8 +215,8 @@ const struct Keynames {
     { KEY_LEFT, "left" },
     { KEY_RIGHT, "right" },
     { KEY_SET, "set" },
-    { KEY_SHOT_HALF, "shot_half" },
-    { KEY_SHOT_FULL, "shot_full" },
+    { KEY_SHOOT_HALF, "shoot_half" },
+    { KEY_SHOOT_FULL, "shoot_full" },
     { KEY_ZOOM_IN, "zoom_in" },
     { KEY_ZOOM_OUT, "zoom_out" },
     { KEY_MENU, "menu" },

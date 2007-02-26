@@ -6,8 +6,8 @@
 #define KEY_LEFT	3
 #define KEY_RIGHT	4
 #define KEY_SET		5
-#define KEY_SHOT_HALF	6
-#define KEY_SHOT_FULL	7
+#define KEY_SHOOT_HALF	6
+#define KEY_SHOOT_FULL	7
 #define KEY_ZOOM_IN	8
 #define KEY_ZOOM_OUT	9
 #define KEY_MENU	10

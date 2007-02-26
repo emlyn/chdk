@@ -30,7 +30,7 @@
 #ifndef __TOKENIZER_H__
 #define __TOKENIZER_H__
 
-enum {
+typedef enum {
   TOKENIZER_ERROR,
   TOKENIZER_ENDOFINPUT,
   TOKENIZER_NUMBER,
@@ -64,17 +64,17 @@ enum {
   TOKENIZER_GT,
   TOKENIZER_EQ,
   TOKENIZER_CR,
+  TOKENIZER_LABEL,
   TOKENIZER_SLEEP,
   TOKENIZER_CLICK,
-  TOKENIZER_SHOT,
+  TOKENIZER_SHOOT,
   TOKENIZER_GET_TV,
   TOKENIZER_SET_TV,
   TOKENIZER_SET_TV_REL,
   TOKENIZER_GET_AV,
   TOKENIZER_SET_AV,
-  TOKENIZER_SET_AV_REL,
-
-};
+  TOKENIZER_SET_AV_REL
+} ubasic_token;
 
 void tokenizer_init(const char *program);
 void tokenizer_next(void);
@@ -82,6 +82,10 @@ int tokenizer_token(void);
 int tokenizer_num(void);
 int tokenizer_variable_num(void);
 void tokenizer_string(char *dest, int len);
+void tokenizer_label(char *dest, int len);
+
+int tokenizer_line_number(void);
+void tokenizer_skip_line(void);
 
 int tokenizer_finished(void);
 void tokenizer_error_print(void);

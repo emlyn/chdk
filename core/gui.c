@@ -209,7 +209,7 @@ void gui_redraw()
 #endif
 
 #ifdef HISTO
-    if (conf_show_histo && kbd_is_key_pressed(KEY_SHOT_HALF)){
+    if (conf_show_histo && kbd_is_key_pressed(KEY_SHOOT_HALF)){
 	const int hx=219;
 	const int hy=48;
 	/* box */
@@ -459,20 +459,12 @@ void gui_draw_osd()
 
     if (ubasic_error){
 	const char *msg;
-	switch (ubasic_error){
-	case 1:
-	    msg = "Parse err.";
-	    break;
-	case 2:
-	    msg = "Unk stmt";
-	    break;
-	case 3:
-	    msg = "Unk key";
-	    break;
-	default:
-	    msg = "Unk err";
+    if (ubasic_error >= UBASIC_E_ENDMARK) {
+        msg = ubasic_errstrings[UBASIC_E_UNKNOWN_ERROR];
+    } else {
+	    msg = ubasic_errstrings[ubasic_error];
 	}
-	sprintf(osd_buf, "uBASIC:%d %s ", ubasic_line, msg);
+	sprintf(osd_buf, "uBASIC:%d %s ", ubasic_linenumber(), msg);
 	draw_txt_string(0, 0, osd_buf);
     }
 }

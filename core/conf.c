@@ -27,26 +27,26 @@ static int ubasic_script_buf[SCRIPT_BUF_SIZE];
 
 const char *ubasic_script_default =
 #if 1
-    "1 sleep 1000\n"
-    "2 if a<1 then let a=2\n"
-    "3 if b<1 then let b=3\n"
-    "4 for s=1 to a\n"
-    "5 shot\n"
-    "6 for n=1 to b\n"
-    "7 click \"right\"\n"
-    "8 next n\n"
-    "9 next s\n"
-    "10 shot\n"
-    "11 end\n";
+    "sleep 1000\n"
+    "if a<1 then let a=2\n"
+    "if b<1 then let b=3\n"
+    "for s=1 to a\n"
+    "shoot\n"
+    "for n=1 to b\n"
+    "click \"right\"\n"
+    "next n\n"
+    "next s\n"
+    "shoot\n"
+    "end\n";
 #else
-    "1 sleep 1000\n"
-    "2 if a<1 then let a=2\n"
-    "4 for s=1 to a\n"
-    "5 shot\n"
-    "7 set_tv_rel b\n"
-    "9 next s\n"
-    "10 shot\n"
-    "11 end\n";
+    "sleep 1000\n"
+    "if a<1 then let a=2\n"
+    "for s=1 to a\n"
+    "shoot\n"
+    "set_tv_rel b\n"
+    "next s\n"
+    "shoot\n"
+    "end\n";
 #endif
 
 static void load_defaults()

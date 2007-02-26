@@ -1,5 +1,6 @@
 uBASIC by Adam Dunkels
 http://www.sics.se/~adam/ubasic/
 
-functions stubs for camera control added by Pablo d'Angelo
+Pablo d'Angelo improved the parser to support labels and removed
+the line numbers.
 

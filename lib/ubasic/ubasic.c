@@ -29,7 +29,7 @@
  */
 
 #if DEBUG
-#define DEBUG_PRINTF(...)  printf(__VA_ARGS__)
+#define DEBUG_PRINTF(...)  fprintf(stderr, __VA_ARGS__)
 #else
 #define DEBUG_PRINTF(...)
 #endif
@@ -41,6 +41,10 @@
 #include "camera_functions.h"
 
 #include "stdlib.h" /* exit() */
+
+#ifdef DEBUG
+#include <stdio.h>
+#endif
 
 static char const *program_ptr;
 #define MAX_STRINGLEN 40
@@ -69,7 +73,24 @@ static void line_statement(void);
 static void statement(void);
 
 int ubasic_error;
-int ubasic_line;
+const char *ubasic_errstrings[UBASIC_E_ENDMARK] = 
+{
+    "No err",
+    "Parse err",
+    "Unk stmt",
+    "Unk key",
+    "Unk label",
+    "Stack ful",
+    "bad return",
+    "Unk err" 
+};
+
+/*---------------------------------------------------------------------------*/
+int
+ubasic_linenumber()
+{
+  return tokenizer_line_number();
+}
 
 /*---------------------------------------------------------------------------*/
 void
@@ -79,8 +100,7 @@ ubasic_init(const char *program)
   for_stack_ptr = gosub_stack_ptr = 0;
   tokenizer_init(program);
   ended = 0;
-  ubasic_error = 0;
-  ubasic_line = 0;
+  ubasic_error = UBASIC_E_NONE;
 }
 /*---------------------------------------------------------------------------*/
 static void
@@ -94,7 +114,7 @@ accept(int token)
 //    exit(1);
      tokenizer_next();
      ended = 1;
-     ubasic_error = 1;
+     ubasic_error = UBASIC_E_PARSE;
      return;
   }
   DEBUG_PRINTF("Expected %d, got it\n", token);
@@ -233,6 +253,8 @@ relation(void)
   }
   return r1;
 }
+
+#if 0
 /*---------------------------------------------------------------------------*/
 static void
 jump_linenum(int linenum)
@@ -251,12 +273,65 @@ jump_linenum(int linenum)
     DEBUG_PRINTF("jump_linenum: Found line %d\n", tokenizer_num());
   }
 }
+#endif
+
+/*---------------------------------------------------------------------------*/
+static void
+jump_line(int linenum)
+{
+  tokenizer_init(program_ptr);
+  while(tokenizer_line_number() != linenum) {
+    tokenizer_next();
+  }
+  /* swallow the CR that would be read next */
+  accept(TOKENIZER_CR);
+
+}
+/*---------------------------------------------------------------------------*/
+// TODO: error handling?
+static int
+jump_label(char * label)
+{
+  char currLabel[MAX_STRINGLEN];
+  tokenizer_init(program_ptr);
+  currLabel[0] = 0;
+  while(tokenizer_token() != TOKENIZER_ENDOFINPUT) {
+    tokenizer_next();
+    if (tokenizer_token() == TOKENIZER_LABEL) {
+      tokenizer_label(currLabel, sizeof(currLabel));
+      tokenizer_next();
+      if(strcmp(label, currLabel) == 0) {
+        accept(TOKENIZER_CR);
+        DEBUG_PRINTF("jump_linenum: Found line %d\n", tokenizer_line_number());
+        break;
+      }
+    }
+  }
+  if (tokenizer_token() == TOKENIZER_ENDOFINPUT) {
+      DEBUG_PRINTF("Label %s not found", label);
+      ubasic_error = UBASIC_E_UNK_LABEL;
+      return 0;
+  } else {
+      return 1;
+  }
+}
 /*---------------------------------------------------------------------------*/
 static void
 goto_statement(void)
 {
   accept(TOKENIZER_GOTO);
-  jump_linenum(tokenizer_num());
+  if(tokenizer_token() == TOKENIZER_STRING) {
+    tokenizer_string(string, sizeof(string));
+    tokenizer_next();
+    jump_label(string);
+  } else {
+    DEBUG_PRINTF("ubasic.c: goto_statement(): no label specified\n");
+    // exit(1);
+#warning todo: well... there should be something... definitely.
+//    exit(1);
+    ended = 1;
+    ubasic_error = UBASIC_E_UNK_LABEL;
+  }
 }
 /*---------------------------------------------------------------------------*/
 static void
@@ -287,7 +362,7 @@ print_statement(void)
   DEBUG_PRINTF("End of print\n");
   tokenizer_next();
 }
-
+/*---------------------------------------------------------------------------*/
 static void
 if_statement(void)
 {
@@ -333,17 +408,30 @@ let_statement(void)
 static void
 gosub_statement(void)
 {
-  int linenum;
   accept(TOKENIZER_GOSUB);
-  linenum = tokenizer_num();
-  accept(TOKENIZER_NUMBER);
-  accept(TOKENIZER_CR);
-  if(gosub_stack_ptr < MAX_GOSUB_STACK_DEPTH) {
-    gosub_stack[gosub_stack_ptr] = tokenizer_num();
-    gosub_stack_ptr++;
-    jump_linenum(linenum);
+  if(tokenizer_token() == TOKENIZER_STRING) {
+    tokenizer_string(string, sizeof(string));
+    tokenizer_next();
+    accept(TOKENIZER_CR);
+    if(gosub_stack_ptr < MAX_GOSUB_STACK_DEPTH) {
+      gosub_stack[gosub_stack_ptr] = tokenizer_line_number();
+      gosub_stack_ptr++;
+      jump_label(string);
+    } else {
+      DEBUG_PRINTF("gosub_statement: gosub stack exhausted\n");
+    // exit(1);
+#warning todo: well... there should be something... definitely.
+//    exit(1);
+    ended = 1;
+    ubasic_error = UBASIC_E_GOSUB_STACK_EXHAUSTED;
+    }
   } else {
-    DEBUG_PRINTF("gosub_statement: gosub stack exhausted\n");
+    DEBUG_PRINTF("ubasic.c: goto_statement(): no label specified\n");
+    // exit(1);
+#warning todo: well... there should be something... definitely.
+//    exit(1);
+    ended = 1;
+    ubasic_error = UBASIC_E_UNK_LABEL;
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -353,9 +441,11 @@ return_statement(void)
   accept(TOKENIZER_RETURN);
   if(gosub_stack_ptr > 0) {
     gosub_stack_ptr--;
-    jump_linenum(gosub_stack[gosub_stack_ptr]);
+    jump_line(gosub_stack[gosub_stack_ptr]);
   } else {
     DEBUG_PRINTF("return_statement: non-matching return\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_UNMATCHED_RETURN;
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -372,7 +462,7 @@ next_statement(void)
     ubasic_set_variable(var,
 			ubasic_get_variable(var) + 1);
     if(ubasic_get_variable(var) <= for_stack[for_stack_ptr - 1].to) {
-      jump_linenum(for_stack[for_stack_ptr - 1].line_after_for);
+      jump_line(for_stack[for_stack_ptr - 1].line_after_for);
     } else {
       for_stack_ptr--;
       accept(TOKENIZER_CR);
@@ -399,7 +489,7 @@ for_statement(void)
   accept(TOKENIZER_CR);
 
   if(for_stack_ptr < MAX_FOR_STACK_DEPTH) {
-    for_stack[for_stack_ptr].line_after_for = tokenizer_num();
+    for_stack[for_stack_ptr].line_after_for = tokenizer_line_number();
     for_stack[for_stack_ptr].for_variable = for_variable;
     for_stack[for_stack_ptr].to = to;
     DEBUG_PRINTF("for_statement: new for, var %d to %d\n",
@@ -441,11 +531,11 @@ sleep_statement(void)
 }
 /*---------------------------------------------------------------------------*/
 static void
-shot_statement(void)
+shoot_statement(void)
 {
-  accept(TOKENIZER_SHOT);
-  ubasic_camera_shot();
-  DEBUG_PRINTF("End of shot\n");
+  accept(TOKENIZER_SHOOT);
+  ubasic_camera_shoot();
+  DEBUG_PRINTF("End of shoot\n");
   accept(TOKENIZER_CR);
 }
 
@@ -513,10 +603,10 @@ void set_av_rel_statement()
 static void
 statement(void)
 {
-  int token;
-  
+  ubasic_token token;
+
   token = tokenizer_token();
-  
+
   switch(token) {
   case TOKENIZER_PRINT:
     print_statement();
@@ -528,8 +618,8 @@ statement(void)
   case TOKENIZER_CLICK:
     click_statement();
     break;
-  case TOKENIZER_SHOT:
-    shot_statement();
+  case TOKENIZER_SHOOT:
+    shoot_statement();
     break;
 
   case TOKENIZER_GET_TV:
@@ -584,17 +674,24 @@ statement(void)
 #warning todo: well... there should be something... definitely.
 //    exit(1);
     ended = 1;
-    ubasic_error = 2;
+    ubasic_error = UBASIC_E_UNK_STATEMENT;
   }
 }
 /*---------------------------------------------------------------------------*/
 static void
 line_statement(void)
 {
-  ubasic_line = tokenizer_num();
-  DEBUG_PRINTF("----------- Line number %d ---------\n", ubasic_line);
+  /* line numbers have been removed */
+  DEBUG_PRINTF("----------- Line number %d ---------\n", tokenizer_line_number());
   /*    current_linenum = tokenizer_num();*/
-  accept(TOKENIZER_NUMBER);
+  if (tokenizer_token() == TOKENIZER_LABEL) {
+#ifdef DEBUG
+      tokenizer_label(string, sizeof(string));
+      DEBUG_PRINTF("line_statement: label: %s\n", string );
+#endif
+      accept(TOKENIZER_LABEL);
+      return;
+  }
   statement();
   return;
 }

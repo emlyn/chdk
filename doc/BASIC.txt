@@ -1,0 +1,92 @@
+
+= Camera scripting using uBASIC =
+
+The HDK includes a is a slightly modified version of the uBASIC
+compiler written by Adam Dunkels, http://www.sics.se/~adam/ubasic/
+
+The camera is now completely scriptable with BASIC programs that
+simulate pressing keys
+
+== uBASIC Syntax short manual ==
+
+Keywords: let, if, then, else, for, to, next, goto, gosub, return, end.
+
+Special keywords: click, shoot, sleep.
+
+Variables: lower latin letter from a to z. 16 bit signed integer.
+
+Labels: This version of ubasic doesn't support line numbers.
+Instead, labels are used. A label must be the only statement
+in a line and start with a colon.
+
+Special keywords syntax:
+* click "button_name"
+where button_name can be one of: up, down, left, right, set, shoot_half,
+shoot_full, zoom_in, zoom_out, menu, display, print, erase.
+Corresponding button is "clicked" (pressed and released).
+
+* shoot
+Take a picture. Procedure will return when first raw data
+will be ready for processing _and_ specified time in menu had
+elapsed. Warning: as two "raws" are there when shooting with
+long exposures this function is partially broken.
+
+* sleep <number>
+Delay for <number> ms. Timer resolution is around 10-30 ms.
+
+Script must be named SCRIPT.BAS and placed in the root directory
+on a card.
+
+Default script follows:
+=======================
+sleep 1000
+if a<1 then let a=2
+if b<1 then let b=3
+for s=1 to a
+  shoot
+  for n=1 to b
+    click "right"
+  next n
+next s
+shoot
+end
+========================
+
+Note that values of variables a, b and c are set to values you can
+choose from the Alt. Conf. menu.
+
+Maximum script size is 2K. A maximum of 4 nested for loops is allowed.
+10 nested gosub calles are possible.
+
+If compile/parse error occurs message with line number is shown
+in the upper left corner of a display.
+
+=== using labels and gosub ===
+
+For complex programming tasks, it is often helpful to split
+the program into smaller subroutines that can be called
+with the gosub command. You can jump to labels using the gosub
+statements. A simple program that captures 3 images with increased
+ISO settings would look like this:
+
+shoot
+for i=1 to 3
+  gosub "incISO"
+  shoot
+next i
+for i=1 to 3
+  gosub "decISO"
+next i
+end
+
+:incISO
+  click "menu"
+  [some more clicks]
+  return
+
+:decISO
+  click "menu"
+  [some more clicks]
+  return
+
+

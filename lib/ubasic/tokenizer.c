@@ -31,7 +31,7 @@
 #undef DEBUG
 
 #if DEBUG
-#define DEBUG_PRINTF(...)  printf(__VA_ARGS__)
+#define DEBUG_PRINTF(...)  fprintf(stderr,__VA_ARGS__)
 #else
 #define DEBUG_PRINTF(...)
 #endif
@@ -48,7 +48,8 @@ struct keyword_token {
   int token;
 };
 
-static int current_token = TOKENIZER_ERROR;
+static ubasic_token current_token = TOKENIZER_ERROR;
+static int current_line = 0;
 
 static const struct keyword_token keywords[] = {
   {"let", TOKENIZER_LET},
@@ -65,7 +66,8 @@ static const struct keyword_token keywords[] = {
   {"call", TOKENIZER_CALL},
 
   {"click", TOKENIZER_CLICK},
-  {"shot", TOKENIZER_SHOT},
+  {"shot", TOKENIZER_SHOOT}, // for compatibility
+  {"shoot", TOKENIZER_SHOOT},
   {"sleep", TOKENIZER_SLEEP}, 
 
   {"get_tv", TOKENIZER_GET_TV},
@@ -86,8 +88,6 @@ static int
 singlechar(void)
 {
   if(*ptr == '\n') {
-    return TOKENIZER_CR;
-  } else if(*ptr == '\r') {
     return TOKENIZER_CR;
   } else if(*ptr == ',') {
     return TOKENIZER_COMMA;
@@ -129,6 +129,9 @@ get_next_token(void)
 
   DEBUG_PRINTF("get_next_token(): '%s'\n", ptr);
 
+  // eat all whitespace
+  while(*ptr == ' ' || *ptr == '\t' || *ptr == '\r') ptr++;
+
   if(*ptr == 0) {
     return TOKENIZER_ENDOFINPUT;
   }
@@ -151,16 +154,28 @@ get_next_token(void)
     }
     DEBUG_PRINTF("get_next_token: error due to too long number\n");
     return TOKENIZER_ERROR;
+  } else if(*ptr == ':') {
+    // label
+    nextptr = ptr;
+    do {
+      ++nextptr;
+    } while(*nextptr != ' ' && * nextptr != '\n' && *nextptr != '\t');
+    return TOKENIZER_LABEL;
   } else if((i=singlechar()) != 0) {
     if (i == TOKENIZER_CR){
-	// eliminate empty lines, support cr+lf line ending
-	do {
-	    ptr++;
-	} while (singlechar() == TOKENIZER_CR);
-	ptr--;
+      // move to next line, and skip all following empty lines as well
+      while (singlechar() == TOKENIZER_CR) 
+      {
+        current_line++;
+        ptr++;
+        // eat all whitespace
+        while(*ptr == ' ' || *ptr == '\t' || *ptr == '\r') ptr++;
+      };
+      ptr--;
+      // dangelo: now the last char might point to a whitespace instead of
+      // a CR. I hope that doesn't break anything.
     }
     nextptr = ptr + 1;
-
     return i;
   } else if(*ptr == '"') {
     nextptr = ptr;
@@ -191,6 +206,7 @@ void
 tokenizer_init(const char *program)
 {
   ptr = program;
+  current_line = 1;
   current_token = get_next_token();
 }
 /*---------------------------------------------------------------------------*/
@@ -246,6 +262,39 @@ tokenizer_string(char *dest, int len)
 }
 /*---------------------------------------------------------------------------*/
 void
+tokenizer_label(char *dest, int len)
+{
+  char *string_end;
+  char *string_end2;
+  int string_len;
+  
+  if(tokenizer_token() != TOKENIZER_LABEL) {
+    return;
+  }
+  // allow string \n and space to end labels
+  // TODO: allow tabs as well
+  string_end = strchr(ptr + 1, ' ');
+  string_end2 = strchr(ptr + 1, '\n');
+  if (string_end == NULL)
+    string_end = string_end2;
+  else if (string_end2 == NULL) {
+
+  }
+  else if (string_end2 < string_end)
+    string_end = string_end2;
+
+  if(string_end == NULL) {
+    return;
+  }
+  string_len = string_end - ptr - 1;
+  if(len < string_len) {
+    string_len = len;
+  }
+  memcpy(dest, ptr + 1, string_len);
+  dest[string_len] = 0;
+}
+/*---------------------------------------------------------------------------*/
+void
 tokenizer_error_print(void)
 {
   DEBUG_PRINTF("tokenizer_error_print: '%s'\n", ptr);
@@ -263,3 +312,7 @@ tokenizer_variable_num(void)
   return *ptr - 'a';
 }
 /*---------------------------------------------------------------------------*/
+int tokenizer_line_number(void)
+{
+  return current_line;
+}
