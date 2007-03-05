@@ -21,6 +21,8 @@ extern int state_save_raw_nth_only;
 extern char *state_ubasic_script;
 
 extern int state_debug1;
+extern int debug_propcase_show;
+extern int debug_propcase_page;
 
 extern void conf_save(int force);
 extern void conf_restore();

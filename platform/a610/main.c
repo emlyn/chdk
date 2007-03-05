@@ -22,6 +22,7 @@ extern long GetFocusLensSubjectDistance();
 extern long GetFocusLensSubjectDistanceFromLens();
 extern long GetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long SetPropertyCase(long opt_id, void *buf, long bufsize);
+extern long VbattGet();
 
 /* Ours stuff */
 extern long wrs_kernel_bss_start;
@@ -486,8 +487,8 @@ const ISOTable iso_table[] = {
 #define ASID_MAX (aperture_sizes_table[AS_SIZE-1].id)
 
 #define ISO_SIZE (sizeof(iso_table)/sizeof(iso_table[0]))
-#define ASID_MIN (iso_table[0].id)
-#define ASID_MAX (iso_table[ISO_SIZE-1].id)
+#define ISO_MIN (iso_table[0].id)
+#define ISO_MAX (iso_table[ISO_SIZE-1].id)
 
 int shooting_get_tv()
 {

@@ -48,6 +48,16 @@ CMenuItem script_submenu[] = {
     {0}
 };
 
+CMenuItem debug_submenu[] = {
+    {"*** Debug ***", MENUITEM_INFO, 0 },
+
+    {"Show PropCases", MENUITEM_BOOL, &debug_propcase_show },
+    {"PropCase page", MENUITEM_INT, &debug_propcase_page },
+
+    {"<- Back", MENUITEM_UP, NULL },
+    {0}
+};
+
 CMenuItem root_menu[] = {
     {"*** Main ***", MENUITEM_INFO, 0 },
     {"Show OSD", MENUITEM_BOOL, &conf_show_osd },
@@ -56,6 +66,7 @@ CMenuItem root_menu[] = {
     {"Show live histo", MENUITEM_BOOL, &conf_show_histo },
 #endif
     {"Scripting parameters ->", MENUITEM_SUBMENU, (int*)script_submenu },
+    {"Debug parameters ->", MENUITEM_SUBMENU, (int*)debug_submenu },
     {"Save options now...", MENUITEM_PROC, (int*)gui_menuproc_save },
     {0}
 };
@@ -269,9 +280,11 @@ void gui_kbd_process()
 	if (!gui_mode_conf){
 	    canon_redraw_bitmap();
 	} else {
-	    curr_menu = root_menu;
-	    gui_menu_curr_item = 0;
-	    gui_menu_stack_ptr = 0;
+	    if (curr_menu == NULL){
+		curr_menu = root_menu;
+		gui_menu_curr_item = 0;
+		gui_menu_stack_ptr = 0;
+	    }
 	}
 	return;
     }
@@ -434,7 +447,10 @@ void gui_conf_draw()
     }
 }
 
+extern long physw_status[3];
 static char osd_buf[32];
+extern long GetPropertyCase(long opt_id, void *buf, long bufsize);
+
 void gui_draw_osd()
 {
     if (conf_save_raw){
@@ -455,6 +471,23 @@ void gui_draw_osd()
     draw_txt_string(35, 7, osd_buf);
     sprintf(osd_buf, "V:%d  ", stat_get_vbatt());
     draw_txt_string(35, 8, osd_buf);
+
+    sprintf(osd_buf, "1:%8x  ", physw_status[2]);
+    draw_txt_string(28, 10, osd_buf);
+
+    if (debug_propcase_show){
+	static char sbuf[100];
+	int r,i, p;
+
+	for (i=0;i<10;i++){
+	    r = 0;
+	    p = debug_propcase_page*10+i;
+	    GetPropertyCase(p, &r, 4);
+	    sprintf(sbuf, "%3d: %d              ", p, r);sbuf[20]=0;
+	    draw_string(64,16+16*i,sbuf);
+	}
+    
+    }
 
 
     if (ubasic_error){

@@ -21,12 +21,14 @@ char *state_ubasic_script;
 int state_save_raw_nth_only;
 
 int state_debug1;
+int debug_propcase_show;
+int debug_propcase_page;
 
 static int dfirst;
 static int ubasic_script_buf[SCRIPT_BUF_SIZE];
 
 const char *ubasic_script_default =
-#if 1
+#if 0
     "sleep 1000\n"
     "if a<1 then let a=2\n"
     "if b<1 then let b=3\n"
@@ -40,10 +42,9 @@ const char *ubasic_script_default =
     "end\n";
 #else
     "sleep 1000\n"
-    "if a<1 then let a=2\n"
-    "for s=1 to a\n"
-    "shoot\n"
-    "set_tv_rel b\n"
+    "for s=1 to 999\n"
+      "shoot\n"
+      "sleep 5000\n"
     "next s\n"
     "shoot\n"
     "end\n";

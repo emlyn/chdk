@@ -39,6 +39,7 @@
 #include "tokenizer.h"
 
 #include "camera_functions.h"
+#include "platform.h"
 
 #include "stdlib.h" /* exit() */
 

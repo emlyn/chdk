@@ -21,6 +21,7 @@ extern int isspace(int c);
 extern int isalpha(int c);
 extern int isupper(int c);
 
+extern int strcmp(const char *s1, const char *s2);
 extern int strncmp(const char *s1, const char *s2, long n);
 extern char *strchr(const char *s, int c);
 extern void *memcpy(void *dest, const void *src, long n);
