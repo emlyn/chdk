@@ -265,7 +265,7 @@ static struct {
 	{ KEY_DOWN	, 0x00000002 },
 	{ KEY_LEFT	, 0x00000008 },
 	{ KEY_RIGHT	, 0x00000004 },
-	{ KEY_SET	, 0x00000100 },
+	{ KEY_SET	, 0x00000800 },
 	{ KEY_SHOOT_FULL, 0x00000030 }, // note 3 here!
 	{ KEY_SHOOT_HALF, 0x00000010 },
 	{ KEY_ZOOM_IN	, 0x00000040 },
@@ -273,7 +273,7 @@ static struct {
 	{ KEY_MENU	, 0x00000200 },
 	{ KEY_DISPLAY	, 0x00000400 },
 	{ KEY_PRINT	, 0x00001000 },
-	{ KEY_ERASE	, 0x00000800 },
+	{ KEY_ERASE	, 0x00000100 },
 };
 
 #define KEYSCNT (sizeof(keymap)/sizeof(keymap[0]))
