@@ -104,6 +104,7 @@ void process_script()
 	    return;
 	case SCRIPT_SLEEP:
 	    t = get_tick_count();
+	    // FIXME take care if overflow occurs
 	    if (delay_target_ticks == 0){
 		/* setup timer */
 		delay_target_ticks = t+KBD_STACK_PREV(2);
