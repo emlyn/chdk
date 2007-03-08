@@ -29,7 +29,7 @@ static int dfirst;
 static int ubasic_script_buf[SCRIPT_BUF_SIZE];
 
 const char *ubasic_script_default =
-#if 0
+#if 1
     "sleep 1000\n"
     "if a<1 then let a=2\n"
     "if b<1 then let b=3\n"
@@ -45,7 +45,7 @@ const char *ubasic_script_default =
     "sleep 1000\n"
     "for s=1 to 999\n"
       "shoot\n"
-      "sleep 1000\n"
+      "sleep 57000\n"
     "next s\n"
     "shoot\n"
     "end\n";
