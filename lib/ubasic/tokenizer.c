@@ -41,7 +41,7 @@
 
 static char const *ptr, *nextptr;
 
-#define MAX_NUMLEN 5
+#define MAX_NUMLEN 6
 
 struct keyword_token {
   const char *keyword;
@@ -137,7 +137,7 @@ get_next_token(void)
   }
   
   if(isdigit(*ptr)) {
-    for(i = 0; i < MAX_NUMLEN; ++i) {
+    for(i = 0; i < (MAX_NUMLEN+1); ++i) {
       if(!isdigit(ptr[i])) {
 	if(i > 0) {
 	  nextptr = ptr + i;
