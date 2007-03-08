@@ -8,6 +8,6 @@ NSTUB(GetZoomLensCurrentPosition, 0xFFE8F684)
 NSTUB(GetZoomLensCurrentPoint, 0xFFE8F670)
 NSTUB(GetFocusLensSubjectDistance, 0xFFEA2F3C)
 
-NSTUB(GetSystemTime, 0xFFC0A9E4)
+NSTUB(GetSystemTime, 0xFFC04D38)
 NSTUB(GetPropertyCase, 0xFFC14DEC)
 NSTUB(SetPropertyCase, 0xFFC14C9C)
