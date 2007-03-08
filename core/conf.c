@@ -23,6 +23,7 @@ int state_save_raw_nth_only;
 int state_debug1;
 int debug_propcase_show;
 int debug_propcase_page;
+int debug_vals_show;
 
 static int dfirst;
 static int ubasic_script_buf[SCRIPT_BUF_SIZE];
@@ -44,7 +45,7 @@ const char *ubasic_script_default =
     "sleep 1000\n"
     "for s=1 to 999\n"
       "shoot\n"
-      "sleep 5000\n"
+      "sleep 1000\n"
     "next s\n"
     "shoot\n"
     "end\n";

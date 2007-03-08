@@ -53,6 +53,7 @@ CMenuItem debug_submenu[] = {
 
     {"Show PropCases", MENUITEM_BOOL, &debug_propcase_show },
     {"PropCase page", MENUITEM_INT, &debug_propcase_page },
+    {"Show misc. values", MENUITEM_BOOL, &debug_vals_show },
 
     {"<- Back", MENUITEM_UP, NULL },
     {0}
@@ -472,8 +473,13 @@ void gui_draw_osd()
     sprintf(osd_buf, "V:%d  ", stat_get_vbatt());
     draw_txt_string(35, 8, osd_buf);
 
-    sprintf(osd_buf, "1:%8x  ", physw_status[2]);
-    draw_txt_string(28, 10, osd_buf);
+    if (debug_vals_show) {
+	sprintf(osd_buf, "1:%8x  ", physw_status[2]);
+	draw_txt_string(28, 10, osd_buf);
+
+	sprintf(osd_buf, "2:%8d  ", get_tick_count());
+	draw_txt_string(28, 11, osd_buf);
+    }
 
     if (debug_propcase_show){
 	static char sbuf[100];

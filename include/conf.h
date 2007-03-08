@@ -23,6 +23,7 @@ extern char *state_ubasic_script;
 extern int state_debug1;
 extern int debug_propcase_show;
 extern int debug_propcase_page;
+extern int debug_vals_show;
 
 extern void conf_save(int force);
 extern void conf_restore();
