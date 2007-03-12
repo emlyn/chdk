@@ -6,3 +6,5 @@ NSTUB(VbattGet, 0xFFC1B4AC)
 NSTUB(GetZoomLensCurrentPosition, 0xFFE59D2C)
 NSTUB(GetZoomLensCurrentPoint, 0xFFE59D18)
 NSTUB(GetFocusLensSubjectDistance, 0xFFE6D4AC)
+
+NSTUB(IsStrobeChargeCompleted, 0xFFCEC238)

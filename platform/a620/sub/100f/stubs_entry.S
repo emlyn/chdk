@@ -60,3 +60,4 @@ NSTUB(ExecuteEventProcedure, 0xffc067f0)
 NSTUB(GetPropertyCase, 0xffc14188)
 NSTUB(SetPropertyCase, 0xffc1406c)
 NSTUB(RefreshPhysicalScreen, 0xffd60708)
+// WARNING: IsStrobeChargeCompleted is not found!

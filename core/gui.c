@@ -82,11 +82,11 @@ static int gui_mode_conf;
 
 const unsigned char fontdata_8x16[4096];
 static char *fb;
-static int width, height;
+static int width, height, pixel_cnt;
 static char sbuf[100];
 
 #define SETPIX(_x,_y,_v) fb[(_y)*(width)+(_x)] = \
-    fb[(width)*(height)+(_y)*(width)+(_x)] = (_v)
+    fb[(pixel_cnt)+(_y)*(width)+(_x)] = (_v)
 
 void draw_char(int x, int y, const char ch)
 {
@@ -129,25 +129,39 @@ void draw_txt_char(int col, int row, const char c)
 }
 
 #ifdef HISTO
-static unsigned int histogram[100];
-static unsigned int histo_max;
+#define HISTO_SIZE (128)
+static unsigned int histogram[HISTO_SIZE];
+static unsigned int histo_max_log;
+static long under_exposed;
+static long over_exposed;
 
 void do_histo()
 {
     unsigned char *img = vid_get_viewport_fb();
+    unsigned int histo_max;
     int i, hi;
-    for (i=0;i<100;i++){
+
+    for (i=0;i<HISTO_SIZE;i++){
 	histogram[i]=0;
     }
+
     histo_max = 0;
 
-    for (i=0;i<width*height;i++){
-	hi = img[i*3+1]*100/256;
+    for (i=0;i<pixel_cnt;i++){
+	hi = img[i*3+1]*HISTO_SIZE/256;
 	histogram[hi]++;
 
 	if (histo_max<histogram[hi])
 	    histo_max=histogram[hi];
     }
+
+    histo_max_log = logf((float)histo_max);
+
+    under_exposed = (histogram[0]+histogram[1]+histogram[2]) >
+	    (pixel_cnt/4/HISTO_SIZE);
+
+    over_exposed = (histogram[HISTO_SIZE-3]+histogram[HISTO_SIZE-2]+histogram[HISTO_SIZE-1]) >
+	    (pixel_cnt/4/HISTO_SIZE);
 }
 #endif
 
@@ -222,27 +236,28 @@ void gui_redraw()
 
 #ifdef HISTO
     if (conf_show_histo && kbd_is_key_pressed(KEY_SHOOT_HALF)){
-	const int hx=219;
+	const int hx=319-HISTO_SIZE;
 	const int hy=48;
 	/* box */
-	for (i=hx-1;i<=hx+100;i++){
+	for (i=hx-1;i<=hx+HISTO_SIZE;i++){
 	    SETPIX(i,hy, 0x55);
 	    SETPIX(i,hy+50, 0x55);
 	}
 
 	for (i=hy;i<hy+50;i++){
 	    SETPIX(hx-1,i, 0x55);
-	    SETPIX(hx+100,i, 0x55);
+	    SETPIX(hx+HISTO_SIZE,i, 0x55);
 	}
 
 	do_histo();
 
 	/* hisogram */
-	for (i=0;i<100;i++){
-	    if (histo_max > 0)
-		threshold = (logf((float)histogram[i]))*50/logf(histo_max);
+	for (i=0;i<HISTO_SIZE;i++){
+	    if (histo_max_log > 0)
+		threshold = (logf((float)histogram[i]))*50/histo_max_log;
 	    else
 		threshold = 50;
+
 	    for (j=1;j<50;j++){
 		int x = hx+i;
 		int y = hy+50-j;
@@ -391,6 +406,7 @@ void gui_init()
     fb = vid_get_bitmap_fb();
     width = vid_get_bitmap_width();
     height  = vid_get_bitmap_height();
+    pixel_cnt = width*height;
 }
 
 void canon_redraw_bitmap()
@@ -479,6 +495,14 @@ void gui_draw_osd()
 
 	sprintf(osd_buf, "2:%8d  ", get_tick_count());
 	draw_txt_string(28, 11, osd_buf);
+
+	sprintf(osd_buf, "3:%d %d ", under_exposed, over_exposed);
+	draw_txt_string(28, 12, osd_buf);
+
+//	long (*f)() = 0xFFD3F1DC;
+//	sprintf(osd_buf, "4:%d %d %d", state_shooting_progress, shooting_in_progress(),f());
+//	draw_txt_string(28, 13, osd_buf);
+
     }
 
     if (debug_propcase_show){

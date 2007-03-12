@@ -14,3 +14,5 @@ NSTUB(SetPropertyCase, 0xFFC14C9C)
 
 NSTUB(RefreshPhysicalScreen, 0xFFD8752C)
 
+NSTUB(IsStrobeChargeCompleted, 0xFFD11B24)
+

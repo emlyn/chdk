@@ -45,7 +45,7 @@ const char *ubasic_script_default =
     "sleep 1000\n"
     "for s=1 to 999\n"
       "shoot\n"
-      "sleep 27000\n"
+      "sleep 2000\n"
     "next s\n"
     "shoot\n"
     "end\n";

@@ -1564,6 +1564,32 @@ static FuncSig func_sig_RefreshPhysicalScreen[] = {
 	/* 13/32 */
 };
 
+static FuncSig func_sig_IsStrobeChargeCompleted[] = {
+	{   2, 0xe04dd004, 0xfdffffff },
+	{   3, 0xe1a04000, 0xfdffffff },
+	{   6, 0xe1a02004, 0xfdffffff },
+	{   7, 0xe1a01005, 0xfdffffff },
+	{   8, 0xeb000000, 0xff000000 },
+	{   9, 0xe1a01003, 0xfdffffff },
+	{  11, 0xe1a02f7d, 0xfdffffff },
+	{  12, 0xeb000000, 0xff000000 },
+	{  13, 0xe1500004, 0xfdffffff },
+	{  14, 0xe1a0100d, 0xfdffffff },
+	{  15, 0x1a000000, 0xff000000 },
+	{  17, 0xeb000000, 0xff000000 },
+	{  19, 0xe1a01003, 0xfdffffff },
+	{  20, 0xeb000000, 0xff000000 },
+	{  22, 0xe0034001, 0xfdffffff },
+	{  23, 0xe1a00004, 0xfdffffff },
+	{  24, 0xe08dd004, 0xfdffffff },
+	{  26, 0xe1a0f00e, 0xfdffffff },
+	{  27, 0x0004fcd8, 0xfdffffff },
+	{  28, 0x0004fcdc, 0xfdffffff },
+	{  31, 0xe1a01008, 0xfdffffff },
+	{ -1, -1, -1 },
+	/* 21/32 */
+};
+
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory },
 	{ "Close", func_sig_Close },
@@ -1624,5 +1650,6 @@ FuncsList func_list[] = {
 	{ "GetPropertyCase", func_sig_GetPropertyCase },
 	{ "SetPropertyCase", func_sig_SetPropertyCase },
 	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen },
+	{ "IsStrobeChargeCompleted", func_sig_IsStrobeChargeCompleted },
 	{ NULL }
 };
