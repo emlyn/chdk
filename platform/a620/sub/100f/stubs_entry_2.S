@@ -1,10 +1,10 @@
 #include "stubs_asm.h"
 
-NSTUB(kbd_pwr_off, 0xFFC1756C)
+NHSTUB(kbd_pwr_off, 0xFFC1756C)
 
-NSTUB(VbattGet, 0xFFC1B4AC)
-NSTUB(GetZoomLensCurrentPosition, 0xFFE59D2C)
-NSTUB(GetZoomLensCurrentPoint, 0xFFE59D18)
-NSTUB(GetFocusLensSubjectDistance, 0xFFE6D4AC)
+NHSTUB(VbattGet, 0xFFC1B4AC)
+NHSTUB(GetZoomLensCurrentPosition, 0xFFE59D2C)
+NHSTUB(GetZoomLensCurrentPoint, 0xFFE59D18)
+NHSTUB(GetFocusLensSubjectDistance, 0xFFE6D4AC)
 
-NSTUB(IsStrobeChargeCompleted, 0xFFCEC238)
+NHSTUB(IsStrobeChargeCompleted, 0xFFCEC238)

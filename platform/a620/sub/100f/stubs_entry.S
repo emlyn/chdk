@@ -21,7 +21,8 @@ NSTUB(ioctl, 0xffec2cc0)
 NSTUB(kbd_p1_f, 0xffc16164)
 NSTUB(kbd_p1_f_cont, 0xffc16170)
 NSTUB(kbd_p2_f, 0xffc16548)
-// WARNING: kbd_pwr_off is not found!
+// Best match: 94%
+NSTUB(kbd_pwr_off, 0xffc1756c)
 NSTUB(kbd_pwr_on, 0xffc17544)
 NSTUB(kbd_read_keys_r2, 0xffc16fb8)
 NSTUB(lseek, 0xffec2cc4)
@@ -42,7 +43,8 @@ NSTUB(strcmp, 0xffebc818)
 NSTUB(strcpy, 0xffebc9ac)
 NSTUB(strlen, 0xffebcb10)
 NSTUB(TakeSemaphore, 0xffc10c40)
-// WARNING: taskIdListGet is not found!
+// Best match: 79%
+NSTUB(taskIdListGet, 0xffed3804)
 NSTUB(taskLock, 0xffed3ec0)
 NSTUB(taskName, 0xffed36fc)
 NSTUB(taskResume, 0xffed3ae0)
@@ -60,4 +62,5 @@ NSTUB(ExecuteEventProcedure, 0xffc067f0)
 NSTUB(GetPropertyCase, 0xffc14188)
 NSTUB(SetPropertyCase, 0xffc1406c)
 NSTUB(RefreshPhysicalScreen, 0xffd60708)
-// WARNING: IsStrobeChargeCompleted is not found!
+// Best match: 90%
+NSTUB(IsStrobeChargeCompleted, 0xffcec238)

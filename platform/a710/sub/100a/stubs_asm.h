@@ -5,6 +5,12 @@
 
 #define NSTUB(name, addr)\
     .globl name ;\
+    .weak name ;\
+    name: ;\
+	ldr  pc, = ## addr
+
+#define NHSTUB(name, addr)\
+    .globl name ;\
     name: ;\
 	ldr  pc, = ## addr
 
