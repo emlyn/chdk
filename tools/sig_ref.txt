@@ -56,3 +56,4 @@ DisplayImagePhysicalScreen 0xFFD112AC
 ExecuteEventProcedure 0xFFC067F0
 GetPropertyCase 0xFFC141A8
 SetPropertyCase 0xFFC1408C
+RefreshPhysicalScreen 0xFFD5F6C0

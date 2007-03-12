@@ -341,11 +341,12 @@ void gui_kbd_process()
 		curr_menu = (void*)curr_menu[gui_menu_curr_item].value;
 		gui_menu_curr_item = 0;
 		gui_menu_stack_ptr++;
-		// FIXME check on stack overrun;
+
 		if (gui_menu_stack_ptr > MENUSTACK_MAXDEPTH){
 		    draw_txt_string(0, 0, "E1");
 		    gui_menu_stack_ptr = 0;
 		}
+		canon_redraw_bitmap();
 		break;
 	    case MENUITEM_UP:
 		if (gui_menu_stack_ptr > 0){
@@ -395,8 +396,7 @@ void gui_init()
 void canon_redraw_bitmap()
 {
     ubasic_error = 0;
-    draw_txt_string(20, 14, "     ");
-    // TODO
+    vid_bitmap_refresh();
 }
 
 void gui_conf_draw()

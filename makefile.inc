@@ -58,8 +58,9 @@ NM=arm-elf-nm
 AR=arm-elf-ar
 RANLIB=arm-elf-ranlib
 
-CFLAGS=-fno-inline -O2 -Wall -Wno-unused -mtune=arm946e-s -fno-strict-aliasing -msoft-float
+CFLAGS=-fno-inline -O2 -mtune=arm946e-s -fno-strict-aliasing -msoft-float
 CFLAGS+=-I$(topdir)include $(PLFLAGS) $(CPPFLAGS)
+CFLAGS+=-Wall -Wno-unused -Wno-format
 LDFLAGS=-L$(topdir)lib/math -L$(topdir)lib/font
 LDFLAGS+=-L$(topdir)lib/libc -L$(topdir)lib/ubasic
 LDFLAGS+=-L$(topdir)platform/$(PLATFORM) -L$(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)

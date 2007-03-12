@@ -22,6 +22,7 @@ extern long GetFocusLensSubjectDistance();
 extern long GetFocusLensSubjectDistanceFromLens();
 extern long GetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long SetPropertyCase(long opt_id, void *buf, long bufsize);
+extern void RefreshPhysicalScreen(long f);
 
 /* Ours stuff */
 extern long wrs_kernel_bss_start;
@@ -567,3 +568,7 @@ int shooting_in_progress()
     return t != 0;
 }
 
+void vid_bitmap_refresh()
+{
+    RefreshPhysicalScreen(1);
+}

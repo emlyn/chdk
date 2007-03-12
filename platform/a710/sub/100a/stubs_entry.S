@@ -59,3 +59,4 @@ NSTUB(CreateTask, 0xffc11abc)
 NSTUB(ExecuteEventProcedure, 0xffc0699c)
 // WARNING: GetPropertyCase is not found!
 // WARNING: SetPropertyCase is not found!
+// WARNING: RefreshPhysicalScreen is not found!

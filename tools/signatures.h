@@ -1546,6 +1546,24 @@ static FuncSig func_sig_SetPropertyCase[] = {
 	/* 20/32 */
 };
 
+static FuncSig func_sig_RefreshPhysicalScreen[] = {
+	{   1, 0xe04dd010, 0xfdffffff },
+	{   2, 0xeb000000, 0xff000000 },
+	{   3, 0xe0105001, 0xfdffffff },
+	{   4, 0x1a000000, 0xff000000 },
+	{   7, 0xe1520001, 0xfdffffff },
+	{   9, 0x1a000000, 0xff000000 },
+	{  12, 0xeb000000, 0xff000000 },
+	{  13, 0xea000000, 0xff000000 },
+	{  14, 0xeb000000, 0xff000000 },
+	{  15, 0xeb000000, 0xff000000 },
+	{  16, 0xeb000000, 0xff000000 },
+	{  27, 0xe1a02005, 0xfdffffff },
+	{  31, 0xe1a0e00f, 0xfdffffff },
+	{ -1, -1, -1 },
+	/* 13/32 */
+};
+
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory },
 	{ "Close", func_sig_Close },
@@ -1605,5 +1623,6 @@ FuncsList func_list[] = {
 	{ "ExecuteEventProcedure", func_sig_ExecuteEventProcedure },
 	{ "GetPropertyCase", func_sig_GetPropertyCase },
 	{ "SetPropertyCase", func_sig_SetPropertyCase },
+	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen },
 	{ NULL }
 };

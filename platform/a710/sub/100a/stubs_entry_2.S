@@ -11,3 +11,6 @@ NSTUB(GetFocusLensSubjectDistance, 0xFFEA2F3C)
 NSTUB(GetSystemTime, 0xFFC04D38)
 NSTUB(GetPropertyCase, 0xFFC14DEC)
 NSTUB(SetPropertyCase, 0xFFC14C9C)
+
+NSTUB(RefreshPhysicalScreen, 0xFFD8752C)
+
