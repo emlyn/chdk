@@ -13,6 +13,8 @@
 #define O_CREAT         0x200
 
 extern float logf(float v);
+extern float sqrtf(float v);
+
 extern long strlen(const char *s);
 extern long sprintf(char *s, const char *st, ...);
 

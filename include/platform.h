@@ -44,6 +44,7 @@ void *vid_get_bitmap_fb();
 long vid_get_bitmap_width();
 long vid_get_bitmap_height();
 void *vid_get_viewport_fb();
+void *vid_get_viewport_live_fb();
 void vid_bitmap_refresh();
 
 /******************************************************************/

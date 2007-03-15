@@ -4,8 +4,10 @@
 #include "keyboard.h"
 #include "conf.h"
 #include "ubasic.h"
+#include "histogram.h"
 
-#define HISTO
+int gui_width, gui_height, gui_pixel_cnt;
+
 
 #define MENUITEM_MASK 0xf
 #define MENUITEM_INFO 1
@@ -63,9 +65,7 @@ CMenuItem root_menu[] = {
     {"*** Main ***", MENUITEM_INFO, 0 },
     {"Show OSD", MENUITEM_BOOL, &conf_show_osd },
     {"Save RAW", MENUITEM_BOOL, &conf_save_raw },
-#ifdef HISTO
-    {"Show live histo", MENUITEM_BOOL, &conf_show_histo },
-#endif
+    {"Show live histogram", MENUITEM_BOOL, &conf_show_histo },
     {"Scripting parameters ->", MENUITEM_SUBMENU, (int*)script_submenu },
     {"Debug parameters ->", MENUITEM_SUBMENU, (int*)debug_submenu },
     {"Save options now...", MENUITEM_PROC, (int*)gui_menuproc_save },
@@ -82,9 +82,11 @@ static int gui_mode_conf;
 
 const unsigned char fontdata_8x16[4096];
 static char *fb;
-static int width, height, pixel_cnt;
 static char sbuf[100];
 
+#define width gui_width
+#define height gui_height
+#define pixel_cnt gui_pixel_cnt
 #define SETPIX(_x,_y,_v) fb[(_y)*(width)+(_x)] = \
     fb[(pixel_cnt)+(_y)*(width)+(_x)] = (_v)
 
@@ -128,113 +130,11 @@ void draw_txt_char(int col, int row, const char c)
     draw_char(col*8, row*16, c);
 }
 
-#ifdef HISTO
-#define HISTO_SIZE (128)
-static unsigned int histogram[HISTO_SIZE];
-static unsigned int histo_max_log;
-static long under_exposed;
-static long over_exposed;
-
-void do_histo()
-{
-    unsigned char *img = vid_get_viewport_fb();
-    unsigned int histo_max;
-    int i, hi;
-
-    for (i=0;i<HISTO_SIZE;i++){
-	histogram[i]=0;
-    }
-
-    histo_max = 0;
-
-    for (i=0;i<pixel_cnt;i++){
-	hi = img[i*3+1]*HISTO_SIZE/256;
-	histogram[hi]++;
-
-	if (histo_max<histogram[hi])
-	    histo_max=histogram[hi];
-    }
-
-    histo_max_log = logf((float)histo_max);
-
-    under_exposed = (histogram[0]+histogram[1]+histogram[2]) >
-	    (pixel_cnt/4/HISTO_SIZE);
-
-    over_exposed = (histogram[HISTO_SIZE-3]+histogram[HISTO_SIZE-2]+histogram[HISTO_SIZE-1]) >
-	    (pixel_cnt/4/HISTO_SIZE);
-}
-#endif
-
 void gui_redraw()
 {
-	int i,j;
-	int threshold;
+    int i,j;
+    int threshold;
 
-#if 0
-    {
-	static char sbuf[100];
-	volatile long *si = 0x7dd0;
-	extern int taskop_txt_p;
-	extern char taskop_txt[6][32];
-	long (*f)(long prop, void*p, long size);
-	int r,i;
-
-	f = 0xFFC141A8;
-//	i = 0;
-//	f(conf_ubasic_var_a, &i, 4);
-/*
-1 - effect
-5 - color temp
-9 - exp. 
-14 - drive timeout
-21 - iso value 50..400
-24 - image size
-23 - quality
-39 - aperture
-40 - time
-69 - tv result
-
-*/
-// 39 - aperture
-// 40 - exp time
-// 65 - focus
-// 69 - calc. exp time
-
-	for (i=0;i<10;i++){
-	    r = 0;
-	    f(conf_ubasic_var_a+i, &r, 4);
-	    sprintf(sbuf, "%3d: %d               ", conf_ubasic_var_a+i,r);sbuf[20]=0;
-	    draw_string(64,16+16*i,sbuf);
-	
-	}
-/*
-	sprintf(sbuf, "d1: %d               ", i);sbuf[20]=0;
-	draw_string(64,16,sbuf);
-
-	sprintf(sbuf, "d1: %d               ", (short)i);sbuf[20]=0;
-	draw_string(64,32,sbuf);
-
-	sprintf(sbuf, "d1: %x               ", i);sbuf[20]=0;
-	draw_string(64,48,sbuf);
-*/
-
-//	sprintf(sbuf, "av: %d               ", shooting_get_av());sbuf[20]=0;
-//	draw_string(64,64+16,sbuf);
-
-//	sprintf(sbuf, "w: %d               ", si[2]);sbuf[20]=0;
-//	draw_string(64,64+32,sbuf);
-
-//	sprintf(sbuf, "w: %d               ", si[3]);sbuf[20]=0;
-//	draw_string(64,64+48,sbuf);
-
-//	for (i=0;i<6;i++){
-//	    sprintf(sbuf, "%s                  ", taskop_txt[i]);sbuf[32]=0;
-//	    draw_string(8,64+64+i*16,sbuf);
-//	}
-    }
-#endif
-
-#ifdef HISTO
     if (conf_show_histo && kbd_is_key_pressed(KEY_SHOOT_HALF)){
 	const int hx=319-HISTO_SIZE;
 	const int hy=48;
@@ -249,14 +149,9 @@ void gui_redraw()
 	    SETPIX(hx+HISTO_SIZE,i, 0x55);
 	}
 
-	do_histo();
-
 	/* hisogram */
 	for (i=0;i<HISTO_SIZE;i++){
-	    if (histo_max_log > 0)
-		threshold = (logf((float)histogram[i]))*50/histo_max_log;
-	    else
-		threshold = 50;
+	    threshold = histogram[i];
 
 	    for (j=1;j<50;j++){
 		int x = hx+i;
@@ -269,7 +164,6 @@ void gui_redraw()
 	    }
 	}
     }
-#endif	
 
 
     if (gui_mode_conf){
@@ -382,6 +276,7 @@ void gui_kbd_process()
 //	    makedump();
 //	    shooting_set_tv_rel(2);
 //	    shooting_set_av_rel(2);
+	    dump_memory();
 	    break;
 	}
     }
@@ -407,6 +302,7 @@ void gui_init()
     width = vid_get_bitmap_width();
     height  = vid_get_bitmap_height();
     pixel_cnt = width*height;
+    exposition_thresh = pixel_cnt/500;
 }
 
 void canon_redraw_bitmap()
@@ -470,6 +366,13 @@ extern long GetPropertyCase(long opt_id, void *buf, long bufsize);
 
 void gui_draw_osd()
 {
+
+    if (under_exposed || over_exposed){
+	draw_txt_string(40, 2, "EXP");
+    } else {
+	draw_txt_string(40, 2, "   ");
+    }
+
     if (conf_save_raw){
 	draw_txt_string(40, 3, "RAW");
     } else {

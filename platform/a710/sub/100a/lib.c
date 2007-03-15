@@ -19,3 +19,8 @@ long hook_raw_size()
 {
     return 0x8CAE10;
 }
+
+void *vid_get_viewport_live_fb()
+{
+    return (void*)0x10670ee0;
+}
