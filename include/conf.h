@@ -18,7 +18,10 @@ extern int conf_ubasic_var_c;
 extern int state_kbd_script_run;
 extern int state_shooting_progress;
 extern int state_save_raw_nth_only;
+extern int state_expos_recalculated;
 extern char *state_ubasic_script;
+extern int state_expos_under;
+extern int state_expos_over;
 
 extern int state_debug1;
 extern int debug_propcase_show;

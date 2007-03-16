@@ -19,6 +19,9 @@ int conf_ubasic_var_c;
 int state_shooting_progress;
 char *state_ubasic_script;
 int state_save_raw_nth_only;
+int state_expos_recalculated;
+int state_expos_under;
+int state_expos_over;
 
 int state_debug1;
 int debug_propcase_show;
@@ -29,7 +32,7 @@ static int dfirst;
 static int ubasic_script_buf[SCRIPT_BUF_SIZE];
 
 const char *ubasic_script_default =
-#if 0
+#if 1
     "sleep 1000\n"
     "if a<1 then let a=2\n"
     "if b<1 then let b=3\n"

@@ -7,6 +7,8 @@
 #include "gui.h"
 #include "histogram.h"
 
+#define HISTOGRAM_IDLE_STAGE (6)
+
 static float identity(float x);
 
 
@@ -96,8 +98,11 @@ void histogram_process()
 		    histogram_proc[HISTO_SIZE-1]*8) > exposition_thresh;
 	} else {
 	    histo_max_invw = 0.0f;
+	    over_exposed = 0;
+	    under_exposed = 1;
 	}
 	histogram_stage=5;
+	state_expos_recalculated = 1;
 	break;
     case 5:
 
@@ -107,6 +112,21 @@ void histogram_process()
 
 	histogram_stage=0;
 	break;
+    case HISTOGRAM_IDLE_STAGE:
+	break;
     }
 
 }
+
+void histogram_stop()
+{
+    histogram_stage=HISTOGRAM_IDLE_STAGE;
+}
+
+
+void histogram_restart()
+{
+    histogram_stage = 0;
+}
+
+

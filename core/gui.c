@@ -399,12 +399,8 @@ void gui_draw_osd()
 	sprintf(osd_buf, "2:%8d  ", get_tick_count());
 	draw_txt_string(28, 11, osd_buf);
 
-	sprintf(osd_buf, "3:%d %d ", under_exposed, over_exposed);
+	sprintf(osd_buf, "3:%d %d ", state_expos_under, state_expos_over);
 	draw_txt_string(28, 12, osd_buf);
-
-//	long (*f)() = 0xFFD3F1DC;
-//	sprintf(osd_buf, "4:%d %d %d", state_shooting_progress, shooting_in_progress(),f());
-//	draw_txt_string(28, 13, osd_buf);
 
     }
 
