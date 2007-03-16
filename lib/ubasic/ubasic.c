@@ -52,12 +52,12 @@ static char const *program_ptr;
 static char string[MAX_STRINGLEN];
 
 #define MAX_GOSUB_STACK_DEPTH 10
-static int gosub_stack[MAX_GOSUB_STACK_DEPTH];
+static short gosub_stack[MAX_GOSUB_STACK_DEPTH];
 static int gosub_stack_ptr;
 
 struct for_state {
-  int line_after_for;
-  int for_variable;
+  short line_after_for;
+  short for_variable;
   int to;
 };
 #define MAX_FOR_STACK_DEPTH 4
@@ -65,7 +65,7 @@ static struct for_state for_stack[MAX_FOR_STACK_DEPTH];
 static int for_stack_ptr;
 
 #define MAX_VARNUM 26
-static short variables[MAX_VARNUM];
+static int variables[MAX_VARNUM];
 
 static int ended;
 
@@ -453,16 +453,16 @@ return_statement(void)
 static void
 next_statement(void)
 {
-  int var;
+  int var, value;
   
   accept(TOKENIZER_NEXT);
   var = tokenizer_variable_num();
   accept(TOKENIZER_VARIABLE);
   if(for_stack_ptr > 0 &&
      var == for_stack[for_stack_ptr - 1].for_variable) {
-    ubasic_set_variable(var,
-			ubasic_get_variable(var) + 1);
-    if(ubasic_get_variable(var) <= for_stack[for_stack_ptr - 1].to) {
+    value = ubasic_get_variable(var) + 1;
+    ubasic_set_variable(var, value);
+    if(value <= for_stack[for_stack_ptr - 1].to) {
       jump_line(for_stack[for_stack_ptr - 1].line_after_for);
     } else {
       for_stack_ptr--;
@@ -717,7 +717,7 @@ ubasic_finished(void)
 void
 ubasic_set_variable(int varnum, int value)
 {
-  if(varnum >= 0 && varnum <= MAX_VARNUM) {
+  if(varnum >= 0 && varnum < MAX_VARNUM) {
     variables[varnum] = value;
   }
 }
@@ -725,7 +725,7 @@ ubasic_set_variable(int varnum, int value)
 int
 ubasic_get_variable(int varnum)
 {
-  if(varnum >= 0 && varnum <= MAX_VARNUM) {
+  if(varnum >= 0 && varnum < MAX_VARNUM) {
     return variables[varnum];
   }
   return 0;
