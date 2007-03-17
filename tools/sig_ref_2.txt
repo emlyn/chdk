@@ -1,0 +1,5 @@
+GetSystemTime 0xFFC04D38
+GetPropertyCase 0xFFC14DEC
+SetPropertyCase 0xFFC14C9C
+RefreshPhysicalScreen 0xFFD8752C
+DisplayImagePhysicalScreen 0xffd36fe0

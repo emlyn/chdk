@@ -4,6 +4,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#define MAX_MATCHES (64)
+
 typedef struct {
     uint32_t ptr;
     uint32_t fail;
@@ -50,7 +52,7 @@ void usage()
 
 int main(int argc, char **argv)
 {
-    Match matches[64];
+    Match matches[MAX_MATCHES];
     uint32_t *buf;
     FILE *f;
     int size;
@@ -60,6 +62,7 @@ int main(int argc, char **argv)
     FuncSig *sig;
     int count;
     int ret = 0;
+    char *curr_name;
 
     if (argc != 3)
 	usage();
@@ -82,32 +85,45 @@ int main(int argc, char **argv)
     fread(buf, 4, size, f);
 
     for (k=0;func_list[k].name;k++){
-	sig = func_list[k].sig;
+
 	count = 0;
-	for (i=0;i<size-32;i++){
-	    fail = 0;
-	    success = 0;
-	    for (j=0;sig[j].offs!=-1;j++){
-		if ((buf[i+sig[j].offs] & sig[j].mask) != sig[j].value){
-		    fail++;
-		    // prioritize first instr.
-		    if (j==0)
-			fail+=5;
-		} else {
-		    success++;
+	curr_name = func_list[k].name;
+
+	while (1) {
+	    sig = func_list[k].sig;
+
+	    for (i=0;i<size-32;i++){
+		fail = 0;
+		success = 0;
+		for (j=0;sig[j].offs!=-1;j++){
+		    if ((buf[i+sig[j].offs] & sig[j].mask) != sig[j].value){
+			fail++;
+		    } else {
+			success++;
+		    }
+		}
+		if (success > fail){
+		    matches[count].ptr = base+i*4;
+		    matches[count].success = success;
+		    matches[count].fail = fail;
+		    count ++;
+		    if (count >= MAX_MATCHES){
+			printf("// WARNING: too many matches for %s!\n", func_list[k].name);
+			break;
+		    }
 		}
 	    }
-	    if (success > fail){
-		matches[count].ptr = base+i*4;
-		matches[count].success = success;
-		matches[count].fail = fail;
-		count ++;
+
+	    // same name, so we have another version of the same function
+	    if ((func_list[k+1].name == NULL) || (strcmp(curr_name, func_list[k+1].name) != 0)) {
+		break;
 	    }
+	    k++;
 	}
 
-
-	if (count == 0 ){
-	    printf("// ERROR: %s is not found!\n", func_list[k].name);
+	// find best match and report results
+	if (count == 0){
+	    printf("// ERROR: %s is not found!\n", curr_name);
 	    ret = 1;
 	} else {
 	    if (count > 1){
@@ -117,12 +133,11 @@ int main(int argc, char **argv)
 	    if (matches->fail > 0)
 		printf("// Best match: %d%%\n", matches->success*100/(matches->success+matches->fail));
 
-	    printf("NSTUB(%s, 0x%x)\n", func_list[k].name, matches->ptr);
+	    printf("NSTUB(%s, 0x%x)\n", curr_name, matches->ptr);
 
 	    for (i=1;i<count && matches[i].fail==matches[0].fail;i++){
-		printf("// ALT: NSTUB(%s, 0x%x) // %d/%d\n", func_list[k].name, matches[i].ptr, matches[i].success, matches[i].fail);
+		printf("// ALT: NSTUB(%s, 0x%x) // %d/%d\n", curr_name, matches[i].ptr, matches[i].success, matches[i].fail);
 	    }
-
 	}
     }
 

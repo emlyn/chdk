@@ -18,8 +18,8 @@ ioctl 0xFFEBBF9C
 kbd_p1_f 0xFFC16184
 kbd_p1_f_cont 0xFFC16190
 kbd_p2_f 0xFFC16568
-kbd_pwr_off 0xFFC1758C
-kbd_pwr_on 0xFFC17564
+kbd_pwr_off 0xFFC1758C 7
+kbd_pwr_on 0xFFC17564 10
 kbd_read_keys_r2 0xFFC16FD8
 lseek 0xFFEBBFA0
 MakeDirectory 0xFFC5C9B0
@@ -33,7 +33,6 @@ PhySw_testgpio 0xFFC17658
 ProtectFile 0xFFC55198
 Read 0xFFC5C7A0
 read 0xFFEBBEBC
-reateTaskStrict 0xFFC123B8
 sprintf 0xFFEB9780
 strcmp 0xFFEB5AF4
 strcpy 0xFFEB5C88
@@ -54,7 +53,7 @@ CreateTask 0xFFC11250
 CreatePhysicalVram 0xFFD11EE4
 DisplayImagePhysicalScreen 0xFFD112AC
 ExecuteEventProcedure 0xFFC067F0
-GetPropertyCase 0xFFC141A8
-SetPropertyCase 0xFFC1408C
+GetPropertyCase 0xFFC141A8 26
+SetPropertyCase 0xFFC1408C 29
 RefreshPhysicalScreen 0xFFD5F6C0
 IsStrobeChargeCompleted 0xFFCEBE00

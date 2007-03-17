@@ -1,5 +1,5 @@
 
-static FuncSig func_sig_AllocateMemory[] = {
+static FuncSig func_sig_AllocateMemory_1[] = {
 	{   2, 0xea000000, 0xff000000 },
 	{   5, 0xea000000, 0xff000000 },
 	{   8, 0x00000064, 0xfdffffff },
@@ -18,7 +18,7 @@ static FuncSig func_sig_AllocateMemory[] = {
 	/* 14/32 */
 };
 
-static FuncSig func_sig_Close[] = {
+static FuncSig func_sig_Close_1[] = {
 	{   1, 0xe1a04000, 0xfdffffff },
 	{   2, 0xeb000000, 0xff000000 },
 	{   3, 0xe1a05000, 0xfdffffff },
@@ -43,13 +43,12 @@ static FuncSig func_sig_Close[] = {
 	{  25, 0xe1a00005, 0xfdffffff },
 	{  26, 0xe08dd004, 0xfdffffff },
 	{  28, 0xe1a0f00e, 0xfdffffff },
-	{  30, 0xe1a04000, 0xfdffffff },
-	{  31, 0xeb000000, 0xff000000 },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 26/32 */
+	/* 24/32 */
 };
 
-static FuncSig func_sig_close[] = {
+static FuncSig func_sig_close_1[] = {
 	{   1, 0xe04dd00c, 0xfdffffff },
 	{   3, 0xe1a09000, 0xfdffffff },
 	{   5, 0xe15a0000, 0xfdffffff },
@@ -77,7 +76,7 @@ static FuncSig func_sig_close[] = {
 	/* 23/32 */
 };
 
-static FuncSig func_sig_CreateTaskStrict[] = {
+static FuncSig func_sig_CreateTaskStrict_1[] = {
 	{   1, 0xe04dd004, 0xfdffffff },
 	{   4, 0xeb000000, 0xff000000 },
 	{   5, 0xe1a04000, 0xfdffffff },
@@ -88,21 +87,12 @@ static FuncSig func_sig_CreateTaskStrict[] = {
 	{  11, 0xe1a00004, 0xfdffffff },
 	{  12, 0xe08dd004, 0xfdffffff },
 	{  14, 0xe1a0f00e, 0xfdffffff },
-	{  17, 0xeb000000, 0xff000000 },
-	{  18, 0xe1a04000, 0xfdffffff },
-	{  19, 0xe1540005, 0xfdffffff },
-	{  21, 0xe1a01025, 0xfdffffff },
-	{  22, 0x1a000000, 0xff000000 },
-	{  23, 0xeb000000, 0xff000000 },
-	{  24, 0xe1a00004, 0xfdffffff },
-	{  28, 0xeb000000, 0xff000000 },
-	{  29, 0xe1a04000, 0xfdffffff },
-	{  30, 0xe1540005, 0xfdffffff },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 20/32 */
+	/* 10/32 */
 };
 
-static FuncSig func_sig_DisableDispatch[] = {
+static FuncSig func_sig_DisableDispatch_1[] = {
 	{   1, 0xeb000000, 0xff000000 },
 	{   2, 0xe1500000, 0xfdffffff },
 	{   4, 0x0a000000, 0xff000000 },
@@ -114,11 +104,12 @@ static FuncSig func_sig_DisableDispatch[] = {
 	{  15, 0x3a000000, 0xff000000 },
 	{  23, 0x00000000, 0xfdffffff },
 	{  27, 0x3a000000, 0xff000000 },
+	{  29, 0x61746170, 0xfdffffff },
 	{ -1, -1, -1 },
-	/* 11/32 */
+	/* 12/32 */
 };
 
-static FuncSig func_sig_EnableDispatch[] = {
+static FuncSig func_sig_EnableDispatch_1[] = {
 	{   1, 0xeb000000, 0xff000000 },
 	{   2, 0xe1500000, 0xfdffffff },
 	{   4, 0x0a000000, 0xff000000 },
@@ -138,7 +129,7 @@ static FuncSig func_sig_EnableDispatch[] = {
 	/* 15/32 */
 };
 
-static FuncSig func_sig_ExitTask[] = {
+static FuncSig func_sig_ExitTask_1[] = {
 	{   1, 0xeb000000, 0xff000000 },
 	{   2, 0xe1500000, 0xfdffffff },
 	{   3, 0xe1a07000, 0xfdffffff },
@@ -167,7 +158,7 @@ static FuncSig func_sig_ExitTask[] = {
 	/* 24/32 */
 };
 
-static FuncSig func_sig_Fclose_Fut[] = {
+static FuncSig func_sig_Fclose_Fut_1[] = {
 	{   1, 0xe0506000, 0xfdffffff },
 	{   2, 0xe04dd054, 0xfdffffff },
 	{   4, 0x0a000000, 0xff000000 },
@@ -201,7 +192,7 @@ static FuncSig func_sig_Fclose_Fut[] = {
 	/* 29/32 */
 };
 
-static FuncSig func_sig_Fopen_Fut[] = {
+static FuncSig func_sig_Fopen_Fut_1[] = {
 	{   1, 0xe1a04000, 0xfdffffff },
 	{   2, 0xe1a05001, 0xfdffffff },
 	{   3, 0xeb000000, 0xff000000 },
@@ -234,7 +225,7 @@ static FuncSig func_sig_Fopen_Fut[] = {
 	/* 28/32 */
 };
 
-static FuncSig func_sig_Fread_Fut[] = {
+static FuncSig func_sig_Fread_Fut_1[] = {
 	{   1, 0xe0537000, 0xfdffffff },
 	{   2, 0xe1a08000, 0xfdffffff },
 	{   3, 0xe1a04001, 0xfdffffff },
@@ -264,7 +255,7 @@ static FuncSig func_sig_Fread_Fut[] = {
 	/* 25/32 */
 };
 
-static FuncSig func_sig_FreeMemory[] = {
+static FuncSig func_sig_FreeMemory_1[] = {
 	{   2, 0xea000000, 0xff000000 },
 	{   5, 0x00000064, 0xfdffffff },
 	{   8, 0x00000000, 0xfdffffff },
@@ -283,7 +274,7 @@ static FuncSig func_sig_FreeMemory[] = {
 	/* 14/32 */
 };
 
-static FuncSig func_sig_Fseek_Fut[] = {
+static FuncSig func_sig_Fseek_Fut_1[] = {
 	{   1, 0xe0507000, 0xfdffffff },
 	{   2, 0xe0870020, 0xfdffffff },
 	{   3, 0xe1a04001, 0xfdffffff },
@@ -312,7 +303,7 @@ static FuncSig func_sig_Fseek_Fut[] = {
 	/* 24/32 */
 };
 
-static FuncSig func_sig_Fwrite_Fut[] = {
+static FuncSig func_sig_Fwrite_Fut_1[] = {
 	{   1, 0xe0537000, 0xfdffffff },
 	{   2, 0xe1a08000, 0xfdffffff },
 	{   3, 0xe1a04001, 0xfdffffff },
@@ -343,7 +334,7 @@ static FuncSig func_sig_Fwrite_Fut[] = {
 	/* 26/32 */
 };
 
-static FuncSig func_sig_GetSystemTime[] = {
+static FuncSig func_sig_GetSystemTime_1[] = {
 	{   3, 0xe1550000, 0xfdffffff },
 	{   4, 0xe1a04000, 0xfdffffff },
 	{   5, 0xe1a00017, 0xfdffffff },
@@ -369,7 +360,7 @@ static FuncSig func_sig_GetSystemTime[] = {
 	/* 21/32 */
 };
 
-static FuncSig func_sig_ints_disable[] = {
+static FuncSig func_sig_ints_disable_1[] = {
 	{   2, 0xea000000, 0xff000000 },
 	{   5, 0xea000000, 0xff000000 },
 	{   6, 0xe1a00000, 0xfdffffff },
@@ -377,37 +368,24 @@ static FuncSig func_sig_ints_disable[] = {
 	{  12, 0xea000000, 0xff000000 },
 	{  13, 0xe1a00001, 0xfdffffff },
 	{  14, 0xe1a0f00e, 0xfdffffff },
-	{  15, 0xe1a0f00e, 0xfdffffff },
-	{  16, 0xe1a00726, 0xfdffffff },
-	{  17, 0xe0800c96, 0xfdffffff },
-	{  18, 0xe0800080, 0xfdffffff },
-	{  19, 0xe1a0f00e, 0xfdffffff },
-	{  20, 0x0000000a, 0xfdffffff },
-	{  31, 0x000a3231, 0xfdffffff },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 14/32 */
+	/* 7/32 */
 };
 
-static FuncSig func_sig_ints_enable[] = {
+static FuncSig func_sig_ints_enable_1[] = {
 	{   2, 0xea000000, 0xff000000 },
 	{   3, 0xe1a00000, 0xfdffffff },
 	{   6, 0xea000000, 0xff000000 },
 	{   9, 0xea000000, 0xff000000 },
 	{  10, 0xe1a00001, 0xfdffffff },
 	{  11, 0xe1a0f00e, 0xfdffffff },
-	{  12, 0xe1a0f00e, 0xfdffffff },
-	{  13, 0xe1a00726, 0xfdffffff },
-	{  14, 0xe0800c96, 0xfdffffff },
-	{  15, 0xe0800080, 0xfdffffff },
-	{  16, 0xe1a0f00e, 0xfdffffff },
-	{  17, 0x0000000a, 0xfdffffff },
-	{  28, 0x000a3231, 0xfdffffff },
-	{  30, 0xeb000000, 0xff000000 },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 14/32 */
+	/* 6/32 */
 };
 
-static FuncSig func_sig_ioctl[] = {
+static FuncSig func_sig_ioctl_1[] = {
 	{   0, 0xea000000, 0xff000000 },
 	{   1, 0xe1b02002, 0xfdffffff },
 	{   3, 0xe04dd004, 0xfdffffff },
@@ -428,6 +406,7 @@ static FuncSig func_sig_ioctl[] = {
 	{  19, 0xe1a01008, 0xfdffffff },
 	{  20, 0xe1a02000, 0xfdffffff },
 	{  21, 0xeb000000, 0xff000000 },
+	{  22, 0xe1700001, 0xfdffffff },
 	{  23, 0x0a000000, 0xff000000 },
 	{  24, 0xe08bb000, 0xfdffffff },
 	{  25, 0xe1a00009, 0xfdffffff },
@@ -437,10 +416,10 @@ static FuncSig func_sig_ioctl[] = {
 	{  29, 0xe1500000, 0xfdffffff },
 	{  31, 0xe1a0000b, 0xfdffffff },
 	{ -1, -1, -1 },
-	/* 28/32 */
+	/* 29/32 */
 };
 
-static FuncSig func_sig_kbd_p1_f[] = {
+static FuncSig func_sig_kbd_p1_f_1[] = {
 	{   1, 0xe04dd00c, 0xfdffffff },
 	{   2, 0xeb000000, 0xff000000 },
 	{   4, 0xe1a0600d, 0xfdffffff },
@@ -465,7 +444,7 @@ static FuncSig func_sig_kbd_p1_f[] = {
 	/* 20/32 */
 };
 
-static FuncSig func_sig_kbd_p1_f_cont[] = {
+static FuncSig func_sig_kbd_p1_f_cont_1[] = {
 	{   1, 0xe1a0600d, 0xfdffffff },
 	{   4, 0xe1a0c002, 0xfdffffff },
 	{   5, 0xe1a0e006, 0xfdffffff },
@@ -490,7 +469,7 @@ static FuncSig func_sig_kbd_p1_f_cont[] = {
 	/* 20/32 */
 };
 
-static FuncSig func_sig_kbd_p2_f[] = {
+static FuncSig func_sig_kbd_p2_f_1[] = {
 	{   1, 0xe04dd014, 0xfdffffff },
 	{   2, 0xe08d5007, 0xfdffffff },
 	{   3, 0xea000000, 0xff000000 },
@@ -520,51 +499,28 @@ static FuncSig func_sig_kbd_p2_f[] = {
 	/* 25/32 */
 };
 
-static FuncSig func_sig_kbd_pwr_off[] = {
+static FuncSig func_sig_kbd_pwr_off_1[] = {
 	{   0, 0xe1a020d0, 0xfdffffff },
 	{   1, 0xe0822103, 0xfdffffff },
 	{   2, 0xe0822822, 0xfdffffff },
+	{   4, 0xe1c33002, 0xfdffffff },
 	{   6, 0xe1a0f00e, 0xfdffffff },
-	{  11, 0xe1a03000, 0xfdffffff },
-	{  12, 0xe1a02001, 0xfdffffff },
-	{  14, 0xeb000000, 0xff000000 },
-	{  15, 0xe1500015, 0xfdffffff },
-	{  17, 0x10032001, 0xfdffffff },
-	{  18, 0x01a02001, 0xfdffffff },
-	{  19, 0xe1520000, 0xfdffffff },
-	{  20, 0xe1a0108f, 0xfdffffff },
-	{  22, 0x1a000000, 0xff000000 },
-	{  23, 0xeb000000, 0xff000000 },
-	{  25, 0xe1a01000, 0xfdffffff },
-	{  28, 0xea000000, 0xff000000 },
-	{  31, 0x0001136c, 0xfdffffff },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 17/32 */
+	/* 5/7 */
 };
 
-static FuncSig func_sig_kbd_pwr_on[] = {
+static FuncSig func_sig_kbd_pwr_on_1[] = {
 	{   0, 0xe1a020d0, 0xfdffffff },
 	{   2, 0xe0822103, 0xfdffffff },
 	{   3, 0xe0822822, 0xfdffffff },
 	{   7, 0xe1a00032, 0xfdffffff },
 	{   9, 0xea000000, 0xff000000 },
-	{  10, 0xe1a020d0, 0xfdffffff },
-	{  11, 0xe0822103, 0xfdffffff },
-	{  12, 0xe0822822, 0xfdffffff },
-	{  16, 0xe1a0f00e, 0xfdffffff },
-	{  21, 0xe1a03000, 0xfdffffff },
-	{  22, 0xe1a02001, 0xfdffffff },
-	{  24, 0xeb000000, 0xff000000 },
-	{  25, 0xe1500015, 0xfdffffff },
-	{  27, 0x10032001, 0xfdffffff },
-	{  28, 0x01a02001, 0xfdffffff },
-	{  29, 0xe1520000, 0xfdffffff },
-	{  30, 0xe1a0108f, 0xfdffffff },
 	{ -1, -1, -1 },
-	/* 17/32 */
+	/* 5/10 */
 };
 
-static FuncSig func_sig_kbd_read_keys_r2[] = {
+static FuncSig func_sig_kbd_read_keys_r2_1[] = {
 	{   1, 0xe1a04822, 0xfdffffff },
 	{   2, 0xe0844a03, 0xfdffffff },
 	{   3, 0xe1a05000, 0xfdffffff },
@@ -584,7 +540,7 @@ static FuncSig func_sig_kbd_read_keys_r2[] = {
 	/* 15/32 */
 };
 
-static FuncSig func_sig_lseek[] = {
+static FuncSig func_sig_lseek_1[] = {
 	{   0, 0xe1b02002, 0xfdffffff },
 	{   2, 0xe04dd004, 0xfdffffff },
 	{   3, 0xe1a09000, 0xfdffffff },
@@ -604,6 +560,7 @@ static FuncSig func_sig_lseek[] = {
 	{  18, 0xe1a01008, 0xfdffffff },
 	{  19, 0xe1a02000, 0xfdffffff },
 	{  20, 0xeb000000, 0xff000000 },
+	{  21, 0xe1700001, 0xfdffffff },
 	{  22, 0x0a000000, 0xff000000 },
 	{  23, 0xe08bb000, 0xfdffffff },
 	{  24, 0xe1a00009, 0xfdffffff },
@@ -614,10 +571,10 @@ static FuncSig func_sig_lseek[] = {
 	{  30, 0xe1a0000b, 0xfdffffff },
 	{  31, 0xea000000, 0xff000000 },
 	{ -1, -1, -1 },
-	/* 28/32 */
+	/* 29/32 */
 };
 
-static FuncSig func_sig_MakeDirectory[] = {
+static FuncSig func_sig_MakeDirectory_1[] = {
 	{   2, 0xea000000, 0xff000000 },
 	{   4, 0xe04dd004, 0xfdffffff },
 	{   5, 0xe1a0500d, 0xfdffffff },
@@ -651,7 +608,7 @@ static FuncSig func_sig_MakeDirectory[] = {
 	/* 29/32 */
 };
 
-static FuncSig func_sig_memcmp[] = {
+static FuncSig func_sig_memcmp_1[] = {
 	{   0, 0xe1520000, 0xfdffffff },
 	{   1, 0x01a00000, 0xfdffffff },
 	{   2, 0x01a0f00e, 0xfdffffff },
@@ -661,27 +618,12 @@ static FuncSig func_sig_memcmp[] = {
 	{   8, 0x1a000000, 0xff000000 },
 	{   9, 0xe1a00000, 0xfdffffff },
 	{  10, 0xe1a0f00e, 0xfdffffff },
-	{  13, 0xe04c0003, 0xfdffffff },
-	{  14, 0xe1a0f00e, 0xfdffffff },
-	{  16, 0xe1a0b000, 0xfdffffff },
-	{  17, 0xe1a00001, 0xfdffffff },
-	{  18, 0xe1a0100b, 0xfdffffff },
-	{  19, 0xeb000000, 0xff000000 },
-	{  20, 0xe1a0000b, 0xfdffffff },
-	{  22, 0xe1510000, 0xfdffffff },
-	{  24, 0xe1a0b000, 0xfdffffff },
-	{  25, 0xe1a0a001, 0xfdffffff },
-	{  26, 0x2a000000, 0xff000000 },
-	{  27, 0xe081c002, 0xfdffffff },
-	{  28, 0xe15c0000, 0xfdffffff },
-	{  29, 0x9a000000, 0xff000000 },
-	{  30, 0xe0811002, 0xfdffffff },
-	{  31, 0xe1520000, 0xfdffffff },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 25/32 */
+	/* 9/32 */
 };
 
-static FuncSig func_sig_memcpy[] = {
+static FuncSig func_sig_memcpy_1[] = {
 	{   1, 0xe1a0b000, 0xfdffffff },
 	{   2, 0xe1a00001, 0xfdffffff },
 	{   3, 0xe1a0100b, 0xfdffffff },
@@ -709,7 +651,7 @@ static FuncSig func_sig_memcpy[] = {
 	/* 23/32 */
 };
 
-static FuncSig func_sig_memset[] = {
+static FuncSig func_sig_memset_1[] = {
 	{   1, 0xe1a0b000, 0xfdffffff },
 	{   2, 0xe1a03002, 0xfdffffff },
 	{   3, 0xe1a02001, 0xfdffffff },
@@ -724,19 +666,12 @@ static FuncSig func_sig_memset[] = {
 	{  16, 0x1a000000, 0xff000000 },
 	{  17, 0xe1a00002, 0xfdffffff },
 	{  18, 0xe1a0f00e, 0xfdffffff },
-	{  19, 0xe00110ff, 0xfdffffff },
-	{  21, 0xe15c0001, 0xfdffffff },
-	{  22, 0x01a0f00e, 0xfdffffff },
-	{  24, 0xe15c0000, 0xfdffffff },
-	{  25, 0x1a000000, 0xff000000 },
-	{  26, 0xe1a00000, 0xfdffffff },
-	{  27, 0xe1a0f00e, 0xfdffffff },
-	{  30, 0xe15c0003, 0xfdffffff },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 22/32 */
+	/* 14/32 */
 };
 
-static FuncSig func_sig_mkdir[] = {
+static FuncSig func_sig_mkdir_1[] = {
 	{   1, 0xe04dd004, 0xfdffffff },
 	{   2, 0xe1a0500d, 0xfdffffff },
 	{   3, 0xe1a04000, 0xfdffffff },
@@ -772,7 +707,7 @@ static FuncSig func_sig_mkdir[] = {
 	/* 31/32 */
 };
 
-static FuncSig func_sig_Open[] = {
+static FuncSig func_sig_Open_1[] = {
 	{   1, 0xe1a04001, 0xfdffffff },
 	{   2, 0xe1a05000, 0xfdffffff },
 	{   3, 0xeb000000, 0xff000000 },
@@ -804,7 +739,7 @@ static FuncSig func_sig_Open[] = {
 	/* 27/32 */
 };
 
-static FuncSig func_sig_open[] = {
+static FuncSig func_sig_open_1[] = {
 	{   0, 0xe1a03000, 0xfdffffff },
 	{   1, 0xea000000, 0xff000000 },
 	{   2, 0xe1500000, 0xfdffffff },
@@ -835,7 +770,7 @@ static FuncSig func_sig_open[] = {
 	/* 26/32 */
 };
 
-static FuncSig func_sig_PhySw_testgpio[] = {
+static FuncSig func_sig_PhySw_testgpio_1[] = {
 	{   3, 0xe1a03800, 0xfdffffff },
 	{   4, 0xe1520000, 0xfdffffff },
 	{   5, 0xe1a010c1, 0xfdffffff },
@@ -863,12 +798,13 @@ static FuncSig func_sig_PhySw_testgpio[] = {
 	/* 23/32 */
 };
 
-static FuncSig func_sig_ProtectFile[] = {
+static FuncSig func_sig_ProtectFile_1[] = {
 	{   1, 0xe04dd018, 0xfdffffff },
 	{   2, 0xe1a0100d, 0xfdffffff },
 	{   3, 0xe1a04000, 0xfdffffff },
 	{   4, 0xeb000000, 0xff000000 },
 	{   5, 0xe1a01000, 0xfdffffff },
+	{   6, 0xe1700001, 0xfdffffff },
 	{   7, 0xe1a02001, 0xfdffffff },
 	{   8, 0xe1a00001, 0xfdffffff },
 	{   9, 0x0a000000, 0xff000000 },
@@ -882,18 +818,17 @@ static FuncSig func_sig_ProtectFile[] = {
 	{  19, 0xe1a00005, 0xfdffffff },
 	{  20, 0xeb000000, 0xff000000 },
 	{  21, 0xe1540000, 0xfdffffff },
+	{  22, 0x11700001, 0xfdffffff },
 	{  23, 0x01a00000, 0xfdffffff },
 	{  24, 0x11a00001, 0xfdffffff },
 	{  25, 0xe08dd018, 0xfdffffff },
 	{  27, 0xe1a0f00e, 0xfdffffff },
-	{  29, 0xe1a04001, 0xfdffffff },
-	{  30, 0xe04dd018, 0xfdffffff },
-	{  31, 0xe1a05000, 0xfdffffff },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 25/32 */
+	/* 24/32 */
 };
 
-static FuncSig func_sig_Read[] = {
+static FuncSig func_sig_Read_1[] = {
 	{   2, 0xea000000, 0xff000000 },
 	{   4, 0xe1a04000, 0xfdffffff },
 	{   5, 0xeb000000, 0xff000000 },
@@ -920,7 +855,7 @@ static FuncSig func_sig_Read[] = {
 	/* 22/32 */
 };
 
-static FuncSig func_sig_read[] = {
+static FuncSig func_sig_read_1[] = {
 	{   1, 0xe04dd00c, 0xfdffffff },
 	{   3, 0xe1a09000, 0xfdffffff },
 	{   4, 0xe1a08001, 0xfdffffff },
@@ -949,32 +884,7 @@ static FuncSig func_sig_read[] = {
 	/* 24/32 */
 };
 
-static FuncSig func_sig_reateTaskStrict[] = {
-	{   1, 0xe04dd004, 0xfdffffff },
-	{   4, 0xeb000000, 0xff000000 },
-	{   5, 0xe1a04000, 0xfdffffff },
-	{   6, 0xe1540005, 0xfdffffff },
-	{   8, 0xe1a01019, 0xfdffffff },
-	{   9, 0x1a000000, 0xff000000 },
-	{  10, 0xeb000000, 0xff000000 },
-	{  11, 0xe1a00004, 0xfdffffff },
-	{  12, 0xe08dd004, 0xfdffffff },
-	{  14, 0xe1a0f00e, 0xfdffffff },
-	{  17, 0xeb000000, 0xff000000 },
-	{  18, 0xe1a04000, 0xfdffffff },
-	{  19, 0xe1540005, 0xfdffffff },
-	{  21, 0xe1a01025, 0xfdffffff },
-	{  22, 0x1a000000, 0xff000000 },
-	{  23, 0xeb000000, 0xff000000 },
-	{  24, 0xe1a00004, 0xfdffffff },
-	{  28, 0xeb000000, 0xff000000 },
-	{  29, 0xe1a04000, 0xfdffffff },
-	{  30, 0xe1540005, 0xfdffffff },
-	{ -1, -1, -1 },
-	/* 20/32 */
-};
-
-static FuncSig func_sig_sprintf[] = {
+static FuncSig func_sig_sprintf_1[] = {
 	{   4, 0xe08d100c, 0xfdffffff },
 	{   5, 0xe08d3004, 0xfdffffff },
 	{   6, 0xeb000000, 0xff000000 },
@@ -982,103 +892,46 @@ static FuncSig func_sig_sprintf[] = {
 	{   9, 0xe1a01000, 0xfdffffff },
 	{  12, 0xe08dd010, 0xfdffffff },
 	{  13, 0xe1a0f00e, 0xfdffffff },
-	{  14, 0xe04dd008, 0xfdffffff },
-	{  16, 0xe04dd01c, 0xfdffffff },
-	{  17, 0xe1a07000, 0xfdffffff },
-	{  21, 0xe1a04001, 0xfdffffff },
-	{  23, 0xe15c0000, 0xfdffffff },
-	{  24, 0xca000000, 0xff000000 },
-	{  27, 0xe15c0000, 0xfdffffff },
-	{  28, 0x1a000000, 0xff000000 },
-	{  31, 0xe1530000, 0xfdffffff },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 16/32 */
+	/* 7/32 */
 };
 
-static FuncSig func_sig_strcmp[] = {
+static FuncSig func_sig_strcmp_1[] = {
 	{   2, 0xe15c0003, 0xfdffffff },
 	{   4, 0x1a000000, 0xff000000 },
 	{   5, 0xe15c0000, 0xfdffffff },
 	{   6, 0x1a000000, 0xff000000 },
 	{   7, 0xe1a00000, 0xfdffffff },
 	{   8, 0xe1a0f00e, 0xfdffffff },
-	{  10, 0xe04c0003, 0xfdffffff },
-	{  11, 0xe1a0f00e, 0xfdffffff },
-	{  13, 0xe1a0b000, 0xfdffffff },
-	{  14, 0xe0808020, 0xfdffffff },
-	{  15, 0xe080902c, 0xfdffffff },
-	{  17, 0xe1a0000b, 0xfdffffff },
-	{  18, 0xe1a01008, 0xfdffffff },
-	{  19, 0xe1a02020, 0xfdffffff },
-	{  20, 0xe1a03009, 0xfdffffff },
-	{  21, 0xeb000000, 0xff000000 },
-	{  22, 0xe1b0a000, 0xfdffffff },
-	{  23, 0x0a000000, 0xff000000 },
-	{  24, 0xe08bc000, 0xfdffffff },
-	{  26, 0xe15c0000, 0xfdffffff },
-	{  27, 0x00400001, 0xfdffffff },
-	{  28, 0x0a000000, 0xff000000 },
-	{  31, 0xe15c0000, 0xfdffffff },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 23/32 */
+	/* 6/32 */
 };
 
-static FuncSig func_sig_strcpy[] = {
+static FuncSig func_sig_strcpy_1[] = {
 	{   0, 0xe1a02000, 0xfdffffff },
 	{   2, 0xe013c0ff, 0xfdffffff },
 	{   4, 0x1a000000, 0xff000000 },
 	{   5, 0xe1a00002, 0xfdffffff },
 	{   6, 0xe1a0f00e, 0xfdffffff },
-	{   7, 0xe0802001, 0xfdffffff },
-	{  10, 0xe1590000, 0xfdffffff },
-	{  11, 0x0a000000, 0xff000000 },
-	{  12, 0xe1a0b001, 0xfdffffff },
-	{  14, 0xe15a0000, 0xfdffffff },
-	{  15, 0x0a000000, 0xff000000 },
-	{  16, 0xe159000a, 0xfdffffff },
-	{  17, 0x1a000000, 0xff000000 },
-	{  18, 0xe0400002, 0xfdffffff },
-	{  21, 0xe04dd01c, 0xfdffffff },
-	{  22, 0xe1a0b000, 0xfdffffff },
-	{  23, 0xe1b0a001, 0xfdffffff },
-	{  25, 0x0a000000, 0xff000000 },
-	{  26, 0xe15b0000, 0xfdffffff },
-	{  27, 0x1a000000, 0xff000000 },
-	{  29, 0xe1a0000a, 0xfdffffff },
-	{  30, 0xeb000000, 0xff000000 },
-	{  31, 0xea000000, 0xff000000 },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 23/32 */
+	/* 5/32 */
 };
 
-static FuncSig func_sig_strlen[] = {
+static FuncSig func_sig_strlen_1[] = {
 	{   0, 0xe0801001, 0xfdffffff },
 	{   2, 0xe15c0000, 0xfdffffff },
 	{   3, 0x1a000000, 0xff000000 },
 	{   4, 0xe0400001, 0xfdffffff },
 	{   5, 0xe1a0f00e, 0xfdffffff },
-	{   6, 0xe1520000, 0xfdffffff },
-	{   8, 0x0a000000, 0xff000000 },
-	{   9, 0xe1a0b000, 0xfdffffff },
-	{  11, 0xe15c0000, 0xfdffffff },
-	{  12, 0x1a000000, 0xff000000 },
-	{  13, 0xe04bb001, 0xfdffffff },
-	{  14, 0xea000000, 0xff000000 },
-	{  15, 0xe0522001, 0xfdffffff },
-	{  16, 0x0a000000, 0xff000000 },
-	{  18, 0xe013c0ff, 0xfdffffff },
-	{  20, 0x1a000000, 0xff000000 },
-	{  21, 0xe1520000, 0xfdffffff },
-	{  22, 0x01a0c000, 0xfdffffff },
-	{  25, 0xe1520000, 0xfdffffff },
-	{  26, 0x01a00000, 0xfdffffff },
-	{  27, 0x01a0f00e, 0xfdffffff },
-	{  30, 0xe15c0003, 0xfdffffff },
+	/* RET found, stopping... */
 	{ -1, -1, -1 },
-	/* 22/32 */
+	/* 5/32 */
 };
 
-static FuncSig func_sig_TakeSemaphore[] = {
+static FuncSig func_sig_TakeSemaphore_1[] = {
 	{   1, 0xe0506000, 0xfdffffff },
 	{   2, 0xe04dd004, 0xfdffffff },
 	{   3, 0xe1a08001, 0xfdffffff },
@@ -1109,7 +962,7 @@ static FuncSig func_sig_TakeSemaphore[] = {
 	/* 26/32 */
 };
 
-static FuncSig func_sig_taskIdListGet[] = {
+static FuncSig func_sig_taskIdListGet_1[] = {
 	{   1, 0xe04dd008, 0xfdffffff },
 	{   2, 0xe1a0b000, 0xfdffffff },
 	{   3, 0xe1a0a001, 0xfdffffff },
@@ -1138,7 +991,7 @@ static FuncSig func_sig_taskIdListGet[] = {
 	/* 24/32 */
 };
 
-static FuncSig func_sig_taskLock[] = {
+static FuncSig func_sig_taskLock_1[] = {
 	{   1, 0xe04dd018, 0xfdffffff },
 	{   4, 0xe15c0000, 0xfdffffff },
 	{   5, 0x0a000000, 0xff000000 },
@@ -1160,7 +1013,7 @@ static FuncSig func_sig_taskLock[] = {
 	/* 17/32 */
 };
 
-static FuncSig func_sig_taskName[] = {
+static FuncSig func_sig_taskName_1[] = {
 	{   1, 0xeb000000, 0xff000000 },
 	{   2, 0xe1500000, 0xfdffffff },
 	{   3, 0x01a00000, 0xfdffffff },
@@ -1181,7 +1034,7 @@ static FuncSig func_sig_taskName[] = {
 	/* 16/32 */
 };
 
-static FuncSig func_sig_taskResume[] = {
+static FuncSig func_sig_taskResume_1[] = {
 	{   1, 0xe04dd018, 0xfdffffff },
 	{   3, 0xe1a0a000, 0xfdffffff },
 	{   5, 0xe15c0000, 0xfdffffff },
@@ -1206,7 +1059,7 @@ static FuncSig func_sig_taskResume[] = {
 	/* 20/32 */
 };
 
-static FuncSig func_sig_taskSuspend[] = {
+static FuncSig func_sig_taskSuspend_1[] = {
 	{   1, 0xe04dd018, 0xfdffffff },
 	{   2, 0xe1b09000, 0xfdffffff },
 	{   7, 0x11a0a000, 0xfdffffff },
@@ -1231,7 +1084,7 @@ static FuncSig func_sig_taskSuspend[] = {
 	/* 20/32 */
 };
 
-static FuncSig func_sig_taskUnlock[] = {
+static FuncSig func_sig_taskUnlock_1[] = {
 	{   1, 0xe04dd018, 0xfdffffff },
 	{   6, 0xe15c0000, 0xfdffffff },
 	{   7, 0x0a000000, 0xff000000 },
@@ -1251,7 +1104,7 @@ static FuncSig func_sig_taskUnlock[] = {
 	/* 15/32 */
 };
 
-static FuncSig func_sig_Write[] = {
+static FuncSig func_sig_Write_1[] = {
 	{   1, 0xe1a04000, 0xfdffffff },
 	{   2, 0xeb000000, 0xff000000 },
 	{   3, 0xe1a05000, 0xfdffffff },
@@ -1273,11 +1126,12 @@ static FuncSig func_sig_Write[] = {
 	{  25, 0xeb000000, 0xff000000 },
 	{  26, 0xe1500000, 0xfdffffff },
 	{  28, 0x1a000000, 0xff000000 },
+	{  29, 0xe1dd20b8, 0xfdffffff },
 	{ -1, -1, -1 },
-	/* 21/32 */
+	/* 22/32 */
 };
 
-static FuncSig func_sig_write[] = {
+static FuncSig func_sig_write_1[] = {
 	{   1, 0xe04dd00c, 0xfdffffff },
 	{   3, 0xe1a09000, 0xfdffffff },
 	{   4, 0xe1a08001, 0xfdffffff },
@@ -1307,7 +1161,7 @@ static FuncSig func_sig_write[] = {
 	/* 25/32 */
 };
 
-static FuncSig func_sig_taskCreateHookAdd[] = {
+static FuncSig func_sig_taskCreateHookAdd_1[] = {
 	{   1, 0xe1a02010, 0xfdffffff },
 	{   2, 0xea000000, 0xff000000 },
 	{   4, 0xe1a09000, 0xfdffffff },
@@ -1335,7 +1189,7 @@ static FuncSig func_sig_taskCreateHookAdd[] = {
 	/* 23/32 */
 };
 
-static FuncSig func_sig_taskDeleteHookAdd[] = {
+static FuncSig func_sig_taskDeleteHookAdd_1[] = {
 	{   1, 0xe1a0a000, 0xfdffffff },
 	{   2, 0xe1a0b000, 0xfdffffff },
 	{   3, 0xeb000000, 0xff000000 },
@@ -1362,7 +1216,7 @@ static FuncSig func_sig_taskDeleteHookAdd[] = {
 	/* 22/32 */
 };
 
-static FuncSig func_sig_SleepTask[] = {
+static FuncSig func_sig_SleepTask_1[] = {
 	{   1, 0xe0507000, 0xfdffffff },
 	{   2, 0xe04dd004, 0xfdffffff },
 	{   3, 0x0a000000, 0xff000000 },
@@ -1394,7 +1248,7 @@ static FuncSig func_sig_SleepTask[] = {
 	/* 27/32 */
 };
 
-static FuncSig func_sig_CreateTask[] = {
+static FuncSig func_sig_CreateTask_1[] = {
 	{   1, 0xe0509000, 0xfdffffff },
 	{   2, 0xe04dd00c, 0xfdffffff },
 	{   3, 0xe1a0a001, 0xfdffffff },
@@ -1424,7 +1278,7 @@ static FuncSig func_sig_CreateTask[] = {
 	/* 25/32 */
 };
 
-static FuncSig func_sig_CreatePhysicalVram[] = {
+static FuncSig func_sig_CreatePhysicalVram_1[] = {
 	{   3, 0xe15e0001, 0xfdffffff },
 	{   4, 0xe1a07000, 0xfdffffff },
 	{   5, 0xe1a05001, 0xfdffffff },
@@ -1452,7 +1306,7 @@ static FuncSig func_sig_CreatePhysicalVram[] = {
 	/* 23/32 */
 };
 
-static FuncSig func_sig_DisplayImagePhysicalScreen[] = {
+static FuncSig func_sig_DisplayImagePhysicalScreen_1[] = {
 	{   2, 0xe1a04001, 0xfdffffff },
 	{   3, 0xe1a06000, 0xfdffffff },
 	{   4, 0xe04dd010, 0xfdffffff },
@@ -1480,7 +1334,7 @@ static FuncSig func_sig_DisplayImagePhysicalScreen[] = {
 	/* 23/32 */
 };
 
-static FuncSig func_sig_ExecuteEventProcedure[] = {
+static FuncSig func_sig_ExecuteEventProcedure_1[] = {
 	{   3, 0xe04dd004, 0xfdffffff },
 	{   7, 0xe1a0200d, 0xfdffffff },
 	{   9, 0xe08d5014, 0xfdffffff },
@@ -1497,7 +1351,7 @@ static FuncSig func_sig_ExecuteEventProcedure[] = {
 	/* 12/32 */
 };
 
-static FuncSig func_sig_GetPropertyCase[] = {
+static FuncSig func_sig_GetPropertyCase_1[] = {
 	{   3, 0xe1a06001, 0xfdffffff },
 	{   4, 0xe15c0000, 0xfdffffff },
 	{   5, 0xe1a01e11, 0xfdffffff },
@@ -1514,14 +1368,11 @@ static FuncSig func_sig_GetPropertyCase[] = {
 	{  21, 0xeb000000, 0xff000000 },
 	{  23, 0xe1a04000, 0xfdffffff },
 	{  25, 0xeb000000, 0xff000000 },
-	{  26, 0xe1a00004, 0xfdffffff },
-	{  28, 0x00001f38, 0xfdffffff },
-	{  29, 0x00001f40, 0xfdffffff },
 	{ -1, -1, -1 },
-	/* 19/32 */
+	/* 16/26 */
 };
 
-static FuncSig func_sig_SetPropertyCase[] = {
+static FuncSig func_sig_SetPropertyCase_1[] = {
 	{   3, 0xe15c0000, 0xfdffffff },
 	{   4, 0xe1a06000, 0xfdffffff },
 	{   5, 0xe1a05001, 0xfdffffff },
@@ -1539,14 +1390,11 @@ static FuncSig func_sig_SetPropertyCase[] = {
 	{  22, 0xe1a010ee, 0xfdffffff },
 	{  24, 0x0a000000, 0xff000000 },
 	{  25, 0xeb000000, 0xff000000 },
-	{  29, 0xea000000, 0xff000000 },
-	{  30, 0x00001f38, 0xfdffffff },
-	{  31, 0x00001f40, 0xfdffffff },
 	{ -1, -1, -1 },
-	/* 20/32 */
+	/* 17/29 */
 };
 
-static FuncSig func_sig_RefreshPhysicalScreen[] = {
+static FuncSig func_sig_RefreshPhysicalScreen_1[] = {
 	{   1, 0xe04dd010, 0xfdffffff },
 	{   2, 0xeb000000, 0xff000000 },
 	{   3, 0xe0105001, 0xfdffffff },
@@ -1564,7 +1412,7 @@ static FuncSig func_sig_RefreshPhysicalScreen[] = {
 	/* 13/32 */
 };
 
-static FuncSig func_sig_IsStrobeChargeCompleted[] = {
+static FuncSig func_sig_IsStrobeChargeCompleted_1[] = {
 	{   2, 0xe04dd004, 0xfdffffff },
 	{   3, 0xe1a04000, 0xfdffffff },
 	{   6, 0xe1a02004, 0xfdffffff },
@@ -1583,73 +1431,196 @@ static FuncSig func_sig_IsStrobeChargeCompleted[] = {
 	{  23, 0xe1a00004, 0xfdffffff },
 	{  24, 0xe08dd004, 0xfdffffff },
 	{  26, 0xe1a0f00e, 0xfdffffff },
-	{  27, 0x0004fcd8, 0xfdffffff },
-	{  28, 0x0004fcdc, 0xfdffffff },
-	{  31, 0xe1a01008, 0xfdffffff },
+	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 18/32 */
+};
+
+static FuncSig func_sig_GetSystemTime_2[] = {
+	{   3, 0xe1550000, 0xfdffffff },
+	{   4, 0xe1a04000, 0xfdffffff },
+	{   5, 0xe1a00017, 0xfdffffff },
+	{   6, 0x11a03000, 0xfdffffff },
+	{   9, 0xeb000000, 0xff000000 },
+	{  12, 0xeb000000, 0xff000000 },
+	{  13, 0xe1a00005, 0xfdffffff },
+	{  15, 0x00001d14, 0xfdffffff },
+	{  17, 0xe1a05000, 0xfdffffff },
+	{  18, 0xe1a07002, 0xfdffffff },
+	{  19, 0xe1a06001, 0xfdffffff },
+	{  20, 0xe1a08003, 0xfdffffff },
+	{  21, 0xeb000000, 0xff000000 },
+	{  22, 0xe085e014, 0xfdffffff },
+	{  24, 0xe085c014, 0xfdffffff },
+	{  25, 0xe152000c, 0xfdffffff },
+	{  26, 0xe1a0a000, 0xfdffffff },
+	{  27, 0x1a000000, 0xff000000 },
+	{  28, 0xeb000000, 0xff000000 },
+	{  29, 0xe1a00005, 0xfdffffff },
+	{  31, 0xe1a00002, 0xfdffffff },
 	{ -1, -1, -1 },
 	/* 21/32 */
 };
 
+static FuncSig func_sig_GetPropertyCase_2[] = {
+	{   3, 0xe1a06001, 0xfdffffff },
+	{   4, 0xe15c0000, 0xfdffffff },
+	{   5, 0xe1a01e13, 0xfdffffff },
+	{   6, 0xe1a07000, 0xfdffffff },
+	{   9, 0xe0811001, 0xfdffffff },
+	{  10, 0xe1a04002, 0xfdffffff },
+	{  11, 0x1a000000, 0xff000000 },
+	{  12, 0xeb000000, 0xff000000 },
+	{  14, 0xe1a01000, 0xfdffffff },
+	{  16, 0xeb000000, 0xff000000 },
+	{  17, 0xe1a03004, 0xfdffffff },
+	{  18, 0xe1a01007, 0xfdffffff },
+	{  19, 0xe1a02006, 0xfdffffff },
+	{  21, 0xeb000000, 0xff000000 },
+	{  23, 0xe1a04000, 0xfdffffff },
+	{  25, 0xeb000000, 0xff000000 },
+	{  26, 0xe1a00004, 0xfdffffff },
+	{  28, 0x00001f28, 0xfdffffff },
+	{  29, 0x00001f30, 0xfdffffff },
+	{ -1, -1, -1 },
+	/* 19/32 */
+};
+
+static FuncSig func_sig_SetPropertyCase_2[] = {
+	{   3, 0xe1a05001, 0xfdffffff },
+	{   4, 0xe15c0000, 0xfdffffff },
+	{   5, 0xe1a01f41, 0xfdffffff },
+	{   6, 0xe1a06000, 0xfdffffff },
+	{   9, 0xe0811001, 0xfdffffff },
+	{  10, 0xe1a04002, 0xfdffffff },
+	{  11, 0x1a000000, 0xff000000 },
+	{  12, 0xeb000000, 0xff000000 },
+	{  14, 0xe1a01000, 0xfdffffff },
+	{  16, 0xeb000000, 0xff000000 },
+	{  17, 0xe1a01006, 0xfdffffff },
+	{  18, 0xe1a02005, 0xfdffffff },
+	{  19, 0xe1a03004, 0xfdffffff },
+	{  21, 0xeb000000, 0xff000000 },
+	{  22, 0xe1a01f42, 0xfdffffff },
+	{  23, 0xe1500000, 0xfdffffff },
+	{  24, 0xe0811002, 0xfdffffff },
+	{  26, 0x0a000000, 0xff000000 },
+	{  27, 0xeb000000, 0xff000000 },
+	{  31, 0xea000000, 0xff000000 },
+	{ -1, -1, -1 },
+	/* 20/32 */
+};
+
+static FuncSig func_sig_RefreshPhysicalScreen_2[] = {
+	{   1, 0xe04dd010, 0xfdffffff },
+	{   2, 0xeb000000, 0xff000000 },
+	{   3, 0xe0105001, 0xfdffffff },
+	{   4, 0x1a000000, 0xff000000 },
+	{   7, 0xe1520001, 0xfdffffff },
+	{   9, 0xe1a00020, 0xfdffffff },
+	{  10, 0x1a000000, 0xff000000 },
+	{  13, 0xeb000000, 0xff000000 },
+	{  14, 0xea000000, 0xff000000 },
+	{  15, 0xeb000000, 0xff000000 },
+	{  16, 0xeb000000, 0xff000000 },
+	{  17, 0xeb000000, 0xff000000 },
+	{  28, 0xe1a02005, 0xfdffffff },
+	{ -1, -1, -1 },
+	/* 13/32 */
+};
+
+static FuncSig func_sig_DisplayImagePhysicalScreen_2[] = {
+	{   2, 0xe1a04001, 0xfdffffff },
+	{   3, 0xe1a06000, 0xfdffffff },
+	{   4, 0xe04dd010, 0xfdffffff },
+	{   5, 0xe1a08004, 0xfdffffff },
+	{   6, 0xe1560002, 0xfdffffff },
+	{   7, 0xe1a05003, 0xfdffffff },
+	{   9, 0xe1a09004, 0xfdffffff },
+	{  10, 0xe1a0b000, 0xfdffffff },
+	{  11, 0xe1a0a008, 0xfdffffff },
+	{  12, 0x0a000000, 0xff000000 },
+	{  13, 0x8a000000, 0xff000000 },
+	{  14, 0xe1a03541, 0xfdffffff },
+	{  15, 0xe083380b, 0xfdffffff },
+	{  16, 0xe0833e72, 0xfdffffff },
+	{  17, 0xe1560003, 0xfdffffff },
+	{  18, 0x0a000000, 0xff000000 },
+	{  19, 0xea000000, 0xff000000 },
+	{  21, 0xe1560003, 0xfdffffff },
+	{  22, 0x0a000000, 0xff000000 },
+	{  23, 0xea000000, 0xff000000 },
+	{  26, 0xea000000, 0xff000000 },
+	{  29, 0xea000000, 0xff000000 },
+	{  31, 0xe1a03002, 0xfdffffff },
+	{ -1, -1, -1 },
+	/* 23/32 */
+};
+
 FuncsList func_list[] = {
-	{ "AllocateMemory", func_sig_AllocateMemory },
-	{ "Close", func_sig_Close },
-	{ "close", func_sig_close },
-	{ "CreateTaskStrict", func_sig_CreateTaskStrict },
-	{ "DisableDispatch", func_sig_DisableDispatch },
-	{ "EnableDispatch", func_sig_EnableDispatch },
-	{ "ExitTask", func_sig_ExitTask },
-	{ "Fclose_Fut", func_sig_Fclose_Fut },
-	{ "Fopen_Fut", func_sig_Fopen_Fut },
-	{ "Fread_Fut", func_sig_Fread_Fut },
-	{ "FreeMemory", func_sig_FreeMemory },
-	{ "Fseek_Fut", func_sig_Fseek_Fut },
-	{ "Fwrite_Fut", func_sig_Fwrite_Fut },
-	{ "GetSystemTime", func_sig_GetSystemTime },
-	{ "ints_disable", func_sig_ints_disable },
-	{ "ints_enable", func_sig_ints_enable },
-	{ "ioctl", func_sig_ioctl },
-	{ "kbd_p1_f", func_sig_kbd_p1_f },
-	{ "kbd_p1_f_cont", func_sig_kbd_p1_f_cont },
-	{ "kbd_p2_f", func_sig_kbd_p2_f },
-	{ "kbd_pwr_off", func_sig_kbd_pwr_off },
-	{ "kbd_pwr_on", func_sig_kbd_pwr_on },
-	{ "kbd_read_keys_r2", func_sig_kbd_read_keys_r2 },
-	{ "lseek", func_sig_lseek },
-	{ "MakeDirectory", func_sig_MakeDirectory },
-	{ "memcmp", func_sig_memcmp },
-	{ "memcpy", func_sig_memcpy },
-	{ "memset", func_sig_memset },
-	{ "mkdir", func_sig_mkdir },
-	{ "Open", func_sig_Open },
-	{ "open", func_sig_open },
-	{ "PhySw_testgpio", func_sig_PhySw_testgpio },
-	{ "ProtectFile", func_sig_ProtectFile },
-	{ "Read", func_sig_Read },
-	{ "read", func_sig_read },
-	{ "reateTaskStrict", func_sig_reateTaskStrict },
-	{ "sprintf", func_sig_sprintf },
-	{ "strcmp", func_sig_strcmp },
-	{ "strcpy", func_sig_strcpy },
-	{ "strlen", func_sig_strlen },
-	{ "TakeSemaphore", func_sig_TakeSemaphore },
-	{ "taskIdListGet", func_sig_taskIdListGet },
-	{ "taskLock", func_sig_taskLock },
-	{ "taskName", func_sig_taskName },
-	{ "taskResume", func_sig_taskResume },
-	{ "taskSuspend", func_sig_taskSuspend },
-	{ "taskUnlock", func_sig_taskUnlock },
-	{ "Write", func_sig_Write },
-	{ "write", func_sig_write },
-	{ "taskCreateHookAdd", func_sig_taskCreateHookAdd },
-	{ "taskDeleteHookAdd", func_sig_taskDeleteHookAdd },
-	{ "SleepTask", func_sig_SleepTask },
-	{ "CreateTask", func_sig_CreateTask },
-	{ "CreatePhysicalVram", func_sig_CreatePhysicalVram },
-	{ "DisplayImagePhysicalScreen", func_sig_DisplayImagePhysicalScreen },
-	{ "ExecuteEventProcedure", func_sig_ExecuteEventProcedure },
-	{ "GetPropertyCase", func_sig_GetPropertyCase },
-	{ "SetPropertyCase", func_sig_SetPropertyCase },
-	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen },
-	{ "IsStrobeChargeCompleted", func_sig_IsStrobeChargeCompleted },
+	{ "AllocateMemory", func_sig_AllocateMemory_1 },
+	{ "close", func_sig_close_1 },
+	{ "Close", func_sig_Close_1 },
+	{ "CreatePhysicalVram", func_sig_CreatePhysicalVram_1 },
+	{ "CreateTask", func_sig_CreateTask_1 },
+	{ "CreateTaskStrict", func_sig_CreateTaskStrict_1 },
+	{ "DisableDispatch", func_sig_DisableDispatch_1 },
+	{ "DisplayImagePhysicalScreen", func_sig_DisplayImagePhysicalScreen_1 },
+	{ "DisplayImagePhysicalScreen", func_sig_DisplayImagePhysicalScreen_2 },
+	{ "EnableDispatch", func_sig_EnableDispatch_1 },
+	{ "ExecuteEventProcedure", func_sig_ExecuteEventProcedure_1 },
+	{ "ExitTask", func_sig_ExitTask_1 },
+	{ "Fclose_Fut", func_sig_Fclose_Fut_1 },
+	{ "Fopen_Fut", func_sig_Fopen_Fut_1 },
+	{ "Fread_Fut", func_sig_Fread_Fut_1 },
+	{ "FreeMemory", func_sig_FreeMemory_1 },
+	{ "Fseek_Fut", func_sig_Fseek_Fut_1 },
+	{ "Fwrite_Fut", func_sig_Fwrite_Fut_1 },
+	{ "GetPropertyCase", func_sig_GetPropertyCase_1 },
+	{ "GetPropertyCase", func_sig_GetPropertyCase_2 },
+	{ "GetSystemTime", func_sig_GetSystemTime_1 },
+	{ "GetSystemTime", func_sig_GetSystemTime_2 },
+	{ "ints_disable", func_sig_ints_disable_1 },
+	{ "ints_enable", func_sig_ints_enable_1 },
+	{ "ioctl", func_sig_ioctl_1 },
+	{ "IsStrobeChargeCompleted", func_sig_IsStrobeChargeCompleted_1 },
+	{ "kbd_p1_f_cont", func_sig_kbd_p1_f_cont_1 },
+	{ "kbd_p1_f", func_sig_kbd_p1_f_1 },
+	{ "kbd_p2_f", func_sig_kbd_p2_f_1 },
+	{ "kbd_pwr_off", func_sig_kbd_pwr_off_1 },
+	{ "kbd_pwr_on", func_sig_kbd_pwr_on_1 },
+	{ "kbd_read_keys_r2", func_sig_kbd_read_keys_r2_1 },
+	{ "lseek", func_sig_lseek_1 },
+	{ "MakeDirectory", func_sig_MakeDirectory_1 },
+	{ "memcmp", func_sig_memcmp_1 },
+	{ "memcpy", func_sig_memcpy_1 },
+	{ "memset", func_sig_memset_1 },
+	{ "mkdir", func_sig_mkdir_1 },
+	{ "open", func_sig_open_1 },
+	{ "Open", func_sig_Open_1 },
+	{ "PhySw_testgpio", func_sig_PhySw_testgpio_1 },
+	{ "ProtectFile", func_sig_ProtectFile_1 },
+	{ "read", func_sig_read_1 },
+	{ "Read", func_sig_Read_1 },
+	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_1 },
+	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_2 },
+	{ "SetPropertyCase", func_sig_SetPropertyCase_1 },
+	{ "SetPropertyCase", func_sig_SetPropertyCase_2 },
+	{ "SleepTask", func_sig_SleepTask_1 },
+	{ "sprintf", func_sig_sprintf_1 },
+	{ "strcmp", func_sig_strcmp_1 },
+	{ "strcpy", func_sig_strcpy_1 },
+	{ "strlen", func_sig_strlen_1 },
+	{ "TakeSemaphore", func_sig_TakeSemaphore_1 },
+	{ "taskCreateHookAdd", func_sig_taskCreateHookAdd_1 },
+	{ "taskDeleteHookAdd", func_sig_taskDeleteHookAdd_1 },
+	{ "taskIdListGet", func_sig_taskIdListGet_1 },
+	{ "taskLock", func_sig_taskLock_1 },
+	{ "taskName", func_sig_taskName_1 },
+	{ "taskResume", func_sig_taskResume_1 },
+	{ "taskSuspend", func_sig_taskSuspend_1 },
+	{ "taskUnlock", func_sig_taskUnlock_1 },
+	{ "write", func_sig_write_1 },
+	{ "Write", func_sig_Write_1 },
 	{ NULL }
 };

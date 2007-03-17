@@ -19,6 +19,6 @@ finsig$(EXE): finsig.c signatures.h
 clean:
 	rm -f pakwif$(EXE) gensig$(EXE) finsig$(EXE) hexdmplt$(EXE) signatures.h 
 
-signatures.h: gensig$(EXE) gensigs.sh sig_ref.txt
-	$(SH) ./gensigs.sh sig_ref.txt sig_ref.bin $(ROMBASEADDR) > signatures.h
+signatures.h: gensig$(EXE) gensigs.sh
+	$(SH) ./gensigs.sh > signatures.h
 

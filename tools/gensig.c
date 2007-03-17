@@ -16,14 +16,14 @@ Instr instrs[] = {
     {0x00800000 , 0x0df00000, 0x02000000 },	// add
     {0x00000000 , 0x0de00000, 0x02000000 },	// and
     {0x0a000000 , 0x0e000000, 0x00ffffff },	// b, bl
-//    {0x00000000 , 0x00000000, 0x00000000 },	// bic
+    {0x01c00000 , 0x0de00000, 0x02000000 },	// bic
 //    {0x00000000 , 0x00000000, 0x00000000 },	// bkpt
 //    {0x00000000 , 0x00000000, 0x00000000 },	// blx
 //    {0x00000000 , 0x00000000, 0x00000000 },	// blx
 //    {0x00000000 , 0x00000000, 0x00000000 },	// bx
 //    {0x00000000 , 0x00000000, 0x00000000 },	// cdp
 //    {0x00000000 , 0x00000000, 0x00000000 },	// clz
-//    {0x00000000 , 0x00000000, 0x00000000 },	// cmn
+    {0x01700000 , 0x0df00000, 0x02000000 },	// cmn
     {0x01500000 , 0x0df00000, 0x02000000 },	// cmp
 //    {0x00000000 , 0x00000000, 0x00000000 },	// eor
 //    {0x00000000 , 0x00000000, 0x00000000 },	// ldc
@@ -87,6 +87,7 @@ int main(int argc, char **argv)
     int size;
     int i,j;
     int wcount;
+    int finish;
 
     if (argc != 6)
 	usage();
@@ -107,16 +108,23 @@ int main(int argc, char **argv)
     fread(buf, 4, size, f);
 
     printf("static FuncSig func_sig_%s[] = {\n",proc_name);
+    finish = 0;
     for (i=0;i<size;i++){
 	for (j=0;instrs[j].inst | instrs[j].mask;j++){
 	    if ((buf[i] & instrs[j].mask) == instrs[j].inst){
 		printf("\t{ %3d, 0x%08x, 0x%08x },\n", i,
 		    buf[i] & ~instrs[j].ignore, ~instrs[j].ignore);
 		wcount++;
+		if ((buf[i] == 0xe1a0f00e) /* "mov pc,lr" aka "ret" */
+		    && (size*100/wcount) > 75){
+		    printf("\t/* RET found, stopping... */\n");
+		    finish = 1;
+		}
 		break;
 	    }
 	}
-    
+	if (finish)
+	    break;
     }
     printf("\t{ -1, -1, -1 },\n");
     printf("\t/* %d/%d */\n",wcount, size);
