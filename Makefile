@@ -39,12 +39,14 @@ batch-zip:
 	$(MAKE) -s --no-print-directory PLATFORM=a610 PLATFORMSUB=100e firzip
 	$(MAKE) -s --no-print-directory PLATFORM=a610 PLATFORMSUB=100f firzip
 	$(MAKE) -s --no-print-directory PLATFORM=a620 PLATFORMSUB=100f firzip
+	$(MAKE) -s --no-print-directory PLATFORM=a630 PLATFORMSUB=100c firzip
 	$(MAKE) -s --no-print-directory PLATFORM=a710 PLATFORMSUB=100a firzip
 
 batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=a610 PLATFORMSUB=100e clean
 	$(MAKE) -s --no-print-directory PLATFORM=a610 PLATFORMSUB=100f clean
 	$(MAKE) -s --no-print-directory PLATFORM=a620 PLATFORMSUB=100f clean
+	$(MAKE) -s --no-print-directory PLATFORM=a630 PLATFORMSUB=100c clean
 	$(MAKE) -s --no-print-directory PLATFORM=a710 PLATFORMSUB=100a clean
 
 .PHONY: fir upload
