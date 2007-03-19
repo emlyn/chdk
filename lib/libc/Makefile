@@ -2,9 +2,11 @@ topdir=../../
 
 include $(topdir)makefile.inc
 
+OBJS = issmth.o strncmp.o strtol.o strchr.o
+
 all: libc.a
 
-libc.a: issmth.o strncmp.o strtol.o strchr.o
+libc.a: $(OBJS)
 
 clean:
-	rm -f *.o *.a
+	rm -f $(OBJS) libc.a

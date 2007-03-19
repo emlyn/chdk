@@ -2,12 +2,14 @@ topdir=../../
 
 include $(topdir)makefile.inc
 
+OBJS = camera_functions.o tokenizer.o ubasic.o
+
 all: libubasic.a
 
-libubasic.a: camera_functions.o tokenizer.o  ubasic.o
+libubasic.a: $(OBJS)
 
 check:
-	gcc -Wall -DTEST -o test *.c
+	gcc -Wall -DTEST -o test$(EXE) *.c
 
 clean:
-	rm -f *.o *.a test
+	rm -f $(OBJS) libubasic.a test$(EXE)

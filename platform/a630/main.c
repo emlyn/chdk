@@ -360,7 +360,7 @@ void *vid_get_bitmap_fb()
 
 void *vid_get_viewport_fb()
 {
-    return (void*)(0x10558000+0x22C0);
+    return (void*)(0x105f20c0);
 }
 
 long vid_get_bitmap_width()

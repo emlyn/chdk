@@ -13,5 +13,5 @@ OBJS=main.o lib.o
 libplatform.a: $(OBJS)
 
 clean: clean-recursive
-	rm -f *.o *.a
+	rm -f $(OBJS) libplatform.a
 

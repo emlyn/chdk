@@ -2,11 +2,13 @@ topdir=../../
 
 include $(topdir)makefile.inc
 
+OBJS = ef_log.o ef_sqrt.o
+
 all: libmath.a
 
-libmath.a: ef_log.o ef_sqrt.o
+libmath.a: $(OBJS)
 
 ef_log.o: ef_log.c fdlibm.h
 
 clean:
-	rm -f *.o *.a
+	rm -f $(OBJS) libmath.a
