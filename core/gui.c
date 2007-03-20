@@ -6,9 +6,6 @@
 #include "ubasic.h"
 #include "histogram.h"
 
-int gui_width, gui_height, gui_pixel_cnt;
-
-
 #define MENUITEM_MASK 0xf
 #define MENUITEM_INFO 1
 #define MENUITEM_BOOL 2
@@ -22,8 +19,9 @@ int gui_width, gui_height, gui_pixel_cnt;
 #define MENUITEM_F_UNSIGNED 0x10
 
 void dump_memory();
+int gui_width, gui_height, gui_pixel_cnt;
 
-static void canon_redraw_bitmap(); /// XXX
+static void canon_redraw_bitmap();
 static void gui_conf_draw();
 static void gui_draw_osd();
 
@@ -58,6 +56,7 @@ CMenuItem debug_submenu[] = {
     {"Show PropCases", MENUITEM_BOOL, &debug_propcase_show },
     {"PropCase page", MENUITEM_INT, &debug_propcase_page },
     {"Show misc. values", MENUITEM_BOOL, &debug_vals_show },
+    {"Dump RAM on ALT +/- press", MENUITEM_BOOL, &confns_enable_memdump },
 
     {"<- Back", MENUITEM_UP, NULL },
     {0}
@@ -186,6 +185,7 @@ void gui_redraw()
 
 void gui_kbd_process()
 {
+    int clicked_key;
 
     if (kbd_is_key_clicked(KEY_MENU)){
 	gui_mode_conf = !gui_mode_conf;
@@ -201,8 +201,14 @@ void gui_kbd_process()
 	return;
     }
 
+    clicked_key = kbd_get_clicked_key();
+
+    if ((clicked_key == KEY_ERASE) && confns_enable_memdump) {
+	dump_memory();
+    }
+
     if (gui_mode_conf){
-	switch (kbd_get_clicked_key()){
+	switch (clicked_key){
 	case KEY_UP:
 	    if (gui_menu_curr_item>0)
 		gui_menu_curr_item--;
@@ -267,18 +273,6 @@ void gui_kbd_process()
 		}
 		break;
 	    }
-	    break;
-	case KEY_ERASE:
-//	    {
-//		void (*f)(long a, long b, long c) = 0xFFC1408C;
-//		long p = 0;
-//		f(40,&p,2);
-//	    }
-//	    lens_set_focus_pos(2000);
-//	    makedump();
-//	    shooting_set_tv_rel(2);
-//	    shooting_set_av_rel(2);
-	    dump_memory();
 	    break;
 	}
     }
@@ -423,9 +417,9 @@ void gui_draw_osd()
 
     if (ubasic_error){
 	const char *msg;
-    if (ubasic_error >= UBASIC_E_ENDMARK) {
-        msg = ubasic_errstrings[UBASIC_E_UNKNOWN_ERROR];
-    } else {
+	if (ubasic_error >= UBASIC_E_ENDMARK) {
+	    msg = ubasic_errstrings[UBASIC_E_UNKNOWN_ERROR];
+	} else {
 	    msg = ubasic_errstrings[ubasic_error];
 	}
 	sprintf(osd_buf, "uBASIC:%d %s ", ubasic_linenumber(), msg);

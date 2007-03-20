@@ -16,6 +16,9 @@ int conf_ubasic_var_a;
 int conf_ubasic_var_b;
 int conf_ubasic_var_c;
 
+int confns_enable_memdump;
+
+
 int state_shooting_progress;
 const char *state_ubasic_script;
 int state_save_raw_nth_only;
