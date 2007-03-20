@@ -88,6 +88,7 @@ void script_start()
 {
     state_kbd_script_run = 1;
     delay_target_ticks = 0;
+    kbd_int_stack_ptr = 0;
     kbd_key_release_all();
     ubasic_init(state_ubasic_script);
 

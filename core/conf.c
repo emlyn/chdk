@@ -37,15 +37,22 @@ static char ubasic_script_buf[SCRIPT_BUF_SIZE];
 const char *ubasic_script_default =
 #if 1
     "sleep 1000\n"
+
     "if a<1 then let a=2\n"
     "if b<1 then let b=3\n"
+
     "for s=1 to a\n"
-    "shoot\n"
-    "for n=1 to b\n"
-    "click \"right\"\n"
-    "next n\n"
+      "shoot\n"
+      "for n=1 to b\n"
+        "click \"right\"\n"
+      "next n\n"
     "next s\n"
     "shoot\n"
+
+    "for n=1 to a*b\n"
+      "click \"left\"\n"
+    "next n\n"
+
     "end\n";
 #else
     "sleep 1000\n"
