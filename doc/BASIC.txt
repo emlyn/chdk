@@ -49,6 +49,9 @@ for s=1 to a
   next n
 next s
 shoot
+for n=1 to a*b
+  click "left"
+next n
 end
 ========================
 

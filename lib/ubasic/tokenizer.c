@@ -159,7 +159,7 @@ get_next_token(void)
     nextptr = ptr;
     do {
       ++nextptr;
-    } while(*nextptr != ' ' && * nextptr != '\n' && *nextptr != '\t');
+    } while(*nextptr != ' ' && *nextptr != '\r' && *nextptr != '\n' && *nextptr != '\t');
     return TOKENIZER_LABEL;
   } else if((i=singlechar()) != 0) {
     if (i == TOKENIZER_CR){
