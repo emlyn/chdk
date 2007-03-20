@@ -17,7 +17,7 @@ int conf_ubasic_var_b;
 int conf_ubasic_var_c;
 
 int state_shooting_progress;
-char *state_ubasic_script;
+const char *state_ubasic_script;
 int state_save_raw_nth_only;
 int state_expos_recalculated;
 int state_expos_under;
@@ -29,7 +29,7 @@ int debug_propcase_page;
 int debug_vals_show;
 
 static int dfirst;
-static int ubasic_script_buf[SCRIPT_BUF_SIZE];
+static char ubasic_script_buf[SCRIPT_BUF_SIZE];
 
 const char *ubasic_script_default =
 #if 1

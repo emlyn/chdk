@@ -66,6 +66,7 @@ void lens_set_focus_pos(long newpos);
 /******************************************************************/
 
 int shooting_in_progress();
+int shooting_is_flash_ready();
 
 int shooting_get_tv();
 void shooting_set_tv(int v);

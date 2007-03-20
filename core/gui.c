@@ -21,6 +21,8 @@ int gui_width, gui_height, gui_pixel_cnt;
 #define MENUITEM_F_MASK 0xf0
 #define MENUITEM_F_UNSIGNED 0x10
 
+void dump_memory();
+
 static void canon_redraw_bitmap(); /// XXX
 static void gui_conf_draw();
 static void gui_draw_osd();

@@ -1,3 +1,4 @@
+#include "stdlib.h"
 #include "platform.h"
 #include "core.h"
 #include "keyboard.h"

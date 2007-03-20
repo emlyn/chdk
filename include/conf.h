@@ -19,7 +19,7 @@ extern int state_kbd_script_run;
 extern int state_shooting_progress;
 extern int state_save_raw_nth_only;
 extern int state_expos_recalculated;
-extern char *state_ubasic_script;
+extern const char *state_ubasic_script;
 extern int state_expos_under;
 extern int state_expos_over;
 

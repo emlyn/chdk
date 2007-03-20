@@ -82,9 +82,9 @@ int main(int argc, char **argv)
     char *proc_name;
     uint32_t buf[1024];
     FILE *f;
-    int base;
-    int pos;
-    int size;
+    uint32_t base;
+    uint32_t pos;
+    uint32_t size;
     int i,j;
     int wcount;
     int finish;
@@ -97,10 +97,10 @@ int main(int argc, char **argv)
     if (f == NULL)
 	usage();
 
-    base = strtol(argv[2], NULL, 0);
+    base = strtoul(argv[2], NULL, 0);
     proc_name = argv[3];
-    pos = strtol(argv[4], NULL, 0) - base;
-    size = strtol(argv[5], NULL, 0);
+    pos = strtoul(argv[4], NULL, 0) - base;
+    size = strtoul(argv[5], NULL, 0);
     wcount = 0;
 
 

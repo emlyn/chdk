@@ -4,6 +4,7 @@
 #include "keyboard.h"
 #include "stdlib.h"
 #include "gui.h"
+#include "histogram.h"
 
 #define FN_RAWDIR   "A/DCIM/100CANON"
 #define FN_RAWF     (FN_RAWDIR "/" "CRW_%04d.JPG")
@@ -50,9 +51,8 @@ void dump_memory()
 	sprintf(fn, FN_RAWF, conf_raw_fileno++);
 	fd = fopen(fn, "w+");
 	if (fd >= 0) {
-	    fwrite(0x1900, 1, 0x1900, fd);
-	    fwrite(0x1900, 1, 32*1024*1024-0x1900, fd);
-	    fwrite(0x40000000, 1, 0x1000, fd);
+	    fwrite((void*)0x1900, 1, 0x1900, fd);
+	    fwrite((void*)0x1900, 1, 32*1024*1024-0x1900, fd);
 	    fclose(fd);
 	}
     finished();

@@ -111,8 +111,6 @@ accept(int token)
     DEBUG_PRINTF("Token not what was expected (expected %d, got %d)\n",
 		 token, tokenizer_token());
     tokenizer_error_print();
-#warning and? what should we do???
-//    exit(1);
      tokenizer_next();
      ended = 1;
      ubasic_error = UBASIC_E_PARSE;
@@ -327,9 +325,6 @@ goto_statement(void)
     jump_label(string);
   } else {
     DEBUG_PRINTF("ubasic.c: goto_statement(): no label specified\n");
-    // exit(1);
-#warning todo: well... there should be something... definitely.
-//    exit(1);
     ended = 1;
     ubasic_error = UBASIC_E_UNK_LABEL;
   }
@@ -420,17 +415,11 @@ gosub_statement(void)
       jump_label(string);
     } else {
       DEBUG_PRINTF("gosub_statement: gosub stack exhausted\n");
-    // exit(1);
-#warning todo: well... there should be something... definitely.
-//    exit(1);
-    ended = 1;
-    ubasic_error = UBASIC_E_GOSUB_STACK_EXHAUSTED;
+      ended = 1;
+      ubasic_error = UBASIC_E_GOSUB_STACK_EXHAUSTED;
     }
   } else {
     DEBUG_PRINTF("ubasic.c: goto_statement(): no label specified\n");
-    // exit(1);
-#warning todo: well... there should be something... definitely.
-//    exit(1);
     ended = 1;
     ubasic_error = UBASIC_E_UNK_LABEL;
   }
@@ -672,8 +661,6 @@ statement(void)
     break;
   default:
     DEBUG_PRINTF("ubasic.c: statement(): not implemented %d\n", token);
-#warning todo: well... there should be something... definitely.
-//    exit(1);
     ended = 1;
     ubasic_error = UBASIC_E_UNK_STATEMENT;
   }

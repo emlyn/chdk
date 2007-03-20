@@ -1,4 +1,4 @@
-VER=pre8
+VER=test3-pre9
 
 PLATFORM=a610
 PLATFORMSUB=100e
@@ -71,7 +71,8 @@ NM=arm-elf-nm
 AR=arm-elf-ar
 RANLIB=arm-elf-ranlib
 
-CFLAGS=-fno-inline -O2 -mtune=arm946e-s -fno-strict-aliasing -msoft-float
+# -msoft-float is used per default but object files are marked as hard-float
+CFLAGS=-fno-inline -O2 -fno-strict-aliasing
 CFLAGS+=-I$(topdir)include $(PLFLAGS) $(CPPFLAGS)
 CFLAGS+=-DPLATFORM=\"$(PLATFORM)\" -DPLATFORMSUB=\"$(PLATFORMSUB)\" -DHDK_VERSION=\"$(VER)\"
 CFLAGS+=-Wall -Wno-unused -Wno-format
