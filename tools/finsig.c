@@ -41,6 +41,15 @@ int match_compare(const Match *p1, const Match *p2)
 	}
     }
 
+    /* scores are equal. prefer lower address */
+
+    if (p1->ptr < p2->ptr){
+	return -1;
+    } else
+    if (p1->ptr > p2->ptr){
+	return 1;
+    }
+
     return 0;
 }
 
