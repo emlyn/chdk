@@ -18,3 +18,10 @@
     be resolved by WIF ELF loader)
 
     * build interwork multilib 
+
+    To build a compiler use something similar to
+	$ ../gcc-cource/configure --prefix=/opt/arm --target=arm-elf \
+	    --enable-multilib --enable-languages=c --enable-clocale=gnu \
+	    --with-cpu=arm9
+	$ make
+
