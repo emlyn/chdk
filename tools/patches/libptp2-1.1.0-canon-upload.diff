@@ -1,0 +1,434 @@
+diff -ur libptp2-1.1.0/src/libptp-endian.h libptp2-1.1.0-vb/src/libptp-endian.h
+--- libptp2-1.1.0/src/libptp-endian.h	2005-09-09 12:32:52.000000000 +0300
++++ libptp2-1.1.0-vb/src/libptp-endian.h	2006-09-02 15:01:09.000000000 +0300
+@@ -1,5 +1,5 @@
+ /* This file is generated automatically by configure */
+-/* It is valid only for the system type i686-pc-linux-gnu */
++/* It is valid only for the system type x86_64-unknown-linux-gnu */
+ 
+ #ifndef __BYTEORDER_H
+ #define __BYTEORDER_H
+@@ -70,20 +70,29 @@
+ /* and read messages to a network or serial device.  Each member of a */
+ /* packet structure must be handled separately. */
+ 
+-/* The i386 and compatibles can handle unaligned memory access, */
+-/* so use the optimized macros above to do this job */
+-#define be16atoh(x)     be16toh(*(uint16_t*)(x))
+-#define be32atoh(x)     be32toh(*(uint32_t*)(x))
+-#define be64atoh(x)     be64toh(*(uint64_t*)(x))
+-#define le16atoh(x)     le16toh(*(uint16_t*)(x))
+-#define le32atoh(x)     le32toh(*(uint32_t*)(x))
+-#define le64atoh(x)     le64toh(*(uint64_t*)(x))
+-
+-#define htobe16a(a,x)   *(uint16_t*)(a) = htobe16(x)
+-#define htobe32a(a,x)   *(uint32_t*)(a) = htobe32(x)
+-#define htobe64a(a,x)   *(uint64_t*)(a) = htobe64(x)
+-#define htole16a(a,x)   *(uint16_t*)(a) = htole16(x)
+-#define htole32a(a,x)   *(uint32_t*)(a) = htole32(x)
+-#define htole64a(a,x)   *(uint64_t*)(a) = htole64(x)
++/* Non-optimized but portable macros */
++#define be16atoh(x)     ((uint16_t)(((x)[0]<<8)|(x)[1]))
++#define be32atoh(x)     ((uint32_t)(((x)[0]<<24)|((x)[1]<<16)|((x)[2]<<8)|(x)[3]))
++#define be64atoh(x)     ((uint64_t)(((x)[0]<<56)|((x)[1]<<48)|((x)[2]<<40)| \
++        ((x)[3]<<32)|((x)[4]<<24)|((x)[5]<<16)|((x)[6]<<8)|(x)[7]))
++#define le16atoh(x)     ((uint16_t)(((x)[1]<<8)|(x)[0]))
++#define le32atoh(x)     ((uint32_t)(((x)[3]<<24)|((x)[2]<<16)|((x)[1]<<8)|(x)[0]))
++#define le64atoh(x)     ((uint64_t)(((x)[7]<<56)|((x)[6]<<48)|((x)[5]<<40)| \
++        ((x)[4]<<32)|((x)[3]<<24)|((x)[2]<<16)|((x)[1]<<8)|(x)[0]))
++
++#define htobe16a(a,x)   (a)[0]=(uint8_t)((x)>>8), (a)[1]=(uint8_t)(x)
++#define htobe32a(a,x)   (a)[0]=(uint8_t)((x)>>24), (a)[1]=(uint8_t)((x)>>16), \
++        (a)[2]=(uint8_t)((x)>>8), (a)[3]=(uint8_t)(x)
++#define htobe64a(a,x)   (a)[0]=(uint8_t)((x)>>56), (a)[1]=(uint8_t)((x)>>48), \
++        (a)[2]=(uint8_t)((x)>>40), (a)[3]=(uint8_t)((x)>>32), \
++        (a)[4]=(uint8_t)((x)>>24), (a)[5]=(uint8_t)((x)>>16), \
++        (a)[6]=(uint8_t)((x)>>8), (a)[7]=(uint8_t)(x)
++#define htole16a(a,x)   (a)[1]=(uint8_t)((x)>>8), (a)[0]=(uint8_t)(x)
++#define htole32a(a,x)   (a)[3]=(uint8_t)((x)>>24), (a)[2]=(uint8_t)((x)>>16), \
++        (a)[1]=(uint8_t)((x)>>8), (a)[0]=(uint8_t)(x)
++#define htole64a(a,x)   (a)[7]=(uint8_t)((x)>>56), (a)[6]=(uint8_t)((x)>>48), \
++        (a)[5]=(uint8_t)((x)>>40), (a)[4]=(uint8_t)((x)>>32), \
++        (a)[3]=(uint8_t)((x)>>24), (a)[2]=(uint8_t)((x)>>16), \
++        (a)[1]=(uint8_t)((x)>>8), (a)[0]=(uint8_t)(x)
+ 
+ #endif /*__BYTEORDER_H*/
+Только в libptp2-1.1.0-vb/src: .libs
+Только в libptp2-1.1.0-vb/src: Makefile
+diff -ur libptp2-1.1.0/src/ptp.c libptp2-1.1.0-vb/src/ptp.c
+--- libptp2-1.1.0/src/ptp.c	2005-09-04 15:54:01.000000000 +0300
++++ libptp2-1.1.0-vb/src/ptp.c	2006-09-02 19:09:33.000000000 +0300
+@@ -108,14 +108,15 @@
+ 	usbreq.payload.params.param4=htod32(req->Param4);
+ 	usbreq.payload.params.param5=htod32(req->Param5);
+ 	/* send it to responder */
++//printf("sendreq: %x %x\n",req->Code, usbreq.length);
+ 	ret=params->write_func((unsigned char *)&usbreq,
+ 		PTP_USB_BULK_REQ_LEN-(sizeof(uint32_t)*(5-req->Nparam)),
+ 		params->data);
+ 	if (ret!=PTP_RC_OK) {
+ 		ret = PTP_ERROR_IO;
+-/*		ptp_error (params,
++		ptp_error (params,
+ 			"PTP: request code 0x%04x sending req error 0x%04x",
+-			req->Code,ret); */
++			req->Code,ret); 
+ 	}
+ 	return ret;
+ }
+@@ -135,25 +136,31 @@
+ 	memcpy(usbdata.payload.data,data,
+ 		(size<PTP_USB_BULK_PAYLOAD_LEN)?size:PTP_USB_BULK_PAYLOAD_LEN);
+ 	/* send first part of data */
++//printf("senddata1: %x\n",ptp->Code);
++//{int i=0;
++//while(i<usbdata.length){printf("%02x ",((unsigned char*)&usbdata)[i]);
++//if((i&15)==15)printf("\n");i++;}}
++//printf("\n");
+ 	ret=params->write_func((unsigned char *)&usbdata, PTP_USB_BULK_HDR_LEN+
+ 		((size<PTP_USB_BULK_PAYLOAD_LEN)?size:PTP_USB_BULK_PAYLOAD_LEN),
+ 		params->data);
+ 	if (ret!=PTP_RC_OK) {
+ 		ret = PTP_ERROR_IO;
+-/*		ptp_error (params,
++		ptp_error (params,
+ 		"PTP: request code 0x%04x sending data error 0x%04x",
+-			ptp->Code,ret);*/
++			ptp->Code,ret);
+ 		return ret;
+ 	}
+ 	if (size<=PTP_USB_BULK_PAYLOAD_LEN) return ret;
+ 	/* if everything OK send the rest */
++//printf("senddata2: %x\n",ptp->Code);
+ 	ret=params->write_func (data+PTP_USB_BULK_PAYLOAD_LEN,
+ 				size-PTP_USB_BULK_PAYLOAD_LEN, params->data);
+ 	if (ret!=PTP_RC_OK) {
+ 		ret = PTP_ERROR_IO;
+-/*		ptp_error (params,
++		ptp_error (params,
+ 		"PTP: request code 0x%04x sending data error 0x%04x",
+-			ptp->Code,ret); */
++			ptp->Code,ret); 
+ 	}
+ 	return ret;
+ }
+@@ -206,12 +213,12 @@
+ 			break;
+ 		}
+ 	} while (0);
+-/*
++
+ 	if (ret!=PTP_RC_OK) {
+ 		ptp_error (params,
+ 		"PTP: request code 0x%04x getting data error 0x%04x",
+ 			ptp->Code, ret);
+-	}*/
++	}
+ 	return ret;
+ }
+ 
+@@ -236,9 +243,9 @@
+ 		ret = dtoh16(usbresp.code);
+ 	}
+ 	if (ret!=PTP_RC_OK) {
+-/*		ptp_error (params,
++		ptp_error (params,
+ 		"PTP: request code 0x%04x getting resp error 0x%04x",
+-			resp->Code, ret);*/
++			resp->Code, ret);
+ 		return ret;
+ 	}
+ 	/* build an appropriate PTPContainer */
+Только в libptp2-1.1.0-vb/src: ptpcam
+diff -ur libptp2-1.1.0/src/ptpcam.c libptp2-1.1.0-vb/src/ptpcam.c
+--- libptp2-1.1.0/src/ptpcam.c	2005-09-07 15:13:02.000000000 +0300
++++ libptp2-1.1.0-vb/src/ptpcam.c	2007-01-25 16:51:08.000000000 +0200
+@@ -92,6 +92,9 @@
+ /* the other one, it sucks definitely ;) */
+ int ptpcam_usb_timeout = USB_TIMEOUT;
+ 
++void
++reset_device (int busn, int devn, short force);
++
+ 
+ void
+ usage()
+@@ -670,8 +673,8 @@
+ 	for (i = 0; i < params.handles.n; i++) {
+ 		CR(ptp_getobjectinfo(&params,params.handles.Handler[i],
+ 			&oi),"Could not get object info\n");
+-		if (oi.ObjectFormat == PTP_OFC_Association)
+-			continue;
++//		if (oi.ObjectFormat == PTP_OFC_Association)
++//			continue;
+ 		printf("0x%08x: % 9i\t%s\n",params.handles.Handler[i],
+ 			oi.ObjectCompressedSize, oi.Filename);
+ 	}
+@@ -879,7 +882,196 @@
+ 	}
+ 	close_camera(&ptp_usb, &params, dev);
+ }
++#define CHECK_PTP_RC(result)    {uint16_t r=(result); if (r!=PTP_RC_OK) return r;}
+ 
++#define PTP_CNT_INIT(cnt) {memset(&cnt,0,sizeof(cnt));}
++#define PTP_DP_NODATA           0x0000  /* no data phase */ 
++#define PTP_DP_SENDDATA         0x0001  /* sending data */ 
++#define PTP_DP_GETDATA          0x0002  /* receiving data */ 
++#define PTP_DP_DATA_MASK        0x00ff  /* data phase mask */ 
++static uint16_t
++ptp_transaction (PTPParams* params, PTPContainer* ptp,
++                uint16_t flags, unsigned int sendlen, unsigned char** data)
++{
++        if ((params==NULL) || (ptp==NULL))
++                return PTP_ERROR_BADPARAM;
++
++        ptp->Transaction_ID=params->transaction_id++;
++        ptp->SessionID=params->session_id;
++        /* send request */
++        CHECK_PTP_RC(params->sendreq_func (params, ptp));
++        /* is there a dataphase? */
++        switch (flags&PTP_DP_DATA_MASK) {
++        case PTP_DP_SENDDATA:
++                CHECK_PTP_RC(params->senddata_func(params, ptp,
++                        *data, sendlen));
++                break;
++        case PTP_DP_GETDATA:
++                CHECK_PTP_RC(params->getdata_func(params, ptp,
++                        (unsigned char**)data));
++                break;
++        case PTP_DP_NODATA:
++                break;
++        default:
++                return PTP_ERROR_BADPARAM;
++        }
++        /* get response */
++        CHECK_PTP_RC(params->getresp_func(params, ptp));
++
++        return PTP_RC_OK;
++}
++
++void upload_file (int busn, int devn, short force, char *src, char *dest,
++	int ofmt);
++void upload_file (int busn, int devn, short force, char *src, char *dest,
++	int ofmt)
++{
++	PTPParams params;
++	PTP_USB ptp_usb;
++	struct usb_device *dev;
++	PTPContainer event;
++	FILE *f;
++	int fsize;
++	const int buffsize =  0x8000;
++	char buff[buffsize];
++	int uppos = 0;
++
++	f=fopen(src,"r+b");
++	if (f==NULL){
++		printf("failed to open source file\n");
++		return;
++	}
++
++	fseek(f, 0, SEEK_END);
++	fsize = ftell(f);
++	fseek(f, 0, SEEK_SET);
++
++	printf("gonna upload %d bytes from '%s'\n",fsize,src);
++
++	if (open_camera(busn, devn, force, &ptp_usb, &params, &dev)<0)
++		return;
++	CR(ptp_getdeviceinfo (&params, &params.deviceinfo),
++		"Could not get device info\n");
++	printf("Camera: %s\n",params.deviceinfo.Model);
++
++	/*{
++		int i;
++		PTPStorageIDs storages;
++		PTPStorageInfo storage_info;
++
++		ptp_getstorageids(&params, &storages);
++		printf("Got %d storages:\n", storages.n);
++		for (i=0;i<storages.n;i++){
++			printf("\t === %x ===\n", storages.Storage[i]);
++			ptp_getstorageinfo(&params, storages.Storage[i],&storage_info);
++			printf("\tLabel          : %s\n", storage_info.StorageDescription);
++			printf("\tDescription    : %s\n", storage_info.VolumeLabel);
++			printf("\tFree space     : %Ld\n", storage_info.FreeSpaceInBytes);
++			printf("\tFree space     : %d\n", storage_info.FreeSpaceInImages);
++			printf("\tAccess         : %d\n", storage_info.AccessCapability);
++			printf("\tMax            : %Ld\n", storage_info.MaxCapability);
++			printf("\tStorageType    : %d\n", storage_info.StorageType);
++			printf("\tFilesystemType : %d\n", storage_info.FilesystemType);
++		}
++	}*/
++
++//	close_camera(&ptp_usb, &params, dev);
++//return;
++	{
++		uint16_t ret;
++		PTPContainer ptp;
++		PTP_CNT_INIT(ptp);
++		int i,j;
++		unsigned char data[1000];
++		unsigned char *pdata = data;
++		char *fname;
++
++		memset(data,0,1000);
++		((int*)data)[0]=0x00010001; // store
++		((int*)data)[0]=0; // store
++//		((int*)data)[1]=0xbf01; // canon firmware
++		((int*)data)[1]=ofmt;
++		((int*)data)[2]=fsize;
++
++		i=0x34;
++		fname = strrchr(src, '/');
++		if (fname == NULL)
++		    fname = src;
++		else
++		    fname++;
++
++		data[i++]=strlen(fname)+1;
++		for (j=0;j<=strlen(fname);j++,i+=2)
++			data[i]=fname[j];
++
++		data[i++]=0x11;
++		for (j=0;j<0x11;j++,i+=2)
++			data[i]="19700101T000000.0"[j];
++		data[i++]=0x11;
++		for (j=0;j<0x11;j++,i+=2)
++			data[i]="19700101T000000.0"[j];
++
++		data[i++]=1;
++		data[i++]=0;
++		ptp.Code= 0x100c;
++		ptp.Param1=0x00010001; // store?
++		ptp.Param2=2; // parent handle?
++		ptp.Param1=0; // store?
++		ptp.Param2=0; // parent handle?
++		ptp.Nparam=2;
++//PTP_OFC_DPOF
++//PTP_OFC_EXIF_JPEG
++//0xbf01
++//		do {
++			ret=ptp_transaction(&params, &ptp, PTP_DP_SENDDATA, i, &pdata);
++//			printf("%x %d\n",ofmt,ret);
++//			((int*)data)[1]=ofmt++;
++//			if (ofmt>0x4000)
++//				break;
++//		} while (ret==8198);
++		if (ret==8198){
++			printf("bad obj type\n");
++			close_camera(&ptp_usb, &params, dev);
++			return;
++		} else
++		if (ret==8193){
++			/* ok */
++		} else
++			printf("set file info res: %d\n",ret);
++	}
++
++//	ptp_usb_event_check(&params, &event);
++//	printf("event: %d\n", event.Code);
++	{
++		uint16_t ret;
++		PTPContainer ptp;
++		PTP_CNT_INIT(ptp);
++		int i,j,len,btype;
++		unsigned char *pdata = buff;
++
++		len = fread(buff, 1, buffsize, f);
++		if (len<0)
++			return;
++		btype = 1;
++		while (len>0){
++			ptp.Code= 0x9019;
++			ptp.Param1=uppos; // byte offset
++			ptp.Param2=len; // len
++			ptp.Param3=btype; // 1-first,2-cont,3-last
++			ptp.Nparam=3;
++
++			ret=ptp_transaction(&params, &ptp, PTP_DP_SENDDATA, len, &pdata);
++			//printf("set file info res: %d\n",ret);
++			uppos+=len;
++			len = fread(buff, 1, buffsize, f);
++			if (len<0)
++				return;
++			btype = ((uppos+len)==fsize)?3:2;
++		}
++	}
++
++	close_camera(&ptp_usb, &params, dev);
++}
+ 
+ void
+ list_operations (int busn, int devn, short force)
+@@ -1292,6 +1484,7 @@
+ 	uint32_t handle=0;
+ 	char *filename=NULL;
+ 	int num=0;
++	int fmt=PTP_OFC_EXIF_JPEG;
+ 	/* parse options */
+ 	int option_index = 0,opt;
+ 	static struct option loptions[] = {
+@@ -1321,7 +1514,7 @@
+ 	};
+ 	
+ 	while(1) {
+-		opt = getopt_long (argc, argv, "LhlcipfroGg:Dd:s:v::", loptions, &option_index);
++		opt = getopt_long (argc, argv, "LhlcipfroGm:g:Dd:s:uv::", loptions, &option_index);
+ 		if (opt==-1) break;
+ 	
+ 		switch (opt) {
+@@ -1387,6 +1580,9 @@
+ 			action=ACT_GET_FILE;
+ 			handle=strtol(optarg,NULL,16);
+ 			break;
++		case 'm':
++			fmt=strtol(optarg,NULL,0);
++			break;
+ 		case 'G':
+ 			action=ACT_GET_ALL_FILES;
+ 			break;
+@@ -1394,6 +1590,9 @@
+ 			action=ACT_DELETE_OBJECT;
+ 			handle=strtol(optarg,NULL,16);
+ 			break;
++		case 'u':
++			action=ACT_UPLOAD_FILE;
++			break;
+ 		case 'D':
+ 			action=ACT_DELETE_ALL_FILES;
+ 		case '?':
+@@ -1447,6 +1646,9 @@
+ 			break;
+ 		case ACT_LOOP_CAPTURE:
+ 			loop_capture (busn,devn,force,num,overwrite);
++			break;
++		case ACT_UPLOAD_FILE:
++			upload_file(busn,devn,force,filename,0,fmt);
+ 	}
+ 
+ 	return 0;
+diff -ur libptp2-1.1.0/src/ptpcam.h libptp2-1.1.0-vb/src/ptpcam.h
+--- libptp2-1.1.0/src/ptpcam.h	2005-09-07 14:56:27.000000000 +0300
++++ libptp2-1.1.0-vb/src/ptpcam.h	2006-09-02 18:33:44.000000000 +0300
+@@ -87,7 +87,7 @@
+ #define ACT_DELETE_OBJECT	0xB
+ #define ACT_DELETE_ALL_FILES	0xC
+ #define ACT_LOOP_CAPTURE	0xD
+-
++#define ACT_UPLOAD_FILE         0xe
+ /* printing value type */
+ #define PTPCAM_PRINT_HEX	00
+ #define PTPCAM_PRINT_DEC	01
+diff -ur libptp2-1.1.0/src/ptp.h libptp2-1.1.0-vb/src/ptp.h
+--- libptp2-1.1.0/src/ptp.h	2005-02-16 11:38:52.000000000 +0200
++++ libptp2-1.1.0-vb/src/ptp.h	2006-09-02 20:40:33.000000000 +0300
+@@ -51,7 +51,7 @@
+ 
+ /* PTP USB Bulk-Pipe container */
+ /* USB bulk max max packet length for high speed endpoints */
+-#define PTP_USB_BULK_HS_MAX_PACKET_LEN	512
++#define PTP_USB_BULK_HS_MAX_PACKET_LEN	0xffff
+ #define PTP_USB_BULK_HDR_LEN		(2*sizeof(uint32_t)+2*sizeof(uint16_t))
+ #define PTP_USB_BULK_PAYLOAD_LEN	(PTP_USB_BULK_HS_MAX_PACKET_LEN-PTP_USB_BULK_HDR_LEN)
+ #define PTP_USB_BULK_REQ_LEN	(PTP_USB_BULK_HDR_LEN+5*sizeof(uint32_t))

@@ -1,0 +1,117 @@
+Index: gcc/config/arm/t-arm-elf
+===================================================================
+--- gcc/config/arm/t-arm-elf	(revision 123359)
++++ gcc/config/arm/t-arm-elf	(working copy)
+@@ -26,9 +26,9 @@
+ # MULTILIB_DIRNAMES   += 32bit 26bit
+ # MULTILIB_EXCEPTIONS += *mthumb/*mapcs-26*
+ # 
+-# MULTILIB_OPTIONS    += mno-thumb-interwork/mthumb-interwork
+-# MULTILIB_DIRNAMES   += normal interwork
+-# MULTILIB_EXCEPTIONS += *mapcs-26/*mthumb-interwork*
++MULTILIB_OPTIONS    += mno-thumb-interwork/mthumb-interwork
++MULTILIB_DIRNAMES   += normal interwork
++MULTILIB_EXCEPTIONS += *mapcs-26/*mthumb-interwork*
+ # 
+ # MULTILIB_OPTIONS    += fno-leading-underscore/fleading-underscore
+ # MULTILIB_DIRNAMES   += elf under
+Index: gcc/config/arm/linux-elf.h
+===================================================================
+--- gcc/config/arm/linux-elf.h	(revision 123359)
++++ gcc/config/arm/linux-elf.h	(working copy)
+@@ -32,7 +32,12 @@
+ 
+ /* Default is to use APCS-32 mode.  */
+ #undef  TARGET_DEFAULT
+-#define TARGET_DEFAULT (ARM_FLAG_APCS_32 | ARM_FLAG_MMU_TRAPS)
++#define TARGET_DEFAULT \
++		( ARM_FLAG_APCS_32 | \
++		  ARM_FLAG_MMU_TRAPS | \
++		  ARM_FLAG_SOFT_FLOAT | \
++		  ARM_FLAG_VFP | \
++		  TARGET_ENDIAN_DEFAULT )
+ 
+ #define SUBTARGET_CPU_DEFAULT TARGET_CPU_arm6
+ 
+Index: gcc/config/arm/unknown-elf.h
+===================================================================
+--- gcc/config/arm/unknown-elf.h	(revision 123359)
++++ gcc/config/arm/unknown-elf.h	(working copy)
+@@ -30,7 +30,7 @@
+ 
+ /* Default to using APCS-32 and software floating point.  */
+ #ifndef TARGET_DEFAULT
+-#define TARGET_DEFAULT	(ARM_FLAG_SOFT_FLOAT | ARM_FLAG_APCS_32 | ARM_FLAG_APCS_FRAME | ARM_FLAG_MMU_TRAPS)
++#define TARGET_DEFAULT	(ARM_FLAG_SOFT_FLOAT | ARM_FLAG_APCS_32 | ARM_FLAG_APCS_FRAME | ARM_FLAG_MMU_TRAPS | ARM_FLAG_VFP)
+ #endif
+ 
+ /* Now we define the strings used to build the spec file.  */
+Index: gcc/config/arm/elf.h
+===================================================================
+--- gcc/config/arm/elf.h	(revision 123359)
++++ gcc/config/arm/elf.h	(working copy)
+@@ -46,7 +46,9 @@
+ 
+ #ifndef SUBTARGET_ASM_FLOAT_SPEC
+ #define SUBTARGET_ASM_FLOAT_SPEC "\
+-%{mapcs-float:-mfloat} %{msoft-float:-mfpu=softfpa}"
++%{mapcs-float:-mfloat} \
++%{mhard-float:-mfpu=fpa} \
++%{!mhard-float:%{msoft-float:-mfpu=softfpa}%{!msoft-float:-mfpu=softvfp}}"
+ #endif
+ 
+ #ifndef ASM_SPEC
+@@ -106,12 +108,12 @@
+ #endif
+ 
+ #ifndef TARGET_DEFAULT
+-#define TARGET_DEFAULT (ARM_FLAG_SOFT_FLOAT | ARM_FLAG_APCS_32 | ARM_FLAG_APCS_FRAME | ARM_FLAG_MMU_TRAPS)
++#define TARGET_DEFAULT (ARM_FLAG_SOFT_FLOAT | ARM_FLAG_APCS_32 | ARM_FLAG_APCS_FRAME | ARM_FLAG_MMU_TRAPS | ARM_FLAG_VFP)
+ #endif
+ 
+ #ifndef MULTILIB_DEFAULTS
+ #define MULTILIB_DEFAULTS \
+-  { "marm", "mlittle-endian", "msoft-float", "mapcs-32", "mno-thumb-interwork", "fno-leading-underscore" }
++  { "marm", "mlittle-endian", "mapcs-32", "mno-thumb-interwork", "fno-leading-underscore" }
+ #endif
+ 
+ #define TARGET_ASM_FILE_START_APP_OFF true
+Index: gcc/config/arm/coff.h
+===================================================================
+--- gcc/config/arm/coff.h	(revision 123359)
++++ gcc/config/arm/coff.h	(working copy)
+@@ -31,7 +31,7 @@
+ #define TARGET_VERSION fputs (" (ARM/coff)", stderr)
+ 
+ #undef  TARGET_DEFAULT
+-#define TARGET_DEFAULT (ARM_FLAG_SOFT_FLOAT | ARM_FLAG_APCS_32 | ARM_FLAG_APCS_FRAME | ARM_FLAG_MMU_TRAPS)
++#define TARGET_DEFAULT (ARM_FLAG_SOFT_FLOAT | ARM_FLAG_APCS_32 | ARM_FLAG_APCS_FRAME | ARM_FLAG_MMU_TRAPS | ARM_FLAG_VFP)
+ 
+ #ifndef MULTILIB_DEFAULTS
+ #define MULTILIB_DEFAULTS \
+Index: gcc/config/arm/lib1funcs.asm
+===================================================================
+--- gcc/config/arm/lib1funcs.asm	(revision 123359)
++++ gcc/config/arm/lib1funcs.asm	(working copy)
+@@ -48,7 +48,7 @@
+ #ifdef __thumb__
+ #define __PLT__  /* Not supported in Thumb assembler (for now).  */
+ #else
+-#define __PLT__ (PLT)
++#define __PLT__ /*(PLT)*/
+ #endif
+ #define TYPE(x) .type SYM(x),function
+ #define SIZE(x) .size SYM(x), . - SYM(x)
+Index: gcc/config/arm/arm.h
+===================================================================
+--- gcc/config/arm/arm.h	(revision 123359)
++++ gcc/config/arm/arm.h	(working copy)
+@@ -468,7 +468,7 @@
+   {"alignment-traps",           ARM_FLAG_MMU_TRAPS,			\
+    N_("The MMU will trap on unaligned accesses") },			\
+   {"no-alignment-traps",       -ARM_FLAG_MMU_TRAPS, "" },		\
+-  {"soft-float",		ARM_FLAG_SOFT_FLOAT,			\
++  {"soft-float",	       -ARM_FLAG_VFP,				\
+    N_("Use library calls to perform FP operations") },			\
+   {"hard-float",	       -ARM_FLAG_SOFT_FLOAT,			\
+    N_("Use hardware floating point instructions") },			\
