@@ -54,14 +54,6 @@ void boot()
 	"MCR     p15, 0, R0,c1,c0\n"
     :::"r0");
 
-    // init these before real memory initializer called
-    // these values wouldn't be changed by initializer
-    // if thery're != 0
-    // at least it looks so...
-    sysPhysMemTopPtr = 0x2000000;
-    sysMemTopPtr = sysPhysMemTopPtr - 0x1D00000;
-    sysMemTopPtr -= 0x10000;
-
     h_usrInit();
 }
 
