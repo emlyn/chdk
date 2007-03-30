@@ -29,7 +29,7 @@ void boot()
     long *canon_data_dst = (void*)0x1900;
     long canon_data_len = 0xe910;
     long *canon_bss_start = (void*)0x10210; // just after data
-    long canon_bss_len = 0xA0B70;
+    long canon_bss_len = 0xA0B70 - 0x10210;
     long i;
 
     asm volatile (
@@ -53,14 +53,6 @@ void boot()
 	"ORR     R0, R0, #1\n"
 	"MCR     p15, 0, R0,c1,c0\n"
     :::"r0");
-
-    // init these before real memory initializer called
-    // these values wouldn't be changed by initializer
-    // if thery're != 0
-    // at least it looks so...
-    sysPhysMemTopPtr = 0x2000000;
-    sysMemTopPtr = sysPhysMemTopPtr - 0x1D00000;
-    sysMemTopPtr -= 0x10000;
 
     h_usrInit();
 }
@@ -110,7 +102,7 @@ void  h_usrKernelInit()
 	"MOV     R12, #0x800\n"
 	"LDR     R0, =h_usrRoot\n"
 	"MOV     R1, #0x4000\n"
-	"LDR     R2, =0xA0B70\n"
+	"LDR     R2, =0xC0B70\n"	// 0xA0B70 + 0x20000
 	"STR     R12, [SP,#0x10-0x10]\n"
 	"STR     R4, [SP,#0x10-0xC]\n"
 	"BL      sub_FFECA130\n"

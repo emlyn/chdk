@@ -29,7 +29,7 @@ void boot()
     long *canon_data_dst = (void*)0x1900;
     long canon_data_len = 0xBD80;
     long *canon_bss_start = (void*)0xD680; // just after data
-    long canon_bss_len = 0x9F9B0;
+    long canon_bss_len = 0x9F9B0 - 0xD680;
     long i;
 
     asm volatile (
@@ -110,7 +110,7 @@ void  h_usrKernelInit()
 	"MOV     R12, #0x800\n"
 	"LDR     R0, =h_usrRoot\n"
 	"MOV     R1, #0x4000\n"
-	"LDR     R2, =0x9F9B0\n"
+	"LDR     R2, =0xBF9B0\n"	// 0x9F9B0 + 0x20000
 	"STR     R12, [SP]\n"
 	"STR     R4, [SP,#4]\n"
 	"BL      sub_FFF0A9B0\n"
