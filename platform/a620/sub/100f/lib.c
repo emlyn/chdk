@@ -24,9 +24,3 @@ void *vid_get_viewport_live_fb()
 {
     return (void*)0x1066fc70;
 }
-
-void *get_parameter_data_magic_pointer()
-{
-    return (void*)0x77220;
-}
-

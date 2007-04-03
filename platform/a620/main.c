@@ -25,15 +25,15 @@ extern long SetPropertyCase(long opt_id, void *buf, long bufsize);
 extern void RefreshPhysicalScreen(long f);
 extern long IsStrobeChargeCompleted();
 
-extern long GetParameterData(long id, long unk, void *buf, long size);
-extern long SetParameterData(long id, long unk, void *buf, long size);
+extern long GetParameterData(long id, void *buf, long size);
+extern long SetParameterData(long id, void *buf, long size);
 
 /* Ours stuff */
 extern long wrs_kernel_bss_start;
 extern long wrs_kernel_bss_end;
 
 extern void boot();
-extern void *get_parameter_data_magic_pointer();
+
 
 /*
  *
@@ -636,13 +636,11 @@ void vid_bitmap_refresh()
 
 long get_parameter_data(long id, void *buf, long bufsize)
 {
-    long *magic = get_parameter_data_magic_pointer();
-    return GetParameterData(id, magic[1], buf, bufsize);
+    return GetParameterData(id|0x4000, buf, bufsize);
 }
 
 long set_parameter_data(long id, void *buf, long bufsize)
 {
-    long *magic = get_parameter_data_magic_pointer();
-    return SetParameterData(id, magic[1], buf, bufsize);
+    return SetParameterData(id|0x4000, buf, bufsize);
 }
 
