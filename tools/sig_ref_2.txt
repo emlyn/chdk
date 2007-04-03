@@ -3,3 +3,5 @@ GetPropertyCase 0xFFC14DEC
 SetPropertyCase 0xFFC14C9C
 RefreshPhysicalScreen 0xFFD8752C
 DisplayImagePhysicalScreen 0xffd36fe0
+GetParameterData 0xFFD7734C
+SetParameterData 0xFFD77280

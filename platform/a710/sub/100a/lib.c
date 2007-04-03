@@ -24,3 +24,9 @@ void *vid_get_viewport_live_fb()
 {
     return (void*)0x10670ee0;
 }
+
+void *get_parameter_data_magic_pointer()
+{
+    return (void*)0x765D8;
+}
+
