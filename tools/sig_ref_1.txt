@@ -57,3 +57,5 @@ GetPropertyCase 0xFFC141A8 26
 SetPropertyCase 0xFFC1408C 29
 RefreshPhysicalScreen 0xFFD5F6C0
 IsStrobeChargeCompleted 0xFFCEBE00
+GetParameterData 0xFFD4F83C
+SetParameterData 0xFFD4F73C

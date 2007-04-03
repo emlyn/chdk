@@ -26,6 +26,9 @@ typedef struct {
 
 /******************************************************************/
 
+long get_parameter_data(long id, void *buf, long bufsize);
+long set_parameter_data(long id, void *buf, long bufsize);
+
 long get_tick_count();
 
 /******************************************************************/

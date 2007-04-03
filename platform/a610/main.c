@@ -26,12 +26,15 @@ extern long VbattGet();
 extern void RefreshPhysicalScreen(long f);
 extern long IsStrobeChargeCompleted();
 
+extern long GetParameterData(long id, long unk, void *buf, long size);
+extern long SetParameterData(long id, long unk, void *buf, long size);
+
 /* Ours stuff */
 extern long wrs_kernel_bss_start;
 extern long wrs_kernel_bss_end;
 
 extern void boot();
-
+extern void *get_parameter_data_magic_pointer();
 
 /*
  *
@@ -77,6 +80,14 @@ int my_ncmp(const char *s1, const char *s2, long len)
     return 0;
 }
 
+static void task_empty(
+    long p0,    long p1,    long p2,    long p3,    long p4,
+    long p5,    long p6,    long p7,    long p8,    long p9)
+{
+    while (1)
+	SleepTask(1000);
+}
+
 void createHook (void *pNewTcb)
 {
     char *name = (char*)(*(long*)((char*)pNewTcb+0x34));
@@ -93,6 +104,10 @@ void createHook (void *pNewTcb)
 	if (my_ncmp(name, "tPhySw", 6) == 0){
 	    *entry = (long)mykbd_task;
 	}
+
+	/*if (my_ncmp(name, "tCaptSeqTask", 8) == 0){
+	    *entry = (long)task_empty;
+	}*/
 	core_hook_task_create(pNewTcb);
     }
 }
@@ -641,3 +656,17 @@ void vid_bitmap_refresh()
 {
     RefreshPhysicalScreen(1);
 }
+
+
+long get_parameter_data(long id, void *buf, long bufsize)
+{
+    long *magic = get_parameter_data_magic_pointer();
+    return GetParameterData(id, magic[1], buf, bufsize);
+}
+
+long set_parameter_data(long id, void *buf, long bufsize)
+{
+    long *magic = get_parameter_data_magic_pointer();
+    return SetParameterData(id, magic[1], buf, bufsize);
+}
+
