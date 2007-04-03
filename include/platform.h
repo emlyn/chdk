@@ -31,6 +31,8 @@ long set_parameter_data(long id, void *buf, long bufsize);
 
 long get_tick_count();
 
+long get_next_photo_dirfile_num();
+
 /******************************************************************/
 
 void kbd_key_press(long key);

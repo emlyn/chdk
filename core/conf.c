@@ -5,13 +5,12 @@
 
 #define FN_COUNTER  "A/RCFG.BIN"
 #define FN_SCRIPT  "A/SCRIPT.BAS"
-#define CNF_MAGICK_VALUE (0x5acd20c1)
+#define CNF_MAGICK_VALUE (0x5acd20c2)
 
 int conf_show_osd;
 int conf_save_raw;
 int conf_script_shoot_delay;
 int conf_show_histo;
-int conf_raw_fileno;
 int conf_ubasic_var_a;
 int conf_ubasic_var_b;
 int conf_ubasic_var_c;
@@ -31,7 +30,6 @@ int debug_propcase_show;
 int debug_propcase_page;
 int debug_vals_show;
 
-static int dfirst;
 static char ubasic_script_buf[SCRIPT_BUF_SIZE];
 
 const char *ubasic_script_default =
@@ -70,7 +68,6 @@ static void load_defaults()
     conf_save_raw = 0;
     conf_script_shoot_delay = 20;
     conf_show_histo = 0;
-    conf_raw_fileno = 1000;
     conf_ubasic_var_a = 0;
     conf_ubasic_var_b = 0;
     conf_ubasic_var_c = 0;
@@ -82,7 +79,6 @@ static void do_save(int fd)
     t = CNF_MAGICK_VALUE;
     write(fd, &t, 4);
 
-    write(fd, &conf_raw_fileno, 4);
     write(fd, &conf_show_osd, 4);
     write(fd, &conf_save_raw, 4);
     write(fd, &conf_script_shoot_delay, 4);
@@ -101,12 +97,6 @@ static int do_restore(int fd)
     rcnt = read(fd, &t, 4);
     if ((rcnt != 4) || (t != CNF_MAGICK_VALUE))
 	return 1;
-
-    /* read raw file number counter */
-    rcnt = read(fd, &t, 4);
-    if (rcnt != 4)
-	return 1;
-    conf_raw_fileno = (t|3) + 1;
 
     /* read: osd */
     rcnt = read(fd, &conf_show_osd, 4);
@@ -147,18 +137,14 @@ static int do_restore(int fd)
 }
 
 
-void conf_save(int force)
+void conf_save()
 {
     int fd;
 
-    if (((conf_raw_fileno & 3) == 0) || (dfirst == 1) || force){
-	dfirst = 0;
-
-	fd = open(FN_COUNTER, O_WRONLY|O_CREAT, 0777);
-	if (fd >= 0){
-	    do_save(fd);
-	    close(fd);
-	}
+    fd = open(FN_COUNTER, O_WRONLY|O_CREAT, 0777);
+    if (fd >= 0){
+	do_save(fd);
+	close(fd);
     }
 }
 
@@ -175,7 +161,6 @@ void conf_restore()
     } else {
 	load_defaults();
     }
-    dfirst = 1;
 
     state_ubasic_script = ubasic_script_default;
 

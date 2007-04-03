@@ -6,9 +6,10 @@
 #include "gui.h"
 #include "histogram.h"
 
-#define FN_RAWDIR   "A/DCIM/100CANON"
+#define FN_RAWDIR   "A/DCIM/%03dCANON"
 #define FN_RAWF     (FN_RAWDIR "/" "CRW_%04d.JPG")
 
+static long ramdump_num;
 static char fn[64];
 static long (*prev_hhandler)(long a);
 
@@ -45,13 +46,19 @@ void core_hook_task_delete(void *tcb)
 void dump_memory()
 {
     int fd;
+    long dirfilenum;
 
     started();
 
-	sprintf(fn, FN_RAWF, conf_raw_fileno++);
+	dirfilenum = get_next_photo_dirfile_num();
+
+	sprintf(fn, FN_RAWDIR, dirfilenum >> 16);
+	mkdir(fn);
+
+	sprintf(fn, FN_RAWDIR "/" "DMP_%04d.JPG", dirfilenum >> 16, ++ramdump_num);
 	fd = fopen(fn, "w+");
 	if (fd >= 0) {
-	    fwrite((void*)0x1900, 1, 0x1900, fd);
+	    fwrite((void*)0, 1, 0x1900, fd);
 	    fwrite((void*)0x1900, 1, 32*1024*1024-0x1900, fd);
 	    fclose(fd);
 	}
@@ -61,6 +68,7 @@ void dump_memory()
 static void saverawfile()
 {
     int fd;
+    long dirfilenum;
 
     // got here second time in a row. Skip second RAW saveing.
     if (state_shooting_progress == SHOOTING_PROGRESS_PROCESSING){
@@ -72,13 +80,17 @@ static void saverawfile()
     if (conf_save_raw){
 	started();
 
-	sprintf(fn, FN_RAWF, conf_raw_fileno++);
+	dirfilenum = get_next_photo_dirfile_num();
+
+	sprintf(fn, FN_RAWDIR, dirfilenum >> 16);
+	mkdir(fn);
+
+	sprintf(fn, FN_RAWF, dirfilenum >> 16, dirfilenum & 0xffff);
 	fd = fopen(fn, "w+");
 	if (fd >= 0) {
 	    fwrite(hook_raw_image_addr(), 1, hook_raw_size(), fd);
 	    fclose(fd);
 	}
-	conf_save(0);
 	finished();
     }
 
@@ -102,7 +114,6 @@ void core_spytask()
     SleepTask(1000);
 
     gui_init();
-    mkdir(FN_RAWDIR);
     conf_restore();
 
     started();

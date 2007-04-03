@@ -432,5 +432,5 @@ void gui_draw_osd()
 
 void gui_menuproc_save()
 {
-    conf_save(1);
+    conf_save();
 }
