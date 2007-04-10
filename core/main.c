@@ -114,8 +114,6 @@ void core_spytask()
 
     SleepTask(1000);
 
-    remount_filesystem();
-
     gui_init();
     conf_restore();
 

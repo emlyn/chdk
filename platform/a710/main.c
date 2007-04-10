@@ -73,6 +73,21 @@ static void task_start_hook(
     taskprev(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9 );
 }
 
+static void (*taskfsprev)(
+    long p0,    long p1,    long p2,    long p3,    long p4,
+    long p5,    long p6,    long p7,    long p8,    long p9);
+
+
+static void task_fs(
+    long p0,    long p1,    long p2,    long p3,    long p4,
+    long p5,    long p6,    long p7,    long p8,    long p9)
+{
+
+    remount_filesystem();
+
+    taskfsprev(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9 );
+}
+
 int my_ncmp(const char *s1, const char *s2, long len)
 {
     int i;
@@ -99,6 +114,12 @@ void createHook (void *pNewTcb)
 	if (my_ncmp(name, "tPhySw", 6) == 0){
 	    *entry = (long)mykbd_task;
 	}
+
+	if (my_ncmp(name, "tInitFileM", 10) == 0){
+	    taskfsprev = (void*)(*entry);
+	    *entry = (long)task_fs;
+	}
+
 	core_hook_task_create(pNewTcb);
     }
 }
