@@ -13,7 +13,7 @@ _start:
 // Turn OFF SD Card power
 // to support autostart
 
-	LDR     R3, =0xC02200BC
+	LDR     R3, =0xC022009C
 	MOV     R2, #0x44
 	STR     R2, [R3]
 
