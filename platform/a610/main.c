@@ -25,9 +25,13 @@ extern long SetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long VbattGet();
 extern void RefreshPhysicalScreen(long f);
 extern long IsStrobeChargeCompleted();
+extern void Unmount_FileSystem();
+extern void Mount_FileSystem();
 
+/* Canon stuff with nonoriginal naming */
 extern long GetParameterData(long id, void *buf, long size);
 extern long SetParameterData(long id, void *buf, long size);
+extern void UpdateMBROnFlash(int driveno, long offset, char *str);
 
 /* Ours stuff */
 extern long wrs_kernel_bss_start;
@@ -35,6 +39,8 @@ extern long wrs_kernel_bss_end;
 
 extern void boot();
 extern void *get_parameter_data_magic_pointer();
+
+#define SD_READONLY_FLAG (0x20000)
 
 /*
  *
@@ -287,17 +293,18 @@ void my_kbd_read_keys()
 	finished();
 #endif
 
+
     if (kbd_process() == 0){
 	// leave it alone...
 	physw_status[0] = kbd_new_state[0];
 	physw_status[1] = kbd_new_state[1];
 	physw_status[2] = kbd_new_state[2];
-#if 1
+#if 0
 	kbd_mod_state = kbd_new_state[2];
 #endif
     } else {
 	// override keys
-#if 1
+#if 0
 	physw_status[2] = kbd_mod_state;
 #else
 	physw_status[0] = kbd_new_state[0];
@@ -307,9 +314,11 @@ void my_kbd_read_keys()
 #endif
     }
 
-    kbd_read_keys_r2(physw_status); // have no idea what's that
-    
+    kbd_read_keys_r2(physw_status);
+    physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
+
     kbd_pwr_off();
+
 }
 
 /****************/
@@ -684,4 +693,16 @@ long get_next_photo_dirfile_num()
     }
 
     return (dirnum << 16) | (filenum);
+}
+
+void remount_filesystem()
+{
+    Unmount_FileSystem();
+    Mount_FileSystem();
+}
+
+
+void mark_filesystem_bootable()
+{
+    UpdateMBROnFlash(0, 0x40, "BOOTDISK");
 }

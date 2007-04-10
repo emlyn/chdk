@@ -5,3 +5,4 @@ RefreshPhysicalScreen 0xFFD8752C
 DisplayImagePhysicalScreen 0xffd36fe0
 SetParameterData 0xFFD75FB0
 GetParameterData 0xFFD76090
+Mount_FileSystem 0xffc602ec

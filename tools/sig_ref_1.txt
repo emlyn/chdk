@@ -59,3 +59,8 @@ RefreshPhysicalScreen 0xFFD5F6C0
 IsStrobeChargeCompleted 0xFFCEBE00
 SetParameterData 0xFFD4E21C
 GetParameterData 0xFFD4E2FC
+iosDevAdd 0xFFEBD07C
+iosDrvInstall 0xFFEBD340
+Unmount_FileSystem 0xFFC5BAC8
+Mount_FileSystem 0xFFC5B9C0
+UpdateMBROnFlash 0xFFC5BC20

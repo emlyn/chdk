@@ -1496,6 +1496,135 @@ static FuncSig func_sig_GetParameterData_1[] = {
 	/* 25/32 */
 };
 
+static FuncSig func_sig_iosDevAdd_1[] = {
+	{   1, 0xe1a0a000, 0xfdffffff },
+	{   2, 0xe1a0b001, 0xfdffffff },
+	{   3, 0xe1a09002, 0xfdffffff },
+	{   4, 0xe1a00001, 0xfdffffff },
+	{   5, 0xeb000000, 0xff000000 },
+	{   6, 0xe1b01000, 0xfdffffff },
+	{   7, 0x0a000000, 0xff000000 },
+	{   9, 0xe1a0100b, 0xfdffffff },
+	{  10, 0xeb000000, 0xff000000 },
+	{  11, 0xe1500000, 0xfdffffff },
+	{  12, 0x1a000000, 0xff000000 },
+	{  14, 0xeb000000, 0xff000000 },
+	{  16, 0xea000000, 0xff000000 },
+	{  17, 0xe1a0000b, 0xfdffffff },
+	{  18, 0xeb000000, 0xff000000 },
+	{  19, 0xe0800001, 0xfdffffff },
+	{  20, 0xeb000000, 0xff000000 },
+	{  21, 0xe1b01000, 0xfdffffff },
+	{  22, 0xe1ca90b8, 0xfdffffff },
+	{  25, 0x0a000000, 0xff000000 },
+	{  26, 0xe1a00001, 0xfdffffff },
+	{  27, 0xe1a0100b, 0xfdffffff },
+	{  28, 0xeb000000, 0xff000000 },
+	{  29, 0xeb000000, 0xff000000 },
+	{  31, 0xe1a0100a, 0xfdffffff },
+	{ -1, -1, -1 },
+	/* 25/32 */
+};
+
+static FuncSig func_sig_iosDrvInstall_1[] = {
+	{   3, 0xe1a0b000, 0xfdffffff },
+	{   4, 0xe1a07000, 0xfdffffff },
+	{   5, 0xe1a06001, 0xfdffffff },
+	{   6, 0xe1a05002, 0xfdffffff },
+	{   7, 0xe1a04003, 0xfdffffff },
+	{   8, 0xeb000000, 0xff000000 },
+	{  11, 0xe1500001, 0xfdffffff },
+	{  12, 0xda000000, 0xff000000 },
+	{  14, 0xe040a001, 0xfdffffff },
+	{  16, 0xe08c1020, 0xfdffffff },
+	{  18, 0xe15c0000, 0xfdffffff },
+	{  19, 0x01a0b001, 0xfdffffff },
+	{  20, 0x0a000000, 0xff000000 },
+	{  21, 0xe05aa001, 0xfdffffff },
+	{  22, 0xe0811020, 0xfdffffff },
+	{  23, 0x1a000000, 0xff000000 },
+	{  24, 0xe15b0000, 0xfdffffff },
+	{  25, 0xe040a00a, 0xfdffffff },
+	{  26, 0x1a000000, 0xff000000 },
+	{  28, 0xeb000000, 0xff000000 },
+	{  29, 0xeb000000, 0xff000000 },
+	{  31, 0xea000000, 0xff000000 },
+	{ -1, -1, -1 },
+	/* 22/32 */
+};
+
+static FuncSig func_sig_Unmount_FileSystem_1[] = {
+	{   1, 0xe04dd004, 0xfdffffff },
+	{   2, 0xe1a0600d, 0xfdffffff },
+	{   4, 0xe1a02002, 0xfdffffff },
+	{   5, 0xe1a00006, 0xfdffffff },
+	{   6, 0xeb000000, 0xff000000 },
+	{   9, 0xe1a03000, 0xfdffffff },
+	{  12, 0xe0835041, 0xfdffffff },
+	{  13, 0xe08c1054, 0xfdffffff },
+	{  15, 0xe1a00006, 0xfdffffff },
+	{  18, 0xeb000000, 0xff000000 },
+	{  19, 0xe08dd004, 0xfdffffff },
+	{  21, 0xe1a0f00e, 0xfdffffff },
+	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 12/32 */
+};
+
+static FuncSig func_sig_Mount_FileSystem_1[] = {
+	{   1, 0xe1a05000, 0xfdffffff },
+	{   3, 0xe1a00005, 0xfdffffff },
+	{   4, 0xeb000000, 0xff000000 },
+	{   6, 0xeb000000, 0xff000000 },
+	{   7, 0xe0501000, 0xfdffffff },
+	{   8, 0xe1a00005, 0xfdffffff },
+	{   9, 0x1a000000, 0xff000000 },
+	{  16, 0xeb000000, 0xff000000 },
+	{  17, 0xe1a00005, 0xfdffffff },
+	{  18, 0xeb000000, 0xff000000 },
+	{  19, 0xe1a04000, 0xfdffffff },
+	{  20, 0xe1a00005, 0xfdffffff },
+	{  21, 0xeb000000, 0xff000000 },
+	{  22, 0xe0044000, 0xfdffffff },
+	{  23, 0xe1a02004, 0xfdffffff },
+	{  24, 0xe1a00006, 0xfdffffff },
+	{  26, 0xeb000000, 0xff000000 },
+	{  29, 0x0002e008, 0xfdffffff },
+	{  30, 0x00002830, 0xfdffffff },
+	{  31, 0x00002828, 0xfdffffff },
+	{ -1, -1, -1 },
+	/* 20/32 */
+};
+
+static FuncSig func_sig_UpdateMBROnFlash_1[] = {
+	{   1, 0xe1a04000, 0xfdffffff },
+	{   2, 0xe1a09002, 0xfdffffff },
+	{   3, 0xe1a07001, 0xfdffffff },
+	{   4, 0xe1a02000, 0xfdffffff },
+	{   5, 0xe1a01c02, 0xfdffffff },
+	{   6, 0xe1a00003, 0xfdffffff },
+	{   7, 0xeb000000, 0xff000000 },
+	{   9, 0xe0843084, 0xfdffffff },
+	{  11, 0xe1a04104, 0xfdffffff },
+	{  12, 0xe1a06000, 0xfdffffff },
+	{  13, 0xe0858038, 0xfdffffff },
+	{  14, 0xe085a044, 0xfdffffff },
+	{  15, 0xe085c04c, 0xfdffffff },
+	{  16, 0xe1a03006, 0xfdffffff },
+	{  18, 0xe1a02001, 0xfdffffff },
+	{  20, 0xe1a0e00f, 0xfdffffff },
+	{  22, 0xe1a00009, 0xfdffffff },
+	{  23, 0xeb000000, 0xff000000 },
+	{  24, 0xe0867007, 0xfdffffff },
+	{  25, 0xe1a02000, 0xfdffffff },
+	{  26, 0xe1a01009, 0xfdffffff },
+	{  27, 0xe1a00007, 0xfdffffff },
+	{  28, 0xeb000000, 0xff000000 },
+	{  29, 0xe0855050, 0xfdffffff },
+	{ -1, -1, -1 },
+	/* 24/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   3, 0xe1550000, 0xfdffffff },
 	{   4, 0xe1a04000, 0xfdffffff },
@@ -1677,6 +1806,31 @@ static FuncSig func_sig_GetParameterData_2[] = {
 	/* 25/32 */
 };
 
+static FuncSig func_sig_Mount_FileSystem_2[] = {
+	{   1, 0xe1a05000, 0xfdffffff },
+	{   3, 0xe1a00005, 0xfdffffff },
+	{   4, 0xeb000000, 0xff000000 },
+	{   6, 0xeb000000, 0xff000000 },
+	{   7, 0xe0501000, 0xfdffffff },
+	{   8, 0xe1a00005, 0xfdffffff },
+	{   9, 0x1a000000, 0xff000000 },
+	{  16, 0xeb000000, 0xff000000 },
+	{  17, 0xe1a00005, 0xfdffffff },
+	{  18, 0xeb000000, 0xff000000 },
+	{  19, 0xe1a04000, 0xfdffffff },
+	{  20, 0xe1a00005, 0xfdffffff },
+	{  21, 0xeb000000, 0xff000000 },
+	{  22, 0xe0044000, 0xfdffffff },
+	{  23, 0xe1a02004, 0xfdffffff },
+	{  24, 0xe1a00006, 0xfdffffff },
+	{  26, 0xeb000000, 0xff000000 },
+	{  29, 0x0002c4a8, 0xfdffffff },
+	{  30, 0x00002750, 0xfdffffff },
+	{  31, 0x00002748, 0xfdffffff },
+	{ -1, -1, -1 },
+	/* 20/32 */
+};
+
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory_1 },
 	{ "close", func_sig_close_1 },
@@ -1705,6 +1859,8 @@ FuncsList func_list[] = {
 	{ "ints_disable", func_sig_ints_disable_1 },
 	{ "ints_enable", func_sig_ints_enable_1 },
 	{ "ioctl", func_sig_ioctl_1 },
+	{ "iosDevAdd", func_sig_iosDevAdd_1 },
+	{ "iosDrvInstall", func_sig_iosDrvInstall_1 },
 	{ "IsStrobeChargeCompleted", func_sig_IsStrobeChargeCompleted_1 },
 	{ "kbd_p1_f_cont", func_sig_kbd_p1_f_cont_1 },
 	{ "kbd_p1_f", func_sig_kbd_p1_f_1 },
@@ -1718,6 +1874,8 @@ FuncsList func_list[] = {
 	{ "memcpy", func_sig_memcpy_1 },
 	{ "memset", func_sig_memset_1 },
 	{ "mkdir", func_sig_mkdir_1 },
+	{ "Mount_FileSystem", func_sig_Mount_FileSystem_1 },
+	{ "Mount_FileSystem", func_sig_Mount_FileSystem_2 },
 	{ "open", func_sig_open_1 },
 	{ "Open", func_sig_Open_1 },
 	{ "PhySw_testgpio", func_sig_PhySw_testgpio_1 },
@@ -1744,6 +1902,8 @@ FuncsList func_list[] = {
 	{ "taskResume", func_sig_taskResume_1 },
 	{ "taskSuspend", func_sig_taskSuspend_1 },
 	{ "taskUnlock", func_sig_taskUnlock_1 },
+	{ "Unmount_FileSystem", func_sig_Unmount_FileSystem_1 },
+	{ "UpdateMBROnFlash", func_sig_UpdateMBROnFlash_1 },
 	{ "write", func_sig_write_1 },
 	{ "Write", func_sig_Write_1 },
 	{ NULL }

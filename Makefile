@@ -20,7 +20,7 @@ endif
 	$(PAKWIF) $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR \
 	     $(topdir)/bin/main.bin\
 	    $(PLATFORMID)
-	rm $(topdir)/bin/main.bin
+	mv $(topdir)/bin/main.bin $(topdir)/bin/DISKBOOT.BIN
 	@echo "**** Firmware creation completed successfully"
 
 upload: fir
@@ -37,7 +37,9 @@ firzip: infoline clean all fir
 	cp $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR $(topdir)bin/PS.FIR
 	LANG=C echo -e "hdk-$(VER) for $(PLATFORM) fw:$(PLATFORMSUB) build:`date -R`" | \
 	    zip -9jc $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB).zip $(topdir)bin/PS.FIR > $(DEVNULL)
+	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB).zip $(topdir)bin/DISKBOOT.BIN > $(DEVNULL)
 	rm -f $(topdir)bin/PS.FIR
+	rm -f $(topdir)bin/DISKBOOT.BIN
 
 batch-zip:
 	$(MAKE) -s --no-print-directory PLATFORM=a610 PLATFORMSUB=100e firzip

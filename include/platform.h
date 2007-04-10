@@ -26,10 +26,15 @@ typedef struct {
 
 /******************************************************************/
 
+long get_tick_count();
+
+void remount_filesystem();
+void mark_filesystem_bootable();
+
+/******************************************************************/
+
 long get_parameter_data(long id, void *buf, long bufsize);
 long set_parameter_data(long id, void *buf, long bufsize);
-
-long get_tick_count();
 
 long get_next_photo_dirfile_num();
 

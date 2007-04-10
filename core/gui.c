@@ -26,6 +26,7 @@ static void gui_conf_draw();
 static void gui_draw_osd();
 
 static void gui_menuproc_save();
+static void gui_menuproc_mkbootdisk();
 
 #define MENUSTACK_MAXDEPTH 2
 
@@ -69,9 +70,11 @@ CMenuItem root_menu[] = {
     {"Show live histogram", MENUITEM_BOOL, &conf_show_histo },
     {"Scripting parameters ->", MENUITEM_SUBMENU, (int*)script_submenu },
     {"Debug parameters ->", MENUITEM_SUBMENU, (int*)debug_submenu },
+    {"Make card bootable...", MENUITEM_PROC, (int*)gui_menuproc_mkbootdisk },
     {"Save options now...", MENUITEM_PROC, (int*)gui_menuproc_save },
     {0}
 };
+
 
 static CMenuItem *curr_menu;
 static CMenuItemStacked gui_menu_stack[MENUSTACK_MAXDEPTH];
@@ -433,4 +436,9 @@ void gui_draw_osd()
 void gui_menuproc_save()
 {
     conf_save();
+}
+
+void gui_menuproc_mkbootdisk()
+{
+    mark_filesystem_bootable();
 }
