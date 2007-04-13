@@ -77,6 +77,7 @@ SIZE=arm-elf-size
 
 # -msoft-float is used per default but object files are marked as hard-float
 CTHUMB=-mthumb
+
 CFLAGS=-fno-inline -O2 -fno-strict-aliasing
 CFLAGS+=-mthumb-interwork
 CFLAGS+=-I$(topdir)include $(PLFLAGS) $(CPPFLAGS)

@@ -38,13 +38,20 @@ extern long _SetParameterData(long id, void *buf, long size);
 extern void _UpdateMBROnFlash(int driveno, long offset, char *str);
 
 /* standart C library */
-extern int _creat (const char *name, int flags);
+//extern int _creat (const char *name, int flags);
 extern int _open (const char *name, int flags, int mode );
 extern int _close (int fd);
 extern int _write (int fd, void *buffer, long nbytes);
 extern int _read (int fd, void *buffer, long nbytes);
 extern int _lseek (int fd, long offset, int whence);
 extern long _mkdir(const char *dirname);
+
+extern int _Open (const char *name, int flags, int mode );
+extern int _Close (int fd);
+extern int _Write (int fd, void *buffer, long nbytes);
+extern int _Read (int fd, void *buffer, long nbytes);
+extern int _Lseek (int fd, long offset, int whence);
+
 extern int _strcmp(const char *s1, const char *s2);
 extern int _strncmp(const char *s1, const char *s2, long n);
 extern long _strlen(const char *s);

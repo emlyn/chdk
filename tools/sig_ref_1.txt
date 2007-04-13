@@ -55,3 +55,7 @@ Unmount_FileSystem 0xFFC5BAC8
 Mount_FileSystem 0xFFC5B9C0
 UpdateMBROnFlash 0xFFC5BC20
 vsprintf 0xFFEB971C
+Close 0xFFC5C70C
+Open 0xFFC5C6E4
+Read 0xFFC5C7A0
+Write 0xFFC5C7AC

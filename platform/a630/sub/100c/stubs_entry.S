@@ -4,6 +4,7 @@
 // Best match: 92%
 NSTUB(AllocateMemory, 0xffc01ab0)
 NSTUB(close, 0xffef0238)
+NSTUB(Close, 0xffc614e8)
 // Best match: 95%
 NSTUB(CreatePhysicalVram, 0xffd2e820)
 NSTUB(CreateTask, 0xffc11abc)
@@ -44,10 +45,12 @@ NSTUB(mkdir, 0xffc61740)
 NSTUB(Mount_FileSystem, 0xffc60810)
 // ALT: NSTUB(Mount_FileSystem, 0xffc60810) // 17/3
 NSTUB(open, 0xffef087c)
+NSTUB(Open, 0xffc614c0)
 // Best match: 86%
 NSTUB(PhySw_testgpio, 0xffc18964)
 NSTUB(ProtectFile, 0xffc59b04)
 NSTUB(read, 0xffef0298)
+NSTUB(Read, 0xffc6157c)
 NSTUB(RefreshPhysicalScreen, 0xffd7f49c)
 NSTUB(SetParameterData, 0xffd6d774)
 NSTUB(SetPropertyCase, 0xffc14c94)
@@ -69,3 +72,4 @@ NSTUB(Unmount_FileSystem, 0xffc608b4)
 NSTUB(UpdateMBROnFlash, 0xffc60a08)
 NSTUB(vsprintf, 0xffeeefe0)
 NSTUB(write, 0xffef0308)
+NSTUB(Write, 0xffc61588)

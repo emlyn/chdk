@@ -99,23 +99,23 @@ long get_tick_count()
 }*/
 int open (const char *name, int flags, int mode )
 {
-    return _open(name, flags, mode);
+    return _Open(name, flags, mode);
 }
 int close (int fd)
 {
-    return _close(fd);
+    return _Close(fd);
 }
 int write (int fd, void *buffer, long nbytes)
 {
-    return _write(fd, buffer, nbytes);
+    return _Write(fd, buffer, nbytes);
 }
 int read (int fd, void *buffer, long nbytes)
 {
-    return _read(fd, buffer, nbytes);
+    return _Read(fd, buffer, nbytes);
 }
 int lseek (int fd, long offset, int whence)
 {
-    return _lseek(fd, offset, whence);
+    return _lseek(fd, offset, whence); /* yes, it's lower-case lseek here since Lseek calls just lseek (A610) */
 }
 long mkdir(const char *dirname)
 {
