@@ -2,6 +2,8 @@ topdir=../
 
 include $(topdir)makefile.inc
 
+CFLAGS+=$(CTHUMB)
+
 # warning: library order matters!
 LDLIBS=-lc -lgcc
 LDOPTS=-nostdlib -Wl,--allow-shlib-undefined -Wl,-T,$(topdir)tools/link.RAM
@@ -22,7 +24,7 @@ main.elf: $(OBJS) $(topdir)platform/$(PLATFORM)/libplatform.a \
 	@echo \-\> $@
 	$(CC) $(CFLAGS) -o $@ $^   $(LDLIBS) $(LDFLAGS) $(LDOPTS)
 	( $(NM) $@ | grep ' U ' > $@.syms ) && exit 1 || exit 0
+	$(SIZE) $@
 
 clean:
 	rm -f $(OBJS) main.bin main.elf main.dump main.elf.syms
- 

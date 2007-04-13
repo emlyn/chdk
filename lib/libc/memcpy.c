@@ -12,14 +12,10 @@ Copies @var{length} bytes from memory region @var{in} to region
 
 */
 
-#include <ansidecl.h>
-#include <stddef.h>
+void *memmove (void*, const void*, long);
 
-void bcopy (const void*, void*, size_t);
-
-PTR
-memcpy (PTR out, const PTR in, size_t length)
+void*
+memcpy (void* out, const void* in, long length)
 {
-    bcopy(in, out, length);
-    return out;
+    return memmove(out, in, length);
 }

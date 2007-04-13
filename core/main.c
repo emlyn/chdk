@@ -11,7 +11,6 @@
 
 static long ramdump_num;
 static char fn[64];
-static long (*prev_hhandler)(long a);
 
 #if 0
 int taskop_txt_p;
@@ -56,16 +55,16 @@ void dump_memory()
 	mkdir(fn);
 
 	sprintf(fn, FN_RAWDIR "/" "DMP_%04d.JPG", dirfilenum >> 16, ++ramdump_num);
-	fd = fopen(fn, "w+");
+	fd = open(fn, O_WRONLY|O_CREAT, 0777);
 	if (fd >= 0) {
-	    fwrite((void*)0, 1, 0x1900, fd);
-	    fwrite((void*)0x1900, 1, 32*1024*1024-0x1900, fd);
-	    fclose(fd);
+	    write(fd, (void*)0, 0x1900);
+	    write(fd, (void*)0x1900, 32*1024*1024-0x1900);
+	    close(fd);
 	}
     finished();
 }
 
-static void saverawfile()
+void core_save_raw_file()
 {
     int fd;
     long dirfilenum;
@@ -86,10 +85,10 @@ static void saverawfile()
 	mkdir(fn);
 
 	sprintf(fn, FN_RAWF, dirfilenum >> 16, dirfilenum & 0xffff);
-	fd = fopen(fn, "w+");
+	fd = open(fn, O_WRONLY|O_CREAT, 0777);
 	if (fd >= 0) {
-	    fwrite(hook_raw_image_addr(), 1, hook_raw_size(), fd);
-	    fclose(fd);
+	    write(fd, hook_raw_image_addr(), hook_raw_size());
+	    close(fd);
 	}
 	finished();
     }
@@ -97,28 +96,18 @@ static void saverawfile()
 }
 
 
-static void myhook1(long a)
-{
-    // only this caller allowed
-    if (__builtin_return_address(0) == hook_raw_ret_addr()){
-	saverawfile();
-    }
-    prev_hhandler(a);
-}
-
 
 void core_spytask()
 {
-    long *p = hook_raw_fptr();
     int cnt = 0;
 
-    SleepTask(1000);
+    msleep(2000);
 
     gui_init();
     conf_restore();
 
     started();
-    SleepTask(50);
+    msleep(50);
     finished();
 
     while (1){
@@ -127,17 +116,12 @@ void core_spytask()
 
 	histogram_process();
 
-	taskLock();
-	if ((*p) != (long)myhook1){
-	    prev_hhandler = (void*)*p;
-	    *p=(long)myhook1;
-	}
-	taskUnlock();
+	hook_raw_install();
 
 	if ((state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) && (!shooting_in_progress()))
 	    state_shooting_progress = SHOOTING_PROGRESS_DONE;
 
-	SleepTask(20);
+	msleep(20);
     }
 }
 

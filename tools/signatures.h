@@ -18,36 +18,6 @@ static FuncSig func_sig_AllocateMemory_1[] = {
 	/* 14/32 */
 };
 
-static FuncSig func_sig_Close_1[] = {
-	{   1, 0xe1a04000, 0xfdffffff },
-	{   2, 0xeb000000, 0xff000000 },
-	{   3, 0xe1a05000, 0xfdffffff },
-	{   4, 0xe1a00004, 0xfdffffff },
-	{   5, 0xeb000000, 0xff000000 },
-	{   6, 0xe1a00005, 0xfdffffff },
-	{   9, 0xe1a04000, 0xfdffffff },
-	{  10, 0xe04dd004, 0xfdffffff },
-	{  11, 0xeb000000, 0xff000000 },
-	{  12, 0xe1a05000, 0xfdffffff },
-	{  13, 0xe1a00004, 0xfdffffff },
-	{  14, 0xeb000000, 0xff000000 },
-	{  15, 0xe1550000, 0xfdffffff },
-	{  16, 0xe1a0600d, 0xfdffffff },
-	{  17, 0xe1a01004, 0xfdffffff },
-	{  18, 0xe1a00006, 0xfdffffff },
-	{  19, 0x1a000000, 0xff000000 },
-	{  20, 0xeb000000, 0xff000000 },
-	{  21, 0xe1a00006, 0xfdffffff },
-	{  22, 0xeb000000, 0xff000000 },
-	{  23, 0xe1500000, 0xfdffffff },
-	{  25, 0xe1a00005, 0xfdffffff },
-	{  26, 0xe08dd004, 0xfdffffff },
-	{  28, 0xe1a0f00e, 0xfdffffff },
-	/* RET found, stopping... */
-	{ -1, -1, -1 },
-	/* 24/32 */
-};
-
 static FuncSig func_sig_close_1[] = {
 	{   1, 0xe04dd00c, 0xfdffffff },
 	{   3, 0xe1a09000, 0xfdffffff },
@@ -158,103 +128,6 @@ static FuncSig func_sig_ExitTask_1[] = {
 	/* 24/32 */
 };
 
-static FuncSig func_sig_Fclose_Fut_1[] = {
-	{   1, 0xe0506000, 0xfdffffff },
-	{   2, 0xe04dd054, 0xfdffffff },
-	{   4, 0x0a000000, 0xff000000 },
-	{   5, 0xe0864020, 0xfdffffff },
-	{   6, 0xe1a00004, 0xfdffffff },
-	{   7, 0xeb000000, 0xff000000 },
-	{   8, 0xe1500020, 0xfdffffff },
-	{   9, 0xd08d5030, 0xfdffffff },
-	{  10, 0xd1a08005, 0xfdffffff },
-	{  11, 0xda000000, 0xff000000 },
-	{  12, 0xe0800001, 0xfdffffff },
-	{  13, 0xeb000000, 0xff000000 },
-	{  14, 0xe1a05000, 0xfdffffff },
-	{  15, 0xe08d8030, 0xfdffffff },
-	{  16, 0xe1a01004, 0xfdffffff },
-	{  17, 0xe1a00005, 0xfdffffff },
-	{  18, 0xeb000000, 0xff000000 },
-	{  19, 0xe1a00005, 0xfdffffff },
-	{  21, 0xeb000000, 0xff000000 },
-	{  22, 0xe1a07000, 0xfdffffff },
-	{  23, 0xe1a00005, 0xfdffffff },
-	{  24, 0xeb000000, 0xff000000 },
-	{  25, 0xe1a00006, 0xfdffffff },
-	{  26, 0xeb000000, 0xff000000 },
-	{  27, 0xe1540000, 0xfdffffff },
-	{  28, 0xe1a04000, 0xfdffffff },
-	{  29, 0x0a000000, 0xff000000 },
-	{  30, 0xe1a00005, 0xfdffffff },
-	{  31, 0xeb000000, 0xff000000 },
-	{ -1, -1, -1 },
-	/* 29/32 */
-};
-
-static FuncSig func_sig_Fopen_Fut_1[] = {
-	{   1, 0xe1a04000, 0xfdffffff },
-	{   2, 0xe1a05001, 0xfdffffff },
-	{   3, 0xeb000000, 0xff000000 },
-	{   4, 0xe1a06000, 0xfdffffff },
-	{   5, 0xe1a00004, 0xfdffffff },
-	{   6, 0xeb000000, 0xff000000 },
-	{   7, 0xe1a01005, 0xfdffffff },
-	{   8, 0xe1a00004, 0xfdffffff },
-	{   9, 0xeb000000, 0xff000000 },
-	{  10, 0xe1a04000, 0xfdffffff },
-	{  11, 0xe1a00006, 0xfdffffff },
-	{  12, 0xeb000000, 0xff000000 },
-	{  13, 0xe1a00004, 0xfdffffff },
-	{  16, 0xe0506000, 0xfdffffff },
-	{  17, 0xe04dd054, 0xfdffffff },
-	{  19, 0x0a000000, 0xff000000 },
-	{  20, 0xe0864020, 0xfdffffff },
-	{  21, 0xe1a00004, 0xfdffffff },
-	{  22, 0xeb000000, 0xff000000 },
-	{  23, 0xe1500020, 0xfdffffff },
-	{  24, 0xd08d5030, 0xfdffffff },
-	{  25, 0xd1a08005, 0xfdffffff },
-	{  26, 0xda000000, 0xff000000 },
-	{  27, 0xe0800001, 0xfdffffff },
-	{  28, 0xeb000000, 0xff000000 },
-	{  29, 0xe1a05000, 0xfdffffff },
-	{  30, 0xe08d8030, 0xfdffffff },
-	{  31, 0xe1a01004, 0xfdffffff },
-	{ -1, -1, -1 },
-	/* 28/32 */
-};
-
-static FuncSig func_sig_Fread_Fut_1[] = {
-	{   1, 0xe0537000, 0xfdffffff },
-	{   2, 0xe1a08000, 0xfdffffff },
-	{   3, 0xe1a04001, 0xfdffffff },
-	{   4, 0xe0870020, 0xfdffffff },
-	{   5, 0xe1a06002, 0xfdffffff },
-	{   8, 0xeb000000, 0xff000000 },
-	{   9, 0xe1a01004, 0xfdffffff },
-	{  10, 0xe1a05000, 0xfdffffff },
-	{  11, 0xe1a02006, 0xfdffffff },
-	{  12, 0xe1a03007, 0xfdffffff },
-	{  13, 0xe1a00008, 0xfdffffff },
-	{  14, 0xeb000000, 0xff000000 },
-	{  15, 0xe1a04000, 0xfdffffff },
-	{  16, 0xe1a00005, 0xfdffffff },
-	{  17, 0xeb000000, 0xff000000 },
-	{  18, 0xe1a00004, 0xfdffffff },
-	{  21, 0xe0537000, 0xfdffffff },
-	{  22, 0xe1a08000, 0xfdffffff },
-	{  23, 0xe1a04001, 0xfdffffff },
-	{  24, 0xe0870020, 0xfdffffff },
-	{  25, 0xe1a06002, 0xfdffffff },
-	{  28, 0xeb000000, 0xff000000 },
-	{  29, 0xe1a01004, 0xfdffffff },
-	{  30, 0xe1a05000, 0xfdffffff },
-	{  31, 0xe1a02006, 0xfdffffff },
-	{ -1, -1, -1 },
-	/* 25/32 */
-};
-
 static FuncSig func_sig_FreeMemory_1[] = {
 	{   2, 0xea000000, 0xff000000 },
 	{   5, 0x00000064, 0xfdffffff },
@@ -272,66 +145,6 @@ static FuncSig func_sig_FreeMemory_1[] = {
 	{  29, 0xea000000, 0xff000000 },
 	{ -1, -1, -1 },
 	/* 14/32 */
-};
-
-static FuncSig func_sig_Fseek_Fut_1[] = {
-	{   1, 0xe0507000, 0xfdffffff },
-	{   2, 0xe0870020, 0xfdffffff },
-	{   3, 0xe1a04001, 0xfdffffff },
-	{   4, 0xe1a06002, 0xfdffffff },
-	{   7, 0xeb000000, 0xff000000 },
-	{   8, 0xe1a01004, 0xfdffffff },
-	{   9, 0xe1a05000, 0xfdffffff },
-	{  10, 0xe1a02006, 0xfdffffff },
-	{  11, 0xe1a00007, 0xfdffffff },
-	{  12, 0xeb000000, 0xff000000 },
-	{  13, 0xe1a04000, 0xfdffffff },
-	{  14, 0xe1a00005, 0xfdffffff },
-	{  15, 0xeb000000, 0xff000000 },
-	{  16, 0xe1a00004, 0xfdffffff },
-	{  19, 0xe0504000, 0xfdffffff },
-	{  20, 0xe0840020, 0xfdffffff },
-	{  23, 0xeb000000, 0xff000000 },
-	{  24, 0xe1a05000, 0xfdffffff },
-	{  25, 0xe1a00004, 0xfdffffff },
-	{  26, 0xeb000000, 0xff000000 },
-	{  27, 0xe1a04000, 0xfdffffff },
-	{  28, 0xe1a00005, 0xfdffffff },
-	{  29, 0xeb000000, 0xff000000 },
-	{  30, 0xe1a00004, 0xfdffffff },
-	{ -1, -1, -1 },
-	/* 24/32 */
-};
-
-static FuncSig func_sig_Fwrite_Fut_1[] = {
-	{   1, 0xe0537000, 0xfdffffff },
-	{   2, 0xe1a08000, 0xfdffffff },
-	{   3, 0xe1a04001, 0xfdffffff },
-	{   4, 0xe0870020, 0xfdffffff },
-	{   5, 0xe1a06002, 0xfdffffff },
-	{   8, 0xeb000000, 0xff000000 },
-	{   9, 0xe1a01004, 0xfdffffff },
-	{  10, 0xe1a05000, 0xfdffffff },
-	{  11, 0xe1a02006, 0xfdffffff },
-	{  12, 0xe1a03007, 0xfdffffff },
-	{  13, 0xe1a00008, 0xfdffffff },
-	{  14, 0xeb000000, 0xff000000 },
-	{  15, 0xe1a04000, 0xfdffffff },
-	{  16, 0xe1a00005, 0xfdffffff },
-	{  17, 0xeb000000, 0xff000000 },
-	{  18, 0xe1a00004, 0xfdffffff },
-	{  21, 0xe0524000, 0xfdffffff },
-	{  22, 0xe1a06000, 0xfdffffff },
-	{  23, 0xe1a05001, 0xfdffffff },
-	{  24, 0xe0840020, 0xfdffffff },
-	{  25, 0x01a00004, 0xfdffffff },
-	{  27, 0xeb000000, 0xff000000 },
-	{  28, 0xe1a01005, 0xfdffffff },
-	{  29, 0xe1a02004, 0xfdffffff },
-	{  30, 0xe1a05000, 0xfdffffff },
-	{  31, 0xe1a00006, 0xfdffffff },
-	{ -1, -1, -1 },
-	/* 26/32 */
 };
 
 static FuncSig func_sig_GetSystemTime_1[] = {
@@ -707,38 +520,6 @@ static FuncSig func_sig_mkdir_1[] = {
 	/* 31/32 */
 };
 
-static FuncSig func_sig_Open_1[] = {
-	{   1, 0xe1a04001, 0xfdffffff },
-	{   2, 0xe1a05000, 0xfdffffff },
-	{   3, 0xeb000000, 0xff000000 },
-	{   4, 0xe1a01005, 0xfdffffff },
-	{   5, 0xe1a02004, 0xfdffffff },
-	{   6, 0xe1a05000, 0xfdffffff },
-	{   7, 0xeb000000, 0xff000000 },
-	{   8, 0xe1a00005, 0xfdffffff },
-	{  11, 0xe1a04000, 0xfdffffff },
-	{  12, 0xeb000000, 0xff000000 },
-	{  13, 0xe1a05000, 0xfdffffff },
-	{  14, 0xe1a00004, 0xfdffffff },
-	{  15, 0xeb000000, 0xff000000 },
-	{  16, 0xe1a00005, 0xfdffffff },
-	{  19, 0xe1a04000, 0xfdffffff },
-	{  20, 0xe04dd004, 0xfdffffff },
-	{  21, 0xeb000000, 0xff000000 },
-	{  22, 0xe1a05000, 0xfdffffff },
-	{  23, 0xe1a00004, 0xfdffffff },
-	{  24, 0xeb000000, 0xff000000 },
-	{  25, 0xe1550000, 0xfdffffff },
-	{  26, 0xe1a0600d, 0xfdffffff },
-	{  27, 0xe1a01004, 0xfdffffff },
-	{  28, 0xe1a00006, 0xfdffffff },
-	{  29, 0x1a000000, 0xff000000 },
-	{  30, 0xeb000000, 0xff000000 },
-	{  31, 0xe1a00006, 0xfdffffff },
-	{ -1, -1, -1 },
-	/* 27/32 */
-};
-
 static FuncSig func_sig_open_1[] = {
 	{   0, 0xe1a03000, 0xfdffffff },
 	{   1, 0xea000000, 0xff000000 },
@@ -828,33 +609,6 @@ static FuncSig func_sig_ProtectFile_1[] = {
 	/* 24/32 */
 };
 
-static FuncSig func_sig_Read_1[] = {
-	{   2, 0xea000000, 0xff000000 },
-	{   4, 0xe1a04000, 0xfdffffff },
-	{   5, 0xeb000000, 0xff000000 },
-	{   6, 0xe1a05000, 0xfdffffff },
-	{   7, 0xe1a00004, 0xfdffffff },
-	{   8, 0xeb000000, 0xff000000 },
-	{   9, 0xe1a00005, 0xfdffffff },
-	{  12, 0xe1a04000, 0xfdffffff },
-	{  13, 0xe1a05001, 0xfdffffff },
-	{  14, 0xeb000000, 0xff000000 },
-	{  15, 0xe1a01005, 0xfdffffff },
-	{  16, 0xe1a06000, 0xfdffffff },
-	{  17, 0xe1a00004, 0xfdffffff },
-	{  18, 0xeb000000, 0xff000000 },
-	{  19, 0xe1a00006, 0xfdffffff },
-	{  23, 0xea000000, 0xff000000 },
-	{  25, 0xe04dd048, 0xfdffffff },
-	{  26, 0xe1a05001, 0xfdffffff },
-	{  27, 0xe1a0100d, 0xfdffffff },
-	{  28, 0xeb000000, 0xff000000 },
-	{  29, 0xe1500000, 0xfdffffff },
-	{  31, 0x1a000000, 0xff000000 },
-	{ -1, -1, -1 },
-	/* 22/32 */
-};
-
 static FuncSig func_sig_read_1[] = {
 	{   1, 0xe04dd00c, 0xfdffffff },
 	{   3, 0xe1a09000, 0xfdffffff },
@@ -882,19 +636,6 @@ static FuncSig func_sig_read_1[] = {
 	{  31, 0xe1a09000, 0xfdffffff },
 	{ -1, -1, -1 },
 	/* 24/32 */
-};
-
-static FuncSig func_sig_sprintf_1[] = {
-	{   4, 0xe08d100c, 0xfdffffff },
-	{   5, 0xe08d3004, 0xfdffffff },
-	{   6, 0xeb000000, 0xff000000 },
-	{   8, 0xe1a03000, 0xfdffffff },
-	{   9, 0xe1a01000, 0xfdffffff },
-	{  12, 0xe08dd010, 0xfdffffff },
-	{  13, 0xe1a0f00e, 0xfdffffff },
-	/* RET found, stopping... */
-	{ -1, -1, -1 },
-	/* 7/32 */
 };
 
 static FuncSig func_sig_strcmp_1[] = {
@@ -1102,33 +843,6 @@ static FuncSig func_sig_taskUnlock_1[] = {
 	{  31, 0xe1a0003a, 0xfdffffff },
 	{ -1, -1, -1 },
 	/* 15/32 */
-};
-
-static FuncSig func_sig_Write_1[] = {
-	{   1, 0xe1a04000, 0xfdffffff },
-	{   2, 0xeb000000, 0xff000000 },
-	{   3, 0xe1a05000, 0xfdffffff },
-	{   4, 0xe1a00004, 0xfdffffff },
-	{   5, 0xeb000000, 0xff000000 },
-	{   6, 0xe1a00005, 0xfdffffff },
-	{   9, 0xe1a04000, 0xfdffffff },
-	{  10, 0xe1a05001, 0xfdffffff },
-	{  11, 0xeb000000, 0xff000000 },
-	{  12, 0xe1a01005, 0xfdffffff },
-	{  13, 0xe1a06000, 0xfdffffff },
-	{  14, 0xe1a00004, 0xfdffffff },
-	{  15, 0xeb000000, 0xff000000 },
-	{  16, 0xe1a00006, 0xfdffffff },
-	{  20, 0xea000000, 0xff000000 },
-	{  22, 0xe04dd048, 0xfdffffff },
-	{  23, 0xe1a05001, 0xfdffffff },
-	{  24, 0xe1a0100d, 0xfdffffff },
-	{  25, 0xeb000000, 0xff000000 },
-	{  26, 0xe1500000, 0xfdffffff },
-	{  28, 0x1a000000, 0xff000000 },
-	{  29, 0xe1dd20b8, 0xfdffffff },
-	{ -1, -1, -1 },
-	/* 22/32 */
 };
 
 static FuncSig func_sig_write_1[] = {
@@ -1625,6 +1339,22 @@ static FuncSig func_sig_UpdateMBROnFlash_1[] = {
 	/* 24/32 */
 };
 
+static FuncSig func_sig_vsprintf_1[] = {
+	{   0, 0xe04dd004, 0xfdffffff },
+	{   1, 0xe1a0c002, 0xfdffffff },
+	{   5, 0xe1a00001, 0xfdffffff },
+	{   6, 0xe08d3004, 0xfdffffff },
+	{   7, 0xe1a0100c, 0xfdffffff },
+	{   8, 0xeb000000, 0xff000000 },
+	{  10, 0xe1a03000, 0xfdffffff },
+	{  11, 0xe1a01000, 0xfdffffff },
+	{  14, 0xe08dd004, 0xfdffffff },
+	{  15, 0xe1a0f00e, 0xfdffffff },
+	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 10/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   3, 0xe1550000, 0xfdffffff },
 	{   4, 0xe1a04000, 0xfdffffff },
@@ -1834,7 +1564,6 @@ static FuncSig func_sig_Mount_FileSystem_2[] = {
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory_1 },
 	{ "close", func_sig_close_1 },
-	{ "Close", func_sig_Close_1 },
 	{ "CreatePhysicalVram", func_sig_CreatePhysicalVram_1 },
 	{ "CreateTask", func_sig_CreateTask_1 },
 	{ "CreateTaskStrict", func_sig_CreateTaskStrict_1 },
@@ -1844,12 +1573,7 @@ FuncsList func_list[] = {
 	{ "EnableDispatch", func_sig_EnableDispatch_1 },
 	{ "ExecuteEventProcedure", func_sig_ExecuteEventProcedure_1 },
 	{ "ExitTask", func_sig_ExitTask_1 },
-	{ "Fclose_Fut", func_sig_Fclose_Fut_1 },
-	{ "Fopen_Fut", func_sig_Fopen_Fut_1 },
-	{ "Fread_Fut", func_sig_Fread_Fut_1 },
 	{ "FreeMemory", func_sig_FreeMemory_1 },
-	{ "Fseek_Fut", func_sig_Fseek_Fut_1 },
-	{ "Fwrite_Fut", func_sig_Fwrite_Fut_1 },
 	{ "GetParameterData", func_sig_GetParameterData_1 },
 	{ "GetParameterData", func_sig_GetParameterData_2 },
 	{ "GetPropertyCase", func_sig_GetPropertyCase_1 },
@@ -1877,11 +1601,9 @@ FuncsList func_list[] = {
 	{ "Mount_FileSystem", func_sig_Mount_FileSystem_1 },
 	{ "Mount_FileSystem", func_sig_Mount_FileSystem_2 },
 	{ "open", func_sig_open_1 },
-	{ "Open", func_sig_Open_1 },
 	{ "PhySw_testgpio", func_sig_PhySw_testgpio_1 },
 	{ "ProtectFile", func_sig_ProtectFile_1 },
 	{ "read", func_sig_read_1 },
-	{ "Read", func_sig_Read_1 },
 	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_1 },
 	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_2 },
 	{ "SetParameterData", func_sig_SetParameterData_1 },
@@ -1889,7 +1611,6 @@ FuncsList func_list[] = {
 	{ "SetPropertyCase", func_sig_SetPropertyCase_1 },
 	{ "SetPropertyCase", func_sig_SetPropertyCase_2 },
 	{ "SleepTask", func_sig_SleepTask_1 },
-	{ "sprintf", func_sig_sprintf_1 },
 	{ "strcmp", func_sig_strcmp_1 },
 	{ "strcpy", func_sig_strcpy_1 },
 	{ "strlen", func_sig_strlen_1 },
@@ -1904,7 +1625,7 @@ FuncsList func_list[] = {
 	{ "taskUnlock", func_sig_taskUnlock_1 },
 	{ "Unmount_FileSystem", func_sig_Unmount_FileSystem_1 },
 	{ "UpdateMBROnFlash", func_sig_UpdateMBROnFlash_1 },
+	{ "vsprintf", func_sig_vsprintf_1 },
 	{ "write", func_sig_write_1 },
-	{ "Write", func_sig_Write_1 },
 	{ NULL }
 };

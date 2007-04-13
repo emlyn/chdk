@@ -10,5 +10,7 @@ long kbd_process();
 
 void gui_init();
 
+void core_save_raw_file();
+
 #endif
 

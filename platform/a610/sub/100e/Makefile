@@ -2,6 +2,8 @@ topdir=../../../../
 
 include $(topdir)makefile.inc
 
+CFLAGS+=-DLOW_LEVEL
+
 all: libplatformsub.a
 
 TARGET_PRIMARY = PRIMARY.BIN

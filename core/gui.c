@@ -361,7 +361,6 @@ void gui_conf_draw()
 
 extern long physw_status[3];
 static char osd_buf[32];
-extern long GetPropertyCase(long opt_id, void *buf, long bufsize);
 
 void gui_draw_osd()
 {
@@ -413,7 +412,7 @@ void gui_draw_osd()
 	for (i=0;i<10;i++){
 	    r = 0;
 	    p = debug_propcase_page*10+i;
-	    GetPropertyCase(p, &r, 4);
+	    get_property_case(p, &r, 4);
 	    sprintf(sbuf, "%3d: %d              ", p, r);sbuf[20]=0;
 	    draw_string(64,16+16*i,sbuf);
 	}

@@ -4,14 +4,14 @@
     .globl n; n = a
 
 #define NSTUB(name, addr)\
-    .globl name ;\
-    .weak name ;\
-    name: ;\
+    .globl _##name ;\
+    .weak _##name ;\
+    _##name: ;\
 	ldr  pc, = ## addr
 
 #define NHSTUB(name, addr)\
-    .globl name ;\
-    name: ;\
+    .globl _##name ;\
+    _##name: ;\
 	ldr  pc, = ## addr
 
 #define STUB(addr)\

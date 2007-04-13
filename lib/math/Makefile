@@ -2,6 +2,8 @@ topdir=../../
 
 include $(topdir)makefile.inc
 
+CFLAGS+=$(CTHUMB)
+
 OBJS = ef_log.o ef_sqrt.o
 
 all: libmath.a

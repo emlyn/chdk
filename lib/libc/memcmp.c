@@ -15,11 +15,8 @@ as if comparing unsigned char arrays.
 
 */
 
-#include <ansidecl.h>
-#include <stddef.h>
-
 int
-memcmp (const PTR str1, const PTR str2, size_t count)
+memcmp (const void * str1, const void * str2, long count)
 {
   register const unsigned char *s1 = (const unsigned char*)str1;
   register const unsigned char *s2 = (const unsigned char*)str2;

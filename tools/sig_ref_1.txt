@@ -1,16 +1,10 @@
 AllocateMemory 0xFFC01B1C
-Close 0xFFC5C70C
 close 0xFFEBBE5C
 CreateTaskStrict 0xFFC123B8
 DisableDispatch 0xFFC11074
 EnableDispatch 0xFFC11100
 ExitTask 0xFFC11610
-Fclose_Fut 0xFFC55B6C
-Fopen_Fut 0xFFC55B30
-Fread_Fut 0xFFC55C50
 FreeMemory 0xFFC01B28
-Fseek_Fut 0xFFC55D38
-Fwrite_Fut 0xFFC55CA0
 GetSystemTime 0xFFC04B10
 ints_disable 0xFFC0D5EC
 ints_enable 0xFFC0D5F8
@@ -27,13 +21,10 @@ memcmp 0xFFEB59D0
 memcpy 0xFFEB5A0C
 memset 0xFFEB5A84
 mkdir 0xFFC5C8F4
-Open 0xFFC5C6E4
 open 0xFFEBC4A0
 PhySw_testgpio 0xFFC17658
 ProtectFile 0xFFC55198
-Read 0xFFC5C7A0
 read 0xFFEBBEBC
-sprintf 0xFFEB9780
 strcmp 0xFFEB5AF4
 strcpy 0xFFEB5C88
 strlen 0xFFEB5DEC
@@ -44,7 +35,6 @@ taskName 0xFFECC9D8
 taskResume 0xFFECCDBC
 taskSuspend 0xFFECCBE8
 taskUnlock 0xFFECD244
-Write 0xFFC5C7AC
 write 0xFFEBBF2C
 taskCreateHookAdd 0xFFEC251C
 taskDeleteHookAdd 0xFFEC2458
@@ -64,3 +54,4 @@ iosDrvInstall 0xFFEBD340
 Unmount_FileSystem 0xFFC5BAC8
 Mount_FileSystem 0xFFC5B9C0
 UpdateMBROnFlash 0xFFC5BC20
+vsprintf 0xFFEB971C

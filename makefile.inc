@@ -1,4 +1,4 @@
-VER=test1-pre10
+VER=test1-pre11
 
 PLATFORM=a610
 PLATFORMSUB=100e
@@ -73,9 +73,12 @@ STRIP=arm-elf-strip
 NM=arm-elf-nm
 AR=arm-elf-ar
 RANLIB=arm-elf-ranlib
+SIZE=arm-elf-size
 
 # -msoft-float is used per default but object files are marked as hard-float
+CTHUMB=-mthumb
 CFLAGS=-fno-inline -O2 -fno-strict-aliasing
+CFLAGS+=-mthumb-interwork
 CFLAGS+=-I$(topdir)include $(PLFLAGS) $(CPPFLAGS)
 CFLAGS+=-DPLATFORM=\"$(PLATFORM)\" -DPLATFORMSUB=\"$(PLATFORMSUB)\" -DHDK_VERSION=\"$(VER)\"
 CFLAGS+=-Wall -Wno-unused -Wno-format

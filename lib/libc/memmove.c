@@ -1,25 +1,63 @@
-/* Wrapper to implement ANSI C's memmove using BSD's bcopy. */
-/* This function is in the public domain.  --Per Bothner. */
-
 /*
+FUNCTION
+	<<memmove>>---move possibly overlapping memory
 
-@deftypefn Supplemental void* memmove (void *@var{from}, const void *@var{to}, size_t @var{count})
+INDEX
+	memmove
 
-Copies @var{count} bytes from memory area @var{from} to memory area
-@var{to}, returning a pointer to @var{to}.
+ANSI_SYNOPSIS
+	#include <string.h>
+	void *memmove(void *<[dst]>, const void *<[src]>, size_t <[length]>);
 
-@end deftypefn
+TRAD_SYNOPSIS
+	#include <string.h>
+	void *memmove(<[dst]>, <[src]>, <[length]>)
+	void *<[dst]>;
+	void *<[src]>;
+	size_t <[length]>;
 
+DESCRIPTION
+	This function moves <[length]> characters from the block of
+	memory starting at <<*<[src]>>> to the memory starting at
+	<<*<[dst]>>>. <<memmove>> reproduces the characters correctly
+	at <<*<[dst]>>> even if the two areas overlap.
+
+
+RETURNS
+	The function returns <[dst]> as passed.
+
+PORTABILITY
+<<memmove>> is ANSI C.
+
+<<memmove>> requires no supporting OS subroutines.
+
+QUICKREF
+	memmove ansi pure
 */
 
-#include <ansidecl.h>
-#include <stddef.h>
-
-void bcopy (const void*, void*, size_t);
-
-PTR
-memmove (PTR s1, const PTR s2, size_t n)
+void*
+memmove (void *dst_void,  const void *src_void, long length)
 {
-  bcopy (s2, s1, n);
-  return s1;
+  char *dst = dst_void;
+  const char *src = src_void;
+
+  if (src < dst && dst < src + length)
+    {
+      /* Have to copy backwards */
+      src += length;
+      dst += length;
+      while (length--)
+	{
+	  *--dst = *--src;
+	}
+    }
+  else
+    {
+      while (length--)
+	{
+	  *dst++ = *src++;
+	}
+    }
+
+  return dst_void;
 }

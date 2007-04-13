@@ -24,3 +24,28 @@ void *vid_get_viewport_live_fb()
 {
     return (void*)0x10670d50;
 }
+
+void *vid_get_bitmap_fb()
+{
+    return (void*)0x103C79A0;
+}
+
+void *vid_get_viewport_fb()
+{
+    return (void*)0x10559570;
+}
+
+long vid_get_bitmap_width()
+{
+    return 360;
+}
+
+long vid_get_bitmap_height()
+{
+    return 240;
+}
+
+long vid_is_bitmap_shown()
+{
+    return 1;
+}

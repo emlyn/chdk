@@ -1,13 +1,6 @@
+#include "lolevel.h"
 #include "platform.h"
 #include "core.h"
-
-/* VxWorks stuff */
-extern long sysMemTopPtr;
-extern long sysPhysMemTopPtr;
-extern int taskCreateHookAdd (void *createHook);
-extern int taskDeleteHookAdd (void *deleteHook);
-extern long iosDevAdd(void*,void*,int);
-extern long iosDrvInstall(void*,void*,void*,void*,void*,void*,void*);
 
 /* Ours stuff */
 extern long wrs_kernel_bss_start;
@@ -115,18 +108,18 @@ void  h_usrKernelInit()
 
 static long drv_struct[16];
  
-long dh_err()
+static long dh_err()
 {
     return -1;
 }
 
-void drv_self_hide()
+static void drv_self_hide()
 {
     long drvnum;
     
-    drvnum = iosDrvInstall(dh_err,dh_err,dh_err,dh_err,dh_err,dh_err,dh_err);
+    drvnum = _iosDrvInstall(dh_err,dh_err,dh_err,dh_err,dh_err,dh_err,dh_err);
     if (drvnum >= 0)
-	iosDevAdd(drv_struct, "A/DISKBOOT.BIN", drvnum);
+	_iosDevAdd(drv_struct, "A/DISKBOOT.BIN", drvnum);
 }
 
 
@@ -153,8 +146,8 @@ void  h_usrRoot()
 	"BL      sub_FFC01A18\n"
     );
 
-    taskCreateHookAdd(createHook);
-    taskDeleteHookAdd(deleteHook);
+    _taskCreateHookAdd(createHook);
+    _taskDeleteHookAdd(deleteHook);
 
     drv_self_hide();
 

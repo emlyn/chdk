@@ -2,6 +2,8 @@ topdir=../../
 
 include $(topdir)makefile.inc
 
+CFLAGS+=$(CTHUMB)
+
 OBJS = camera_functions.o tokenizer.o ubasic.o
 
 all: libubasic.a

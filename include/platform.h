@@ -36,6 +36,11 @@ void mark_filesystem_bootable();
 long get_parameter_data(long id, void *buf, long bufsize);
 long set_parameter_data(long id, void *buf, long bufsize);
 
+long get_property_case(long id, void *buf, long bufsize);
+long set_property_case(long id, void *buf, long bufsize);
+
+long get_file_counter();
+long get_file_next_counter();
 long get_next_photo_dirfile_num();
 
 /******************************************************************/
@@ -50,6 +55,7 @@ long kbd_get_clicked_key();
 
 /******************************************************************/
 
+long vid_is_bitmap_shown();
 void *vid_get_bitmap_fb();
 long vid_get_bitmap_width();
 long vid_get_bitmap_height();
@@ -63,6 +69,7 @@ void *hook_raw_fptr();
 void *hook_raw_ret_addr();
 char *hook_raw_image_addr();
 long hook_raw_size();
+void hook_raw_install();
 
 /******************************************************************/
 
