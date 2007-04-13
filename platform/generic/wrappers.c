@@ -113,10 +113,10 @@ int read (int fd, void *buffer, long nbytes)
 {
     return _Read(fd, buffer, nbytes);
 }
-int lseek (int fd, long offset, int whence)
-{
-    return _lseek(fd, offset, whence); /* yes, it's lower-case lseek here since Lseek calls just lseek (A610) */
-}
+//int lseek (int fd, long offset, int whence)
+//{
+//    return _lseek(fd, offset, whence); /* yes, it's lower-case lseek here since Lseek calls just lseek (A610) */
+//}
 long mkdir(const char *dirname)
 {
     return _mkdir(dirname);

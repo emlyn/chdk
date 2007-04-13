@@ -7,7 +7,7 @@
 #include "histogram.h"
 
 #define FN_RAWDIR   "A/DCIM/%03dCANON"
-#define FN_RAWF     (FN_RAWDIR "/" "CRW_%04d.JPG")
+#define FN_RAWF     (FN_RAWDIR "/" "CRW_%04d.CRW")
 
 static long ramdump_num;
 static char fn[64];
@@ -64,16 +64,25 @@ void dump_memory()
     finished();
 }
 
-void core_save_raw_file()
+static long raw_data_available;
+
+/* called from another process */
+void core_rawdata_available()
+{
+    raw_data_available = 1;
+}
+
+static void process_rawsave()
 {
     int fd;
     long dirfilenum;
 
+#if 0
     // got here second time in a row. Skip second RAW saveing.
     if (state_shooting_progress == SHOOTING_PROGRESS_PROCESSING){
 	return;
     }
-
+#endif
     state_shooting_progress = SHOOTING_PROGRESS_PROCESSING;
 
     if (conf_save_raw){
@@ -90,11 +99,10 @@ void core_save_raw_file()
 	    write(fd, hook_raw_image_addr(), hook_raw_size());
 	    close(fd);
 	}
+
 	finished();
     }
-
 }
-
 
 
 void core_spytask()
@@ -111,6 +119,14 @@ void core_spytask()
     finished();
 
     while (1){
+
+	if (raw_data_available){
+	    process_rawsave();
+	    hook_raw_save_complete();
+	    raw_data_available = 0;
+	    continue;
+	}
+
 	if (((cnt++) & 3) == 0)
 	    gui_redraw();
 

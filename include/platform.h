@@ -70,6 +70,7 @@ void *hook_raw_ret_addr();
 char *hook_raw_image_addr();
 long hook_raw_size();
 void hook_raw_install();
+void hook_raw_save_complete();
 
 /******************************************************************/
 

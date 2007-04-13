@@ -7,10 +7,10 @@ long get_next_photo_dirfile_num()
     long tmp;
     long dirnum, filenum;
 
-    get_parameter_data(0x2f, &tmp, 4);
+    tmp = get_file_next_counter();
 
     dirnum = (tmp>>18)&0x3FF;
-    filenum = ((tmp>>4)&0x3FFF) + 1;
+    filenum = ((tmp>>4)&0x3FFF);
 
     if ((filenum % 100) == 0){
 	dirnum++;
