@@ -89,17 +89,13 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f()
 
 void my_kbd_read_keys()
 {
-    volatile long *mmio1 = (void*)0xc0220204;
-    volatile long *mmio2 = (void*)0xc0220208;
-
     kbd_prev_state[0] = kbd_new_state[0];
     kbd_prev_state[1] = kbd_new_state[1];
     kbd_prev_state[2] = kbd_new_state[2];
 
     _kbd_pwr_on();
-    kbd_new_state[0] = 0;
-    kbd_new_state[1] = *mmio1;
-    kbd_new_state[2] = *mmio2 & 0xffff;
+
+    kbd_fetch_data(kbd_new_state);
 
 #if 0
     if ((new_state[2] & 0x00001000 /* print button */) == 0 )

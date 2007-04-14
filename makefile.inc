@@ -1,4 +1,4 @@
-VER=test2-pre11
+VER=test1-pre12
 
 PLATFORM=a610
 PLATFORMSUB=100e

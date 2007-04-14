@@ -20,3 +20,13 @@ static KeyMap keymap[] = {
 	{ 0, 0 }
 };
 
+void kbd_fetch_data(long *dst)
+{
+    volatile long *mmio1 = (void*)0xc0220204;
+    volatile long *mmio2 = (void*)0xc0220208;
+
+    dst[0] = 0;
+    dst[1] = *mmio1;
+    dst[2] = *mmio2 & 0xffff;
+}
+

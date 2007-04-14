@@ -78,4 +78,6 @@ extern long physw_status[3];
 void __attribute__((naked,noinline))
     mykbd_task(long ua, long ub, long uc, long ud, long ue, long uf);
 
+void kbd_fetch_data(long *dst);
+
 #endif

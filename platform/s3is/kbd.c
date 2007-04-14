@@ -20,3 +20,10 @@ static KeyMap keymap[] = {
 	{ 0, 0 }
 };
 
+// just use an original one
+extern void platformsub_kbd_fetch_data(long*);
+void kbd_fetch_data(long *dst)
+{
+    _platformsub_kbd_fetch_data(dst);
+}
+
