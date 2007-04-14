@@ -1,0 +1,1 @@
+#include "../generic/main.c"
