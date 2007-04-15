@@ -21,5 +21,5 @@ long get_next_photo_dirfile_num()
 
 long get_file_next_counter()
 {
-    return ((get_file_counter()>>4)+1)<<4;
+    return /*((get_file_counter()>>4)+1)<<4*/ 0x1900010;
 }
