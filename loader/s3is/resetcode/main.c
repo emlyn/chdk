@@ -57,6 +57,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
 	"STR     R1, [R2,#0xEC]\n"
 	"STR     R1, [R2,#0xFC]\n"
 
+#if 0
 	"MOV     R1, #0x78\n"
 	"MCR     p15, 0, R1,c1,c0\n"
 	"MOV     R1, #0\n"
@@ -76,6 +77,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
 	"LDR     R1, =0x12345678\n"
 	"ADD     R3, R3, #0x4000000C\n"
 	"STR     R1, [R3]\n"
+#endif
 
 	"MOV     SP, #0x1900\n"
 	"MOV     LR, PC\n"
