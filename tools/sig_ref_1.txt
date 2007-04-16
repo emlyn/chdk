@@ -59,3 +59,10 @@ Close 0xFFC5C70C
 Open 0xFFC5C6E4
 Read 0xFFC5C7A0
 Write 0xFFC5C7AC
+memPartAlloc 0xFFEBEE28
+memPartFindMax 0xFFEBDB68
+_pow 0xFFEA8F74
+_log 0xFFEA83DC
+_log10 0xFFEA8A84
+_sqrt 0xFFEAD2C0
+GetCurrentTargetDistance 0xFFE736BC

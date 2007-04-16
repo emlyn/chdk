@@ -2,6 +2,9 @@
 
 #include "../generic/shooting.c"
 
+const int dof_tbl[] = {7300, 8460, 9565, 10835, 12565, 14926, 17342, 21709, 29200};
+const int dof_tbl_size = sizeof(dof_tbl)/sizeof(dof_tbl[0]);
+
 long get_next_photo_dirfile_num()
 {
     long tmp;

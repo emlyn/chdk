@@ -4,6 +4,36 @@
 #define SSID_INVALID (-32767)
 #define ASID_INVALID (-32767)
 
+#define MODE_MASK               0x0300
+#define MODE_REC                0x0100
+#define MODE_PLAY               0x0200
+
+#define MODE_SHOOTING_MASK      0x00FF
+#define MODE_AUTO               1
+#define MODE_P                  2
+#define MODE_TV                 3
+#define MODE_AV                 4
+#define MODE_M                  5
+#define MODE_PORTRAIT           6
+#define MODE_NIGHT              7
+#define MODE_LANDSCAPE          8
+#define MODE_VIDEO              9
+#define MODE_STITCH             10
+#define MODE_MY_COLORS          11
+#define MODE_SCN_WATER          12
+#define MODE_SCN_NIGHT          13
+#define MODE_SCN_CHILD          14
+#define MODE_SCN_PARTY          15
+#define MODE_SCN_GRASS          16
+#define MODE_SCN_SNOW           17
+#define MODE_SCN_BEACH          18
+#define MODE_SCN_FIREWORK       19
+#define MODE_SCN_COLOR_ACCENT   20
+
+#define MODE_SCREEN_MASK        0x0C00
+#define MODE_SCREEN_OPENED      0x0400
+#define MODE_SCREEN_ROTATED     0x0800
+
 typedef struct {
     short int id; // hacks id
     short int prop_id; // Canons id
@@ -23,6 +53,10 @@ typedef struct {
     short int prop_id; // Canons id
     char name[8];
 } ApertureSize;
+
+/******************************************************************/
+
+extern const int dof_tbl[], dof_tbl_size;
 
 /******************************************************************/
 
@@ -81,6 +115,8 @@ void lens_set_zoom_point(long newpt);
 long lens_get_focus_pos();
 void lens_set_focus_pos(long newpos);
 
+long lens_get_target_distance();
+
 /******************************************************************/
 
 int shooting_in_progress();
@@ -95,9 +131,17 @@ int shooting_get_av();
 void shooting_set_av(int v);
 void shooting_set_av_rel(int v);
 
+int shooting_get_real_av();
+long shooting_get_current_mode();
+
 /******************************************************************/
 
 long stat_get_vbatt();
+
+/******************************************************************/
+
+long vbatt_get_min();
+long vbatt_get_max();
 
 /******************************************************************/
 void __attribute__((noreturn)) shutdown();

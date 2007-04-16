@@ -123,3 +123,12 @@ void startup()
     boot();
 }
 
+long vbatt_get_min()
+{
+    return VBATT_DEFAULT_MIN;
+}
+
+long vbatt_get_max()
+{
+    return VBATT_DEFAULT_MAX;
+}

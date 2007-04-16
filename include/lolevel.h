@@ -16,6 +16,7 @@ extern long _GetZoomLensCurrentPoint();
 extern long _GetFocusLensCurrentPosition();
 extern long _GetFocusLensSubjectDistance();
 extern long _GetFocusLensSubjectDistanceFromLens();
+extern long _GetCurrentTargetDistance();
 extern long _GetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _SetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _IsStrobeChargeCompleted();
@@ -79,5 +80,11 @@ void __attribute__((naked,noinline))
     mykbd_task(long ua, long ub, long uc, long ud, long ue, long uf);
 
 void kbd_fetch_data(long *dst);
+
+/* math */
+extern double __log(double x);
+extern double __log10(double x);
+extern double __pow(double x, double y);
+extern double __sqrt(double x);
 
 #endif

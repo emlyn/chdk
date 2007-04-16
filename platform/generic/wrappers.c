@@ -131,3 +131,24 @@ long sprintf(char *s, const char *st, ...)
     __builtin_va_end(va);
     return res;
 }
+
+double log(double x) {
+    return __log(x);
+}
+
+double log10(double x) {
+    return __log10(x);
+}
+
+double pow(double x, double y) {
+    return __pow(x, y);
+}
+
+double sqrt(double x) {
+    return __sqrt(x);
+}
+
+long lens_get_target_distance()
+{
+    return _GetCurrentTargetDistance();
+}

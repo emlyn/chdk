@@ -29,11 +29,6 @@ void debug_led(int state)
 }
 
 
-long _GetFocusLensSubjectDistance()
-{
-    return -1;
-}
-
 void _kbd_pwr_on()
 {
 

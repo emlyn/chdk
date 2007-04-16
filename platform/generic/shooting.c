@@ -2,6 +2,7 @@
 #include "platform.h"
 #include "core.h"
 #include "keyboard.h"
+#include "math.h"
 
 const ApertureSize aperture_sizes_table[] = {
     {  9, 288, "2.8", },
@@ -145,6 +146,17 @@ int shooting_get_av()
     return 0;
 }
 
+int shooting_get_real_av()
+{
+#if 1
+    short int avv = 0;
+    _GetPropertyCase(68, &avv, sizeof(avv));
+    return (int)(((double)pow(1.4142135623730950488016887242097/* sqrt(2) */, ((double)avv)/96.0))*100.0);
+#else
+    return (int)(((double)pow(1.4142135623730950488016887242097/* sqrt(2) */, ((double)_GetCurrentAvValue())/96.0))*100.0);
+#endif
+}
+
 void shooting_set_av(int v)
 {
     long i;
@@ -198,3 +210,4 @@ long get_file_counter()
     get_parameter_data(PARAM_FILE_COUNTER, &v, 4);
     return v;
 }
+
