@@ -28,20 +28,3 @@ void debug_led(int state)
 	p[0]=0x44;
 }
 
-
-void _kbd_pwr_on()
-{
-
-}
-
-void _kbd_pwr_off()
-{
-
-}
-
-void _Unmount_FileSystem()
-{
-}
-void _Mount_FileSystem()
-{
-}
