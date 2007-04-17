@@ -45,16 +45,15 @@ void core_hook_task_delete(void *tcb)
 void dump_memory()
 {
     int fd;
-    long dirfilenum;
+    long dirnum;
 
     started();
 
-	dirfilenum = get_next_photo_dirfile_num();
-
-	sprintf(fn, FN_RAWDIR, dirfilenum >> 16);
+	dirnum = get_target_dir_num();
+	sprintf(fn, FN_RAWDIR, dirnum);
 	mkdir(fn);
 
-	sprintf(fn, FN_RAWDIR "/" "DMP_%04d.JPG", dirfilenum >> 16, ++ramdump_num);
+	sprintf(fn, FN_RAWDIR "/" "DMP_%04d.JPG", dirnum, ++ramdump_num);
 	fd = open(fn, O_WRONLY|O_CREAT, 0777);
 	if (fd >= 0) {
 	    write(fd, (void*)0, 0x1900);
@@ -75,7 +74,7 @@ void core_rawdata_available()
 static void process_rawsave()
 {
     int fd;
-    long dirfilenum;
+    long dirnum;
 
 #if 0
     // got here second time in a row. Skip second RAW saveing.
@@ -88,12 +87,11 @@ static void process_rawsave()
     if (conf_save_raw){
 	started();
 
-	dirfilenum = get_next_photo_dirfile_num();
-
-	sprintf(fn, FN_RAWDIR, dirfilenum >> 16);
+	dirnum = get_target_dir_num();
+	sprintf(fn, FN_RAWDIR, dirnum);
 	mkdir(fn);
 
-	sprintf(fn, FN_RAWF, dirfilenum >> 16, dirfilenum & 0xffff);
+	sprintf(fn, FN_RAWF, dirnum, get_target_file_num());
 	fd = open(fn, O_WRONLY|O_CREAT, 0777);
 	if (fd >= 0) {
 	    write(fd, hook_raw_image_addr(), hook_raw_size());

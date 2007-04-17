@@ -73,9 +73,8 @@ long set_parameter_data(long id, void *buf, long bufsize);
 long get_property_case(long id, void *buf, long bufsize);
 long set_property_case(long id, void *buf, long bufsize);
 
-long get_file_counter();
-long get_file_next_counter();
-long get_next_photo_dirfile_num();
+long get_target_dir_num();
+long get_target_file_num();
 
 /******************************************************************/
 
