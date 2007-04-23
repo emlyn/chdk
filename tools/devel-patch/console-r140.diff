@@ -1,0 +1,346 @@
+Index: include/conf.h
+===================================================================
+--- include/conf.h	(revision 131)
++++ include/conf.h	(working copy)
+@@ -25,7 +25,7 @@
+ extern int state_expos_under;
+ extern int state_expos_over;
+ 
+-extern int state_debug1;
++extern int state_debug[4];
+ extern int debug_propcase_show;
+ extern int debug_propcase_page;
+ extern int debug_vals_show;
+Index: platform/a610/sub/100e/stubs_entry_2.S
+===================================================================
+--- platform/a610/sub/100e/stubs_entry_2.S	(revision 131)
++++ platform/a610/sub/100e/stubs_entry_2.S	(working copy)
+@@ -11,4 +11,8 @@
+ //NSTUB(GetFocusLensCurrentPosition, 0xFFE67F10)
+ //NSTUB(MoveFocusLensWithPosition, 0xFFE67CB4)
+ 
+-
++NHSTUB(ioGlobalStdSet, 0xFFEBC6EC)
++NHSTUB(printf, 0xFFEB9AD8)
++NHSTUB(iosDrvRemove, 0xFFEBD234)
++NHSTUB(iosDevDelete, 0xFFEBD054)
++NHSTUB(iosInit, 0xFFEBD10C)
+Index: platform/a610/sub/100e/boot.c
+===================================================================
+--- platform/a610/sub/100e/boot.c	(revision 131)
++++ platform/a610/sub/100e/boot.c	(working copy)
+@@ -122,6 +122,138 @@
+ 	_iosDevAdd(drv_struct, "A/DISKBOOT.BIN", drvnum);
+ }
+ 
++
++typedef struct {
++    long dev_hdr[4];
++    long opened;
++
++    long fill[64];
++} MY_DEV;
++
++#define CONS_W (45)
++#define CONS_H (128)
++extern long state_debug[3];
++char console_buf[CONS_H][CONS_W];
++long console_buf_line = 0;
++long console_buf_line_ptr = 0;
++
++int ttyOpen(MY_DEV* tty,  char* additionalInfo, int mode)
++{
++    state_debug[0]++;
++    if (tty->opened)
++	return -1;
++
++    tty->opened = 1;
++    return 0;
++}
++
++int ttyClose(MY_DEV* tty,  char* name)
++{
++    return 0;
++}
++
++const char *cmd = "ShowCameraLog\n";
++int cons_cmd_ptr = -1;
++
++int ttyRead(MY_DEV* tty,  char* buffer, int nBytes)
++{
++    int r = 1;
++
++    state_debug[1]++;
++    state_debug[1]+=nBytes<<16;
++
++    if (cons_cmd_ptr == -1){
++	msleep(2000);
++	cons_cmd_ptr = 0;
++    }
++
++    if (cmd[cons_cmd_ptr] != 0){
++	*buffer = cmd[cons_cmd_ptr];
++	cons_cmd_ptr++;
++    } else {
++	while (cons_cmd_ptr != 0){
++	    msleep(10);
++	}
++	*buffer = cmd[cons_cmd_ptr];
++	cons_cmd_ptr++;
++    }
++
++    return r;
++}
++
++void mytty_nextline()
++{
++    int i;
++
++    console_buf_line_ptr=0;
++    console_buf_line++;
++    if (console_buf_line>=CONS_H){
++	console_buf_line = 0;
++    }
++    for (i=0;i<15;i++){
++	int l=i+console_buf_line;
++	if (l>=CONS_H)
++	    l-=CONS_H;
++	console_buf[l][0] = 0;
++    }
++}
++
++void mytty_putc(char c)
++{
++    if (c == 0xa){
++	mytty_nextline();
++    } else {
++	if (console_buf_line_ptr>=(CONS_W-1)){
++	    mytty_nextline();
++	}
++
++	console_buf[console_buf_line][console_buf_line_ptr++] = c;
++	console_buf[console_buf_line][console_buf_line_ptr] = 0;
++    }
++}
++
++int ttyWrite(MY_DEV* tty,  char* buffer, int nBytes)
++{
++    int i;
++    state_debug[2]++;
++    state_debug[2]+=nBytes<<16;
++
++
++    for (i=0;i<nBytes;i++){
++	mytty_putc(buffer[i]);
++    }
++
++    return ((int(*)(void *p, void *p2, int l))0xFFEC3CC0)(tty, buffer, nBytes);
++    return nBytes;
++}
++
++int ttyIoctl(MY_DEV* tty,  int request, int arg)
++{
++    state_debug[0]++;
++    return 0;
++}
++
++MY_DEV tty_drv_struct[1];
++
++static void drv_console()
++{
++    long drvnum;
++    
++    drvnum = _iosDrvInstall(0xFFEC2D50, 0, 0xFFEC2D50, 0xFFEC2D90, ttyRead, ttyWrite, 0xFFEC2DD4);
++
++    *(long*)0x82ED0 = drvnum;
++
++#if 0
++    int *fd = 0x19F4;
++    *fd = _open("/tyCo/0", /*O_RDWR*/ 2, 0777);
++    if (*fd >= 0){
++	_ioGlobalStdSet(0, *fd);
++	_ioGlobalStdSet(1, *fd);
++	_ioGlobalStdSet(2, *fd);
++    }
++#endif
++}
++
+ void  h_usrRoot()
+ {
+     asm volatile (
+@@ -138,8 +270,19 @@
+ 	"BL      sub_FFC0183C\n"
+ 	"BL      sub_FFC01758\n"
+ 	"MOV     R0, #0x32\n"
+-	"BL      sub_FFEC0414\n"
+-	"BL      sub_FFC01A68\n"
++	"BL      sub_FFEC0414\n" //selectInit
++    );
++
++    _iosInit(0x14, 0x32, "/null");
++    drv_console();
++
++    asm volatile (
++#if 0
++	"BL      sub_FFC01A68\n" //usrIosCoreInit
++#else
++	"BL	sub_FFEC2BEC\n"
++	"BL	sub_FFC018C8\n"
++#endif
+ 	"BL      sub_FFC01A48\n"
+ 	"BL      sub_FFC01A94\n"
+ 	"BL      sub_FFEBFCD4\n"
+Index: platform/a610/sub/100e/stubs_auto.S
+===================================================================
+--- platform/a610/sub/100e/stubs_auto.S	(revision 131)
++++ platform/a610/sub/100e/stubs_auto.S	(working copy)
+@@ -7,6 +7,7 @@
+ STUB(FFC01758)
+ STUB(FFC0177C)
+ STUB(FFC0183C)
++STUB(FFC018C8)
+ STUB(FFC019BC)
+ STUB(FFC01A18)
+ STUB(FFC01A24)
+@@ -20,6 +21,7 @@
+ STUB(FFEBE470)
+ STUB(FFEBFCD4)
+ STUB(FFEC0414)
++STUB(FFEC2BEC)
+ STUB(FFEC59B8)
+ STUB(FFEC9DA8)
+ STUB(FFECCB68)
+Index: core/gui.c
+===================================================================
+--- core/gui.c	(revision 140)
++++ core/gui.c	(working copy)
+@@ -21,6 +21,14 @@
+ void dump_memory();
+ int gui_width, gui_height, gui_pixel_cnt;
+ 
++#define CONS_W (45)
++#define CONS_H (128)
++extern char console_buf[CONS_H][CONS_W];
++extern long console_buf_line;
++long cons_topline;
++
++extern cons_cmd_ptr;
++
+ static void canon_redraw_bitmap();
+ static void gui_conf_draw();
+ static void gui_draw_osd();
+@@ -322,6 +330,26 @@
+ 	    }
+ 	    break;
+ 	}
++    } else {
++	switch (clicked_key){
++	case KEY_UP:		/* wrap around */
++	    if (cons_topline>0)
++		cons_topline--;
++	    else
++		cons_topline = CONS_H-1;
++	    break;
++	case KEY_DOWN:
++	    cons_topline++;
++	    if (cons_topline >= CONS_H)
++		cons_topline = 0;
++	    break;
++	case KEY_SET:
++	    cons_cmd_ptr = 0;
++	    break;
++	case KEY_DISPLAY:
++	    shooting_set_tv_rel(1);
++	    break;
++	}    
+     }
+ }
+ 
+@@ -404,11 +432,13 @@
+ }
+ 
+ extern long physw_status[3];
+-static char osd_buf[32];
++static char osd_buf[64];
+ 
++
++
+ void gui_draw_osd()
+ {
+-
++#if 0
+     if (under_exposed || over_exposed){
+ 	draw_txt_string(40, 2, "EXP");
+     } else {
+@@ -433,18 +463,32 @@
+     draw_txt_string(35, 7, osd_buf);
+     sprintf(osd_buf, "V:%d  ", stat_get_vbatt());
+     draw_txt_string(35, 8, osd_buf);
+-
++#endif
+     if (debug_vals_show) {
+-
+-	sprintf(osd_buf, "1:%8x  ", physw_status[0]);
++#if 1
++//	sprintf(osd_buf, "1:%8x  ", physw_status[0]);
++	sprintf(osd_buf, "1:%8x  ", state_debug[0]);
+ 	draw_txt_string(28, 10, osd_buf);
+ 
+-	sprintf(osd_buf, "2:%8x  ", physw_status[1]);
++//	sprintf(osd_buf, "2:%8x  ", physw_status[1]);
++	sprintf(osd_buf, "2:%8x  ", state_debug[1]);
+ 	draw_txt_string(28, 11, osd_buf);
+ 
+-	sprintf(osd_buf, "3:%8x  ", physw_status[2]);
++//	sprintf(osd_buf, "3:%8x  ", physw_status[2]);
++	sprintf(osd_buf, "3:%8x  ", state_debug[2]);
+ 	draw_txt_string(28, 12, osd_buf);
++#endif
++    }
+ 
++    if (gui_mode_alt){
++	long i;
++	for (i=0;i<15;i++){
++	    long l = cons_topline+i;
++	    if (l>CONS_H)
++		l-=CONS_H;
++	    sprintf(osd_buf, "%-45s", console_buf[l]);
++	    draw_txt_string(0, i, osd_buf);
++	}
+     }
+ 
+     if (debug_propcase_show){
+Index: core/main.c
+===================================================================
+--- core/main.c	(revision 131)
++++ core/main.c	(working copy)
+@@ -107,7 +107,7 @@
+ {
+     int cnt = 0;
+ 
+-    msleep(2000);
++    msleep(1000);
+ 
+     gui_init();
+     conf_restore();
+Index: core/conf.c
+===================================================================
+--- core/conf.c	(revision 131)
++++ core/conf.c	(working copy)
+@@ -25,7 +25,7 @@
+ int state_expos_under;
+ int state_expos_over;
+ 
+-int state_debug1;
++int state_debug[4];
+ int debug_propcase_show;
+ int debug_propcase_page;
+ int debug_vals_show;
+@@ -71,6 +71,7 @@
+     conf_ubasic_var_a = 0;
+     conf_ubasic_var_b = 0;
+     conf_ubasic_var_c = 0;
++    debug_vals_show = 1;
+ }
+ 
+ static void do_save(int fd)
