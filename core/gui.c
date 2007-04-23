@@ -94,20 +94,64 @@ static char sbuf[100];
 #define SETPIX(_x,_y,_v) fb[(_y)*(width)+(_x)] = \
     fb[(pixel_cnt)+(_y)*(width)+(_x)] = (_v)
 
+long color1 = 0xffffffff;
+long color2 = 0xeeeeeeee;
+
 void draw_char(int x, int y, const char ch)
 {
     const unsigned char *sym = fontdata_8x16 +
 	    ((const unsigned char)ch)*16;
+    const long plut[] = {
+#define BG (0xff)
+#define FG (0x00)
+#define L(a,b,c,d) ((((a)?(FG):(BG)) << 24) | \
+	(((b)?(FG):(BG)) << 16) | \
+	(((c)?(FG):(BG)) << 8) | \
+	(((d)?(FG):(BG))))
+#define LD(a) L(a&0x1, a&0x2, a&0x4, a&0x8)
+	LD(0),
+	LD(1),
+	LD(2),
+	LD(3),
+	LD(4),
+	LD(5),
+	LD(6),
+	LD(7),
+	LD(8),
+	LD(9),
+	LD(10),
+	LD(11),
+	LD(12),
+	LD(13),
+	LD(14),
+	LD(15),
+    };
+    const long c1 = color1;
+    const long c2 = color2;
+    const long w = width;
+
     int i, ii;
     char c;
 
-    // XXX optimize. probably use 4bit -> 32bit lookup table
-    // so 4(8) pixels were drawn at a time
+    char *fb_loc = &fb[x];
+    char *fb_loc2 = &fb[x+pixel_cnt];
+    long offs = y*w;
+
+
     for (i=0;i<16;i++){
-	for (ii=0;ii<8;ii++){
-	    c = (sym[i] & (0x80>>ii)) ? 0xee:0xff;
-	    SETPIX(x+ii,y+i, c);
-	}
+	long v1 = plut[(sym[i]>>4) & 0xf];
+	long v2 = plut[sym[i] & 0xf];
+
+	v1 = (v1&c1) | (~v1&c2);
+	v2 = (v2&c1) | (~v2&c2);
+
+	((long*)(&fb_loc[offs]))[0] = v1;
+	((long*)(&fb_loc[offs]))[1] = v2;
+
+	((long*)(&fb_loc2[offs]))[0] = v1;
+	((long*)(&fb_loc2[offs]))[1] = v2;
+
+	offs += w;
     }
 }
 
