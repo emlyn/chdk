@@ -29,6 +29,17 @@ void capt_seq_hook_set_nr()
 {
     long *nrflag = (long*)0x6D44;
 
+    switch (core_get_noise_reduction_value()){
+    case NOISE_REDICTION_AUTO_CANON:
+	// leave it alone
+	break;
+    case NOISE_REDICTION_OFF:
+	*nrflag = 1;
+	break;
+    case NOISE_REDICTION_ON:
+	*nrflag = 2;
+	break;
+    };
 }
 
 void __attribute__((naked,noinline)) sub_FFD3A354_my(long p)

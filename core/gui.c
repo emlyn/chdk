@@ -67,6 +67,7 @@ CMenuItem root_menu[] = {
     {"*** Main ***", MENUITEM_INFO, 0 },
     {"Show OSD", MENUITEM_BOOL, &conf_show_osd },
     {"Save RAW", MENUITEM_BOOL, &conf_save_raw },
+    {"Force NR OFF", MENUITEM_BOOL, &conf_force_nr_off },
     {"Show live histogram", MENUITEM_BOOL, &conf_show_histo },
     {"Scripting parameters ->", MENUITEM_SUBMENU, (int*)script_submenu },
     {"Debug parameters ->", MENUITEM_SUBMENU, (int*)debug_submenu },

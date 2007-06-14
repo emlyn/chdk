@@ -12,6 +12,11 @@ void gui_init();
 
 void core_rawdata_available();
 
+#define NOISE_REDICTION_AUTO_CANON (0)
+#define NOISE_REDICTION_OFF (1)
+#define NOISE_REDICTION_ON (2)
+
+long core_get_noise_reduction_value();
 
 #endif
 

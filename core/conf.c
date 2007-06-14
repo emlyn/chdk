@@ -9,6 +9,7 @@
 
 int conf_show_osd;
 int conf_save_raw;
+int conf_force_nr_off;
 int conf_script_shoot_delay;
 int conf_show_histo;
 int conf_ubasic_var_a;
@@ -71,6 +72,7 @@ static void load_defaults()
     conf_ubasic_var_a = 0;
     conf_ubasic_var_b = 0;
     conf_ubasic_var_c = 0;
+    conf_force_nr_off = 0;
 }
 
 static void do_save(int fd)

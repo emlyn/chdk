@@ -42,6 +42,17 @@ void core_hook_task_delete(void *tcb)
 #endif
 }
 
+
+long core_get_noise_reduction_value()
+{
+    if (conf_force_nr_off){
+	return NOISE_REDICTION_OFF;
+    }
+
+    return NOISE_REDICTION_AUTO_CANON;
+}
+
+
 void dump_memory()
 {
     int fd;

@@ -3,6 +3,7 @@
 
 extern int conf_show_osd;
 extern int conf_save_raw;
+extern int conf_force_nr_off;
 extern int conf_script_shoot_delay;
 extern int conf_show_histo;
 extern int conf_ubasic_var_a;
