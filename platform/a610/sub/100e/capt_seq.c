@@ -27,7 +27,7 @@ void hook_raw_save_complete()
 
 void capt_seq_hook_set_nr()
 {
-    long *nrflag = (long*)0x6CE4;
+    long *nrflag = (long*)0x6CE0;
 
 }
 
