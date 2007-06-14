@@ -76,12 +76,6 @@ static void process_rawsave()
     int fd;
     long dirnum;
 
-#if 0
-    // got here second time in a row. Skip second RAW saveing.
-    if (state_shooting_progress == SHOOTING_PROGRESS_PROCESSING){
-	return;
-    }
-#endif
     state_shooting_progress = SHOOTING_PROGRESS_PROCESSING;
 
     if (conf_save_raw){
@@ -129,8 +123,6 @@ void core_spytask()
 	    gui_redraw();
 
 	histogram_process();
-
-	hook_raw_install();
 
 	if ((state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) && (!shooting_in_progress()))
 	    state_shooting_progress = SHOOTING_PROGRESS_DONE;

@@ -17,3 +17,7 @@ libplatform.a: $(OBJS)
 clean: clean-recursive
 	rm -f $(OBJS) libplatform.a
 
+distclean: distclean-recursive
+	rm -f $(OBJS:.o=.d) $(OBJS) libplatform.a
+
+include $(topdir)bottom.inc

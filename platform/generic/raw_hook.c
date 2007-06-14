@@ -2,6 +2,8 @@
 #include "core.h"
 #include "lolevel.h"
 
+#if 0
+
 #define RAWDATA_AVAILABLE (1)
 #define RAWDATA_SAVED (2)
 
@@ -36,9 +38,9 @@ void hook_raw_install()
     _taskUnlock();
 }
 
-
 void hook_raw_save_complete()
 {
     raw_save_stage = RAWDATA_SAVED;
 }
+#endif
 

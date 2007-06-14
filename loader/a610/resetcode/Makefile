@@ -4,7 +4,7 @@ include $(topdir)makefile.inc
 
 # warning: library order matters!
 LDLIBS=
-LDOPTS=-nostdlib -Wl,--allow-shlib-undefined -Wl,--no-define-common,-EL,-T,$(topdir)tools/link.RAM
+LDOPTS=-nostdlib -Wl,--allow-shlib-undefined -Wl,--no-define-common,-EL,-T,$(topdir)tools/link-boot.ld
 LDOPTS+=-Wl,-N,-Ttext,$(RESTARTSTART)
 
 all: main.bin
@@ -23,3 +23,5 @@ main.elf: $(OBJS)
 
 clean: clean-recursive
 	rm -f $(OBJS) main.bin main.elf main.dump main.elf.syms
+
+include $(topdir)bottom.inc

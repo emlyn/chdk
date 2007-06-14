@@ -1,30 +1,44 @@
 topdir=../
 
+SKIPBUILDRULES=1
+
 include $(topdir)makefile.inc
 
-all: pakwif$(EXE) finsig$(EXE) hexdmplt$(EXE)
+OBJS=pakwif.o gensig.o finsig.o
 
-pakwif$(EXE): pakwif.c
-	@echo $< \-\> $@
-	$(HOSTCC) $(HOSTCFLAGS) -o pakwif$(EXE) pakwif.c
+all: pakwif$(EXE) finsig$(EXE)
 
-gensig$(EXE): gensig.c
+%.o: %.c
 	@echo $< \-\> $@
-	$(HOSTCC) $(HOSTCFLAGS) -o gensig$(EXE) gensig.c
+	$(HOSTCC) $(HOSTCFLAGS) -c -o $@ $<
 
-hexdmplt$(EXE): hexdmplt.c
-	@echo $< \-\> $@
-	$(HOSTCC) $(HOSTCFLAGS) -o hexdmplt$(EXE) hexdmplt.c
+.dep/%.d: %.c .dep
+	$(HOSTCC) $(HOSTCFLAGS) -MM $< > $@.$$$$; \
+	    sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	    rm -f $@.$$$$
 
-finsig$(EXE): finsig.c signatures.h
+pakwif$(EXE): pakwif.o
 	@echo $< \-\> $@
-	$(HOSTCC) $(HOSTCFLAGS) -o finsig$(EXE) finsig.c
+	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
+
+finsig$(EXE): finsig.o
+	@echo $< \-\> $@
+	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
+
+gensig$(EXE): gensig.o
+	@echo $< \-\> $@
+	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
+
 
 clean:
-	rm -f pakwif$(EXE) gensig$(EXE) finsig$(EXE) hexdmplt$(EXE)
+	rm -f pakwif$(EXE) gensig$(EXE) finsig$(EXE) $(OBJS)
 	if [ -s sig_ref.bin ] ; then \
 	  rm -f signatures.h ; \
 	fi
+
+distclean: clean
+	rm -f signatures.h
+
 
 signatures.h: gensig$(EXE) gensigs.sh sig_ref_1.txt sig_ref_1.bin sig_ref_2.txt sig_ref_2.bin
 	@echo \-\> $@
@@ -40,3 +54,8 @@ sig_ref_1.bin:
 
 sig_ref_2.bin:
 	touch sig_ref_2.bin
+
+finsig.o: signatures.h
+
+include $(topdir)bottom.inc
+

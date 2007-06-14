@@ -9,6 +9,8 @@ all: all-recursive
 
 clean: clean-recursive
 
+distclean: distclean-recursive
+
 fir: all
 	@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FIR
 	cp $(topdir)loader/$(PLATFORM)/main.bin $(topdir)/bin/main.bin

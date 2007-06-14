@@ -14,3 +14,8 @@ libc.a: $(OBJS)
 
 clean:
 	rm -f $(OBJS) libc.a
+
+distclean: clean
+	rm -f $(OBJS:.o=.d)
+
+include $(topdir)bottom.inc

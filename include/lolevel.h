@@ -33,6 +33,12 @@ extern long _GetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _SetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _IsStrobeChargeCompleted();
 
+long _SetEventFlag(void *flag, long what);
+long _CheckAnyEventFlag(void *flag, long mask, long *res);
+long _GetEventFlagValue(void *flag, long *res);
+
+long _ReceiveMessageQueue(void *msgq, long *dst, long unk1 /* maybe size? */);
+
 /* Canon stuff with nonoriginal naming */
 extern long _GetParameterData(long id, void *buf, long size);
 extern long _SetParameterData(long id, void *buf, long size);
@@ -76,8 +82,9 @@ extern void _kbd_pwr_on();
 extern void _kbd_pwr_off();
 extern void _kbd_read_keys_r2(void*p);
 extern long physw_status[3];
-void __attribute__((naked,noinline))
-    mykbd_task(long ua, long ub, long uc, long ud, long ue, long uf);
+
+void __attribute__((naked,noinline)) mykbd_task();
+extern void capt_seq_task();
 
 void kbd_fetch_data(long *dst);
 

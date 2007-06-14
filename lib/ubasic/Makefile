@@ -15,3 +15,8 @@ check:
 
 clean:
 	rm -f $(OBJS) libubasic.a test$(EXE)
+
+distclean: clean
+	rm -f $(OBJS:.o=.d)
+
+include $(topdir)bottom.inc

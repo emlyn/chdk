@@ -50,3 +50,5 @@ stubs_entry.S: $(topdir)tools/finsig$(EXE) $(TARGET_PRIMARY)
 
 $(TARGET_PRIMARY):
 	touch $(TARGET_PRIMARY)
+
+include $(topdir)bottom.inc

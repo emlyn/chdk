@@ -1,4 +1,4 @@
-VER=test1-pre13
+VER=pre14
 
 PLATFORM=a610
 PLATFORMSUB=100e
@@ -20,7 +20,7 @@ PLATFORMSUB=100e
 
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
 
-SILENT=SILENT
+#SILENT=SILENT
 
 ##########################################################################
 ##########################################################################
@@ -94,20 +94,47 @@ LDFLAGS+=-L$(topdir)platform/$(PLATFORM) -L$(topdir)platform/$(PLATFORM)/sub/$(P
 
 default: all
 
-.c.o:
+ifndef SKIPBUILDRULES
+
+%.o: %.c
 	@echo $< \-\> $@
 	$(CC) $(CFLAGS) -nostdinc -c -o $@ $<
-.S.o:
+%.o: %.S
 	@echo $< \-\> $@
 	$(CC) $(CFLAGS) -nostdinc -c -o $@ $<
 %.a:
 	@echo $^ \-\> $@
 	$(AR) rcs $@ $^
 
+.dep/%.d: %.c .dep
+	$(CC) $(CFLAGS) -M $< > $@.$$$$; \
+	    sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	    rm -f $@.$$$$
+
+.dep/%.d: %.S .dep
+	$(CC) $(CFLAGS) -M $< > $@.$$$$; \
+	    sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	    rm -f $@.$$$$
+
+endif
+
+all: all-recursive
+clean: clean-recursive
+distclean: distclean-recursive
+
+.dep:
+	mkdir .dep
+
 clean-recursive:
 	@for i in $(SUBDIRS); do \
 	    echo \>\> Cleaning in $(FOLDER)$$i; \
 	    $(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" clean || exit 1; \
+	done
+
+distclean-recursive:
+	@for i in $(SUBDIRS); do \
+	    echo \>\> Distcleaning in $(FOLDER)$$i; \
+	    $(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" distclean || exit 1; \
 	done
 
 all-recursive:
@@ -117,4 +144,13 @@ all-recursive:
 	    echo \<\< Leaving $(FOLDER)$$i; \
 	done
 
-.$(SILENT):
+depend-recursive:
+	@for i in $(SUBDIRS); do \
+	    echo \>\> Entering to $(FOLDER)$$i; \
+	    $(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" depend || exit 1; \
+	    echo \<\< Leaving $(FOLDER)$$i; \
+	done
+
+ifdef SILENT
+.SILENT:
+endif
