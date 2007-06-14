@@ -4,7 +4,6 @@ topdir=../../
 include $(topdir)makefile.inc
 SUBDIRS=resetcode
 
-# warning: library order matters!
 LDLIBS=
 LDOPTS=-nostdlib -Wl,--allow-shlib-undefined -Wl,--no-define-common,-EL,-T,$(topdir)tools/link-boot.ld
 LDOPTS+=-Wl,-N,-Ttext,$(MEMBASEADDR)

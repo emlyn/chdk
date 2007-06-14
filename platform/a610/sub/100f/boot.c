@@ -3,8 +3,6 @@
 #include "core.h"
 
 /* Ours stuff */
-extern long wrs_kernel_bss_start;
-extern long wrs_kernel_bss_end;
 extern void createHook (void *pNewTcb);
 extern void deleteHook (void *pTcb);
 
