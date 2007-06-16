@@ -30,13 +30,13 @@ void capt_seq_hook_set_nr()
     long *nrflag = (long*)0x6D44;
 
     switch (core_get_noise_reduction_value()){
-    case NOISE_REDICTION_AUTO_CANON:
+    case NOISE_REDUCTION_AUTO_CANON:
 	// leave it alone
 	break;
-    case NOISE_REDICTION_OFF:
+    case NOISE_REDUCTION_OFF:
 	*nrflag = 1;
 	break;
-    case NOISE_REDICTION_ON:
+    case NOISE_REDUCTION_ON:
 	*nrflag = 2;
 	break;
     };

@@ -46,10 +46,10 @@ void core_hook_task_delete(void *tcb)
 long core_get_noise_reduction_value()
 {
     if (conf_force_nr_off){
-	return NOISE_REDICTION_OFF;
+	return NOISE_REDUCTION_OFF;
     }
 
-    return NOISE_REDICTION_AUTO_CANON;
+    return NOISE_REDUCTION_AUTO_CANON;
 }
 
 
