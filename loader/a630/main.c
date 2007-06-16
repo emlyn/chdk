@@ -1,19 +1,11 @@
 static void __attribute__((noreturn)) shutdown();
 static void __attribute__((noreturn)) panic(int cnt);
 
-static long spycode[] = {
-#include "reboot_core.h"
-};
+extern long *blob_chdk_core;
+extern long *blob_copy_and_reset;
+extern long blob_chdk_core_size;
+extern long blob_copy_and_reset_size;
 
-static long cp_n_res[] = {
-#include "copy_and_reset.h"
-};
-
-#define LED_PR 0xc0220084
-
-#define SPYCODEBASE ((void*)MEMISOSTART)
-//#define RESETCODEBASE ((void*)0x1900)
-#define RESETCODEBASE ((void*)RESTARTSTART)
 
 
 void __attribute__((noreturn)) my_restart() 
@@ -21,14 +13,15 @@ void __attribute__((noreturn)) my_restart()
     void __attribute__((noreturn)) (*copy_and_restart)(char *dst, char *src, long length);
     int i;
 
-    for (i=0;i<(sizeof(cp_n_res)/sizeof(long));i++){
-	((long*)(RESETCODEBASE))[i] = cp_n_res[i];
+    for (i=0;i<(blob_copy_and_reset_size/sizeof(long));i++){
+	((long*)(RESTARTSTART))[i] = blob_copy_and_reset[i];
     }
 
-    copy_and_restart = RESETCODEBASE;
-    
-    copy_and_restart(SPYCODEBASE, (char*)spycode, sizeof(spycode));
+    copy_and_restart = (void*)RESTARTSTART;
+    copy_and_restart((void*)MEMISOSTART, (char*)blob_chdk_core, blob_chdk_core_size);
 }
+
+#define LED_PR 0xc0220084
 
 static void __attribute__((noreturn)) shutdown()
 {
