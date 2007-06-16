@@ -2,19 +2,23 @@ curdir=./
 topdir=../../
 
 include $(topdir)makefile.inc
-
 SUBDIRS=resetcode
 
-# warning: library order matters!
 LDLIBS=
-LDOPTS=-nostdlib -Wl,--allow-shlib-undefined -Wl,--no-define-common,-EL,-T,$(topdir)tools/link.RAM
+LDOPTS=-nostdlib -Wl,--allow-shlib-undefined -Wl,--no-define-common,-EL,-T,$(topdir)tools/link-boot.ld
 LDOPTS+=-Wl,-N,-Ttext,$(MEMBASEADDR)
 
 CPPFLAGS+=-I.
 
+CORE_FILE=$(topdir)core/main.bin
+RESET_FILE=$(curdir)resetcode/main.bin
+
+CPPFLAGS+=-DCORE_FILE=\"$(CORE_FILE)\"
+CPPFLAGS+=-DRESET_FILE=\"$(RESET_FILE)\"
+
 all: all-recursive main.bin
 
-OBJS=entry.o main.o
+OBJS=entry.o main.o blobs.o
 
 main.bin: main.elf
 	@echo $< \-\> $@
@@ -28,23 +32,11 @@ main.elf: $(OBJS)
 
 clean: clean-recursive
 	rm -f $(OBJS) main.bin main.elf main.dump main.elf.syms
+
+distclean: distclean-recursive
+	rm -f $(OBJS) main.bin main.elf main.dump main.elf.syms
 	rm -f reboot_core.h copy_and_reset.h
 
-reboot_core.h: $(topdir)core/main.bin
-	@echo $< \-\> $@
-ifeq ($(OSTYPE),Windows)
-	$(topdir)tools/hexdmplt  $< $@
-else
-	hexdump -v -e '1/4 "0x%08x, " "\n" ' $< > $@
-endif
+blobs.o: $(RESET_FILE) $(CORE_FILE)
 
-copy_and_reset.h: $(curdir)resetcode/main.bin
-	@echo $< \-\> $@
-ifeq ($(OSTYPE),Windows)
-	$(topdir)tools/hexdmplt  $< $@
-else
-	hexdump -v -e '1/4 "0x%08x, " "\n" ' $< > $@
-endif
-
-main.c: reboot_core.h copy_and_reset.h
-main.o: main.c reboot_core.h copy_and_reset.h
+include $(topdir)bottom.inc

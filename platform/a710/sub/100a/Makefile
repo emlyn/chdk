@@ -7,24 +7,29 @@ CFLAGS+=-DLOW_LEVEL
 all: libplatformsub.a
 
 TARGET_PRIMARY = PRIMARY.BIN
-OBJS=boot.o stubs_min.o stubs_auto.o stubs_entry.o lib.o stubs_entry_2.o
+OBJS=boot.o stubs_min.o stubs_auto.o stubs_entry.o lib.o stubs_entry_2.o capt_seq.o
 
 libplatformsub.a: $(OBJS)
 
 clean:
 	rm -f $(OBJS) libplatformsub.a stubs_entry.S.err stubs_not_found_names.err
 
-stubs_auto.S: boot.c
+distclean: clean
+	rm -f stubs_entry.S stubs_auto.S
+	rm -rf .dep
+
+
+stubs_auto.S: boot.c capt_seq.c
 	@echo $< \-\> $@
 # UNIX shell magick )
-	cat $< | \
+	cat $^ | \
 	    grep 'BL\?[[:space:]]*sub_[0-9A-Fa-f]' | \
 	    sed 's/.*sub_\([0-9A-Fa-f]*\).*/\1/' | \
 	    $(SORT) | uniq | \
 	    awk 'BEGIN {print "/* THIS FILE IS GENERATED */\n#include \"stubs_asm.h\"\n"} \
 		{printf("STUB(%s)\n",$$1)}' > stubs_auto.S
 
-stubs_entry.S: $(topdir)tools/finsig$(EXE) $(TARGET_PRIMARY)
+stubs_entry.S: $(TARGET_PRIMARY) $(topdir)tools/signatures.h
 	@echo \-\> $@
 	rm -f stubs_entry.S.err
 	if [ -s $(TARGET_PRIMARY) ] ; then \
@@ -50,3 +55,5 @@ stubs_entry.S: $(topdir)tools/finsig$(EXE) $(TARGET_PRIMARY)
 
 $(TARGET_PRIMARY):
 	touch $(TARGET_PRIMARY)
+
+include $(topdir)bottom.inc
