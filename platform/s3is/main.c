@@ -15,7 +15,7 @@ static struct {
     { MODE_PORTRAIT,            32781 },
     { MODE_NIGHT,               32782 },
     { MODE_LANDSCAPE,           32780 },
-    { MODE_VIDEO,                2590 },
+    { MODE_VIDEO_STD,            2590 },
     { MODE_STITCH,              33290 },
     { MODE_MY_COLORS,           16921 },
     { MODE_SCN_NIGHT,           16395 },

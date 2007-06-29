@@ -15,7 +15,7 @@ static struct {
     { MODE_PORTRAIT,           9  },
     { MODE_NIGHT,              8  },
     { MODE_LANDSCAPE,          7  },
-    { MODE_VIDEO,              18 },
+    { MODE_VIDEO_STD,          18 },
     { MODE_STITCH,             5  },
     { MODE_MY_COLORS,          4  },
     { MODE_SCN_WATER,          13 },

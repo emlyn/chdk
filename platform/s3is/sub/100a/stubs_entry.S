@@ -15,6 +15,9 @@ NSTUB(ExecuteEventProcedure, 0xff816bc8)
 NSTUB(ExitTask, 0xff821a18)
 NSTUB(FreeMemory, 0xff811ad0)
 NSTUB(GetCurrentTargetDistance, 0xffb0c584)
+// Best match: 77%
+NSTUB(GetFocusLensSubjectDistance, 0xffaf007c)
+// ALT: NSTUB(GetFocusLensSubjectDistance, 0xffaf007c) // 17/5
 // Best match: 84%
 NSTUB(GetParameterData, 0xff994b68)
 NSTUB(GetPropertyCase, 0xff82498c)

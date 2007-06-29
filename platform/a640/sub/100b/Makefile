@@ -29,7 +29,7 @@ stubs_auto.S: boot.c capt_seq.c
 	    awk 'BEGIN {print "/* THIS FILE IS GENERATED */\n#include \"stubs_asm.h\"\n"} \
 		{printf("STUB(%s)\n",$$1)}' > stubs_auto.S
 
-stubs_entry.S: $(TARGET_PRIMARY) $(topdir)tools/signatures.h
+stubs_entry.S: $(TARGET_PRIMARY) $(topdir)tools/finsig
 	@echo \-\> $@
 	rm -f stubs_entry.S.err
 	if [ -s $(TARGET_PRIMARY) ] ; then \

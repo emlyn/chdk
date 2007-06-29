@@ -31,13 +31,12 @@ gensig$(EXE): gensig.o
 
 
 clean:
+
+distclean:
 	rm -f pakwif$(EXE) gensig$(EXE) finsig$(EXE) $(OBJS)
 	if [ -s sig_ref.bin ] ; then \
 	  rm -f signatures.h ; \
 	fi
-
-distclean: clean
-	rm -f signatures.h
 
 
 signatures.h: gensig$(EXE) gensigs.sh sig_ref_1.txt sig_ref_1.bin sig_ref_2.txt sig_ref_2.bin

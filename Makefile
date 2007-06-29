@@ -44,22 +44,29 @@ firzip: infoline clean all fir
 	rm -f $(topdir)bin/DISKBOOT.BIN
 
 batch-zip:
-	$(MAKE) -s --no-print-directory PLATFORM=a610 PLATFORMSUB=100e firzip
-	$(MAKE) -s --no-print-directory PLATFORM=a610 PLATFORMSUB=100f firzip
-	$(MAKE) -s --no-print-directory PLATFORM=a620 PLATFORMSUB=100f firzip
-	$(MAKE) -s --no-print-directory PLATFORM=a630 PLATFORMSUB=100c firzip
-	$(MAKE) -s --no-print-directory PLATFORM=a640 PLATFORMSUB=100b firzip
-	$(MAKE) -s --no-print-directory PLATFORM=a710 PLATFORMSUB=100a firzip
-	$(MAKE) -s --no-print-directory PLATFORM=s3is PLATFORMSUB=100a firzip
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a610 PLATFORMSUB=100e firzip
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a610 PLATFORMSUB=100f firzip
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a620 PLATFORMSUB=100f firzip
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a630 PLATFORMSUB=100c firzip
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a640 PLATFORMSUB=100b firzip
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a710 PLATFORMSUB=100a firzip
+	$(MAKE) SILENT=$(SILENT) PLATFORM=s2is PLATFORMSUB=100e firzip
+	$(MAKE) SILENT=$(SILENT) PLATFORM=s2is PLATFORMSUB=100f firzip
+	$(MAKE) SILENT=$(SILENT) PLATFORM=s2is PLATFORMSUB=100g firzip
+	$(MAKE) SILENT=$(SILENT) PLATFORM=s3is PLATFORMSUB=100a firzip
 	@echo "**** All firmwares created successfully"
 
 batch-clean:
-	$(MAKE) -s --no-print-directory PLATFORM=a610 PLATFORMSUB=100e clean
-	$(MAKE) -s --no-print-directory PLATFORM=a610 PLATFORMSUB=100f clean
-	$(MAKE) -s --no-print-directory PLATFORM=a620 PLATFORMSUB=100f clean
-	$(MAKE) -s --no-print-directory PLATFORM=a630 PLATFORMSUB=100c clean
-	$(MAKE) -s --no-print-directory PLATFORM=a640 PLATFORMSUB=100b clean
-	$(MAKE) -s --no-print-directory PLATFORM=a710 PLATFORMSUB=100a clean
-	$(MAKE) -s --no-print-directory PLATFORM=s3is PLATFORMSUB=100a clean
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a610 PLATFORMSUB=100e clean
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a610 PLATFORMSUB=100f clean
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a620 PLATFORMSUB=100f clean
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a630 PLATFORMSUB=100c clean
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a640 PLATFORMSUB=100b clean
+	$(MAKE) SILENT=$(SILENT) PLATFORM=a710 PLATFORMSUB=100a clean
+	$(MAKE) SILENT=$(SILENT) PLATFORM=s2is PLATFORMSUB=100e clean
+	$(MAKE) SILENT=$(SILENT) PLATFORM=s2is PLATFORMSUB=100f clean
+	$(MAKE) SILENT=$(SILENT) PLATFORM=s2is PLATFORMSUB=100g clean
+	$(MAKE) SILENT=$(SILENT) PLATFORM=s3is PLATFORMSUB=100a clean
+
 
 .PHONY: fir upload

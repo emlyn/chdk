@@ -1,4 +1,7 @@
 #include "lolevel.h"
+#include "platform.h"
+#include "conf.h"
+#include "keyboard.h"
 
 void msleep(long msec)
 {

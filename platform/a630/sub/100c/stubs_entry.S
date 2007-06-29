@@ -18,6 +18,8 @@ NSTUB(ExitTask, 0xffc11e7c)
 // Best match: 92%
 NSTUB(FreeMemory, 0xffc01abc)
 NSTUB(GetCurrentTargetDistance, 0xffea94d0)
+// Best match: 95%
+NSTUB(GetFocusLensSubjectDistance, 0xffe9b4fc)
 NSTUB(GetParameterData, 0xffd6d854)
 NSTUB(GetPropertyCase, 0xffc14de4)
 NSTUB(GetSystemTime, 0xffc04d38)

@@ -15,12 +15,15 @@ PLATFORMSUB=100e
 #PLATFORM=a710
 #PLATFORMSUB=100a
 
+#PLATFORM=s2is
+#PLATFORMSUB=100e
+
 #PLATFORM=s3is
 #PLATFORMSUB=100a
 
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
 
-#SILENT=SILENT
+SILENT=
 
 ##########################################################################
 ##########################################################################
@@ -151,6 +154,9 @@ depend-recursive:
 	    echo \<\< Leaving $(FOLDER)$$i; \
 	done
 
-ifdef SILENT
+ifneq ($(SILENT),)
 .SILENT:
 endif
+
+.PHONY: clean-recursive distclean-recursive all-recursive depend-recursive all clean distclean $(SUBDIRS)
+
