@@ -4,6 +4,7 @@
 #include "keyboard.h"
 #include "math.h"
 
+#if 0
 const ApertureSize aperture_sizes_table[] = {
     {  9, 288, "2.8", },
     { 10, 320, "3.2", },
@@ -73,6 +74,7 @@ const ISOTable iso_table[] = {
     {2, 200, "200", -1},
     {3, 400, "400", -1},
 };
+#endif
 
 #define SS_SIZE (sizeof(shutter_speeds_table)/sizeof(shutter_speeds_table[0]))
 #define SSID_MIN (shutter_speeds_table[0].id)

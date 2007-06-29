@@ -71,11 +71,6 @@ void lens_set_zoom_point(long newpt)
 {
 }
 
-long lens_get_focus_pos()
-{
-    return _GetFocusLensSubjectDistance();
-}
-
 void lens_set_focus_pos(long newpos)
 {
 }
@@ -146,9 +141,4 @@ double pow(double x, double y) {
 
 double sqrt(double x) {
     return __sqrt(x);
-}
-
-long lens_get_target_distance()
-{
-    return _GetCurrentTargetDistance();
 }

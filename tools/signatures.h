@@ -1637,6 +1637,33 @@ static FuncSig func_sig_GetCurrentTargetDistance_1[] = {
 	/* 18/32 */
 };
 
+static FuncSig func_sig_GetFocusLensSubjectDistance_1[] = {
+	{   3, 0xe1a01f62, 0xfdffffff },
+	{   4, 0xe1520000, 0xfdffffff },
+	{   6, 0xe0811003, 0xfdffffff },
+	{   7, 0x1a000000, 0xff000000 },
+	{   8, 0xeb000000, 0xff000000 },
+	{   9, 0xeb000000, 0xff000000 },
+	{  10, 0xe1a00800, 0xfdffffff },
+	{  11, 0xe1a00840, 0xfdffffff },
+	{  12, 0xeb000000, 0xff000000 },
+	{  13, 0xe1a00800, 0xfdffffff },
+	{  14, 0xe1a00820, 0xfdffffff },
+	{  16, 0x0000abbc, 0xfdffffff },
+	{  20, 0xe04dd004, 0xfdffffff },
+	{  22, 0xe1a01f66, 0xfdffffff },
+	{  23, 0xe1520000, 0xfdffffff },
+	{  25, 0xe0811001, 0xfdffffff },
+	{  26, 0x1a000000, 0xff000000 },
+	{  27, 0xeb000000, 0xff000000 },
+	{  28, 0xe1a0100d, 0xfdffffff },
+	{  29, 0xe08d0002, 0xfdffffff },
+	{  30, 0xe1a02000, 0xfdffffff },
+	{  31, 0xeb000000, 0xff000000 },
+	{ -1, -1, -1 },
+	/* 22/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   3, 0xe1550000, 0xfdffffff },
 	{   4, 0xe1a04000, 0xfdffffff },
@@ -1843,6 +1870,33 @@ static FuncSig func_sig_Mount_FileSystem_2[] = {
 	/* 20/32 */
 };
 
+static FuncSig func_sig_GetFocusLensSubjectDistance_2[] = {
+	{   3, 0xe1a01d06, 0xfdffffff },
+	{   4, 0xe1520000, 0xfdffffff },
+	{   6, 0xe0811003, 0xfdffffff },
+	{   7, 0x1a000000, 0xff000000 },
+	{   8, 0xeb000000, 0xff000000 },
+	{   9, 0xeb000000, 0xff000000 },
+	{  10, 0xe1a00800, 0xfdffffff },
+	{  11, 0xe1a00840, 0xfdffffff },
+	{  12, 0xeb000000, 0xff000000 },
+	{  13, 0xe1a00800, 0xfdffffff },
+	{  14, 0xe1a00820, 0xfdffffff },
+	{  16, 0x00009ba4, 0xfdffffff },
+	{  20, 0xe04dd004, 0xfdffffff },
+	{  22, 0xe1a01e19, 0xfdffffff },
+	{  23, 0xe1520000, 0xfdffffff },
+	{  25, 0xe0811001, 0xfdffffff },
+	{  26, 0x1a000000, 0xff000000 },
+	{  27, 0xeb000000, 0xff000000 },
+	{  28, 0xe1a0100d, 0xfdffffff },
+	{  29, 0xe08d0002, 0xfdffffff },
+	{  30, 0xe1a02000, 0xfdffffff },
+	{  31, 0xeb000000, 0xff000000 },
+	{ -1, -1, -1 },
+	/* 22/32 */
+};
+
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory_1 },
 	{ "close", func_sig_close_1 },
@@ -1858,6 +1912,8 @@ FuncsList func_list[] = {
 	{ "ExitTask", func_sig_ExitTask_1 },
 	{ "FreeMemory", func_sig_FreeMemory_1 },
 	{ "GetCurrentTargetDistance", func_sig_GetCurrentTargetDistance_1 },
+	{ "GetFocusLensSubjectDistance", func_sig_GetFocusLensSubjectDistance_1 },
+	{ "GetFocusLensSubjectDistance", func_sig_GetFocusLensSubjectDistance_2 },
 	{ "GetParameterData", func_sig_GetParameterData_1 },
 	{ "GetParameterData", func_sig_GetParameterData_2 },
 	{ "GetPropertyCase", func_sig_GetPropertyCase_1 },

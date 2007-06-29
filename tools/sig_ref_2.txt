@@ -6,3 +6,4 @@ DisplayImagePhysicalScreen 0xffd36fe0
 SetParameterData 0xFFD75FB0
 GetParameterData 0xFFD76090
 Mount_FileSystem 0xffc602ec
+GetFocusLensSubjectDistance 0xFFEA2F3C

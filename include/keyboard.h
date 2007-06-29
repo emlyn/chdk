@@ -12,8 +12,15 @@
 #define KEY_ZOOM_OUT	9
 #define KEY_MENU	10
 #define KEY_DISPLAY	11
-#define KEY_PRINT	12
-#define KEY_ERASE	13
+#define KEY_PRINT	12     //S-series: Shortcut
+#define KEY_ERASE	13     //S-series: Func
+#define KEY_ISO		14     //S-series
+#define KEY_FLASH	15     //S-series
+#define KEY_MF		16     //S-series
+#define KEY_MACRO	17     //S-series
+#define KEY_VIDEO	18     //S-series
+#define KEY_TIMER	19     //S-series
+#define KEY_DUMMY	20     //dummy key for pressing to disable energy saving in alt mode
 
 extern void gui_kbd_process();
 extern void gui_kbd_enter();

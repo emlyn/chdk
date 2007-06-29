@@ -66,3 +66,4 @@ _log 0xFFEA83DC
 _log10 0xFFEA8A84
 _sqrt 0xFFEAD2C0
 GetCurrentTargetDistance 0xFFE736BC
+GetFocusLensSubjectDistance 0xFFE667F0

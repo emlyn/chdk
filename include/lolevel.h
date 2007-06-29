@@ -81,12 +81,21 @@ extern void _kbd_p2_f();
 extern void _kbd_pwr_on();
 extern void _kbd_pwr_off();
 extern void _kbd_read_keys_r2(void*p);
-extern long physw_status[3];
+extern long physw_status[3], physw_copy[3];;
 
 void __attribute__((naked,noinline)) mykbd_task();
 extern void capt_seq_task();
 
 void kbd_fetch_data(long *dst);
+
+extern long playrec_mode; //used on S-series only
+
+extern void *led_table;
+extern void _UniqueLedOn(void *addr, long brightness);
+extern void _UniqueLedOff(void *addr);
+
+extern long _LockMainPower();
+extern long _UnlockMainPower();
 
 /* math */
 extern double __log(double x);
