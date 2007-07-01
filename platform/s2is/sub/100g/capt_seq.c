@@ -5,8 +5,8 @@
 #define RAWDATA_AVAILABLE (1)
 #define RAWDATA_SAVED (2)
 
-#define NR_ON (2)
-#define NR_OFF (1)
+#define NR_ON (1)
+#define NR_OFF (0)
 
 static long raw_save_stage;
 
@@ -34,10 +34,10 @@ void capt_seq_hook_set_nr()
 	// leave it alone
 	break;
     case NOISE_REDUCTION_OFF:
-	*nrflag = 1;
+	*nrflag = 0;
 	break;
     case NOISE_REDUCTION_ON:
-	*nrflag = 2;
+	*nrflag = 1;
 	break;
     };
 }
