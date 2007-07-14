@@ -1,0 +1,83 @@
+// !!! THIS FILE IS GENERATED. DO NOT EDIT. !!!
+#include "stubs_asm.h"
+
+NSTUB(AllocateMemory, 0xffc01ab0)
+NSTUB(close, 0xffee547c)
+NSTUB(Close, 0xffc5dac8)
+NSTUB(CreatePhysicalVram, 0xffd23964)
+NSTUB(CreateTask, 0xffc1125c)
+NSTUB(CreateTaskStrict, 0xffc122fc)
+NSTUB(DisableDispatch, 0xffc11080)
+// Best match: 95%
+NSTUB(DisplayImagePhysicalScreen, 0xffd22c98)
+NSTUB(EnableDispatch, 0xffc1110c)
+NSTUB(ExecuteEventProcedure, 0xffc06808)
+NSTUB(ExitTask, 0xffc1161c)
+NSTUB(FreeMemory, 0xffc01abc)
+NSTUB(GetCurrentTargetDistance, 0xffea0cd4)
+// ERROR: GetFocusLensSubjectDistance is not found!
+// Best match: 84%
+NSTUB(GetParameterData, 0xffd5ded4)
+NSTUB(GetPropertyCase, 0xffc144f0)
+// Best match: 95%
+NSTUB(GetSystemTime, 0xffc04b28)
+// ALT: NSTUB(GetSystemTime, 0xffc04b28) // 20/1
+NSTUB(ints_disable, 0xffc0d6dc)
+NSTUB(ints_enable, 0xffc0d6e8)
+NSTUB(ioctl, 0xffee55bc)
+NSTUB(iosDevAdd, 0xffee669c)
+NSTUB(iosDrvInstall, 0xffee6960)
+NSTUB(IsStrobeChargeCompleted, 0xffcfed8c)
+NSTUB(kbd_p1_f_cont, 0xffc168f4)
+NSTUB(kbd_p1_f, 0xffc168e8)
+NSTUB(kbd_p2_f, 0xffc16ccc)
+NSTUB(kbd_pwr_off, 0xffc17ca8)
+// ALT: NSTUB(kbd_pwr_off, 0xffc17cf4) // 5/0
+NSTUB(kbd_pwr_on, 0xffc17c80)
+NSTUB(kbd_read_keys_r2, 0xffc1771c)
+NSTUB(_log10, 0xffed73c0)
+NSTUB(_log, 0xffedaee8)
+NSTUB(lseek, 0xffee55c0)
+NSTUB(MakeDirectory, 0xffc5dd6c)
+NSTUB(memcmp, 0xffee04d8)
+// ALT: NSTUB(memcmp, 0xffeec67c) // 9/0
+NSTUB(memcpy, 0xffee0514)
+NSTUB(memPartAlloc, 0xffee8448)
+NSTUB(memPartFindMax, 0xffee7188)
+NSTUB(memset, 0xffee058c)
+NSTUB(mkdir, 0xffc5dcb0)
+// Best match: 85%
+NSTUB(Mount_FileSystem, 0xffc5cdf8)
+// ALT: NSTUB(Mount_FileSystem, 0xffc5cdf8) // 17/3
+NSTUB(open, 0xffee5ac0)
+NSTUB(Open, 0xffc5daa0)
+// Best match: 86%
+NSTUB(PhySw_testgpio, 0xffc17d1c)
+NSTUB(_pow, 0xffed7548)
+NSTUB(ProtectFile, 0xffc56430)
+NSTUB(read, 0xffee54dc)
+NSTUB(Read, 0xffc5db5c)
+NSTUB(RefreshPhysicalScreen, 0xffd703c0)
+// Best match: 84%
+NSTUB(SetParameterData, 0xffd5ddf4)
+NSTUB(SetPropertyCase, 0xffc143d4)
+NSTUB(SleepTask, 0xffc11170)
+NSTUB(_sqrt, 0xffed92e4)
+NSTUB(strcmp, 0xffee05fc)
+NSTUB(strcpy, 0xffee0790)
+NSTUB(strlen, 0xffee08f4)
+NSTUB(TakeSemaphore, 0xffc10c6c)
+NSTUB(taskCreateHookAdd, 0xffeeb11c)
+NSTUB(taskDeleteHookAdd, 0xffeeb058)
+// Best match: 79%
+NSTUB(taskIdListGet, 0xffef50e4)
+NSTUB(taskLock, 0xffef57a0)
+NSTUB(taskName, 0xffef4fdc)
+NSTUB(taskResume, 0xffef53c0)
+NSTUB(taskSuspend, 0xffef51ec)
+NSTUB(taskUnlock, 0xffef5848)
+NSTUB(Unmount_FileSystem, 0xffc5ce9c)
+NSTUB(UpdateMBROnFlash, 0xffc5cfec)
+NSTUB(vsprintf, 0xffee4224)
+NSTUB(write, 0xffee554c)
+NSTUB(Write, 0xffc5db68)
