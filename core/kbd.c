@@ -3,24 +3,29 @@
 #include "core.h"
 #include "keyboard.h"
 #include "conf.h"
+#include "lang.h"
 #include "ubasic.h"
 #include "histogram.h"
+#include "script.h"
+#include "gui_lang.h"
+#include "motion_detector.h"
 
 static int keyid_by_name (const char *n);
 
 
-#define SCRIPT_END	0
-#define SCRIPT_CLICK	1
-#define SCRIPT_SHOOT	2
-#define SCRIPT_SLEEP	3
-#define SCRIPT_PRESS	4
-#define SCRIPT_RELEASE	5
-#define SCRIPT_PR_WAIT_SAVE	6
-#define SCRIPT_WAIT_SAVE	7
-#define SCRIPT_WAIT_FLASH	8
-#define SCRIPT_WAIT_EXPHIST	9
-#define SCRIPT_PR_WAIT_EXPHIST	10
-
+#define SCRIPT_END              0
+#define SCRIPT_CLICK            1
+#define SCRIPT_SHOOT            2
+#define SCRIPT_SLEEP            3
+#define SCRIPT_PRESS            4
+#define SCRIPT_RELEASE          5
+#define SCRIPT_PR_WAIT_SAVE     6
+#define SCRIPT_WAIT_SAVE        7
+#define SCRIPT_WAIT_FLASH       8
+#define SCRIPT_WAIT_EXPHIST     9
+#define SCRIPT_PR_WAIT_EXPHIST  10
+#define SCRIPT_WAIT_CLICK       11
+#define SCRIPT_MOTION_DETECTOR  12
 
 #define KBD_STACK_SIZE 24
 
@@ -34,6 +39,7 @@ static int kbd_blocked;
 static int key_pressed;
 int state_kbd_script_run;
 static long delay_target_ticks;
+static long kbd_last_clicked;
 
 static void kbd_sched_delay(long msec)
 {
@@ -41,25 +47,48 @@ static void kbd_sched_delay(long msec)
     KBD_STACK_PUSH(SCRIPT_SLEEP);
 }
 
-static void kbd_sched_click(long key)
+
+void kbd_sched_motion_detector(){
+    KBD_STACK_PUSH(SCRIPT_MOTION_DETECTOR);
+}
+
+static void kbd_sched_press(long key)
 {
 // WARNING stack program flow is reversed
-    kbd_sched_delay(20);
-
-    KBD_STACK_PUSH(key);
-    KBD_STACK_PUSH(SCRIPT_RELEASE);
-
     kbd_sched_delay(20);
 
     KBD_STACK_PUSH(key);
     KBD_STACK_PUSH(SCRIPT_PRESS);
 }
 
+static void kbd_sched_release(long key)
+{
+// WARNING stack program flow is reversed
+    kbd_sched_delay(20);
+
+    KBD_STACK_PUSH(key);
+    KBD_STACK_PUSH(SCRIPT_RELEASE);
+}
+
+static void kbd_sched_click(long key)
+{
+// WARNING stack program flow is reversed
+    kbd_sched_release(key);
+    kbd_sched_press(key);
+}
+
+static void kbd_sched_wait_click(int timeout)
+{
+// WARNING stack program flow is reversed
+    KBD_STACK_PUSH(timeout);
+    KBD_STACK_PUSH(SCRIPT_WAIT_CLICK);
+}
+
 void kbd_sched_shoot()
 {
 // WARNING stack program flow is reversed
 
-    kbd_sched_delay(conf_script_shoot_delay*100);// XXX FIXME find out how to wait to jpeg save finished
+    kbd_sched_delay(conf.script_shoot_delay*100);// XXX FIXME find out how to wait to jpeg save finished
 
     KBD_STACK_PUSH(SCRIPT_WAIT_SAVE);
 
@@ -86,20 +115,33 @@ void kbd_sched_shoot()
 
 void script_start()
 {
+    int i;
+
     state_kbd_script_run = 1;
     delay_target_ticks = 0;
     kbd_int_stack_ptr = 0;
+    kbd_last_clicked = 0;
     kbd_key_release_all();
     ubasic_init(state_ubasic_script);
 
-    ubasic_set_variable('a' - 'a', conf_ubasic_var_a);
-    ubasic_set_variable('b' - 'a', conf_ubasic_var_b);
-    ubasic_set_variable('c' - 'a', conf_ubasic_var_c);
+    for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
+        ubasic_set_variable(i, conf.ubasic_vars[i]);
+    }
+
+    if (conf.alt_prevent_shutdown != ALT_PREVENT_SHUTDOWN_ALT_SCRIPT) {
+        enable_shutdown();
+    }
 }
 
 void script_end()
 {
+    ubasic_end();
+    if (conf.alt_prevent_shutdown != ALT_PREVENT_SHUTDOWN_NO) {
+        disable_shutdown();
+    }
+    kbd_key_release_all();
     state_kbd_script_run = 0;
+    vid_bitmap_refresh();
 }
 
 void process_script()
@@ -109,6 +151,11 @@ void process_script()
     // process stack operations
     if (kbd_int_stack_ptr){
 	switch (KBD_STACK_PREV(1)){
+	case SCRIPT_MOTION_DETECTOR:
+			if(md_detect_motion()==0){
+				kbd_int_stack_ptr-=1;
+			}
+			return;
 	case SCRIPT_PRESS:
 	    kbd_key_press(KBD_STACK_PREV(2));
 	    kbd_int_stack_ptr-=2; // pop op.
@@ -163,6 +210,22 @@ void process_script()
 	    }
 	    return;
 	}
+        case SCRIPT_WAIT_CLICK: {
+            t = get_tick_count();
+	    if (delay_target_ticks == 0){
+		/* setup timer */
+		delay_target_ticks = t+((KBD_STACK_PREV(2))?KBD_STACK_PREV(2):86400000);
+	    } else {
+                kbd_last_clicked = kbd_get_clicked_key();
+                if (kbd_last_clicked || delay_target_ticks <= t) {
+                    if (!kbd_last_clicked) 
+                        kbd_last_clicked=0xFFFF;
+        	    delay_target_ticks = 0;
+                    kbd_int_stack_ptr-=2; // pop op.
+                }
+	    }
+	    return;
+	}
 	default:
 	    /*finished();*/
 	    script_end();
@@ -171,8 +234,30 @@ void process_script()
 
     ubasic_run();
 
-    if (ubasic_finished())
+    if (ubasic_finished()) {
+        script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
 	script_end();
+    }    
+}
+
+void ubasic_camera_press(const char *s)
+{
+    long k = keyid_by_name(s);
+    if (k > 0) {
+	kbd_sched_press(k);
+    } else {
+	ubasic_error = 3;
+    }
+}
+
+void ubasic_camera_release(const char *s)
+{
+    long k = keyid_by_name(s);
+    if (k > 0) {
+	kbd_sched_release(k);
+    } else {
+	ubasic_error = 3;
+    }
 }
 
 void ubasic_camera_click(const char *s)
@@ -185,6 +270,24 @@ void ubasic_camera_click(const char *s)
     }
 }
 
+void ubasic_camera_wait_click(int timeout)
+{
+    kbd_sched_wait_click(timeout);
+}
+
+int ubasic_camera_is_clicked(const char *s)
+{
+    long k = keyid_by_name(s);
+if (k==0xFF) return get_usb_power();
+    if (k > 0) {
+        return (kbd_last_clicked == k);
+    } else {
+	ubasic_error = 3;
+    }
+    return 0;
+}
+
+
 void ubasic_camera_sleep(long v)
 {
     kbd_sched_delay(v);
@@ -193,6 +296,21 @@ void ubasic_camera_sleep(long v)
 void ubasic_camera_shoot()
 {
     kbd_sched_shoot();
+}
+// remote autostart
+void script_autostart()
+{
+	auto_started = 1;
+	kbd_blocked = 1;
+	gui_kbd_enter();
+	script_console_clear(); 
+	script_console_add_line("***Autostart***"); //lang_str(LANG_CONSOLE_TEXT_STARTED));
+	script_start();
+}
+void exit_alt()
+{
+	    kbd_blocked = 0;
+	    gui_kbd_leave();
 }
 
 long kbd_process()
@@ -203,12 +321,25 @@ long kbd_process()
 
     if (kbd_blocked){
 	if (key_pressed){
-	    if (kbd_get_pressed_key() == 0)
-		key_pressed = 0;
+            if (kbd_is_key_pressed(conf.alt_mode_button)) {
+                ++key_pressed;
+                if (key_pressed==40) {
+                    kbd_key_press(conf.alt_mode_button);
+                } else if (key_pressed==45) {
+                    kbd_key_release_all();
+                    key_pressed = 2;
+        	    kbd_blocked = 0;
+//        	    gui_kbd_leave();
+                }
+            } else if (kbd_get_pressed_key() == 0) {
+                if (key_pressed!=100)
+                    gui_kbd_enter();
+        	key_pressed = 0;
+            }    
 	    return 1;
 	}
 
-	if (kbd_is_key_pressed(KEY_PRINT)){
+	if (kbd_is_key_pressed(conf.alt_mode_button)){
 	    key_pressed = 2;
 	    kbd_blocked = 0;
 	    gui_kbd_leave();
@@ -216,10 +347,13 @@ long kbd_process()
 	}
 
 	if (kbd_is_key_pressed(KEY_SHOOT_FULL)){
-	    key_pressed = 1;
+	    key_pressed = 100;
 	    if (!state_kbd_script_run){
+                script_console_clear();
+                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
 		script_start();
 	    } else {
+                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
 		script_end();
 	    }
 	}
@@ -229,42 +363,61 @@ long kbd_process()
 	else {
 	    gui_kbd_process();
 	}
+/*        if (kbd_get_pressed_key() != 0 && !state_kbd_script_run) {
+            // emulate presskey to avoid camera turn off due to timeout
+            kbd_key_release_all();
+            kbd_key_press(KEY_DUMMY);
+        } */
     } else {
-	if (!key_pressed && kbd_is_key_pressed(KEY_PRINT)){
+	if (!key_pressed && kbd_is_key_pressed(conf.alt_mode_button)){
 	    kbd_blocked = 1;
 	    key_pressed = 1;
 	    kbd_key_release_all();
-	    gui_kbd_enter();
+//	    gui_kbd_enter();
 	    return 1;
 	} else 
-	if ((key_pressed == 2) && !kbd_is_key_pressed(KEY_PRINT)){
+	if ((key_pressed == 2) && !kbd_is_key_pressed(conf.alt_mode_button)){
 	    key_pressed = 0;
+	}
+	
+	if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
+	    return 1;
 	}
     }
 
     return kbd_blocked;
 }
 
-const struct Keynames {
+static const struct Keynames {
     int keyid;
     char *keyname;
 } keynames[] = {
-    { KEY_UP, "up" },
-    { KEY_DOWN, "down" },
-    { KEY_LEFT, "left" },
-    { KEY_RIGHT, "right" },
-    { KEY_SET, "set" },
-    { KEY_SHOOT_HALF, "shoot_half" },
-    { KEY_SHOOT_FULL, "shoot_full" },
-    { KEY_ZOOM_IN, "zoom_in" },
-    { KEY_ZOOM_OUT, "zoom_out" },
-    { KEY_MENU, "menu" },
-    { KEY_DISPLAY, "display" },
-    { KEY_PRINT, "print" },
-    { KEY_ERASE, "erase" },
+    { KEY_UP,           "up"         },
+    { KEY_DOWN,         "down"       },
+    { KEY_LEFT,         "left"       },
+    { KEY_RIGHT,        "right"      },
+    { KEY_SET,          "set"        },
+    { KEY_SHOOT_HALF,   "shoot_half" },
+    { KEY_SHOOT_FULL,   "shoot_full" },
+    { KEY_ZOOM_IN,      "zoom_in"    },
+    { KEY_ZOOM_OUT,     "zoom_out"   },
+    { KEY_MENU,         "menu"       },
+    { KEY_DISPLAY,      "display"    },
+    { KEY_PRINT,        "print"      },
+    { KEY_ERASE,        "erase"      },
+    { KEY_ISO,          "iso"        },
+    { KEY_FLASH,        "flash"      },
+    { KEY_MF,           "mf"         },
+    { KEY_MACRO,        "macro"      },
+    { KEY_VIDEO,        "video"      },
+    { KEY_TIMER,        "timer"      },
+    { KEY_EXPO_CORR,    "expo_corr"  },
+    { KEY_MICROPHONE,   "fe"         },
+    { 0xFF,             "remote"     },
+    { 0xFFFF,           "no_key"     },
 };
 
-int keyid_by_name (const char *n)
+static int keyid_by_name (const char *n)
 {
     int i;
     for (i=0;i<sizeof(keynames)/sizeof(keynames[0]);i++)

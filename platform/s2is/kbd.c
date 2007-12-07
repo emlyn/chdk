@@ -1,5 +1,6 @@
 #include "lolevel.h"
 #include "platform.h"
+#include "conf.h"
 #include "core.h"
 #include "keyboard.h"
 
@@ -17,13 +18,14 @@ long physw_copy[3];
 static KeyMap keymap[];
 static long last_kbd_key = 0;
 static long alt_mode_key_mask = 0x00004000;
-
+static int usb_power;
 #define KEYS_MASK0 (0x00000003)
 #define KEYS_MASK1 (0x5f7f7038)
 #define KEYS_MASK2 (0x00000000)
 
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
+#define USB_MASK (8) 
 
 #ifndef MALLOCD_STACK
 static char kbd_stack[NEW_SS];
@@ -174,6 +176,13 @@ void my_kbd_read_keys_cont(long *canon_key_state)
     canon_key_state[0] = physw_status[0];
     canon_key_state[1] = physw_status[1];
     canon_key_state[2] = physw_status[2];
+// phot's code
+	if (conf.remote_enable) {
+	    usb_power       = (physw_status[2] & USB_MASK)==USB_MASK; 
+    // clear the flag to avoid switching to view mode
+		physw_status[2] =  physw_status[2] & ~SD_READONLY_FLAG;
+	}
+
 }
 
 
@@ -363,3 +372,5 @@ static KeyMap keymap[] = {
 //        { 1, KEY_DUMMY   	, 0x00000000 },
 	{ 0, 0, 0 }
 };
+int get_usb_power(void) {return usb_power;}
+

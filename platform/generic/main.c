@@ -62,6 +62,14 @@ static void physw_hook(
     mykbd_task();
 }
 
+static void movie_record_hook(
+    long p0,    long p1,    long p2,    long p3,    long p4,
+    long p5,    long p6,    long p7,    long p8,    long p9)
+{
+    movie_record_task();
+}
+
+
 
 static int my_ncmp(const char *s1, const char *s2, long len)
 {
@@ -97,6 +105,10 @@ void createHook (void *pNewTcb)
 
 	if (my_ncmp(name, "tCaptSeqTa", 10) == 0){
 	    *entry = (long)capt_seq_hook;
+	}
+
+	if (my_ncmp(name, "tMovieReco", 10) == 0){
+	    *entry = (long)movie_record_hook;
 	}
 
 	core_hook_task_create(pNewTcb);
@@ -137,12 +149,3 @@ void startup()
     boot();
 }
 
-long vbatt_get_min()
-{
-    return VBATT_DEFAULT_MIN;
-}
-
-long vbatt_get_max()
-{
-    return VBATT_DEFAULT_MAX;
-}

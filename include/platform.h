@@ -9,58 +9,134 @@
 #define MODE_PLAY               0x0200
 
 #define MODE_SHOOTING_MASK      0x00FF
-#define MODE_AUTO               1
-#define MODE_P                  2
-#define MODE_TV                 3
-#define MODE_AV                 4
-#define MODE_M                  5
-#define MODE_PORTRAIT           6
-#define MODE_NIGHT              7
-#define MODE_LANDSCAPE          8
-#define MODE_VIDEO_STD          9
-#define MODE_VIDEO_SPEED        10
-#define MODE_VIDEO_COMPACT      11
-#define MODE_VIDEO_MY_COLORS    12
-#define MODE_VIDEO_COLOR_ACCENT 13
-#define MODE_STITCH             14
-#define MODE_MY_COLORS          15
-#define MODE_SCN_WATER          16
-#define MODE_SCN_NIGHT          17
-#define MODE_SCN_CHILD          18
-#define MODE_SCN_PARTY          19
-#define MODE_SCN_GRASS          20
-#define MODE_SCN_SNOW           21
-#define MODE_SCN_BEACH          22
-#define MODE_SCN_FIREWORK       23
-#define MODE_SCN_COLOR_ACCENT   24
+
+enum {
+MODE_AUTO               =1,
+MODE_P                  ,
+MODE_TV                 ,
+MODE_AV                 ,
+MODE_M                  ,
+MODE_PORTRAIT           ,
+MODE_NIGHT              ,
+MODE_LANDSCAPE          ,
+MODE_VIDEO_STD          ,
+MODE_VIDEO_SPEED        ,
+MODE_VIDEO_COMPACT      ,
+MODE_VIDEO_MY_COLORS    ,
+MODE_VIDEO_COLOR_ACCENT ,
+MODE_STITCH             ,
+MODE_MY_COLORS          ,
+MODE_SCN_WATER          ,
+MODE_SCN_NIGHT          ,
+MODE_SCN_CHILD          ,
+MODE_SCN_PARTY          ,
+MODE_SCN_GRASS          ,
+MODE_SCN_SNOW           ,
+MODE_SCN_BEACH          ,
+MODE_SCN_FIREWORK       ,
+MODE_SCN_COLOR_ACCENT   ,
+MODE_VIDEO_HIRES        ,
+MODE_SCN_AQUARIUM       ,
+
+MODE_SCN_NIGHT1         ,
+MODE_SCN_ISO_3200       ,
+MODE_SCN_SPORT          ,
+
+MODE_INDOOR             ,
+MODE_KIDS_PETS          ,
+MODE_NIGHT_SNAPSHOT     ,
+MODE_DIGITAL_MACRO      ,
+};
 
 #define MODE_SCREEN_MASK        0x0C00
 #define MODE_SCREEN_OPENED      0x0400
 #define MODE_SCREEN_ROTATED     0x0800
 
 typedef struct {
-    short int id; // hacks id
-    short int prop_id; // Canons id
+    short id; // hacks id
+    short prop_id; // Canons id
     char name[8];
-    short int shutter_dfs_value; // shutter speed to use dark frame substraction
+    short shutter_dfs_value; // shutter speed to use dark frame substraction
 } ISOTable;
 
 typedef struct {
-    short int id; // hacks id
-    short int prop_id; // Canons id
+    short id; // hacks id
+    short prop_id; // Canons id
     char name[8];
     long usec;
 } ShutterSpeed;
 
 typedef struct {
-    short int id; // hacks id
-    short int prop_id; // Canons id
+    short id; // hacks id
+    short prop_id; // Canons id
     char name[8];
 } ApertureSize;
 
+typedef struct {
+    short av96;
+    short dav96;
+    short av96_step;
+    short tv96;
+    short dtv96;
+    short tv96_step;
+    short sv96;
+    short dsv96;
+    short sv96_step;
+    short iso;
+    short diso;
+    short iso_step;
+    short subj_dist;
+    short dsubj_dist;
+    short subj_dist_step;
+    short shoot_counter;
+    short type;
+} EXPO_BRACKETING_VALUES;
+
+#define SET_NOW      1
+#define SET_LATER    0
+
+typedef struct {
+    short av96;
+    short tv96;
+    short sv96;
+    short subj_dist;
+} PHOTO_PARAM;
+
+typedef struct {
+    int    subject_distance;
+    int     near_limit;
+    int     far_limit;
+    int     hyperfocal_distance;
+    int     depth_of_field;
+} DOF_TYPE;
+
+typedef struct {
+    short av96;
+    short tv96;
+    short sv96;
+    short iso;
+    short sv96_market;
+    short iso_market;
+    short bv96_external;
+    float     bv_external; //Bv96_external/96
+    short bv96_internal;//Ev96_internal-Sv96
+    short ev96_internal; //Tv96+Av96
+    short ev96_external; //Bv96+Sv96
+    short dev96;// Ev96_external-Ev96_internal
+    short b; //average scene luminance 
+} EXPO_TYPE;
+
+typedef struct {
+    float value; 
+    char fraction[10];
+} shutter_speed;
+
+
 /******************************************************************/
 
-extern const int dof_tbl[], dof_tbl_size;
+int get_focal_length(int zp);
+int get_effective_focal_length(int zp);
+int get_zoom_x(int zp);
 
 /******************************************************************/
 
@@ -77,6 +153,8 @@ long set_parameter_data(long id, void *buf, long bufsize);
 long get_property_case(long id, void *buf, long bufsize);
 long set_property_case(long id, void *buf, long bufsize);
 
+long get_file_counter();
+long get_file_next_counter();
 long get_target_dir_num();
 long get_target_file_num();
 
@@ -89,7 +167,11 @@ long kbd_is_key_pressed(long key);
 long kbd_is_key_clicked(long key);
 long kbd_get_pressed_key();
 long kbd_get_clicked_key();
-
+long kbd_get_autoclicked_key();
+void kbd_reset_autoclicked_key();
+long kbd_use_zoom_as_mf();
+void kbd_set_alt_mode_key_mask(long key);
+int get_usb_power(void);
 /******************************************************************/
 
 long vid_is_bitmap_shown();
@@ -97,8 +179,10 @@ void *vid_get_bitmap_fb();
 long vid_get_bitmap_width();
 long vid_get_bitmap_height();
 void *vid_get_viewport_fb();
+void *vid_get_viewport_fb_d();
 void *vid_get_viewport_live_fb();
 void vid_bitmap_refresh();
+long vid_get_viewport_height();
 
 /******************************************************************/
 
@@ -115,9 +199,9 @@ long lens_get_zoom_pos();
 void lens_set_zoom_pos(long newpos);
 long lens_get_zoom_point();
 void lens_set_zoom_point(long newpt);
+void lens_set_zoom_speed(long newspd); //for S-series
 long lens_get_focus_pos();
 void lens_set_focus_pos(long newpos);
-
 long lens_get_target_distance();
 
 /******************************************************************/
@@ -125,29 +209,117 @@ long lens_get_target_distance();
 int shooting_in_progress();
 int shooting_is_flash_ready();
 
-int shooting_get_tv();
-void shooting_set_tv(int v);
-void shooting_set_tv_rel(int v);
+/******************************************************************/
+int shooting_get_user_tv_id();
+char* shooting_get_tv_str();
+short shooting_get_tv96_from_shutter_speed(float t);
+short shooting_get_tv96();
+void shooting_set_tv96(short v, short is_now);
+void shooting_set_tv96_direct(short v, short is_now);
+void shooting_set_shutter_speed(float t, short is_now);
+short shooting_get_user_tv96();
+void shooting_set_user_tv96(short v);
+float shooting_get_shutter_speed_from_tv96(short tv);
+float shooting_get_shutter_speed_override_value();
+const char * shooting_get_tv_bracket_value();
+void shooting_set_user_tv_by_id(int v);
+void shooting_set_user_tv_by_id_rel(int v);
 const ShutterSpeed *shooting_get_tv_line();
+/******************************************************************/
+short shooting_get_aperture_from_av96(short av96);
+int shooting_get_user_av_id();
+char* shooting_get_av_str();
+void shooting_set_user_av_by_id(int v);
+short shooting_get_av96();
+void shooting_set_av96(short v,short is_now);
+void shooting_set_av96_direct(short v, short is_now);
+short shooting_get_user_av96();
+void shooting_set_user_av96(short v);
+void shooting_set_user_av_by_id_rel(int v);
+short shooting_get_real_aperture();
+short shooting_get_min_real_aperture();
+short shooting_get_av96_override_value();
+const char * shooting_get_av_bracket_value();
+/******************************************************************/
+int shooting_get_day_seconds();
+int shooting_get_tick_count();
+/******************************************************************/
+void shooting_set_prop(int id, int v);
+int shooting_get_prop(int id);
+/******************************************************************/
+extern int circle_of_confusion;
+/******************************************************************/
+extern const int zoom_points;
+int shooting_get_zoom();
+void shooting_set_zoom(int v);
+void shooting_set_zoom_rel(int v);
+void shooting_set_zoom_speed(int v);
+/******************************************************************/
+int shooting_get_focus();
+void shooting_set_focus(int v, short is_now);
+short shooting_get_focus_mode();
+int shooting_get_hyperfocal_distance();
+int shooting_get_near_limit_of_acceptable_sharpness();
+int shooting_get_far_limit_of_acceptable_sharpness();
+int shooting_get_depth_of_field();
+int shooting_get_subject_distance_override_value();
+int shooting_get_subject_distance_bracket_value();
+short shooting_get_drive_mode();
+/******************************************************************/
+int shooting_get_iso_mode();
+void shooting_set_iso_mode(int v);
+short shooting_get_sv96();
+short shooting_get_svm96();
+short shooting_get_iso_market();
+short shooting_get_iso_real();
+void shooting_set_iso_real(short iso, short is_now);
+//void shooting_set_iso_market(short isom);
+//void shooting_set_iso_real_delta_from_base(short diso);
+void shooting_set_sv96(short sv96, short is_now);
+short shooting_get_iso_override_value();
+short shooting_get_iso_bracket_value();
+/******************************************************************/
+short shooting_get_bv96();
+short shooting_get_luminance();
+/******************************************************************/
+int shooting_get_canon_subject_distance();
+int shooting_get_exif_subject_dist();
+/******************************************************************/
+void shooting_expo_param_override();
+void shooting_bracketing(void);
 
-int shooting_get_av();
-void shooting_set_av(int v);
-void shooting_set_av_rel(int v);
+void shooting_video_bitrate_change(int v);
+extern int auto_started;
+void shooting_tv_bracketing();
+void shooting_av_bracketing();
+void shooting_iso_bracketing();
+/******************************************************************/
 
-int shooting_get_real_av();
-long shooting_get_current_mode();
+
+int mode_get();
 
 /******************************************************************/
 
 long stat_get_vbatt();
+long get_vbatt_min();
+long get_vbatt_max();
+void ubasic_camera_set_raw(int mode);
+void ubasic_camera_set_nr(int mode);
+int ubasic_camera_get_nr();
+int ubasic_camera_script_autostart();
+void ubasic_camera_set_script_autostart();
+void exit_alt();
 
-/******************************************************************/
+void disable_shutdown();
+void enable_shutdown();
 
-long vbatt_get_min();
-long vbatt_get_max();
+void JogDial_CW(void);
+void JogDial_CCW(void);
+void change_video_tables(int a, int b);
 
 /******************************************************************/
 void __attribute__((noreturn)) shutdown();
+void ubasic_set_led(int led, int state, int bright);
 void debug_led(int state);
 #define started() debug_led(1)
 #define finished() debug_led(0)

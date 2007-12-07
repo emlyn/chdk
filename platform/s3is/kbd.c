@@ -1,6 +1,7 @@
 #include "lolevel.h"
 #include "platform.h"
 #include "core.h"
+#include "conf.h"
 #include "keyboard.h"
 
 typedef struct {
@@ -14,13 +15,17 @@ static long kbd_new_state[3];
 static long kbd_prev_state[3];
 static long kbd_mod_state[3];
 static KeyMap keymap[];
+static long last_kbd_key = 0;
+static long alt_mode_key_mask = 0x00004000;
+static int usb_power;
 
 #define KEYS_MASK0 (0x00000003)
-#define KEYS_MASK1 (0x1d3f6000)
+#define KEYS_MASK1 (0x5f7f7038)
 #define KEYS_MASK2 (0x00000000)
 
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
+#define USB_MASK (8)
 
 #ifndef MALLOCD_STACK
 static char kbd_stack[NEW_SS];
@@ -106,6 +111,7 @@ void my_kbd_read_keys()
 	physw_status[0] = kbd_new_state[0];
 	physw_status[1] = kbd_new_state[1];
 	physw_status[2] = kbd_new_state[2];
+        physw_status[1] |= alt_mode_key_mask;
     } else {
 	// override keys
 	physw_status[0] = (kbd_new_state[0] & (~KEYS_MASK0)) |
@@ -119,12 +125,26 @@ void my_kbd_read_keys()
     }
 
     _kbd_read_keys_r2(physw_status);
+    usb_power=(physw_status[2] & USB_MASK)==USB_MASK;
+	if (conf.remote_enable)
+		physw_status[2] = physw_status[2] & ~(SD_READONLY_FLAG | USB_MASK);
+	else
     physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
 
 }
 
 /****************/
 
+void kbd_set_alt_mode_key_mask(long key)
+{
+    int i;
+    for (i=0; keymap[i].hackkey; ++i) {
+	if (keymap[i].hackkey == key) {
+	    alt_mode_key_mask = keymap[i].canonkey;
+	    return;
+	}
+    }
+}
 
 void kbd_key_press(long key)
 {
@@ -201,7 +221,76 @@ long kbd_get_clicked_key()
     return 0;
 }
 
+void kbd_reset_autoclicked_key() {
+    last_kbd_key = 0;
+}
 
+long kbd_get_autoclicked_key() {
+    static long last_kbd_time = 0, press_count = 0;
+    register long key, t;
+
+    key=kbd_get_clicked_key();
+    if (key) {
+        last_kbd_key = key;
+        press_count = 0;
+        last_kbd_time = get_tick_count();
+        return key;
+    } else {
+        if (last_kbd_key && kbd_is_key_pressed(last_kbd_key)) {
+            t = get_tick_count();
+            if (t-last_kbd_time>((press_count)?175:500)) {
+                ++press_count;
+                last_kbd_time = t;
+                return last_kbd_key;
+            } else {
+                return 0;
+            }
+        } else {
+            last_kbd_key = 0;
+            return 0;
+        }
+    }
+}
+
+long kbd_use_zoom_as_mf() {
+    static long v;
+    static long zoom_key_pressed = 0;
+
+    if (kbd_is_key_pressed(KEY_ZOOM_IN) && kbd_is_key_pressed(KEY_MF) && (mode_get()&MODE_MASK) == MODE_REC) {
+        get_property_case(12, &v, 4);
+        if (v) {
+            kbd_key_release_all();
+            kbd_key_press(KEY_MF);
+            kbd_key_press(KEY_UP);
+            zoom_key_pressed = KEY_ZOOM_IN;
+            return 1;
+        }
+    } else {
+        if (zoom_key_pressed==KEY_ZOOM_IN) {
+            kbd_key_release(KEY_UP);
+            zoom_key_pressed = 0;
+            return 1;
+        }
+    }
+    if (kbd_is_key_pressed(KEY_ZOOM_OUT) && kbd_is_key_pressed(KEY_MF) && (mode_get()&MODE_MASK) == MODE_REC) {
+        get_property_case(12, &v, 4);
+        if (v) {
+            kbd_key_release_all();
+            kbd_key_press(KEY_MF);
+            kbd_key_press(KEY_DOWN);
+            zoom_key_pressed = KEY_ZOOM_OUT;
+            return 1;
+        }
+    } else {
+        if (zoom_key_pressed==KEY_ZOOM_OUT) {
+            kbd_key_release(KEY_DOWN);
+            zoom_key_pressed = 0;
+            return 1;
+        }
+    }
+    return 0;
+}
+int get_usb_power(void) {return usb_power;}
 static KeyMap keymap[] = {
     /* tiny bug: key order matters. see kbd_get_pressed_key()
      * for example
@@ -221,6 +310,13 @@ static KeyMap keymap[] = {
 	{ 1, KEY_DISPLAY	, 0x00002000 },
 	{ 1, KEY_PRINT		, 0x00004000 },
 	{ 1, KEY_ERASE		, 0x00400000 },
+        { 1, KEY_ISO		, 0x00001000 },
+        { 1, KEY_FLASH		, 0x00000008 },
+        { 1, KEY_MF		, 0x00000010 },
+        { 1, KEY_MACRO		, 0x00000020 },
+        { 1, KEY_VIDEO		, 0x40000000 },
+        { 1, KEY_TIMER		, 0x02000000 },
+//        { 1, KEY_DUMMY   	, 0x00000000 },
 	{ 0, 0, 0 }
 };
 

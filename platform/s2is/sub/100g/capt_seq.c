@@ -1,6 +1,7 @@
 #include "lolevel.h"
 #include "platform.h"
 #include "core.h"
+#include "conf.h"
 
 #define RAWDATA_AVAILABLE (1)
 #define RAWDATA_SAVED (2)
@@ -165,6 +166,7 @@ void __attribute__((naked,noinline)) capt_seq_task()
                 "B       loc_FF96C918\n"
 "loc_FF96C7F8:\n"
                 "BL      sub_FF96D734\n"
+                "BL      shooting_expo_param_override\n"  // +
                 "BL      sub_FF96A6F0\n"
                 "LDR     R3, =0x5D11C\n"
                 "MOV     R1, #0x10\n"

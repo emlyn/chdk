@@ -52,6 +52,7 @@ extern int ubasic_error;
 void ubasic_init(const char *program);
 void ubasic_run(void);
 int ubasic_finished(void);
+void ubasic_end();
 int ubasic_linenumber();
 
 int ubasic_get_variable(int varnum);

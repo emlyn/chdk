@@ -1,4 +1,4 @@
-VER=pre14
+VER=trunk
 
 PLATFORM=a610
 PLATFORMSUB=100e
@@ -19,14 +19,29 @@ PLATFORMSUB=100e
 #PLATFORMSUB=100a
 
 #PLATFORM=s2is
-#PLATFORMSUB=100e
+#PLATFORMSUB=100f
 
 #PLATFORM=s3is
 #PLATFORMSUB=100a
 
+#PLATFORM=g7
+#PLATFORMSUB=100i
+
+#PLATFORM=a570
+#PLATFORMSUB=100e
+
+#PLATFORM=ixus700
+#PLATFORMSUB=101a
+
+#PLATFORM=ixus800
+#PLATFORMSUB=101b
+
+include $(topdir)version.inc
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
 
-SILENT=
+SILENT=SILENT
+
+NOZERO100K=TRUE
 
 ##########################################################################
 ##########################################################################
@@ -73,7 +88,7 @@ PAKWIF=$(topdir)tools/pakwif$(EXE)
 
 ##########################################################################
 
-export PATH+=:/opt/arm/bin
+export PATH+=:/net/mos127/export/home/gratchev/_distr/opt/arm/bin
 
 CC=arm-elf-gcc
 OBJCOPY=arm-elf-objcopy
@@ -85,12 +100,13 @@ RANLIB=arm-elf-ranlib
 SIZE=arm-elf-size
 
 # -msoft-float is used per default but object files are marked as hard-float
+CFLAGS=-fno-inline -Os -fno-strict-aliasing
+# flags for gcc v4
+# CFLAGS+=-mtune=arm946e-s
 CTHUMB=-mthumb
-
-CFLAGS=-fno-inline -O2 -fno-strict-aliasing
 CFLAGS+=-mthumb-interwork
 CFLAGS+=-I$(topdir)include $(PLFLAGS) $(CPPFLAGS)
-CFLAGS+=-DPLATFORM=\"$(PLATFORM)\" -DPLATFORMSUB=\"$(PLATFORMSUB)\" -DHDK_VERSION=\"$(VER)\"
+CFLAGS+=-DPLATFORM=\"$(PLATFORM)\" -DPLATFORMSUB=\"$(PLATFORMSUB)\" -DHDK_VERSION=\"$(VER)\" -DBUILD_NUMBER=\"$(BUILD_NUMBER)\" -DCAMERA_$(PLATFORM)
 CFLAGS+=-Wall -Wno-unused -Wno-format
 LDFLAGS=-L$(topdir)lib/math -L$(topdir)lib/font
 LDFLAGS+=-L$(topdir)lib/libc -L$(topdir)lib/ubasic
@@ -157,9 +173,6 @@ depend-recursive:
 	    echo \<\< Leaving $(FOLDER)$$i; \
 	done
 
-ifneq ($(SILENT),)
+ifdef SILENT
 .SILENT:
 endif
-
-.PHONY: clean-recursive distclean-recursive all-recursive depend-recursive all clean distclean $(SUBDIRS)
-

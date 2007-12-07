@@ -28,12 +28,15 @@
  *
  */
 
-#undef DEBUG
-
 #if DEBUG
-#define DEBUG_PRINTF(...)  fprintf(stderr,__VA_ARGS__)
+#define DEBUG_PRINTF(...)  printf(__VA_ARGS__)
 #else
 #define DEBUG_PRINTF(...)
+#endif
+
+#ifdef TEST
+#include <string.h>
+#include <ctype.h>
 #endif
 
 #include "tokenizer.h"
@@ -52,35 +55,118 @@ static ubasic_token current_token = TOKENIZER_ERROR;
 static int current_line = 0;
 
 static const struct keyword_token keywords[] = {
-  {"let", TOKENIZER_LET},
-  {"print", TOKENIZER_PRINT},
-  {"if", TOKENIZER_IF},
-  {"then", TOKENIZER_THEN},
-  {"else", TOKENIZER_ELSE},
-  {"for", TOKENIZER_FOR},
-  {"to", TOKENIZER_TO},
-  {"next", TOKENIZER_NEXT},
-  {"goto", TOKENIZER_GOTO},
-  {"gosub", TOKENIZER_GOSUB},
-  {"return", TOKENIZER_RETURN},
-  {"call", TOKENIZER_CALL},
+  {"<>",          			  TOKENIZER_NE},
+  {"<=",          			  TOKENIZER_LE},
+  {">=",          			  TOKENIZER_GE},
+  {"<",             		  TOKENIZER_LT},
+  {">",                       TOKENIZER_GT},
+  {"not",                     TOKENIZER_LNOT},
+  {"or",                      TOKENIZER_LOR},
+  {"and",                     TOKENIZER_LAND},
 
-  {"click", TOKENIZER_CLICK},
-  {"shot", TOKENIZER_SHOOT}, // for compatibility
-  {"shoot", TOKENIZER_SHOOT},
-  {"sleep", TOKENIZER_SLEEP}, 
+  {"let",                     TOKENIZER_LET},
+  {"if",                      TOKENIZER_IF},
+  {"then",                    TOKENIZER_THEN},
+  {"else",                    TOKENIZER_ELSE},
+  {"endif",                   TOKENIZER_ENDIF},
+  {"for",                     TOKENIZER_FOR},
+  {"to",                      TOKENIZER_TO},
+  {"next",                    TOKENIZER_NEXT},
+  {"step",                    TOKENIZER_STEP},
+  {"do",                      TOKENIZER_DO},
+  {"until",                   TOKENIZER_UNTIL},
+  {"while",                   TOKENIZER_WHILE},
+  {"wend",                    TOKENIZER_WEND},
+  {"goto",                    TOKENIZER_GOTO},
+  {"gosub",                   TOKENIZER_GOSUB},
+  {"return",                  TOKENIZER_RETURN},
+  {"call",                    TOKENIZER_CALL},
+  {"rem",                     TOKENIZER_REM},
+  {"cls",                     TOKENIZER_CLS},
+  {"print_screen",            TOKENIZER_PRINT_SCREEN},
+  {"print",                   TOKENIZER_PRINT},
 
-  {"get_tv", TOKENIZER_GET_TV},
+  {"click",                   TOKENIZER_CLICK},
+  {"press",                   TOKENIZER_PRESS},
+  {"release",                 TOKENIZER_RELEASE},
+  {"shoot",                   TOKENIZER_SHOOT},
+  {"sleep",                   TOKENIZER_SLEEP}, 
+
   /* WARNING due to tokenizer limitation longest match must be first */
-  {"set_tv_rel", TOKENIZER_SET_TV_REL},
-  {"set_tv", TOKENIZER_SET_TV},
+// GET  
+  {"get_av96",                TOKENIZER_GET_AV96},
+  {"get_av",                  TOKENIZER_GET_USER_AV_ID}, //FOR COMPATIBILITY
+  {"get_bv96",                TOKENIZER_GET_BV96},
+  {"get_day_seconds",         TOKENIZER_GET_DAY_SECONDS},
+  {"get_dof",                 TOKENIZER_GET_DOF},
+  {"get_far_limit",           TOKENIZER_GET_FAR_LIMIT},
+  {"get_focus",               TOKENIZER_GET_FOCUS},
+  {"get_hyp_dist",            TOKENIZER_GET_HYPERFOCAL_DIST},
+  {"get_iso_market",          TOKENIZER_GET_ISO_MARKET},
+  {"get_iso_mode",            TOKENIZER_GET_ISO_MODE},
+  {"get_iso_real",            TOKENIZER_GET_ISO_REAL},
+  {"get_iso",                 TOKENIZER_GET_ISO_MODE}, //FOR COMPATIBILITY
+  {"get_near_limit",          TOKENIZER_GET_NEAR_LIMIT},
+  {"get_prop",                TOKENIZER_GET_PROP},
+  {"get_sv96",	              TOKENIZER_GET_SV96},
+  {"get_tick_count",          TOKENIZER_GET_TICK_COUNT},
+  {"get_tv96",                TOKENIZER_GET_TV96},
+  {"get_user_av_id",          TOKENIZER_GET_USER_AV_ID},
+  {"get_user_av96",           TOKENIZER_GET_USER_AV96},
+  {"get_user_tv_id",          TOKENIZER_GET_USER_TV_ID},
+  {"get_user_tv96",           TOKENIZER_GET_USER_TV96},
+  {"get_vbatt",               TOKENIZER_GET_VBATT},
+  {"get_zoom",                TOKENIZER_GET_ZOOM},
+//SET  
+  {"set_av96_direct",         TOKENIZER_SET_AV96},
+  {"set_av_rel",              TOKENIZER_SET_USER_AV_BY_ID_REL}, //FOR COMPATIBILITY
+  {"set_av96",                TOKENIZER_SET_AV96},
+  {"set_av",                  TOKENIZER_SET_USER_AV_BY_ID}, //FOR COMPATIBILITY
+  {"set_focus",               TOKENIZER_SET_FOCUS},
+  {"set_iso_mode",            TOKENIZER_SET_ISO_MODE},
+  {"set_iso_real",            TOKENIZER_SET_ISO_REAL},
+  {"set_iso",                 TOKENIZER_SET_ISO_MODE}, //FOR COMPATIBILITY
+  {"set_led",                 TOKENIZER_SET_LED},
+  {"set_prop",                TOKENIZER_SET_PROP},
+  {"set_raw_nr",              TOKENIZER_SET_RAW_NR},
+  {"set_raw",                 TOKENIZER_SET_RAW},
+  //{"set_shutter_speed",       TOKENIZER_SET_SHUTTER_SPEED},
+  {"set_sv96",		          TOKENIZER_SET_SV96},
+  {"set_tv96_direct",         TOKENIZER_SET_TV96_DIRECT},
+  {"set_tv_rel",              TOKENIZER_SET_USER_TV_BY_ID_REL}, //FOR COMPATIBILITY
+  {"set_tv96",                TOKENIZER_SET_TV96},
+  {"set_tv",                  TOKENIZER_SET_USER_TV_BY_ID}, //FOR COMPATIBILITY
+  {"set_user_av_by_id_rel",   TOKENIZER_SET_USER_AV_BY_ID_REL},
+  {"set_user_av_by_id",       TOKENIZER_SET_USER_AV_BY_ID},
+  {"set_user_av96",           TOKENIZER_SET_USER_AV96},
+  {"set_user_tv_by_id_rel",   TOKENIZER_SET_USER_TV_BY_ID_REL},
+  {"set_user_tv_by_id",       TOKENIZER_SET_USER_TV_BY_ID},
+  {"set_user_tv96",           TOKENIZER_SET_USER_TV96},
+  {"set_zoom_speed",          TOKENIZER_SET_ZOOM_SPEED},
+  {"set_zoom_rel",            TOKENIZER_SET_ZOOM_REL},
+  {"set_zoom",                TOKENIZER_SET_ZOOM},
+  
+  {"wait_click",              TOKENIZER_WAIT_CLICK},
+  {"is_key",        TOKENIZER_IS_KEY},
+  
+  {"wheel_right",             TOKENIZER_WHEEL_RIGHT},
+  {"wheel_left",              TOKENIZER_WHEEL_LEFT},
+  
+  {"@title",                  TOKENIZER_REM},
+  {"@param",                  TOKENIZER_REM},
+  {"@default",                TOKENIZER_REM},
 
-  {"get_av", TOKENIZER_GET_AV},
-  {"set_av_rel", TOKENIZER_SET_AV_REL},
-  {"set_av", TOKENIZER_SET_AV},
+ {"md_detect_motion", TOKENIZER_MD_DETECT_MOTION},
+  {"md_get_cell_diff", TOKENIZER_MD_GET_CELL_DIFF},
+  {"get_autostart",    TOKENIZER_SCRIPT_AUTOSTART},
+  {"set_autostart",    TOKENIZER_SET_SCRIPT_AUTOSTART},
+  {"get_usb_power",    TOKENIZER_GET_USB_POWER},
+  {"exit_alt",         TOKENIZER_EXIT_ALT},
+  
+  
+  {"end",                     TOKENIZER_END},
 
-  {"end", TOKENIZER_END},
-  {NULL, TOKENIZER_ERROR}
+  {NULL,                      TOKENIZER_ERROR}
 };
 
 /*---------------------------------------------------------------------------*/
@@ -101,6 +187,8 @@ singlechar(void)
     return TOKENIZER_AND;
   } else if(*ptr == '|') {
     return TOKENIZER_OR;
+  } else if(*ptr == '^') {
+    return TOKENIZER_XOR;
   } else if(*ptr == '*') {
     return TOKENIZER_ASTR;
   } else if(*ptr == '/') {
@@ -111,10 +199,6 @@ singlechar(void)
     return TOKENIZER_LEFTPAREN;
   } else if(*ptr == ')') {
     return TOKENIZER_RIGHTPAREN;
-  } else if(*ptr == '<') {
-    return TOKENIZER_LT;
-  } else if(*ptr == '>') {
-    return TOKENIZER_GT;
   } else if(*ptr == '=') {
     return TOKENIZER_EQ;
   }
@@ -188,12 +272,15 @@ get_next_token(void)
     for(kt = keywords; kt->keyword != NULL; ++kt) {
       if(strncmp(ptr, kt->keyword, strlen(kt->keyword)) == 0) {
 	nextptr = ptr + strlen(kt->keyword);
+        if (kt->token == TOKENIZER_REM) {
+           while(*nextptr != 0 && *nextptr != '\r' && *nextptr != '\n') ++nextptr;
+        }
 	return kt->token;
       }
     }
   }
 
-  if(*ptr >= 'a' && *ptr <= 'z') {
+  if((*ptr >= 'a' && *ptr <= 'z') || (*ptr >= 'A' && *ptr <= 'Z')) {
     nextptr = ptr + 1;
     return TOKENIZER_VARIABLE;
   }
@@ -265,23 +352,13 @@ void
 tokenizer_label(char *dest, int len)
 {
   char *string_end;
-  char *string_end2;
   int string_len;
   
   if(tokenizer_token() != TOKENIZER_LABEL) {
     return;
   }
-  // allow string \n and space to end labels
-  // TODO: allow tabs as well
-  string_end = strchr(ptr + 1, ' ');
-  string_end2 = strchr(ptr + 1, '\n');
-  if (string_end == NULL)
-    string_end = string_end2;
-  else if (string_end2 == NULL) {
-
-  }
-  else if (string_end2 < string_end)
-    string_end = string_end2;
+  // allow string \r, \n, tabulation and space to end labels
+  string_end = strpbrk(ptr + 1, " \t\r\n");
 
   if(string_end == NULL) {
     return;
@@ -309,7 +386,7 @@ tokenizer_finished(void)
 int
 tokenizer_variable_num(void)
 {
-  return *ptr - 'a';
+  return *ptr - (*ptr>='a'?'a':('A'-26));
 }
 /*---------------------------------------------------------------------------*/
 int tokenizer_line_number(void)

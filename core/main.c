@@ -5,12 +5,10 @@
 #include "stdlib.h"
 #include "gui.h"
 #include "histogram.h"
+#include "raw.h"
+#include "motion_detector.h"
 
-#define FN_RAWDIR   "A/DCIM/%03dCANON"
-#define FN_RAWF     (FN_RAWDIR "/" "CRW_%04d.CRW")
-
-static long ramdump_num;
-static char fn[64];
+static int raw_need_postprocess;
 
 #if 0
 int taskop_txt_p;
@@ -45,36 +43,34 @@ void core_hook_task_delete(void *tcb)
 
 long core_get_noise_reduction_value()
 {
-    if (conf_force_nr_off){
-	return NOISE_REDUCTION_OFF;
-    }
-
-    return NOISE_REDUCTION_AUTO_CANON;
+    return conf.raw_nr;
 }
 
 
 void dump_memory()
 {
     int fd;
-    long dirnum;
+    static int cnt=1;
+    static char fn[32];
 
+//((void (*)(int v))(0xFFC5BCC0))(0x7F); //Make_BOOTDISK
     started();
-
-	dirnum = get_target_dir_num();
-	sprintf(fn, FN_RAWDIR, dirnum);
-	mkdir(fn);
-
-	sprintf(fn, FN_RAWDIR "/" "DMP_%04d.JPG", dirnum, ++ramdump_num);
+        mkdir("A/DCIM");
+        mkdir("A/DCIM/100CANON");
+	sprintf(fn, "A/DCIM/100CANON/CRW_%04d.JPG", cnt++);
 	fd = open(fn, O_WRONLY|O_CREAT, 0777);
-	if (fd >= 0) {
+	if (fd) {
+//            fwrite((void*)vid_get_viewport_fb(), 360*240*3, 1, fd);
+//            fwrite((void*)vid_get_bitmap_fb(), 360*240, 1, fd);
 	    write(fd, (void*)0, 0x1900);
 	    write(fd, (void*)0x1900, 32*1024*1024-0x1900);
 	    close(fd);
 	}
+    vid_bitmap_refresh();
     finished();
 }
 
-static long raw_data_available;
+static volatile long raw_data_available;
 
 /* called from another process */
 void core_rawdata_available()
@@ -82,61 +78,50 @@ void core_rawdata_available()
     raw_data_available = 1;
 }
 
-static void process_rawsave()
-{
-    int fd;
-    long dirnum;
-
-    state_shooting_progress = SHOOTING_PROGRESS_PROCESSING;
-
-    if (conf_save_raw){
-	started();
-
-	dirnum = get_target_dir_num();
-	sprintf(fn, FN_RAWDIR, dirnum);
-	mkdir(fn);
-
-	sprintf(fn, FN_RAWF, dirnum, get_target_file_num());
-	fd = open(fn, O_WRONLY|O_CREAT, 0777);
-	if (fd >= 0) {
-	    write(fd, hook_raw_image_addr(), hook_raw_size());
-	    close(fd);
-	}
-
-	finished();
-    }
-}
-
-
 void core_spytask()
 {
-    int cnt = 0;
+    int cnt = 1;
+
+    raw_need_postprocess = 0;
 
     msleep(2000);
 
-    gui_init();
     conf_restore();
+    gui_init();
+		md_init();
 
     started();
     msleep(50);
     finished();
 
+    mkdir("A/CHDK");
+    mkdir("A/CHDK/FONTS");
+    mkdir("A/CHDK/SCRIPTS");
+    mkdir("A/CHDK/LANG");
+    mkdir("A/CHDK/BOOKS");
+    mkdir("A/CHDK/GRIDS");
+auto_started = 0;
+	if (conf.script_startup) script_autostart();				// remote autostart
     while (1){
 
 	if (raw_data_available){
-	    process_rawsave();
+            raw_need_postprocess = raw_savefile();
 	    hook_raw_save_complete();
 	    raw_data_available = 0;
 	    continue;
 	}
 
-	if (((cnt++) & 3) == 0)
-	    gui_redraw();
+	if (state_shooting_progress != SHOOTING_PROGRESS_PROCESSING) {
+	    if (((cnt++) & 3) == 0)
+	        gui_redraw();
 
-	histogram_process();
+	    histogram_process();
+	}
 
-	if ((state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) && (!shooting_in_progress()))
+	if ((state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) && (!shooting_in_progress())) {
 	    state_shooting_progress = SHOOTING_PROGRESS_DONE;
+            if (raw_need_postprocess) raw_postprocess();
+        }
 
 	msleep(20);
     }

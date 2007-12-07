@@ -1,6 +1,7 @@
 #include "lolevel.h"
 #include "platform.h"
 #include "core.h"
+#include "conf.h"
 
 #define RAWDATA_AVAILABLE (1)
 #define RAWDATA_SAVED (2)
@@ -41,6 +42,7 @@ void capt_seq_hook_set_nr()
 	break;
     };
 }
+
 
 void __attribute__((naked,noinline)) sub_FFD5F178_my(long p)
 {
@@ -169,6 +171,7 @@ void __attribute__((naked,noinline)) capt_seq_task()
                 ".long loc_FFD5C860\n"
 "loc_FFD5C780:\n"
                 "BL      sub_FFD5CDA0\n"
+                "BL      shooting_expo_param_override\n"  // +
                 "BL      sub_FFD5A518\n"
                 "B       loc_FFD5C85C\n"
 "loc_FFD5C78C:\n"

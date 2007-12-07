@@ -17,6 +17,7 @@ static KeyMap keymap[] = {
 	{ KEY_DISPLAY	, 0x00000400 },
 	{ KEY_PRINT	, 0x00001000 },
 	{ KEY_ERASE	, 0x00000800 },
+        { KEY_DUMMY	, 0x00001000 },
 	{ 0, 0 }
 };
 

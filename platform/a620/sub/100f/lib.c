@@ -35,12 +35,22 @@ void *vid_get_viewport_fb()
     return (void*)0x10559570;
 }
 
+void *vid_get_viewport_fb_d()
+{
+    return (void*)(*(int*)0x72b0c);
+}
+
 long vid_get_bitmap_width()
 {
     return 360;
 }
 
 long vid_get_bitmap_height()
+{
+    return 240;
+}
+
+long vid_get_viewport_height()
 {
     return 240;
 }

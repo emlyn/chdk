@@ -415,10 +415,10 @@ int main(int argc, char **argv)
 
 	fir_fn = argv[1];
 	wif_fn = argv[2];
-	camid = atoi(argv[3]);
+	camid = strtoul(argv[3], NULL, 0);
 
 	if (argc == 5){
-	    ver = atoi(argv[4]);
+	    ver = strtoul(argv[4], NULL, 0);
 	} else {
 	    ver = 0x01000100;
 	}

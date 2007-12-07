@@ -1,5 +1,6 @@
 #include "lolevel.h"
 #include "platform.h"
+#include "conf.h"
 #include "core.h"
 #include "keyboard.h"
 
@@ -13,9 +14,21 @@ static long kbd_new_state[3];
 static long kbd_prev_state[3];
 static long kbd_mod_state;
 static KeyMap keymap[];
+static long last_kbd_key = 0;
+static int usb_power=0;
 
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
+#if defined(CAMERA_a710)
+#define USB_MASK 8
+#define USB_REG 0
+#endif
+
+#if defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_a610) || defined(CAMERA_a620)
+#define USB_MASK 0x8000000
+#define USB_REG 1
+#endif
+
 
 #ifndef MALLOCD_STACK
 static char kbd_stack[NEW_SS];
@@ -122,6 +135,12 @@ void my_kbd_read_keys()
 	physw_status[2] = (kbd_new_state[2] & (~0x1fff)) |
 			  (kbd_mod_state & 0x1fff);
 #endif
+#if defined(USB_MASK) && defined(USB_REG)
+		if (conf.remote_enable) {
+	physw_status[USB_REG] = kbd_new_state[USB_REG] & ~USB_MASK;
+	usb_power=(kbd_new_state[USB_REG] & USB_MASK)==USB_MASK;
+		}
+#endif
     }
 
     _kbd_read_keys_r2(physw_status);
@@ -206,4 +225,74 @@ long kbd_get_clicked_key()
     }
     return 0;
 }
+
+void kbd_reset_autoclicked_key() {
+    last_kbd_key = 0;
+}
+
+long kbd_get_autoclicked_key() {
+    static long last_kbd_time = 0, press_count = 0;
+    register long key, t;
+
+    key=kbd_get_clicked_key();
+    if (key) {
+        last_kbd_key = key;
+        press_count = 0;
+        last_kbd_time = get_tick_count();
+        return key;
+    } else {
+        if (last_kbd_key && kbd_is_key_pressed(last_kbd_key)) {
+            t = get_tick_count();
+            if (t-last_kbd_time>((press_count)?175:500)) {
+                ++press_count;
+                last_kbd_time = t;
+                return last_kbd_key;
+            } else {
+                return 0;
+            }
+        } else {
+            last_kbd_key = 0;
+            return 0;
+        }
+    }
+}
+
+long kbd_use_zoom_as_mf() {
+    static long v;
+    static long zoom_key_pressed = 0;
+
+    if (kbd_is_key_pressed(KEY_ZOOM_IN) && (mode_get()&MODE_MASK) == MODE_REC) {
+        get_property_case(12, &v, 4);
+        if (v) {
+            kbd_key_release_all();
+            kbd_key_press(KEY_RIGHT);
+            zoom_key_pressed = KEY_ZOOM_IN;
+            return 1;
+        }
+    } else {
+        if (zoom_key_pressed==KEY_ZOOM_IN) {
+            kbd_key_release(KEY_RIGHT);
+            zoom_key_pressed = 0;
+            return 1;
+        }
+    }
+    if (kbd_is_key_pressed(KEY_ZOOM_OUT) && (mode_get()&MODE_MASK) == MODE_REC) {
+        get_property_case(12, &v, 4);
+        if (v) {
+            kbd_key_release_all();
+            kbd_key_press(KEY_LEFT);
+            zoom_key_pressed = KEY_ZOOM_OUT;
+            return 1;
+        }
+    } else {
+        if (zoom_key_pressed==KEY_ZOOM_OUT) {
+            kbd_key_release(KEY_LEFT);
+            zoom_key_pressed = 0;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int get_usb_power(void) {return usb_power;}
 

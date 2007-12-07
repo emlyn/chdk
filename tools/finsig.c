@@ -101,11 +101,11 @@ int main(int argc, char **argv)
 	while (1) {
 	    sig = func_list[k].sig;
 
-	    for (i=0;i<size-32;i++){
+	    for (i=0;i<size;i++){
 		fail = 0;
 		success = 0;
 		for (j=0;sig[j].offs!=-1;j++){
-		    if ((buf[i+sig[j].offs] & sig[j].mask) != sig[j].value){
+		    if ((i+sig[j].offs) >= size || (buf[i+sig[j].offs] & sig[j].mask) != sig[j].value){
 			fail++;
 		    } else {
 			success++;

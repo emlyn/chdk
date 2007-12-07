@@ -13,9 +13,15 @@
 extern long *_GetSystemTime(long *t);
 extern long _GetZoomLensCurrentPosition();
 extern long _GetZoomLensCurrentPoint();
+extern long _MoveZoomLensWithPoint(short *pos);
+extern long _SetZoomActuatorSpeedPercent(short *perc);
+extern volatile long zoom_busy;
 extern long _GetFocusLensCurrentPosition();
 extern long _GetFocusLensSubjectDistance();
 extern long _GetFocusLensSubjectDistanceFromLens();
+extern void _MoveFocusLensToDistance(short *dist); 
+extern volatile long focus_busy;
+extern long _GetCurrentAvValue();
 extern long _GetCurrentTargetDistance();
 extern long _GetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _SetPropertyCase(long opt_id, void *buf, long bufsize);
@@ -58,12 +64,37 @@ extern int _Close (int fd);
 extern int _Write (int fd, void *buffer, long nbytes);
 extern int _Read (int fd, void *buffer, long nbytes);
 extern int _Lseek (int fd, long offset, int whence);
+extern int _Remove(const char *name);
 
+extern int _isdigit(int c);
+extern int _isspace(int c);
+extern int _isalpha(int c);
+extern int _isupper(int c);
+
+extern long _strlen(const char *s);
 extern int _strcmp(const char *s1, const char *s2);
 extern int _strncmp(const char *s1, const char *s2, long n);
-extern long _strlen(const char *s);
-extern void *_memcpy(void *dest, const void *src, long n);
+extern char *_strchr(const char *s, int c);
+extern char *_strcpy(char *dest, const char *src);
+extern char *_strncpy(char *dest, const char *src, long n);
+extern char *_strcat(char *dest, const char *app);
+extern char *_strrchr(const char *s, int c);
+extern char *_strpbrk(const char *s, const char *accept);
+
+extern long _strtol(const char *nptr, char **endptr, int base);
+
 extern int _vsprintf(char *buf, const char *fmt, __builtin_va_list va_list);
+
+extern void *_malloc(long size);
+extern void _free(void *p);
+extern void *_AllocateUncacheableMemory(long size);
+extern void _FreeUncacheableMemory(void *p);
+
+extern void *_memcpy(void *dest, const void *src, long n);
+extern void *_memset(void *s, int c, int n);
+extern int _memcmp(const void *s1, const void *s2, long n);
+
+extern void _qsort (void *__base, int __nelem, int __size, int (*__cmp)(const void *__e1, const void *__e2));
 
 /* VxWorks */
 extern long _taskLock();
@@ -72,6 +103,7 @@ extern int _taskCreateHookAdd (void *createHook);
 extern int _taskDeleteHookAdd (void *deleteHook);
 extern long _iosDevAdd(void*,void*,int);
 extern long _iosDrvInstall(void*,void*,void*,void*,void*,void*,void*);
+extern void _GiveSemaphore(int sem);
 
 /* misc */
 extern const char aPhysw;
@@ -81,10 +113,11 @@ extern void _kbd_p2_f();
 extern void _kbd_pwr_on();
 extern void _kbd_pwr_off();
 extern void _kbd_read_keys_r2(void*p);
-extern long physw_status[3], physw_copy[3];;
+extern long physw_status[3], physw_copy[3];
 
 void __attribute__((naked,noinline)) mykbd_task();
 extern void capt_seq_task();
+extern void movie_record_task();
 
 void kbd_fetch_data(long *dst);
 
@@ -97,10 +130,26 @@ extern void _UniqueLedOff(void *addr);
 extern long _LockMainPower();
 extern long _UnlockMainPower();
 
+
 /* math */
+extern int _rand(void);
+extern void* _srand(unsigned int seed);
+
 extern double __log(double x);
 extern double __log10(double x);
 extern double __pow(double x, double y);
 extern double __sqrt(double x);
+
+/* time */
+extern int _utime(char *file, void *newTimes);
+extern unsigned long _time(unsigned long *timer);
+extern void *_localtime(const unsigned long *_tod);
+
+/* file */
+extern void *_opendir(const char* name);
+extern void *_readdir(void *d);
+extern int   _closedir(void *d);
+extern void  _rewinddir(void *d);
+extern int   _stat(char *name, void *pStat);
 
 #endif

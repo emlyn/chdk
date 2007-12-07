@@ -46,9 +46,17 @@ static void led_off(const int led)
 
 void debug_led(int state)
 {
-    volatile long *p=(void*)LED_PR;
     if (state)
         led_on(LED_BLUE, LED_BRIGHTNESS);
     else
         led_off(LED_BLUE);
+}
+void ubasic_set_led(int led, int state, int bright)
+{
+	if (state) {
+		if (bright > LED_BRIGHTNESS) bright = LED_BRIGHTNESS;
+        led_on(led, bright);
+	}
+    else
+        led_off(led);
 }

@@ -21,7 +21,7 @@ main.elf: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^   $(LDLIBS) $(LDFLAGS) $(LDOPTS)
 	( $(NM) $@ | grep ' U ' > $@.syms ) && exit 1 || exit 0
 
-clean: clean-recursive
+clean:
 	rm -f $(OBJS) main.bin main.elf main.dump main.elf.syms
 
 distclean: distclean-recursive

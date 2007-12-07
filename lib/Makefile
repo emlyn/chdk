@@ -1,6 +1,6 @@
 topdir=../
 include $(topdir)makefile.inc
 
-SUBDIRS=libc font math ubasic
+SUBDIRS=font math ubasic lang
 
 include $(topdir)bottom.inc

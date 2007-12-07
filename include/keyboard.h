@@ -20,7 +20,10 @@
 #define KEY_MACRO	17     //S-series
 #define KEY_VIDEO	18     //S-series
 #define KEY_TIMER	19     //S-series
-#define KEY_DUMMY	20     //dummy key for pressing to disable energy saving in alt mode
+#define KEY_EXPO_CORR	20     //G-series
+#define KEY_MICROPHONE	21
+#define KEY_DUMMY	22     //dummy key for pressing to disable energy saving in alt mode
+
 
 extern void gui_kbd_process();
 extern void gui_kbd_enter();

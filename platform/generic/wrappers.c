@@ -1,7 +1,5 @@
 #include "lolevel.h"
 #include "platform.h"
-#include "conf.h"
-#include "keyboard.h"
 
 void msleep(long msec)
 {
@@ -72,10 +70,37 @@ long lens_get_zoom_point()
 
 void lens_set_zoom_point(long newpt)
 {
+    if (newpt < 0) {
+        newpt = 0;
+    } else if (newpt >= zoom_points) {
+        newpt = zoom_points-1;
+    }
+    _MoveZoomLensWithPoint((short*)&newpt);
+    while (zoom_busy);
+}
+
+void lens_set_zoom_speed(long newspd)
+{
+    if (newspd < 5) {
+        newspd = 5;
+    } else if (newspd > 100) {
+        newspd = 100;
+    }
+    _SetZoomActuatorSpeedPercent((short*)&newspd);
 }
 
 void lens_set_focus_pos(long newpos)
 {
+ #if !defined(CAMERA_ixus70)
+    _MoveFocusLensToDistance((short*)&newpos);
+    //while (focus_busy);
+    //ARM BEGIN
+    while ((shooting_is_flash_ready()!=1) || (focus_busy));
+    //ARM END
+    newpos = _GetFocusLensSubjectDistance();
+    _SetPropertyCase(65, &newpos, sizeof(newpos));
+    _SetPropertyCase(66, &newpos, sizeof(newpos));
+ #endif
 }
 
 long stat_get_vbatt()
@@ -111,13 +136,73 @@ int read (int fd, void *buffer, long nbytes)
 {
     return _Read(fd, buffer, nbytes);
 }
-//int lseek (int fd, long offset, int whence)
-//{
-//    return _lseek(fd, offset, whence); /* yes, it's lower-case lseek here since Lseek calls just lseek (A610) */
-//}
+int lseek (int fd, long offset, int whence)
+{
+    return _lseek(fd, offset, whence); /* yes, it's lower-case lseek here since Lseek calls just lseek (A610) */
+}
 long mkdir(const char *dirname)
 {
     return _mkdir(dirname);
+}
+
+int remove(const char *name) {
+    return _Remove(name);
+}
+
+int isdigit(int c) {
+    return _isdigit(c);
+}
+
+int isspace(int c) {
+    return _isspace(c);
+}
+
+int isalpha(int c) {
+    return _isalpha(c);
+}
+
+int isupper(int c) {
+    return _isupper(c);
+}
+
+long strlen(const char *s) {
+    return _strlen(s);
+}
+
+int strcmp(const char *s1, const char *s2) {
+    return _strcmp(s1, s2);
+}
+
+int strncmp(const char *s1, const char *s2, long n) {
+    return _strncmp(s1, s2, n);
+}
+
+char *strchr(const char *s, int c) {
+    return _strchr(s, c);
+}
+
+char *strcpy(char *dest, const char *src) {
+    return _strcpy(dest, src);
+}
+
+char *strncpy(char *dest, const char *src, long n) {
+    return _strncpy(dest, src, n);
+}
+
+char *strcat(char *dest, const char *app) {
+    return _strcat(dest, app);
+}
+
+char *strrchr(const char *s, int c) {
+    return _strrchr(s, c);
+}
+
+long strtol(const char *nptr, char **endptr, int base) {
+    return _strtol(nptr, endptr, base);
+}
+
+char *strpbrk(const char *s, const char *accept) {
+    return _strpbrk(s, accept);
 }
 
 long sprintf(char *s, const char *st, ...)
@@ -130,18 +215,105 @@ long sprintf(char *s, const char *st, ...)
     return res;
 }
 
-double log(double x) {
+unsigned long time(unsigned long *timer) {
+    return _time(timer);
+}
+
+int utime(char *file, void *newTimes) {
+    return _utime(file, newTimes);
+}
+
+void *localtime(const unsigned long *_tod) {
+    return _localtime(_tod);
+}
+
+double _log(double x) {
     return __log(x);
 }
 
-double log10(double x) {
+double _log10(double x) {
     return __log10(x);
 }
 
-double pow(double x, double y) {
+double _pow(double x, double y) {
     return __pow(x, y);
 }
 
-double sqrt(double x) {
+double _sqrt(double x) {
     return __sqrt(x);
+}
+
+void *malloc(long size) {
+    return _malloc(size);
+}
+
+void free(void *p) {
+    return _free(p);
+}
+
+void *memcpy(void *dest, const void *src, long n) {
+    return _memcpy(dest, src, n);
+}
+
+void *memset(void *s, int c, int n) {
+    return _memset(s, c, n);
+}
+
+int memcmp(const void *s1, const void *s2, long n) {
+    return _memcmp(s1, s2, n);
+}
+
+int rand(void) {
+    return _rand();
+}
+
+void *srand(unsigned int seed) {
+    return _srand(seed);
+}
+
+void qsort(void *__base, int __nelem, int __size, int (*__cmp)(const void *__e1, const void *__e2)) {
+    _qsort(__base, __nelem, __size, __cmp);
+}
+
+void *opendir(const char* name) {
+    return _opendir(name);
+}
+
+void* readdir(void *d) {
+    return _readdir(d);
+}
+
+int closedir(void *d) {
+    return _closedir(d);
+}
+
+void rewinddir(void *d) {
+    return _rewinddir(d);
+}
+
+int stat(char *name, void *pStat) {
+    return _stat(name, pStat);
+}
+
+void *umalloc(long size) {
+    return _AllocateUncacheableMemory(size);
+}
+
+void ufree(void *p) {
+    return _FreeUncacheableMemory(p);
+}
+
+static int shutdown_disabled = 0;
+void disable_shutdown() {
+    if (!shutdown_disabled) {
+        _LockMainPower();
+        shutdown_disabled = 1;
+    }
+}
+
+void enable_shutdown() {
+    if (shutdown_disabled) {
+        _UnlockMainPower();
+        shutdown_disabled = 0;
+    }
 }

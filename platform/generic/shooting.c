@@ -3,78 +3,8 @@
 #include "core.h"
 #include "keyboard.h"
 #include "math.h"
-
-#if 0
-const ApertureSize aperture_sizes_table[] = {
-    {  9, 288, "2.8", },
-    { 10, 320, "3.2", },
-    { 11, 352, "3.5", },
-    { 12, 384, "4.0", },
-    { 13, 416, "4.5", },
-    { 14, 448, "5.0", },
-    { 15, 480, "5.6", },
-    { 16, 512, "6.3", },
-    { 17, 544, "7.1", },
-    { 18, 576, "8.0", },
-};
-
-const ShutterSpeed shutter_speeds_table[] = {
-    {-13, -384, "15", 15000000  },
-    {-12, -352, "13", 13000000  },
-    {-11, -320, "10", 10000000  },
-    {-9, -288, "8", 8000000  },
-    {-8, -256, "6", 6000000  },
-    {-7, -224, "5", 5000000  },
-    {-6, -192, "4", 4000000  },
-    {-5, -160, "3.2", 3200000  },
-    {-4, -128, "2.5", 2500000  },
-    {-3, -96 , "2", 2000000  },
-    {-2, -64 , "1.6", 1600000  },
-    {-1, -32 , "1.3", 1300000  },
-    { 0, 0, "1", 1000000  },
-    { 1, 32, "0.8", 800000 },
-    { 2, 64, "0.6", 600000 },
-    { 3, 96, "0.5", 500000 },
-    { 4, 128, "0.4", 400000 },
-    { 5, 160, "0.3", 300000 },
-    { 6, 192, "1/4", 250000 },
-    { 7, 224, "1/5", 200000 },
-    { 8, 256, "1/6", 166667 },
-    { 9, 288, "1/8", 125000 },
-    {10, 320, "1/10", 100000 },
-    {11, 352, "1/13",  76923 },
-    {12, 384, "1/15",  66667 },
-    {13, 416, "1/20",  50000 },
-    {14, 448, "1/25",  40000 },
-    {15, 480, "1/30",  33333 },
-    {16, 512, "1/40",  25000 },
-    {17, 544, "1/50",  20000 },
-    {18, 576, "1/60",  16667 },
-    {19, 608, "1/80",  12500 },
-    {20, 640, "1/100",  10000 },
-    {21, 672, "1/125",   8000 },
-    {22, 704, "1/160",   6250 },
-    {23, 736, "1/200",   5000 },
-    {24, 768, "1/250",   4000 },
-    {25, 800, "1/320",   3125 },
-    {26, 832, "1/400",   2500 },
-    {27, 864, "1/500",   2000 },
-    {28, 896, "1/640",   1563 },
-    {30, 928, "1/800",   1250 },
-    {31, 960, "1/1000",   1000 },
-    {32, 992, "1/1250",    800 },
-    {33, 1021, "1/1600",    625 },
-    {34, 1053, "1/2000",    500 },
-    {35, 1084, "1/2500",    400 },
-};
-
-const ISOTable iso_table[] = {
-    {0, 50,   "50", -1},
-    {1, 100, "100", -1},
-    {2, 200, "200", -1},
-    {3, 400, "400", -1},
-};
-#endif
+#include "stdlib.h"
+#include "conf.h"
 
 #define SS_SIZE (sizeof(shutter_speeds_table)/sizeof(shutter_speeds_table[0]))
 #define SSID_MIN (shutter_speeds_table[0].id)
@@ -84,15 +14,66 @@ const ISOTable iso_table[] = {
 #define ASID_MIN (aperture_sizes_table[0].id)
 #define ASID_MAX (aperture_sizes_table[AS_SIZE-1].id)
 
+#define AV96_MIN (aperture_sizes_table[0].prop_id)
+
 #define ISO_SIZE (sizeof(iso_table)/sizeof(iso_table[0]))
 #define ISO_MIN (iso_table[0].id)
 #define ISO_MAX (iso_table[ISO_SIZE-1].id)
+#define ISO_MIN_VALUE (iso_table[1-iso_table[0].id].prop_id)
+#if defined(CAMERA_a570) 
+ #define PROPCASE_DRIVE_MODE    				0
+ #define PROPCASE_FOCUS_MODE    				0
+ #define PROPCASE_USER_TV       				264
+ #define PROPCASE_TV	        				262
+ #define PROPCASE_USER_AV      					26
+ #define PROPCASE_AV            				0
+ #define PROPCASE_MIN_AV       					0
+ #define PROPCASE_SV            				0
+ #define PROPCASE_DELTA_SV      				0
+ #define PROPCASE_SV_MARKET     				0
+ #define PROPCASE_BV            				0
+ #define PROPCASE_SUBJECT_DIST1 				0
+ #define PROPCASE_SUBJECT_DIST2 				0
+ #define PROPCASE_ISO_MODE  				    149
+ #define PROPCASE_SHOOTING      				206
+ #else
+ #define PROPCASE_DRIVE_MODE    				6
+ #define PROPCASE_FOCUS_MODE    				12
+ #define PROPCASE_USER_TV       				40
+ #define PROPCASE_TV	        				69
+ #define PROPCASE_USER_AV       				39
+ #define PROPCASE_AV            				68
+ #define PROPCASE_MIN_AV        				77
+ #define PROPCASE_SV            				73
+ #define PROPCASE_DELTA_SV      				70
+ #define PROPCASE_SV_MARKET     				72
+ #define PROPCASE_BV            				71
+ #define PROPCASE_ISO_MODE      				21
+ #define PROPCASE_SUBJECT_DIST1 				65
+ #define PROPCASE_SUBJECT_DIST2 				66
+ #define PROPCASE_SHOOTING     					205
+#endif
 
-int shooting_get_tv()
+/*define PROPCASE_CONT_MODE_SHOOT_COUNT 		218*/
+static short iso_market_base=0;
+static short sv96_base=0;
+const double sqrt2=1.4142135623731;//square root from 2 
+const double log_2=0.6931471805599;//natural logarithm of 2
+const double k=12.5;//K is the reflected-light meter calibration constant 
+const short koef[] = {1,10,100,1000};
+const float shutter_koef[] = {0.00001, 0.0001,0.001,0.01,0.1,1,10,100,1000};
+const char * expo_shift[] = { "Off", "1/3 EV","2/3 EV", "1 EV", "1 1/3Ev", "1 2/3Ev", "2 Ev"};
+
+static PHOTO_PARAM photo_param_put_off;
+
+static EXPO_BRACKETING_VALUES bracketing;
+
+
+int shooting_get_user_tv_id()
 {
-    short int tvv;
+    short tvv;
     long i;
-    _GetPropertyCase(40, &tvv, sizeof(tvv));
+    _GetPropertyCase(PROPCASE_USER_TV, &tvv, sizeof(tvv));
     for (i=0;i<SS_SIZE;i++){
 	if (shutter_speeds_table[i].prop_id == tvv)
 	    return shutter_speeds_table[i].id;
@@ -102,89 +83,533 @@ int shooting_get_tv()
 
 const ShutterSpeed *shooting_get_tv_line()
 {
-    short int tvv;
+    short tvv;
     long i;
-    _GetPropertyCase(40, &tvv, sizeof(tvv));
+    _GetPropertyCase(PROPCASE_USER_TV, &tvv, sizeof(tvv));
     for (i=0;i<SS_SIZE;i++){
-	if (shutter_speeds_table[i].prop_id == tvv)
+	   if (shutter_speeds_table[i].prop_id == tvv)
 	    return &shutter_speeds_table[i];
     }
     return 0;
-
 }
 
-void shooting_set_tv(int v)
+void shooting_set_user_tv_by_id(int v)
 {
     long i;
 //    if ((v<SSID_MIN) || (v>SSID_MAX))
 //	return;
-
-
-    for (i=0;i<SS_SIZE;i++){
+ for (i=0;i<SS_SIZE;i++){
 	if (shutter_speeds_table[i].id == v){
-	    short int vv = shutter_speeds_table[i].prop_id;
-	    _SetPropertyCase(40, &vv, sizeof(vv));
+	    short vv = shutter_speeds_table[i].prop_id;
+	    _SetPropertyCase(PROPCASE_USER_TV, &vv, sizeof(vv));
+	    _SetPropertyCase(PROPCASE_TV, &vv, sizeof(vv));
 	    return;
-	}
-    }
-
+	 }
+ }
+}
+void shooting_set_prop(int id, int v)
+{
+   short vv = v;
+   _SetPropertyCase(id, &vv, sizeof(vv));
+   return;
 }
 
-void shooting_set_tv_rel(int v)
+int shooting_get_prop(int id)
 {
-    int cv = shooting_get_tv();
-    shooting_set_tv(cv+v);
+    short vv;
+    _GetPropertyCase(id, &vv, sizeof(vv));
+    return vv;
 }
 
-int shooting_get_av()
+short shooting_get_canon_iso_mode()
 {
-    short int avv;
+    short isom;
+    _GetPropertyCase(PROPCASE_ISO_MODE, &isom, sizeof(isom));
+     return isom;
+}
+
+
+int shooting_get_iso_mode()
+{
+    short isov;
     long i;
-    _GetPropertyCase(39, &avv, sizeof(avv));
-    for (i=0;i<AS_SIZE;i++){
-	if (aperture_sizes_table[i].prop_id == avv)
-	    return aperture_sizes_table[i].id;
+    _GetPropertyCase(PROPCASE_ISO_MODE, &isov, sizeof(isov));
+    for (i=0;i<ISO_SIZE;i++){
+			if (iso_table[i].prop_id == isov)
+	   		 return iso_table[i].id;
     }
     return 0;
 }
 
-int shooting_get_real_av()
+void shooting_set_user_tv_by_id_rel(int v)
 {
-#if 1
-    short int avv = 0;
-    _GetPropertyCase(68, &avv, sizeof(avv));
-    return (int)(((double)pow(1.4142135623730950488016887242097/* sqrt(2) */, ((double)avv)/96.0))*100.0);
-#else
-    return (int)(((double)pow(1.4142135623730950488016887242097/* sqrt(2) */, ((double)_GetCurrentAvValue())/96.0))*100.0);
-#endif
+    int cv = shooting_get_user_tv_id();
+    shooting_set_user_tv_by_id(cv+v);
 }
 
-void shooting_set_av(int v)
+int shooting_get_user_av_id()
+{
+    short avv;
+    long i;
+    _GetPropertyCase(PROPCASE_USER_AV, &avv, sizeof(avv));
+    for (i=0;i<AS_SIZE;i++){
+			if (aperture_sizes_table[i].prop_id == avv)
+	   		 return aperture_sizes_table[i].id;
+    }
+    return 0;
+}
+
+short shooting_get_real_aperture() {
+    return (short)((pow(sqrt2, ((double)_GetCurrentAvValue())/96.0))*100.0);
+}
+//Beg ARM
+
+short shooting_get_aperture_from_av96(short av96) {
+	return (short)((pow(sqrt2, ((double)av96)/96.0))*100.0);
+}
+
+short shooting_get_min_real_aperture() {
+	 short avv;
+	 _GetPropertyCase(PROPCASE_MIN_AV, &avv, sizeof(avv));
+    return (short)((pow(sqrt2, ((float)avv)/96.0))*100.0);
+}
+
+short shooting_get_iso_from_sv96(short sv96)
+{
+    return (short)(pow(2, (((float) sv96+168.0)/96.0)));
+}
+
+short shooting_get_iso_real()
+{
+    short sv;
+    _GetPropertyCase(PROPCASE_SV, &sv, sizeof(sv));
+    if (sv == 0) { 
+     return 0;
+    }
+    return shooting_get_iso_from_sv96(sv);
+}
+
+short shooting_get_svm96()
+{
+    short  sv;
+     _GetPropertyCase(PROPCASE_SV_MARKET, &sv, sizeof(sv));
+     return sv;
+}
+
+short shooting_get_sv96()
+{
+    short  sv;
+     _GetPropertyCase(PROPCASE_SV, &sv, sizeof(sv));
+     return sv;
+}
+
+short shooting_get_base_sv96()
+{
+    short dsv,sv;
+     _GetPropertyCase(PROPCASE_DELTA_SV, &dsv, sizeof(dsv));
+     _GetPropertyCase(PROPCASE_SV, &sv, sizeof(sv));
+     return (sv-dsv);
+}
+
+short shooting_get_sv96_from_iso(short iso)
+{
+	if  (iso>0) 
+    return (short)(log(pow(2.0,(-7.0/4.0))*(double)(iso))*96.0/(log_2));
+  return 0;  
+}
+
+short shooting_get_svm96_from_iso(short iso)
+{
+	 if  (iso>0) 
+    return (short)(log((double)(iso)*32.0/100.0)*96.0/(log_2));
+   return 0;   
+}  
+
+short shooting_get_iso_market_from_svm96(short svm96)
+{
+	if (svm96>0 )
+		return (short)((double)pow(2, (((double)svm96)/96.0))*100.0/32.0);
+	return 0;	
+}
+
+short shooting_get_iso_market_base()
+{
+	//if ((iso_market_base==0) && (shooting_get_iso_mode() <= 0)) {
+	//	 iso_market_base=(short)shooting_get_iso_market_from_svm96(shooting_get_svm96());
+  // }
+  //return iso_market_base;
+  if (iso_market_base==0) {
+      if (ISO_MIN_VALUE==50) iso_market_base=50;
+      else iso_market_base=100;
+     }
+  return iso_market_base; 	
+}
+
+short shooting_get_svm96_base()
+{
+	return shooting_get_svm96_from_iso(shooting_get_iso_market_base());
+}
+
+short shooting_get_iso_base()
+{
+     return (shooting_get_iso_from_sv96(shooting_get_base_sv96()));
+}
+
+// AUTOISO:EXIF
+short shooting_get_iso_market()
+{
+    double koef;
+    short iso_mode=shooting_get_canon_iso_mode();
+    if (iso_mode < 50) {
+      koef=(double) (shooting_get_iso_real())/(double) (shooting_get_iso_base());
+      //_GetPropertyCase(PROPCASE_SV_MARKET, &svm96, sizeof(svm96));
+      //return (int)(((double) shooting_get_isom_from_svm96(svm96))*koef);
+      return (short)(((double) shooting_get_iso_market_base())*koef);
+     }
+    return iso_mode;
+}
+
+void shooting_set_sv96(short sv96, short is_now){
+  if(is_now	)  {
+    short dsv96 =sv96-shooting_get_base_sv96();
+     while ((shooting_is_flash_ready()!=1) || (focus_busy));
+     if (shooting_get_iso_mode() > 0) {
+      short svm96_base =shooting_get_svm96_base();
+       shooting_set_iso_mode(0);
+       _SetPropertyCase(PROPCASE_SV_MARKET, &svm96_base, sizeof(svm96_base));
+     }
+    _SetPropertyCase(PROPCASE_SV, &sv96, sizeof(sv96));
+    _SetPropertyCase(PROPCASE_DELTA_SV, &dsv96, sizeof(dsv96));
+  }
+  else  {
+    photo_param_put_off.sv96=sv96;
+  }
+}
+
+/*void shooting_set_iso_real_delta_from_base(int diso)
+{
+ return;
+ int iso=(int)((short)shooting_get_iso_base()+diso);
+ 
+ if (iso>0) {
+    shooting_set_sv96((short)(shooting_get_sv96_from_iso(iso)));
+  }
+}*/
+
+void shooting_set_iso_real(short iso, short is_now)
+{
+	if (iso>0) shooting_set_sv96(shooting_get_sv96_from_iso(iso), is_now);
+
+}
+
+short shooting_get_bv96()
+{
+    short bv = 0;
+    _GetPropertyCase(PROPCASE_BV, &bv, sizeof(bv));
+    return bv;
+}
+
+short shooting_get_luminance()// http://en.wikipedia.org/wiki/APEX_system
+{
+    short bv = shooting_get_bv96();
+    short b=(short)(100*k*pow(2.0,((double)(bv-168)/96.0)));
+    return b;
+}
+
+/*void shooting_set_iso_market(int isom)
+{
+	if (isom>0) {
+   shooting_set_sv96(shooting_get_sv96_from_iso((int)(((double)isom*(double)shooting_get_iso_base())/(double)shooting_get_iso_market_base())));
+  }
+}*/
+
+int shooting_get_exif_subject_dist()
+{
+    int sd = 0;
+    _GetPropertyCase(PROPCASE_SUBJECT_DIST1, &sd, sizeof(sd));
+    return sd;
+}
+
+int shooting_get_hyperfocal_distance()
+{
+  int av=shooting_get_real_aperture();
+  int fl=get_focal_length(lens_get_zoom_point());	
+  if (av>0) return (fl*fl)/(10*circle_of_confusion*av);
+  else return (-1);
+}
+
+int shooting_get_canon_subject_distance()
+{
+	if (conf.dof_use_exif_subj_dist) return shooting_get_exif_subject_dist();
+	else return lens_get_focus_pos();
+}
+
+int shooting_get_subject_distance()
+{
+   if (!conf.dof_subj_dist_as_near_limit) return shooting_get_canon_subject_distance();
+   else {
+    	int h, v, m;
+   		int fl=get_focal_length(lens_get_zoom_point()); 
+    	int near=shooting_get_canon_subject_distance();	
+        int v1=(fl*fl);
+      	int av_min=shooting_get_min_real_aperture();
+        int c_of_c=circle_of_confusion*10;
+        if ((av_min!=0) && (c_of_c!=0)) {
+		    h=v1/(c_of_c*av_min);
+    	    if ((near>0) && (near<65500)) {
+    		  v=(h-near);
+    		  m=h*near;
+    		  if ((v>0) && (m>0)) return m/v;  
+       	     }
+        }
+       	return (-1);
+    }
+}
+
+int shooting_get_near_limit_of_acceptable_sharpness()
+{
+	int s=shooting_get_canon_subject_distance();	
+	if (conf.dof_subj_dist_as_near_limit) return s;
+    else {
+      int h = shooting_get_hyperfocal_distance();	
+      int m = h*s;
+      int v = h+s;
+      if ((m>0) && (v>0)) return (m/v);
+      else return (-1);
+    }
+}
+
+int shooting_get_near_limit_from_subject_distance(int s)
+{
+      int h = shooting_get_hyperfocal_distance();	
+      int m = h*s;
+      int v = h+s;
+      if ((m>0) && (v>0)) return (m/v);
+      else return (-1);
+}
+
+
+int shooting_get_far_limit_of_acceptable_sharpness()
+{
+	int s=shooting_get_canon_subject_distance(), h=shooting_get_hyperfocal_distance();	
+    int v = h-s;
+    int m = h*s;
+    if ((m>0) && (v>0)) return (m/v);
+    else return (-1);
+}
+
+int shooting_get_depth_of_field()
+{
+  int far=shooting_get_far_limit_of_acceptable_sharpness(), near=shooting_get_near_limit_of_acceptable_sharpness();
+  if ((far>0) && (near>0)) return far-near;
+  else return (-1);
+}
+
+
+short shooting_get_tv96_from_shutter_speed(float t)
+{
+  return (short) (96.0*log(1.0/t)/log_2);  
+}
+
+float shooting_get_shutter_speed_from_tv96(short tv)
+{
+  return  pow(2,(float)((-1)*tv)/96.0 );  
+}
+
+short shooting_get_tv96()
+{
+    short tv;
+    _GetPropertyCase(PROPCASE_TV, &tv, sizeof(tv));
+    return tv;
+}
+
+short shooting_get_user_tv96()
+{
+    short tv;
+    _GetPropertyCase(PROPCASE_USER_TV, &tv, sizeof(tv));
+    return tv;
+}
+
+void shooting_set_user_tv96(short v)
+{
+ long i;
+//    if ((v<SSID_MIN) || (v>SSID_MAX))
+//	return;
+ for (i=0;i<SS_SIZE;i++){
+  	if (shutter_speeds_table[i].prop_id == v){
+  		_SetPropertyCase(PROPCASE_USER_TV, &v, sizeof(v));
+  		_SetPropertyCase(PROPCASE_TV, &v, sizeof(v));
+	    return;
+	  }
+  }
+}
+
+
+void shooting_set_tv96(short v, short is_now)
+{
+ long i;
+ 
+//    if ((v<SSID_MIN) || (v>SSID_MAX))
+//	return;
+ for (i=0;i<SS_SIZE;i++){
+  	if (shutter_speeds_table[i].prop_id == v){
+       shooting_set_tv96_direct(v, is_now);
+       return;
+     }
+  }
+}
+
+void shooting_set_tv96_direct(short v, short is_now)
+{
+   	if(is_now) {
+	   _SetPropertyCase(PROPCASE_TV, &v, sizeof(v));
+   	}
+   	else photo_param_put_off.tv96=v; 
+}
+
+
+void shooting_set_shutter_speed(float t, short is_now)
+{
+	if (t>0) shooting_set_tv96_direct((short) 96.0*log(1/t)/log_2, is_now);  
+}
+
+
+short shooting_get_av96()
+{
+    short av;
+    _GetPropertyCase(PROPCASE_AV, &av, sizeof(av));
+    return av;
+}
+
+short shooting_get_user_av96()
+{
+    short av;
+    _GetPropertyCase(PROPCASE_USER_AV, &av, sizeof(av));
+    return av;
+}
+
+
+void shooting_set_av96(short v, short is_now)
+{
+
+ long i;
+//    if ((v<ASID_MIN) || (v>ASID_MAX))
+//	return;
+ for (i=0;i<AS_SIZE;i++){
+	if (aperture_sizes_table[i].prop_id == v){
+	   shooting_set_av96_direct(v, is_now);
+	   return;
+	}
+  }
+}
+
+void shooting_set_av96_direct(short v, short is_now)
+{  
+ if(is_now) { 
+   _SetPropertyCase(PROPCASE_AV, &v, sizeof(v));
+ }
+ else photo_param_put_off.av96=v;
+}
+
+
+void shooting_set_user_av96(short v)
 {
     long i;
 
 //    if ((v<ASID_MIN) || (v>ASID_MAX))
 //	return;
 
-    for (i=0;i<AS_SIZE;i++){
-	if (aperture_sizes_table[i].id == v){
-	    short int vv = aperture_sizes_table[i].prop_id;
-	    _SetPropertyCase(39, &vv, sizeof(vv));
+ for (i=0;i<AS_SIZE;i++){
+	if (aperture_sizes_table[i].prop_id == v){
+		  _SetPropertyCase(PROPCASE_USER_AV, &v, sizeof(v));
+		  _SetPropertyCase(PROPCASE_AV, &v, sizeof(v));
 	    return;
 	}
-    }
+ }
 }
 
-void shooting_set_av_rel(int v)
+short shooting_get_drive_mode()
 {
-    int cv = shooting_get_av();
-    shooting_set_av(cv+v);
+    short m;
+    _GetPropertyCase(PROPCASE_DRIVE_MODE, &m, sizeof(m));
+    return m;
+}
+
+short shooting_get_focus_mode()
+{
+    short m;
+    _GetPropertyCase(PROPCASE_FOCUS_MODE, &m, sizeof(m));
+    return m;
+}
+
+
+/*
+short shooting_get_continuous_mode_shoot_count()
+{
+    short c;
+    _GetPropertyCase(PROPCASE_CONT_MODE_SHOOT_COUNT, &c, sizeof(c));
+    return c;
+}
+*/
+
+
+//End ARM
+
+void shooting_set_user_av_by_id(int v)
+{
+    long i;
+
+//    if ((v<ASID_MIN) || (v>ASID_MAX))
+//	return;
+
+  for (i=0;i<AS_SIZE;i++){
+		if (aperture_sizes_table[i].id == v){
+	    short vv = aperture_sizes_table[i].prop_id;
+	    _SetPropertyCase(PROPCASE_USER_AV, &vv, sizeof(vv));
+	    _SetPropertyCase(PROPCASE_AV, &vv, sizeof(vv));
+	    return;
+		}
+  }
+}
+
+void shooting_set_user_av_by_id_rel(int v)
+{
+    int cv = shooting_get_user_av_id();
+    shooting_set_user_av_by_id(cv+v);
+}
+
+
+int shooting_get_day_seconds()
+{
+    unsigned long t;
+    struct tm *ttm;
+    t = time(NULL);
+    ttm = localtime(&t);
+    return ttm->tm_hour * 3600 + ttm->tm_min * 60 + ttm->tm_sec;
+}
+
+int shooting_get_tick_count()
+{
+    return (int)get_tick_count();
+}
+
+void shooting_set_iso_mode(int v)
+{
+    long i;
+
+ for (i=0;i<ISO_SIZE;i++){
+	if (iso_table[i].id == v){
+	    short vv = iso_table[i].prop_id;
+	    _SetPropertyCase(PROPCASE_ISO_MODE, &vv, sizeof(vv));
+	    return;
+	}
+ }
 }
 
 int shooting_in_progress()
 {
     int t = 0;
-    _GetPropertyCase(205, &t, 4);
+    _GetPropertyCase(PROPCASE_SHOOTING, &t, 4);
     return t != 0;
 }
 
@@ -196,8 +621,8 @@ int shooting_is_flash_ready()
  */
     _GetPropertyCase(204, &t, 4);
     if (t == 3){
-	_GetPropertyCase(221, &t, 4);
-	return (t==1) && _IsStrobeChargeCompleted();
+	   _GetPropertyCase(221, &t, 4);
+	   return (t==1) && _IsStrobeChargeCompleted();
     }
     return 1;
 }
@@ -212,4 +637,266 @@ long get_file_counter()
     get_parameter_data(PARAM_FILE_COUNTER, &v, 4);
     return v;
 }
+
+int shooting_get_zoom() {
+    return lens_get_zoom_point();
+}
+
+void shooting_set_zoom(int v) {
+    long dist;
+
+    dist = lens_get_focus_pos();
+    lens_set_zoom_point(v);
+    lens_set_focus_pos(dist);
+}
+
+void shooting_set_zoom_rel(int v) {
+    int cv = shooting_get_zoom();
+    shooting_set_zoom(cv+v);
+}
+
+void shooting_set_zoom_speed(int v) {
+    lens_set_zoom_speed(v);
+}
+
+int shooting_get_focus() {
+	if (conf.dof_use_exif_subj_dist) return shooting_get_exif_subject_dist();
+	else return lens_get_focus_pos();
+}
+
+void shooting_set_focus(int v, short is_now) {
+	if((is_now) && (shooting_get_focus_mode())) {
+	  if ((!conf.dof_subj_dist_as_near_limit) && (v>0)) lens_set_focus_pos(v); 
+	  else {
+        int near=shooting_get_near_limit_from_subject_distance(v);
+        if (near>0) lens_set_focus_pos(near); 
+	  }
+	}
+	else photo_param_put_off.subj_dist=v;
+}
+
+void shooting_video_bitrate_change(int v){
+ int m[]={1,2,3,4,5,6,7,8,10,12};
+ if (v>=(sizeof(m)/sizeof(m[0]))) v=(sizeof(m)/sizeof(m[0]))-1;
+ change_video_tables(m[v],4);
+}
+
+float shooting_get_shutter_speed_override_value()
+{
+  return (float)conf.tv_override_value*shutter_koef[conf.tv_override_koef];  
+}
+
+const char * shooting_get_tv_bracket_value()
+{
+  return expo_shift[conf.tv_bracket_value];  
+}
+
+
+short shooting_get_iso_override_value()
+{
+  return conf.iso_override_value*koef[conf.iso_override_koef];  
+}
+
+short shooting_get_iso_bracket_value()
+{
+  return conf.iso_bracket_value*koef[conf.iso_bracket_koef];  
+}
+
+
+short shooting_get_av96_override_value()
+{
+  return (short)(AV96_MIN+32*((conf.av_override_value)-1));
+}
+
+const char * shooting_get_av_bracket_value()
+{
+  return expo_shift[conf.av_bracket_value];  
+}
+
+
+int shooting_get_subject_distance_override_value()
+{
+  return conf.subj_dist_override_value*koef[conf.subj_dist_override_koef];  
+}
+
+int shooting_get_subject_distance_bracket_value()
+{
+  return conf.subj_dist_bracket_value*koef[conf.subj_dist_bracket_koef];
+}
+
+
+void shooting_tv_bracketing(){
+ short value, is_odd;
+ int m=mode_get()&MODE_SHOOTING_MASK;
+ if (bracketing.shoot_counter==0) { // first shoot
+    bracketing.shoot_counter=1;
+    if (m==MODE_M || m==MODE_TV) bracketing.tv96=shooting_get_user_tv96();
+    else bracketing.tv96=shooting_get_tv96();
+    bracketing.tv96_step=32*conf.tv_bracket_value;
+ }
+  // other shoots
+  // lublu belku
+  
+   bracketing.shoot_counter++;   
+   is_odd=(bracketing.shoot_counter&1);
+   if ((!is_odd) || (conf.bracket_type>0)) bracketing.dtv96+=bracketing.tv96_step;
+   if (((!is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==1))  value=bracketing.tv96-bracketing.dtv96;
+   else value=bracketing.tv96+bracketing.dtv96;
+   shooting_set_tv96_direct(value, SET_NOW);
+}
+
+void shooting_av_bracketing(){
+ short value, is_odd;
+ int m=mode_get()&MODE_SHOOTING_MASK;
+ if (bracketing.shoot_counter==0) { // first shoot
+    bracketing.shoot_counter=1;
+    if (m==MODE_M || m==MODE_AV) bracketing.av96=shooting_get_user_av96();
+    else bracketing.av96=shooting_get_av96();
+    bracketing.av96_step=32*conf.av_bracket_value;
+  }
+  // other shoots
+   bracketing.shoot_counter++;   
+   is_odd=(bracketing.shoot_counter&1);
+   if (((!is_odd) || (conf.bracket_type>0)) || (((is_odd) && (conf.bracket_type==0)) && ((bracketing.av96-bracketing.dav96)<AV96_MIN))) 
+       bracketing.dav96+=bracketing.av96_step;
+   if ((((!is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==1)) && ((bracketing.av96-bracketing.dav96)>=AV96_MIN))
+     {
+     value=bracketing.av96-bracketing.dav96;
+     shooting_set_av96_direct(value, SET_NOW);
+     }
+   else if (((is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==2)  || (((!is_odd) && (conf.bracket_type==0)) && ((bracketing.av96-bracketing.dav96)<AV96_MIN)))
+     { 
+     value=bracketing.av96+bracketing.dav96;
+     shooting_set_av96_direct(value, SET_NOW);
+     }
+}
+
+
+void shooting_iso_bracketing(){
+ short value=0, is_odd;
+ if (bracketing.shoot_counter==0) { // first shoot
+    bracketing.shoot_counter=1;
+    bracketing.iso=shooting_get_iso_real();
+    bracketing.iso_step=shooting_get_iso_bracket_value();
+    }
+  // other shoots
+   bracketing.shoot_counter++;   
+   is_odd=(bracketing.shoot_counter&1);
+   
+   if (((!is_odd) || (conf.bracket_type>0)) || (((is_odd) && (conf.bracket_type==0)) && (bracketing.iso<=bracketing.diso))) 
+    {
+   	   bracketing.diso+=bracketing.iso_step;
+    }
+   if ((((!is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==1)) && (bracketing.iso>bracketing.diso))
+     {
+     value=bracketing.iso-bracketing.diso;
+     shooting_set_iso_real(value, SET_NOW);
+     }
+   else if ((((is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==2)) || (((!is_odd) && (conf.bracket_type==0)) && (bracketing.iso<=bracketing.diso)))
+     {
+     value=bracketing.iso+bracketing.diso;
+     shooting_set_iso_real(value, SET_NOW);
+     }
+}
+
+void shooting_subject_distance_bracketing(){
+ short value=0, is_odd;
+ if (bracketing.shoot_counter==0) { // first shoot
+    bracketing.shoot_counter=1;
+    bracketing.subj_dist=shooting_get_focus();
+    bracketing.subj_dist_step=shooting_get_subject_distance_bracket_value();
+ }
+  // other shoots
+   bracketing.shoot_counter++;   
+   is_odd=(bracketing.shoot_counter&1);
+   if (((!is_odd) || (conf.bracket_type>0)) || (((is_odd) && (conf.bracket_type==0)) && (bracketing.subj_dist<=bracketing.dsubj_dist)))
+   {
+	   bracketing.dsubj_dist+=bracketing.subj_dist_step;
+   }
+   if ((((!is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==1)) && (bracketing.subj_dist>bracketing.dsubj_dist))
+     {
+     value=bracketing.subj_dist-bracketing.dsubj_dist;
+     shooting_set_focus(value, SET_NOW);
+     }
+   else if ((((is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==2)) || (((!is_odd) && (conf.bracket_type==0)) && (bracketing.subj_dist<=bracketing.dsubj_dist)))
+     {
+     value=bracketing.subj_dist+bracketing.dsubj_dist;
+     shooting_set_focus(value, SET_NOW);
+    }
+}
+
+
+void shooting_bracketing(void){
+  
+  short drive_mode=shooting_get_drive_mode();
+  if (shooting_get_drive_mode()!=0)  {
+     int m=mode_get()&MODE_SHOOTING_MASK;
+     if (m!=MODE_STITCH) {
+       if (state_shooting_progress != SHOOTING_PROGRESS_PROCESSING) { 
+           bracketing.shoot_counter=0;
+           bracketing.av96=0;
+           bracketing.dav96=0;
+           bracketing.tv96=0;
+           bracketing.dtv96=0;
+           bracketing.sv96=0;
+           bracketing.dsv96=0;
+           bracketing.iso=0;
+           bracketing.diso=0;
+           bracketing.subj_dist=0;
+           bracketing.dsubj_dist=0;
+           bracketing.type=0;
+       }
+          if (conf.tv_bracket_value) shooting_tv_bracketing(); 
+   	      else if (conf.av_bracket_value) shooting_av_bracketing(); 
+   	      else if (conf.iso_bracket_value) shooting_iso_bracketing();
+   	      else if ((conf.subj_dist_bracket_value)) shooting_subject_distance_bracketing();
+      }
+   }
+}
+
+
+//static short last_drive_mode=-1;
+
+void shooting_expo_param_override(void){
+ //if (conf.tv_override) shooting_set_tv96_direct(-384-32*conf.tv_override);
+short drive_mode=shooting_get_drive_mode();
+/*if(drive_mode!=last_drive_mode)
+ {
+  if (last_drive_mode==0) shoot_counter=0;
+  last_drive_mode=drive_mode;
+ }*/
+int m=mode_get()&MODE_SHOOTING_MASK;
+ if(state_kbd_script_run) {//scripts
+    if (photo_param_put_off.tv96) {
+	 shooting_set_tv96_direct(photo_param_put_off.tv96, SET_NOW);	
+	 photo_param_put_off.tv96=0;
+ 	}
+    if (photo_param_put_off.sv96) {
+	 shooting_set_sv96(photo_param_put_off.sv96, SET_NOW);
+	 photo_param_put_off.sv96=0; 
+    }
+    if (photo_param_put_off.av96) {
+	 shooting_set_av96_direct(photo_param_put_off.av96, SET_NOW);
+	 photo_param_put_off.av96=0;
+    }
+	if (photo_param_put_off.subj_dist) {
+	 shooting_set_focus(photo_param_put_off.subj_dist, SET_NOW);
+	 photo_param_put_off.subj_dist=0;  
+    }
+  }
+  else {//simple mode
+    if (conf.tv_override_value) shooting_set_tv96_direct(shooting_get_tv96_from_shutter_speed(shooting_get_shutter_speed_override_value()), SET_NOW);
+    if (conf.iso_override_value) shooting_set_iso_real(shooting_get_iso_override_value(), SET_NOW);
+    if (conf.av_override_value) shooting_set_av96_direct(shooting_get_av96_override_value(), SET_NOW);
+    if ((conf.subj_dist_override_value))
+	// Or change focus mode???
+	{
+	  shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
+	}
+  }
+  return;
+}
+
+
+
 

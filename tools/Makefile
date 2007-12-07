@@ -4,7 +4,7 @@ SKIPBUILDRULES=1
 
 include $(topdir)makefile.inc
 
-OBJS=pakwif.o gensig.o finsig.o
+OBJS=pakwif.o finsig.o
 
 all: pakwif$(EXE) finsig$(EXE)
 
@@ -31,18 +31,19 @@ gensig$(EXE): gensig.o
 
 
 clean:
+	rm -f pakwif$(EXE) finsig$(EXE) $(OBJS)
+#	if [ -s sig_ref.bin ] ; then \
+#	  rm -f signatures.h ; \
+#	fi
 
-distclean:
-	rm -f pakwif$(EXE) gensig$(EXE) finsig$(EXE) $(OBJS)
-	if [ -s sig_ref.bin ] ; then \
-	  rm -f signatures.h ; \
-	fi
+distclean: clean
+#	rm -f signatures.h
 
 
 signatures.h: gensig$(EXE) gensigs.sh sig_ref_1.txt sig_ref_1.bin sig_ref_2.txt sig_ref_2.bin
 	@echo \-\> $@
 	if [ -s sig_ref_1.bin ] && [ -s sig_ref_2.bin ] ; then \
-	  $(SH) ./gensigs.sh > signatures.h ; \
+	  $(SH) ./gensigs.sh $(SORT) > signatures.h ; \
 	else \
 	  echo CAUTION! \'signatures.h\' is not uptated due to \'sig_ref_1.bin\` or \'sig_ref_2.bin\` is empty! ; \
 	  touch signatures.h ; \
