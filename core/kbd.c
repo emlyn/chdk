@@ -151,11 +151,13 @@ void process_script()
     // process stack operations
     if (kbd_int_stack_ptr){
 	switch (KBD_STACK_PREV(1)){
+
 	case SCRIPT_MOTION_DETECTOR:
 			if(md_detect_motion()==0){
 				kbd_int_stack_ptr-=1;
 			}
 			return;
+
 	case SCRIPT_PRESS:
 	    kbd_key_press(KBD_STACK_PREV(2));
 	    kbd_int_stack_ptr-=2; // pop op.
@@ -278,8 +280,8 @@ void ubasic_camera_wait_click(int timeout)
 int ubasic_camera_is_clicked(const char *s)
 {
     long k = keyid_by_name(s);
-if (k==0xFF) return get_usb_power();
-    if (k > 0) {
+    if (k==0xFF) return get_usb_power(1);
+	if (k > 0) {
         return (kbd_last_clicked == k);
     } else {
 	ubasic_error = 3;
@@ -319,7 +321,7 @@ long kbd_process()
  * While running Alt. mode shoot key will start a script execution.
  */
 
-    if (kbd_blocked){
+	if (kbd_blocked){
 	if (key_pressed){
             if (kbd_is_key_pressed(conf.alt_mode_button)) {
                 ++key_pressed;
@@ -414,7 +416,7 @@ static const struct Keynames {
     { KEY_EXPO_CORR,    "expo_corr"  },
     { KEY_MICROPHONE,   "fe"         },
     { 0xFF,             "remote"     },
-    { 0xFFFF,           "no_key"     },
+	{ 0xFFFF,           "no_key"     },
 };
 
 static int keyid_by_name (const char *n)

@@ -73,11 +73,6 @@ extern long mkdir(const char *dirname);
 extern void msleep(long msec);
 extern long task_lock();
 extern long task_unlock();
-
-typedef struct { int quot, rem; } div_t;
-
-div_t	div	(int nNumerator, int nDenominator);
-
 #define feof(a) Feof_Fut(a)
 #define fdelete(a) DeleteFile_Fut(a)
 

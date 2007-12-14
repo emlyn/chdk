@@ -21,6 +21,7 @@ NSTUB(GetCurrentTargetDistance, 0xffe7a398)
 NSTUB(GetFocusLensSubjectDistance, 0xffe6d4ac)
 //ARM BEGIN
 NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffe6da4c)
+//NSTUB(GetFlashLightValue, 0xffe8538c)
 //NSTUB(Setcdsgainapex, 0xffe77a70)
 //ARM END
 NSTUB(GetParameterData, 0xffd4f350)

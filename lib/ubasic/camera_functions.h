@@ -20,7 +20,7 @@ void ubasic_set_led(int led, int state, int bright);
 int shooting_get_day_seconds();
 int shooting_get_tick_count();
 int ubasic_camera_script_autostart();
-int get_usb_power();
+int get_usb_power(int edge);
 void ubasic_camera_set_script_autostart(int state);
 void exit_alt();
 //#include "../../core/motion_detector.h"

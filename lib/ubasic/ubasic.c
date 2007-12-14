@@ -228,7 +228,7 @@ case TOKENIZER_SCRIPT_AUTOSTART:
     break;
  case TOKENIZER_GET_USB_POWER:
     accept(TOKENIZER_GET_USB_POWER);
-    r = get_usb_power();     
+    r = get_usb_power(0);     
     break;
 
   default:
@@ -546,7 +546,7 @@ if_statement(void)
 static void
 else_statement(void)
 {
-  int r, endif_cntr;
+  int r=0, endif_cntr;
   
   accept(TOKENIZER_ELSE);
 

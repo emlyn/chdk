@@ -18,6 +18,7 @@ static KeyMap keymap[];
 static long last_kbd_key = 0;
 static long alt_mode_key_mask = 0x00004000;
 static int usb_power;
+static int remote_key, remote_count;
 
 #define KEYS_MASK0 (0x00000003)
 #define KEYS_MASK1 (0x5f7f7038)
@@ -125,12 +126,29 @@ void my_kbd_read_keys()
     }
 
     _kbd_read_keys_r2(physw_status);
-    usb_power=(physw_status[2] & USB_MASK)==USB_MASK;
-	if (conf.remote_enable)
+    //usb_power=(physw_status[2] & USB_MASK)==USB_MASK;
+if (conf.remote_enable) {
+		remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
+		if (remote_key) 
+			remote_count += 1;
+		else if (remote_count) {
+			usb_power = remote_count;
+			remote_count = 0;
+		}
 		physw_status[2] = physw_status[2] & ~(SD_READONLY_FLAG | USB_MASK);
+	}
 	else
-    physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
+		physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
+}
 
+int get_usb_power(int edge)
+{
+	int x;
+
+	if (edge) return remote_key;
+	x = usb_power;
+	usb_power = 0;
+	return x;
 }
 
 /****************/
@@ -290,7 +308,6 @@ long kbd_use_zoom_as_mf() {
     }
     return 0;
 }
-int get_usb_power(void) {return usb_power;}
 static KeyMap keymap[] = {
     /* tiny bug: key order matters. see kbd_get_pressed_key()
      * for example

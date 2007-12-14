@@ -309,7 +309,7 @@ static KeyMap keymap[] = {
 	{ 0, 0 }
 };
 
-int get_usb_power(void) {return usb_power;}
+int get_usb_power(int edge) {return usb_power;}
 
 
  void kbd_fetch_data(long *dst)

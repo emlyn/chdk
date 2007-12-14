@@ -27,9 +27,22 @@ void debug_led(int state)
     else
 	p[0]=0x44;
 }
+#define LED_BASE 0xc0220000
+
 void ubasic_set_led(int led, int state, int bright)
+
 {
-	debug_led(state);
+  int leds[] = {308,304,108,312,108,148,108};
+  if(led < 4 || led > 10 || led == 6) return;
+  volatile long *p=(void*)LED_BASE + leds[led-4];
+    if (state)
+	p[0]=0x46;
+    else
+	p[0]=0x44;
+}
+
+int get_flash_params_count(void){
+ return 110;
 }
 
 int Get_JogDial(void){

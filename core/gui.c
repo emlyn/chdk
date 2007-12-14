@@ -36,19 +36,13 @@
 //------------------------------------------------------------------
 // #define KEY_NONE (KEY_DUMMY+1)
 
-#if   defined (CAMERA_ixus700) 
+#if   defined(CAMERA_ixus700) || defined(CAMERA_ixus800) || defined(CAMERA_a560)
  #define SHORTCUT_TOGGLE_RAW      KEY_DISPLAY
  #define SHORTCUT_TOGGLE_HISTO    KEY_DOWN
  #define SHORTCUT_TOGGLE_ZEBRA    KEY_MENU
  #define SHORTCUT_TOGGLE_OSD      KEY_RIGHT
 
-#elif defined (CAMERA_ixus800)  
- #define SHORTCUT_TOGGLE_RAW      KEY_DISPLAY
- #define SHORTCUT_TOGGLE_HISTO    KEY_DOWN
- #define SHORTCUT_TOGGLE_ZEBRA    KEY_MENU
- #define SHORTCUT_TOGGLE_OSD      KEY_RIGHT
-
-#elif defined (CAMERA_g7)  
+#elif defined(CAMERA_g7)  
  #define SHORTCUT_TOGGLE_RAW      KEY_ERASE
  #define SHORTCUT_TOGGLE_HISTO    KEY_DOWN
  #define SHORTCUT_TOGGLE_ZEBRA    KEY_LEFT
@@ -140,9 +134,9 @@ static CMenuItem script_submenu_items_top[] = {
     {LANG_MENU_SCRIPT_LOAD,             MENUITEM_PROC,                      (int*)gui_load_script },
     {LANG_MENU_SCRIPT_DELAY,            MENUITEM_INT|MENUITEM_F_UNSIGNED,   &conf.script_shoot_delay },
 	// remote autostart
-	{(int)"Autostart",					MENUITEM_BOOL,						&conf.script_startup },
+	{LANG_MENU_SCRIPT_AUTOSTART,		MENUITEM_BOOL,						&conf.script_startup },
 #if !defined(CAMERA_g7) && !defined (CAMERA_ixus800) && !defined (CAMERA_ixus700) && !defined (CAMERA_a570) && !defined (CAMERA_a700)
-	{(int)"Remote Enable",				MENUITEM_BOOL,						&conf.remote_enable},
+	{LANG_MENU_SCRIPT_REMOTE_ENABLE,	MENUITEM_BOOL,						&conf.remote_enable},
 #endif
     {LANG_MENU_SCRIPT_CURRENT,          MENUITEM_SEPARATOR },
     {(int)script_title,                 MENUITEM_TEXT },
@@ -187,11 +181,11 @@ static CMenuItem misc_submenu_items[] = {
     {LANG_MENU_MISC_CALENDAR,           MENUITEM_PROC,    (int*)gui_draw_calendar },
     {LANG_MENU_MISC_TEXT_READER,        MENUITEM_SUBMENU, (int*)&reader_submenu },
     {LANG_MENU_MISC_GAMES,              MENUITEM_SUBMENU, (int*)&games_submenu },
-#if !defined(CAMERA_a710) && !defined(CAMERA_a700) && !defined(CAMERA_g7) && !defined(CAMERA_a570) && !defined (CAMERA_ixus700) && !defined (CAMERA_ixus800)
+#if !defined(CAMERA_a710) && !defined(CAMERA_a700) && !defined(CAMERA_g7) && !defined(CAMERA_a570) && !defined (CAMERA_ixus700) && !defined (CAMERA_ixus800) && !defined (CAMERA_a560)
     {LANG_MENU_MISC_FLASHLIGHT,         MENUITEM_BOOL,    &conf.flashlight },
 #endif
     {LANG_MENU_MISC_SHOW_SPLASH,        MENUITEM_BOOL,    &conf.splash_show },
-#if !defined(CAMERA_g7) && !defined (CAMERA_ixus700)
+#if !defined(CAMERA_g7) && !defined (CAMERA_ixus700) && !defined (CAMERA_ixus800) && !defined (CAMERA_a560)
     {LANG_MENU_MISC_ZOOM_FOR_MF,        MENUITEM_BOOL,    &conf.use_zoom_mf },
 #endif
 #if defined(CAMERA_s2is) || defined(CAMERA_s3is)
@@ -209,6 +203,7 @@ static CMenu misc_submenu = { LANG_MENU_MISC_TITLE, NULL, misc_submenu_items };
 
 static CMenuItem debug_submenu_items[] = {
     {LANG_MENU_DEBUG_SHOW_PROPCASES,    MENUITEM_BOOL,          &debug_propcase_show },
+    {(int)"Show parameter data",        MENUITEM_BOOL,          &debug_pardata_show },
     {LANG_MENU_DEBUG_PROPCASE_PAGE,     MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,   &debug_propcase_page, MENU_MINMAX(0, 128) },
     {LANG_MENU_DEBUG_SHOW_MISC_VALS,    MENUITEM_BOOL,          &debug_vals_show },
     {LANG_MENU_DEBUG_MEMORY_BROWSER,    MENUITEM_PROC,          (int*)gui_draw_debug },
@@ -259,11 +254,14 @@ static CMenuItem values_submenu_items[] = {
       {LANG_MENU_VALUES_SHOW_REAL_ISO,           MENUITEM_BOOL,      &conf.values_show_real_iso},			
       {LANG_MENU_VALUES_SHOW_MARKET_ISO,         MENUITEM_BOOL,      &conf.values_show_market_iso},				
   	  {LANG_MENU_SHOW_ISO_ONLY_IN_AUTOISO_MODE,  MENUITEM_BOOL,	     &conf.values_show_iso_only_in_autoiso_mode},			
-      {LANG_MENU_VALUES_SHOW_EV_INT, 			 MENUITEM_BOOL,	     &conf.values_show_ev_int},
-      {LANG_MENU_VALUES_SHOW_EV_EXT,     	     MENUITEM_BOOL,		 &conf.values_show_ev_ext},				
-      {LANG_MENU_VALUES_SHOW_BV_INT,			 MENUITEM_BOOL,	     &conf.values_show_bv_int},					
-      {LANG_MENU_VALUES_SHOW_BV_EXT,			 MENUITEM_BOOL,	     &conf.values_show_bv_ext},					
-      {LANG_MENU_VALUES_SHOW_UNDEREPOSURE,	     MENUITEM_BOOL,      &conf.values_show_undereposure},							
+      {LANG_MENU_VALUES_SHOW_EV_SETED, 			 MENUITEM_BOOL,	     &conf.values_show_ev_seted},
+      {LANG_MENU_VALUES_SHOW_EV_MEASURED,        MENUITEM_BOOL,		 &conf.values_show_ev_measured},				
+      {LANG_MENU_VALUES_SHOW_BV_SETED,			 MENUITEM_BOOL,	     &conf.values_show_bv_seted},					
+      {LANG_MENU_VALUES_SHOW_BV_MEASURED,   	 MENUITEM_BOOL,	     &conf.values_show_bv_measured},					
+      {LANG_MENU_VALUES_SHOW_OVEREXPOSURE,	     MENUITEM_BOOL,      &conf.values_show_overexposure},	
+#if !defined(CAMERA_a570) 						
+      {LANG_MENU_SHOW_CANON_OVEREXPOSURE,	     MENUITEM_BOOL,      &conf.values_show_canon_overexposure},							
+#endif      
       {LANG_MENU_VALUES_SHOW_LUMINANCE,  	     MENUITEM_BOOL,      &conf.values_show_luminance},							
 	  {LANG_MENU_BACK,                           MENUITEM_UP },
     {0}
@@ -306,12 +304,15 @@ static CMenu exposure_submenu = { LANG_MENU_EXPOSURE_TITLE, NULL, exposure_subme
 static CMenuItem operation_submenu_items[] = {
 	  {LANG_MENU_OVERRIDE_TV_VALUE,        MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.tv_override_value, MENU_MINMAX(0, 100)}, 
 	  {LANG_MENU_OVERRIDE_TV_KOEF,         MENUITEM_ENUM,    (int*)gui_tv_override_koef_enum},
+#if !defined (CAMERA_ixus700) && !defined (CAMERA_ixus800) && !defined (CAMERA_a560)
 	  {LANG_MENU_OVERRIDE_AV_VALUE,        MENUITEM_ENUM,    (int*)gui_av_override_enum },
+ #endif
 	  {LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)}, 
 	  {LANG_MENU_OVERRIDE_ISO_KOEF,        MENUITEM_ENUM,    (int*)gui_iso_override_koef_enum},
  	  {LANG_MENU_OVERRIDE_SUBJ_DIST_VALUE, MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.subj_dist_override_value, MENU_MINMAX(0, 500)}, 
 	  {LANG_MENU_OVERRIDE_SUBJ_DIST_KOEF,  MENUITEM_ENUM,    (int*)gui_subj_dist_override_koef_enum},
 	  {LANG_MENU_BRACKET_IN_CONTINUOUS,	   MENUITEM_SUBMENU, (int*)&bracketing_in_continuous_submenu }, 
+	  {LANG_MENU_CLEAR_OVERRIDE_VALUES,    MENUITEM_BOOL,    (int*)&conf.clear_override},
       //{LANG_MENU_EXPOSURE,                 MENUITEM_SUBMENU,    (int*)&exposure_submenu },
 	  {LANG_MENU_BACK,                     MENUITEM_UP },
      {0}
@@ -693,9 +694,9 @@ const char* gui_video_bitrate_enum(int change, int arg) {
 
     conf.video_bitrate+=change;
     if (conf.video_bitrate<0)
-        conf.video_bitrate=0;
-    else if (conf.video_bitrate>=(sizeof(modes)/sizeof(modes[0])))
         conf.video_bitrate=sizeof(modes)/sizeof(modes[0])-1;
+    else if (conf.video_bitrate>=(sizeof(modes)/sizeof(modes[0])))
+        conf.video_bitrate=0;
 
     shooting_video_bitrate_change(conf.video_bitrate);
 
@@ -709,9 +710,9 @@ const char* gui_tv_bracket_values_enum(int change, int arg) {
 
     conf.tv_bracket_value+=change;
     if (conf.tv_bracket_value<0)
-        conf.tv_bracket_value=0;
-    else if (conf.tv_bracket_value>=(sizeof(modes)/sizeof(modes[0])))
         conf.tv_bracket_value=sizeof(modes)/sizeof(modes[0])-1;
+    else if (conf.tv_bracket_value>=(sizeof(modes)/sizeof(modes[0])))
+        conf.tv_bracket_value=0;
 
     return modes[conf.tv_bracket_value]; 
 }
@@ -721,33 +722,33 @@ const char* gui_av_bracket_values_enum(int change, int arg) {
 
     conf.av_bracket_value+=change;
     if (conf.av_bracket_value<0)
-        conf.av_bracket_value=0;
-    else if (conf.av_bracket_value>=(sizeof(modes)/sizeof(modes[0])))
         conf.av_bracket_value=sizeof(modes)/sizeof(modes[0])-1;
+    else if (conf.av_bracket_value>=(sizeof(modes)/sizeof(modes[0])))
+        conf.av_bracket_value=0;
 
     return modes[conf.av_bracket_value]; 
 }
 
 const char* gui_subj_dist_bracket_koef_enum(int change, int arg) {
-    static const char* modes[]={ "1", "10","100","1000"};
+    static const char* modes[]={"Off", "1", "10","100","1000"};
 
     conf.subj_dist_bracket_koef+=change;
     if (conf.subj_dist_bracket_koef<0)
-        conf.subj_dist_bracket_koef=0;
-    else if (conf.subj_dist_bracket_koef>=(sizeof(modes)/sizeof(modes[0])))
         conf.subj_dist_bracket_koef=sizeof(modes)/sizeof(modes[0])-1;
+    else if (conf.subj_dist_bracket_koef>=(sizeof(modes)/sizeof(modes[0])))
+        conf.subj_dist_bracket_koef=0;
     
     return modes[conf.subj_dist_bracket_koef]; 
 }
 
 const char* gui_iso_bracket_koef_enum(int change, int arg) {
-    static const char* modes[]={ "1", "10","100"};
+    static const char* modes[]={ "Off","1", "10","100"};
 
     conf.iso_bracket_koef+=change;
     if (conf.iso_bracket_koef<0)
-        conf.iso_bracket_koef=0;
-    else if (conf.iso_bracket_koef>=(sizeof(modes)/sizeof(modes[0])))
         conf.iso_bracket_koef=sizeof(modes)/sizeof(modes[0])-1;
+    else if (conf.iso_bracket_koef>=(sizeof(modes)/sizeof(modes[0])))
+        conf.iso_bracket_koef=0;
     
     return modes[conf.iso_bracket_koef]; 
 }
@@ -765,19 +766,19 @@ const char* gui_bracket_type_enum(int change, int arg) {
 }
 
 const char* gui_tv_override_koef_enum(int change, int arg) {
-    static const char* modes[]={"0.00001", "1/10000", "1/1000","1/100","1/10", "1","10","100"};
+    static const char* modes[]={"Off", "1/100K", "1/10000", "1/1000","1/100","1/10", "1","10","100"};
 
     conf.tv_override_koef+=change;
     if (conf.tv_override_koef<0)
-        conf.tv_override_koef=0;
-    else if (conf.tv_override_koef>=(sizeof(modes)/sizeof(modes[0])))
         conf.tv_override_koef=sizeof(modes)/sizeof(modes[0])-1;
+    else if (conf.tv_override_koef>=(sizeof(modes)/sizeof(modes[0])))
+        conf.tv_override_koef=0;
     
     return modes[conf.tv_override_koef]; 
 }
 
 const char* gui_iso_override_koef_enum(int change, int arg) {
-    static const char* modes[]={ "1", "10","100"};
+    static const char* modes[]={ "Off","1", "10","100"};
 
     conf.iso_override_koef+=change;
     if (conf.iso_override_koef<0)
@@ -790,7 +791,7 @@ const char* gui_iso_override_koef_enum(int change, int arg) {
 
 
 const char* gui_subj_dist_override_koef_enum(int change, int arg) {
-    static const char* modes[]={ "1", "10","100","1000"};
+    static const char* modes[]={ "Off","1", "10","100","1000"};
 
     conf.subj_dist_override_koef+=change;
     if (conf.subj_dist_override_koef<0)
@@ -972,6 +973,7 @@ void gui_redraw()
                 if (state_kbd_script_run) show_script_console=5;
                 if (show_script_console) {
                     --show_script_console;
+                    md_draw_grid();
                     script_console_draw();
                 }
             }
@@ -1042,6 +1044,7 @@ static inline int conf_save_new_settings_if_changed() {
 }
 #endif
 
+
 //-------------------------------------------------------------------
 void gui_kbd_process()
 {
@@ -1098,6 +1101,37 @@ void gui_kbd_process()
                 gui_menu_init(&script_submenu);
                 gui_mode = GUI_MODE_MENU;
                 draw_restore();
+            } else { 
+				if (kbd_is_key_clicked(KEY_RIGHT)) {
+				  gui_subj_dist_override_koef_enum(1,0);
+                  draw_restore();
+				  }
+				else if (kbd_is_key_clicked(KEY_LEFT)) 
+				  {
+				  gui_subj_dist_override_koef_enum(-1,0);
+                  draw_restore();
+				  }
+				else if (kbd_is_key_clicked(KEY_ZOOM_IN))   
+                  {
+                  conf.subj_dist_override_value+=1;
+				  if (conf.subj_dist_override_value>500) conf.subj_dist_override_value=0;
+                  draw_restore();
+				  }
+				 else if (kbd_is_key_clicked(KEY_ZOOM_OUT))   
+                  {
+				  conf.subj_dist_override_value-=1;
+				  if (conf.subj_dist_override_value<0) conf.subj_dist_override_value=500;
+                  draw_restore();
+				  }
+ 
+				/*
+				
+  if (conf.subj_dist_override_koef<0)
+                  conf.subj_dist_override_koef=0;
+                else if (conf.subj_dist_override_koef>=(sizeof(modes)/sizeof(modes[0])))
+                  conf.subj_dist_override_koef=sizeof(modes)/sizeof(modes[0])-1;
+    //              draw_restore();*/
+    
             }
             break;
     	case GUI_MODE_MENU:
@@ -1263,7 +1297,7 @@ void gui_draw_osd() {
         gui_osd_draw_histo();
     }
 
-    if (!conf.show_osd) return;
+    if (!(conf.show_osd && (canon_menu_active==(int)&canon_menu_active-4) && (canon_shoot_menu_active==0)))  return;
     
     if ((m&MODE_MASK) == MODE_REC) {
 //        m &= MODE_SHOOTING_MASK;
@@ -1280,7 +1314,7 @@ void gui_draw_osd() {
            
            if (conf.show_dof==DOF_SHOW_IN_DOF) gui_osd_draw_dof();  
            
-           if (conf.values_show_real_iso || conf.values_show_market_iso || conf.values_show_ev_int || conf.values_show_ev_ext || conf.values_show_bv_ext || conf.values_show_bv_int || conf.values_show_undereposure) gui_osd_calc_expo_param();           	           
+           if (conf.values_show_real_iso || conf.values_show_market_iso || conf.values_show_ev_seted || conf.values_show_ev_measured || conf.values_show_bv_measured || conf.values_show_bv_seted || conf.values_show_overexposure || conf.values_show_canon_overexposure) gui_osd_calc_expo_param();           	           
            
            if (conf.show_state) gui_osd_draw_state();
         }
@@ -1318,13 +1352,14 @@ void gui_draw_osd() {
 	draw_txt_string(28, 12, osd_buf, conf.osd_color);
 
 //      sprintf(osd_buf, "4:%8x  ", vid_get_viewport_fb_d());
-        sprintf(osd_buf, "4:%8x  ", get_usb_power());
+//        sprintf(osd_buf, "4:%8x  ", get_usb_power());
 	draw_txt_string(28, 13, osd_buf, conf.osd_color);
     }
 
-    if (debug_propcase_show){
+   {
 	static char sbuf[100];
-	int r,i, p;
+    int r,i, p, len;
+    if (debug_propcase_show){
 
 	for (i=0;i<10;i++){
 	    r = 0;
@@ -1334,6 +1369,33 @@ void gui_draw_osd() {
 	    draw_string(64,16+16*i,sbuf, conf.osd_color);
 	}
     }
+
+if (debug_pardata_show){
+        extern long* FlashParamsTable[]; 
+	char s[30];
+	int count;
+
+	for (i=0;i<10;i++){
+	    r = 0;
+	    p = debug_propcase_page*10+i;
+	    if (p>=get_flash_params_count())  sprintf(sbuf, "%3d: This parameter does not exists", p);
+	    else   {
+             len=FlashParamsTable[p][1]>>16;
+             if ((len==1)||(len==2)||(len==4)){
+              get_parameter_data(p, &r, len); 
+	      sprintf(sbuf, "%3d: %30d :%2d ", p, r,len);
+	      }
+	     else {
+	      if (len>=sizeof(s)) count=sizeof(s)-1; else count=len;
+	      get_parameter_data(p, &s, count);
+	      s[count]=0;
+	      sprintf(sbuf, "%3d: %30s :%2d ", p, s,len);
+	     }
+	    }
+	    draw_string(16,16+16*i,sbuf, conf.osd_color);
+	}
+    }
+   }
 
 
     if (ubasic_error){

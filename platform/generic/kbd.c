@@ -16,6 +16,7 @@ static long kbd_mod_state;
 static KeyMap keymap[];
 static long last_kbd_key = 0;
 static int usb_power=0;
+static int remote_key, remote_count;
 
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
@@ -138,7 +139,14 @@ void my_kbd_read_keys()
 #if defined(USB_MASK) && defined(USB_REG)
 		if (conf.remote_enable) {
 	physw_status[USB_REG] = kbd_new_state[USB_REG] & ~USB_MASK;
-	usb_power=(kbd_new_state[USB_REG] & USB_MASK)==USB_MASK;
+remote_key = (kbd_new_state[USB_REG] & USB_MASK)==USB_MASK;
+
+			if (remote_key) 
+				remote_count += 1;
+			else if (remote_count) {
+				usb_power = remote_count;
+				remote_count = 0;
+			}
 		}
 #endif
     }
@@ -149,7 +157,15 @@ void my_kbd_read_keys()
     _kbd_pwr_off();
 
 }
+int get_usb_power(int edge)
+{
+	int x;
 
+	if (edge) return remote_key;
+	x = usb_power;
+	usb_power = 0;
+	return x;
+}
 /****************/
 
 
@@ -294,5 +310,5 @@ long kbd_use_zoom_as_mf() {
     return 0;
 }
 
-int get_usb_power(void) {return usb_power;}
+
 

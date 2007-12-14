@@ -52,12 +52,25 @@ void debug_led(int state)
         led_off(LED_BLUE);
 }
 
+int get_flash_params_count(void){
+ return 108;
+}
+
+
 void ubasic_set_led(int led, int state, int bright)
 {
 	if (state) {
 		if (bright > LED_BRIGHTNESS) bright = LED_BRIGHTNESS;
-        led_on(led, bright);
+		if (led == 6) { // yellow = red + green
+	        led_on(4, bright);
+		    led_on(5, bright);
+		} else
+			led_on(led, bright);
 	}
     else
+		if (led == 6) {
+	        led_off(4);
+		    led_off(5);
+		} else
         led_off(led);
 }

@@ -48,6 +48,10 @@ MODE_NIGHT_SNAPSHOT     ,
 MODE_DIGITAL_MACRO      ,
 };
 
+//********************
+//char * get_debug();
+//********************
+
 #define MODE_SCREEN_MASK        0x0C00
 #define MODE_SCREEN_OPENED      0x0400
 #define MODE_SCREEN_ROTATED     0x0800
@@ -117,12 +121,12 @@ typedef struct {
     short iso;
     short sv96_market;
     short iso_market;
-    short bv96_external;
-    float     bv_external; //Bv96_external/96
-    short bv96_internal;//Ev96_internal-Sv96
-    short ev96_internal; //Tv96+Av96
-    short ev96_external; //Bv96+Sv96
+    short bv96_measured;
+    short bv96_seted;//Ev96_internal-Sv96
+    short ev96_seted; //Tv96+Av96
+    short ev96_measured; //Bv96+Sv96
     short dev96;// Ev96_external-Ev96_internal
+    short dev96_canon;// Canon OverExposure
     short b; //average scene luminance 
 } EXPO_TYPE;
 
@@ -171,7 +175,7 @@ long kbd_get_autoclicked_key();
 void kbd_reset_autoclicked_key();
 long kbd_use_zoom_as_mf();
 void kbd_set_alt_mode_key_mask(long key);
-int get_usb_power(void);
+int get_usb_power(int edge);
 /******************************************************************/
 
 long vid_is_bitmap_shown();
@@ -222,6 +226,7 @@ void shooting_set_user_tv96(short v);
 float shooting_get_shutter_speed_from_tv96(short tv);
 float shooting_get_shutter_speed_override_value();
 const char * shooting_get_tv_bracket_value();
+const char * shooting_get_bracket_type();
 void shooting_set_user_tv_by_id(int v);
 void shooting_set_user_tv_by_id_rel(int v);
 const ShutterSpeed *shooting_get_tv_line();
@@ -279,8 +284,10 @@ void shooting_set_sv96(short sv96, short is_now);
 short shooting_get_iso_override_value();
 short shooting_get_iso_bracket_value();
 /******************************************************************/
+short shooting_get_canon_overexposure_value();
 short shooting_get_bv96();
 short shooting_get_luminance();
+//const char* shooting_get_flash_light_value();
 /******************************************************************/
 int shooting_get_canon_subject_distance();
 int shooting_get_exif_subject_dist();
@@ -293,6 +300,8 @@ extern int auto_started;
 void shooting_tv_bracketing();
 void shooting_av_bracketing();
 void shooting_iso_bracketing();
+/******************************************************************/
+void clear_override_values();
 /******************************************************************/
 
 
@@ -316,11 +325,16 @@ void enable_shutdown();
 void JogDial_CW(void);
 void JogDial_CCW(void);
 void change_video_tables(int a, int b);
+int get_flash_params_count(void);
 
 /******************************************************************/
 void __attribute__((noreturn)) shutdown();
 void ubasic_set_led(int led, int state, int bright);
 void debug_led(int state);
+/****************************************/
+extern int canon_menu_active;  
+extern char canon_shoot_menu_active;  
+
 #define started() debug_led(1)
 #define finished() debug_led(0)
 

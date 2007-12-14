@@ -100,8 +100,11 @@ void core_spytask()
     mkdir("A/CHDK/LANG");
     mkdir("A/CHDK/BOOKS");
     mkdir("A/CHDK/GRIDS");
-auto_started = 0;
-	if (conf.script_startup) script_autostart();				// remote autostart
+    auto_started = 0;
+    
+    clear_override_values();
+    
+    if (conf.script_startup) script_autostart();				// remote autostart
     while (1){
 
 	if (raw_data_available){

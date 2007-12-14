@@ -1,7 +1,6 @@
 #include "lolevel.h"
 #include "platform.h"
 #include "core.h"
-#include "conf.h"
 
 #define RAWDATA_AVAILABLE (1)
 #define RAWDATA_SAVED (2)
@@ -42,7 +41,6 @@ void capt_seq_hook_set_nr()
 	break;
     };
 }
-
 
 
 void __attribute__((naked,noinline)) sub_FF97DD78_my(long p)

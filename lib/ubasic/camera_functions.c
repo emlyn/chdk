@@ -122,30 +122,6 @@ int shooting_get_iso_real()
 {
   return iso;
 }
-
-/*int shooting_get_iso_market()
-{
-  return iso;
-}
-
-void shooting_set_iso_real_delta_from_base(int v)
-{
-    iso=v;
-    printf("*** set iso real delta %d ***\n",v);
-}
-
-void shooting_set_iso_real(int iso)
-{
-    iso=v;
-    printf("*** set iso real %d ***\n",v);
-}
-
-void shooting_set_iso_market(int isom)
-{
-    iso=v;
-    printf("*** set iso market %d ***\n",v);
-}*/
-
 //ARM End
 void script_console_add_line(const char *str) {
     printf(">>> %s\n", str);
@@ -221,7 +197,7 @@ void ubasic_camera_set_script_autostart(int state)
 	autostart = state;
     printf("*** set autostart %d ***\n",autostart);
 }
-int get_usb_power()
+int get_usb_power(int edge)
 {
 	return 0;
 }

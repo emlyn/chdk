@@ -44,11 +44,6 @@ void capt_seq_hook_set_nr()
 }
 
 
-void tv_override(void){
- if (conf.tv_override) shooting_set_tv96_direct(-384-32*conf.tv_override);
-}
-
-
 void __attribute__((naked,noinline)) sub_FFEABF94_my(long p)
 {
     asm volatile (
@@ -164,7 +159,7 @@ void __attribute__((naked,noinline)) capt_seq_task()
                  ".long loc_FFEA93BC\n"
  "loc_FFEA92DC:\n"
                  "BL      sub_FFEA9958\n"
-                 "BL      tv_override\n"  // +
+                 "BL      shooting_expo_param_override\n"  // +
                  "BL      sub_FFEA710C\n"
                  "B       loc_FFEA93B8\n"
  "loc_FFEA92E8:\n"

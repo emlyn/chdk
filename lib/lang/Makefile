@@ -11,7 +11,7 @@ all: liblang.a
 liblang.a: $(OBJS)
 
 clean:
-	rm -f $(OBJS) liblang.a
+	rm -f $(OBJS) libfont.a
 
 distclean: clean
 	rm -f $(OBJS:.o=.d)

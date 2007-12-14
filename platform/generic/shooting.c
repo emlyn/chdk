@@ -21,21 +21,22 @@
 #define ISO_MAX (iso_table[ISO_SIZE-1].id)
 #define ISO_MIN_VALUE (iso_table[1-iso_table[0].id].prop_id)
 #if defined(CAMERA_a570) 
- #define PROPCASE_DRIVE_MODE    				0
- #define PROPCASE_FOCUS_MODE    				0
+ #define PROPCASE_DRIVE_MODE    				102
+ #define PROPCASE_FOCUS_MODE    				133
  #define PROPCASE_USER_TV       				264
  #define PROPCASE_TV	        				262
  #define PROPCASE_USER_AV      					26
- #define PROPCASE_AV            				0
- #define PROPCASE_MIN_AV       					0
- #define PROPCASE_SV            				0
- #define PROPCASE_DELTA_SV      				0
- #define PROPCASE_SV_MARKET     				0
- #define PROPCASE_BV            				0
- #define PROPCASE_SUBJECT_DIST1 				0
- #define PROPCASE_SUBJECT_DIST2 				0
+ #define PROPCASE_AV            				23
+ #define PROPCASE_MIN_AV       					25
+ #define PROPCASE_SV            				246
+ #define PROPCASE_DELTA_SV      				79
+ #define PROPCASE_SV_MARKET     				247
+ #define PROPCASE_BV            				34
+ #define PROPCASE_SUBJECT_DIST1 				245
+ #define PROPCASE_SUBJECT_DIST2 				65
  #define PROPCASE_ISO_MODE  				    149
  #define PROPCASE_SHOOTING      				206
+ #define PROPCASE_OVEREXPOSURE 					-1
  #else
  #define PROPCASE_DRIVE_MODE    				6
  #define PROPCASE_FOCUS_MODE    				12
@@ -52,22 +53,66 @@
  #define PROPCASE_SUBJECT_DIST1 				65
  #define PROPCASE_SUBJECT_DIST2 				66
  #define PROPCASE_SHOOTING     					205
+ #define PROPCASE_OVEREXPOSURE 					76
 #endif
 
 /*define PROPCASE_CONT_MODE_SHOOT_COUNT 		218*/
 static short iso_market_base=0;
+//static short iso_base=0;
 static short sv96_base=0;
-const double sqrt2=1.4142135623731;//square root from 2 
-const double log_2=0.6931471805599;//natural logarithm of 2
-const double k=12.5;//K is the reflected-light meter calibration constant 
-const short koef[] = {1,10,100,1000};
-const float shutter_koef[] = {0.00001, 0.0001,0.001,0.01,0.1,1,10,100,1000};
-const char * expo_shift[] = { "Off", "1/3 EV","2/3 EV", "1 EV", "1 1/3Ev", "1 2/3Ev", "2 Ev"};
+static short svm96_base=0;
+static short sv96_base_tmp=0;
+//static short override_iso=0;
+static const double sqrt2=1.4142135623731;//square root from 2 
+static const double log_2=0.6931471805599;//natural logarithm of 2
+static const double k=12.5;//K is the reflected-light meter calibration constant 
+static const short koef[] = {0, 1,10,100,1000};
+static const float shutter_koef[] = {0, 0.00001, 0.0001,0.001,0.01,0.1,1,10,100,1000};
+static const char * expo_shift[] = { "Off", "1/3Ev","2/3Ev", "1Ev", "1 1/3Ev", "1 2/3Ev", "2Ev"};
+static const char * expo_type[] = { "+/-", "-","+"};
 
 static PHOTO_PARAM photo_param_put_off;
 
 static EXPO_BRACKETING_VALUES bracketing;
 
+//***********************
+/*
+static char debug_str[60];
+
+void debug_char(char * deb_str)
+{
+ short debug_str_length=strlen(debug_str);
+ if	(debug_str_length>50) strcpy(debug_str, "");
+ sprintf(debug_str+debug_str_length, "%s", deb_str);
+}
+
+void debug_int()
+{
+ strcpy(debug_str, "");
+}
+
+
+void debug_int(int deb_str)
+{
+ short debug_str_length=strlen(debug_str);
+ if	(debug_str_length>50) strcpy(debug_str, "");
+ sprintf(debug_str+debug_str_length, "%d", deb_str);
+}
+
+
+void debug(char * deb_str, int deb_str)
+{
+ short debug_str_length=strlen(debug_str);
+ if	(debug_str_length>50) strcpy(debug_str, "");
+ sprintf(debug_str+debug_str_length, "%s", deb_str);
+ sprintf(debug_str+strlen(debug_str), "%d", deb_str);
+}
+
+char * get_debug()
+{
+ return debug_str;
+}*/
+//***********************
 
 int shooting_get_user_tv_id()
 {
@@ -171,12 +216,12 @@ short shooting_get_aperture_from_av96(short av96) {
 short shooting_get_min_real_aperture() {
 	 short avv;
 	 _GetPropertyCase(PROPCASE_MIN_AV, &avv, sizeof(avv));
-    return (short)((pow(sqrt2, ((float)avv)/96.0))*100.0);
+    return (short)((pow(sqrt2, ((double)avv)/96.0))*100.0);
 }
 
 short shooting_get_iso_from_sv96(short sv96)
 {
-    return (short)(pow(2, (((float) sv96+168.0)/96.0)));
+    return (short)(pow(2, (((double) sv96+168.0)/96.0)));
 }
 
 short shooting_get_iso_real()
@@ -205,23 +250,25 @@ short shooting_get_sv96()
 
 short shooting_get_base_sv96()
 {
-    short dsv,sv;
-     _GetPropertyCase(PROPCASE_DELTA_SV, &dsv, sizeof(dsv));
-     _GetPropertyCase(PROPCASE_SV, &sv, sizeof(sv));
-     return (sv-dsv);
+   short dsv,sv;
+   if (shooting_get_canon_iso_mode()<50) { 	
+       _GetPropertyCase(PROPCASE_DELTA_SV, &dsv, sizeof(dsv));
+       _GetPropertyCase(PROPCASE_SV, &sv, sizeof(sv));
+       sv96_base=(sv-dsv);
+   }
+   return sv96_base;
 }
 
 short shooting_get_sv96_from_iso(short iso)
 {
-	if  (iso>0) 
+  if  (iso>0) 
     return (short)(log(pow(2.0,(-7.0/4.0))*(double)(iso))*96.0/(log_2));
   return 0;  
 }
 
 short shooting_get_svm96_from_iso(short iso)
 {
-	 if  (iso>0) 
-    return (short)(log((double)(iso)*32.0/100.0)*96.0/(log_2));
+   if  (iso>0) return (short)(log((double)(iso)*32.0/100.0)*96.0/(log_2));
    return 0;   
 }  
 
@@ -234,10 +281,10 @@ short shooting_get_iso_market_from_svm96(short svm96)
 
 short shooting_get_iso_market_base()
 {
-	//if ((iso_market_base==0) && (shooting_get_iso_mode() <= 0)) {
-	//	 iso_market_base=(short)shooting_get_iso_market_from_svm96(shooting_get_svm96());
-  // }
-  //return iso_market_base;
+//if ((iso_market_base==0) && (shooting_get_iso_mode() <= 0)) {
+//	 iso_market_base=(short)shooting_get_iso_market_from_svm96(shooting_get_svm96());
+// }
+ //return iso_market_base;
   if (iso_market_base==0) {
       if (ISO_MIN_VALUE==50) iso_market_base=50;
       else iso_market_base=100;
@@ -247,43 +294,49 @@ short shooting_get_iso_market_base()
 
 short shooting_get_svm96_base()
 {
-	return shooting_get_svm96_from_iso(shooting_get_iso_market_base());
+	if (svm96_base==0) svm96_base=shooting_get_svm96_from_iso(shooting_get_iso_market_base());
+	return svm96_base;
 }
 
 short shooting_get_iso_base()
 {
-     return (shooting_get_iso_from_sv96(shooting_get_base_sv96()));
+	sv96_base=shooting_get_base_sv96();
+	if (sv96_base!=0) return shooting_get_iso_from_sv96(sv96_base);
+	else return 0;
 }
 
 // AUTOISO:EXIF
 short shooting_get_iso_market()
 {
-    double koef;
+    //double koef;
     short iso_mode=shooting_get_canon_iso_mode();
-    if (iso_mode < 50) {
-      koef=(double) (shooting_get_iso_real())/(double) (shooting_get_iso_base());
-      //_GetPropertyCase(PROPCASE_SV_MARKET, &svm96, sizeof(svm96));
-      //return (int)(((double) shooting_get_isom_from_svm96(svm96))*koef);
-      return (short)(((double) shooting_get_iso_market_base())*koef);
+    if ((iso_mode < 50) || (conf.iso_override_koef && conf.iso_override_value) || (conf.iso_bracket_koef && conf.iso_bracket_value)) 
+     {
+      short iso_b=shooting_get_iso_base();
+      if (iso_b) return (short)((shooting_get_iso_market_base()*shooting_get_iso_real())/iso_b);
      }
     return iso_mode;
 }
 
 void shooting_set_sv96(short sv96, short is_now){
-  if(is_now	)  {
-    short dsv96 =sv96-shooting_get_base_sv96();
-     while ((shooting_is_flash_ready()!=1) || (focus_busy));
-     if (shooting_get_iso_mode() > 0) {
-      short svm96_base =shooting_get_svm96_base();
-       shooting_set_iso_mode(0);
-       _SetPropertyCase(PROPCASE_SV_MARKET, &svm96_base, sizeof(svm96_base));
-     }
+  short dsv96=0, iso_mode=shooting_get_canon_iso_mode(); 	
+  if (is_now)  {
+    if (iso_mode<50) dsv96 =sv96-shooting_get_base_sv96();
+    else if (sv96_base) dsv96=sv96-sv96_base;
+	else if (sv96_base_tmp) dsv96=sv96-sv96_base_tmp;  
+	else
+	 { 
+	 sv96_base_tmp= (short)((shooting_get_svm96_base()*shooting_get_sv96())/shooting_get_svm96());   
+	 dsv96=sv96-sv96_base_tmp;
+	 }	 
+    while ((shooting_is_flash_ready()!=1) || (focus_busy));
+    short svm96_base =shooting_get_svm96_base();
+    if (iso_mode>=50) shooting_set_iso_mode(0);
+    _SetPropertyCase(PROPCASE_SV_MARKET, &svm96_base, sizeof(svm96_base));
     _SetPropertyCase(PROPCASE_SV, &sv96, sizeof(sv96));
     _SetPropertyCase(PROPCASE_DELTA_SV, &dsv96, sizeof(dsv96));
   }
-  else  {
-    photo_param_put_off.sv96=sv96;
-  }
+  else   photo_param_put_off.sv96=sv96;
 }
 
 /*void shooting_set_iso_real_delta_from_base(int diso)
@@ -308,6 +361,14 @@ short shooting_get_bv96()
     _GetPropertyCase(PROPCASE_BV, &bv, sizeof(bv));
     return bv;
 }
+
+short shooting_get_canon_overexposure_value()
+{
+    short bv = 0;
+    _GetPropertyCase(PROPCASE_OVEREXPOSURE, &bv, sizeof(bv));
+    return bv;
+}
+
 
 short shooting_get_luminance()// http://en.wikipedia.org/wiki/APEX_system
 {
@@ -688,7 +749,12 @@ float shooting_get_shutter_speed_override_value()
 
 const char * shooting_get_tv_bracket_value()
 {
-  return expo_shift[conf.tv_bracket_value];  
+  return expo_shift[conf.tv_bracket_value];
+}
+
+const char * shooting_get_bracket_type()
+{
+  return expo_type[conf.bracket_type];  
 }
 
 
@@ -846,12 +912,15 @@ void shooting_bracketing(void){
            bracketing.dsubj_dist=0;
            bracketing.type=0;
        }
-          if (conf.tv_bracket_value) shooting_tv_bracketing(); 
+          if (conf.tv_bracket_value)  shooting_tv_bracketing(); 
    	      else if (conf.av_bracket_value) shooting_av_bracketing(); 
-   	      else if (conf.iso_bracket_value) shooting_iso_bracketing();
-   	      else if ((conf.subj_dist_bracket_value)) shooting_subject_distance_bracketing();
+   	      else if ((conf.iso_bracket_value) && (conf.iso_bracket_koef)) {
+			  shooting_iso_bracketing();
+   	       }
+   	      else if ((conf.subj_dist_bracket_value) && (conf.subj_dist_bracket_koef)) shooting_subject_distance_bracketing();
       }
    }
+  //else override_iso=0;
 }
 
 
@@ -885,10 +954,10 @@ int m=mode_get()&MODE_SHOOTING_MASK;
     }
   }
   else {//simple mode
-    if (conf.tv_override_value) shooting_set_tv96_direct(shooting_get_tv96_from_shutter_speed(shooting_get_shutter_speed_override_value()), SET_NOW);
-    if (conf.iso_override_value) shooting_set_iso_real(shooting_get_iso_override_value(), SET_NOW);
-    if (conf.av_override_value) shooting_set_av96_direct(shooting_get_av96_override_value(), SET_NOW);
-    if ((conf.subj_dist_override_value))
+    if ((conf.tv_override_value) && (conf.tv_override_koef))  shooting_set_tv96_direct(shooting_get_tv96_from_shutter_speed(shooting_get_shutter_speed_override_value()), SET_NOW);
+    if ((conf.iso_override_value) && (conf.iso_override_koef)) shooting_set_iso_real(shooting_get_iso_override_value(), SET_NOW);
+	if (conf.av_override_value) shooting_set_av96_direct(shooting_get_av96_override_value(), SET_NOW);
+    if ((conf.subj_dist_override_value) && (conf.subj_dist_override_koef))
 	// Or change focus mode???
 	{
 	  shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);

@@ -27,7 +27,22 @@ void debug_led(int state)
     else
 	p[0]=0x44;
 }
+
+
+int get_flash_params_count(void){
+ return 111;
+}
+
+#define LED_BASE 0xc02200C0
+
 void ubasic_set_led(int led, int state, int bright)
+
 {
-	debug_led(state);
+  int leds[] = {12,16,4,8,4,0,4};
+  if(led < 4 || led > 10 || led == 6) return;
+  volatile long *p=(void*)LED_BASE + leds[led-4];
+    if (state)
+	p[0]=0x46;
+    else
+	p[0]=0x44;
 }

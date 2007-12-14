@@ -34,7 +34,7 @@ static char* gui_lang_default = \
 " 21 \"Show OSD\"\n"
 " 22 \"Show RAW/EXP state\"\n"
 " 23 \"Show misc values\"\n"
-" 24 \"Zoom value\"\n"
+" 24 \" Zoom value\"\n"
 " 25 \"Show DOF calculator\"\n"
 " 26 \"Show clock\"\n"
 " 27 \"OSD layout editor\"\n"
@@ -109,7 +109,7 @@ static char* gui_lang_default = \
 " 79 \"Debug\"\n"
 
 " 80 \"Show PropCases\"\n"
-" 81 \"PropCase page\"\n"
+" 81 \"PropCase/ParamsData page\"\n"
 " 82 \"Show misc. values\"\n"
 " 83 \"Memory browser\"\n"
 " 84 \"Dump RAM on ALT +/- press\"\n"
@@ -289,11 +289,11 @@ static char* gui_lang_default = \
 "223 \"Show 'real' Aperture\"\n"
 "224 \"Show 'real' ISO\"\n"
 "225 \"Show 'market' ISO\"\n"
-"226 \"Show ISO only in Autoiso mode\"\n"
-"227 \"Show Ev (Tv+Av)\"\n"
-"228 \"Show Ev (Bv+Sv)\"\n"
-"229 \"Show Bv (brightness value) int\"\n"
-"230 \"Show Bv (brightness value) ext\"\n"
+"226 \" Show ISO only in Autoiso mode\"\n"
+"227 \"Show seted Exposure Ev (Tv+Av)\"\n"
+"228 \"Show Measured Ev (Bv+Sv)\"\n"
+"229 \"Show Seted Bv (brightness val.)\"\n"
+"230 \"Show Measured Bv\"\n"
 "231 \"Show Overexp.value(No flash!)\"\n"
 "232 \"Show Scene luminance (cd/m2)\"\n"
 
@@ -307,10 +307,10 @@ static char* gui_lang_default = \
 "239 \"Extra Photo Operations->\"\n"
 "240 \"Override shutter speed\"\n"
 "241 \"   Value factor\"\n"
-"242 \"Override apperture\"\n"
+"242 \"Override aperture\"\n"
 "243 \"Override ISO value\"\n"
 "244 \"   Value factor\"\n"
-"245 \"Override subject dist.value\"\n"
+"245 \"Override focus dist. (MF)\"\n"
 "246 \"   Value factor (mm)\"\n"
 
 "247 \"Bracketing in continuous mode\"\n"
@@ -319,16 +319,23 @@ static char* gui_lang_default = \
 "250 \"AV bracketing value\"\n"
 "251 \"ISO bracketing value\"\n"
 "252 \"    Value factor\"\n"
-"253 \"Subj.distance bracket.value(MF)\"\n"
+"253 \"Focus dist. bracket.value (MF)\"\n"
 "254 \"    Value factor (mm)\"\n"
 "255 \"Bracketing type\"\n"
 
-"256 \"Exposure control (no flash)\"\n"
-"257 \"Exposure control (no flash)->\"\n"
-"258 \"Recalc Exposure\"\n"
-"259 \"TV Exposure recalc order\"\n"
-"260 \"AV Exposure recalc order\"\n"
-"261 \"ISO Exposure recalc order\"\n"
+"256 \"Script Autostart\"\n"
+"257 \"Enable remote (USB)->\"\n"
+
+"258 \"Exposure control (no flash)\"\n"
+"259 \"Exposure control (no flash)->\"\n"
+"260 \"Recalc Exposure\"\n"
+"261 \"TV Exposure recalc order\"\n"
+"262 \"AV Exposure recalc order\"\n"
+"263 \"ISO Exposure recalc order\"\n"
+
+"264 \"Clear override values on start\"\n"
+
+"265 \"Show canon overexposure value\"\n"
 ;
 
 //-------------------------------------------------------------------

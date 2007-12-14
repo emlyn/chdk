@@ -47,6 +47,7 @@ int state_debug1;
 int debug_propcase_show;
 int debug_propcase_page;
 int debug_vals_show;
+int debug_pardata_show;
 
 //-------------------------------------------------------------------
 static int def_ubasic_vars[SCRIPT_NUM_PARAMS] = {0};
@@ -89,6 +90,18 @@ int ubasic_camera_get_nr()
 {
 	// "Auto", "Off", "On"
     return conf.raw_nr;
+}
+
+
+void clear_override_values()
+{	
+	if (conf.clear_override)
+	{
+	 conf.av_override_value=0;
+	 conf.tv_override_koef=0;
+	 conf.subj_dist_override_koef=0;
+	 conf.iso_override_koef=0;
+	}
 }
 
 static const ConfInfo conf_info[] = {
@@ -180,11 +193,11 @@ static const ConfInfo conf_info[] = {
     CONF_INFO( 90, conf.values_show_real_iso,    CONF_DEF_VALUE, i:1, NULL),				
     CONF_INFO( 91, conf.values_show_market_iso,  CONF_DEF_VALUE, i:0, NULL),	
     CONF_INFO( 92, conf.values_show_iso_only_in_autoiso_mode, CONF_DEF_VALUE, i:0, NULL),			
-    CONF_INFO( 93, conf.values_show_ev_int,      CONF_DEF_VALUE, i:0, NULL),			
-    CONF_INFO( 94, conf.values_show_ev_ext,      CONF_DEF_VALUE, i:0, NULL),				
-    CONF_INFO( 95, conf.values_show_bv_ext,      CONF_DEF_VALUE, i:0, NULL),					
-    CONF_INFO( 96, conf.values_show_bv_int,      CONF_DEF_VALUE, i:0, NULL),						
-    CONF_INFO( 97, conf.values_show_undereposure,  CONF_DEF_VALUE, i:0, NULL),							
+    CONF_INFO( 93, conf.values_show_ev_seted,      CONF_DEF_VALUE, i:0, NULL),			
+    CONF_INFO( 94, conf.values_show_ev_measured,      CONF_DEF_VALUE, i:0, NULL),				
+    CONF_INFO( 95, conf.values_show_bv_measured,      CONF_DEF_VALUE, i:0, NULL),					
+    CONF_INFO( 96, conf.values_show_bv_seted,      CONF_DEF_VALUE, i:0, NULL),						
+    CONF_INFO( 97, conf.values_show_overexposure,  CONF_DEF_VALUE, i:0, NULL),							
     CONF_INFO( 98, conf.values_show_luminance,   CONF_DEF_VALUE, i:0, NULL),						
   //ARM End  	
     CONF_INFO( 99, conf.video_mode,             CONF_DEF_VALUE, i:0, NULL),
@@ -192,14 +205,14 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(101, conf.video_bitrate,          CONF_DEF_VALUE, i:3, conf_change_video_bitrate),
     
     CONF_INFO(102, conf.tv_override_value,		    CONF_DEF_VALUE, i:0, NULL),	
-    CONF_INFO(103, conf.tv_override_koef,		CONF_DEF_VALUE, i:5, NULL),	
+    CONF_INFO(103, conf.tv_override_koef,		CONF_DEF_VALUE, i:0, NULL),	
     //ARM begin 
     CONF_INFO(104, conf.av_override_value,			CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(105, conf.iso_override_value,			CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(106, conf.iso_override_koef,		CONF_DEF_VALUE, i:0, NULL),
     
     CONF_INFO(107, conf.subj_dist_override_value,		CONF_DEF_VALUE, i:0, NULL),
-    CONF_INFO(108, conf.subj_dist_override_koef,	CONF_DEF_VALUE, i:1, NULL),
+    CONF_INFO(108, conf.subj_dist_override_koef,	CONF_DEF_VALUE, i:0, NULL),
     
     CONF_INFO(109, conf.tv_bracket_value,	      CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(110, conf.av_bracket_value,		  CONF_DEF_VALUE, i:0, NULL),
@@ -213,8 +226,14 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(117, conf.tv_exposure_order,				CONF_DEF_VALUE, i:2, NULL),
     CONF_INFO(118, conf.av_exposure_order,				CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(119, conf.iso_exposure_order,				CONF_DEF_VALUE, i:3, NULL),
+    
     CONF_INFO(120, conf.script_startup,         CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(121, conf.remote_enable,         CONF_DEF_VALUE, i:0, NULL),
+    
+    CONF_INFO(122, conf.values_show_canon_overexposure,  CONF_DEF_VALUE, i:0, NULL),							
+    CONF_INFO(123, conf.clear_override,  CONF_DEF_VALUE, i:1, NULL),							
+    
+   
     //ARM end  	
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
@@ -270,18 +289,18 @@ static void conf_init_defaults() {
     // init some defaults values
     def_batt_volts_max = get_vbatt_max();
     def_batt_volts_min = get_vbatt_min();
-    def_histo_pos.x = 319-HISTO_WIDTH;
-    def_histo_pos.y = 45;
-    def_dof_pos.x = 5*FONT_WIDTH;
-    def_dof_pos.y = 0;
+    def_histo_pos.x = 45;
+    def_histo_pos.y = vid_get_bitmap_height()-HISTO_HEIGHT-40;
+    def_dof_pos.x = 90;
+    def_dof_pos.y = 45;
     def_batt_icon_pos.x = 178;
-    def_batt_icon_pos.y = 4;
-    def_batt_txt_pos.x=vid_get_bitmap_width()-8*FONT_WIDTH-2;
-    def_batt_txt_pos.y=vid_get_bitmap_height()-64;
-    def_mode_state_pos.x=vid_get_bitmap_width()-4*FONT_WIDTH;
-    def_mode_state_pos.y=45;
+    def_batt_icon_pos.y = 0;
+    def_batt_txt_pos.x=178;
+    def_batt_txt_pos.y=1*FONT_HEIGHT;
+    def_mode_state_pos.x=35;
+    def_mode_state_pos.y=0;
     def_values_pos.x=vid_get_bitmap_width()-9*FONT_WIDTH;
-    def_values_pos.y=6*FONT_HEIGHT;
+    def_values_pos.y=30;
     def_clock_pos.x=vid_get_bitmap_width()-5*FONT_WIDTH-2;
     def_clock_pos.y=0;
 }
@@ -313,7 +332,7 @@ void conf_save() {
     static char buf[sizeof(t)+CONF_NUM*(sizeof(conf_info[0].id)+sizeof(conf_info[0].size))+sizeof(conf)];
     char *p=buf;
 
-    fd = open(CONF_FILE, O_WRONLY|O_CREAT, 0777); 
+    fd = open(CONF_FILE, O_WRONLY|O_CREAT|O_TRUNC, 0777); 
     if (fd>=0){
         memcpy(p, &t, sizeof(t));
         p+=sizeof(t);

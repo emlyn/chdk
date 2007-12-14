@@ -322,5 +322,5 @@ static KeyMap keymap[] = {
     dst[1] = *mmio1;
     dst[2] = *mmio2 & 0xffff;
 }
-int get_usb_power(void) {return usb_power;}
+int get_usb_power(int edge) {return usb_power;}
 

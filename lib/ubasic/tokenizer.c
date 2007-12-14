@@ -89,6 +89,7 @@ static const struct keyword_token keywords[] = {
   {"click",                   TOKENIZER_CLICK},
   {"press",                   TOKENIZER_PRESS},
   {"release",                 TOKENIZER_RELEASE},
+  {"shot",                    TOKENIZER_SHOOT}, // for compatibility
   {"shoot",                   TOKENIZER_SHOOT},
   {"sleep",                   TOKENIZER_SLEEP}, 
 

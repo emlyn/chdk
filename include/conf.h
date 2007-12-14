@@ -113,6 +113,7 @@ typedef struct {
     int iso_override_koef;
     int subj_dist_override_value;
     int subj_dist_override_koef;
+    int clear_override;
     
     int recalc_exposure;
     int tv_exposure_order;
@@ -133,15 +134,16 @@ typedef struct {
     int values_show_real_iso;
     int values_show_market_iso;
     int values_show_iso_only_in_autoiso_mode;
-    int values_show_ev_int;
-    int values_show_ev_ext;
-    int values_show_bv_ext;
-    int values_show_bv_int;
-    int values_show_undereposure;
+    int values_show_ev_seted;
+    int values_show_ev_measured;
+    int values_show_bv_measured;
+    int values_show_bv_seted;
+    int values_show_overexposure;
+    int values_show_canon_overexposure;
     int values_show_luminance;
 
     int ns_enable_memdump;
-   int script_startup;			// remote autostart
+    int script_startup;			// remote autostart
     int remote_enable;			// remote enable
 
 } Conf;
@@ -168,7 +170,8 @@ extern int state_debug1;
 extern int debug_propcase_show;
 extern int debug_propcase_page;
 extern int debug_vals_show;
-
+extern int debug_pardata_show;
+extern void script_autostart();				// remote autostart
 extern void conf_save();
 extern void conf_restore();
 extern void conf_load_defaults();
