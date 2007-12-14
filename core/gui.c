@@ -1297,7 +1297,7 @@ void gui_draw_osd() {
         gui_osd_draw_histo();
     }
 
-    if (!(conf.show_osd && (canon_menu_active==(int)&canon_menu_active-4) && (canon_shoot_menu_active==0)))  return;
+    if (!(conf.show_osd && (canon_menu_active==(int)&canon_menu_active-4) && (canon_shoot_menu_active==0) && (recreview_hold==0)))  return;
     
     if ((m&MODE_MASK) == MODE_REC) {
 //        m &= MODE_SHOOTING_MASK;

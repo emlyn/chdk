@@ -334,6 +334,7 @@ void debug_led(int state);
 /****************************************/
 extern int canon_menu_active;  
 extern char canon_shoot_menu_active;  
+extern int recreview_hold;
 
 #define started() debug_led(1)
 #define finished() debug_led(0)
