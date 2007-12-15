@@ -74,12 +74,19 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=g7   PLATFORMSUB=100g NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=g7   PLATFORMSUB=100i NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=g7   PLATFORMSUB=100j NO_INC_BUILD=1 firzipsub
+	#$(MAKE) -s --no-print-directory PLATFORM=a540 PLATFORMSUB=100b NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=a560 PLATFORMSUB=100a NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=a570 PLATFORMSUB=100e NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=a570 PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
-	$(MAKE) -s --no-print-directory PLATFORM=ixus700   PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
-	$(MAKE) -s --no-print-directory PLATFORM=ixus700   PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
-	$(MAKE) -s --no-print-directory PLATFORM=ixus800   PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
+	#$(MAKE) -s --no-print-directory PLATFORM=s80  PLATFORMSUB=100g NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus700_sd500   PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus700_sd500   PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus800_sd700   PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
+	#$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300   PLATFORMSUB=100k NO_INC_BUILD=1 firzipsub
+	#$(MAKE) -s --no-print-directory PLATFORM=ixus50_sd400   PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
+	#$(MAKE) -s --no-print-directory PLATFORM=ixus65_sd630   PLATFORMSUB=100a NO_INC_BUILD=1 firzipsub
+	#$(MAKE) -s --no-print-directory PLATFORM=ixus70_sd1000  PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
+	#$(MAKE) -s --no-print-directory PLATFORM=ixusW_sd430    PLATFORMSUB=110a NO_INC_BUILD=1 firzipsub
 	@echo "**** All firmwares created successfully"
 
 batch-clean:
@@ -97,11 +104,18 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=g7   PLATFORMSUB=100g NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=g7   PLATFORMSUB=100i NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=g7   PLATFORMSUB=100j NO_INC_BUILD=1 clean
+	#$(MAKE) -s --no-print-directory PLATFORM=a540 PLATFORMSUB=100b NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=a560 PLATFORMSUB=100a NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=a570 PLATFORMSUB=100e NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=a570 PLATFORMSUB=101a NO_INC_BUILD=1 clean
-	$(MAKE) -s --no-print-directory PLATFORM=ixus700   PLATFORMSUB=101a NO_INC_BUILD=1 clean
-	$(MAKE) -s --no-print-directory PLATFORM=ixus700   PLATFORMSUB=101b NO_INC_BUILD=1 clean
-	$(MAKE) -s --no-print-directory PLATFORM=ixus800   PLATFORMSUB=101b NO_INC_BUILD=1 clean
+	#$(MAKE) -s --no-print-directory PLATFORM=s80  PLATFORMSUB=100g NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus700_sd500   PLATFORMSUB=101a NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus700_sd500   PLATFORMSUB=101b NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus800_sd700   PLATFORMSUB=101b NO_INC_BUILD=1 clean
+	#$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300   PLATFORMSUB=100k NO_INC_BUILD=1 clean
+	#$(MAKE) -s --no-print-directory PLATFORM=ixus50_sd400   PLATFORMSUB=101a NO_INC_BUILD=1 clean
+	#$(MAKE) -s --no-print-directory PLATFORM=ixus65_sd630   PLATFORMSUB=100a NO_INC_BUILD=1 clean
+	#$(MAKE) -s --no-print-directory PLATFORM=ixus70_sd1000  PLATFORMSUB=101b NO_INC_BUILD=1 clean
+	#$(MAKE) -s --no-print-directory PLATFORM=ixusW_sd430    PLATFORMSUB=110a NO_INC_BUILD=1 clean
 
 .PHONY: fir upload
