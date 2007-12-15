@@ -33,8 +33,8 @@ void *vid_get_bitmap_fb()
 void *vid_get_viewport_fb()
 {
 //    return (void*)0x104B6C20;
-    return (void*)0x10559670;
-//    return (void*)0x105F1470;
+//    return (void*)0x10559670;
+    return (void*)0x105F1470;
 }
 
 void *vid_get_viewport_fb_d()
