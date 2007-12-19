@@ -91,7 +91,7 @@ void lens_set_zoom_speed(long newspd)
 
 void lens_set_focus_pos(long newpos)
 {
- #if !defined(CAMERA_ixus700) 
+ #if !defined(CAMERA_ixus700_sd500) 
     _MoveFocusLensToDistance((short*)&newpos);
     //while (focus_busy);
     while ((shooting_is_flash_ready()!=1) || (focus_busy));

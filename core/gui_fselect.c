@@ -676,7 +676,7 @@ void gui_fselect_kbd_process() {
                 }
             }
             break;
-    #if defined (CAMERA_ixus700) || defined (CAMERA_ixus800) || defined (CAMERA_a560)
+    #if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_a560)
         case KEY_DISPLAY:
     #else
         case KEY_ERASE:

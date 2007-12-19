@@ -36,7 +36,7 @@
 //------------------------------------------------------------------
 // #define KEY_NONE (KEY_DUMMY+1)
 
-#if   defined(CAMERA_ixus700) || defined(CAMERA_ixus800) || defined(CAMERA_a560)
+#if   defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560)
  #define SHORTCUT_TOGGLE_RAW      KEY_DISPLAY
  #define SHORTCUT_TOGGLE_HISTO    KEY_DOWN
  #define SHORTCUT_TOGGLE_ZEBRA    KEY_MENU
@@ -135,7 +135,7 @@ static CMenuItem script_submenu_items_top[] = {
     {LANG_MENU_SCRIPT_DELAY,            MENUITEM_INT|MENUITEM_F_UNSIGNED,   &conf.script_shoot_delay },
 	// remote autostart
 	{LANG_MENU_SCRIPT_AUTOSTART,		MENUITEM_BOOL,						&conf.script_startup },
-#if !defined(CAMERA_g7) && !defined (CAMERA_ixus800) && !defined (CAMERA_ixus700) && !defined (CAMERA_a570) && !defined (CAMERA_a700)
+#if !defined(CAMERA_g7) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_a570) && !defined (CAMERA_a700)
 	{LANG_MENU_SCRIPT_REMOTE_ENABLE,	MENUITEM_BOOL,						&conf.remote_enable},
 #endif
     {LANG_MENU_SCRIPT_CURRENT,          MENUITEM_SEPARATOR },
@@ -181,11 +181,11 @@ static CMenuItem misc_submenu_items[] = {
     {LANG_MENU_MISC_CALENDAR,           MENUITEM_PROC,    (int*)gui_draw_calendar },
     {LANG_MENU_MISC_TEXT_READER,        MENUITEM_SUBMENU, (int*)&reader_submenu },
     {LANG_MENU_MISC_GAMES,              MENUITEM_SUBMENU, (int*)&games_submenu },
-#if !defined(CAMERA_a710) && !defined(CAMERA_a700) && !defined(CAMERA_g7) && !defined(CAMERA_a570) && !defined (CAMERA_ixus700) && !defined (CAMERA_ixus800) && !defined (CAMERA_a560)
+#if !defined(CAMERA_a710) && !defined(CAMERA_a700) && !defined(CAMERA_g7) && !defined(CAMERA_a570) && !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)
     {LANG_MENU_MISC_FLASHLIGHT,         MENUITEM_BOOL,    &conf.flashlight },
 #endif
     {LANG_MENU_MISC_SHOW_SPLASH,        MENUITEM_BOOL,    &conf.splash_show },
-#if !defined(CAMERA_g7) && !defined (CAMERA_ixus700) && !defined (CAMERA_ixus800) && !defined (CAMERA_a560)
+#if !defined(CAMERA_g7) && !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)
     {LANG_MENU_MISC_ZOOM_FOR_MF,        MENUITEM_BOOL,    &conf.use_zoom_mf },
 #endif
 #if defined(CAMERA_s2is) || defined(CAMERA_s3is)
@@ -304,7 +304,7 @@ static CMenu exposure_submenu = { LANG_MENU_EXPOSURE_TITLE, NULL, exposure_subme
 static CMenuItem operation_submenu_items[] = {
 	  {LANG_MENU_OVERRIDE_TV_VALUE,        MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.tv_override_value, MENU_MINMAX(0, 100)}, 
 	  {LANG_MENU_OVERRIDE_TV_KOEF,         MENUITEM_ENUM,    (int*)gui_tv_override_koef_enum},
-#if !defined (CAMERA_ixus700) && !defined (CAMERA_ixus800) && !defined (CAMERA_a560)
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)
 	  {LANG_MENU_OVERRIDE_AV_VALUE,        MENUITEM_ENUM,    (int*)gui_av_override_enum },
  #endif
 	  {LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)}, 
@@ -1329,7 +1329,7 @@ void gui_draw_osd() {
         gui_osd_draw_clock();
     }
 
-#if defined (CAMERA_ixus700) || defined (CAMERA_ixus800)
+#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700)
     if (gui_mode==GUI_MODE_NONE && kbd_is_key_pressed(KEY_SHOOT_HALF) && ((m&MODE_MASK)==MODE_REC)&&((m&MODE_SHOOTING_MASK))!=MODE_VIDEO_STD) {    
      strcpy(osd_buf,shooting_get_tv_str());
      strcat(osd_buf,"\"  ");
