@@ -67,6 +67,14 @@ extern int _Read (int fd, void *buffer, long nbytes);
 extern int _Lseek (int fd, long offset, int whence);
 extern int _Remove(const char *name);
 
+extern long _Fopen_Fut(const char *filename, const char *mode);
+extern void _Fclose_Fut(long file);
+extern long _Fread_Fut(void *buf, long elsize, long count, long f);
+extern long _Fwrite_Fut(const void *buf, long elsize, long count, long f);
+extern long _Fseek_Fut(long file, long offset, long whence);
+extern long _Fflush_Fut(long file);
+extern int _rename(const char *oldname, const char *newname);
+
 extern int _isdigit(int c);
 extern int _isspace(int c);
 extern int _isalpha(int c);

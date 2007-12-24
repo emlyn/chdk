@@ -52,7 +52,7 @@ extern void SleepTask(long msec);
 extern long mkdir(const char *dirname);
 extern long taskLock();
 extern long taskUnlock();
-/*
+
 extern long Fopen_Fut(const char *filename, const char *mode);
 extern void Fclose_Fut(long file);
 extern long Fread_Fut(void *buf, long elsize, long count, long f);
@@ -61,7 +61,8 @@ extern long Fseek_Fut(long file, long offset, long whence);
 extern long RenameFile_Fut(const char *oldname, const char *newname);
 extern long Feof_Fut(long file);
 extern long DeleteFile_Fut(const char *name);
-*/
+extern long Fflush_Fut(long file);
+
 extern int creat (const char *name, int flags);
 extern int open (const char *name, int flags, int mode );
 extern int close (int fd);
@@ -69,6 +70,13 @@ extern int write (int fd, void *buffer, long nbytes);
 extern int read (int fd, void *buffer, long nbytes);
 extern int lseek (int fd, long offset, int whence);
 extern long mkdir(const char *dirname);
+
+#define fopen(a,b) Fopen_Fut(a,b)
+#define fclose(a) Fclose_Fut(a)
+#define fread(a,b,c,d) Fread_Fut(a,b,c,d)
+#define fwrite(a,b,c,d) Fwrite_Fut(a,b,c,d)
+#define fseek(a,b,c) Fseek_Fut(a,b,c)
+#define fflush(a) Fflush_Fut(a)
 
 extern void msleep(long msec);
 extern long task_lock();

@@ -144,3 +144,8 @@ NSTUB(utime, 0xffef7744)
 // ALT: NSTUB(utime, 0xffef7744) // 26/0
 NSTUB(vsprintf, 0xffef8f08)
 NSTUB(write, 0xffefa230)
+NSTUB(Fclose_Fut, 0xffc5b5e0)
+NSTUB(Fopen_Fut, 0xffc5b5a0)
+NSTUB(Fread_Fut, 0xffc5b69c)
+NSTUB(Fseek_Fut, 0xffc5b790)
+NSTUB(Fwrite_Fut, 0xffc5b6f0)

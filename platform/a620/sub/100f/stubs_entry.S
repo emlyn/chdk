@@ -19,11 +19,6 @@ NSTUB(GetCurrentAvValue, 0xffe77ff0)
 NSTUB(GetCurrentTargetDistance, 0xffe7a398)
 // Best match: 96%
 NSTUB(GetFocusLensSubjectDistance, 0xffe6d4ac)
-//ARM BEGIN
-NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffe6da4c)
-//NSTUB(GetFlashLightValue, 0xffe8538c)
-//NSTUB(Setcdsgainapex, 0xffe77a70)
-//ARM END
 NSTUB(GetParameterData, 0xffd4f350)
 NSTUB(GetPropertyCase, 0xffc14188)
 NSTUB(GetSystemTime, 0xffc04b10)
@@ -148,3 +143,8 @@ NSTUB(utime, 0xffebec7c)
 // ALT: NSTUB(utime, 0xffebec7c) // 26/0
 NSTUB(vsprintf, 0xffec0440)
 NSTUB(write, 0xffec2c50)
+NSTUB(Fclose_Fut, 0xffc56480)
+NSTUB(Fopen_Fut, 0xffc56444)
+NSTUB(Fread_Fut, 0xffc56564)
+NSTUB(Fseek_Fut, 0xffc5664c)
+NSTUB(Fwrite_Fut, 0xffc565b4)

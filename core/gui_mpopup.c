@@ -21,11 +21,13 @@ static struct {
         { MPOPUP_COPY,          LANG_POPUP_COPY   },
         { MPOPUP_PASTE,         LANG_POPUP_PASTE  },
         { MPOPUP_DELETE,        LANG_POPUP_DELETE },
-        { MPOPUP_SELINV,        LANG_POPUP_SELINV }
+        { MPOPUP_SELINV,        LANG_POPUP_SELINV },
+        { MPOPUP_RAW_ADD,       (int)"RAW sum"    },
+        { MPOPUP_RAW_AVERAGE,   (int)"RAW average"},
 };
 
 #define ACTIONSNUM              (sizeof(actions)/sizeof(actions[0]))
-#define MAX_ACTIONS             5
+#define MAX_ACTIONS             7
 static int                      mpopup_actions[MAX_ACTIONS], mpopup_actions_num, mpopup_actions_active;
 static coord                    mpopup_actions_x, mpopup_actions_y;
 static unsigned int             mpopup_actions_w;
@@ -133,7 +135,7 @@ void gui_mpopup_kbd_process() {
 }
 
 //-------------------------------------------------------------------
-void gui_browser_progress_show(const unsigned int perc) {
+void gui_browser_progress_show(char* msg, const unsigned int perc) {
     coord x=60, y=100;
     unsigned int w=240, h=40, len;
 
@@ -141,8 +143,8 @@ void gui_browser_progress_show(const unsigned int perc) {
     draw_rect(x+2, y+2, x+w+2, y+h+2, COLOR_BLACK); //shadow
     draw_rect(x+3, y+3, x+w+3, y+h+3, COLOR_BLACK); //shadow
     draw_filled_rect(x, y, x+w, y+h, MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); // main box
-    len = strlen(lang_str(LANG_FSELECT_PROGRESS_TITLE));
-    draw_string(x+((w-len*FONT_WIDTH)>>1), y+2, lang_str(LANG_FSELECT_PROGRESS_TITLE), MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); //title text
+    len = strlen(msg);
+    draw_string(x+((w-len*FONT_WIDTH)>>1), y+2, msg, MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); //title text
     draw_filled_rect(x+10, y+4+FONT_HEIGHT, x+w-10, y+h-10, MAKE_COLOR(COLOR_BLACK, COLOR_WHITE)); // progress rect
     draw_filled_rect(x+11, y+5+FONT_HEIGHT, x+11+(w-22)*perc/100, y+h-11, MAKE_COLOR(COLOR_RED, COLOR_RED)); // progress bar
 }

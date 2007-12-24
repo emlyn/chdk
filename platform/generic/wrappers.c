@@ -315,3 +315,27 @@ void enable_shutdown() {
         shutdown_disabled = 0;
     }
 }
+
+long Fopen_Fut(const char *filename, const char *mode){
+ return _Fopen_Fut(filename,mode);
+}
+
+void Fclose_Fut(long file){
+ _Fclose_Fut(file);
+}
+
+long Fread_Fut(void *buf, long elsize, long count, long f){
+ return _Fread_Fut(buf,  elsize,  count, f);
+}
+
+long Fwrite_Fut(const void *buf, long elsize, long count, long f){
+  return _Fwrite_Fut(buf, elsize, count, f);
+}
+
+long Fseek_Fut(long file, long offset, long whence){
+ return  _Fseek_Fut(file, offset, whence);
+}
+
+int rename(const char *oldname, const char *newname){
+ return _rename(oldname, newname);
+}

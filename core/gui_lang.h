@@ -347,8 +347,14 @@
 #define LANG_MENU_CLEAR_OVERRIDE_VALUES 264
 #define LANG_MENU_SHOW_CANON_OVEREXPOSURE 265
 
+#define LANG_MENU_RAW_DEVELOP 		266
+#define LANG_RAW_DEVELOP_MESSAGE        267
+#define LANG_RAW_DEVELOP_SELECT_FILE    268
+#define LANG_POPUP_RAW_SUM		269
+#define LANG_POPUP_RAW_AVERAGE		270
+
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  265
+#define GUI_LANG_ITEMS                  270
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

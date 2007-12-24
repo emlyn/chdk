@@ -8,6 +8,8 @@
 #define MPOPUP_PASTE            0x0004
 #define MPOPUP_DELETE           0x0008
 #define MPOPUP_SELINV           0x0010
+#define MPOPUP_RAW_ADD		0x0020
+#define MPOPUP_RAW_AVERAGE	0x0040
 #define MPOPUP_CANCEL           0x0100
 
 //-------------------------------------------------------------------
@@ -15,7 +17,7 @@ extern void gui_mpopup_init(const unsigned int flags, void (*on_select)(unsigned
 extern void gui_mpopup_kbd_process();
 extern void gui_mpopup_draw();
 
-extern void gui_browser_progress_show(const unsigned int perc);
+extern void gui_browser_progress_show(char* msg, const unsigned int perc);
 
 //-------------------------------------------------------------------
 #endif

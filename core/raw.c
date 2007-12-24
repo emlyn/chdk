@@ -13,7 +13,12 @@ static char fn[64];
 static char dir[32];
 static char prefixes[][4] = { "IMG", "CRW", "SND" };
 static char exts[][4] = { "JPG", "CRW", "CR2", "THM", "WAV" };
-//int xxxx, eeee;
+static int develop_raw=0;
+//-------------------------------------------------------------------
+void raw_prepare_develop(char* filename){
+ develop_raw=1; 
+ strcpy(fn,filename);
+}
 
 //-------------------------------------------------------------------
 int raw_savefile() {
@@ -25,7 +30,19 @@ int raw_savefile() {
         return 0;
     }
     
-   	shooting_bracketing();
+    if (develop_raw) {
+     started();
+     fd = open(fn, O_RDONLY, 0777);
+     if (fd>=0) {
+      read(fd, hook_raw_image_addr(), hook_raw_size());
+      close(fd);
+      }
+     finished();
+     develop_raw=0;
+     return 0;
+    }
+
+    shooting_bracketing();
     
     state_shooting_progress = SHOOTING_PROGRESS_PROCESSING;
 

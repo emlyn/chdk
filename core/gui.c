@@ -26,6 +26,7 @@
 #include "histogram.h"
 #include "script.h"
 #include "motion_detector.h"
+#include "raw.h"
 
 //-------------------------------------------------------------------
 
@@ -87,6 +88,7 @@ static void gui_menuproc_save(int arg);
 #endif
 static void gui_menuproc_reset(int arg);
 static void gui_grid_lines_load(int arg);
+static void gui_raw_develop(int arg);
 static const char* gui_histo_mode_enum(int change, int arg);
 static const char* gui_histo_layout_enum(int change, int arg);
 static const char* gui_zebra_mode_enum(int change, int arg);
@@ -116,6 +118,7 @@ static const char* gui_subj_dist_override_koef_enum(int change, int arg);
 static const char* gui_tv_exposure_order_enum(int change, int arg);
 static const char* gui_av_exposure_order_enum(int change, int arg);
 static const char* gui_iso_exposure_order_enum(int change, int arg);
+
 //static const char* gui_tv_enum(int change, int arg);
 
 
@@ -401,6 +404,7 @@ static CMenuItem raw_submenu_items[] = {
     {LANG_MENU_RAW_SAVE_IN_DIR,         MENUITEM_BOOL,      &conf.raw_in_dir },
     {LANG_MENU_RAW_PREFIX,              MENUITEM_ENUM,      (int*)gui_raw_prefix_enum },
     {LANG_MENU_RAW_EXTENSION,           MENUITEM_ENUM,      (int*)gui_raw_ext_enum },
+    {LANG_MENU_RAW_DEVELOP,             MENUITEM_PROC,      (int*)gui_raw_develop },
     {LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
@@ -901,6 +905,23 @@ void gui_update_script_submenu() {
     for (i=0; i<sizeof(script_submenu_items_bottom)/sizeof(script_submenu_items_bottom[0]); ++p, ++i) {
         script_submenu_items[p]=script_submenu_items_bottom[i];
     }
+}
+
+//-------------------------------------------------------------------
+
+void raw_fselect_cb(const char * filename){
+ struct stat st;
+ if (!filename) return;
+ stat((char*)filename,&st);
+ if (st.st_size!=hook_raw_size()) return;
+ gui_mbox_init((int)"", LANG_RAW_DEVELOP_MESSAGE, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
+ raw_prepare_develop((char*)filename);
+}
+
+//-------------------------------------------------------------------
+void gui_raw_develop(int arg){
+ int m=mode_get();
+ gui_fselect_init(LANG_RAW_DEVELOP_SELECT_FILE, "A/DCIM", raw_fselect_cb);
 }
 
 //-------------------------------------------------------------------

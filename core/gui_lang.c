@@ -336,6 +336,13 @@ static char* gui_lang_default = \
 "264 \"Clear override values on start\"\n"
 
 "265 \"Show canon overexposure value\"\n"
+
+"266 \"RAW develop\"\n"
+"267 \"Please switch camera\\nto record mode and make\\none shoot.\"\n"
+"268 \"Select RAW file\"\n"
+"269 \"RAW sum\"\n"
+"270 \"RAW average\"\n"
+
 ;
 
 //-------------------------------------------------------------------

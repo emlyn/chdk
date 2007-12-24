@@ -9,6 +9,7 @@
 #include "gui_mbox.h"
 #include "gui_mpopup.h"
 #include "gui_fselect.h"
+#include "raw_merge.h"
 
 //-------------------------------------------------------------------
 #define NUM_LINES               7
@@ -45,6 +46,7 @@ static coord x, y, w, h;
 static int gui_fselect_redraw;
 static char *fselect_title;
 static void (*fselect_on_select)(const char *fn);
+static char raw_operation;
 
 //-------------------------------------------------------------------
 static void gui_fselect_free_data() {
@@ -468,7 +470,7 @@ static void fselect_marked_paste_cb(unsigned int btn) {
                     started();
                     ++i;
                     if (marked_count)
-                        gui_browser_progress_show(i*100/marked_count);
+                        gui_browser_progress_show(lang_str(LANG_FSELECT_PROGRESS_TITLE),i*100/marked_count);
                     sprintf(selected_file, "%s/%s", marked_dir, ptr->name);
                     fsrc = open(selected_file, O_RDONLY, 0777);
                     if (fsrc>=0) {
@@ -541,7 +543,7 @@ static void fselect_marked_delete_cb(unsigned int btn) {
             started();
             ++del_cnt;
             if (cnt)
-                gui_browser_progress_show(del_cnt*100/cnt);
+                gui_browser_progress_show(lang_str(LANG_FSELECT_PROGRESS_TITLE),del_cnt*100/cnt);
             sprintf(selected_file, "%s/%s", current_dir, ptr->name);
             remove(selected_file);
             finished();
@@ -562,12 +564,26 @@ static void fselect_marked_delete_cb(unsigned int btn) {
 //-------------------------------------------------------------------
 static void fselect_marked_inverse_selection() {
     struct fitem  *ptr;
-
+    
     for (ptr=head; ptr; ptr=ptr->next)
         if (ptr->attr != 0xFF && !(ptr->attr & DOS_ATTR_DIRECTORY))
             ptr->marked = !ptr->marked;
-
+    
     gui_fselect_redraw = 2;
+}
+
+//-------------------------------------------------------------------
+void process_raw_files(void){
+ struct fitem *ptr;
+ if ((fselect_marked_count()>1) && raw_merge_start(raw_operation)) {
+   for (ptr=head; ptr; ptr=ptr->next)
+     if (ptr->marked && ptr->attr != 0xFF && !(ptr->attr & DOS_ATTR_DIRECTORY)) {
+       sprintf(selected_file, "%s/%s", current_dir, ptr->name);
+       raw_merge_add_file(selected_file);
+      }
+  raw_merge_end();
+  gui_fselect_read_dir(current_dir);
+ }
 }
 
 //-------------------------------------------------------------------
@@ -602,6 +618,14 @@ static void fselect_mpopup_cb(unsigned int actn) {
             fselect_marked_inverse_selection();
             break;
         case MPOPUP_CANCEL:
+            break;
+	case MPOPUP_RAW_AVERAGE:
+	    raw_operation=RAW_OPERATIOM_AVERAGE;
+            process_raw_files();
+            break;
+        case MPOPUP_RAW_ADD:
+            raw_operation=RAW_OPERATIOM_SUM;
+            process_raw_files();
             break;
     }
     gui_fselect_redraw = 2;
@@ -645,7 +669,7 @@ void gui_fselect_kbd_process() {
             break;
         case KEY_LEFT:
             if (selected && selected->attr != 0xFF) {
-                i=MPOPUP_CUT|MPOPUP_COPY|MPOPUP_SELINV;
+                i=MPOPUP_CUT|MPOPUP_COPY|MPOPUP_SELINV|MPOPUP_RAW_ADD|MPOPUP_RAW_AVERAGE;
                 if (fselect_marked_count() > 0)
                     i |= MPOPUP_DELETE;
                 if (marked_operation == MARKED_OP_CUT || marked_operation == MARKED_OP_COPY)
