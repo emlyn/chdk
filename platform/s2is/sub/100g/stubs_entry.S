@@ -160,3 +160,6 @@ NSTUB(Fopen_Fut, 0xff86fa84)
 NSTUB(Fread_Fut, 0xff86fba4)
 NSTUB(Fseek_Fut, 0xff86fc8c)
 NSTUB(Fwrite_Fut, 0xff86fbf4)
+// ERROR: GetDrive_ClusterSize is not found!
+// ERROR: GetDrive_TotalClusters is not found!
+// ERROR: GetDrive_FreeClusters is not found!

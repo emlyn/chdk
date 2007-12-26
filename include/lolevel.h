@@ -160,5 +160,9 @@ extern void *_readdir(void *d);
 extern int   _closedir(void *d);
 extern void  _rewinddir(void *d);
 extern int   _stat(char *name, void *pStat);
+extern unsigned long _GetDrive_ClusterSize(int drive);
+extern unsigned long _GetDrive_TotalClusters(int drive);
+extern unsigned long _GetDrive_FreeClusters(int drive);
+
 
 #endif

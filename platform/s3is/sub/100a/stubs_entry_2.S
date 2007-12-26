@@ -15,3 +15,7 @@ NHSTUB(malloc, 0xFFB571D8)
 
 NHSTUB(UniqueLedOn, 0xFF82DC3C)
 NHSTUB(UniqueLedOff, 0xFF82DCA0)
+
+NHSTUB(GetDrive_ClusterSize, 0xFF870710)
+NHSTUB(GetDrive_TotalClusters, 0xFF87076C)
+NHSTUB(GetDrive_FreeClusters, 0xFF8707A8)

@@ -7,3 +7,7 @@ NHSTUB(kbd_pwr_off, 0xFF827F0C)
 
 // null stubs
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF966BC4)
+
+NHSTUB(GetDrive_ClusterSize, 0xFF86ED94)
+NHSTUB(GetDrive_TotalClusters, 0xFF86EDD0)
+NHSTUB(GetDrive_FreeClusters, 0xFF86EE0C)

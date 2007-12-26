@@ -13,6 +13,6 @@ NHSTUB(FreeMemory, 0xFFC08670)
 NHSTUB(GetFocusLensSubjectDistance, 0xFFE685A0)
 NHSTUB(free, 0xFFCD1704)
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFFDD3094) //null stub
-
-
-
+NHSTUB(GetDrive_ClusterSize, 0xFFE3AE00)
+NHSTUB(GetDrive_TotalClusters, 0xFFE3AE3C)
+NHSTUB(GetDrive_FreeClusters, 0xFFE3AE78)

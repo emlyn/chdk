@@ -22,8 +22,8 @@ static struct {
         { MPOPUP_PASTE,         LANG_POPUP_PASTE  },
         { MPOPUP_DELETE,        LANG_POPUP_DELETE },
         { MPOPUP_SELINV,        LANG_POPUP_SELINV },
-        { MPOPUP_RAW_ADD,       (int)"RAW sum"    },
-        { MPOPUP_RAW_AVERAGE,   (int)"RAW average"},
+        { MPOPUP_RAW_ADD,       LANG_POPUP_RAW_SUM},
+        { MPOPUP_RAW_AVERAGE,   LANG_POPUP_RAW_AVERAGE },
 };
 
 #define ACTIONSNUM              (sizeof(actions)/sizeof(actions[0]))

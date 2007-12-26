@@ -339,3 +339,11 @@ long Fseek_Fut(long file, long offset, long whence){
 int rename(const char *oldname, const char *newname){
  return _rename(oldname, newname);
 }
+
+unsigned int GetFreeCardSpaceKb(void){
+ return (_GetDrive_FreeClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
+}
+
+unsigned int GetTotalCardSpaceKb(void){
+ return (_GetDrive_TotalClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
+}

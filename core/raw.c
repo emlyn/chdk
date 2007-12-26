@@ -103,8 +103,41 @@ void raw_postprocess() {
     finished();
  */
 }
+/*
+//-------------------------------------------------------------------
+
+void set_raw_pixel(unsigned int x, unsigned int y, unsigned short value){
+ char* addr=hook_raw_image_addr()+y*ROWLEN+(x/8)*10;
+ switch (x%8) {
+  case 0: addr[0]=(addr[0]&0xC0)|(value<<6); addr[1]=value>>2;                  break;
+  case 1: addr[0]=(addr[0]&0x3F)|(value>>4); addr[3]=(addr[3]&0xF0)|(value<<4); break;
+  case 2: addr[2]=(addr[2]&0xFC)|(value<<2); addr[3]=(addr[3]&0x0F)|(value>>6); break;
+  case 3: addr[2]=(addr[2]&0x03)|(value>>8); addr[5]=value;                     break;
+  case 4: addr[4]=value>>2;                  addr[7]=(addr[7]&0xC0)|(value<<6); break;
+  case 5: addr[6]=(addr[6]&0xF0)|(value<<4); addr[7]=(addr[7]&0x3F)|(value>>4); break;
+  case 6: addr[6]=(addr[6]&0x0F)|(value>>6); addr[9]=(addr[9]&0xFC)|(value<<2); break;
+  case 7: addr[8]=value;                     addr[9]=(addr[9]&0x03)|(value>>8); break;
+ }
+}
 
 //-------------------------------------------------------------------
+unsigned short get_raw_pixel(unsigned int x,unsigned  int y){
+ char* addr=hook_raw_image_addr()+y*ROWLEN+(x/8)*10;
+ switch (x%8) {
+  case 0: return ((0x3fc&(((unsigned short)addr[1])<<2)) | (addr[0] >> 6));
+  case 1: return ((0x3f0&(((unsigned short)addr[0])<<4)) | (addr[3] >> 4));
+  case 2: return ((0x3c0&(((unsigned short)addr[3])<<6)) | (addr[2] >> 2));
+  case 3: return ((0x300&(((unsigned short)addr[2])<<8)) | (addr[5])); 
+  case 4: return ((0x3fc&(((unsigned short)addr[4])<<2)) | (addr[7] >> 6)); 
+  case 5: return ((0x3f0&(((unsigned short)addr[7])<<4)) | (addr[6] >> 4)); 
+  case 6: return ((0x3c0&(((unsigned short)addr[6])<<6)) | (addr[9] >> 2)); 
+  case 7: return ((0x300&(((unsigned short)addr[9])<<8)) | (addr[8])); 
+ }
+ return 0;
+}
+
 //-------------------------------------------------------------------
-//-------------------------------------------------------------------
-//-------------------------------------------------------------------
+void patch_bad_pixel(unsigned int x,unsigned  int y){
+ set_raw_pixel(x,y,(get_raw_pixel(x-2,y)+get_raw_pixel(x+2,y)+get_raw_pixel(x,y-2)+get_raw_pixel(x,y+2))/4);
+}
+*/

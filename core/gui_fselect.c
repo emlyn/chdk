@@ -282,6 +282,12 @@ void gui_fselect_draw() {
             draw_string(x+FONT_WIDTH, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT+4, current_dir, MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); //current dir
             draw_filled_rect(x+(1+i)*FONT_WIDTH, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT+4, 
                              x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE)*FONT_WIDTH, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT+4+FONT_HEIGHT, MAKE_COLOR(COLOR_GREY, COLOR_GREY)); // fill
+            if (strlen(current_dir)<=NAME_SIZE) {
+             unsigned int fr,tot;
+             fr=GetFreeCardSpaceKb()>>10; tot=GetTotalCardSpaceKb()>>10;
+             sprintf(buf,"%dM/%dM (%d%%)",fr, tot, tot? fr*100/tot: 0);
+             draw_string(x+(NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE-strlen(buf)+1)*FONT_WIDTH, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT+4, buf, MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); // free space
+            };
         }
 
         // scrollbar

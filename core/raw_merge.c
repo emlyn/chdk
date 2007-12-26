@@ -2,30 +2,10 @@
 #include "stdlib.h"
 #include "platform.h"
 #include "gui_mpopup.h"
-#include "script.h"
-
-#if defined (CAMERA_g7) || (CAMERA_a640)
-#define ROWPIX 3736   // for 10 MP
-#define ROWS   2772   // for 10 MP
-
-#elif defined (CAMERA_a630)
-#define ROWPIX 3344   // for 8 MP
-#define ROWS   2484   // for 8 MP
-
-#elif defined (CAMERA_a620) || defined (CAMERA_a710) || defined (CAMERA_a560) || defined (CAMERA_a570) || defined (CAMERA_ixus700_sd500)
-#define ROWPIX 3152   // for 7 MP
-#define ROWS   2340   // for 7 MP
-
-#elif defined (CAMERA_a700) || defined (CAMERA_s3is) || defined (CAMERA_ixus800_sd700)
-#define ROWPIX 2888   // for 6 MP
-#define ROWS   2136   // for 6 MP
-
-#elif defined (CAMERA_a610) || defined (CAMERA_s2is)
-#define ROWPIX 2672   // for 5 MP
-#define ROWS   1968   // for 5 MP
-#endif
-
-#define ROWLEN ((ROWPIX*10)/8)
+#include "gui_mbox.h"
+#include "raw.h"
+#include "gui_lang.h"
+#include "lang.h"
 
 #define TEMP_FILE        "raw16.tmp"
 #define TEMP_FILE_NAME   "A/raw16.tmp"
@@ -35,11 +15,18 @@ static int raw_action;
 static int raw_count;
 static unsigned short *row;
 static unsigned char *rawrow;
-static char namebuf[64];
+static char namebuf[100];
 
 
 int raw_merge_start(int action){
-
+ unsigned int req, avail;
+ req=((ROWPIX*ROWS)>>18)+1;
+ avail=GetFreeCardSpaceKb()>>10;
+ if (avail<req) {
+  sprintf(namebuf,lang_str(LANG_AVERAGE_NO_CARD_SPACE),req,avail);
+  gui_mbox_init((int)"", (int)namebuf, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
+  return 0;
+ }
  raw_action=action;
  raw_count=0;
  row=malloc(ROWPIX*sizeof(unsigned short));

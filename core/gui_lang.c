@@ -342,6 +342,7 @@ static char* gui_lang_default = \
 "268 \"Select RAW file\"\n"
 "269 \"RAW sum\"\n"
 "270 \"RAW average\"\n"
+"271 \"Not enough memory card space:\\n%dM required, %dM available.\"\n"
 
 ;
 

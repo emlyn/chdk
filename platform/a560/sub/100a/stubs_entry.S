@@ -170,3 +170,10 @@ NSTUB(Fopen_Fut, 0xffe36d1c)
 NSTUB(Fread_Fut, 0xffe36e18)
 NSTUB(Fseek_Fut, 0xffe36f0c)
 NSTUB(Fwrite_Fut, 0xffe36e6c)
+// Best match: 76%
+NSTUB(GetDrive_ClusterSize, 0xffe3ae3c)
+// Best match: 73%
+NSTUB(GetDrive_TotalClusters, 0xffe3ae00)
+// ALT: NSTUB(GetDrive_TotalClusters, 0xffe3ae3c) // 31/11
+// Best match: 75%
+NSTUB(GetDrive_FreeClusters, 0xffe3ae78)

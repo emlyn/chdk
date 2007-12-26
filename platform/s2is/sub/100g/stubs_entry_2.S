@@ -28,3 +28,7 @@ NHSTUB(PhySw_testgpio, 0xFF8118C0)
 
 NHSTUB(UniqueLedOn, 0xFF82EBDC)
 NHSTUB(UniqueLedOff, 0xFF82EC54)
+
+NHSTUB(GetDrive_ClusterSize, 0xFF87652C)
+NHSTUB(GetDrive_TotalClusters, 0xFF876588)
+NHSTUB(GetDrive_FreeClusters, 0xFF8765C4)

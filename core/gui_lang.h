@@ -352,9 +352,10 @@
 #define LANG_RAW_DEVELOP_SELECT_FILE    268
 #define LANG_POPUP_RAW_SUM		269
 #define LANG_POPUP_RAW_AVERAGE		270
+#define LANG_AVERAGE_NO_CARD_SPACE	271
 
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  270
+#define GUI_LANG_ITEMS                  271
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();
