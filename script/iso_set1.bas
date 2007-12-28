@@ -14,12 +14,9 @@ t=d*100
 
 g=a*b*c
 
-press "shoot_half"
 set_iso_real g
+shoot
 get_iso_real e
 get_iso_market f
 print "ISO:", e, "(", f, ")"
-press "shoot_full"
-release "shoot_full"
-release "shoot_half"
 end

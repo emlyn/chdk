@@ -15,46 +15,12 @@
 #define ASID_MAX (aperture_sizes_table[AS_SIZE-1].id)
 
 #define AV96_MIN (aperture_sizes_table[0].prop_id)
+#define AV96_MAX (aperture_sizes_table[AS_SIZE-1].prop_id)
 
 #define ISO_SIZE (sizeof(iso_table)/sizeof(iso_table[0]))
 #define ISO_MIN (iso_table[0].id)
 #define ISO_MAX (iso_table[ISO_SIZE-1].id)
 #define ISO_MIN_VALUE (iso_table[1-iso_table[0].id].prop_id)
-#if defined(CAMERA_a570) 
- #define PROPCASE_DRIVE_MODE    				102
- #define PROPCASE_FOCUS_MODE    				133
- #define PROPCASE_USER_TV       				264
- #define PROPCASE_TV	        				262
- #define PROPCASE_USER_AV      					26
- #define PROPCASE_AV            				23
- #define PROPCASE_MIN_AV       					25
- #define PROPCASE_SV            				246
- #define PROPCASE_DELTA_SV      				79
- #define PROPCASE_SV_MARKET     				247
- #define PROPCASE_BV            				34
- #define PROPCASE_SUBJECT_DIST1 				245
- #define PROPCASE_SUBJECT_DIST2 				65
- #define PROPCASE_ISO_MODE  				    149
- #define PROPCASE_SHOOTING      				206
- #define PROPCASE_OVEREXPOSURE 					-1
- #else
- #define PROPCASE_DRIVE_MODE    				6
- #define PROPCASE_FOCUS_MODE    				12
- #define PROPCASE_USER_TV       				40
- #define PROPCASE_TV	        				69
- #define PROPCASE_USER_AV       				39
- #define PROPCASE_AV            				68
- #define PROPCASE_MIN_AV        				77
- #define PROPCASE_SV            				73
- #define PROPCASE_DELTA_SV      				70
- #define PROPCASE_SV_MARKET     				72
- #define PROPCASE_BV            				71
- #define PROPCASE_ISO_MODE      				21
- #define PROPCASE_SUBJECT_DIST1 				65
- #define PROPCASE_SUBJECT_DIST2 				66
- #define PROPCASE_SHOOTING     					205
- #define PROPCASE_OVEREXPOSURE 					76
-#endif
 
 /*define PROPCASE_CONT_MODE_SHOOT_COUNT 		218*/
 static short iso_market_base=0;
@@ -86,7 +52,7 @@ void debug_char(char * deb_str)
  sprintf(debug_str+debug_str_length, "%s", deb_str);
 }
 
-void debug_int()
+void debug_init()
 {
  strcpy(debug_str, "");
 }
@@ -100,12 +66,12 @@ void debug_int(int deb_str)
 }
 
 
-void debug(char * deb_str, int deb_str)
+void debug(char * deb_str, int deb_int)
 {
  short debug_str_length=strlen(debug_str);
  if	(debug_str_length>50) strcpy(debug_str, "");
  sprintf(debug_str+debug_str_length, "%s", deb_str);
- sprintf(debug_str+strlen(debug_str), "%d", deb_str);
+ sprintf(debug_str+strlen(debug_str), "%d", deb_int);
 }
 
 char * get_debug()
@@ -205,18 +171,20 @@ int shooting_get_user_av_id()
 }
 
 short shooting_get_real_aperture() {
-    return (short)((pow(sqrt2, ((double)_GetCurrentAvValue())/96.0))*100.0);
+    return shooting_get_aperture_from_av96(_GetCurrentAvValue());
 }
 //Beg ARM
 
 short shooting_get_aperture_from_av96(short av96) {
-	return (short)((pow(sqrt2, ((double)av96)/96.0))*100.0);
+	if (av96) return (short)((pow(sqrt2, ((double)av96)/96.0))*100.0);
+	else return -1;
 }
 
 short shooting_get_min_real_aperture() {
-	 short avv;
-	 _GetPropertyCase(PROPCASE_MIN_AV, &avv, sizeof(avv));
-    return (short)((pow(sqrt2, ((double)avv)/96.0))*100.0);
+	 short av96;
+	_GetPropertyCase(PROPCASE_MIN_AV, &av96, sizeof(av96));
+	if (av96) return shooting_get_aperture_from_av96(av96);
+	else return shooting_get_real_aperture();
 }
 
 short shooting_get_iso_from_sv96(short sv96)
@@ -352,7 +320,6 @@ void shooting_set_sv96(short sv96, short is_now){
 void shooting_set_iso_real(short iso, short is_now)
 {
 	if (iso>0) shooting_set_sv96(shooting_get_sv96_from_iso(iso), is_now);
-
 }
 
 short shooting_get_bv96()
@@ -395,7 +362,13 @@ int shooting_get_hyperfocal_distance()
 {
   int av=shooting_get_real_aperture();
   int fl=get_focal_length(lens_get_zoom_point());	
-  if (av>0) return (fl*fl)/(10*circle_of_confusion*av);
+  if ((av>0) && (fl>0)) return (fl*fl)/(10*circle_of_confusion*av);
+  else return (-1);
+}
+
+int shooting_get_hyperfocal_distance_(int av, int fl)
+{
+  if ((av>0) && (fl>0) && (circle_of_confusion>0)) return (fl*fl)/(10*circle_of_confusion*av);
   else return (-1);
 }
 
@@ -415,7 +388,7 @@ int shooting_get_subject_distance()
         int v1=(fl*fl);
       	int av_min=shooting_get_min_real_aperture();
         int c_of_c=circle_of_confusion*10;
-        if ((av_min!=0) && (c_of_c!=0)) {
+        if ((av_min!=0) && (c_of_c!=0) && (v1)) {
 		    h=v1/(c_of_c*av_min);
     	    if ((near>0) && (near<65500)) {
     		  v=(h-near);
@@ -440,7 +413,7 @@ int shooting_get_near_limit_of_acceptable_sharpness()
     }
 }
 
-int shooting_get_near_limit_from_subject_distance(int s)
+int shooting_get_near_limit_from_subj_dist(int s)
 {
       int h = shooting_get_hyperfocal_distance();	
       int m = h*s;
@@ -452,7 +425,7 @@ int shooting_get_near_limit_from_subject_distance(int s)
 
 int shooting_get_far_limit_of_acceptable_sharpness()
 {
-	int s=shooting_get_canon_subject_distance(), h=shooting_get_hyperfocal_distance();	
+	int s=shooting_get_subject_distance(), h=shooting_get_hyperfocal_distance();	
     int v = h-s;
     int m = h*s;
     if ((m>0) && (v>0)) return (m/v);
@@ -469,7 +442,8 @@ int shooting_get_depth_of_field()
 
 short shooting_get_tv96_from_shutter_speed(float t)
 {
-  return (short) (96.0*log(1.0/t)/log_2);  
+  if (t>0) return (short) (96.0*log(1.0/t)/log_2);  
+  else return (-10000);
 }
 
 float shooting_get_shutter_speed_from_tv96(short tv)
@@ -479,9 +453,9 @@ float shooting_get_shutter_speed_from_tv96(short tv)
 
 short shooting_get_tv96()
 {
-    short tv;
-    _GetPropertyCase(PROPCASE_TV, &tv, sizeof(tv));
-    return tv;
+    short tv96;
+    _GetPropertyCase(PROPCASE_TV, &tv96, sizeof(tv96));
+    return tv96;
 }
 
 short shooting_get_user_tv96()
@@ -509,7 +483,6 @@ void shooting_set_user_tv96(short v)
 void shooting_set_tv96(short v, short is_now)
 {
  long i;
- 
 //    if ((v<SSID_MIN) || (v>SSID_MAX))
 //	return;
  for (i=0;i<SS_SIZE;i++){
@@ -529,11 +502,16 @@ void shooting_set_tv96_direct(short v, short is_now)
 }
 
 
+/*
 void shooting_set_shutter_speed(float t, short is_now)
 {
 	if (t>0) shooting_set_tv96_direct((short) 96.0*log(1/t)/log_2, is_now);  
-}
+}*/
 
+void shooting_set_shutter_speed_ubasic(int t, short is_now)
+{
+	if (t>0) shooting_set_tv96_direct((short) (96.0*log(100000.0/(double)t)/log_2), is_now);  
+}
 
 short shooting_get_av96()
 {
@@ -541,6 +519,33 @@ short shooting_get_av96()
     _GetPropertyCase(PROPCASE_AV, &av, sizeof(av));
     return av;
 }
+
+short shooting_get_aperture_sizes_table_size()
+{
+    return AS_SIZE;
+}
+
+
+short shooting_get_aperture_sizes_table_prop_id(short i)
+{
+    return aperture_sizes_table[i].prop_id;
+}
+
+short shooting_get_max_aperture_sizes_table_prop_id()
+{
+    return AV96_MAX;
+}
+
+
+
+short shooting_get_av_prop_id()
+{
+    short av;
+    _GetPropertyCase(PROPCASE_AV, &av, sizeof(av));
+    return av;
+}
+
+
 
 short shooting_get_user_av96()
 {
@@ -566,7 +571,7 @@ void shooting_set_av96(short v, short is_now)
 
 void shooting_set_av96_direct(short v, short is_now)
 {  
- if(is_now) { 
+ if(is_now) {
    _SetPropertyCase(PROPCASE_AV, &v, sizeof(v));
  }
  else photo_param_put_off.av96=v;
@@ -721,15 +726,14 @@ void shooting_set_zoom_speed(int v) {
 }
 
 int shooting_get_focus() {
-	if (conf.dof_use_exif_subj_dist) return shooting_get_exif_subject_dist();
-	else return lens_get_focus_pos();
+	return shooting_get_subject_distance();
 }
 
 void shooting_set_focus(int v, short is_now) {
 	if((is_now) && (shooting_get_focus_mode())) {
 	  if ((!conf.dof_subj_dist_as_near_limit) && (v>0)) lens_set_focus_pos(v); 
 	  else {
-        int near=shooting_get_near_limit_from_subject_distance(v);
+        int near=shooting_get_near_limit_from_subj_dist(v);
         if (near>0) lens_set_focus_pos(near); 
 	  }
 	}
@@ -771,7 +775,8 @@ short shooting_get_iso_bracket_value()
 
 short shooting_get_av96_override_value()
 {
-  return (short)(AV96_MIN+32*((conf.av_override_value)-1));
+  if (conf.av_override_value<=AS_SIZE)	return (short) aperture_sizes_table[conf.av_override_value-1].prop_id;
+  else return (short) (AV96_MAX+32*(conf.av_override_value-AS_SIZE));
 }
 
 const char * shooting_get_av_bracket_value()
@@ -782,7 +787,7 @@ const char * shooting_get_av_bracket_value()
 
 int shooting_get_subject_distance_override_value()
 {
-  return conf.subj_dist_override_value*koef[conf.subj_dist_override_koef];  
+  return conf.subj_dist_override_value;
 }
 
 int shooting_get_subject_distance_bracket_value()
@@ -790,14 +795,24 @@ int shooting_get_subject_distance_bracket_value()
   return conf.subj_dist_bracket_value*koef[conf.subj_dist_bracket_koef];
 }
 
+int shooting_get_subject_distance_override_koef()
+{
+  static const short koef[] = {0, 1,10,100,1000};
+  return koef[(conf.subj_dist_override_koef)];
+
+}
 
 void shooting_tv_bracketing(){
  short value, is_odd;
  int m=mode_get()&MODE_SHOOTING_MASK;
  if (bracketing.shoot_counter==0) { // first shoot
     bracketing.shoot_counter=1;
-    if (m==MODE_M || m==MODE_TV) bracketing.tv96=shooting_get_user_tv96();
-    else bracketing.tv96=shooting_get_tv96();
+#if   defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560)
+    bracketing.tv96=shooting_get_tv96(); 
+#else    
+    if (!(m==MODE_M || m==MODE_TV)) bracketing.tv96=shooting_get_tv96(); 
+    else bracketing.tv96=shooting_get_user_tv96();
+#endif    
     bracketing.tv96_step=32*conf.tv_bracket_value;
  }
   // other shoots
@@ -816,8 +831,10 @@ void shooting_av_bracketing(){
  int m=mode_get()&MODE_SHOOTING_MASK;
  if (bracketing.shoot_counter==0) { // first shoot
     bracketing.shoot_counter=1;
-    if (m==MODE_M || m==MODE_AV) bracketing.av96=shooting_get_user_av96();
-    else bracketing.av96=shooting_get_av96();
+    //short av_override_value=shooting_get_av96_override_value;
+    //if (av_override_value) bracketing.av96=av_override_value;
+    if (!(m==MODE_M || m==MODE_AV)) bracketing.av96=shooting_get_av96(); 
+	else bracketing.av96=shooting_get_user_av96();
     bracketing.av96_step=32*conf.av_bracket_value;
   }
   // other shoots
@@ -936,7 +953,7 @@ short drive_mode=shooting_get_drive_mode();
  }*/
 int m=mode_get()&MODE_SHOOTING_MASK;
  if(state_kbd_script_run) {//scripts
-    if (photo_param_put_off.tv96) {
+     if (photo_param_put_off.tv96) {
 	 shooting_set_tv96_direct(photo_param_put_off.tv96, SET_NOW);	
 	 photo_param_put_off.tv96=0;
  	}
@@ -945,7 +962,7 @@ int m=mode_get()&MODE_SHOOTING_MASK;
 	 photo_param_put_off.sv96=0; 
     }
     if (photo_param_put_off.av96) {
-	 shooting_set_av96_direct(photo_param_put_off.av96, SET_NOW);
+     shooting_set_av96_direct(photo_param_put_off.av96, SET_NOW);
 	 photo_param_put_off.av96=0;
     }
 	if (photo_param_put_off.subj_dist) {

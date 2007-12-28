@@ -233,7 +233,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(122, conf.values_show_canon_overexposure,  CONF_DEF_VALUE, i:0, NULL),							
     CONF_INFO(123, conf.clear_override,  CONF_DEF_VALUE, i:1, NULL),							
     
-   
+    CONF_INFO(124, conf.show_osd_in_review,  CONF_DEF_VALUE, i:0, NULL),							
+    
     //ARM end  	
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))

@@ -96,7 +96,9 @@ static const struct keyword_token keywords[] = {
   /* WARNING due to tokenizer limitation longest match must be first */
 // GET  
   {"get_av96",                TOKENIZER_GET_AV96},
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	      
   {"get_av",                  TOKENIZER_GET_USER_AV_ID}, //FOR COMPATIBILITY
+#endif
   {"get_bv96",                TOKENIZER_GET_BV96},
   {"get_day_seconds",         TOKENIZER_GET_DAY_SECONDS},
   {"get_dof",                 TOKENIZER_GET_DOF},
@@ -113,16 +115,20 @@ static const struct keyword_token keywords[] = {
   {"get_tick_count",          TOKENIZER_GET_TICK_COUNT},
   {"get_tv96",                TOKENIZER_GET_TV96},
   {"get_user_av_id",          TOKENIZER_GET_USER_AV_ID},
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	      
   {"get_user_av96",           TOKENIZER_GET_USER_AV96},
+#endif
   {"get_user_tv_id",          TOKENIZER_GET_USER_TV_ID},
   {"get_user_tv96",           TOKENIZER_GET_USER_TV96},
   {"get_vbatt",               TOKENIZER_GET_VBATT},
   {"get_zoom",                TOKENIZER_GET_ZOOM},
 //SET  
-  {"set_av96_direct",         TOKENIZER_SET_AV96},
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	    
+  {"set_av96_direct",         TOKENIZER_SET_AV96_DIRECT},
   {"set_av_rel",              TOKENIZER_SET_USER_AV_BY_ID_REL}, //FOR COMPATIBILITY
   {"set_av96",                TOKENIZER_SET_AV96},
   {"set_av",                  TOKENIZER_SET_USER_AV_BY_ID}, //FOR COMPATIBILITY
+#endif  
   {"set_focus",               TOKENIZER_SET_FOCUS},
   {"set_iso_mode",            TOKENIZER_SET_ISO_MODE},
   {"set_iso_real",            TOKENIZER_SET_ISO_REAL},
@@ -137,9 +143,11 @@ static const struct keyword_token keywords[] = {
   {"set_tv_rel",              TOKENIZER_SET_USER_TV_BY_ID_REL}, //FOR COMPATIBILITY
   {"set_tv96",                TOKENIZER_SET_TV96},
   {"set_tv",                  TOKENIZER_SET_USER_TV_BY_ID}, //FOR COMPATIBILITY
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	      
   {"set_user_av_by_id_rel",   TOKENIZER_SET_USER_AV_BY_ID_REL},
   {"set_user_av_by_id",       TOKENIZER_SET_USER_AV_BY_ID},
   {"set_user_av96",           TOKENIZER_SET_USER_AV96},
+#endif
   {"set_user_tv_by_id_rel",   TOKENIZER_SET_USER_TV_BY_ID_REL},
   {"set_user_tv_by_id",       TOKENIZER_SET_USER_TV_BY_ID},
   {"set_user_tv96",           TOKENIZER_SET_USER_TV96},

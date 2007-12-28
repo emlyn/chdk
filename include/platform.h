@@ -48,6 +48,43 @@ MODE_NIGHT_SNAPSHOT     ,
 MODE_DIGITAL_MACRO      ,
 };
 
+#if defined(CAMERA_a570) 
+ #define PROPCASE_DRIVE_MODE    				102
+ #define PROPCASE_FOCUS_MODE    				133
+ #define PROPCASE_USER_TV       				264
+ #define PROPCASE_TV	        				262
+ #define PROPCASE_USER_AV      					26
+ #define PROPCASE_AV            				23
+ #define PROPCASE_MIN_AV       					25
+ #define PROPCASE_SV            				246
+ #define PROPCASE_DELTA_SV      				79
+ #define PROPCASE_SV_MARKET     				247
+ #define PROPCASE_BV            				34
+ #define PROPCASE_SUBJECT_DIST1 				245
+ #define PROPCASE_SUBJECT_DIST2 				65
+ #define PROPCASE_ISO_MODE  				    149
+ #define PROPCASE_SHOOTING      				206
+ #define PROPCASE_OVEREXPOSURE 					-1
+ #else
+ #define PROPCASE_DRIVE_MODE    				6
+ #define PROPCASE_FOCUS_MODE    				12
+ #define PROPCASE_USER_TV       				40
+ #define PROPCASE_TV	        				69
+ #define PROPCASE_USER_AV       				39
+ #define PROPCASE_AV            				68
+ #define PROPCASE_MIN_AV        				77
+ #define PROPCASE_SV            				73
+ #define PROPCASE_DELTA_SV      				70
+ #define PROPCASE_SV_MARKET     				72
+ #define PROPCASE_BV            				71
+ #define PROPCASE_ISO_MODE      				21
+ #define PROPCASE_SUBJECT_DIST1 				65
+ #define PROPCASE_SUBJECT_DIST2 				66
+ #define PROPCASE_SHOOTING     					205
+ #define PROPCASE_OVEREXPOSURE 					76
+#endif
+
+
 //********************
 //char * get_debug();
 //********************
@@ -55,6 +92,10 @@ MODE_DIGITAL_MACRO      ,
 #define MODE_SCREEN_MASK        0x0C00
 #define MODE_SCREEN_OPENED      0x0400
 #define MODE_SCREEN_ROTATED     0x0800
+
+#define AS_SIZE (sizeof(aperture_sizes_table)/sizeof(aperture_sizes_table[0]))
+#define ASID_MIN (aperture_sizes_table[0].id)
+#define ASID_MAX (aperture_sizes_table[AS_SIZE-1].id)
 
 typedef struct {
     short id; // hacks id
@@ -220,7 +261,7 @@ short shooting_get_tv96_from_shutter_speed(float t);
 short shooting_get_tv96();
 void shooting_set_tv96(short v, short is_now);
 void shooting_set_tv96_direct(short v, short is_now);
-void shooting_set_shutter_speed(float t, short is_now);
+void shooting_set_shutter_speed_ubasic(int t, short is_now);
 short shooting_get_user_tv96();
 void shooting_set_user_tv96(short v);
 float shooting_get_shutter_speed_from_tv96(short tv);
@@ -231,6 +272,9 @@ void shooting_set_user_tv_by_id(int v);
 void shooting_set_user_tv_by_id_rel(int v);
 const ShutterSpeed *shooting_get_tv_line();
 /******************************************************************/
+short shooting_get_aperture_sizes_table_size();
+short shooting_get_aperture_sizes_table_prop_id(short i);
+short shooting_get_max_aperture_sizes_table_prop_id();
 short shooting_get_aperture_from_av96(short av96);
 int shooting_get_user_av_id();
 char* shooting_get_av_str();
@@ -264,11 +308,14 @@ int shooting_get_focus();
 void shooting_set_focus(int v, short is_now);
 short shooting_get_focus_mode();
 int shooting_get_hyperfocal_distance();
+int shooting_get_hyperfocal_distance_(int av, int fl);
 int shooting_get_near_limit_of_acceptable_sharpness();
 int shooting_get_far_limit_of_acceptable_sharpness();
 int shooting_get_depth_of_field();
+int shooting_get_subject_distance();
 int shooting_get_subject_distance_override_value();
 int shooting_get_subject_distance_bracket_value();
+int shooting_get_subject_distance_override_koef();
 short shooting_get_drive_mode();
 /******************************************************************/
 int shooting_get_iso_mode();

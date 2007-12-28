@@ -114,11 +114,11 @@ static const char* gui_bracket_type_enum(int change, int arg);
 static const char* gui_av_override_enum(int change, int arg);
 static const char* gui_iso_override_koef_enum(int change, int arg);
 static const char* gui_tv_override_koef_enum(int change, int arg);
+static const char* gui_subj_dist_override_value_enum(int change, int arg);
 static const char* gui_subj_dist_override_koef_enum(int change, int arg);
 static const char* gui_tv_exposure_order_enum(int change, int arg);
 static const char* gui_av_exposure_order_enum(int change, int arg);
 static const char* gui_iso_exposure_order_enum(int change, int arg);
-
 //static const char* gui_tv_enum(int change, int arg);
 
 
@@ -282,7 +282,9 @@ static CMenu video_submenu = { LANG_MENU_VIDEO_PARAM_TITLE, NULL, video_submenu_
 
 static CMenuItem bracketing_in_continuous_submenu_items[] = {
 	  {LANG_MENU_TV_BRACKET_VALUE,             MENUITEM_ENUM,    (int*)gui_tv_bracket_values_enum },
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	  
 	  {LANG_MENU_AV_BRACKET_VALUE,             MENUITEM_ENUM,    (int*)gui_av_bracket_values_enum },
+#endif
 	  {LANG_MENU_ISO_BRACKET_VALUE,            MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.iso_bracket_value, MENU_MINMAX(0, 100)}, 
 	  {LANG_MENU_ISO_BRACKET_KOEF,             MENUITEM_ENUM,    (int*)gui_iso_bracket_koef_enum},
 	  {LANG_MENU_SUBJ_DIST_BRACKET_VALUE,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.subj_dist_bracket_value, MENU_MINMAX(0, 100)}, 
@@ -312,7 +314,8 @@ static CMenuItem operation_submenu_items[] = {
  #endif
 	  {LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)}, 
 	  {LANG_MENU_OVERRIDE_ISO_KOEF,        MENUITEM_ENUM,    (int*)gui_iso_override_koef_enum},
- 	  {LANG_MENU_OVERRIDE_SUBJ_DIST_VALUE, MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.subj_dist_override_value, MENU_MINMAX(0, 500)}, 
+ 	 // {LANG_MENU_OVERRIDE_SUBJ_DIST_VALUE, MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.subj_dist_override_value, MENU_MINMAX(0, 500)}, 
+      {LANG_MENU_OVERRIDE_SUBJ_DIST_VALUE, MENUITEM_ENUM,    (int*)gui_subj_dist_override_value_enum},
 	  {LANG_MENU_OVERRIDE_SUBJ_DIST_KOEF,  MENUITEM_ENUM,    (int*)gui_subj_dist_override_koef_enum},
 	  {LANG_MENU_BRACKET_IN_CONTINUOUS,	   MENUITEM_SUBMENU, (int*)&bracketing_in_continuous_submenu }, 
 	  {LANG_MENU_CLEAR_OVERRIDE_VALUES,    MENUITEM_BOOL,    (int*)&conf.clear_override},
@@ -375,6 +378,7 @@ static CMenuItem osd_submenu_items[] = {
     //ARM end
     {LANG_MENU_OSD_BATT_PARAMS,         MENUITEM_SUBMENU,   (int*)&battery_submenu },
     {LANG_MENU_OSD_GRID_PARAMS,         MENUITEM_SUBMENU,   (int*)&grid_submenu },
+    {LANG_MENU_OSD_SHOW_IN_REVIEW,      MENUITEM_BOOL,      &conf.show_osd_in_review},
 #ifndef OPTIONS_AUTOSAVE
     {LANG_MENU_MAIN_SAVE_OPTIONS,       MENUITEM_PROC,      (int*)gui_menuproc_save },
 #endif
@@ -793,13 +797,24 @@ const char* gui_iso_override_koef_enum(int change, int arg) {
     return modes[conf.iso_override_koef]; 
 }
 
+const char* gui_subj_dist_override_value_enum(int change, int arg) {
+	static const int koef[] = {0, 1,10,100,1000};
+    static char buf[8];
+    conf.subj_dist_override_value+=(change*koef[conf.subj_dist_override_koef]);
+    if (conf.subj_dist_override_value<0)
+        conf.subj_dist_override_value=65500;
+    else if (conf.subj_dist_override_value>65500)
+        conf.subj_dist_override_value=0;
+    sprintf(buf, "%d", (int)conf.subj_dist_override_value);
+    return buf; 
+}
+
 
 const char* gui_subj_dist_override_koef_enum(int change, int arg) {
     static const char* modes[]={ "Off","1", "10","100","1000"};
 
     conf.subj_dist_override_koef+=change;
-    if (conf.subj_dist_override_koef<0)
-        conf.subj_dist_override_koef=0;
+    if (conf.subj_dist_override_koef<0) conf.subj_dist_override_koef=0;
     else if (conf.subj_dist_override_koef>=(sizeof(modes)/sizeof(modes[0])))
         conf.subj_dist_override_koef=sizeof(modes)/sizeof(modes[0])-1;
     
@@ -878,14 +893,20 @@ const char* gui_iso_exposure_order_enum(int change, int arg) {
 }*/
 
 const char* gui_av_override_enum(int change, int arg) {
-    static const char* modes[]={ "Off", "MIN", "+1/3", "+2/3","+1","+1 1/3","+1 2/3","+2","+2 1/3","+2 2/3","+3","+3 1/3","+3 2/3", "+4", "+4 1/3", "+4 2/3", "+5"};
+    static char buf[8];
+    short prop_id;
     conf.av_override_value+=change;
-    if (conf.av_override_value<0)
-       conf.av_override_value=sizeof(modes)/sizeof(modes[0])-1;
-    else if (conf.av_override_value>=(sizeof(modes)/sizeof(modes[0])))
-       conf.av_override_value=0;
-    return modes[conf.av_override_value]; 
+    if (conf.av_override_value<0) conf.av_override_value=shooting_get_aperture_sizes_table_size()+6;
+    else if (conf.av_override_value>shooting_get_aperture_sizes_table_size()+6) conf.av_override_value=0;
+    if (conf.av_override_value == 0)  return "Off";
+    else {
+     short prop_id=shooting_get_aperture_from_av96(shooting_get_av96_override_value());		
+	 sprintf(buf, "%d.%02d", (int)prop_id/100, (int)prop_id%100 );
+	 return buf; 
+	}
 }
+
+
 
 //-------------------------------------------------------------------
 void gui_update_script_submenu() {
@@ -1123,37 +1144,35 @@ void gui_kbd_process()
                 gui_menu_init(&script_submenu);
                 gui_mode = GUI_MODE_MENU;
                 draw_restore();
-            } else { 
+            } else {
+#if !defined(CAMERA_g7) && !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)
+			  if (shooting_get_focus_mode()){ 
 				if (kbd_is_key_clicked(KEY_RIGHT)) {
 				  gui_subj_dist_override_koef_enum(1,0);
-                  draw_restore();
+                  gui_osd_draw_state();
+                  shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
 				  }
 				else if (kbd_is_key_clicked(KEY_LEFT)) 
 				  {
 				  gui_subj_dist_override_koef_enum(-1,0);
-                  draw_restore();
+                  gui_osd_draw_state();
+                  shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
 				  }
-				else if (kbd_is_key_clicked(KEY_ZOOM_IN))   
-                  {
-                  conf.subj_dist_override_value+=1;
-				  if (conf.subj_dist_override_value>500) conf.subj_dist_override_value=0;
-                  draw_restore();
-				  }
-				 else if (kbd_is_key_clicked(KEY_ZOOM_OUT))   
-                  {
-				  conf.subj_dist_override_value-=1;
-				  if (conf.subj_dist_override_value<0) conf.subj_dist_override_value=500;
-                  draw_restore();
-				  }
- 
-				/*
-				
-  if (conf.subj_dist_override_koef<0)
-                  conf.subj_dist_override_koef=0;
-                else if (conf.subj_dist_override_koef>=(sizeof(modes)/sizeof(modes[0])))
-                  conf.subj_dist_override_koef=sizeof(modes)/sizeof(modes[0])-1;
-    //              draw_restore();*/
-    
+				else  
+				switch (kbd_get_autoclicked_key()) {
+				  case KEY_ZOOM_IN:
+                  gui_subj_dist_override_value_enum(1,0);
+                  gui_osd_draw_state();
+                  shooting_set_focus(shooting_get_subject_distance_override_value(),SET_NOW);
+                  break;
+                 case KEY_ZOOM_OUT:
+                  gui_subj_dist_override_value_enum(-1,0);
+                  gui_osd_draw_state();
+                  shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
+                  break;
+            	  }
+              }
+#endif
             }
             break;
     	case GUI_MODE_MENU:
@@ -1251,11 +1270,6 @@ void gui_draw_osd() {
         return;
     }
     
-     //OWEN begin
-     //This don't work
-     //if (!(conf.values_show_in_review) && (shooting_get_av96()>=576) && ((m&MODE_MASK) != MODE_PLAY)) {return;}
-     //OWEN end;
-
     if (kbd_is_key_pressed(KEY_SHOOT_HALF)) {
         if (kbd_is_key_pressed(SHORTCUT_TOGGLE_ZEBRA)) {
             if (!pressed) {
@@ -1319,9 +1333,9 @@ void gui_draw_osd() {
         gui_osd_draw_histo();
     }
 
-    if (!(conf.show_osd && (canon_menu_active==(int)&canon_menu_active-4) && (canon_shoot_menu_active==0) && (recreview_hold==0)))  return;
+    if (!(conf.show_osd && (canon_menu_active==(int)&canon_menu_active-4) && (canon_shoot_menu_active==0)))  return;
     
-    if ((m&MODE_MASK) == MODE_REC) {
+    if (((m&MODE_MASK) == MODE_REC) && ((recreview_hold==0) || (conf.show_osd_in_review)) ) {
 //        m &= MODE_SHOOTING_MASK;
 //        if (m==MODE_SCN_WATER || m==MODE_SCN_NIGHT || m==MODE_SCN_CHILD || m==MODE_SCN_PARTY || m==MODE_STITCH ||
 //            m==MODE_SCN_GRASS || m==MODE_SCN_SNOW  || m==MODE_SCN_BEACH || m==MODE_SCN_FIREWORK || m==MODE_VIDEO)
@@ -1345,9 +1359,9 @@ void gui_draw_osd() {
 	    if (conf.show_values) gui_osd_draw_values();
     }
 
-    gui_batt_draw_osd();
+    if (recreview_hold==0) gui_batt_draw_osd();
     
-    if (conf.show_clock) {
+    if ((conf.show_clock) && (recreview_hold==0)) {
         gui_osd_draw_clock();
     }
 

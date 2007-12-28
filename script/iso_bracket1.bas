@@ -17,10 +17,9 @@ for i=a to c
   g=i*b 
   sleep t
   set_iso_real g
+  shoot
   get_iso_real e
   get_iso_market f
   print "ISO:", e, "(", f, ")"
-  sleep 500
-  shoot
 next i
 end

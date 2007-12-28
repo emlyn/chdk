@@ -97,7 +97,7 @@ static char* gui_lang_default = \
 " 69 \"Calendar\"\n"
 " 70 \"Text file reader ->\"\n"
 " 71 \"Games ->\"\n"
-" 72 \"Flash-light\"\n"
+" 72 \"Flashlight\"\n"
 " 73 \"Show splash screen on load\"\n"
 " 74 \"Use zoom buttons for MF\"\n"
 " 75 \"<ALT> mode button\"\n"
@@ -290,11 +290,11 @@ static char* gui_lang_default = \
 "224 \"Show 'real' ISO\"\n"
 "225 \"Show 'market' ISO\"\n"
 "226 \" Show ISO only in Autoiso mode\"\n"
-"227 \"Show seted Exposure Ev (Tv+Av)\"\n"
+"227 \"Show Set Exposure Ev (Tv+Av)\"\n"
 "228 \"Show Measured Ev (Bv+Sv)\"\n"
-"229 \"Show Seted Bv (brightness val.)\"\n"
+"229 \"Show Set Bv (Brightness Value)\"\n"
 "230 \"Show Measured Bv\"\n"
-"231 \"Show Overexp.value(No flash!)\"\n"
+"231 \"Show Overexp. Value (No Flash!)\"\n"
 "232 \"Show Scene luminance (cd/m2)\"\n"
 
 "233 \"Video Parameters\"\n"
@@ -310,7 +310,7 @@ static char* gui_lang_default = \
 "242 \"Override aperture\"\n"
 "243 \"Override ISO value\"\n"
 "244 \"   Value factor\"\n"
-"245 \"Override focus dist. (MF)\"\n"
+"245 \"Override Subj. Dist. Value (MF)\"\n"
 "246 \"   Value factor (mm)\"\n"
 
 "247 \"Bracketing in continuous mode\"\n"
@@ -319,7 +319,7 @@ static char* gui_lang_default = \
 "250 \"AV bracketing value\"\n"
 "251 \"ISO bracketing value\"\n"
 "252 \"    Value factor\"\n"
-"253 \"Focus dist. bracket.value (MF)\"\n"
+"253 \"Subj. Dist. Bracket Value (MF)\"\n"
 "254 \"    Value factor (mm)\"\n"
 "255 \"Bracketing type\"\n"
 
@@ -343,6 +343,9 @@ static char* gui_lang_default = \
 "269 \"RAW sum\"\n"
 "270 \"RAW average\"\n"
 "271 \"Not enough memory card space:\\n%dM required, %dM available.\"\n"
+
+"272 \"Show OSD in Review Mode\"\n"
+
 
 ;
 

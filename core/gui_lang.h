@@ -354,8 +354,10 @@
 #define LANG_POPUP_RAW_AVERAGE		270
 #define LANG_AVERAGE_NO_CARD_SPACE	271
 
+#define LANG_MENU_OSD_SHOW_IN_REVIEW     272
+
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  271
+#define GUI_LANG_ITEMS                  272
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

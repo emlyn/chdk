@@ -13,8 +13,8 @@ for i=a to c
   press "shoot_half"
   sleep 2000
   set_focus g
- rem get_focus e
- rem  print "FOC:", e
+  get_focus e
+  print "FOC:", e
   sleep 2000
   press "shoot_full"
   release "shoot_full"

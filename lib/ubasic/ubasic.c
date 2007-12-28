@@ -897,10 +897,10 @@ static void set_tv96_statement()
 
 static void set_shutter_speed_statement()
 {
-    float to;
+    int to;
     accept(TOKENIZER_SET_SHUTTER_SPEED);
     to = expr();
-    shooting_set_shutter_speed(to, SET_LATER);
+    shooting_set_shutter_speed_ubasic(to, SET_LATER);
     accept_cr();
 }
 
@@ -1074,7 +1074,7 @@ static void get_focus_statement()
     accept(TOKENIZER_GET_FOCUS);
     var = tokenizer_variable_num();
     accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, shooting_get_focus());
+    ubasic_set_variable(var, shooting_get_subject_distance());
     accept_cr();
 }
 
@@ -1125,7 +1125,7 @@ static void set_focus_statement()
     int to;
     accept(TOKENIZER_SET_FOCUS);
     to = expr();
-    shooting_set_focus(to, SET_LATER);
+    shooting_set_focus(to, SET_NOW);
     accept_cr();
 }
 
