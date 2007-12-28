@@ -41,6 +41,7 @@
 extern int raw_savefile();
 extern void raw_postprocess();
 extern void raw_prepare_develop(char* filename);
+extern void load_bad_pixels_list(char* filename);
 
 //-------------------------------------------------------------------
 #endif

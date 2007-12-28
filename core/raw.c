@@ -21,15 +21,12 @@ void raw_prepare_develop(char* filename){
 }
 
 //-------------------------------------------------------------------
+void patch_bad_pixels(void);
+//-------------------------------------------------------------------
 int raw_savefile() {
     int fd;
     static struct utimbuf t;
 
-    // got here second time in a row. Skip second RAW saving.
-    if (conf.raw_save_first_only && state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) {
-        return 0;
-    }
-    
     if (develop_raw) {
      started();
      fd = open(fn, O_RDONLY, 0777);
@@ -42,7 +39,14 @@ int raw_savefile() {
      return 0;
     }
 
+    patch_bad_pixels();
+
     shooting_bracketing();
+
+    // got here second time in a row. Skip second RAW saving.
+    if (conf.raw_save_first_only && state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) {
+        return 0;
+    }
     
     state_shooting_progress = SHOOTING_PROGRESS_PROCESSING;
 
@@ -103,20 +107,20 @@ void raw_postprocess() {
     finished();
  */
 }
-/*
+
 //-------------------------------------------------------------------
 
 void set_raw_pixel(unsigned int x, unsigned int y, unsigned short value){
  char* addr=hook_raw_image_addr()+y*ROWLEN+(x/8)*10;
  switch (x%8) {
-  case 0: addr[0]=(addr[0]&0xC0)|(value<<6); addr[1]=value>>2;                  break;
-  case 1: addr[0]=(addr[0]&0x3F)|(value>>4); addr[3]=(addr[3]&0xF0)|(value<<4); break;
-  case 2: addr[2]=(addr[2]&0xFC)|(value<<2); addr[3]=(addr[3]&0x0F)|(value>>6); break;
-  case 3: addr[2]=(addr[2]&0x03)|(value>>8); addr[5]=value;                     break;
-  case 4: addr[4]=value>>2;                  addr[7]=(addr[7]&0xC0)|(value<<6); break;
-  case 5: addr[6]=(addr[6]&0xF0)|(value<<4); addr[7]=(addr[7]&0x3F)|(value>>4); break;
-  case 6: addr[6]=(addr[6]&0x0F)|(value>>6); addr[9]=(addr[9]&0xFC)|(value<<2); break;
-  case 7: addr[8]=value;                     addr[9]=(addr[9]&0x03)|(value>>8); break;
+  case 0: addr[0]=(addr[0]&0x3F)|(value<<6); addr[1]=value>>2;                  break;
+  case 1: addr[0]=(addr[0]&0xC0)|(value>>4); addr[3]=(addr[3]&0x0F)|(value<<4); break;
+  case 2: addr[2]=(addr[2]&0x03)|(value<<2); addr[3]=(addr[3]&0xF0)|(value>>6); break;
+  case 3: addr[2]=(addr[2]&0xFC)|(value>>8); addr[5]=value;                     break;
+  case 4: addr[4]=value>>2;                  addr[7]=(addr[7]&0x3F)|(value<<6); break;
+  case 5: addr[6]=(addr[6]&0x0F)|(value<<4); addr[7]=(addr[7]&0xC0)|(value>>4); break;
+  case 6: addr[6]=(addr[6]&0xF0)|(value>>6); addr[9]=(addr[9]&0x03)|(value<<2); break;
+  case 7: addr[8]=value;                     addr[9]=(addr[9]&0xFC)|(value>>8); break;
  }
 }
 
@@ -140,4 +144,75 @@ unsigned short get_raw_pixel(unsigned int x,unsigned  int y){
 void patch_bad_pixel(unsigned int x,unsigned  int y){
  set_raw_pixel(x,y,(get_raw_pixel(x-2,y)+get_raw_pixel(x+2,y)+get_raw_pixel(x,y-2)+get_raw_pixel(x,y+2))/4);
 }
-*/
+
+struct point{
+ int x;
+ int y;
+ struct point *next;
+} *pixel_list=NULL;
+
+void patch_bad_pixels(void){
+ struct point *pixel=pixel_list;
+ while (pixel){
+  patch_bad_pixel((*pixel).x,(*pixel).y);
+  pixel=(*pixel).next;
+ }
+}
+
+void make_pixel_list(char * ptr){
+ int x,y;
+ struct point *pixel;
+ char *endptr;
+ while(*ptr){
+  while (*ptr==' ' || *ptr=='\t') ++ptr; // whitespaces
+   x=strtol(ptr, &endptr, 0);
+   if (endptr != ptr) { 
+    ptr = endptr;
+    if (*ptr++==',') {
+     while (*ptr==' ' || *ptr=='\t') ++ptr; // whitespaces
+     if (*ptr!='\n' && *ptr!='\r'){
+      y=strtol(ptr, &endptr, 0);
+      if (endptr != ptr) { 
+       ptr = endptr;
+       pixel=malloc(sizeof(struct point));
+       if (pixel) {
+        (*pixel).x=x;
+        (*pixel).y=y;
+        (*pixel).next=pixel_list;
+        pixel_list=pixel;
+       }
+      }
+     }
+    }
+   }
+   while (*ptr && *ptr!='\n') ++ptr; // unless end of line
+   if (*ptr) ++ptr;
+ }
+}
+
+#define PIXELS_BUF_SIZE 4096
+void load_bad_pixels_list(char* filename){
+    char *buf;
+    const char *grid;
+    int fd;
+
+    if (filename) {
+        buf = umalloc(PIXELS_BUF_SIZE);
+        if (!buf) return;
+
+        fd = open(filename, O_RDONLY, 0777);
+        if (fd>=0) {
+            int rcnt = read(fd, buf, PIXELS_BUF_SIZE);
+            if (rcnt > 0) {
+                if (rcnt == PIXELS_BUF_SIZE) 
+        	    buf[PIXELS_BUF_SIZE-1] = 0;
+                else
+        	    buf[rcnt] = 0;
+            }
+            close(fd);
+        }
+        make_pixel_list(buf);    
+        ufree(buf);
+    }
+
+}
