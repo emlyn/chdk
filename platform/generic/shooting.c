@@ -675,21 +675,25 @@ void shooting_set_iso_mode(int v)
 int shooting_in_progress()
 {
     int t = 0;
-    _GetPropertyCase(PROPCASE_SHOOTING, &t, 4);
+    _GetPropertyCase(PROPCASE_SHOOTING, &t, sizeof(&t));
     return t != 0;
 }
 
 int shooting_is_flash_ready()
 {
+#if !defined(CAMERA_a570) && !defined(CAMERA_a560)	
     int t = 0;
 /* well, I'm not sure what's exactly is happening here
  * but it works for a610-100e
  */
-    _GetPropertyCase(204, &t, 4);
-    if (t == 3){
-	   _GetPropertyCase(221, &t, 4);
-	   return (t==1) && _IsStrobeChargeCompleted();
+   // _GetPropertyCase(204, &t, 4);
+   // if (t == 3){
+   _GetPropertyCase(PROPCASE_FLASH_MODE, &t, sizeof(&t));
+   if ((t != 2) && (shooting_in_progress())) {
+     _GetPropertyCase(PROPCASE_IS_FLASH_READY, &t,sizeof(&t));
+    return (t==1) && _IsStrobeChargeCompleted();
     }
+#endif        
     return 1;
 }
 
@@ -709,11 +713,11 @@ int shooting_get_zoom() {
 }
 
 void shooting_set_zoom(int v) {
-    long dist;
+    int dist;
 
-    dist = lens_get_focus_pos();
+    dist = shooting_get_focus();
     lens_set_zoom_point(v);
-    lens_set_focus_pos(dist);
+    shooting_set_focus(dist, SET_NOW);
 }
 
 void shooting_set_zoom_rel(int v) {

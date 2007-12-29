@@ -48,9 +48,10 @@ MODE_NIGHT_SNAPSHOT     ,
 MODE_DIGITAL_MACRO      ,
 };
 
-#if defined(CAMERA_a570) 
+#if defined(CAMERA_a570) || defined(CAMERA_a560)
  #define PROPCASE_DRIVE_MODE    				102
  #define PROPCASE_FOCUS_MODE    				133
+ #define PROPCASE_FLASH_MODE         			-1
  #define PROPCASE_USER_TV       				264
  #define PROPCASE_TV	        				262
  #define PROPCASE_USER_AV      					26
@@ -64,10 +65,12 @@ MODE_DIGITAL_MACRO      ,
  #define PROPCASE_SUBJECT_DIST2 				65
  #define PROPCASE_ISO_MODE  				    149
  #define PROPCASE_SHOOTING      				206
+ #define PROPCASE_IS_FLASH_READY      			-1
  #define PROPCASE_OVEREXPOSURE 					-1
- #else
+#else
  #define PROPCASE_DRIVE_MODE    				6
  #define PROPCASE_FOCUS_MODE    				12
+ #define PROPCASE_FLASH_MODE         			16
  #define PROPCASE_USER_TV       				40
  #define PROPCASE_TV	        				69
  #define PROPCASE_USER_AV       				39
@@ -81,6 +84,7 @@ MODE_DIGITAL_MACRO      ,
  #define PROPCASE_SUBJECT_DIST1 				65
  #define PROPCASE_SUBJECT_DIST2 				66
  #define PROPCASE_SHOOTING     					205
+ #define PROPCASE_IS_FLASH_READY      			221
  #define PROPCASE_OVEREXPOSURE 					76
 #endif
 

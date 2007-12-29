@@ -117,9 +117,9 @@ static const struct keyword_token keywords[] = {
   {"get_user_av_id",          TOKENIZER_GET_USER_AV_ID},
 #if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	      
   {"get_user_av96",           TOKENIZER_GET_USER_AV96},
-#endif
   {"get_user_tv_id",          TOKENIZER_GET_USER_TV_ID},
   {"get_user_tv96",           TOKENIZER_GET_USER_TV96},
+#endif  
   {"get_vbatt",               TOKENIZER_GET_VBATT},
   {"get_zoom",                TOKENIZER_GET_ZOOM},
 //SET  
@@ -128,8 +128,8 @@ static const struct keyword_token keywords[] = {
   {"set_av_rel",              TOKENIZER_SET_USER_AV_BY_ID_REL}, //FOR COMPATIBILITY
   {"set_av96",                TOKENIZER_SET_AV96},
   {"set_av",                  TOKENIZER_SET_USER_AV_BY_ID}, //FOR COMPATIBILITY
-#endif  
   {"set_focus",               TOKENIZER_SET_FOCUS},
+#endif    
   {"set_iso_mode",            TOKENIZER_SET_ISO_MODE},
   {"set_iso_real",            TOKENIZER_SET_ISO_REAL},
   {"set_iso",                 TOKENIZER_SET_ISO_MODE}, //FOR COMPATIBILITY
@@ -140,23 +140,25 @@ static const struct keyword_token keywords[] = {
   //{"set_shutter_speed",       TOKENIZER_SET_SHUTTER_SPEED},
   {"set_sv96",		          TOKENIZER_SET_SV96},
   {"set_tv96_direct",         TOKENIZER_SET_TV96_DIRECT},
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	        
   {"set_tv_rel",              TOKENIZER_SET_USER_TV_BY_ID_REL}, //FOR COMPATIBILITY
+#endif    
   {"set_tv96",                TOKENIZER_SET_TV96},
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	        
   {"set_tv",                  TOKENIZER_SET_USER_TV_BY_ID}, //FOR COMPATIBILITY
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	      
   {"set_user_av_by_id_rel",   TOKENIZER_SET_USER_AV_BY_ID_REL},
   {"set_user_av_by_id",       TOKENIZER_SET_USER_AV_BY_ID},
   {"set_user_av96",           TOKENIZER_SET_USER_AV96},
-#endif
   {"set_user_tv_by_id_rel",   TOKENIZER_SET_USER_TV_BY_ID_REL},
   {"set_user_tv_by_id",       TOKENIZER_SET_USER_TV_BY_ID},
   {"set_user_tv96",           TOKENIZER_SET_USER_TV96},
+#endif  
   {"set_zoom_speed",          TOKENIZER_SET_ZOOM_SPEED},
   {"set_zoom_rel",            TOKENIZER_SET_ZOOM_REL},
   {"set_zoom",                TOKENIZER_SET_ZOOM},
   
   {"wait_click",              TOKENIZER_WAIT_CLICK},
-  {"is_key",        TOKENIZER_IS_KEY},
+  {"is_key",                  TOKENIZER_IS_KEY},
   
   {"wheel_right",             TOKENIZER_WHEEL_RIGHT},
   {"wheel_left",              TOKENIZER_WHEEL_LEFT},
@@ -165,12 +167,12 @@ static const struct keyword_token keywords[] = {
   {"@param",                  TOKENIZER_REM},
   {"@default",                TOKENIZER_REM},
 
- {"md_detect_motion", TOKENIZER_MD_DETECT_MOTION},
-  {"md_get_cell_diff", TOKENIZER_MD_GET_CELL_DIFF},
-  {"get_autostart",    TOKENIZER_SCRIPT_AUTOSTART},
-  {"set_autostart",    TOKENIZER_SET_SCRIPT_AUTOSTART},
-  {"get_usb_power",    TOKENIZER_GET_USB_POWER},
-  {"exit_alt",         TOKENIZER_EXIT_ALT},
+  {"md_detect_motion",        TOKENIZER_MD_DETECT_MOTION},
+  {"md_get_cell_diff",        TOKENIZER_MD_GET_CELL_DIFF},
+  {"get_autostart",           TOKENIZER_SCRIPT_AUTOSTART},
+  {"set_autostart",           TOKENIZER_SET_SCRIPT_AUTOSTART},
+  {"get_usb_power",           TOKENIZER_GET_USB_POWER},
+  {"exit_alt",                TOKENIZER_EXIT_ALT},
   
   
   {"end",                     TOKENIZER_END},
