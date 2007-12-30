@@ -345,7 +345,7 @@ static char* gui_lang_default = \
 "271 \"Not enough memory card space:\\n%dM required, %dM available.\"\n"
 
 "272 \"Show OSD in Review Mode\"\n"
-
+"273 \"Show Parameter Data\"\n"
 
 ;
 

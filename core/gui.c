@@ -206,7 +206,7 @@ static CMenu misc_submenu = { LANG_MENU_MISC_TITLE, NULL, misc_submenu_items };
 
 static CMenuItem debug_submenu_items[] = {
     {LANG_MENU_DEBUG_SHOW_PROPCASES,    MENUITEM_BOOL,          &debug_propcase_show },
-    {(int)"Show parameter data",        MENUITEM_BOOL,          &debug_pardata_show },
+    {LANG_MENU_DEBUG_SHOW_PARAMETER_DATA,        MENUITEM_BOOL,          &debug_pardata_show },
     {LANG_MENU_DEBUG_PROPCASE_PAGE,     MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,   &debug_propcase_page, MENU_MINMAX(0, 128) },
     {LANG_MENU_DEBUG_SHOW_MISC_VALS,    MENUITEM_BOOL,          &debug_vals_show },
     {LANG_MENU_DEBUG_MEMORY_BROWSER,    MENUITEM_PROC,          (int*)gui_draw_debug },

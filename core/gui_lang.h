@@ -355,9 +355,10 @@
 #define LANG_AVERAGE_NO_CARD_SPACE	271
 
 #define LANG_MENU_OSD_SHOW_IN_REVIEW     272
+#define LANG_MENU_DEBUG_SHOW_PARAMETER_DATA	273
 
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  272
+#define GUI_LANG_ITEMS                  273
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();
