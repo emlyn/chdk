@@ -138,7 +138,7 @@ static CMenuItem script_submenu_items_top[] = {
     {LANG_MENU_SCRIPT_DELAY,            MENUITEM_INT|MENUITEM_F_UNSIGNED,   &conf.script_shoot_delay },
 	// remote autostart
 	{LANG_MENU_SCRIPT_AUTOSTART,		MENUITEM_BOOL,						&conf.script_startup },
-#if !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_a570) && !defined (CAMERA_a700)
+#if !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560) && !defined (CAMERA_a700)
 	{LANG_MENU_SCRIPT_REMOTE_ENABLE,	MENUITEM_BOOL,						&conf.remote_enable},
 #endif
     {LANG_MENU_SCRIPT_CURRENT,          MENUITEM_SEPARATOR },
