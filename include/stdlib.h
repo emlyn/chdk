@@ -10,8 +10,66 @@
 #define O_RDONLY        0
 #define O_WRONLY        1
 #define O_RDWR          2
+
+
+#if !defined(CAMERA_a720)
+
 #define O_TRUNC         0x400
 #define O_CREAT         0x200
+
+struct	stat
+    {
+    unsigned long	st_dev;		/* device ID number */
+    unsigned long	st_ino;		/* file serial number */
+    unsigned short	st_mode;	/* file mode (see below) */
+    short		st_nlink;	/* number of links to file */
+    short		st_uid;		/* user ID of file's owner */
+    short		st_gid;		/* group ID of file's group */
+    unsigned long	st_rdev;	/* device ID, only if special file */
+    unsigned long	st_size;	/* size of file, in bytes */
+    unsigned long	st_atime;	/* time of last access */
+    unsigned long	st_mtime;	/* time of last modification */
+    unsigned long	st_ctime;	/* time of last change of file status */
+    long		st_blksize;
+    long		st_blocks;
+    unsigned char	st_attrib;	/* file attribute byte (dosFs only) */
+    int			reserved1;	/* reserved for future use */
+    int			reserved2;	/* reserved for future use */
+    int			reserved3;	/* reserved for future use */
+    int			reserved4;	/* reserved for future use */
+    int			reserved5;	/* reserved for future use */
+    int			reserved6;	/* reserved for future use */
+};
+
+#else
+
+#define O_TRUNC         0x200
+#define O_CREAT         0x100
+
+struct	stat
+    {
+    unsigned long	st_dev;		//?
+    unsigned long	st_ino;		//?	
+    unsigned short	st_mode;	//?	
+    short		st_nlink;	//?	
+    short		st_uid;		//?	
+    short		st_gid;		//?	
+    unsigned long	st_atime;	//?	
+    unsigned long	st_mtime;	//?	
+    unsigned long	st_ctime;	//?	
+    unsigned long	st_size;	
+    long		st_blksize;	//?
+    long		st_blocks;	//?
+    unsigned char	st_attrib;
+    int			reserved1;	//	
+    int			reserved2;	//
+    int			reserved3;	//
+    int			reserved4;	//
+    int			reserved5;	//
+    int			reserved6;	//
+};
+
+#endif
 
 extern int rand(void);
 extern void* srand(unsigned int seed);
@@ -91,39 +149,29 @@ extern long task_unlock();
 #define DOS_ATTR_DIRECTORY      0x10            /* entry is a sub-directory */
 #define DOS_ATTR_ARCHIVE        0x20            /* file subject to archiving */
 
-struct	stat
-    {
-    unsigned long	st_dev;		/* device ID number */
-    unsigned long	st_ino;		/* file serial number */
-    unsigned short	st_mode;	/* file mode (see below) */
-    short		st_nlink;	/* number of links to file */
-    short		st_uid;		/* user ID of file's owner */
-    short		st_gid;		/* group ID of file's group */
-    unsigned long	st_rdev;	/* device ID, only if special file */
-    unsigned long	st_size;	/* size of file, in bytes */
-    unsigned long	st_atime;	/* time of last access */
-    unsigned long	st_mtime;	/* time of last modification */
-    unsigned long	st_ctime;	/* time of last change of file status */
-    long		st_blksize;
-    long		st_blocks;
-    unsigned char	st_attrib;	/* file attribute byte (dosFs only) */
-    int			reserved1;	/* reserved for future use */
-    int			reserved2;	/* reserved for future use */
-    int			reserved3;	/* reserved for future use */
-    int			reserved4;	/* reserved for future use */
-    int			reserved5;	/* reserved for future use */
-    int			reserved6;	/* reserved for future use */
-};
-
+#if !defined (CAMERA_a720)
 struct dirent {
     char                name[100];
 };
+#else
+struct dirent {
+    char                name[13];
+    unsigned long	unk1;
+    unsigned char 	attrib;
+    unsigned long 	size;
+    unsigned long	time1;
+    unsigned long	time2;
+    unsigned long	time3;
+};
+#endif
 
 typedef struct {
     unsigned int        fd;
     unsigned int        loc;
     struct dirent       dir;
 } DIR;
+
+
 
 extern DIR*           opendir (const char* name);
 extern struct dirent* readdir (DIR*);

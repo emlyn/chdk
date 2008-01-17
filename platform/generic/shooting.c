@@ -681,7 +681,7 @@ int shooting_in_progress()
 
 int shooting_is_flash_ready()
 {
-#if !defined(CAMERA_a570) && !defined(CAMERA_a560)	
+//#if !defined(CAMERA_a570) && !defined(CAMERA_a560)	
     int t = 0;
 /* well, I'm not sure what's exactly is happening here
  * but it works for a610-100e
@@ -693,7 +693,7 @@ int shooting_is_flash_ready()
      _GetPropertyCase(PROPCASE_IS_FLASH_READY, &t,sizeof(&t));
     return (t==1) && _IsStrobeChargeCompleted();
     }
-#endif        
+//#endif        
     return 1;
 }
 

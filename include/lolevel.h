@@ -153,10 +153,12 @@ extern double __sqrt(double x);
 extern int _utime(char *file, void *newTimes);
 extern unsigned long _time(unsigned long *timer);
 extern void *_localtime(const unsigned long *_tod);
+extern void *_LocalTime(const unsigned long *_tod, void * t_m); // DRYOS
 
 /* file */
 extern void *_opendir(const char* name);
 extern void *_readdir(void *d);
+extern int _ReadFastDir(void *d, void* dd); // DRYOS
 extern int   _closedir(void *d);
 extern void  _rewinddir(void *d);
 extern int   _stat(char *name, void *pStat);

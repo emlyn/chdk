@@ -1,6 +1,42 @@
 #include "lolevel.h"
 #include "platform.h"
 
+#if defined (CAMERA_a720)
+#define _U	0x01	/* upper */
+#define _L	0x02	/* lower */
+#define _D	0x04	/* digit */
+#define _C	0x08	/* cntrl */
+#define _P	0x10	/* punct */
+#define _S	0x20	/* white space (space/lf/tab) */
+#define _X	0x40	/* hex digit */
+#define _SP	0x80	/* hard space (0x20) */
+unsigned char _ctype[] = {
+_C,_C,_C,_C,_C,_C,_C,_C,			/* 0-7 */
+_C,_C|_S,_C|_S,_C|_S,_C|_S,_C|_S,_C,_C,		/* 8-15 */
+_C,_C,_C,_C,_C,_C,_C,_C,			/* 16-23 */
+_C,_C,_C,_C,_C,_C,_C,_C,			/* 24-31 */
+_S|_SP,_P,_P,_P,_P,_P,_P,_P,			/* 32-39 */
+_P,_P,_P,_P,_P,_P,_P,_P,			/* 40-47 */
+_D,_D,_D,_D,_D,_D,_D,_D,			/* 48-55 */
+_D,_D,_P,_P,_P,_P,_P,_P,			/* 56-63 */
+_P,_U|_X,_U|_X,_U|_X,_U|_X,_U|_X,_U|_X,_U,	/* 64-71 */
+_U,_U,_U,_U,_U,_U,_U,_U,			/* 72-79 */
+_U,_U,_U,_U,_U,_U,_U,_U,			/* 80-87 */
+_U,_U,_U,_P,_P,_P,_P,_P,			/* 88-95 */
+_P,_L|_X,_L|_X,_L|_X,_L|_X,_L|_X,_L|_X,_L,	/* 96-103 */
+_L,_L,_L,_L,_L,_L,_L,_L,			/* 104-111 */
+_L,_L,_L,_L,_L,_L,_L,_L,			/* 112-119 */
+_L,_L,_L,_P,_P,_P,_P,_C,			/* 120-127 */
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 128-143 */
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 144-159 */
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 160-175 */
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 176-191 */
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 192-207 */
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 208-223 */
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 224-239 */
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};		/* 240-255 */ 
+#endif
+
 void msleep(long msec)
 {
     _SleepTask(msec);
@@ -109,9 +145,13 @@ long stat_get_vbatt()
 
 long get_tick_count()
 {
-    long t;
+long t;
+#if !defined(CAMERA_a720)
     _GetSystemTime(&t);
     return t;
+#else
+    return (int)_GetSystemTime(&t);
+#endif
 }
 
 /*int creat (const char *name, int flags)
@@ -148,19 +188,37 @@ int remove(const char *name) {
 }
 
 int isdigit(int c) {
+#if !defined(CAMERA_a720)  
     return _isdigit(c);
+#else
+    return _ctype[c]&_D;
+#endif
 }
 
 int isspace(int c) {
+#if !defined(CAMERA_a720)  
     return _isspace(c);
+#else
+    return _ctype[c]&_S;
+#endif
+
 }
 
 int isalpha(int c) {
+#if !defined(CAMERA_a720)  
     return _isalpha(c);
+#else
+    return _ctype[c]&(_U|_L);
+#endif
 }
 
 int isupper(int c) {
+#if !defined(CAMERA_a720)  
     return _isupper(c);
+#else
+    return _ctype[c]&_U;
+#endif
+
 }
 
 long strlen(const char *s) {
@@ -200,7 +258,18 @@ long strtol(const char *nptr, char **endptr, int base) {
 }
 
 char *strpbrk(const char *s, const char *accept) {
+#if !defined(CAMERA_a720)   
     return _strpbrk(s, accept);
+#else
+    const char *sc1,*sc2;
+
+    for( sc1 = s; *sc1 != '\0'; ++sc1) {
+     for( sc2 = accept; *sc2 != '\0'; ++sc2) {
+      if (*sc1 == *sc2) return (char *) sc1;
+     }
+    }
+return (void*)0;
+#endif
 }
 
 long sprintf(char *s, const char *st, ...)
@@ -222,7 +291,13 @@ int utime(char *file, void *newTimes) {
 }
 
 void *localtime(const unsigned long *_tod) {
+#if !defined (CAMERA_a720)
     return _localtime(_tod);
+#else
+#warning  do something with this!  - sizeof(x[]) must be >= sizeof(struct tm)
+  static int x[9];
+  return _LocalTime(_tod, &x);   
+#endif
 }
 
 double _log(double x) {
@@ -238,6 +313,9 @@ double _pow(double x, double y) {
 }
 
 double _sqrt(double x) {
+#if defined (CAMERA_a720)
+    asm volatile ("STMFD   SP!, {R4-R6,LR}\n");
+#endif
     return __sqrt(x);
 }
 
@@ -278,7 +356,14 @@ void *opendir(const char* name) {
 }
 
 void* readdir(void *d) {
+# if !defined (CAMERA_a720)
     return _readdir(d);
+#else
+#warning  do something with this!  - sizeof(de[]) must be >= sizeof(struct dirent)
+  static char de[40];
+  _ReadFastDir(d, &de);
+  return de[0]? &de : (void*)0;
+#endif
 }
 
 int closedir(void *d) {

@@ -184,7 +184,7 @@ static CMenuItem misc_submenu_items[] = {
     {LANG_MENU_MISC_CALENDAR,           MENUITEM_PROC,    (int*)gui_draw_calendar },
     {LANG_MENU_MISC_TEXT_READER,        MENUITEM_SUBMENU, (int*)&reader_submenu },
     {LANG_MENU_MISC_GAMES,              MENUITEM_SUBMENU, (int*)&games_submenu },
-#if !defined(CAMERA_a710) && !defined(CAMERA_a700) && !defined(CAMERA_g7) && !defined(CAMERA_a570) && !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)
+#if defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_a630) || defined(CAMERA_a640) || defined (CAMERA_s2is) || defined (CAMERA_s3is) || defined (CAMERA_s5is)
     {LANG_MENU_MISC_FLASHLIGHT,         MENUITEM_BOOL,    &conf.flashlight },
 #endif
     {LANG_MENU_MISC_SHOW_SPLASH,        MENUITEM_BOOL,    &conf.splash_show },
@@ -262,7 +262,7 @@ static CMenuItem values_submenu_items[] = {
       {LANG_MENU_VALUES_SHOW_BV_SETED,			 MENUITEM_BOOL,	     &conf.values_show_bv_seted},					
       {LANG_MENU_VALUES_SHOW_BV_MEASURED,   	 MENUITEM_BOOL,	     &conf.values_show_bv_measured},					
       {LANG_MENU_VALUES_SHOW_OVEREXPOSURE,	     MENUITEM_BOOL,      &conf.values_show_overexposure},	
-#if !defined(CAMERA_a570) && !defined(CAMERA_a560) 						 						
+#if !defined(CAMERA_a570) && !defined(CAMERA_a560) && !defined(CAMERA_a720)
       {LANG_MENU_SHOW_CANON_OVEREXPOSURE,	     MENUITEM_BOOL,      &conf.values_show_canon_overexposure},							
 #endif      
       {LANG_MENU_VALUES_SHOW_LUMINANCE,  	     MENUITEM_BOOL,      &conf.values_show_luminance},							
@@ -434,10 +434,12 @@ static CMenu zebra_submenu = { LANG_MENU_ZEBRA_TITLE, NULL, zebra_submenu_items 
 
 
 static CMenuItem root_menu_items[] = {
-	{LANG_MENU_OPERATION_PARAM,         MENUITEM_SUBMENU,   (int*)&operation_submenu },
-	{LANG_MENU_MAIN_OSD_PARAM,          MENUITEM_SUBMENU,   (int*)&osd_submenu },
+    {LANG_MENU_OPERATION_PARAM,         MENUITEM_SUBMENU,   (int*)&operation_submenu },
+    {LANG_MENU_MAIN_OSD_PARAM,          MENUITEM_SUBMENU,   (int*)&osd_submenu },
+#if !defined (CAMERA_a720)
     {LANG_MENU_VIDEO_PARAM,             MENUITEM_SUBMENU,   (int*)&video_submenu },
-	{LANG_MENU_MAIN_RAW_PARAM,          MENUITEM_SUBMENU,   (int*)&raw_submenu },
+#endif
+    {LANG_MENU_MAIN_RAW_PARAM,          MENUITEM_SUBMENU,   (int*)&raw_submenu },
     {LANG_MENU_MAIN_HISTO_PARAM,        MENUITEM_SUBMENU,   (int*)&histo_submenu },
     {LANG_MENU_MAIN_ZEBRA_PARAM,        MENUITEM_SUBMENU,   (int*)&zebra_submenu },
     {LANG_MENU_MAIN_SCRIPT_PARAM,       MENUITEM_SUBMENU,   (int*)&script_submenu },
@@ -1392,7 +1394,7 @@ void gui_draw_osd() {
 	draw_txt_string(28, 12, osd_buf, conf.osd_color);
 
 //      sprintf(osd_buf, "4:%8x  ", vid_get_viewport_fb_d());
-//        sprintf(osd_buf, "4:%8x  ", get_usb_power());
+        sprintf(osd_buf, "4:%8x  ", get_usb_power(1));
 	draw_txt_string(28, 13, osd_buf, conf.osd_color);
     }
 
