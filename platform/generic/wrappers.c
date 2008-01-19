@@ -313,9 +313,6 @@ double _pow(double x, double y) {
 }
 
 double _sqrt(double x) {
-#if defined (CAMERA_a720)
-    asm volatile ("STMFD   SP!, {R4-R6,LR}\n");
-#endif
     return __sqrt(x);
 }
 
