@@ -1261,7 +1261,9 @@ void gui_draw_osd() {
     unsigned int m, n = 0, mode_photo;
     coord x;
     static int flashlight = 0, zebra = 0, zebra_init = 0, pressed = 0;
-    
+    static int half_disp_press_old=0;
+    int half_disp_press;
+
     m = mode_get();
 
     if (conf.flashlight && (m&MODE_SCREEN_OPENED) && (m&MODE_SCREEN_ROTATED) && (gui_mode==GUI_MODE_NONE /* || gui_mode==GUI_MODE_ALT */)) {
@@ -1317,6 +1319,12 @@ void gui_draw_osd() {
 				 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_MY_COLORS || 
 				 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_ACCENT || 
 				 (m&MODE_SHOOTING_MASK)==MODE_STITCH);
+
+    half_disp_press=mode_photo && kbd_is_key_pressed(KEY_SHOOT_HALF) && kbd_is_key_pressed(KEY_DISPLAY);
+    if (half_disp_press && ! half_disp_press_old) draw_restore();
+    half_disp_press_old=half_disp_press;
+    if (half_disp_press) return;
+
     if (conf.zebra_draw && gui_mode==GUI_MODE_NONE && kbd_is_key_pressed(KEY_SHOOT_HALF) && mode_photo) {
         if (!zebra_init) {
             zebra_init = 1;
