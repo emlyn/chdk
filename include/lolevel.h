@@ -127,6 +127,7 @@ extern long physw_status[3], physw_copy[3];
 void __attribute__((naked,noinline)) mykbd_task();
 extern void capt_seq_task();
 extern void movie_record_task();
+extern void init_file_modules_task();
 
 void kbd_fetch_data(long *dst);
 

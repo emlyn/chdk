@@ -429,3 +429,30 @@ unsigned int GetFreeCardSpaceKb(void){
 unsigned int GetTotalCardSpaceKb(void){
  return (_GetDrive_TotalClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
 }
+
+int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long *part_start_sector,  unsigned long *part_length){
+// return value: 1 - success, 0 - fail
+ 
+ int offset=0x10; // points to partition #2
+ int valid;
+  
+ if ((mbr_sector[0x1FE]!=0x55) || (mbr_sector[0x1FF]!=0xAA)) return 0; // signature check 
+
+ while(offset>=0) {
+ 
+  *part_start_sector=(*(unsigned short*)(mbr_sector+offset+0x1C8)<<16) | *(unsigned short*)(mbr_sector+offset+0x1C6); 
+  *part_length=(*(unsigned short*)(mbr_sector+offset+0x1CC)<<16) | *(unsigned short*)(mbr_sector+offset+0x1CA); 
+
+  valid= (*part_start_sector) && (*part_length) &&
+         (*part_start_sector<=drive_total_sectors) && 
+         (*part_start_sector+*part_length<=drive_total_sectors) &&
+         ((mbr_sector[offset+0x1BE]==0) || (mbr_sector[offset+0x1BE]==0x80)); // status: 0x80 (active) or 0 (non-active)
+
+  if (valid && (mbr_sector[0x1C2+offset]==0x0B)) break;   // FAT32 secondary partition
+
+  offset-=0x10;
+
+ }
+
+ return valid;
+}

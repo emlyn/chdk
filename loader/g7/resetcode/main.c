@@ -56,7 +56,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
 	"STR     R1, [R2,#0xDC]\n"
 	"STR     R1, [R2,#0xEC]\n"
 	"STR     R1, [R2,#0xFC]\n"
-//#if 0
+
 	"MOV     R1, #0x78\n"
 	"MCR     p15, 0, R1,c1,c0\n"
 	"MOV     R1, #0\n"
@@ -75,8 +75,15 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
 	"MOV     R3, #0xFF0\n"
 	"LDR     R1, =0x12345678\n"
 	"ADD     R3, R3, #0x4000000C\n"
-	"STR     R1, [R3]\n"
-//#endif
+
+
+	"LDR     R2, =0xC0220204\n"    //  power
+	"LDR     R2, [R2]\n"           //  button
+	"AND     R2, #0x10000\n"       //  is
+	"CMP     R2, #0\n"             //  pressed?
+
+	"STREQ   R1, [R3]\n"           //  if not, store value
+
 	"MOV     SP, #0x1900\n"
 	"MOV     LR, PC\n"
 	"MOV     PC, %0\n"

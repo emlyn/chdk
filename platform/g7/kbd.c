@@ -16,7 +16,7 @@ static long kbd_prev_state[3];
 static long kbd_mod_state[3];
 static KeyMap keymap[];
 static long last_kbd_key = 0;
-static long alt_mode_key_mask = 0x10000000;
+static long alt_mode_key_mask = 0x1000;
 static int usb_power=0;
 static int remote_key, remote_count;
 #define KEYS_MASK0 (0xC0000000)

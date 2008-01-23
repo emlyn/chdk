@@ -100,7 +100,7 @@ static const char* gui_raw_nr_enum(int change, int arg);
 static const char* gui_reader_codepage_enum(int change, int arg);
 static const char* gui_zoom_value_enum(int change, int arg);
 static const char* gui_dof_show_value_enum(int change, int arg);
-#if defined(CAMERA_s2is) || defined(CAMERA_s3is)
+#if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_g7)
 static const char* gui_alt_mode_button_enum(int change, int arg);
 #endif
 static const char* gui_alt_power_enum(int change, int arg);
@@ -191,7 +191,7 @@ static CMenuItem misc_submenu_items[] = {
 #if !defined(CAMERA_g7) && !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)
     {LANG_MENU_MISC_ZOOM_FOR_MF,        MENUITEM_BOOL,    &conf.use_zoom_mf },
 #endif
-#if defined(CAMERA_s2is) || defined(CAMERA_s3is)
+#if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_g7)
     {LANG_MENU_MISC_ALT_BUTTON,         MENUITEM_ENUM,    (int*)gui_alt_mode_button_enum },
 #endif
     {LANG_MENU_MISC_DISABLE_LCD_OFF,    MENUITEM_ENUM,    (int*)gui_alt_power_enum },
@@ -654,10 +654,15 @@ const char* gui_dof_show_value_enum(int change, int arg) {
 //ARM End
 
 //-------------------------------------------------------------------
-#if defined(CAMERA_s2is) || defined(CAMERA_s3is)
+#if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_g7)
 const char* gui_alt_mode_button_enum(int change, int arg) {
+#if defined(CAMERA_s2is) || defined(CAMERA_s3is)
     static const char* names[]={ "Shrtcut", "Flash", "Timer", "ISO", "Video" };
     static const int keys[]={ KEY_PRINT, KEY_FLASH, KEY_TIMER, KEY_ISO, KEY_VIDEO };
+#else
+    static const char* names[]={ "Print", "FE"};
+    static const int keys[]={ KEY_PRINT, KEY_MICROPHONE };
+#endif
     int i;
 
     for (i=0; i<sizeof(names)/sizeof(names[0]); ++i) {

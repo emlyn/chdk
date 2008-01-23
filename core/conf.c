@@ -268,10 +268,8 @@ static void conf_change_menu_rbf_file() {
 }
 
 static void conf_change_alt_mode_button() {
-#if defined(CAMERA_s2is) || defined(CAMERA_s3is)
+#if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_g7)
     kbd_set_alt_mode_key_mask(conf.alt_mode_button);
-#elif defined(CAMERA_g7) 
-    kbd_set_alt_mode_key_mask(KEY_PRINT);
 #else
     conf.alt_mode_button = KEY_PRINT;
 #endif
