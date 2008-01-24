@@ -430,6 +430,8 @@ unsigned int GetTotalCardSpaceKb(void){
  return (_GetDrive_TotalClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
 }
 
+#if defined(CAMERA_g7) || defined(CAMERA_a710)
+static char mbr_buf[512];
 int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long *part_start_sector,  unsigned long *part_length){
 // return value: 1 - success, 0 - fail
  
@@ -437,6 +439,8 @@ int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long 
  int valid;
   
  if ((mbr_sector[0x1FE]!=0x55) || (mbr_sector[0x1FF]!=0xAA)) return 0; // signature check 
+
+ _memcpy(mbr_buf,mbr_sector,512);
 
  while(offset>=0) {
  
@@ -456,3 +460,31 @@ int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long 
 
  return valid;
 }
+
+int get_part_count(void){
+ unsigned long part_start_sector, part_length;
+ char part_status, part_type;
+ int i;
+ int count=0;
+ for (i=0; i<=1;i++){
+  part_start_sector=(*(unsigned short*)(mbr_buf+i*16+0x1C8)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1C6); 
+  part_length=(*(unsigned short*)(mbr_buf+i*16+0x1CC)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1CA); 
+  part_status=mbr_buf[i*16+0x1BE];
+  part_type=mbr_buf[0x1C2+i*16];
+  if ( part_start_sector && part_length && part_type && ((part_status==0) || (part_status==0x80)) ) count++;
+ }
+ return count;
+}
+
+void swap_partitions(void){
+ int i;
+ char c;
+ for(i=0;i<16;i++){
+  c=mbr_buf[i+0x1BE];
+  mbr_buf[i+0x1BE]=mbr_buf[i+0x1CE];
+  mbr_buf[i+0x1CE]=c;
+ }
+ _WriteSDCard(0,0,1,&mbr_buf);
+}
+
+#endif

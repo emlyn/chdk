@@ -199,7 +199,8 @@ static CMenuItem misc_submenu_items[] = {
     {LANG_MENU_MISC_BUILD_INFO,         MENUITEM_PROC,    (int*)gui_show_build_info },
     {LANG_MENU_MISC_MEMORY_INFO,        MENUITEM_PROC,    (int*)gui_show_memory_info },
     {LANG_MENU_BACK,                    MENUITEM_UP },
-    {0}
+    {0}, // for swap part. menu
+    {0},
 };
 static CMenu misc_submenu = { LANG_MENU_MISC_TITLE, NULL, misc_submenu_items };
 
@@ -452,6 +453,9 @@ static CMenuItem root_menu_items[] = {
 #endif
     {0}
 };
+
+static CMenuItem swap_menuitem={(int)"Swap partitions",      MENUITEM_PROC,      (int*)swap_partitions };
+
 static CMenu root_menu = { LANG_MENU_MAIN_TITLE, NULL, root_menu_items };
 
 //-------------------------------------------------------------------
@@ -1108,6 +1112,16 @@ void gui_kbd_process()
         switch (gui_mode) {
             case GUI_MODE_ALT:
                 gui_menu_init(&root_menu);
+#if defined (CAMERA_g7) || defined (CAMERA_a710)
+                if (get_part_count()==2){
+                 int misc_menu_count;
+                 misc_menu_count=sizeof(misc_submenu_items)/sizeof(misc_submenu_items[0]);
+                 if (misc_submenu_items[misc_menu_count-2].text==0){
+                  misc_submenu_items[misc_menu_count-2]=misc_submenu_items[misc_menu_count-3];
+                  misc_submenu_items[misc_menu_count-3]=swap_menuitem;
+                 }
+                }
+#endif
                 gui_mode = GUI_MODE_MENU;
                 draw_restore();
                 break;

@@ -166,6 +166,6 @@ extern int   _stat(char *name, void *pStat);
 extern unsigned long _GetDrive_ClusterSize(int drive);
 extern unsigned long _GetDrive_TotalClusters(int drive);
 extern unsigned long _GetDrive_FreeClusters(int drive);
-
+extern int _WriteSDCard(unsigned int drive, unsigned int start_sect, unsigned int num_sect, void *buf);
 
 #endif

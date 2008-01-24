@@ -393,6 +393,9 @@ extern int recreview_hold;
 unsigned int GetFreeCardSpaceKb(void);
 unsigned int GetTotalCardSpaceKb(void);
 
+void swap_partitions(void);
+int get_part_count(void);
+
 #define started() debug_led(1)
 #define finished() debug_led(0)
 
