@@ -11,6 +11,7 @@ long kbd_process();
 void gui_init();
 
 void core_rawdata_available();
+void core_spytask_can_start();
 
 #define NOISE_REDUCTION_AUTO_CANON      (0)
 #define NOISE_REDUCTION_OFF             (1)

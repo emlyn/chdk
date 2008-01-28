@@ -61,6 +61,10 @@ void core_rawdata_available()
     raw_data_available = 1;
 }
 
+void core_spytask_can_start() {
+        spytask_can_start = 1;
+}
+
 void core_spytask()
 {
     int cnt = 1;

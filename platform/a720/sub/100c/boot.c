@@ -1289,11 +1289,14 @@ void __attribute__((naked,noinline)) task_InitFileModules_my() { //#fs
                 "MOVNE   R0, R5\n"
                 "BLNE    sub_FFC5B69C\n"
                 "BL      sub_FFC5A4E8_my\n"    // continue to SDHC-hook here!
+
+                "BL      core_spytask_can_start\n"      // CHDK: Set "it's-save-to-start"-Flag for spytask
+
                 "CMP     R4, #0\n"
                 "MOVEQ   R0, R5\n"
                 "LDMEQFD SP!, {R4-R6,LR}\n"
                 "MOVEQ   R1, #0\n"
-                "BEQ     sub_FFC5B69C\n"
+                "BEQ     sub_FFC5B69C\n"        // cameralog "LogicalEvent...", it's save to run this after spytask has started
                 "LDMFD   SP!, {R4-R6,PC}\n"
         );
 }; //#fe
