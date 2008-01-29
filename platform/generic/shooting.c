@@ -811,7 +811,7 @@ void shooting_tv_bracketing(){
  int m=mode_get()&MODE_SHOOTING_MASK;
  if (bracketing.shoot_counter==0) { // first shoot
     bracketing.shoot_counter=1;
-#if   defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560)
+#if   defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000) 
     bracketing.tv96=shooting_get_tv96(); 
 #else    
     if (!(m==MODE_M || m==MODE_TV)) bracketing.tv96=shooting_get_tv96(); 

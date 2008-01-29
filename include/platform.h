@@ -37,18 +37,21 @@ MODE_SCN_FIREWORK       ,
 MODE_SCN_COLOR_ACCENT   ,
 MODE_VIDEO_HIRES        ,
 MODE_SCN_AQUARIUM       ,
-
+MODE_COLOR_ACCENT       ,
 MODE_SCN_NIGHT1         ,
 MODE_SCN_ISO_3200       ,
 MODE_SCN_SPORT          ,
-
+MODE_SCN_KIDS_PETS      ,
 MODE_INDOOR             ,
 MODE_KIDS_PETS          ,
 MODE_NIGHT_SNAPSHOT     ,
 MODE_DIGITAL_MACRO      ,
+MODE_SCN_FOLIAGE        ,
+MODE_VIDEO_TIME_LAPSE   ,
+MODE_SCN_INDOOR         ,
 };
 
-#if defined(CAMERA_a570) || defined(CAMERA_a560) || defined(CAMERA_a720) 
+#if defined(CAMERA_a570) || defined(CAMERA_a560) || defined(CAMERA_a720) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000)
  #define PROPCASE_DRIVE_MODE					102
  #define PROPCASE_FOCUS_MODE					133
  #define PROPCASE_FLASH_MODE         			        143

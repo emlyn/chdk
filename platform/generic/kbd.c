@@ -25,7 +25,7 @@ static int remote_key, remote_count;
 #define USB_REG 0
 #endif
 
-#if defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_ixus800_sd700)
+#if defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000)
 #define USB_MASK 0x8000000
 #define USB_REG 1
 #endif
