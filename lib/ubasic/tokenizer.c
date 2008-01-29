@@ -96,7 +96,7 @@ static const struct keyword_token keywords[] = {
   /* WARNING due to tokenizer limitation longest match must be first */
 // GET  
   {"get_av96",                TOKENIZER_GET_AV96},
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	      
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560) && !defined(CAMERA_ixus850_sd800) && !defined(CAMERA_ixus70_sd1000)
   {"get_av",                  TOKENIZER_GET_USER_AV_ID}, //FOR COMPATIBILITY
 #endif
   {"get_bv96",                TOKENIZER_GET_BV96},
@@ -115,7 +115,7 @@ static const struct keyword_token keywords[] = {
   {"get_tick_count",          TOKENIZER_GET_TICK_COUNT},
   {"get_tv96",                TOKENIZER_GET_TV96},
   {"get_user_av_id",          TOKENIZER_GET_USER_AV_ID},
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	      
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560) && !defined(CAMERA_ixus850_sd800) && !defined(CAMERA_ixus70_sd1000)	      
   {"get_user_av96",           TOKENIZER_GET_USER_AV96},
   {"get_user_tv_id",          TOKENIZER_GET_USER_TV_ID},
   {"get_user_tv96",           TOKENIZER_GET_USER_TV96},
@@ -123,7 +123,7 @@ static const struct keyword_token keywords[] = {
   {"get_vbatt",               TOKENIZER_GET_VBATT},
   {"get_zoom",                TOKENIZER_GET_ZOOM},
 //SET  
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	    
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560) && !defined(CAMERA_ixus850_sd800) && !defined(CAMERA_ixus70_sd1000)
   {"set_av96_direct",         TOKENIZER_SET_AV96_DIRECT},
   {"set_av_rel",              TOKENIZER_SET_USER_AV_BY_ID_REL}, //FOR COMPATIBILITY
   {"set_av96",                TOKENIZER_SET_AV96},
@@ -140,11 +140,11 @@ static const struct keyword_token keywords[] = {
   //{"set_shutter_speed",       TOKENIZER_SET_SHUTTER_SPEED},
   {"set_sv96",		          TOKENIZER_SET_SV96},
   {"set_tv96_direct",         TOKENIZER_SET_TV96_DIRECT},
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	        
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560) && !defined(CAMERA_ixus850_sd800) && !defined(CAMERA_ixus70_sd1000)
   {"set_tv_rel",              TOKENIZER_SET_USER_TV_BY_ID_REL}, //FOR COMPATIBILITY
 #endif    
   {"set_tv96",                TOKENIZER_SET_TV96},
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560)	        
+#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560) && !defined(CAMERA_ixus850_sd800) && !defined(CAMERA_ixus70_sd1000)
   {"set_tv",                  TOKENIZER_SET_USER_TV_BY_ID}, //FOR COMPATIBILITY
   {"set_user_av_by_id_rel",   TOKENIZER_SET_USER_AV_BY_ID_REL},
   {"set_user_av_by_id",       TOKENIZER_SET_USER_AV_BY_ID},
