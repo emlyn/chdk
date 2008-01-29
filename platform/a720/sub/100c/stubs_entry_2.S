@@ -108,8 +108,6 @@ NHSTUB(closedir, 0xFFDC1C68)  // CloseFastDir
 
 
 // dryos Test
-NHSTUB(phySw_p1, 0xFFC131D0)    // called from phySw
-NHSTUB(phySw_p2, 0xFFC12A1C)    // called when phySw_p1 returns 1
 NHSTUB(NewTaskShell, 0xFFC596B0)  // starts new shell on Console. GUI output?
 NHSTUB(UIFS_WriteFirmInfoToFile, 0xFFD4A934) // should write 'A/FirmInfo.txt'
 NHSTUB(dumpMemoryToFile, 0xFFC141Fa)         // writes a portion of memory into a file (char* filename, 0, (void*) src, int length)
