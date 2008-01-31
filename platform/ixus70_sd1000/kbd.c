@@ -281,7 +281,7 @@ long kbd_use_zoom_as_mf() {
     static long zoom_key_pressed = 0;
 
     if (kbd_is_key_pressed(KEY_ZOOM_IN) && (mode_get()&MODE_MASK) == MODE_REC) {
-        get_property_case(PROPCASE_MF_ACTIVE, &v, 4);
+        get_property_case(PROPCASE_FOCUS_MODE, &v, 4);
         if (v) {
             kbd_key_release_all();
             kbd_key_press(KEY_RIGHT);
@@ -296,7 +296,7 @@ long kbd_use_zoom_as_mf() {
         }
     }
     if (kbd_is_key_pressed(KEY_ZOOM_OUT) && (mode_get()&MODE_MASK) == MODE_REC) {
-        get_property_case(PROPCASE_MF_ACTIVE, &v, 4);
+        get_property_case(PROPCASE_FOCUS_MODE, &v, 4);
         if (v) {
             kbd_key_release_all();
             kbd_key_press(KEY_LEFT);

@@ -23,7 +23,7 @@ long hook_raw_size()
 
 void *vid_get_viewport_live_fb()
 {
-    return (void*)0x106DA350; // 0x1065BA50 + 0x7E900 (find on "VRAM Address  : %p")
+    return (void*)0; // 0x1065BA50 + 0x7E900 (find on "VRAM Address  : %p")
 }
 
 void *vid_get_bitmap_fb()

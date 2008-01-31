@@ -70,7 +70,7 @@ MODE_SCN_INDOOR         ,
  #define PROPCASE_SHOOTING      				206
  #define PROPCASE_IS_FLASH_READY      				208
  #define PROPCASE_OVEREXPOSURE 					-1
- #define PROPCASE_MF_ACTIVE					115
+ #define PROPCASE_SHOOTING_MODE					49
 
 #else
  #define PROPCASE_DRIVE_MODE    				6
@@ -91,7 +91,7 @@ MODE_SCN_INDOOR         ,
  #define PROPCASE_SHOOTING     					205
  #define PROPCASE_IS_FLASH_READY      				221
  #define PROPCASE_OVEREXPOSURE 					76
- #define PROPCASE_MF_ACTIVE					12
+ #define PROPCASE_SHOOTING_MODE					0
 #endif
 
 

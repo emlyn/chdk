@@ -60,7 +60,7 @@ static struct {
 int mode_get() {
     int mode, i, t=0xFF;
     mode = (playrec_mode==1 || playrec_mode==2) ? MODE_REC : MODE_PLAY;
-    _GetPropertyCase(0, &t, 4);
+    _GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
     for (i=0; i<MODESCNT; ++i) {
 	if (modemap[i].canonmode == t) {
 	    return (mode | (modemap[i].hackmode & MODE_SHOOTING_MASK));

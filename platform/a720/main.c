@@ -86,7 +86,7 @@ int mode_get() {
 
     mode  = (physw_status[1] & 0x02000000)?MODE_REC:MODE_PLAY;
     
-    _GetPropertyCase(49, &t, 4);
+    _GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
     for (i=0; i<MODESCNT; ++i) {
 	if (modemap[i].canonmode == t) {
 	    return (mode | (modemap[i].hackmode & MODE_SHOOTING_MASK));
