@@ -48,6 +48,9 @@ PLATFORMSUB=100e
 #PLATFORM=ixus70_sd1000
 #PLATFORMSUB=102a
 
+#PLATFORM=a650
+#PLATFORMSUB=100d
+
 include $(topdir)version.inc
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
 

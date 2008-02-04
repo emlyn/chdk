@@ -1,7 +1,7 @@
 #include "lolevel.h"
 #include "platform.h"
 
-#if defined (CAMERA_a720)
+#if defined (CAMERA_a720) || defined(CAMERA_a650)
 #define _U	0x01	/* upper */
 #define _L	0x02	/* lower */
 #define _D	0x04	/* digit */
@@ -146,7 +146,7 @@ long stat_get_vbatt()
 long get_tick_count()
 {
 long t;
-#if !defined(CAMERA_a720)
+#if !defined(CAMERA_a720) && !defined(CAMERA_a650)
     _GetSystemTime(&t);
     return t;
 #else
@@ -188,7 +188,7 @@ int remove(const char *name) {
 }
 
 int isdigit(int c) {
-#if !defined(CAMERA_a720)  
+#if !defined(CAMERA_a720)  && !defined(CAMERA_a650)
     return _isdigit(c);
 #else
     return _ctype[c]&_D;
@@ -196,7 +196,7 @@ int isdigit(int c) {
 }
 
 int isspace(int c) {
-#if !defined(CAMERA_a720)  
+#if !defined(CAMERA_a720)  && !defined(CAMERA_a650)
     return _isspace(c);
 #else
     return _ctype[c]&_S;
@@ -205,7 +205,7 @@ int isspace(int c) {
 }
 
 int isalpha(int c) {
-#if !defined(CAMERA_a720)  
+#if !defined(CAMERA_a720) && !defined(CAMERA_a650) 
     return _isalpha(c);
 #else
     return _ctype[c]&(_U|_L);
@@ -213,7 +213,7 @@ int isalpha(int c) {
 }
 
 int isupper(int c) {
-#if !defined(CAMERA_a720)  
+#if !defined(CAMERA_a720) && !defined(CAMERA_a650) 
     return _isupper(c);
 #else
     return _ctype[c]&_U;
@@ -258,7 +258,7 @@ long strtol(const char *nptr, char **endptr, int base) {
 }
 
 char *strpbrk(const char *s, const char *accept) {
-#if !defined(CAMERA_a720)   
+#if !defined(CAMERA_a720) && !defined(CAMERA_a650)  
     return _strpbrk(s, accept);
 #else
     const char *sc1,*sc2;
@@ -291,7 +291,7 @@ int utime(char *file, void *newTimes) {
 }
 
 void *localtime(const unsigned long *_tod) {
-#if !defined (CAMERA_a720)
+#if !defined (CAMERA_a720) && !defined(CAMERA_a650)
     return _localtime(_tod);
 #else
 #warning  do something with this!  - sizeof(x[]) must be >= sizeof(struct tm)
@@ -353,7 +353,7 @@ void *opendir(const char* name) {
 }
 
 void* readdir(void *d) {
-# if !defined (CAMERA_a720)
+# if !defined (CAMERA_a720) && !defined(CAMERA_a650)
     return _readdir(d);
 #else
 #warning  do something with this!  - sizeof(de[]) must be >= sizeof(struct dirent)

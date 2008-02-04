@@ -38,6 +38,11 @@
 #define ROWPIX 3336   // for new 8 MP
 #define ROWS   2480   // for new 8 MP
 
+#elif defined (CAMERA_a650)
+#define ROWPIX 4104   // for 12 MP
+#define ROWS   3048   // for 12 MP
+
+
 #else
 #error camera type not defined
 

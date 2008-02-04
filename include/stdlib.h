@@ -12,7 +12,7 @@
 #define O_RDWR          2
 
 
-#if !defined(CAMERA_a720)
+#if !defined(CAMERA_a720) && !defined(CAMERA_a650)
 
 #define O_TRUNC         0x400
 #define O_CREAT         0x200
@@ -149,7 +149,7 @@ extern long task_unlock();
 #define DOS_ATTR_DIRECTORY      0x10            /* entry is a sub-directory */
 #define DOS_ATTR_ARCHIVE        0x20            /* file subject to archiving */
 
-#if !defined (CAMERA_a720)
+#if !defined (CAMERA_a720) && !defined(CAMERA_a650)
 struct dirent {
     char                name[100];
 };

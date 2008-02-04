@@ -264,7 +264,7 @@ static CMenuItem values_submenu_items[] = {
       {LANG_MENU_VALUES_SHOW_BV_SETED,			 MENUITEM_BOOL,	     &conf.values_show_bv_seted},					
       {LANG_MENU_VALUES_SHOW_BV_MEASURED,   	 MENUITEM_BOOL,	     &conf.values_show_bv_measured},					
       {LANG_MENU_VALUES_SHOW_OVEREXPOSURE,	     MENUITEM_BOOL,      &conf.values_show_overexposure},	
-#if !defined(CAMERA_a570) && !defined(CAMERA_a560) && !defined(CAMERA_a720) && !defined(CAMERA_ixus850_sd800) && !defined(CAMERA_ixus70_sd1000)
+#if !defined(CAMERA_a570) && !defined(CAMERA_a560) && !defined(CAMERA_a720) && !defined(CAMERA_ixus850_sd800) && !defined(CAMERA_ixus70_sd1000) && !defined(CAMERA_a650)
       {LANG_MENU_SHOW_CANON_OVEREXPOSURE,	     MENUITEM_BOOL,      &conf.values_show_canon_overexposure},							
 #endif      
       {LANG_MENU_VALUES_SHOW_LUMINANCE,  	     MENUITEM_BOOL,      &conf.values_show_luminance},							
@@ -438,7 +438,7 @@ static CMenu zebra_submenu = { LANG_MENU_ZEBRA_TITLE, NULL, zebra_submenu_items 
 static CMenuItem root_menu_items[] = {
     {LANG_MENU_OPERATION_PARAM,         MENUITEM_SUBMENU,   (int*)&operation_submenu },
     {LANG_MENU_MAIN_OSD_PARAM,          MENUITEM_SUBMENU,   (int*)&osd_submenu },
-#if !defined (CAMERA_a720)
+#if !defined (CAMERA_a720) && !defined(CAMERA_a650)
     {LANG_MENU_VIDEO_PARAM,             MENUITEM_SUBMENU,   (int*)&video_submenu },
 #endif
     {LANG_MENU_MAIN_RAW_PARAM,          MENUITEM_SUBMENU,   (int*)&raw_submenu },
