@@ -54,28 +54,28 @@ MODE_SCN_INDOOR         ,
 #if defined(CAMERA_a570) || defined(CAMERA_a560) || defined(CAMERA_a720) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_a650)
  #define PROPCASE_DRIVE_MODE					102
  #define PROPCASE_FOCUS_MODE					133
- #define PROPCASE_FLASH_MODE         			        143
+ #define PROPCASE_FLASH_MODE   			     143
  #define PROPCASE_USER_TV       				264
  #define PROPCASE_TV	        				262
  #define PROPCASE_USER_AV      					26
  #define PROPCASE_AV            				23
  #define PROPCASE_MIN_AV       					25
- #define PROPCASE_SV            				246
+ #define PROPCASE_SV            				247
  #define PROPCASE_DELTA_SV      				79
- #define PROPCASE_SV_MARKET     				247
+ #define PROPCASE_SV_MARKET     				246
  #define PROPCASE_BV            				34
  #define PROPCASE_SUBJECT_DIST1 				245
  #define PROPCASE_SUBJECT_DIST2 				65
- #define PROPCASE_ISO_MODE					149
+ #define PROPCASE_ISO_MODE				    	149
  #define PROPCASE_SHOOTING      				206
- #define PROPCASE_IS_FLASH_READY      				208
- #define PROPCASE_OVEREXPOSURE 					-1
+ #define PROPCASE_IS_FLASH_READY      		208
+ #define PROPCASE_OVEREXPOSURE 					103
  #define PROPCASE_SHOOTING_MODE					49
 
 #else
  #define PROPCASE_DRIVE_MODE    				6
  #define PROPCASE_FOCUS_MODE    				12
- #define PROPCASE_FLASH_MODE         				16
+ #define PROPCASE_FLASH_MODE       				16
  #define PROPCASE_USER_TV       				40
  #define PROPCASE_TV	        				69
  #define PROPCASE_USER_AV       				39
@@ -89,7 +89,7 @@ MODE_SCN_INDOOR         ,
  #define PROPCASE_SUBJECT_DIST1 				65
  #define PROPCASE_SUBJECT_DIST2 				66
  #define PROPCASE_SHOOTING     					205
- #define PROPCASE_IS_FLASH_READY      				221
+ #define PROPCASE_IS_FLASH_READY   				221
  #define PROPCASE_OVEREXPOSURE 					76
  #define PROPCASE_SHOOTING_MODE					0
 #endif

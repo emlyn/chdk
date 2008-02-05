@@ -58,7 +58,7 @@ static struct {
 #define MODESCNT (sizeof(modemap)/sizeof(modemap[0]))
 
 
-static const int fl_tbl[] = {5800, 6420, 7060, 7700, 8340, 9950, 11550, 13160, 14750, 17150, 19570, 22760, 26750, 30750, 34800};
+static const int fl_tbl[] = {7400, 8210, 9040, 9860, 10670, 12730, 14780, 16820, 18890, 21970, 25030, 29170, 36780, 44400};
 #define NUM_FL (sizeof(fl_tbl)/sizeof(fl_tbl[0]))
 #define CF_EFL 60345
 
@@ -85,8 +85,8 @@ int mode_get() {
     int mode, i, t=0xFF;
 
     mode  = (physw_status[1] & 0x02000000)?MODE_PLAY:MODE_REC;
-//    mode |= (physw_status[2] & 0x00008000)?0:MODE_SCREEN_OPENED;
-//    mode |= (physw_status[2] & 0x00004000)?0:MODE_SCREEN_ROTATED;
+    mode |= (physw_status[0] & 0x04000000)?0:MODE_SCREEN_OPENED;
+    mode |= (physw_status[0] & 0x08000000)?0:MODE_SCREEN_ROTATED;
 
     _GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
     for (i=0; i<MODESCNT; ++i) {

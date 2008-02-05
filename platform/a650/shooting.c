@@ -3,7 +3,7 @@
 #include "platform.h"
 
 const ApertureSize aperture_sizes_table[] = {
-    {  9, 283, "2.8" },
+    {  9, 288, "2.8" },
     { 10, 320, "3.2" },
     { 11, 352, "3.5" },
     { 12, 384, "4.0" },
@@ -60,8 +60,8 @@ const ShutterSpeed shutter_speeds_table[] = {
     {  29,  928, "1/800",  1250 },
     {  30,  960, "1/1000", 1000 },
     {  31,  992, "1/1250",  800 },
-    {  32, 1021, "1/1600",  625 },
-    {  33, 1053, "1/2000",  500 },
+    {  32, 1024, "1/1600",  625 },
+    {  33, 1056, "1/2000",  500 },
 };
 
 const ISOTable iso_table[] = {
@@ -77,7 +77,7 @@ const ISOTable iso_table[] = {
 
 #include "../generic/shooting.c"
 
-const int dof_tbl[] = {5800, 6420, 7060, 7700, 8340, 9950, 11550, 13160, 14750, 17150, 19570, 22760, 26750, 30750, 34800};
+const int dof_tbl[] = {7400, 8210, 9040, 9860, 10670, 12730, 14780, 16820, 18890, 21970, 25030, 29170, 36780, 44400};
 const int dof_tbl_size = sizeof(dof_tbl)/sizeof(dof_tbl[0]);
 
 long get_file_next_counter() {
