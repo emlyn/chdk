@@ -180,7 +180,7 @@ int shooting_get_user_av_id()
 }
 
 short shooting_get_real_aperture() {
-#if defined(CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined(ixus70_sd1000)
+#if defined(CAMERA_ixus700_sd500) || defined(ixus70_sd1000)
     return shooting_get_aperture_from_av96(shooting_get_av96());
 #else
     return shooting_get_aperture_from_av96(_GetCurrentAvValue());
@@ -678,6 +678,9 @@ short shooting_can_focus()
     	        (m==MODE_VIDEO_TIME_LAPSE) ||
 			    (m==MODE_VIDEO_COLOR_ACCENT));
   return mode_video;
+#elif defined (CAMERA_ixus800_sd700)                				   
+ int m=mode_get()&MODE_SHOOTING_MASK;
+  return (shooting_get_zoom()<8) && (m!=MODE_AUTO) && (m!=MODE_SCN_WATER);
 #else 
   return 1;  
 #endif 			  
@@ -687,8 +690,8 @@ short shooting_get_common_focus_mode()
 {
 #if defined (CAMERA_ixus700_sd500) 
  return 0;
-#elif defined (CAMERA_ixus800_sd700) || defined (ixus70_sd1000) || defined (CAMERA_a560)                				   
-  return shooting_get_subject_distance_override_koef();
+#elif defined (CAMERA_ixus800_sd700) || defined (ixus70_sd1000) || defined (CAMERA_a560)
+  return 1;
 #else 
   return shooting_get_focus_mode();
 #endif 			  
