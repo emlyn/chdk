@@ -335,7 +335,7 @@ static char* gui_lang_default = \
 
 "264 \"Clear override values on start\"\n"
 
-"265 \"Show canon overexposure value\"\n"
+"265 \"Show Canon overexposure value\"\n"
 
 "266 \"RAW develop\"\n"
 "267 \"Please switch camera\\nto record mode and make\\none shoot.\"\n"
@@ -346,6 +346,10 @@ static char* gui_lang_default = \
 
 "272 \"Show OSD in Review Mode\"\n"
 "273 \"Show Parameter Data\"\n"
+
+"274 \"Subject distance from lens\"\n"
+
+"275 \"Clear Bracket Values on Start\"\n"
 
 ;
 

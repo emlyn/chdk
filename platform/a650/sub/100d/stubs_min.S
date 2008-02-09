@@ -13,7 +13,7 @@ DEF(focus_busy, 0xD530)
 DEF(canon_menu_active,0xEE9C)  // 0xEE98+4
 
 #warning incorrect value, points to zero
-DEF(canon_shoot_menu_active,0xFFEAE4FC)
+DEF(canon_shoot_menu_active,0xE6CD)
 
 #warning incorrect value, points to zero
 DEF(recreview_hold, 0xFFEAE4FC)

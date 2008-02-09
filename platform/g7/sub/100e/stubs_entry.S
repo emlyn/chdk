@@ -20,9 +20,17 @@ NSTUB(GetCurrentAvValue, 0xffb4ffc0)
 // ALT: NSTUB(GetCurrentAvValue, 0xffb500b8) // 13/0
 // ALT: NSTUB(GetCurrentAvValue, 0xffb52530) // 13/0
 NSTUB(GetCurrentTargetDistance, 0xffb524d8)
+// Best match: 92%
+NSTUB(GetDrive_ClusterSize, 0xff87c338)
+// Best match: 92%
+NSTUB(GetDrive_FreeClusters, 0xff87c3b0)
+// Best match: 92%
+NSTUB(GetDrive_TotalClusters, 0xff87c374)
 // Best match: 83%
 NSTUB(GetFocusLensSubjectDistance, 0xffb3d81c)
 // ALT: NSTUB(GetFocusLensSubjectDistance, 0xffb3d81c) // 26/5
+// Best match: 92%
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffb3dd88)
 NSTUB(GetParameterData, 0xff9bbd60)
 // Best match: 92%
 NSTUB(GetPropertyCase, 0xff8258d4)
@@ -157,9 +165,3 @@ NSTUB(Fopen_Fut, 0xff875b40)
 NSTUB(Fread_Fut, 0xff875c3c)
 NSTUB(Fseek_Fut, 0xff875d30)
 NSTUB(Fwrite_Fut, 0xff875c90)
-// Best match: 92%
-NSTUB(GetDrive_ClusterSize, 0xff87c338)
-// Best match: 92%
-NSTUB(GetDrive_TotalClusters, 0xff87c374)
-// Best match: 92%
-NSTUB(GetDrive_FreeClusters, 0xff87c3b0)

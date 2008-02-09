@@ -93,7 +93,7 @@ int ubasic_camera_get_nr()
 }
 
 
-void clear_override_values()
+void clear_values()
 {	
 	if (conf.clear_override)
 	{
@@ -101,6 +101,13 @@ void clear_override_values()
 	 conf.tv_override_koef=0;
 	 conf.subj_dist_override_koef=0;
 	 conf.iso_override_koef=0;
+	}
+	if (conf.clear_bracket)
+	{
+	 conf.av_bracket_value=0;
+	 conf.tv_bracket_value=0;
+	 conf.iso_bracket_koef=0;
+	 conf.subj_dist_bracket_koef=0;
 	}
 }
 
@@ -178,7 +185,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO( 70, conf.raw_nr,                 CONF_DEF_VALUE, i:NOISE_REDUCTION_AUTO_CANON, NULL),
     CONF_INFO( 71, conf.grid_force_color,       CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 72, conf.grid_color,             CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_BG, COLOR_FG), NULL),
-    //ARM begin  	
+
     CONF_INFO( 80, conf.dof_subj_dist_as_near_limit, CONF_DEF_VALUE, i:0, NULL),	
     CONF_INFO( 81, conf.dof_use_exif_subj_dist,  CONF_DEF_VALUE, i:0, NULL),	
     CONF_INFO( 82, conf.dof_subj_dist_in_misc,   CONF_DEF_VALUE, i:1, NULL),		
@@ -199,14 +206,14 @@ static const ConfInfo conf_info[] = {
     CONF_INFO( 96, conf.values_show_bv_seted,      CONF_DEF_VALUE, i:0, NULL),						
     CONF_INFO( 97, conf.values_show_overexposure,  CONF_DEF_VALUE, i:0, NULL),							
     CONF_INFO( 98, conf.values_show_luminance,   CONF_DEF_VALUE, i:0, NULL),						
-  //ARM End  	
+
     CONF_INFO( 99, conf.video_mode,             CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(100, conf.video_quality,          CONF_DEF_VALUE, i:84,NULL),
     CONF_INFO(101, conf.video_bitrate,          CONF_DEF_VALUE, i:3, conf_change_video_bitrate),
     
     CONF_INFO(102, conf.tv_override_value,		    CONF_DEF_VALUE, i:0, NULL),	
     CONF_INFO(103, conf.tv_override_koef,		CONF_DEF_VALUE, i:0, NULL),	
-    //ARM begin 
+
     CONF_INFO(104, conf.av_override_value,			CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(105, conf.iso_override_value,			CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(106, conf.iso_override_koef,		CONF_DEF_VALUE, i:0, NULL),
@@ -222,8 +229,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(114, conf.subj_dist_bracket_koef,   CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(115, conf.bracket_type,		 	  CONF_DEF_VALUE, i:0, NULL),
     
-    CONF_INFO(116, conf.recalc_exposure,				CONF_DEF_VALUE, i:0, NULL),
-    CONF_INFO(117, conf.tv_exposure_order,				CONF_DEF_VALUE, i:2, NULL),
+    CONF_INFO(116, conf.recalc_exposure,		  CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(117, conf.tv_exposure_order,		   CONF_DEF_VALUE, i:2, NULL),
     CONF_INFO(118, conf.av_exposure_order,				CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(119, conf.iso_exposure_order,				CONF_DEF_VALUE, i:3, NULL),
     
@@ -235,7 +242,12 @@ static const ConfInfo conf_info[] = {
     
     CONF_INFO(124, conf.show_osd_in_review,  CONF_DEF_VALUE, i:0, NULL),							
     
-    //ARM end  	
+	CONF_INFO(125, conf.dof_dist_from_lens,  CONF_DEF_VALUE, i:0, NULL),
+    
+    CONF_INFO(126, conf.clear_bracket,  CONF_DEF_VALUE, i:1, NULL),
+    
+  //  CONF_INFO(126, conf.nd_filter_state,  CONF_DEF_VALUE, i:0, NULL),							
+    
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

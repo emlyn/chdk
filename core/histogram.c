@@ -69,15 +69,13 @@ void histogram_process()
     static int viewport_size;
     unsigned int histo_fill[5];
 
-//    if (kbd_is_key_pressed(KEY_SHOOT_HALF)){
-//        img = vid_get_viewport_fb();
-//    } else {
-//        img = vid_get_viewport_live_fb();
-//    }
-
-    switch (histogram_stage) {
+	    switch (histogram_stage) {
         case 0:
-            img=((mode_get()&MODE_MASK) == MODE_PLAY)?vid_get_viewport_fb_d():vid_get_viewport_fb();
+            img=((mode_get()&MODE_MASK) == MODE_PLAY)?vid_get_viewport_fb_d():((kbd_is_key_pressed(KEY_SHOOT_HALF))?vid_get_viewport_fb():vid_get_viewport_live_fb());
+      	
+        	if (img==NULL){
+	    	  img = vid_get_viewport_fb();
+		    }
             viewport_size = vid_get_viewport_height() * screen_width;
             for (c=0; c<5; ++c) {
                 for (i=0; i<HISTO_WIDTH; ++i) {

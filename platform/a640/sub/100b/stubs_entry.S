@@ -20,6 +20,7 @@ NSTUB(GetCurrentAvValue, 0xffeb09c8)
 NSTUB(GetCurrentTargetDistance, 0xffeb2ec8)
 // Best match: 96%
 NSTUB(GetFocusLensSubjectDistance, 0xffea4e74)
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffea5428)
 NSTUB(GetParameterData, 0xffd704f8)
 // Best match: 92%
 NSTUB(GetPropertyCase, 0xffc15484)

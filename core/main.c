@@ -88,7 +88,7 @@ void core_spytask()
     mkdir("A/CHDK/GRIDS");
     auto_started = 0;
     
-    clear_override_values();
+    clear_values();
     
     if (conf.script_startup) script_autostart();				// remote autostart
     while (1){

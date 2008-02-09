@@ -105,11 +105,14 @@ typedef struct {
     int subj_dist_bracket_value;
     int subj_dist_bracket_koef;
     int bracket_type;
+    int clear_bracket;
 
 
     int tv_override_value;
     int tv_override_koef;
     int av_override_value;
+    //For ixuses
+    //int nd_filter_state;
     int iso_override_value;
     int iso_override_koef;
     int subj_dist_override_value;
@@ -128,6 +131,8 @@ typedef struct {
     int dof_far_limit_in_misc;
     int dof_hyperfocal_in_misc;
     int dof_depth_in_misc;
+    int dof_dist_from_lens;
+    
     
     int values_show_in_review;
     int values_show_zoom;

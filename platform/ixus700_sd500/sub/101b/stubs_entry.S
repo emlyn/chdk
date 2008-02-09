@@ -15,14 +15,26 @@ NSTUB(DisplayImagePhysicalScreen, 0xff932ac4)
 NSTUB(EnableDispatch, 0xff82180c)
 NSTUB(ExecuteEventProcedure, 0xff816164)
 NSTUB(ExitTask, 0xff821dd0)
+NSTUB(Fclose_Fut, 0xff863730)
+// ALT: NSTUB(Fclose_Fut, 0xff863730) // 30/0
+NSTUB(Fopen_Fut, 0xff8636f4)
+// ALT: NSTUB(Fopen_Fut, 0xff8636f4) // 28/0
+NSTUB(Fread_Fut, 0xff863814)
+// ALT: NSTUB(Fread_Fut, 0xff863814) // 25/0
 // Best match: 66%
 NSTUB(FreeMemory, 0xff811bac)
 NSTUB(FreeUncacheableMemory, 0xff813ef4)
+NSTUB(Fseek_Fut, 0xff8638fc)
+// ALT: NSTUB(Fseek_Fut, 0xff8638fc) // 24/0
+NSTUB(Fwrite_Fut, 0xff863864)
+// ALT: NSTUB(Fwrite_Fut, 0xff863864) // 26/0
 NSTUB(GetCurrentAvValue, 0xffa713a0)
 NSTUB(GetCurrentTargetDistance, 0xffa71348)
 // Best match: 51%
 NSTUB(GetFocusLensSubjectDistance, 0xffa55f8c)
 // ALT: NSTUB(GetFocusLensSubjectDistance, 0xffa55f8c) // 16/15
+// Best match: 88%
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffa65218)
 // Best match: 86%
 NSTUB(GetParameterData, 0xff96b814)
 // Best match: 71%
@@ -43,7 +55,7 @@ NSTUB(LockMainPower, 0xff9679d4)
 NSTUB(MakeDirectory, 0xff86ab80)
 // ERROR: Mount_FileSystem is not found!
 // Best match: 96%
-NSTUB(MoveFocusLensToDistance, 0xffa715d8)
+NSTUB(MoveFocusLensToDistance, 0xffa65c48)
 NSTUB(MoveZoomLensWithPoint, 0xffa56e38)
 // ALT: NSTUB(MoveZoomLensWithPoint, 0xffa56e38) // 25/0
 // ERROR: Open is not found!
@@ -156,11 +168,6 @@ NSTUB(utime, 0xffab5d28)
 // ALT: NSTUB(utime, 0xffab5d28) // 26/0
 NSTUB(vsprintf, 0xffab74ec)
 NSTUB(write, 0xffab9cfc)
-NSTUB(Fclose_Fut, 0xff863730)
-NSTUB(Fopen_Fut, 0xff8636f4)
-NSTUB(Fread_Fut, 0xff863814)
-NSTUB(Fseek_Fut, 0xff8638fc)
-NSTUB(Fwrite_Fut, 0xff863864)
 // Best match: 76%
 NSTUB(GetDrive_ClusterSize, 0xff86a18c)
 // ALT: NSTUB(GetDrive_ClusterSize, 0xff86a18c) // 32/10

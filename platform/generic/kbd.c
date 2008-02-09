@@ -274,12 +274,11 @@ long kbd_get_autoclicked_key() {
 }
 
 long kbd_use_zoom_as_mf() {
-    static long v;
     static long zoom_key_pressed = 0;
 
     if (kbd_is_key_pressed(KEY_ZOOM_IN) && (mode_get()&MODE_MASK) == MODE_REC) {
-        get_property_case(PROPCASE_FOCUS_MODE, &v, 4);
-        if (v) {
+
+        if (shooting_get_focus_mode()) {
             kbd_key_release_all();
             kbd_key_press(KEY_RIGHT);
             zoom_key_pressed = KEY_ZOOM_IN;
@@ -293,8 +292,7 @@ long kbd_use_zoom_as_mf() {
         }
     }
     if (kbd_is_key_pressed(KEY_ZOOM_OUT) && (mode_get()&MODE_MASK) == MODE_REC) {
-        get_property_case(PROPCASE_FOCUS_MODE, &v, 4);
-        if (v) {
+        if (shooting_get_focus_mode()) {
             kbd_key_release_all();
             kbd_key_press(KEY_LEFT);
             zoom_key_pressed = KEY_ZOOM_OUT;

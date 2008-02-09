@@ -54,7 +54,7 @@ MODE_SCN_INDOOR         ,
 #if defined(CAMERA_a570) || defined(CAMERA_a560) || defined(CAMERA_a720) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_a650)
  #define PROPCASE_DRIVE_MODE					102
  #define PROPCASE_FOCUS_MODE					133
- #define PROPCASE_FLASH_MODE   			     143
+ #define PROPCASE_FLASH_MODE    		        143
  #define PROPCASE_USER_TV       				264
  #define PROPCASE_TV	        				262
  #define PROPCASE_USER_AV      					26
@@ -66,9 +66,9 @@ MODE_SCN_INDOOR         ,
  #define PROPCASE_BV            				34
  #define PROPCASE_SUBJECT_DIST1 				245
  #define PROPCASE_SUBJECT_DIST2 				65
- #define PROPCASE_ISO_MODE				    	149
+ #define PROPCASE_ISO_MODE		    			149
  #define PROPCASE_SHOOTING      				206
- #define PROPCASE_IS_FLASH_READY      		208
+ #define PROPCASE_IS_FLASH_READY      			208
  #define PROPCASE_OVEREXPOSURE 					103
  #define PROPCASE_SHOOTING_MODE					49
 
@@ -94,6 +94,8 @@ MODE_SCN_INDOOR         ,
  #define PROPCASE_SHOOTING_MODE					0
 #endif
 
+
+#define MAX_DIST 65535
 
 //********************
 //char * get_debug();
@@ -150,6 +152,10 @@ typedef struct {
 #define SET_NOW      1
 #define SET_LATER    0
 
+#define SHOW_ALWAYS    1
+#define SHOW_HALF      2
+
+
 typedef struct {
     short av96;
     short tv96;
@@ -163,6 +169,7 @@ typedef struct {
     int     far_limit;
     int     hyperfocal_distance;
     int     depth_of_field;
+    int     lens_to_focal_plane_width;
 } DOF_TYPE;
 
 typedef struct {
@@ -256,6 +263,7 @@ long lens_get_zoom_point();
 void lens_set_zoom_point(long newpt);
 void lens_set_zoom_speed(long newspd); //for S-series
 long lens_get_focus_pos();
+long lens_get_focus_pos_from_lense();
 void lens_set_focus_pos(long newpos);
 long lens_get_target_distance();
 
@@ -318,7 +326,7 @@ int shooting_get_focus();
 void shooting_set_focus(int v, short is_now);
 short shooting_get_focus_mode();
 int shooting_get_hyperfocal_distance();
-int shooting_get_hyperfocal_distance_(int av, int fl);
+int shooting_get_hyperfocal_distance_f(int av, int fl);
 int shooting_get_near_limit_of_acceptable_sharpness();
 int shooting_get_far_limit_of_acceptable_sharpness();
 int shooting_get_depth_of_field();
@@ -326,7 +334,10 @@ int shooting_get_subject_distance();
 int shooting_get_subject_distance_override_value();
 int shooting_get_subject_distance_bracket_value();
 int shooting_get_subject_distance_override_koef();
+int shooting_get_lens_to_focal_plane_width();
 short shooting_get_drive_mode();
+short shooting_can_focus();
+short shooting_get_common_focus_mode();
 /******************************************************************/
 int shooting_get_iso_mode();
 void shooting_set_iso_mode(int v);
@@ -358,7 +369,7 @@ void shooting_tv_bracketing();
 void shooting_av_bracketing();
 void shooting_iso_bracketing();
 /******************************************************************/
-void clear_override_values();
+void clear_values();
 /******************************************************************/
 
 

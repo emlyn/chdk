@@ -27,6 +27,7 @@ NSTUB(GetCurrentTargetDistance, 0xffe08374)
 // Best match: 90%
 NSTUB(GetFocusLensSubjectDistance, 0xffe71b8c)
 // ALT: NSTUB(GetFocusLensSubjectDistance, 0xffe71b8c) // 28/3
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffe72080)
 // Best match: 86%
 NSTUB(GetParameterData, 0xffee3d30)
 // Best match: 89%

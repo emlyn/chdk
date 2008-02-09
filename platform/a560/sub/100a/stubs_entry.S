@@ -46,6 +46,7 @@ NSTUB(MakeDirectory, 0xffe3b944)
 // ERROR: Mount_FileSystem is not found!
 // Best match: 73%
 NSTUB(MoveFocusLensToDistance, 0xffdfddc0)
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffe66a8c)
 NSTUB(MoveZoomLensWithPoint, 0xffe79160)
 // ALT: NSTUB(MoveZoomLensWithPoint, 0xffe79160) // 25/0
 // Best match: 66%

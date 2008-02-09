@@ -13,14 +13,25 @@ NSTUB(DisplayImagePhysicalScreen, 0xff941b58)
 NSTUB(EnableDispatch, 0xff821508)
 NSTUB(ExecuteEventProcedure, 0xff816bc8)
 NSTUB(ExitTask, 0xff821a18)
+NSTUB(Fclose_Fut, 0xff86a104)
+NSTUB(Fopen_Fut, 0xff86a0c8)
+NSTUB(Fread_Fut, 0xff86a1e8)
 NSTUB(FreeMemory, 0xff811ad0)
 NSTUB(FreeUncacheableMemory, 0xff814ce4)
+NSTUB(Fseek_Fut, 0xff86a2d0)
+NSTUB(Fwrite_Fut, 0xff86a238)
 NSTUB(GetCurrentAvValue, 0xffb0a538)
 // ALT: NSTUB(GetCurrentAvValue, 0xffb0c5dc) // 13/0
 NSTUB(GetCurrentTargetDistance, 0xffb0c584)
+// ERROR: GetDrive_ClusterSize is not found!
+// ERROR: GetDrive_TotalClusters is not found!
+// Best match: 52%
+NSTUB(GetDrive_FreeClusters, 0xff8707c8)
 // Best match: 83%
 NSTUB(GetFocusLensSubjectDistance, 0xffaf007c)
 // ALT: NSTUB(GetFocusLensSubjectDistance, 0xffaf007c) // 26/5
+// Best match: 88%
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffaf05f4)
 // Best match: 86%
 NSTUB(GetParameterData, 0xff994b68)
 NSTUB(GetPropertyCase, 0xff82498c)
@@ -149,12 +160,3 @@ NSTUB(utime, 0xffb5177c)
 // ALT: NSTUB(utime, 0xffb5177c) // 26/0
 NSTUB(vsprintf, 0xffb52f40)
 NSTUB(write, 0xffb54268)
-NSTUB(Fclose_Fut, 0xff86a104)
-NSTUB(Fopen_Fut, 0xff86a0c8)
-NSTUB(Fread_Fut, 0xff86a1e8)
-NSTUB(Fseek_Fut, 0xff86a2d0)
-NSTUB(Fwrite_Fut, 0xff86a238)
-// ERROR: GetDrive_ClusterSize is not found!
-// ERROR: GetDrive_TotalClusters is not found!
-// Best match: 52%
-NSTUB(GetDrive_FreeClusters, 0xff8707c8)

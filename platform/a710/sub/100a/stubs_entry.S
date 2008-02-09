@@ -19,6 +19,7 @@ NSTUB(GetCurrentAvValue, 0xffeb3d50)
 // ALT: NSTUB(GetCurrentAvValue, 0xffeb628c) // 13/0
 NSTUB(GetCurrentTargetDistance, 0xffeb6234)
 NSTUB(GetFocusLensSubjectDistance, 0xffea2f3c)
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffea34f0)
 NSTUB(GetParameterData, 0xffd76090)
 NSTUB(GetPropertyCase, 0xffc14dec)
 NSTUB(GetSystemTime, 0xffc04d38)

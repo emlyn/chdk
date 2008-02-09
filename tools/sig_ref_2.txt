@@ -39,3 +39,12 @@ LockMainPower 0xFFD70F48
 UnlockMainPower 0xFFD70FE0
 MoveZoomLensWithPoint 0xFFE8F550
 MoveFocusLensToDistance 0xFFEB64D4
+GetFocusLensSubjectDistanceFromLens 0xffea34f0
+Fclose_Fut 0xffc59fb4
+Fopen_Fut 0xffc59f78
+Fread_Fut 0xffc5a098
+Fseek_Fut 0xffc5a180
+Fwrite_Fut 0xffc5a0e8
+GetDrive_ClusterSize 0xffc607b0
+GetDrive_TotalClusters 0xffc607ec
+GetDrive_FreeClusters 0xffc60828

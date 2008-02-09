@@ -103,3 +103,12 @@ LockMainPower 0xFFD48EE0
 UnlockMainPower 0xFFD48F94
 MoveZoomLensWithPoint 0xFFE52F3C
 MoveFocusLensToDistance 0xFFE7394C
+GetFocusLensSubjectDistanceFromLens 0xFFE66D90
+Fclose_Fut 0xffc55b6c
+Fopen_Fut 0xffc55b30
+Fread_Fut 0xffc55c50
+Fseek_Fut 0xffc55d38
+Fwrite_Fut 0xffc55ca0
+GetDrive_ClusterSize 0xffc5bee8
+GetDrive_TotalClusters 0xffc5bf24
+GetDrive_FreeClusters 0xffc5bf60

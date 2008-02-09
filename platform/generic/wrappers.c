@@ -127,14 +127,12 @@ void lens_set_zoom_speed(long newspd)
 
 void lens_set_focus_pos(long newpos)
 {
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined(CAMERA_a560) 
     _MoveFocusLensToDistance((short*)&newpos);
     //while (focus_busy);
     while ((shooting_is_flash_ready()!=1) || (focus_busy));
     newpos = _GetFocusLensSubjectDistance();
     _SetPropertyCase(PROPCASE_SUBJECT_DIST1, &newpos, sizeof(newpos));
     _SetPropertyCase(PROPCASE_SUBJECT_DIST2, &newpos, sizeof(newpos));
-#endif
 }
 
 long stat_get_vbatt()
