@@ -40,33 +40,33 @@
 #if   defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000)
 //Alt mode
  #define SHORTCUT_TOGGLE_RAW          KEY_DISPLAY
-//Half press shoot button   
+//Half press shoot button
  #define SHORTCUT_TOGGLE_HISTO        KEY_DOWN
  #define SHORTCUT_TOGGLE_ZEBRA        KEY_MENU
  #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
-//Alt mode & Manual mode    
- #define SHORTCUT_SET_INFINITY        KEY_DISPLAY
- #define SHORTCUT_SET_HYPERFOCAL      KEY_MENU
- 
-#elif defined(CAMERA_g7)  
+//Alt mode (there is no manual mode)
+ #define SHORTCUT_SET_INFINITY        KEY_UP    // reusable later, IXUS(SD) have dedicated normal macro infinity key
+ #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
+
+#elif defined(CAMERA_g7)
 //Alt mode
  #define SHORTCUT_TOGGLE_RAW          KEY_ERASE
-//Half press shoot button    
+//Half press shoot button
  #define SHORTCUT_TOGGLE_HISTO        KEY_DOWN
  #define SHORTCUT_TOGGLE_ZEBRA        KEY_LEFT
  #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
-//Alt mode & Manual mode  
+//Alt mode & Manual mode
  #define SHORTCUT_SET_INFINITY        KEY_DISPLAY
  #define SHORTCUT_SET_HYPERFOCAL      KEY_ERASE
 #else
 
 //Alt mode
  #define SHORTCUT_TOGGLE_RAW          KEY_ERASE
-//Half press shoot button    
+//Half press shoot button
  #define SHORTCUT_TOGGLE_HISTO        KEY_UP
  #define SHORTCUT_TOGGLE_ZEBRA        KEY_LEFT
  #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
-//Alt mode & Manual mode  
+//Alt mode & Manual mode
  #define SHORTCUT_SET_INFINITY        KEY_DISPLAY
  #define SHORTCUT_SET_HYPERFOCAL      KEY_ERASE
 #endif
@@ -262,7 +262,7 @@ static CMenuItem dof_submenu_items[] = {
       {LANG_MENU_DOF_HYPERFOCAL_IN_MISC,       MENUITEM_BOOL,      &conf.dof_hyperfocal_in_misc},				
       {LANG_MENU_DOF_DEPTH_LIMIT_IN_MISC,      MENUITEM_BOOL,      &conf.dof_depth_in_misc},			
 #if !defined(CAMERA_a650) && !defined(CAMERA_a720) 
-      {LANG_MENU_DOF_DIST_FROM_LENS,           MENUITEM_BOOL,      &conf.dof_dist_from_lens},			
+      {LANG_MENU_DOF_DIST_FROM_LENS,           MENUITEM_BOOL,      &conf.dof_dist_from_lens},
 #endif      
 	  {LANG_MENU_BACK,                    	   MENUITEM_UP },
     {0}
@@ -334,7 +334,7 @@ static CMenuItem operation_submenu_items[] = {
 #if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000)
 	  {LANG_MENU_OVERRIDE_AV_VALUE,        MENUITEM_ENUM,    (int*)gui_av_override_enum },
 #endif	  
-	  {LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)}, 
+	  {LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)},
 	  {LANG_MENU_OVERRIDE_ISO_KOEF,        MENUITEM_ENUM,    (int*)gui_iso_override_koef_enum},
 #if !defined (CAMERA_ixus700_sd500) 
       {LANG_MENU_OVERRIDE_SUBJ_DIST_VALUE, MENUITEM_ENUM,    (int*)gui_subj_dist_override_value_enum},
@@ -1190,50 +1190,56 @@ void gui_kbd_process()
         }
         return;
     }
-    
+
     switch (gui_mode) {
         case GUI_MODE_ALT:
             if (kbd_is_key_clicked(SHORTCUT_TOGGLE_RAW)) {
                 if (conf.ns_enable_memdump) {
                     dump_memory();
-                } else if (!shooting_get_common_focus_mode()) {
+                } else {
                     conf.save_raw = !conf.save_raw;
                     draw_restore();
                 }
-                else
-				  {	
-				  int m=mode_get()&MODE_SHOOTING_MASK;
-				  if ((m==MODE_M) || (m==MODE_AV)) 
-				    conf.subj_dist_override_value=(int)shooting_get_hyperfocal_distance_f(shooting_get_aperture_from_av96(shooting_get_user_av96()),get_focal_length(lens_get_zoom_point()));
-				  else conf.subj_dist_override_value=(int)shooting_get_hyperfocal_distance();		
-				  gui_osd_draw_state();
-                  shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
-				  } 
             } else if (kbd_is_key_clicked(KEY_SET)) {
                 gui_menu_init(&script_submenu);
                 gui_mode = GUI_MODE_MENU;
                 draw_restore();
             } else {
               if (shooting_get_common_focus_mode())
-			  { 
+			  {
 				if (kbd_is_key_clicked(KEY_RIGHT)) {
 				  gui_subj_dist_override_koef_enum(1,0);
                   gui_osd_draw_state();
                   shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
 				  }
-				else if (kbd_is_key_clicked(KEY_LEFT)) 
+				else if (kbd_is_key_clicked(KEY_LEFT))
 				  {
 				  gui_subj_dist_override_koef_enum(-1,0);
                   gui_osd_draw_state();
                   shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
 				  }
-				else if (kbd_is_key_clicked(SHORTCUT_SET_INFINITY)) 
+				else if (kbd_is_key_clicked(SHORTCUT_SET_INFINITY))
  				  {
-				  conf.subj_dist_override_value=MAX_DIST;	
+				  conf.subj_dist_override_value=MAX_DIST;
 				  gui_osd_draw_state();
-                  shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
+#if defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000)
+                  if (conf.subj_dist_override_koef) // the on/off switch
+#endif
+                   shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
 				  }
-				else  
+				else if (kbd_is_key_clicked(SHORTCUT_SET_HYPERFOCAL))
+				  {
+				  int m=mode_get()&MODE_SHOOTING_MASK;
+				  if ((m==MODE_M) || (m==MODE_AV))
+				    conf.subj_dist_override_value=(int)shooting_get_hyperfocal_distance_f(shooting_get_aperture_from_av96(shooting_get_user_av96()),get_focal_length(lens_get_zoom_point()));
+				  else conf.subj_dist_override_value=(int)shooting_get_hyperfocal_distance();
+				  gui_osd_draw_state();
+#if defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000)
+                  if (conf.subj_dist_override_koef) // the on/off switch
+#endif
+                   shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
+				  }
+				else
 				switch (kbd_get_autoclicked_key()) {
 				  case KEY_ZOOM_IN:
                   gui_subj_dist_override_value_enum(1,0);
