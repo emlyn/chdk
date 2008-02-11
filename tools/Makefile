@@ -40,12 +40,12 @@ distclean: clean
 #	rm -f signatures.h
 
 
-signatures.h: gensig$(EXE) gensigs.sh sig_ref_1.txt sig_ref_1.bin sig_ref_2.txt sig_ref_2.bin
+signatures.h: gensig$(EXE) gensigs.sh sig_ref_1.txt sig_ref_1.bin sig_ref_2.txt sig_ref_2.bin sig_ref_3.txt sig_ref_3.bin
 	@echo \-\> $@
-	if [ -s sig_ref_1.bin ] && [ -s sig_ref_2.bin ] ; then \
+	if [ -s sig_ref_1.bin ] && [ -s sig_ref_2.bin ] && [ -s sig_ref_3.bin ] ; then \
 	  $(SH) ./gensigs.sh $(SORT) > signatures.h ; \
 	else \
-	  echo CAUTION! \'signatures.h\' is not uptated due to \'sig_ref_1.bin\` or \'sig_ref_2.bin\` is empty! ; \
+	  echo CAUTION! \'signatures.h\' is not uptated due to \'sig_ref_1.bin\` or \'sig_ref_2.bin\` or \'sig_ref_3.bin\` is empty! ; \
 	  touch signatures.h ; \
 	fi
 
@@ -54,6 +54,9 @@ sig_ref_1.bin:
 
 sig_ref_2.bin:
 	touch sig_ref_2.bin
+
+sig_ref_3.bin:
+	touch sig_ref_3.bin
 
 finsig.o: signatures.h
 

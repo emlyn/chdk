@@ -24,11 +24,9 @@ NSTUB(GetCurrentAvValue, 0xffea6ffc)
 // ALT: NSTUB(GetCurrentAvValue, 0xffea70f4) // 13/0
 // ALT: NSTUB(GetCurrentAvValue, 0xffea9528) // 13/0
 NSTUB(GetCurrentTargetDistance, 0xffea94d0)
-NSTUB(GetDrive_ClusterSize, 0xffc60cd4)
-NSTUB(GetDrive_FreeClusters, 0xffc60d4c) // 18/7
-NSTUB(GetDrive_TotalClusters, 0xffc60d10) // 18/7
 // Best match: 96%
 NSTUB(GetFocusLensSubjectDistance, 0xffe9b4fc)
+// Best match: 57%
 NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffe9bab0)
 NSTUB(GetParameterData, 0xffd6d854)
 NSTUB(GetPropertyCase, 0xffc14de4)

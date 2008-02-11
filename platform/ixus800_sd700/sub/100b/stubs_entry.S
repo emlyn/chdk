@@ -13,13 +13,20 @@ NSTUB(DisplayImagePhysicalScreen, 0xff934484)
 NSTUB(EnableDispatch, 0xff8214cc)
 NSTUB(ExecuteEventProcedure, 0xff816bc8)
 NSTUB(ExitTask, 0xff8219dc)
+NSTUB(Fclose_Fut, 0xff868884)
+NSTUB(Fopen_Fut, 0xff868848)
+NSTUB(Fread_Fut, 0xff868968)
 NSTUB(FreeMemory, 0xff811ad0)
 NSTUB(FreeUncacheableMemory, 0xff814ce4)
+NSTUB(Fseek_Fut, 0xff868a50)
+NSTUB(Fwrite_Fut, 0xff8689b8)
 NSTUB(GetCurrentAvValue, 0xffac6198)
 NSTUB(GetCurrentTargetDistance, 0xffac6140)
 // Best match: 54%
 NSTUB(GetFocusLensSubjectDistance, 0xffab4f50)
 // ALT: NSTUB(GetFocusLensSubjectDistance, 0xffab4f50) // 17/14
+// Best match: 92%
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffab54ec)
 // Best match: 86%
 NSTUB(GetParameterData, 0xff976f2c)
 NSTUB(GetPropertyCase, 0xff8248e0)
@@ -148,15 +155,3 @@ NSTUB(utime, 0xffb0957c)
 // ALT: NSTUB(utime, 0xffb0957c) // 26/0
 NSTUB(vsprintf, 0xffb0ad40)
 NSTUB(write, 0xffb0c068)
-NSTUB(Fclose_Fut, 0xff868884)
-NSTUB(Fopen_Fut, 0xff868848)
-NSTUB(Fread_Fut, 0xff868968)
-NSTUB(Fseek_Fut, 0xff868a50)
-NSTUB(Fwrite_Fut, 0xff8689b8)
-// Best match: 78%
-NSTUB(GetDrive_ClusterSize, 0xff86edcc)
-// Best match: 73%
-NSTUB(GetDrive_TotalClusters, 0xff86ed90)
-// ALT: NSTUB(GetDrive_TotalClusters, 0xff86edcc) // 31/11
-// Best match: 75%
-NSTUB(GetDrive_FreeClusters, 0xff86ee08)

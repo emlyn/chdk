@@ -13,5 +13,8 @@
 //NHSTUB(GetFocusLensCurrentPosition, 0xFFE67F10)
 //NHSTUB(MoveFocusLensWithPosition, 0xFFE67CB4)
 
-NHSTUB(SetZoomActuatorSpeedPercent, 0xFFC20AD4)  //null stub
 
+NHSTUB(GetDrive_ClusterSize, 0xFFC5BEE8)
+NHSTUB(GetDrive_TotalClusters, 0xFFC5BF24)
+NHSTUB(GetDrive_FreeClusters, 0xFFC5BF60)
+NHSTUB(SetZoomActuatorSpeedPercent, 0xFFC20AD4)  //null stub

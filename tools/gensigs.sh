@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSIONS="1 2"
+VERSIONS="1 2 3"
 
 echo
 

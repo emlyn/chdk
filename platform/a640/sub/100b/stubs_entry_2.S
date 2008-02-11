@@ -1,13 +1,5 @@
 #include "stubs_asm.h"
 
-NHSTUB(Fclose_Fut, 0xFFC5B5E0)
-NHSTUB(Fopen_Fut, 0xFFC5B5A0)
-NHSTUB(Fread_Fut, 0xFFC5B69C)
-NHSTUB(Fseek_Fut, 0xFFC5B790)
-NHSTUB(Fwrite_Fut, 0xFFC5B6F0)
-NHSTUB(Feof_Fut, 0xFFC5B7DC)
-NHSTUB(DeleteFile_Fut, 0xFFC5B46C)
-
 NHSTUB(malloc, 0xFFEFD1A0)
 NHSTUB(free, 0xFFEFD1AC)
 
@@ -17,3 +9,6 @@ NHSTUB(free, 0xFFEFD1AC)
 //NHSTUB(GetFocusLensSubjectDistance, 0xFFEA4E74)
 
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFFEBDC9C)  //null stub
+NHSTUB(GetDrive_ClusterSize, 0xffc61d94)
+NHSTUB(GetDrive_TotalClusters, 0xffc61dd0)
+NHSTUB(GetDrive_FreeClusters, 0xffc61e0c)

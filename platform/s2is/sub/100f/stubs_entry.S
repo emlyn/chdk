@@ -24,14 +24,10 @@ NSTUB(Fwrite_Fut, 0xff86fe68)
 NSTUB(GetCurrentAvValue, 0xffaa6d44)
 // ALT: NSTUB(GetCurrentAvValue, 0xffaa8cf8) // 13/0
 NSTUB(GetCurrentTargetDistance, 0xffaa8ca0)
-// ERROR: GetDrive_ClusterSize is not found!
-// ERROR: GetDrive_TotalClusters is not found!
-// ERROR: GetDrive_FreeClusters is not found!
 // Best match: 87%
 NSTUB(GetFocusLensSubjectDistance, 0xffa8e9ec)
 // ALT: NSTUB(GetFocusLensSubjectDistance, 0xffa8e9ec) // 27/4
-// Best match: 76%
-NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffa8ef74)
+// ERROR: GetFocusLensSubjectDistanceFromLens is not found!
 // Best match: 76%
 NSTUB(GetParameterData, 0xff987fb8)
 // ALT: NSTUB(GetParameterData, 0xff987fb8) // 23/7

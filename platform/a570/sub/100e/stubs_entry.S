@@ -15,11 +15,16 @@ NSTUB(DisableDispatch, 0xffebe698)
 NSTUB(EnableDispatch, 0xffebe724)
 NSTUB(ExecuteEventProcedure, 0xffc04a54)
 NSTUB(ExitTask, 0xffebec34)
+NSTUB(Fclose_Fut, 0xffe422a0)
+NSTUB(Fopen_Fut, 0xffe42260)
+NSTUB(Fread_Fut, 0xffe4235c)
 // Best match: 95%
 NSTUB(FreeMemory, 0xffc01e3c)
 // ALT: NSTUB(FreeMemory, 0xffc01e3c) // 23/1
 // Best match: 90%
 NSTUB(FreeUncacheableMemory, 0xffc0e5d4)
+NSTUB(Fseek_Fut, 0xffe42450)
+NSTUB(Fwrite_Fut, 0xffe423b0)
 NSTUB(GetCurrentAvValue, 0xffe05c74)
 // ALT: NSTUB(GetCurrentAvValue, 0xffe05d6c) // 13/0
 // ALT: NSTUB(GetCurrentAvValue, 0xffe083cc) // 13/0
@@ -167,15 +172,3 @@ NSTUB(utime, 0xffefa040)
 // ALT: NSTUB(utime, 0xffefa040) // 15/11
 NSTUB(vsprintf, 0xffcd58e0)
 NSTUB(write, 0xffcd6c08)
-NSTUB(Fclose_Fut, 0xffe422a0)
-NSTUB(Fopen_Fut, 0xffe42260)
-NSTUB(Fread_Fut, 0xffe4235c)
-NSTUB(Fseek_Fut, 0xffe42450)
-NSTUB(Fwrite_Fut, 0xffe423b0)
-// Best match: 76%
-NSTUB(GetDrive_ClusterSize, 0xffe46380)
-// Best match: 73%
-NSTUB(GetDrive_TotalClusters, 0xffe46344)
-// ALT: NSTUB(GetDrive_TotalClusters, 0xffe46380) // 31/11
-// Best match: 75%
-NSTUB(GetDrive_FreeClusters, 0xffe463bc)
