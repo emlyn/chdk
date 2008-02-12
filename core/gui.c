@@ -1147,7 +1147,7 @@ void gui_kbd_process()
         switch (gui_mode) {
             case GUI_MODE_ALT:
                 gui_menu_init(&root_menu);
-#if defined (CAMERA_g7) || defined (CAMERA_a710)
+#if defined (CAMERA_g7) || defined (CAMERA_a710) || defined (CAMERA_s3is)
                 if (get_part_count()==2){
                  int misc_menu_count;
                  misc_menu_count=sizeof(misc_submenu_items)/sizeof(misc_submenu_items[0]);

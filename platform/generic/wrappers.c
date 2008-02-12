@@ -428,7 +428,7 @@ unsigned int GetTotalCardSpaceKb(void){
  return (_GetDrive_TotalClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
 }
 
-#if defined(CAMERA_g7) || defined(CAMERA_a710)
+#if defined(CAMERA_g7) || defined(CAMERA_a710) || defined (CAMERA_s3is)
 static char mbr_buf[512];
 int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long *part_start_sector,  unsigned long *part_length){
 // return value: 1 - success, 0 - fail

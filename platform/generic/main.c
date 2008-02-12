@@ -100,7 +100,7 @@ void createHook (void *pNewTcb)
 
 	if (my_ncmp(name, "tInitFileM", 10) == 0){
 	    init_file_modules_prev = (void*)(*entry);
-	  #if defined (CAMERA_g7) || defined (CAMERA_a710)
+	  #if defined (CAMERA_g7) || defined (CAMERA_a710) || defined (CAMERA_s3is)
 	    *entry = (long)init_file_modules_task;
 	  #else
 	    *entry = (long)init_file_modules_hook;
