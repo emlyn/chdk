@@ -104,6 +104,8 @@ static void gui_menuproc_save(int arg);
 static void gui_menuproc_reset(int arg);
 static void gui_grid_lines_load(int arg);
 static void gui_raw_develop(int arg);
+static void gui_menuproc_break_card(int arg);
+static void gui_menuproc_swap_patitons(int arg);
 static const char* gui_histo_show_enum(int change, int arg);
 static const char* gui_histo_mode_enum(int change, int arg);
 static const char* gui_histo_layout_enum(int change, int arg);
@@ -217,7 +219,6 @@ static CMenuItem misc_submenu_items[] = {
     {LANG_MENU_MISC_BUILD_INFO,         MENUITEM_PROC,    (int*)gui_show_build_info },
     {LANG_MENU_MISC_MEMORY_INFO,        MENUITEM_PROC,    (int*)gui_show_memory_info },
     {LANG_MENU_BACK,                    MENUITEM_UP },
-    {0}, // for swap part. menu
     {0},
 };
 static CMenu misc_submenu = { LANG_MENU_MISC_TITLE, NULL, misc_submenu_items };
@@ -232,6 +233,10 @@ static CMenuItem debug_submenu_items[] = {
     {LANG_MENU_DEBUG_BENCHMARK,         MENUITEM_PROC,          (int*)gui_draw_bench },
     {LANG_MENU_DEBUG_DUMP_RAM,          MENUITEM_BOOL,          &conf.ns_enable_memdump },
     {LANG_MENU_DEBUG_MAKE_BOOTABLE,     MENUITEM_PROC, 	    	(int*)gui_menuproc_mkbootdisk },
+#if defined (CAMERA_MULTIPART)
+    {LANG_MENU_DEBUG_CREATE_MULTIPART , MENUITEM_PROC, 	    	(int*)gui_menuproc_break_card },
+    {LANG_MENU_DEBUG_SWAP_PART,         MENUITEM_PROC, 	    	(int*)gui_menuproc_swap_patitons },
+#endif
     {LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
@@ -463,8 +468,6 @@ static CMenuItem root_menu_items[] = {
 #endif
     {0}
 };
-
-static CMenuItem swap_menuitem={(int)"Swap partitions",      MENUITEM_PROC,      (int*)swap_partitions };
 
 static CMenu root_menu = { LANG_MENU_MAIN_TITLE, NULL, root_menu_items };
 
@@ -996,6 +999,25 @@ void gui_raw_develop(int arg){
 }
 
 //-------------------------------------------------------------------
+
+#if defined (CAMERA_MULTIPART)
+void card_break_proc(unsigned int btn){
+ if (btn==MBOX_BTN_YES) create_partitions();
+}
+
+
+static void gui_menuproc_break_card(int arg){
+ gui_mbox_init(LANG_WARNING, LANG_PARTITIONS_CREATE_WARNING, MBOX_BTN_YES_NO|MBOX_DEF_BTN2|MBOX_TEXT_CENTER, card_break_proc);
+}
+
+
+static void gui_menuproc_swap_patitons(int arg){
+ if (get_part_count()<2) gui_mbox_init(LANG_ERROR, LANG_ONLY_ONE_PARTITION, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
+ else swap_partitions();
+}
+#endif
+
+//-------------------------------------------------------------------
 static volatile enum Gui_Mode gui_mode;
 static volatile int gui_restore;
 static volatile int gui_in_redraw;
@@ -1147,16 +1169,6 @@ void gui_kbd_process()
         switch (gui_mode) {
             case GUI_MODE_ALT:
                 gui_menu_init(&root_menu);
-#if defined (CAMERA_g7) || defined (CAMERA_a710) || defined (CAMERA_s3is)
-                if (get_part_count()==2){
-                 int misc_menu_count;
-                 misc_menu_count=sizeof(misc_submenu_items)/sizeof(misc_submenu_items[0]);
-                 if (misc_submenu_items[misc_menu_count-2].text==0){
-                  misc_submenu_items[misc_menu_count-2]=misc_submenu_items[misc_menu_count-3];
-                  misc_submenu_items[misc_menu_count-3]=swap_menuitem;
-                 }
-                }
-#endif
                 gui_mode = GUI_MODE_MENU;
                 draw_restore();
                 break;

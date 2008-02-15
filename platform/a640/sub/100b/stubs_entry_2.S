@@ -12,3 +12,4 @@ NHSTUB(SetZoomActuatorSpeedPercent, 0xFFEBDC9C)  //null stub
 NHSTUB(GetDrive_ClusterSize, 0xffc61d94)
 NHSTUB(GetDrive_TotalClusters, 0xffc61dd0)
 NHSTUB(GetDrive_FreeClusters, 0xffc61e0c)
+NHSTUB(WriteSDCard, 0xFFC718B8)

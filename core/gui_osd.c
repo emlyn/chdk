@@ -167,7 +167,7 @@ static void gui_osd_draw_single_histo(int hist, coord x, coord y, int small) {
     }
       
     draw_rect(x, y, x+1+w, y+h, conf.histo_color2&0xFF);
-
+ // for (i=1;i<=4;i++) draw_line(x+(1+w)*i/5, y, x+(1+w)*i/5, y+h, conf.histo_color2&0xFF);
 }
 
 //-------------------------------------------------------------------
@@ -334,6 +334,7 @@ static void gui_osd_draw_blended_histo(coord x, coord y) {
     }
 
     draw_rect(x, y, x+1+HISTO_WIDTH, y+HISTO_HEIGHT, conf.histo_color2&0xFF);
+ // for (i=1;i<=4;i++) draw_line(x+(1+HISTO_WIDTH)*i/5, y, x+(1+HISTO_WIDTH)*i/5, y+HISTO_HEIGHT, conf.histo_color2&0xFF);
 }
 
 //-------------------------------------------------------------------

@@ -360,8 +360,16 @@
 #define LANG_MENU_DOF_DIST_FROM_LENS 274
 #define LANG_MENU_CLEAR_BRACKET_VALUES 275
 
+#define LANG_MENU_DEBUG_CREATE_MULTIPART 276
+#define LANG_MENU_DEBUG_SWAP_PART 277
+#define LANG_PARTITIONS_CREATE_WARNING 278
+#define LANG_ONLY_ONE_PARTITION 279
+#define LANG_ERROR 280
+#define LANG_WARNING 281
+#define LANG_INFORMATION 282
+
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  275
+#define GUI_LANG_ITEMS                  282
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

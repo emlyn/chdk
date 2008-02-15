@@ -428,8 +428,10 @@ unsigned int GetTotalCardSpaceKb(void){
  return (_GetDrive_TotalClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
 }
 
-#if defined(CAMERA_g7) || defined(CAMERA_a710) || defined (CAMERA_s3is)
+#if defined(CAMERA_MULTIPART)
 static char mbr_buf[512];
+static unsigned long drive_sectors;
+
 int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long *part_start_sector,  unsigned long *part_length){
 // return value: 1 - success, 0 - fail
  
@@ -439,6 +441,7 @@ int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long 
  if ((mbr_sector[0x1FE]!=0x55) || (mbr_sector[0x1FF]!=0xAA)) return 0; // signature check 
 
  _memcpy(mbr_buf,mbr_sector,512);
+ drive_sectors=drive_total_sectors;
 
  while(offset>=0) {
  
@@ -482,6 +485,29 @@ void swap_partitions(void){
   mbr_buf[i+0x1BE]=mbr_buf[i+0x1CE];
   mbr_buf[i+0x1CE]=c;
  }
+ _WriteSDCard(0,0,1,&mbr_buf);
+}
+
+void create_partitions(void){
+ unsigned long start, length;
+ char type;
+
+ _memset(mbr_buf,0,sizeof(mbr_buf));
+ 
+ start=1; length=2*1024*1024/512; //2 Mb
+ type=1; // FAT primary
+ mbr_buf[0x1BE + 4]=type;
+ mbr_buf[0x1BE + 8]=start;   mbr_buf[0x1BE + 9]=start>>8;   mbr_buf[0x1BE + 10]=start>>16;  mbr_buf[0x1BE + 11]=start>>24;
+ mbr_buf[0x1BE + 12]=length; mbr_buf[0x1BE + 13]=length>>8; mbr_buf[0x1BE + 14]=length>>16; mbr_buf[0x1BE + 15]=length>>24;
+
+ start=start+length; length=drive_sectors-start-1; 
+ type=0x0B;  //FAT32 primary;
+ mbr_buf[0x1CE + 4]=type;
+ mbr_buf[0x1CE + 8]=start;   mbr_buf[0x1CE + 9]=start>>8;   mbr_buf[0x1CE + 10]=start>>16;  mbr_buf[0x1CE + 11]=start>>24;
+ mbr_buf[0x1CE + 12]=length; mbr_buf[0x1CE + 13]=length>>8; mbr_buf[0x1CE + 14]=length>>16; mbr_buf[0x1CE + 15]=length>>24;
+
+ mbr_buf[0x1FE]=0x55; mbr_buf[0x1FF]=0xAA; // signature;
+
  _WriteSDCard(0,0,1,&mbr_buf);
 }
 

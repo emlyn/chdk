@@ -351,6 +351,14 @@ static char* gui_lang_default = \
 
 "275 \"Clear Bracket Values on Start\"\n"
 
+"276 \"Create card with two partitions\"\n"
+"277 \"Swap partitions\"\n"
+"278 \"This DESTROYS ALL INFORMATION\\non card. Continue?\"\n"
+"279 \"This card has only one partition.\"\n"
+"280 \"Error\"\n"
+"281 \"Warning\"\n"
+"282 \"Information\"\n"
+
 ;
 
 //-------------------------------------------------------------------
