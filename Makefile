@@ -18,7 +18,7 @@ distclean: distclean-recursive
 fir: version firsub
 
 firsub: all
-	@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FIR
+	mkdir -p $(topdir)/bin
 	cp $(topdir)loader/$(PLATFORM)/main.bin $(topdir)/bin/main.bin
 ifndef NOZERO100K
 ifeq ($(OSTYPE),Windows)
@@ -27,9 +27,17 @@ else
 	dd if=/dev/zero bs=1k count=100 >> $(topdir)/bin/main.bin 2> $(DEVNULL)
 endif
 endif
+ifdef PLATFORMOS
+  ifeq ($(PLATFORMOS),vxworks)
+	@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FIR
 	$(PAKWIF) $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR \
 	     $(topdir)/bin/main.bin\
 	    $(PLATFORMID) 0x01000101
+  endif
+  ifeq ($(PLATFORMOS),dryos)
+	@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FI2
+  endif
+endif
 	mv $(topdir)/bin/main.bin $(topdir)/bin/DISKBOOT.BIN
 	@echo "**** Firmware creation completed successfully"
 
@@ -39,7 +47,7 @@ upload: fir
 	/home/vitalyb/Projects/ch/libptp2-1.1.0/src/ptpcam -u -m 0xbf01 --filename $(topdir)bin/PS.FIR
 
 infoline:
-	@echo "**** BUILDING HDK-$(VER), #$(BUILD_NUMBER) FOR $(PLATFORM)-$(PLATFORMSUB)"
+	@echo "**** BUILDING CHDK-$(VER), #$(BUILD_NUMBER) FOR $(PLATFORM)-$(PLATFORMSUB)"
 
 version: FORCE
 	echo "**** Build: $(BUILD_NUMBER)"
@@ -52,11 +60,20 @@ firzip: version firzipsub
 firzipsub: infoline clean firsub
 	@echo \-\> $(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip
 	rm -f $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip
+	LANG=C echo -e "CHDK-$(VER) for $(PLATFORM) fw:$(PLATFORMSUB) build:$(BUILD_NUMBER) date:`date -R`" | \
+	    zip -9jz $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/DISKBOOT.BIN > $(DEVNULL)
+ifdef PLATFORMOS
+  ifeq ($(PLATFORMOS),vxworks)
 	cp $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR $(topdir)bin/PS.FIR
-	LANG=C echo -e "hdk-$(VER) for $(PLATFORM) fw:$(PLATFORMSUB) build:`date -R`" | \
-	    zip -9jc $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FIR > $(DEVNULL)
-	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/DISKBOOT.BIN > $(DEVNULL)
+	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FIR > $(DEVNULL)
 	rm -f $(topdir)bin/PS.FIR
+  endif
+  ifeq ($(PLATFORMOS),dryos)
+	#cp $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FI2 $(topdir)bin/PS.FI2
+	#zip -9jc $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
+	#rm -f $(topdir)bin/PS.FI2
+  endif
+endif
 	rm -f $(topdir)bin/DISKBOOT.BIN
 
 batch-zip: version

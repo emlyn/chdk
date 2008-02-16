@@ -1,118 +1,91 @@
 // !!! THIS FILE IS GENERATED. DO NOT EDIT. !!!
 #include "stubs_asm.h"
 
-// ERROR: AllocateMemory is not found!
-// ERROR: AllocateUncacheableMemory is not found!
-// ERROR: Close is not found!
-// ERROR: CreatePhysicalVram is not found!
-// ERROR: CreateTask is not found!
-// ERROR: CreateTaskStrict is not found!
-// ERROR: DisableDispatch is not found!
-// ERROR: DisplayImagePhysicalScreen is not found!
-// ERROR: EnableDispatch is not found!
-// ERROR: ExecuteEventProcedure is not found!
-// ERROR: ExitTask is not found!
-// ERROR: Fclose_Fut is not found!
-// ERROR: Fopen_Fut is not found!
-// ERROR: Fread_Fut is not found!
-// ERROR: FreeMemory is not found!
-// ERROR: FreeUncacheableMemory is not found!
-// Best match: 52%
+NSTUB(AllocateMemory, 0xffdd7df4)
+NSTUB(AllocateUncacheableMemory, 0xffc19848)
+NSTUB(Close, 0xffc1502c)
+NSTUB(CreateTask, 0xffc0bbc0)
+NSTUB(ExecuteEventProcedure, 0xffc0c278)
+NSTUB(ExitTask, 0xffc0be50)
+NSTUB(Fclose_Fut, 0xffc14a10)
+NSTUB(Fopen_Fut, 0xffc149d0)
+NSTUB(Fread_Fut, 0xffc14abc)
+NSTUB(FreeMemory, 0xffdd7de0)
+NSTUB(FreeUncacheableMemory, 0xffc1987c)
 NSTUB(Fseek_Fut, 0xffc14bb0)
-// ERROR: Fwrite_Fut is not found!
-// ERROR: GetCurrentAvValue is not found!
-// ERROR: GetCurrentTargetDistance is not found!
-// ERROR: GetFocusLensSubjectDistance is not found!
-// ERROR: GetFocusLensSubjectDistanceFromLens is not found!
-// ERROR: GetParameterData is not found!
-// ERROR: GetPropertyCase is not found!
-// ERROR: GetSystemTime is not found!
-// ERROR: GetZoomLensCurrentPoint is not found!
-// ERROR: GetZoomLensCurrentPosition is not found!
-// ERROR: IsStrobeChargeCompleted is not found!
-// ERROR: LockMainPower is not found!
-// ERROR: MakeDirectory is not found!
-// ERROR: Mount_FileSystem is not found!
-// ERROR: MoveFocusLensToDistance is not found!
-// ERROR: MoveZoomLensWithPoint is not found!
-// ERROR: Open is not found!
-// ERROR: PhySw_testgpio is not found!
-// ERROR: ProtectFile is not found!
-// ERROR: Read is not found!
-// ERROR: RefreshPhysicalScreen is not found!
-// ERROR: Remove is not found!
-// ERROR: SetParameterData is not found!
-// ERROR: SetPropertyCase is not found!
-// ERROR: SleepTask is not found!
-// ERROR: TakeSemaphore is not found!
-// ERROR: UnlockMainPower is not found!
-// ERROR: Unmount_FileSystem is not found!
-// ERROR: UpdateMBROnFlash is not found!
-// ERROR: VbattGet is not found!
-// ERROR: Write is not found!
-// ERROR: _log is not found!
-// ERROR: _log10 is not found!
-// ERROR: _pow is not found!
-// Best match: 62%
+NSTUB(Fwrite_Fut, 0xffc14b10)
+NSTUB(GetCurrentAvValue, 0xffcffca8)
+NSTUB(GetCurrentTargetDistance, 0xffcfdb3c)
+NSTUB(GetDrive_ClusterSize, 0xffc3f4c4)
+NSTUB(GetDrive_FreeClusters, 0xffc3f564)
+NSTUB(GetDrive_TotalClusters, 0xffc3f4f8)
+NSTUB(GetFocusLensSubjectDistance, 0xffcfef9c)
+NSTUB(GetParameterData, 0xffd1c5b8)
+NSTUB(GetPropertyCase, 0xffc59c2c)
+NSTUB(GetSystemTime, 0xffdd7efc)
+NSTUB(GetZoomLensCurrentPoint, 0xffd02fdc)
+NSTUB(GetZoomLensCurrentPosition, 0xffd03b5c)
+NSTUB(IsStrobeChargeCompleted, 0xffc974e4)
+NSTUB(LocalTime, 0xffc56058)
+NSTUB(LockMainPower, 0xffc5bf6c)
+NSTUB(Lseek, 0xffc1516c)
+NSTUB(MoveFocusLensToDistance, 0xffda6578)
+NSTUB(MoveZoomLensWithPoint, 0xffd03a88)
+NSTUB(NewTaskShell, 0xffc596b0)
+NSTUB(Open, 0xffc15004)
+NSTUB(Read, 0xffc0a448)
+NSTUB(ReadFastDir, 0xffdc1b98)
+NSTUB(RefreshPhysicalScreen, 0xffd62184)
+NSTUB(Remove, 0xffc15074)
+NSTUB(SetParameterData, 0xffd1c528)
+NSTUB(SetPropertyCase, 0xffc50cc8)
+NSTUB(SleepTask, 0xffc196d0)
+NSTUB(TakeSemaphore, 0xffc0ba5c)
+NSTUB(UIFS_WriteFirmInfoToFile, 0xffd4a934)
+NSTUB(UnlockMainPower, 0xffc5bec0)
+NSTUB(UpdateMBROnFlash, 0xffc3f28c)
+NSTUB(VbattGet, 0xffc119a8)
+NSTUB(Write, 0xffc150d8)
+NSTUB(_log, 0xffe3c8dc)
+NSTUB(_log10, 0xffe3b820)
+NSTUB(_pow, 0xffe3b990)
 NSTUB(_sqrt, 0xffe3dc44)
-// ALT: NSTUB(_sqrt, 0xffe3dc44) // 15/9
-// ERROR: chdir is not found!
-// ERROR: close is not found!
-// ERROR: closedir is not found!
-// ERROR: free is not found!
-// ERROR: ints_disable is not found!
-// ERROR: ints_enable is not found!
-// ERROR: ioctl is not found!
-// ERROR: iosDevAdd is not found!
-// ERROR: iosDrvInstall is not found!
-// ERROR: isalpha is not found!
-// ERROR: isdigit is not found!
-// ERROR: islower is not found!
-// ERROR: isspace is not found!
-// ERROR: isupper is not found!
-// ERROR: kbd_p1_f is not found!
-// ERROR: kbd_p1_f_cont is not found!
-// ERROR: kbd_p2_f is not found!
-// ERROR: kbd_pwr_off is not found!
-// ERROR: kbd_pwr_on is not found!
-// ERROR: kbd_read_keys_r2 is not found!
-// ERROR: localtime is not found!
-// ERROR: lseek is not found!
-// ERROR: malloc is not found!
-// ERROR: memcmp is not found!
-// ERROR: memcpy is not found!
-// ERROR: memset is not found!
-// ERROR: mkdir is not found!
-// ERROR: open is not found!
-// ERROR: opendir is not found!
-// ERROR: qsort is not found!
-// ERROR: rand is not found!
-// ERROR: read is not found!
-// ERROR: readdir is not found!
-// ERROR: rename is not found!
-// ERROR: rewinddir is not found!
-// ERROR: srand is not found!
-// ERROR: stat is not found!
-// ERROR: strcat is not found!
-// ERROR: strchr is not found!
-// ERROR: strcmp is not found!
-// ERROR: strcpy is not found!
-// Best match: 60%
-NSTUB(strlen, 0xffe07818)
-// ERROR: strncmp is not found!
-// ERROR: strncpy is not found!
-// ERROR: strpbrk is not found!
-// ERROR: strrchr is not found!
-// ERROR: strtol is not found!
-// ERROR: taskCreateHookAdd is not found!
-// ERROR: taskDeleteHookAdd is not found!
-// ERROR: taskIdListGet is not found!
-// ERROR: taskLock is not found!
-// ERROR: taskName is not found!
-// ERROR: taskResume is not found!
-// ERROR: taskSuspend is not found!
-// ERROR: taskUnlock is not found!
-// ERROR: time is not found!
-// ERROR: utime is not found!
-// ERROR: vsprintf is not found!
-// ERROR: write is not found!
+NSTUB(close, 0xffc0a260)
+NSTUB(closedir, 0xffdc1c68)
+NSTUB(closefastdir, 0xffdc1c68)
+NSTUB(free, 0xffc03ab0)
+NSTUB(kbd_p1_f, 0xffc131d0)
+NSTUB(kbd_p1_f_cont, 0xffc131dc)
+NSTUB(kbd_p2_f, 0xffc12a1c)
+NSTUB(kbd_pwr_off, 0xffc370c0)
+NSTUB(kbd_pwr_on, 0xffc370e8)
+NSTUB(kbd_read_keys, 0xffc130cc)
+NSTUB(kbd_read_keys_r2, 0xffc36b14)
+NSTUB(lseek, 0xffc1516c)
+NSTUB(malloc, 0xffc039dc)
+NSTUB(memcmp, 0xffc0e8f0)
+NSTUB(memcpy, 0xffc71bf4)
+NSTUB(memset, 0xffe0e37c)
+NSTUB(mkdir, 0xffc153d0)
+NSTUB(open, 0xffc0a1b0)
+NSTUB(opendir, 0xffdc1b04)
+NSTUB(openfastdir, 0xffdc1b04)
+NSTUB(qsort, 0xffd62a14)
+NSTUB(rand, 0xffc0e9f8)
+NSTUB(read, 0xffc0a448)
+NSTUB(readfastdir, 0xffdc1b98)
+NSTUB(rename, 0xffc15100)
+NSTUB(srand, 0xffc0e9ec)
+NSTUB(stat, 0xffc15238)
+NSTUB(strcat, 0xffc71b20)
+NSTUB(strchr, 0xffc71ba8)
+NSTUB(strcmp, 0xffc0e888)
+NSTUB(strcpy, 0xffc0e834)
+NSTUB(strlen, 0xffc0e8cc)
+NSTUB(strncmp, 0xffc71b5c)
+NSTUB(strncpy, 0xffc0e84c)
+NSTUB(strrchr, 0xffc71bcc)
+NSTUB(strtol, 0xffc1fc0c)
+NSTUB(time, 0xffc55f0c)
+NSTUB(vsprintf, 0xffc0e7b4)
+NSTUB(write, 0xffc0a4a8)
