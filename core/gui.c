@@ -443,6 +443,7 @@ static CMenuItem zebra_submenu_items[] = {
     {LANG_MENU_ZEBRA_RESTORE_SCREEN,    MENUITEM_BOOL|MENUITEM_ARG_CALLBACK,      &conf.zebra_restore_screen,     (int)cb_zebra_restore_screen },
     {LANG_MENU_ZEBRA_RESTORE_OSD,       MENUITEM_BOOL|MENUITEM_ARG_CALLBACK,      &conf.zebra_restore_osd,        (int)cb_zebra_restore_osd },
     {LANG_MENU_ZEBRA_DRAW_OVER,         MENUITEM_ENUM,                            (int*)gui_zebra_draw_osd_enum },
+    {LANG_MENU_ZEBRA_MULTICHANNEL,      MENUITEM_BOOL,                            &conf.zebra_multichannel},    
     {LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
@@ -1377,7 +1378,7 @@ void gui_draw_osd() {
         }
          else if (kbd_is_key_pressed(SHORTCUT_TOGGLE_HISTO)) {
             if (!pressed) {
-                conf.show_histo = !conf.show_histo;
+                if (++conf.show_histo>SHOW_HALF) conf.show_histo=0;
                 if (!conf.show_histo) {
                     draw_restore();
                 }
@@ -1432,7 +1433,11 @@ void gui_draw_osd() {
 
     if (!(conf.show_osd && (canon_menu_active==(int)&canon_menu_active-4) && (canon_shoot_menu_active==0)))  return;    
     
-    if ((gui_mode==GUI_MODE_NONE || gui_mode==GUI_MODE_ALT) && ((kbd_is_key_pressed(KEY_SHOOT_HALF) && ((conf.show_histo==SHOW_HALF) || (m&MODE_MASK) == MODE_PLAY)) || ((conf.show_histo==SHOW_ALWAYS)  &&  !((m&MODE_MASK) == MODE_PLAY) && (recreview_hold==0))) && (mode_photo || (m&MODE_SHOOTING_MASK)==MODE_STITCH)) {
+    if ((gui_mode==GUI_MODE_NONE || gui_mode==GUI_MODE_ALT) && (
+     (kbd_is_key_pressed(KEY_SHOOT_HALF) && ((conf.show_histo==SHOW_HALF)/* || (m&MODE_MASK) == MODE_PLAY*/)) || 
+     ((conf.show_histo==SHOW_ALWAYS)  &&  !((m&MODE_MASK) == MODE_PLAY) && (recreview_hold==0))
+    ) && 
+    (mode_photo || (m&MODE_SHOOTING_MASK)==MODE_STITCH)) {
         gui_osd_draw_histo();
     }
 

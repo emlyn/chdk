@@ -50,6 +50,7 @@ typedef struct {
     int zebra_over;
     int zebra_under;
     int zebra_draw_osd;
+    int zebra_multichannel;
 
     OSD_pos histo_pos;
     OSD_pos dof_pos;

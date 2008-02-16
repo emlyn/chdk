@@ -367,9 +367,10 @@
 #define LANG_ERROR 280
 #define LANG_WARNING 281
 #define LANG_INFORMATION 282
+#define LANG_MENU_ZEBRA_MULTICHANNEL 283
 
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  282
+#define GUI_LANG_ITEMS                  283
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

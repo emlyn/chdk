@@ -358,6 +358,7 @@ static char* gui_lang_default = \
 "280 \"Error\"\n"
 "281 \"Warning\"\n"
 "282 \"Information\"\n"
+"283 \"RGB zebra (overexp. only)\"\n"
 
 ;
 
