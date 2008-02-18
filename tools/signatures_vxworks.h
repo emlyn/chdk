@@ -3026,6 +3026,42 @@ static FuncSig func_sig_Fwrite_Fut_1[] = {
 	/* 26/32 */
 };
 
+static FuncSig func_sig_SetAutoShutdownTime_1[] = {
+	{   1, 0xe59f30d4, 0xfdffffff }, // ldr:4:0xE59F30D4
+	{   2, 0xe5932000, 0xfdffffff }, // ldr:4:0xE5932000
+	{   3, 0xe1520001, 0xfdffffff }, // cmp:7:0xE3520001
+	{   4, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   5, 0xe59f80c8, 0xfdffffff }, // ldr:4:0xE59F80C8
+	{   6, 0xe59f70c8, 0xfdffffff }, // ldr:4:0xE59F70C8
+	{   7, 0xe59fa0c8, 0xfdffffff }, // ldr:4:0xE59FA0C8
+	{   8, 0xe1a05000, 0xfdffffff }, // mov:6:0xE3A05000
+	{   9, 0xe59f60c4, 0xfdffffff }, // ldr:4:0xE59F60C4
+	{  10, 0xe1a01098, 0xfdffffff }, // mov:6:0xE3A01098
+	{  11, 0xe59f00c0, 0xfdffffff }, // ldr:4:0xE59F00C0
+	{  12, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000000
+	{  13, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFAEB2F
+	{  14, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{  15, 0xe5980000, 0xfdffffff }, // ldr:4:0xE5980000
+	{  16, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFB2518
+	{  17, 0xe5972000, 0xfdffffff }, // ldr:4:0xE5972000
+	{  18, 0xe0643284, 0xfdffffff }, // rsb:6:0xE0643284
+	{  19, 0xe0843103, 0xfdffffff }, // add:6:0xE0843103
+	{  20, 0xe1a03183, 0xfdffffff }, // mov:6:0xE1A03183
+	{  21, 0xe1520001, 0xfdffffff }, // cmp:7:0xE3520001
+	{  22, 0xe5863000, 0xfdffffff }, // str:4:0xE5863000
+	{  23, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000003
+	{  24, 0xe59a0000, 0xfdffffff }, // ldr:4:0xE59A0000
+	{  25, 0xe5875000, 0xfdffffff }, // str:4:0xE5875000
+	{  26, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFE315
+	{  27, 0xe58a5000, 0xfdffffff }, // str:4:0xE58A5000
+	{  28, 0xe5965000, 0xfdffffff }, // ldr:4:0xE5965000
+	{  29, 0xe1550000, 0xfdffffff }, // cmp:7:0xE3550000
+	{  30, 0xe1a06001, 0xfdffffff }, // mov:6:0xE3A06001
+	{  31, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000004
+	{ -1, -1, -1 },
+	/* 31/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   1, 0xe59f6030, 0xfdffffff }, // ldr:4:0xE59F6030
 	{   2, 0xe5965000, 0xfdffffff }, // ldr:4:0xE5965000
@@ -4200,6 +4236,42 @@ static FuncSig func_sig_GetFocusLensSubjectDistanceFromLens_2[] = {
 	/* 26/32 */
 };
 
+static FuncSig func_sig_SetAutoShutdownTime_2[] = {
+	{   1, 0xe59f30c8, 0xfdffffff }, // ldr:4:0xE59F30C8
+	{   2, 0xe5932000, 0xfdffffff }, // ldr:4:0xE5932000
+	{   3, 0xe1520001, 0xfdffffff }, // cmp:7:0xE3520001
+	{   4, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   5, 0xe59f60bc, 0xfdffffff }, // ldr:4:0xE59F60BC
+	{   6, 0xe59f50bc, 0xfdffffff }, // ldr:4:0xE59F50BC
+	{   7, 0xe59f70bc, 0xfdffffff }, // ldr:4:0xE59F70BC
+	{   8, 0xe1a010a7, 0xfdffffff }, // mov:6:0xE3A010A7
+	{   9, 0xe59f00b8, 0xfdffffff }, // ldr:4:0xE59F00B8
+	{  10, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000000
+	{  11, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFA4B9E
+	{  12, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{  13, 0xe5960000, 0xfdffffff }, // ldr:4:0xE5960000
+	{  14, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFA86E6
+	{  15, 0xe5952000, 0xfdffffff }, // ldr:4:0xE5952000
+	{  16, 0xe0643284, 0xfdffffff }, // rsb:6:0xE0643284
+	{  17, 0xe0843103, 0xfdffffff }, // add:6:0xE0843103
+	{  18, 0xe1a03183, 0xfdffffff }, // mov:6:0xE1A03183
+	{  19, 0xe1520001, 0xfdffffff }, // cmp:7:0xE3520001
+	{  20, 0xe5873000, 0xfdffffff }, // str:4:0xE5873000
+	{  21, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000002
+	{  22, 0xe1a03000, 0xfdffffff }, // mov:6:0xE3A03000
+	{  23, 0xe5853000, 0xfdffffff }, // str:4:0xE5853000
+	{  24, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEFD
+	{  25, 0xe597e000, 0xfdffffff }, // ldr:4:0xE597E000
+	{  26, 0xe15e0000, 0xfdffffff }, // cmp:7:0xE35E0000
+	{  27, 0xe1a04001, 0xfdffffff }, // mov:6:0xE3A04001
+	{  28, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000004
+	{  29, 0xe59f306c, 0xfdffffff }, // ldr:4:0xE59F306C
+	{  30, 0xe5960000, 0xfdffffff }, // ldr:4:0xE5960000
+	{  31, 0xe583e000, 0xfdffffff }, // str:4:0xE583E000
+	{ -1, -1, -1 },
+	/* 31/32 */
+};
+
 static FuncSig func_sig_Fclose_Fut_3[] = {
 	{   1, 0xe0506000, 0xfdffffff }, // sub:6:0xE2506000
 	{   2, 0xe04dd03c, 0xfdffffff }, // sub:6:0xE24DD03C
@@ -4453,6 +4525,8 @@ FuncsList func_list[] = {
 	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_1 },
 	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_2 },
 	{ "Remove", func_sig_Remove_1 },
+	{ "SetAutoShutdownTime", func_sig_SetAutoShutdownTime_1 },
+	{ "SetAutoShutdownTime", func_sig_SetAutoShutdownTime_2 },
 	{ "SetParameterData", func_sig_SetParameterData_1 },
 	{ "SetParameterData", func_sig_SetParameterData_2 },
 	{ "SetPropertyCase", func_sig_SetPropertyCase_1 },

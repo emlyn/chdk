@@ -1354,14 +1354,11 @@ static void wheel_right_statement(void){
 #endif
   accept_cr();
 }
-
-
-
-
-
-
-
-
+static void shutdown_statement(void){
+  accept(TOKENIZER_SHUT_DOWN);
+  camera_shutdown_in_a_second();
+  accept_cr();
+}
 
 /*---------------------------------------------------------------------------*/
 
@@ -1742,6 +1739,9 @@ statement(void)
     break;
   case TOKENIZER_EXIT_ALT:
     exit_alt_statement();
+    break;
+  case TOKENIZER_SHUT_DOWN:
+    shutdown_statement();
     break;
 
 // >> mx3 . motion detector

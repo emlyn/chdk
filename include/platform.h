@@ -390,6 +390,7 @@ int ubasic_camera_get_nr();
 int ubasic_camera_script_autostart();
 void ubasic_camera_set_script_autostart();
 void exit_alt();
+void camera_shutdown_in_a_second(void); 
 
 void disable_shutdown();
 void enable_shutdown();

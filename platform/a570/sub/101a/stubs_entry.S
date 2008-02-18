@@ -64,6 +64,7 @@ NSTUB(ProtectFile, 0xffe417f8)
 // Best match: 58%
 NSTUB(RefreshPhysicalScreen, 0xffcc646c)
 // ERROR: Remove is not found!
+NSTUB(SetAutoShutdownTime, 0xffee0b1c)
 // Best match: 86%
 NSTUB(SetParameterData, 0xffee3cc4)
 // Best match: 73%

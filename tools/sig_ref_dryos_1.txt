@@ -86,3 +86,4 @@ ReadFastDir 0xFFDC1B98
 closedir 0xFFDC1C68
 NewTaskShell 0xFFC596B0
 UIFS_WriteFirmInfoToFile 0xFFD4A934
+SetAutoShutdownTime  0xFFC5BFE0

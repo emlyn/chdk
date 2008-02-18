@@ -44,6 +44,7 @@ NSTUB(ReadFastDir, 0xffdd0640)
 // Best match: 85%
 NSTUB(RefreshPhysicalScreen, 0xffd6f958)
 NSTUB(Remove, 0xffc14f68)
+NSTUB(SetAutoShutdownTime, 0xffc5d280)
 // Best match: 72%
 NSTUB(SetParameterData, 0xffd21810)
 NSTUB(SetPropertyCase, 0xffc51f68)

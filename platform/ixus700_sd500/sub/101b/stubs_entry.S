@@ -59,6 +59,8 @@ NSTUB(ProtectFile, 0xff862d5c)
 // ERROR: Read is not found!
 NSTUB(RefreshPhysicalScreen, 0xff97b5c8)
 // ERROR: Remove is not found!
+// Best match: 96%
+NSTUB(SetAutoShutdownTime, 0xff9678cc)
 // Best match: 86%
 NSTUB(SetParameterData, 0xff96b734)
 // ERROR: SetPropertyCase is not found!

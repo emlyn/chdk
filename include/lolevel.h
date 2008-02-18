@@ -139,6 +139,7 @@ extern void _UniqueLedOff(void *addr);
 
 extern long _LockMainPower();
 extern long _UnlockMainPower();
+extern void _SetAutoShutdownTime(int t);
 
 
 /* math */

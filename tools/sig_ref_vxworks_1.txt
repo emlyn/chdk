@@ -108,3 +108,4 @@ Fopen_Fut 0xffc55b30
 Fread_Fut 0xffc55c50
 Fseek_Fut 0xffc55d38
 Fwrite_Fut 0xffc55ca0
+SetAutoShutdownTime 0xffd48dd8

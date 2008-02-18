@@ -40,3 +40,4 @@ UnlockMainPower 0xFFD70FE0
 MoveZoomLensWithPoint 0xFFE8F550
 MoveFocusLensToDistance 0xFFEB64D4
 GetFocusLensSubjectDistanceFromLens 0xffea34f0
+SetAutoShutdownTime 0xffd70e4c 

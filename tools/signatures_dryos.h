@@ -2723,6 +2723,42 @@ static FuncSig func_sig_UIFS_WriteFirmInfoToFile_1[] = {
 	/* 29/32 */
 };
 
+static FuncSig func_sig_SetAutoShutdownTime_1[] = {
+	{   1, 0xe59f4098, 0xfdffffff }, // ldr:4:0xE59F4098
+	{   2, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   3, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{   4, 0xe1500001, 0xfdffffff }, // cmp:7:0xE3500001
+	{   5, 0x11a010a9, 0xfdffffff }, // mov:6:0x13A010A9
+	{   6, 0x108f008c, 0xfdffffff }, // add:6:0x128F008C
+	{   7, 0x1b000000, 0xff000000 }, // b, bl:3:0x1BFEC025
+	{   8, 0xe59f1090, 0xfdffffff }, // ldr:4:0xE59F1090
+	{   9, 0xe5940024, 0xfdffffff }, // ldr:4:0xE5940024
+	{  10, 0xe1a030aa, 0xfdffffff }, // mov:6:0xE3A030AA
+	{  11, 0xe08f2078, 0xfdffffff }, // add:6:0xE28F2078
+	{  12, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFEC011
+	{  13, 0xe1a00ffa, 0xfdffffff }, // mov:6:0xE3A00FFA
+	{  14, 0xe0000095, 0xfdffffff }, // and:6:0xE0000095 mul:11:0xE0000095
+	{  15, 0xe1a05000, 0xfdffffff }, // mov:6:0xE3A05000
+	{  16, 0xe584001c, 0xfdffffff }, // str:4:0xE584001C
+	{  17, 0xe5940004, 0xfdffffff }, // ldr:4:0xE5940004
+	{  18, 0xe1500001, 0xfdffffff }, // cmp:7:0xE3500001
+	{  19, 0x05845004, 0xfdffffff }, // str:4:0x05845004
+	{  20, 0x0b000000, 0xff000000 }, // b, bl:3:0x0B000043
+	{  21, 0xe594001c, 0xfdffffff }, // ldr:4:0xE594001C
+	{  22, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{  23, 0x0584500c, 0xfdffffff }, // str:4:0x0584500C
+	{  24, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A00000C
+	{  25, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  26, 0xe584100c, 0xfdffffff }, // str:4:0xE584100C
+	{  27, 0xe5942008, 0xfdffffff }, // ldr:4:0xE5942008
+	{  28, 0xe1520000, 0xfdffffff }, // cmp:7:0xE3520000
+	{  29, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000007
+	{  30, 0xe5841004, 0xfdffffff }, // str:4:0xE5841004
+	{  31, 0xe04f2e2a, 0xfdffffff }, // sub:6:0xE24F2E2A
+	{ -1, -1, -1 },
+	/* 32/32 */
+};
+
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory_1 },
 	{ "AllocateUncacheableMemory", func_sig_AllocateUncacheableMemory_1 },
@@ -2760,6 +2796,7 @@ FuncsList func_list[] = {
 	{ "ReadFastDir", func_sig_ReadFastDir_1 },
 	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_1 },
 	{ "Remove", func_sig_Remove_1 },
+	{ "SetAutoShutdownTime", func_sig_SetAutoShutdownTime_1 },
 	{ "SetParameterData", func_sig_SetParameterData_1 },
 	{ "SetPropertyCase", func_sig_SetPropertyCase_1 },
 	{ "SleepTask", func_sig_SleepTask_1 },

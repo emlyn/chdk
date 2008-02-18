@@ -57,6 +57,7 @@ NSTUB(ProtectFile, 0xffc56430)
 NSTUB(Read, 0xffc5db5c)
 NSTUB(RefreshPhysicalScreen, 0xffd703c0)
 NSTUB(Remove, 0xffc5dae8)
+NSTUB(SetAutoShutdownTime, 0xffd58dd0)
 // Best match: 86%
 NSTUB(SetParameterData, 0xffd5ddf4)
 NSTUB(SetPropertyCase, 0xffc143d4)

@@ -395,7 +395,14 @@ void enable_shutdown() {
         shutdown_disabled = 0;
     }
 }
-
+void camera_shutdown_in_a_second(void){
+int i;
+//#if defined(CAMERA_a720) || defined(CAMERA_a650)
+//#else
+_SetAutoShutdownTime(1); // 1 sec
+for (i=0;i<200;i++) _UnlockMainPower(); // set power unlock counter to 200 or more, because every keyboard function call try to lock power again ( if "Disable LCD off" menu is "alt" or "script"). 
+//#endif
+}
 long Fopen_Fut(const char *filename, const char *mode){
  return _Fopen_Fut(filename,mode);
 }
