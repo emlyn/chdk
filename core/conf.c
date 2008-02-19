@@ -249,7 +249,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(127, conf.zebra_multichannel,  CONF_DEF_VALUE, i:0, NULL),							
 
     CONF_INFO(128, conf.nd_filter_state,  CONF_DEF_VALUE, i:0, NULL),							
-    CONF_INFO(128, conf.histo_show_ev_grid,  CONF_DEF_VALUE, i:0, NULL),							
+    CONF_INFO(129, conf.histo_show_ev_grid,  CONF_DEF_VALUE, i:0, NULL),							
     
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
