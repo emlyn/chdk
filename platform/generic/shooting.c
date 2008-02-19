@@ -180,11 +180,12 @@ int shooting_get_user_av_id()
 }
 
 short shooting_get_real_aperture() {
-#if defined(CAMERA_ixus700_sd500) || defined(ixus70_sd1000)
-    return shooting_get_aperture_from_av96(shooting_get_av96());
-#else
+//#if defined(CAMERA_ixus700_sd500) || defined(ixus70_sd1000) || defined(CAMERA_ixus800_sd700)
+//    return shooting_get_min_real_aperture();
+//#else
+//I hope that GetCurrentAvValue is correct for ixus70_sd1000 ixus700_sd500 now
     return shooting_get_aperture_from_av96(_GetCurrentAvValue());
-#endif
+//#endif
 }
 
 short shooting_get_aperture_from_av96(short av96) {
@@ -454,9 +455,9 @@ int shooting_get_near_limit_of_acceptable_sharpness()
  else return h;
 }
 
-int shooting_get_near_limit_from_subj_dist(int s)
+int shooting_get_near_limit_f(int s, int a, int fl)
 {
-      int h = shooting_get_hyperfocal_distance_();	
+      int h = shooting_get_hyperfocal_distance_f(a, fl);	
       int m = h*s;
       int v = h+s;
       if ((m>0) && (v>0)) return (m/v);
@@ -603,7 +604,7 @@ short shooting_get_user_av96()
 {
 #if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (ixus70_sd1000) && !defined (CAMERA_a560)	      	        	
     short av;
-    _GetPropertyCase(PROPCASE_AV, &av, sizeof(av));
+    _GetPropertyCase(PROPCASE_USER_AV, &av, sizeof(av));
     return av;
 #else     
     return 0;
@@ -623,6 +624,19 @@ void shooting_set_av96(short v, short is_now)
 	}
   }
 }
+
+void shooting_set_nd_filter_state(short v, short is_now)
+{
+#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (ixus70_sd1000) || defined (CAMERA_a560) || defined (CAMERA_a570) || defined (CAMERA_a710) ||  defined (CAMERA_g7)	          	
+	if (is_now) {
+	 if (v==1) _PutInNdFilter();
+	 else if (v==2) _PutOutNdFilter();
+	}
+	else photo_param_put_off.nd_filter=v;
+#endif	
+}
+
+
 
 void shooting_set_av96_direct(short v, short is_now)
 {  
@@ -688,10 +702,10 @@ short shooting_can_focus()
 
 short shooting_get_common_focus_mode()
 {
-#if defined (CAMERA_ixus700_sd500) 
- return 0;
-#elif defined (CAMERA_ixus800_sd700) || defined (ixus70_sd1000) || defined (CAMERA_a560)
-  return 1;
+#if defined (CAMERA_ixus800_sd700) || defined (ixus70_sd1000) || defined (CAMERA_a560)                				   
+  return shooting_get_subject_distance_override_koef();
+#elif defined (CAMERA_ixus700_sd500) 
+  return 0;
 #else 
   return shooting_get_focus_mode();
 #endif 			  
@@ -834,7 +848,7 @@ void shooting_set_focus(int v, short is_now) {
 	  if (conf.dof_dist_from_lens) s+=shooting_get_lens_to_focal_plane_width();
 	  if ((!conf.dof_subj_dist_as_near_limit) && (s>0)) lens_set_focus_pos((s<MAX_DIST)?s:MAX_DIST); 
 	  else {
-        int near=shooting_get_near_limit_from_subj_dist(s);
+        int near=shooting_get_near_limit_f(s,shooting_get_min_real_aperture(),get_focal_length(lens_get_zoom_point()));
         if (near>0) lens_set_focus_pos((near<MAX_DIST)?near:MAX_DIST); 
 	  }
 	}
@@ -1073,7 +1087,18 @@ void shooting_expo_param_override(void){
   {
    shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
   }
+#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (ixus70_sd1000) || defined (CAMERA_a560) || defined (CAMERA_a570) || defined (CAMERA_a710) ||  defined (CAMERA_g7)	          
+ if ((state_kbd_script_run) && (photo_param_put_off.nd_filter)) {
+   shooting_set_nd_filter_state(photo_param_put_off.nd_filter, SET_NOW);
+   photo_param_put_off.nd_filter=0;  
+  }
+  else if (conf.nd_filter_state)
+  {
+   shooting_set_nd_filter_state(conf.nd_filter_state, SET_NOW);
+  }
+#endif  
   return;
+  
 }
 
 

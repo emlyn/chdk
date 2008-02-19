@@ -57,6 +57,12 @@ NSTUB(Open, 0xff87cb24)
 NSTUB(PhySw_testgpio, 0xff8295b0)
 // ALT: NSTUB(PhySw_testgpio, 0xff8295b0) // 25/4
 NSTUB(ProtectFile, 0xff875130)
+// Best match: 92%
+NSTUB(PutInNdFilter, 0xffb50450)
+// ALT: NSTUB(PutInNdFilter, 0xffb50450) // 25/2
+// Best match: 94%
+NSTUB(PutOutNdFilter, 0xffb50498)
+// ALT: NSTUB(PutOutNdFilter, 0xffb50498) // 16/1
 NSTUB(Read, 0xff87cbe0)
 NSTUB(RefreshPhysicalScreen, 0xff9ce274)
 NSTUB(Remove, 0xff87cb6c)

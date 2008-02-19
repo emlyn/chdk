@@ -101,6 +101,7 @@ void clear_values()
 	 conf.tv_override_koef=0;
 	 conf.subj_dist_override_koef=0;
 	 conf.iso_override_koef=0;
+	 conf.nd_filter_state=0;
 	}
 	if (conf.clear_bracket)
 	{
@@ -242,11 +243,13 @@ static const ConfInfo conf_info[] = {
     
     CONF_INFO(124, conf.show_osd_in_review,  CONF_DEF_VALUE, i:0, NULL),							
     
-	CONF_INFO(125, conf.dof_dist_from_lens,  CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(125, conf.dof_dist_from_lens,  CONF_DEF_VALUE, i:0, NULL),
     
     CONF_INFO(126, conf.clear_bracket,  CONF_DEF_VALUE, i:1, NULL),
-    
     CONF_INFO(127, conf.zebra_multichannel,  CONF_DEF_VALUE, i:0, NULL),							
+
+    CONF_INFO(128, conf.nd_filter_state,  CONF_DEF_VALUE, i:0, NULL),							
+    CONF_INFO(128, conf.histo_show_ev_grid,  CONF_DEF_VALUE, i:0, NULL),							
     
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))

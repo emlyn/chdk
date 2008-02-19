@@ -1295,6 +1295,16 @@ static void set_raw_nr_statement()
     accept_cr();
 }
 
+static void set_nd_filter_statement()
+{
+    int to;
+    accept(TOKENIZER_SET_ND_FILTER);
+    to = expr();
+    shooting_set_nd_filter_state(to, SET_LATER);
+    accept_cr();
+}
+
+
 static void set_autostart_statement()
 {
     int to;
@@ -1580,7 +1590,11 @@ statement(void)
   case TOKENIZER_SET_USER_AV_BY_ID_REL:
     set_user_av_by_id_rel_statement();
     break;
-
+   
+  case TOKENIZER_SET_ND_FILTER:
+    set_nd_filter_statement();
+    break;  
+  
   case TOKENIZER_GET_ZOOM:
     get_zoom_statement();
     break;

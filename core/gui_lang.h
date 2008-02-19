@@ -369,13 +369,12 @@
 #define LANG_INFORMATION 282
 #define LANG_MENU_ZEBRA_MULTICHANNEL 283
 
+#define LANG_MENU_OVERRIDE_ND_FILTER 284
 
-
-
-
+#define LANG_MENU_HISTO_SHOW_EV_GRID 285
 
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  283
+#define GUI_LANG_ITEMS                  285
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

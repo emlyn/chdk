@@ -60,6 +60,12 @@ NSTUB(Open, 0xffe46b30)
 // Best match: 93%
 NSTUB(PhySw_testgpio, 0xffde7c48)
 NSTUB(ProtectFile, 0xffe41784)
+// Best match: 92%
+NSTUB(PutInNdFilter, 0xffe060f0)
+// ALT: NSTUB(PutInNdFilter, 0xffe060f0) // 25/2
+// Best match: 94%
+NSTUB(PutOutNdFilter, 0xffe06138)
+// ALT: NSTUB(PutOutNdFilter, 0xffe06138) // 16/1
 // ERROR: Read is not found!
 // Best match: 58%
 NSTUB(RefreshPhysicalScreen, 0xffcc646c)

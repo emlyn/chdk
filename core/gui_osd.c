@@ -167,7 +167,8 @@ static void gui_osd_draw_single_histo(int hist, coord x, coord y, int small) {
     }
       
     draw_rect(x, y, x+1+w, y+h, conf.histo_color2&0xFF);
- // for (i=1;i<=4;i++) draw_line(x+(1+w)*i/5, y, x+(1+w)*i/5, y+h, conf.histo_color2&0xFF);
+    //Vertical Lines
+    if (conf.histo_show_ev_grid) for (i=1;i<=4;i++) draw_line(x+(1+w)*i/5, y, x+(1+w)*i/5, y+h, conf.histo_color2&0xFF);
 }
 
 //-------------------------------------------------------------------
@@ -227,7 +228,7 @@ int gui_osd_draw_zebra() {
     color cl_under=conf.zebra_color>>8, cl_over=conf.zebra_color&0xFF;
     static int need_restore=0;
     int viewport_height;
-    int m = ((mode_get()&MODE_MASK) == MODE_REC);
+ int m = ((mode_get()&MODE_MASK) == MODE_REC);
     color cls[] = {
         COLOR_TRANSPARENT,
         (m)?0xDF:0xCC,
@@ -356,7 +357,9 @@ static void gui_osd_draw_blended_histo(coord x, coord y) {
     }
 
     draw_rect(x, y, x+1+HISTO_WIDTH, y+HISTO_HEIGHT, conf.histo_color2&0xFF);
- // for (i=1;i<=4;i++) draw_line(x+(1+HISTO_WIDTH)*i/5, y, x+(1+HISTO_WIDTH)*i/5, y+HISTO_HEIGHT, conf.histo_color2&0xFF);
+    //Vertical lines
+    if (conf.histo_show_ev_grid) for (i=1;i<=4;i++) draw_line(x+(1+HISTO_WIDTH)*i/5, y, x+(1+HISTO_WIDTH)*i/5, y+HISTO_HEIGHT, conf.histo_color2&0xFF);
+
 }
 
 //-------------------------------------------------------------------
@@ -422,7 +425,7 @@ void gui_osd_draw_histo() {
 //-------------------------------------------------------------------
 static void sprintf_dist(char *buf, float dist) {
 // length of printed string is always 4
-    if (dist<=0 || dist>MAX_DIST) {
+    if (dist<=0 || dist>=MAX_DIST) {
         sprintf(buf, " inf");
     } else if (dist<1000) {
         sprintf(buf, "0.%03d", (int)dist);
@@ -448,10 +451,11 @@ void gui_osd_calc_dof() {
     
     int av, av_min, c_of_c, fl, v, v1, m;
     //long lfpfl=lens_get_focus_pos_fl();
-           
+
+#if defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus950_sd850)    
+    av=shooting_get_min_real_aperture();
+#else
     av=shooting_get_real_aperture();
-#if defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus950_sd850)
-    if (av>=shooting_get_aperture_from_av96(shooting_get_aperture_sizes_table_prop_id(shooting_get_aperture_sizes_table_size()/2))) av/=2; // nd filter in 
 #endif
     fl=get_focal_length(lens_get_zoom_point());	
     dof.far_limit=-1.0;
@@ -627,7 +631,7 @@ void gui_osd_draw_state() {
     long t; 
     
     n=0;
- 
+
     if (conf.save_raw || gui_mode==GUI_MODE_OSD){
         draw_string(conf.mode_state_pos.x, conf.mode_state_pos.y+n, "RAW", conf.osd_color);
         n+=FONT_HEIGHT;
@@ -642,6 +646,9 @@ void gui_osd_draw_state() {
         gui_print_osd_state_string_float("TV:", "%d.%05d ", 100000, t);
     }
     if (conf.av_override_value || gui_mode==GUI_MODE_OSD) gui_print_osd_state_string_float("AV:", "%d.%02d ", 100, shooting_get_aperture_from_av96(shooting_get_av96_override_value()));
+#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (ixus70_sd1000) || defined (CAMERA_a560) || defined (CAMERA_a570) || defined (CAMERA_a710) ||  defined (CAMERA_g7)    
+    if (conf.nd_filter_state || gui_mode==GUI_MODE_OSD) gui_print_osd_state_string_chr("NDFILTER:", ((conf.nd_filter_state==1)?"IN":"OUT"));
+#endif    
     if ((conf.subj_dist_override_value && conf.subj_dist_override_koef && shooting_can_focus()) || ((gui_mode==GUI_MODE_ALT) && shooting_get_common_focus_mode())	|| gui_mode==GUI_MODE_OSD)   {
     	gui_print_osd_state_string_int("SD:",shooting_get_subject_distance_override_value());
         if (gui_mode==GUI_MODE_ALT)  gui_print_osd_state_string_int("FACTOR:",shooting_get_subject_distance_override_koef());   	

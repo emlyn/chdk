@@ -41,3 +41,5 @@ MoveZoomLensWithPoint 0xFFE8F550
 MoveFocusLensToDistance 0xFFEB64D4
 GetFocusLensSubjectDistanceFromLens 0xffea34f0
 SetAutoShutdownTime 0xffd70e4c 
+PutInNdFilter 0xFFEB41D8
+PutOutNdFilter 0xFFEB4220

@@ -3,7 +3,7 @@
 
 //-------------------------------------------------------------------
 #define SCRIPT_DEFAULT_FILENAME	    "A/SCRIPT.BAS"
-#define SCRIPT_NUM_PARAMS           10
+#define SCRIPT_NUM_PARAMS           26
 
 //-------------------------------------------------------------------
 extern const char *state_ubasic_script;

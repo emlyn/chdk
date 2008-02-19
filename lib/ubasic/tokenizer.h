@@ -145,6 +145,7 @@ typedef enum {
   TOKENIZER_GET_USB_POWER,
   TOKENIZER_EXIT_ALT,
   TOKENIZER_SHUT_DOWN,
+  TOKENIZER_SET_ND_FILTER,
 } ubasic_token;
 
 void tokenizer_init(const char *program);

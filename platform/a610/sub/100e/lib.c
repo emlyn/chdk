@@ -22,7 +22,9 @@ long hook_raw_size()
 
 void *vid_get_viewport_live_fb()
 {
-    return (void*)0x10670d50;
+    //return (void*)0x10670d50;
+    void **fb=(void **)0x52EC;
+   return fb[ *((unsigned char*)0x52FC) ];
 }
 
 void *vid_get_bitmap_fb()

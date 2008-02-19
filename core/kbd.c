@@ -70,6 +70,21 @@ static void kbd_sched_release(long key)
     KBD_STACK_PUSH(SCRIPT_RELEASE);
 }
 
+void md_kbd_sched_immediate_shoot(int no_release)
+{
+    kbd_int_stack_ptr-=1;// REMOVE MD ITEM
+  
+    // stack operations are reversed!
+    if (!no_release)  // only release shutter if allowed
+    {
+      kbd_sched_release(KEY_SHOOT_FULL);
+      kbd_sched_delay(20);
+    }
+    KBD_STACK_PUSH(SCRIPT_MOTION_DETECTOR); // it will removed right after exit from this function
+    kbd_key_press(KEY_SHOOT_FULL); // not a stack operation... pressing right now
+}
+
+
 static void kbd_sched_click(long key)
 {
 // WARNING stack program flow is reversed

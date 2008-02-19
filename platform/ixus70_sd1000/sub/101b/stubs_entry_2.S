@@ -9,6 +9,8 @@ NHSTUB(Write,  0xFFA9A0A8)
 NHSTUB(free, 0xFF9201CC)
 NHSTUB(kbd_read_keys_r2, 0xFFA30724) 
 
+NSTUB(GetCurrentAvValue, 0xFFAD9E94)
+
 NHSTUB(AllocateMemory, 0xFF818664)
 NHSTUB(FreeMemory, 0xFF818650)
 NHSTUB(GetFocusLensSubjectDistance, 0xFFAD2FB4) 

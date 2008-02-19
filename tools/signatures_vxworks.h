@@ -3062,6 +3062,60 @@ static FuncSig func_sig_SetAutoShutdownTime_1[] = {
 	/* 31/32 */
 };
 
+static FuncSig func_sig_PutInNdFilter_1[] = {
+	{   1, 0xe59f4028, 0xfdffffff }, // ldr:4:0xE59F4028
+	{   2, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   3, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{   4, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF678C5
+	{   5, 0xe59f001c, 0xfdffffff }, // ldr:4:0xE59F001C
+	{   6, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000006
+	{   8, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{   9, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  10, 0xe1a02000, 0xfdffffff }, // mov:6:0xE3A02000
+	{  12, 0xea000000, 0xff000000 }, // b, bl:3:0xEAF6784E
+	{  13, 0x0000b0bc, 0xfdffffff }, // and:6:0x0000B0BC
+	{  15, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  16, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  17, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFBA05
+	{  19, 0xe59f4028, 0xfdffffff }, // ldr:4:0xE59F4028
+	{  20, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  21, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{  22, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF678B3
+	{  23, 0xe59f001c, 0xfdffffff }, // ldr:4:0xE59F001C
+	{  24, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{  25, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000006
+	{  26, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{  27, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  28, 0xe1a02000, 0xfdffffff }, // mov:6:0xE3A02000
+	{  30, 0xea000000, 0xff000000 }, // b, bl:3:0xEAF6783C
+	{  31, 0x0000b0bc, 0xfdffffff }, // and:6:0x0000B0BC
+	{ -1, -1, -1 },
+	/* 27/32 */
+};
+
+static FuncSig func_sig_PutOutNdFilter_1[] = {
+	{   1, 0xe59f4028, 0xfdffffff }, // ldr:4:0xE59F4028
+	{   2, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   3, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{   4, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF678B3
+	{   5, 0xe59f001c, 0xfdffffff }, // ldr:4:0xE59F001C
+	{   6, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000006
+	{   8, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{   9, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  10, 0xe1a02000, 0xfdffffff }, // mov:6:0xE3A02000
+	{  12, 0xea000000, 0xff000000 }, // b, bl:3:0xEAF6783C
+	{  13, 0x0000b0bc, 0xfdffffff }, // and:6:0x0000B0BC
+	{  15, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  16, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  17, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFB9FA
+	{  24, 0x00000000, 0xfdffffff }, // and:6:0x00000000
+	{  28, 0x00000072, 0xfdffffff }, // and:6:0x00000072
+	{ -1, -1, -1 },
+	/* 17/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   1, 0xe59f6030, 0xfdffffff }, // ldr:4:0xE59F6030
 	{   2, 0xe5965000, 0xfdffffff }, // ldr:4:0xE5965000
@@ -4272,6 +4326,60 @@ static FuncSig func_sig_SetAutoShutdownTime_2[] = {
 	/* 31/32 */
 };
 
+static FuncSig func_sig_PutInNdFilter_2[] = {
+	{   1, 0xe59f4028, 0xfdffffff }, // ldr:4:0xE59F4028
+	{   2, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   3, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{   4, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF5706D
+	{   5, 0xe59f001c, 0xfdffffff }, // ldr:4:0xE59F001C
+	{   6, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000006
+	{   8, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{   9, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  10, 0xe1a02000, 0xfdffffff }, // mov:6:0xE3A02000
+	{  12, 0xea000000, 0xff000000 }, // b, bl:3:0xEAF56FF6
+	{  13, 0x0000a168, 0xfdffffff }, // and:6:0x0000A168
+	{  15, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  16, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  17, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFFEDE
+	{  19, 0xe59f4028, 0xfdffffff }, // ldr:4:0xE59F4028
+	{  20, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  21, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{  22, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF5705B
+	{  23, 0xe59f001c, 0xfdffffff }, // ldr:4:0xE59F001C
+	{  24, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{  25, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000006
+	{  26, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{  27, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  28, 0xe1a02000, 0xfdffffff }, // mov:6:0xE3A02000
+	{  30, 0xea000000, 0xff000000 }, // b, bl:3:0xEAF56FE4
+	{  31, 0x0000a168, 0xfdffffff }, // and:6:0x0000A168
+	{ -1, -1, -1 },
+	/* 27/32 */
+};
+
+static FuncSig func_sig_PutOutNdFilter_2[] = {
+	{   1, 0xe59f4028, 0xfdffffff }, // ldr:4:0xE59F4028
+	{   2, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   3, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{   4, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF5705B
+	{   5, 0xe59f001c, 0xfdffffff }, // ldr:4:0xE59F001C
+	{   6, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000006
+	{   8, 0xe5940000, 0xfdffffff }, // ldr:4:0xE5940000
+	{   9, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  10, 0xe1a02000, 0xfdffffff }, // mov:6:0xE3A02000
+	{  12, 0xea000000, 0xff000000 }, // b, bl:3:0xEAF56FE4
+	{  13, 0x0000a168, 0xfdffffff }, // and:6:0x0000A168
+	{  15, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  16, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  17, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFFEBE
+	{  24, 0x00000000, 0xfdffffff }, // and:6:0x00000000
+	{  28, 0x00000072, 0xfdffffff }, // and:6:0x00000072
+	{ -1, -1, -1 },
+	/* 17/32 */
+};
+
 static FuncSig func_sig_Fclose_Fut_3[] = {
 	{   1, 0xe0506000, 0xfdffffff }, // sub:6:0xE2506000
 	{   2, 0xe04dd03c, 0xfdffffff }, // sub:6:0xE24DD03C
@@ -4521,6 +4629,10 @@ FuncsList func_list[] = {
 	{ "PhySw_testgpio", func_sig_PhySw_testgpio_1 },
 	{ "PhySw_testgpio", func_sig_PhySw_testgpio_2 },
 	{ "ProtectFile", func_sig_ProtectFile_1 },
+	{ "PutInNdFilter", func_sig_PutInNdFilter_1 },
+	{ "PutInNdFilter", func_sig_PutInNdFilter_2 },
+	{ "PutOutNdFilter", func_sig_PutOutNdFilter_1 },
+	{ "PutOutNdFilter", func_sig_PutOutNdFilter_2 },
 	{ "Read", func_sig_Read_1 },
 	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_1 },
 	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_2 },

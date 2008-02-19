@@ -50,6 +50,12 @@ NSTUB(MoveZoomLensWithPoint, 0xffe87808)
 NSTUB(Open, 0xffc614c0)
 NSTUB(PhySw_testgpio, 0xffc18964)
 NSTUB(ProtectFile, 0xffc59b04)
+// Best match: 92%
+NSTUB(PutInNdFilter, 0xffea7484)
+// ALT: NSTUB(PutInNdFilter, 0xffea7484) // 25/2
+// Best match: 94%
+NSTUB(PutOutNdFilter, 0xffea74cc)
+// ALT: NSTUB(PutOutNdFilter, 0xffea74cc) // 16/1
 NSTUB(Read, 0xffc6157c)
 NSTUB(RefreshPhysicalScreen, 0xffd7f49c)
 NSTUB(Remove, 0xffc61508)

@@ -54,6 +54,20 @@ NSTUB(MoveFocusLensToDistance, 0xffaa8cbc)
 // ERROR: Open is not found!
 // ERROR: PhySw_testgpio is not found!
 NSTUB(ProtectFile, 0xff86f0ec)
+// Best match: 92%
+NSTUB(PutInNdFilter, 0xffaa6ae4)
+// ALT: NSTUB(PutInNdFilter, 0xffaa6ae4) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffaa6b2c) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffaa6b2c) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffaa6ef4) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffaa6ef4) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffaa8688) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffaa8688) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffaa86d0) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffaa86d0) // 25/2
+// Best match: 94%
+NSTUB(PutOutNdFilter, 0xffaa6f3c)
+// ALT: NSTUB(PutOutNdFilter, 0xffaa6f3c) // 16/1
 // ERROR: Read is not found!
 NSTUB(RefreshPhysicalScreen, 0xff998640)
 // ERROR: Remove is not found!

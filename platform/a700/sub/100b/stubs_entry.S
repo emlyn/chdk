@@ -54,6 +54,20 @@ NSTUB(Open, 0xffc5daa0)
 // Best match: 89%
 NSTUB(PhySw_testgpio, 0xffc17d1c)
 NSTUB(ProtectFile, 0xffc56430)
+// Best match: 92%
+NSTUB(PutInNdFilter, 0xffe9e938)
+// ALT: NSTUB(PutInNdFilter, 0xffe9e938) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffe9e980) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffe9e980) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffe9ed44) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffe9ed44) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffea08d4) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffea08d4) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffea091c) // 25/2
+// ALT: NSTUB(PutInNdFilter, 0xffea091c) // 25/2
+// Best match: 94%
+NSTUB(PutOutNdFilter, 0xffe9ed8c)
+// ALT: NSTUB(PutOutNdFilter, 0xffe9ed8c) // 16/1
 NSTUB(Read, 0xffc5db5c)
 NSTUB(RefreshPhysicalScreen, 0xffd703c0)
 NSTUB(Remove, 0xffc5dae8)

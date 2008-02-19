@@ -360,6 +360,9 @@ static char* gui_lang_default = \
 "282 \"Information\"\n"
 "283 \"RGB zebra (overexp. only)\"\n"
 
+"284 \"ND filter state\"\n"
+
+"285 \"Show Histo Ev Grid\"\n"
 
 ;
 

@@ -128,6 +128,7 @@ static const struct keyword_token keywords[] = {
   {"set_iso_real",            TOKENIZER_SET_ISO_REAL},
   {"set_iso",                 TOKENIZER_SET_ISO_MODE}, //FOR COMPATIBILITY
   {"set_led",                 TOKENIZER_SET_LED},
+  {"set_nd_filter",           TOKENIZER_SET_ND_FILTER},
   {"set_prop",                TOKENIZER_SET_PROP},
   {"set_raw_nr",              TOKENIZER_SET_RAW_NR},
   {"set_raw",                 TOKENIZER_SET_RAW},
@@ -147,6 +148,7 @@ static const struct keyword_token keywords[] = {
   {"set_zoom_rel",            TOKENIZER_SET_ZOOM_REL},
   {"set_zoom",                TOKENIZER_SET_ZOOM},
   
+  
   {"wait_click",              TOKENIZER_WAIT_CLICK},
   {"is_key",                  TOKENIZER_IS_KEY},
   
@@ -164,8 +166,8 @@ static const struct keyword_token keywords[] = {
   {"get_usb_power",           TOKENIZER_GET_USB_POWER},
   {"exit_alt",                TOKENIZER_EXIT_ALT},
   {"shut_down",        TOKENIZER_SHUT_DOWN},
-  
-  
+
+
   {"end",                     TOKENIZER_END},
 
   {NULL,                      TOKENIZER_ERROR}

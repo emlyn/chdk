@@ -165,6 +165,7 @@ typedef struct {
     short tv96;
     short sv96;
     short subj_dist;
+    short nd_filter;
 } PHOTO_PARAM;
 
 typedef struct {
@@ -311,6 +312,7 @@ short shooting_get_real_aperture();
 short shooting_get_min_real_aperture();
 short shooting_get_av96_override_value();
 const char * shooting_get_av_bracket_value();
+void shooting_set_nd_filter_state(short v, short is_now);
 /******************************************************************/
 int shooting_get_day_seconds();
 int shooting_get_tick_count();

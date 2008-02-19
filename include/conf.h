@@ -42,6 +42,7 @@ typedef struct {
     int histo_auto_ajust;
     int histo_ignore_boundary;
     int histo_layout;
+    int histo_show_ev_grid;
 
     int zebra_draw;
     int zebra_mode;
@@ -112,8 +113,9 @@ typedef struct {
     int tv_override_value;
     int tv_override_koef;
     int av_override_value;
-    //For ixuses
-    //int nd_filter_state;
+    
+    int nd_filter_state;
+    
     int iso_override_value;
     int iso_override_koef;
     int subj_dist_override_value;

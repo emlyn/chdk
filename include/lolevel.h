@@ -20,6 +20,8 @@ extern long _GetFocusLensCurrentPosition();
 extern long _GetFocusLensSubjectDistance();
 extern long _GetFocusLensSubjectDistanceFromLens();
 extern void _MoveFocusLensToDistance(short *dist); 
+extern void _PutInNdFilter();
+extern void _PutOutNdFilter();
 extern volatile long focus_busy;
 extern long _GetCurrentAvValue();
 //extern long _GetFlashLightValue();

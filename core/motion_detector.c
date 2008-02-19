@@ -36,6 +36,8 @@ void dump_memory();
 #define MD_XY2IDX(x,y) ((y)*motion_detector.columns+x)
 
 void kbd_sched_shoot();
+void md_kbd_sched_immediate_shoot(int no_release);
+
 
 enum {
 
@@ -48,9 +50,10 @@ enum {
 };
 
 enum {
-	MD_DO_IMMEDIATE_SHOOT=1,
-	MD_MAKE_DEBUG_LOG_FILE=2,
-	MD_MAKE_RAM_DUMP_FILE=4
+    MD_DO_IMMEDIATE_SHOOT=1,
+    MD_MAKE_DEBUG_LOG_FILE=2,
+    MD_MAKE_RAM_DUMP_FILE=4,
+    MD_NO_SHUTTER_RELEASE_ON_SHOOT=8
 };
 
 enum {
@@ -58,6 +61,9 @@ enum {
 	MD_REGION_INCLUDE=1,
 	MD_REGION_EXCLUDE=2
 };
+
+
+
 
 
 //#define MD_XY2IDX(x,y) ((y)*motion_detector.columns+x)
@@ -519,7 +525,8 @@ int md_detect_motion(void){
 //			md_save_calls_history();
 			if( ( motion_detector.parameters&MD_DO_IMMEDIATE_SHOOT ) !=0){
 				//make shoot
-				kbd_sched_shoot();
+				//kbd_sched_shoot();
+				md_kbd_sched_immediate_shoot(motion_detector.parameters&MD_NO_SHUTTER_RELEASE_ON_SHOOT);
 			}
 			return 0;
 		}
