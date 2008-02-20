@@ -364,5 +364,18 @@
 
 275 "Clear Bracket Values on Start"
 
+276 "Create card with two partitions"
+277 "Swap partitions"
+278 "This DESTROYS ALL INFORMATION\non card. Continue?"
+279 "This card has only one partition."
+280 "Error"
+281 "Warning"
+282 "Information"
+283 "RGB zebra (overexp. only)"
+
+284 "ND filter state"
+
+285 "Show Histo Ev Grid"
+
 
 
