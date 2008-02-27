@@ -35,6 +35,7 @@ static const double k=12.5;//K is the reflected-light meter calibration constant
 static const short koef[] = {0, 1,10,100,1000};
 static const float shutter_koef[] = {0, 0.00001, 0.0001,0.001,0.01,0.1,1,10,100,1000};
 static const char * expo_shift[] = { "Off", "1/3Ev","2/3Ev", "1Ev", "1 1/3Ev", "1 2/3Ev", "2Ev"};
+static const char* tv_override[]={"64","50.8", "40.3", "32", "25.4","20","16", "12.7", "10","8", "6.3","5","4","3.2", "2.5","2", "1.6", "1.3", "1", "0.8", "0.6", "0.5", "0.4", "0.3", "1/4", "1/5", "1/6", "1/8", "1/10", "1/13", "1/15", "1/20", "1/25", "1/30", "1/40", "1/50", "1/60", "1/80", "1/100", "1/125", "1/160", "1/200", "1/250", "1/320", "1/400", "1/500", "1/640","1/800", "1/1000", "1/1250", "1/1600","1/2000","1/2500","1/3200","1/4000", "1/5000", "1/6400", "1/8000", "1/10000", "1/12500", "1/16000", "1/20000", "1/25000", "1/32000", "1/40000", "1/50000", "1/64000","1/80000", "1/100k"};
 static const char * expo_type[] = { "+/-", "-","+"};
 
 static PHOTO_PARAM photo_param_put_off;
@@ -627,7 +628,7 @@ void shooting_set_av96(short v, short is_now)
 
 void shooting_set_nd_filter_state(short v, short is_now)
 {
-#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a560) || defined (CAMERA_a570) || defined (CAMERA_a710) ||  defined (CAMERA_g7)	          	
+#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a560) || defined (CAMERA_a570) ||  defined (CAMERA_g7)	          	
 	if (is_now) {
 	 if (v==1) _PutInNdFilter();
 	 else if (v==2) _PutOutNdFilter();
@@ -771,15 +772,14 @@ int shooting_get_tick_count()
 
 void shooting_set_iso_mode(int v)
 {
-    long i;
-
+ long i;
  for (i=0;i<ISO_SIZE;i++){
 	if (iso_table[i].id == v){
 	    short vv = iso_table[i].prop_id;
 	    _SetPropertyCase(PROPCASE_ISO_MODE, &vv, sizeof(vv));
 	    return;
 	}
- }
+  }
 }
 
 int shooting_in_progress()
@@ -870,6 +870,12 @@ const char * shooting_get_tv_bracket_value()
 {
   return expo_shift[conf.tv_bracket_value];
 }
+
+const char * shooting_get_tv_override_value()
+{
+  return tv_override[conf.tv_override_value];
+}
+
 
 const char * shooting_get_bracket_type()
 {
@@ -1054,7 +1060,7 @@ void shooting_bracketing(void){
 
 void shooting_expo_param_override(void){
  //if (conf.tv_override) shooting_set_tv96_direct(-384-32*conf.tv_override);
- short drive_mode=shooting_get_drive_mode();
+ //short drive_mode=shooting_get_drive_mode();
 /*if(drive_mode!=last_drive_mode)
  {
   if (last_drive_mode==0) shoot_counter=0;
@@ -1065,8 +1071,11 @@ void shooting_expo_param_override(void){
   shooting_set_tv96_direct(photo_param_put_off.tv96, SET_NOW);	
   photo_param_put_off.tv96=0;
  }
- else if ((conf.tv_override_value) && (conf.tv_override_koef)) 
-  shooting_set_tv96_direct(shooting_get_tv96_from_shutter_speed(shooting_get_shutter_speed_override_value()), SET_NOW); 
+ else if ((conf.tv_override_value) && (conf.tv_override_koef))
+   { 
+   if (conf.tv_enum_type) shooting_set_tv96_direct(32*(conf.tv_override_value-18),SET_NOW);
+   else   shooting_set_tv96_direct(shooting_get_tv96_from_shutter_speed(shooting_get_shutter_speed_override_value()), SET_NOW); 
+   }
  if ((state_kbd_script_run) && (photo_param_put_off.sv96)) {
   shooting_set_sv96(photo_param_put_off.sv96, SET_NOW);
   photo_param_put_off.sv96=0; 
@@ -1087,7 +1096,7 @@ void shooting_expo_param_override(void){
   {
    shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
   }
-#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a560) || defined (CAMERA_a570) || defined (CAMERA_a710) ||  defined (CAMERA_g7)	          
+#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a560) || defined (CAMERA_a570) ||  defined (CAMERA_g7)	          
  if ((state_kbd_script_run) && (photo_param_put_off.nd_filter)) {
    shooting_set_nd_filter_state(photo_param_put_off.nd_filter, SET_NOW);
    photo_param_put_off.nd_filter=0;  

@@ -61,3 +61,8 @@ long vid_is_bitmap_shown()
 {
     return 1;
 }
+
+char *camera_jpeg_count_str()
+{
+    return (char*)0x80A90;
+}

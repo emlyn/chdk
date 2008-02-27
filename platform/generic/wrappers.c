@@ -292,7 +292,7 @@ void *localtime(const unsigned long *_tod) {
 #if !defined (CAMERA_a720) && !defined(CAMERA_a650)
     return _localtime(_tod);
 #else
-#warning  do something with this!  - sizeof(x[]) must be >= sizeof(struct tm)
+#warning  A650, A720 do something with this!  - sizeof(x[]) must be >= sizeof(struct tm) :  'static int x[9];'
   static int x[9];
   return _LocalTime(_tod, &x);   
 #endif
@@ -354,7 +354,7 @@ void* readdir(void *d) {
 # if !defined (CAMERA_a720) && !defined(CAMERA_a650)
     return _readdir(d);
 #else
-#warning  do something with this!  - sizeof(de[]) must be >= sizeof(struct dirent)
+#warning  A650, A720  do something with this!  - sizeof(de[]) must be >= sizeof(struct dirent): 'static char de[40];'
   static char de[40];
   _ReadFastDir(d, &de);
   return de[0]? &de : (void*)0;

@@ -373,8 +373,24 @@
 
 #define LANG_MENU_HISTO_SHOW_EV_GRID 285
 
+#define LANG_MENU_VIS_OSD_WARNING 286
+#define LANG_MENU_VIS_OSD_WARNING_BKG 287
+#define LANG_MENU_VIS_SPACE_ICON 288
+#define LANG_MENU_SPACE_SHOW_ICON 289
+#define LANG_OSD_LAYOUT_EDITOR_SPACE_ICON 290
+#define LANG_MENU_SPACE_SHOW_PERCENT 291
+#define LANG_MENU_SPACE_SHOW_MB 292
+#define LANG_OSD_LAYOUT_EDITOR_SPACE_TEXT 293
+#define LANG_MENU_OSD_SHOW_REMAINING_RAW 294
+#define LANG_OSD_LAYOUT_EDITOR_RAW 295
+#define LANG_MENU_OSD_SHOW_RAW_STATE 296
+
+#define LANG_MENU_SHOW_VALUES_IN_VIDEO 297
+
+#define LANG_MENU_TV_ENUM_TYPE 298
+
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  285
+#define GUI_LANG_ITEMS                  298
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

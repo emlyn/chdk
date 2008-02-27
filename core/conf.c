@@ -52,8 +52,8 @@ int debug_pardata_show;
 //-------------------------------------------------------------------
 static int def_ubasic_vars[SCRIPT_NUM_PARAMS] = {0};
 static int def_batt_volts_max, def_batt_volts_min;
-static OSD_pos def_histo_pos, def_dof_pos, def_batt_icon_pos, def_batt_txt_pos, 
-               def_mode_state_pos, def_values_pos, def_clock_pos;
+static OSD_pos def_histo_pos, def_dof_pos, def_batt_icon_pos, def_space_icon_pos, def_batt_txt_pos, def_space_txt_pos, 
+               def_mode_state_pos, def_mode_raw_pos, def_values_pos, def_clock_pos;
 
 static void conf_change_script_file();
 static void conf_change_histo_mode();
@@ -251,6 +251,20 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(128, conf.nd_filter_state,  CONF_DEF_VALUE, i:0, NULL),							
     CONF_INFO(129, conf.histo_show_ev_grid,  CONF_DEF_VALUE, i:0, NULL),							
     
+    CONF_INFO(130, conf.osd_color_warn,   CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_BG, COLOR_RED), NULL),
+    CONF_INFO(131, conf.space_color,        CONF_DEF_VALUE, cl:COLOR_WHITE, NULL),
+    CONF_INFO(132, conf.space_icon_show,         CONF_DEF_VALUE, i:1, NULL),
+    CONF_INFO(133, conf.space_icon_pos,          CONF_DEF_PTR, ptr:&def_space_icon_pos, NULL),
+    CONF_INFO(134, conf.space_perc_show,         CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(135, conf.space_mb_show,        CONF_DEF_VALUE, i:1, NULL),
+    CONF_INFO(136, conf.space_txt_pos,           CONF_DEF_PTR,   ptr:&def_space_txt_pos , NULL),
+    CONF_INFO(137, conf.show_remaining_raw,             CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(138, conf.mode_raw_pos,         CONF_DEF_PTR,   ptr:&def_mode_raw_pos , NULL),
+    CONF_INFO(139, conf.show_raw_state,  CONF_DEF_VALUE, i:1, NULL),
+    
+    CONF_INFO(140, conf.show_values_in_video, CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(141, conf.tv_enum_type, CONF_DEF_VALUE, i:1, NULL),
+    
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 
@@ -311,8 +325,14 @@ static void conf_init_defaults() {
     def_batt_icon_pos.y = 0;
     def_batt_txt_pos.x=178;
     def_batt_txt_pos.y=1*FONT_HEIGHT;
+    def_space_icon_pos.x = vid_get_bitmap_width()-100;
+    def_space_icon_pos.y = vid_get_bitmap_height()-7;
+    def_space_txt_pos.x=128;
+    def_space_txt_pos.y=0;
     def_mode_state_pos.x=35;
     def_mode_state_pos.y=0;
+    def_mode_raw_pos.x=vid_get_bitmap_width()-7*FONT_WIDTH-2;
+    def_mode_raw_pos.y=vid_get_bitmap_height()-3*FONT_HEIGHT-2;
     def_values_pos.x=vid_get_bitmap_width()-9*FONT_WIDTH;
     def_values_pos.y=30;
     def_clock_pos.x=vid_get_bitmap_width()-5*FONT_WIDTH-2;

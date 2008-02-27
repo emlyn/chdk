@@ -289,6 +289,7 @@ short shooting_get_user_tv96();
 void shooting_set_user_tv96(short v);
 float shooting_get_shutter_speed_from_tv96(short tv);
 float shooting_get_shutter_speed_override_value();
+const char * shooting_get_tv_override_value();
 const char * shooting_get_tv_bracket_value();
 const char * shooting_get_bracket_type();
 void shooting_set_user_tv_by_id(int v);
@@ -417,6 +418,7 @@ unsigned int GetTotalCardSpaceKb(void);
 void swap_partitions(void);
 int get_part_count(void);
 void create_partitions(void);
+extern char * camera_jpeg_count_str();
 
 #define started() debug_led(1)
 #define finished() debug_led(0)

@@ -97,7 +97,7 @@ void  h_usrKernelInit()
 	"MOV     R12, #0x800\n"
 	"LDR     R0, =h_usrRoot\n"
 	"MOV     R1, #0x4000\n"
-	"LDR     R2, =0xCF9B0\n"	// 0x9F9B0 + 0x30000
+	"LDR     R2, =0xDF9B0\n"	// 0x9F9B0 + 0x40000
 	"STR     R12, [SP]\n"
 	"STR     R4, [SP,#4]\n"
 	"BL      sub_FFF0A9B0\n"

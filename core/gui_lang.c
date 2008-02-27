@@ -32,13 +32,13 @@ static char* gui_lang_default = \
 " 20 \"OSD\"\n"
 
 " 21 \"Show OSD\"\n"
-" 22 \"Show RAW/EXP state\"\n"
+" 22 \"Show State\"\n"
 " 23 \"Show misc values\"\n"
-" 24 \" Zoom value\"\n"
+" 24 \" Show Zoom value as\"\n"
 " 25 \"Show DOF calculator\"\n"
 " 26 \"Show clock\"\n"
 " 27 \"OSD layout editor\"\n"
-" 28 \"Battery parameters ->\"\n"
+" 28 \"Battery & Filespace ->\"\n"
 
 
 " 29 \"Histogram\"\n"
@@ -115,15 +115,14 @@ static char* gui_lang_default = \
 " 84 \"Dump RAM on ALT +/- press\"\n"
 " 85 \"Make card bootable...\"\n"
 
+" 86 \"Battery & Filespace Settings\"\n"
 
-" 86 \"Battery\"\n"
-
-" 87 \"Voltage MAX\"\n"
-" 88 \"Voltage MIN\"\n"
-" 89 \"25+ step\"\n"
-" 90 \"Show percent\"\n"
-" 91 \"Show volts\"\n"
-" 92 \"Show icon\"\n"
+" 87 \"Battery MAX Voltage (mV)\"\n"
+" 88 \"Battery MIN Voltage (mV)\"\n"
+" 89 \"Step Size (ON=25,OFF=1 mV)\"\n"
+" 90 \"Show Battery percent\"\n"
+" 91 \"Show Battery volts\"\n"
+" 92 \"Show Battery icon\"\n"
 
 
 " 93 \"Text file reader\"\n"
@@ -335,10 +334,10 @@ static char* gui_lang_default = \
 
 "264 \"Clear override values on start\"\n"
 
-"265 \"Show Canon overexposure value\"\n"
+"265 \"Show Canon overexp. value\"\n"
 
 "266 \"RAW develop\"\n"
-"267 \"Please switch camera\\nto record mode and make\\none shoot.\"\n"
+"267 \"Please switch camera\\nto record mode and take\\none shot.\"\n"
 "268 \"Select RAW file\"\n"
 "269 \"RAW sum\"\n"
 "270 \"RAW average\"\n"
@@ -363,6 +362,22 @@ static char* gui_lang_default = \
 "284 \"ND filter state\"\n"
 
 "285 \"Show Histo Ev Grid\"\n"
+
+"286 \"OSD Warning\"\n"
+"287 \"OSD Warning Background\"\n"
+"288 \"Remaining Space Icon Color\"\n"
+"289 \"Show Filespace Icon\"\n"
+"290 \"Remaining Space\"\n"
+"291 \"Show Filespace in Percent\"\n"
+"292 \"Show Filespace in MB\"\n"
+"293 \"Filespace Text\"\n"
+"294 \"  Show RAW shoot remain\"\n"
+"295 \"Remaining RAW\"\n"
+"296 \"Show RAW state \"\n"
+
+"297 \"Show values in video\"\n"
+
+"298 \"  Shutter speed enum type\"\n"
 
 ;
 

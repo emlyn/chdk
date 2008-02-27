@@ -39,7 +39,7 @@ unsigned long get_batt_perc() {
 static void gui_batt_draw_icon () {
     coord x;
     int perc = get_batt_perc();
-    color cl = (perc<=10)?COLOR_RED:(conf.batt_icon_color&0xFF);
+    color cl = (perc<=10)?conf.osd_color_warn:(conf.batt_icon_color&0xFF);
 
     // battery icon
     draw_rect(conf.batt_icon_pos.x+3-1,    conf.batt_icon_pos.y+1,     conf.batt_icon_pos.x+3+25+1, conf.batt_icon_pos.y+1+10,  cl);
@@ -59,9 +59,11 @@ static void gui_batt_draw_icon () {
 
 //-------------------------------------------------------------------
 static void gui_batt_draw_charge(){
-    sprintf(osd_buf, "%3d%%", get_batt_perc());
+    int perc = get_batt_perc();
+    color cl = (perc<=10)?conf.osd_color_warn:conf.osd_color;
+    sprintf(osd_buf, "%3d%%", perc);
     osd_buf[5]=0;
-    draw_string(conf.batt_txt_pos.x, conf.batt_txt_pos.y, osd_buf, conf.osd_color);
+    draw_string(conf.batt_txt_pos.x, conf.batt_txt_pos.y, osd_buf, cl);
 }
 
 //-------------------------------------------------------------------

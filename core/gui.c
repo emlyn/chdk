@@ -18,6 +18,7 @@
 #include "gui_debug.h"
 #include "gui_fselect.h"
 #include "gui_batt.h"
+#include "gui_space.h"
 #include "gui_osd.h"
 #include "gui_read.h"
 #include "gui_calendar.h"
@@ -134,13 +135,14 @@ static const char* gui_bracket_type_enum(int change, int arg);
 static const char* gui_av_override_enum(int change, int arg);
 static const char* gui_iso_override_koef_enum(int change, int arg);
 static const char* gui_tv_override_koef_enum(int change, int arg);
+static const char* gui_tv_override_value_enum(int change, int arg);
+static const char* gui_tv_enum_type_enum(int change, int arg);
 static const char* gui_subj_dist_override_value_enum(int change, int arg);
 static const char* gui_subj_dist_override_koef_enum(int change, int arg);
 static const char* gui_tv_exposure_order_enum(int change, int arg);
 static const char* gui_av_exposure_order_enum(int change, int arg);
 static const char* gui_iso_exposure_order_enum(int change, int arg);
 static const char* gui_nd_filter_state_enum(int change, int arg);
-//static const char* gui_tv_enum(int change, int arg);
 
 
 // Menu callbacks
@@ -148,6 +150,8 @@ static const char* gui_nd_filter_state_enum(int change, int arg);
 static void cb_step_25();
 static void cb_perc();
 static void cb_volts();
+static void cb_space_perc();
+static void cb_space_mb();
 static void cb_battery_menu_change(unsigned int item);
 static void cb_zebra_restore_screen();
 static void cb_zebra_restore_osd();
@@ -254,6 +258,10 @@ static CMenuItem battery_submenu_items[] = {
     {LANG_MENU_BATT_SHOW_PERCENT,       MENUITEM_BOOL|MENUITEM_ARG_CALLBACK,    &conf.batt_perc_show,   (int)cb_perc },
     {LANG_MENU_BATT_SHOW_VOLTS,         MENUITEM_BOOL|MENUITEM_ARG_CALLBACK,    &conf.batt_volts_show,  (int)cb_volts },
     {LANG_MENU_BATT_SHOW_ICON,          MENUITEM_BOOL,                          &conf.batt_icon_show },	
+    {(int)"",                           MENUITEM_SEPARATOR },
+    {LANG_MENU_SPACE_SHOW_ICON,         MENUITEM_BOOL,                          &conf.space_icon_show },	
+    {LANG_MENU_SPACE_SHOW_PERCENT,      MENUITEM_BOOL|MENUITEM_ARG_CALLBACK,    &conf.space_perc_show,   (int)cb_space_perc },
+    {LANG_MENU_SPACE_SHOW_MB,           MENUITEM_BOOL|MENUITEM_ARG_CALLBACK,    &conf.space_mb_show,  (int)cb_space_mb },
     {LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
@@ -279,6 +287,7 @@ static CMenu dof_submenu = { LANG_MENU_DOF_TITLE, /*cb_dof_menu_change*/ NULL, d
 static CMenuItem values_submenu_items[] = {
 	  {LANG_MENU_OSD_SHOW_MISC_VALUES,           MENUITEM_ENUM,      (int*)gui_show_values_enum },
 	 // {LANG_MENU_VALUES_SHOW_IN_REVIEW,   MENUITEM_BOOL,      &conf.values_show_in_review},
+	  {LANG_MENU_SHOW_VALUES_IN_VIDEO,           MENUITEM_BOOL,      &conf.show_values_in_video},
 	  {LANG_MENU_VALUES_SHOW_ZOOM,               MENUITEM_BOOL,      &conf.values_show_zoom},	
 	  {LANG_MENU_OSD_ZOOM_VALUE,                 MENUITEM_ENUM,      (int*)gui_zoom_value_enum },	
       {LANG_MENU_VALUES_SHOW_REAL_APERTURE,      MENUITEM_BOOL,      &conf.values_show_real_aperture},		
@@ -336,12 +345,13 @@ static CMenuItem exposure_submenu_items[] = {
 static CMenu exposure_submenu = { LANG_MENU_EXPOSURE_TITLE, NULL, exposure_submenu_items };
 
 static CMenuItem operation_submenu_items[] = {
-	  {LANG_MENU_OVERRIDE_TV_VALUE,        MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.tv_override_value, MENU_MINMAX(0, 100)}, 
+	  {LANG_MENU_OVERRIDE_TV_VALUE,        MENUITEM_ENUM,    (int*)gui_tv_override_value_enum}, 
 	  {LANG_MENU_OVERRIDE_TV_KOEF,         MENUITEM_ENUM,    (int*)gui_tv_override_koef_enum},
+ 	  {LANG_MENU_TV_ENUM_TYPE,             MENUITEM_ENUM,    (int*)gui_tv_enum_type_enum},
 #if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000)
 	  {LANG_MENU_OVERRIDE_AV_VALUE,        MENUITEM_ENUM,    (int*)gui_av_override_enum },
 #endif	  
-#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a560) || defined (CAMERA_a570) || defined (CAMERA_a710) ||  defined (CAMERA_g7)	          
+#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a560) || defined (CAMERA_a570) ||  defined (CAMERA_g7)	          
       {LANG_MENU_OVERRIDE_ND_FILTER,       MENUITEM_ENUM,    (int*)gui_nd_filter_state_enum },
 #endif      
 	  {LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)}, 
@@ -379,6 +389,8 @@ static CMenuItem visual_submenu_items[] = {
     {LANG_MENU_VIS_COLORS,              MENUITEM_SEPARATOR },
     {LANG_MENU_VIS_OSD_TEXT,            MENUITEM_COLOR_FG,  (int*)&conf.osd_color },
     {LANG_MENU_VIS_OSD_BKG,             MENUITEM_COLOR_BG,  (int*)&conf.osd_color },
+    {LANG_MENU_VIS_OSD_WARNING,         MENUITEM_COLOR_FG,  (int*)&conf.osd_color_warn },
+    {LANG_MENU_VIS_OSD_WARNING_BKG,     MENUITEM_COLOR_BG,  (int*)&conf.osd_color_warn },
     {LANG_MENU_VIS_HISTO,               MENUITEM_COLOR_FG,  (int*)&conf.histo_color },
     {LANG_MENU_VIS_HISTO_BKG,           MENUITEM_COLOR_BG,  (int*)&conf.histo_color },
     {LANG_MENU_VIS_HISTO_BORDER,        MENUITEM_COLOR_FG,  (int*)&conf.histo_color2 },
@@ -386,6 +398,7 @@ static CMenuItem visual_submenu_items[] = {
     {LANG_MENU_VIS_ZEBRA_UNDER,         MENUITEM_COLOR_BG,  (int*)&conf.zebra_color },
     {LANG_MENU_VIS_ZEBRA_OVER,          MENUITEM_COLOR_FG,  (int*)&conf.zebra_color },
     {LANG_MENU_VIS_BATT_ICON,           MENUITEM_COLOR_FG,  (int*)&conf.batt_icon_color },
+    {LANG_MENU_VIS_SPACE_ICON,           MENUITEM_COLOR_FG,  (int*)&conf.space_color },
     {LANG_MENU_VIS_MENU_TEXT,           MENUITEM_COLOR_FG,  (int*)&conf.menu_color },
     {LANG_MENU_VIS_MENU_BKG,            MENUITEM_COLOR_BG,  (int*)&conf.menu_color },
     {LANG_MENU_VIS_READER_TEXT,         MENUITEM_COLOR_FG,  (int*)&conf.reader_color },
@@ -398,13 +411,14 @@ static CMenu visual_submenu = { LANG_MENU_VIS_TITLE, NULL, visual_submenu_items 
 static CMenuItem osd_submenu_items[] = {
     {LANG_MENU_OSD_SHOW,                MENUITEM_BOOL,      &conf.show_osd },
     {LANG_MENU_OSD_SHOW_STATES,         MENUITEM_BOOL,      &conf.show_state },
-    
     {LANG_MENU_OSD_SHOW_CLOCK,          MENUITEM_BOOL,      &conf.show_clock },
     {LANG_MENU_OSD_LAYOUT_EDITOR,       MENUITEM_PROC,      (int*)gui_draw_osd_le },
     {LANG_MENU_OSD_VALUES,  	    	MENUITEM_SUBMENU,   (int*)&values_submenu },
     {LANG_MENU_OSD_DOF_CALC,            MENUITEM_SUBMENU,   (int*)&dof_submenu },
     {LANG_MENU_OSD_BATT_PARAMS,         MENUITEM_SUBMENU,   (int*)&battery_submenu },
     {LANG_MENU_OSD_GRID_PARAMS,         MENUITEM_SUBMENU,   (int*)&grid_submenu },
+    {LANG_MENU_OSD_SHOW_RAW_STATE,          MENUITEM_BOOL,      &conf.show_raw_state },    
+    {LANG_MENU_OSD_SHOW_REMAINING_RAW,  MENUITEM_BOOL,      &conf.show_remaining_raw },    
     {LANG_MENU_OSD_SHOW_IN_REVIEW,      MENUITEM_BOOL,      &conf.show_osd_in_review},
 #ifndef OPTIONS_AUTOSAVE
     {LANG_MENU_MAIN_SAVE_OPTIONS,       MENUITEM_PROC,      (int*)gui_menuproc_save },
@@ -489,6 +503,14 @@ void cb_perc() {
 
 void cb_volts() {
     conf.batt_perc_show=0;
+}
+
+void cb_space_perc() {
+    conf.space_mb_show=0;
+}
+
+void cb_space_mb() {
+    conf.space_perc_show=0;
 }
 
 void cb_battery_menu_change(unsigned int item) {
@@ -849,14 +871,65 @@ const char* gui_bracket_type_enum(int change, int arg) {
 const char* gui_tv_override_koef_enum(int change, int arg) {
     static const char* modes[]={"Off", "1/100K", "1/10000", "1/1000","1/100","1/10", "1","10","100"};
 
-    conf.tv_override_koef+=change;
-    if (conf.tv_override_koef<0)
+   conf.tv_override_koef+=change;
+   if (conf.tv_enum_type) {
+     if (conf.tv_override_koef<0)  conf.tv_override_koef=6;
+     else if (conf.tv_override_koef>6) conf.tv_override_koef=0;
+     else if (conf.tv_override_koef==1)	 conf.tv_override_koef=6;
+     else if (conf.tv_override_koef==5)	 conf.tv_override_koef=0;
+     else if (conf.tv_override_koef!=0 && conf.tv_override_koef!=6) conf.tv_override_koef=6;
+     }
+   else {
+	if (conf.tv_override_koef<0)
         conf.tv_override_koef=sizeof(modes)/sizeof(modes[0])-1;
     else if (conf.tv_override_koef>=(sizeof(modes)/sizeof(modes[0])))
         conf.tv_override_koef=0;
+    }
     
     return modes[conf.tv_override_koef]; 
 }
+
+const char* gui_tv_override_value_enum(int change, int arg) {
+    static const char* modes[]={"64","50.8", "40.3", "32", "25.4","20","16", "12.7", "10","8", "6.3","5","4","3.2", "2.5","2", "1.6", "1.3", "1", "0.8", "0.6", "0.5", "0.4", "0.3", "1/4", "1/5", "1/6", "1/8", "1/10", "1/13", "1/15", "1/20", "1/25", "1/30", "1/40", "1/50", "1/60", "1/80", "1/100", "1/125", "1/160", "1/200", "1/250", "1/320", "1/400", "1/500", "1/640","1/800", "1/1000", "1/1250", "1/1600","1/2000","1/2500","1/3200","1/4000", "1/5000", "1/6400", "1/8000", "1/10000", "1/12500", "1/16000", "1/20000", "1/25000", "1/32000", "1/40000", "1/50000", "1/64000","1/80000", "1/100k"};
+
+    conf.tv_override_value+=change;
+    if (conf.tv_enum_type) {
+       if (conf.tv_override_value<0) {
+          conf.tv_override_value=sizeof(modes)/sizeof(modes[0])-1;
+        }
+       else if (conf.tv_override_value>=(sizeof(modes)/sizeof(modes[0])))
+         conf.tv_override_value=0;
+       return modes[conf.tv_override_value]; 
+     }
+     else 
+      {
+       char * buf="";	
+       if (conf.tv_override_value<0) {
+          conf.tv_override_value=100;
+        }
+       else if (conf.tv_override_value>100)  conf.tv_override_value=0;
+       sprintf(buf, "%d",  conf.tv_override_value);
+       return buf; 
+      }
+}
+
+const char* gui_tv_enum_type_enum(int change, int arg) {
+    static const char* modes[]={"Factor", "Ev Step"};
+
+    conf.tv_enum_type+=change;
+    if (conf.tv_enum_type<0)
+        conf.tv_enum_type=sizeof(modes)/sizeof(modes[0])-1;
+    else if (conf.tv_enum_type>=(sizeof(modes)/sizeof(modes[0])))
+        conf.tv_enum_type=0;
+    if (change) {
+      conf.tv_override_koef=6;	
+	  if (conf.tv_enum_type)  
+	     conf.tv_override_value=18; 
+	  else conf.tv_override_value=1; 
+      }
+    return modes[conf.tv_enum_type]; 
+}
+
 
 const char* gui_iso_override_koef_enum(int change, int arg) {
     static const char* modes[]={ "Off","1", "10","100"};
@@ -894,6 +967,7 @@ const char* gui_subj_dist_override_koef_enum(int change, int arg) {
     return modes[conf.subj_dist_override_koef]; 
 }
 
+/*
 const char* gui_tv_exposure_order_enum(int change, int arg) {
     static const char* modes[]={ "Off", "1","2", "3"};
 
@@ -952,19 +1026,7 @@ const char* gui_iso_exposure_order_enum(int change, int arg) {
 
     return modes[conf.iso_exposure_order]; 
 }
-
-/*const char* gui_tv_enum(int change, int arg) {
-    static const char* modes[]={ "Off", "20\"","25\"", "30\"", "40\"", "50\"", "65\""};
-
-    conf.tv_override+=change;
-    if (conf.tv_override<0)
-        conf.tv_override=0;
-    else if (conf.tv_override>=(sizeof(modes)/sizeof(modes[0])))
-        conf.tv_override=sizeof(modes)/sizeof(modes[0])-1;
-
-    return modes[conf.tv_override]; 
-}*/
-
+*/
 const char* gui_av_override_enum(int change, int arg) {
     static char buf[8];
     short prop_id;
@@ -1380,7 +1442,7 @@ extern long GetPropertyCase(long opt_id, void *buf, long bufsize);
 //extern int xxxx, eeee;
 //-------------------------------------------------------------------
 void gui_draw_osd() {
-    unsigned int m, n = 0, mode_photo;
+    unsigned int m, n = 0, mode_photo, mode_video;
     coord x;
     static int flashlight = 0, zebra = 0, zebra_init = 0, pressed = 0;
     static int half_disp_press_old=0;
@@ -1434,13 +1496,16 @@ void gui_draw_osd() {
         pressed = 0;
     }
     
-    mode_photo = (m&MODE_MASK) == MODE_PLAY || 
-                 !((m&MODE_SHOOTING_MASK)==MODE_VIDEO_STD || 
+    mode_video = ((m&MODE_SHOOTING_MASK)==MODE_VIDEO_STD || 
 				 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_SPEED ||  
 				 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_COMPACT ||
 				 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_MY_COLORS || 
 				 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_ACCENT || 
-                                 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_TIME_LAPSE || 
+                 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_TIME_LAPSE);
+    
+    
+    mode_photo = (m&MODE_MASK) == MODE_PLAY || 
+                 !( mode_video ||
 				 (m&MODE_SHOOTING_MASK)==MODE_STITCH);
 
     half_disp_press=mode_photo && kbd_is_key_pressed(KEY_SHOOT_HALF) && kbd_is_key_pressed(KEY_DISPLAY);
@@ -1480,7 +1545,7 @@ void gui_draw_osd() {
         gui_osd_draw_histo();
     }
 
-    if (((m&MODE_MASK) == MODE_REC) && ((recreview_hold==0) || (conf.show_osd_in_review)) ) {
+    if ((m&MODE_MASK) == MODE_REC && (recreview_hold==0 || conf.show_osd_in_review) ) {
 //        m &= MODE_SHOOTING_MASK;
 //        if (m==MODE_SCN_WATER || m==MODE_SCN_NIGHT || m==MODE_SCN_CHILD || m==MODE_SCN_PARTY || m==MODE_STITCH ||
 //            m==MODE_SCN_GRASS || m==MODE_SCN_SNOW  || m==MODE_SCN_BEACH || m==MODE_SCN_FIREWORK || m==MODE_VIDEO)
@@ -1489,7 +1554,7 @@ void gui_draw_osd() {
         if (conf.show_grid_lines) {
             gui_grid_draw_osd(1);
         }
-        if ((gui_mode==GUI_MODE_NONE || gui_mode==GUI_MODE_ALT) && (kbd_is_key_pressed(KEY_SHOOT_HALF) || (state_kbd_script_run) || (shooting_get_common_focus_mode())) && (mode_photo || (m&MODE_SHOOTING_MASK)==MODE_STITCH)) {
+        if ((gui_mode==GUI_MODE_NONE || gui_mode==GUI_MODE_ALT) && (((kbd_is_key_pressed(KEY_SHOOT_HALF) || (state_kbd_script_run) || (shooting_get_common_focus_mode())) && (mode_photo || (m&MODE_SHOOTING_MASK)==MODE_STITCH )) || (mode_video && conf.show_values_in_video) )) {
         	 
            if (conf.show_dof!=DOF_DONT_SHOW) gui_osd_calc_dof();
            
@@ -1497,17 +1562,22 @@ void gui_draw_osd() {
            
            if (conf.values_show_real_iso || conf.values_show_market_iso || conf.values_show_ev_seted || conf.values_show_ev_measured || conf.values_show_bv_measured || conf.values_show_bv_seted || conf.values_show_overexposure || conf.values_show_canon_overexposure) gui_osd_calc_expo_param();           	           
         }
-        if (conf.show_state) gui_osd_draw_state();
-
-	    if ((conf.show_values==SHOW_ALWAYS) ||  ((kbd_is_key_pressed(KEY_SHOOT_HALF) || (recreview_hold==1)) && (conf.show_values==SHOW_HALF)))
+        if (conf.show_state && !mode_video) gui_osd_draw_state();
+        if (conf.save_raw && conf.show_raw_state && !mode_video) gui_osd_draw_raw_info();
+        
+	    if ((conf.show_values==SHOW_ALWAYS && mode_photo) || (mode_video && conf.show_values_in_video) || ((kbd_is_key_pressed(KEY_SHOOT_HALF) || (recreview_hold==1)) && (conf.show_values==SHOW_HALF)))
 		   gui_osd_draw_values(1);
-        else if  (shooting_get_common_focus_mode() && conf.show_values && !(conf.show_dof==DOF_SHOW_IN_DOF) )   
+        else if  (shooting_get_common_focus_mode() && mode_photo && conf.show_values && !(conf.show_dof==DOF_SHOW_IN_DOF) )   
            gui_osd_draw_values(2);
 	    else if  (conf.show_values==SHOW_HALF)
 		   gui_osd_draw_values(0);   
     }
+    
 
-    if (recreview_hold==0) gui_batt_draw_osd();
+    if (recreview_hold==0) {
+        gui_batt_draw_osd();
+        gui_space_draw_osd();
+    }
     
     if ((conf.show_clock) && (recreview_hold==0)) {
         gui_osd_draw_clock();

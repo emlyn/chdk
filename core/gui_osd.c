@@ -9,6 +9,7 @@
 #include "gui_draw.h"
 #include "gui_lang.h"
 #include "gui_batt.h"
+#include "gui_space.h"
 #include "gui_grid.h"
 #include "gui_osd.h"
 
@@ -25,10 +26,13 @@ typedef struct {
 static OSD_elem osd[]={
     {LANG_OSD_LAYOUT_EDITOR_HISTO,      &conf.histo_pos,        {HISTO_WIDTH+2, HISTO_HEIGHT}   },
     {LANG_OSD_LAYOUT_EDITOR_DOF_CALC,   &conf.dof_pos,          {23*FONT_WIDTH, 2*FONT_HEIGHT}  },
-    {LANG_OSD_LAYOUT_EDITOR_STATES,     &conf.mode_state_pos,   {12*FONT_WIDTH, 6*FONT_HEIGHT}   },
+    {LANG_OSD_LAYOUT_EDITOR_STATES,     &conf.mode_state_pos,   {12*FONT_WIDTH, 4*FONT_HEIGHT}   },
+    {LANG_OSD_LAYOUT_EDITOR_RAW,     &conf.mode_raw_pos,   {7*FONT_WIDTH, FONT_HEIGHT}   },
     {LANG_OSD_LAYOUT_EDITOR_MISC,       &conf.values_pos,       {9*FONT_WIDTH, 9*FONT_HEIGHT}   },
     {LANG_OSD_LAYOUT_EDITOR_BAT_ICON,   &conf.batt_icon_pos,    {28, 12}                        },
+    {LANG_OSD_LAYOUT_EDITOR_SPACE_ICON,   &conf.space_icon_pos,    {103, 7}                        },
     {LANG_OSD_LAYOUT_EDITOR_BAT_TEXT,   &conf.batt_txt_pos,     {5*FONT_WIDTH, FONT_HEIGHT}     },
+    {LANG_OSD_LAYOUT_EDITOR_SPACE_TEXT,   &conf.space_txt_pos,     {5*FONT_WIDTH, FONT_HEIGHT}     },
     {LANG_OSD_LAYOUT_EDITOR_CLOCK,      &conf.clock_pos,        {5*FONT_WIDTH, FONT_HEIGHT}     },
     {0}
 };
@@ -65,7 +69,9 @@ void gui_osd_draw() {
         gui_osd_draw_histo();
         gui_osd_draw_dof();
         gui_batt_draw_osd();
+        gui_space_draw_osd();
         gui_osd_draw_state();
+        gui_osd_draw_raw_info();
         gui_osd_draw_values();
         gui_osd_draw_clock();
         for (i=1; i<=2; ++i) {
@@ -199,11 +205,15 @@ static void gui_osd_draw_zebra_osd() {
                     if (conf.show_state) {
                         gui_osd_draw_state();
                     }
+                    if (conf.show_remaining_raw) {
+                        gui_osd_draw_raw_info();
+                    }
                     if (conf.show_values) {
                         gui_osd_draw_values();
                     }
                 }
                 gui_batt_draw_osd();
+                gui_space_draw_osd();
                 if (conf.show_clock) {
                     gui_osd_draw_clock();
                 }
@@ -414,9 +424,13 @@ void gui_osd_draw_histo() {
         }
     }
 
-    if (histo_magnification) {
-        sprintf(osd_buf, " %d.%02dx ", histo_magnification/1000, histo_magnification/10%100);
-        draw_string(conf.histo_pos.x, conf.histo_pos.y-FONT_HEIGHT, osd_buf, conf.histo_color);
+    if ((histo_magnification) || (conf.show_overexp )) {
+        if ((conf.show_overexp ) && kbd_is_key_pressed(KEY_SHOOT_HALF) && (under_exposed || over_exposed))  
+		   draw_string(conf.histo_pos.x+HISTO_WIDTH-FONT_WIDTH*3, conf.histo_pos.y-FONT_HEIGHT, "EXP", conf.histo_color);
+        if (histo_magnification) {
+		   sprintf(osd_buf, " %d.%02dx ", histo_magnification/1000, histo_magnification/10%100);
+		   draw_string(conf.histo_pos.x, conf.histo_pos.y-FONT_HEIGHT, osd_buf, conf.histo_color);
+           }
     } else {
         draw_filled_rect(conf.histo_pos.x, conf.histo_pos.y-FONT_HEIGHT, conf.histo_pos.x+8*FONT_WIDTH, conf.histo_pos.y-1, MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
     }
@@ -624,7 +638,54 @@ void gui_print_osd_misc_string_canon_values(const char * title, short value) {
   m+=FONT_HEIGHT;
 }
 
+//-------------------------------------------------------------------
+void gui_osd_draw_raw_info() 
+    {
+    int x, camera_jpeg_count,jpeg_size,raw_and_jpeg_count,raw_size;
+    static int b;
+    
+    if (conf.show_remaining_raw) 
+      {
+            raw_size = hook_raw_size() / 1024;
+            camera_jpeg_count = atoi(camera_jpeg_count_str());
+            
+            if (camera_jpeg_count>0)
+                {
+                jpeg_size=GetFreeCardSpaceKb()/camera_jpeg_count;
+                raw_and_jpeg_count=GetFreeCardSpaceKb()/(raw_size+jpeg_size);
+                }
+            else
+                raw_and_jpeg_count=0;
+ 
+            if (raw_and_jpeg_count>0)
+                {
+                sprintf(osd_buf, "RAW:%3d", raw_and_jpeg_count);
+                draw_string(conf.mode_raw_pos.x, conf.mode_raw_pos.y, osd_buf, conf.osd_color);
+                }
+            else
+                {
+                sprintf(osd_buf, "DISK FULL!");
 
+                if (conf.mode_raw_pos.x<=3*FONT_WIDTH) 
+                    x = 4*FONT_WIDTH;
+                else
+                    x = conf.mode_raw_pos.x;
+                
+                if (b > 6)
+                    {
+                    draw_string(x-3*FONT_WIDTH, conf.mode_raw_pos.y, osd_buf, conf.osd_color_warn); 
+                    b = (b>12) ? 0 : b+1;
+                    }
+                else
+                    {
+                    draw_string(x-3*FONT_WIDTH, conf.mode_raw_pos.y, osd_buf, conf.osd_color); 
+                    b = b+1;
+                    } 
+                }
+         }
+    else draw_string(conf.mode_raw_pos.x, conf.mode_raw_pos.y, "RAW", conf.osd_color);
+	            
+}
 //-------------------------------------------------------------------
 void gui_osd_draw_state() {
     int a,  gui_mode=gui_get_mode(), m=(mode_get()&MODE_SHOOTING_MASK); 
@@ -632,18 +693,21 @@ void gui_osd_draw_state() {
     
     n=0;
 
-    if (conf.save_raw || gui_mode==GUI_MODE_OSD){
-        draw_string(conf.mode_state_pos.x, conf.mode_state_pos.y+n, "RAW", conf.osd_color);
-        n+=FONT_HEIGHT;
-    }
-    if (((gui_mode==GUI_MODE_NONE || gui_mode==GUI_MODE_ALT) && conf.show_histo && conf.show_overexp && kbd_is_key_pressed(KEY_SHOOT_HALF)) || gui_mode==GUI_MODE_OSD) {
-        draw_string(conf.mode_state_pos.x, conf.mode_state_pos.y+n, (under_exposed || over_exposed)?"EXP":"   ", conf.osd_color);
-        n+=FONT_HEIGHT;
-    }
-    if (((conf.tv_override_value) && (conf.tv_override_koef)) || gui_mode==GUI_MODE_OSD){
-    	if(kbd_is_key_pressed(KEY_SHOOT_HALF)) t=(int)(shooting_get_shutter_speed_from_tv96(shooting_get_tv96())*100000);	
-    	else t=(int)(shooting_get_shutter_speed_override_value()*100000);
-        gui_print_osd_state_string_float("TV:", "%d.%05d ", 100000, t);
+   if (((conf.tv_override_value) && (conf.tv_override_koef)) || gui_mode==GUI_MODE_OSD){
+    	if(kbd_is_key_pressed(KEY_SHOOT_HALF)) 
+		  { 
+		  t=(int)(shooting_get_shutter_speed_from_tv96(shooting_get_tv96())*100000);	
+		  gui_print_osd_state_string_float("TV:", "%d.%05d ", 100000, t);
+		  }
+    	else 
+		 {
+    	 if (conf.tv_enum_type) gui_print_osd_state_string_chr("TV:",shooting_get_tv_override_value()); 
+         else  
+          {
+		  t=(int)(shooting_get_shutter_speed_override_value()*100000);
+          gui_print_osd_state_string_float("TV:", "%d.%05d ", 100000, t);
+          }
+       }
     }
     if (conf.av_override_value || gui_mode==GUI_MODE_OSD) gui_print_osd_state_string_float("AV:", "%d.%02d ", 100, shooting_get_aperture_from_av96(shooting_get_av96_override_value()));
 #if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a560) || defined (CAMERA_a570) || defined (CAMERA_a710) ||  defined (CAMERA_g7)    
@@ -700,6 +764,7 @@ void gui_osd_draw_values(int showtype) {
      m+=FONT_HEIGHT;
     }
     
+    
     if ((conf.values_show_real_aperture) && (showtype==1)) 
 	     gui_print_osd_misc_string_float("Av :", "%d.%02d ", 100, shooting_get_real_aperture());
     if ((conf.show_dof==DOF_SHOW_IN_MISC) && (showtype)) { 
@@ -724,7 +789,6 @@ void gui_osd_draw_values(int showtype) {
       if (conf.values_show_canon_overexposure	) gui_print_osd_misc_string_canon_values("dEc:", expo.dev96_canon);
       if (conf.values_show_luminance) gui_print_osd_misc_string_float("B  :", "%d.%02d ", 100, expo.b);
     }
-    
 }
 //-------------------------------------------------------------------
 void gui_osd_draw_clock() {

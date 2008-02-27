@@ -73,3 +73,7 @@ int review_fullscreen_mode(){
  get_parameter_data(53, &r, 1);
  return  r==0;
 }
+char *camera_jpeg_count_str()
+{
+    return (char*)0x82F88;
+}

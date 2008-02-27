@@ -10,8 +10,8 @@ DEF(focus_busy, 0x9D50) //  0x9CB8
 
 DEF(canon_menu_active,0xB55C)
 
-#warning incorrect value, points to zero
+#warning A720 - incorrect value, points to zero: 'DEF(canon_shoot_menu_active,0xFFE9CDB4)'
 DEF(canon_shoot_menu_active,0xFFE9CDB4)
 
-#warning incorrect value, points to zero
+#warning A720 - incorrect value, points to zero: 'DEF(recreview_hold, 0xFFE9CDB4)'
 DEF(recreview_hold, 0xFFE9CDB4)

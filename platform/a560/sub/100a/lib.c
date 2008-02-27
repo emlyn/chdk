@@ -55,3 +55,8 @@ long vid_get_viewport_height()
 {
     return 240;//((mode_get()&MODE_MASK) == MODE_PLAY)?240:230;
 }
+
+char *camera_jpeg_count_str()
+{
+    return (char*)0x10B80;
+}

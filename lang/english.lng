@@ -32,13 +32,13 @@
  20 "OSD"
 
  21 "Show OSD"
- 22 "Show RAW/EXP State"
+ 22 "Show State"
  23 "Show Misc Values"
  24 " Zoom Value"
  25 "Show DOF Calculator"
  26 "Show Clock"
  27 "OSD Layout Editor"
- 28 "Battery Parameters ->"
+ 28 "Battery & Filespace ->"
 
 
  29 "Histogram"
@@ -116,14 +116,14 @@
  85 "Make Card Bootable..."
 
 
- 86 "Battery"
+86 "Battery & Filespace Settings"
 
- 87 "Voltage MAX"
- 88 "Voltage MIN"
- 89 "25+ Step"
- 90 "Show Percent"
- 91 "Show Volts"
- 92 "Show Icon"
+ 87 "Battery MAX Voltage (mV)"
+ 88 "Battery MIN Voltage (mV)"
+ 89 "Step Size (ON= 25, OFF= 1 mV)"
+ 90 "Show Battery Percent"
+ 91 "Show Battery Voltage"
+ 92 "Show Battery Icon"
 
 
  93 "Text File Reader"
@@ -348,10 +348,10 @@
 
 264 "Clear Override Values on Start"
 
-265 "Show Canon Overexposure Value"
+265 "Show Canon Overexp. Value"
 
 266 "RAW develop"
-267 "Please switch camera\ninto record mode and make\none shoot."
+267 "Please switch camera\ninto record mode and take\none shot."
 268 "Select RAW file"
 269 "RAW sum"
 270 "RAW average"
@@ -376,6 +376,23 @@
 284 "ND filter state"
 
 285 "Show Histo Ev Grid"
+
+286 "OSD Warning"
+287 "OSD Warning Background"
+288 "Remaining Space Icon Color"
+289 "Show Filespace Icon"
+290 "Remaining Space"
+291 "Show Filespace in Percent"
+292 "Show Filespace in MB"
+293 "Filespace Text"
+294 "  Show RAW shoot remain"
+295 "Remaining RAW"
+
+296 "Show RAW state"
+
+297 "Show values in video"
+
+298 "  Shutter speed enum type"
 
 
 

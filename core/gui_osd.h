@@ -36,6 +36,7 @@ extern void gui_osd_zebra_init();
 extern void gui_osd_draw_histo();
 extern void gui_osd_draw_dof();
 extern void gui_osd_draw_state();
+extern void gui_osd_draw_raw_info();
 extern void gui_osd_draw_values();
 extern void gui_osd_draw_clock();
 

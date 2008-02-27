@@ -54,3 +54,7 @@ long vid_get_viewport_height()
 {
     return 240;
 }
+char *camera_jpeg_count_str()
+{
+    return (char*)0x70EA0;
+}

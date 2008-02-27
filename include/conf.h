@@ -30,12 +30,18 @@ typedef struct {
     int batt_perc_show;
     int batt_volts_show;
     int batt_icon_show;
+    int space_icon_show;
     int show_clock;
+    int space_perc_show;
+    int space_mb_show;
 
     int zoom_value;
 
     int show_state;
+    int show_remaining_raw;
+    int show_raw_state;
     int show_values;
+    int show_values_in_video;
     int show_overexp;
 
     int histo_mode;
@@ -56,15 +62,20 @@ typedef struct {
     OSD_pos histo_pos;
     OSD_pos dof_pos;
     OSD_pos batt_icon_pos;
+    OSD_pos space_icon_pos;
     OSD_pos batt_txt_pos;
+    OSD_pos space_txt_pos;
     OSD_pos mode_state_pos;
+    OSD_pos mode_raw_pos;
     OSD_pos values_pos;
     OSD_pos clock_pos;
 
     color histo_color;
     color histo_color2; // markers/border
     color osd_color;
+    color osd_color_warn;
     color batt_icon_color;
+    color space_color;
     color menu_color;
     color reader_color;
     color zebra_color; // under/over
@@ -112,6 +123,7 @@ typedef struct {
 
     int tv_override_value;
     int tv_override_koef;
+    int tv_enum_type;
     int av_override_value;
     
     int nd_filter_state;
