@@ -51,7 +51,7 @@ MODE_VIDEO_TIME_LAPSE   ,
 MODE_SCN_INDOOR         ,
 };
 
-#if defined(CAMERA_a570) || defined(CAMERA_a560) || defined(CAMERA_a720) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_a650)
+#if defined(CAMERA_a570) || defined(CAMERA_a560) || defined(CAMERA_a720) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_a650) || defined(CAMERA_a460)
  #define PROPCASE_DRIVE_MODE					102
  #define PROPCASE_FOCUS_MODE					133
  #define PROPCASE_FLASH_MODE    		        143

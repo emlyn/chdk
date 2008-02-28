@@ -51,6 +51,9 @@ PLATFORMSUB=100e
 #PLATFORM=a650
 #PLATFORMSUB=100d
 
+#PLATFORM=a460
+#PLATFORMSUB=100d
+
 include $(topdir)version.inc
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
 

@@ -42,6 +42,9 @@
 #define ROWPIX 4104   // for 12 MP
 #define ROWS   3048   // for 12 MP
 
+#elif defined (CAMERA_a460)
+#define ROWPIX 2664   // for 5 MP 1/3" sensor size
+#define ROWS   1968   // for 5 MP 1/3" sensor size
 
 #else
 #error camera type not defined

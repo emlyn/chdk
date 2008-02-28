@@ -466,7 +466,7 @@ void gui_osd_calc_dof() {
     int av, av_min, c_of_c, fl, v, v1, m;
     //long lfpfl=lens_get_focus_pos_fl();
 
-#if defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus950_sd850)    
+#if defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus950_sd850) || defined(CAMERA_a460)
     av=shooting_get_min_real_aperture();
 #else
     av=shooting_get_real_aperture();

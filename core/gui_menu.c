@@ -89,6 +89,7 @@ static void gui_menu_back() {
 
 //-------------------------------------------------------------------
 void gui_menu_kbd_process() {
+static char sbuf[7];
     switch (kbd_get_autoclicked_key()) {
 
 	case KEY_ERASE:
@@ -309,16 +310,40 @@ void gui_menu_kbd_process() {
                 }
             }
             break;
+
+#if defined (CAMERA_a460)
+        case KEY_DISPLAY:
+            if (int_incr <= 1000){
+                int_incr *= 10;
+            }
+            else {
+               int_incr = 1;
+            }
+            sprintf(sbuf, "±%d",int_incr);
+            if (int_incr == 1) {
+               draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
+            }
+            draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
+            break;
+
+#else
         case KEY_ZOOM_IN:
             if (int_incr >= 10){
                 int_incr /= 10;
             }
+            sprintf(sbuf, "±%d",int_incr);
+            draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
+            draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
             break;
+
         case KEY_ZOOM_OUT:
             if (int_incr <= 1000){
                 int_incr *= 10;
             }
+            sprintf(sbuf, "±%d",int_incr);
+            draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
             break;
+
         case KEY_DISPLAY:
             if (gui_menu_stack_ptr > 0){
                 gui_menu_stack_ptr--;
@@ -328,6 +353,7 @@ void gui_menu_kbd_process() {
                 gui_force_restore();
             }
             break;
+#endif
     }
 }
 
