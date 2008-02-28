@@ -166,6 +166,8 @@ typedef struct {
     int ns_enable_memdump;
     int script_startup;			// remote autostart
     int remote_enable;			// remote enable
+    int user_menu_enable;
+    int user_menu_vars[10];
 
 } Conf;
 

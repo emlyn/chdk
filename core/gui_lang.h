@@ -388,9 +388,12 @@
 #define LANG_MENU_SHOW_VALUES_IN_VIDEO 297
 
 #define LANG_MENU_TV_ENUM_TYPE 298
+#define LANG_MENU_USER_MENU_ENABLE 299
+#define LANG_MENU_USER_MENU 300
+#define LANG_MENU_ITEM_BLANK 301
 
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  298
+#define GUI_LANG_ITEMS                  301
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

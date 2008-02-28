@@ -10,9 +10,10 @@
 #include "gui_draw.h"
 #include "gui_palette.h"
 #include "gui_menu.h"
+#include "gui_lang.h"
 
 //-------------------------------------------------------------------
-#define MENUSTACK_MAXDEPTH  3
+#define MENUSTACK_MAXDEPTH  4
 
 //-------------------------------------------------------------------
 typedef struct {
@@ -29,6 +30,7 @@ static unsigned int gui_menu_stack_ptr;
 static int          gui_menu_curr_item;
 static int          gui_menu_top_item;
 static int          gui_menu_redraw;
+static int          gui_menu_add_item = 0;
 
 static int          count;
 static coord        x, y, w, num_lines;
@@ -88,6 +90,17 @@ static void gui_menu_back() {
 //-------------------------------------------------------------------
 void gui_menu_kbd_process() {
     switch (kbd_get_autoclicked_key()) {
+
+	case KEY_ERASE:
+		if (conf.user_menu_enable == 2) {
+			if (curr_menu->title != LANG_MENU_USER_MENU)
+				add_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_add_item, 0);
+			else
+				add_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_add_item, 1);
+	            gui_menu_redraw=1;
+		}
+		break;
+		
         case KEY_UP:
             do {
                 if (gui_menu_curr_item>0) {
@@ -105,6 +118,7 @@ void gui_menu_kbd_process() {
                      (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK)==MENUITEM_SEPARATOR);
             int_incr = 1;
             gui_menu_redraw=1;
+			if (curr_menu->title == LANG_MENU_USER_MENU) gui_menu_add_item = gui_menu_curr_item;
             break;
         case KEY_DOWN:
             do {
@@ -122,6 +136,7 @@ void gui_menu_kbd_process() {
                      (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK)==MENUITEM_SEPARATOR);
             int_incr = 1;
             gui_menu_redraw=1;
+			if (curr_menu->title == LANG_MENU_USER_MENU) gui_menu_add_item = gui_menu_curr_item;
             break;
         case KEY_LEFT:
             if (gui_menu_curr_item>=0) {

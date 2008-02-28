@@ -80,7 +80,8 @@ extern void dump_memory();
 
 static void gui_draw_osd();
 static void gui_draw_splash();
-
+void user_menu_save();
+void user_menu_restore();
 // Menu procs
 //-------------------------------------------------------------------
 static void gui_show_build_info(int arg);
@@ -143,6 +144,10 @@ static const char* gui_tv_exposure_order_enum(int change, int arg);
 static const char* gui_av_exposure_order_enum(int change, int arg);
 static const char* gui_iso_exposure_order_enum(int change, int arg);
 static const char* gui_nd_filter_state_enum(int change, int arg);
+//static const char* gui_tv_enum(int change, int arg);
+const char* gui_user_menu_show_enum(int change, int arg);
+
+void rinit();
 
 
 // Menu callbacks
@@ -408,9 +413,31 @@ static CMenuItem visual_submenu_items[] = {
 };
 static CMenu visual_submenu = { LANG_MENU_VIS_TITLE, NULL, visual_submenu_items };
 
+void blank_menu()
+{};
+
+static CMenuItem user_submenu_items[] = {
+	{ LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
+	{ LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
+	{ LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
+	{ LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
+	{ LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
+	{ LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
+	{ LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
+	{ LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
+	{ LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
+	{ LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
+	{ LANG_MENU_MAIN_TITLE,      MENUITEM_PROC,  (int*)rinit},
+    {0}
+};
+static CMenu user_submenu = { LANG_MENU_USER_MENU, NULL, user_submenu_items };
+
 static CMenuItem osd_submenu_items[] = {
     {LANG_MENU_OSD_SHOW,                MENUITEM_BOOL,      &conf.show_osd },
+    {LANG_MENU_USER_MENU,  	    		MENUITEM_SUBMENU,   (int*)&user_submenu},
+    {LANG_MENU_USER_MENU_ENABLE,		MENUITEM_ENUM,      (int*)gui_user_menu_show_enum },
     {LANG_MENU_OSD_SHOW_STATES,         MENUITEM_BOOL,      &conf.show_state },
+    
     {LANG_MENU_OSD_SHOW_CLOCK,          MENUITEM_BOOL,      &conf.show_clock },
     {LANG_MENU_OSD_LAYOUT_EDITOR,       MENUITEM_PROC,      (int*)gui_draw_osd_le },
     {LANG_MENU_OSD_VALUES,  	    	MENUITEM_SUBMENU,   (int*)&values_submenu },
@@ -491,6 +518,23 @@ static CMenuItem root_menu_items[] = {
 };
 
 static CMenu root_menu = { LANG_MENU_MAIN_TITLE, NULL, root_menu_items };
+
+void rinit(){
+	gui_menu_init(&root_menu);
+}
+
+static CMenuItem blank_menu_item = { LANG_MENU_ITEM_BLANK, MENUITEM_PROC, (int*)blank_menu,0};
+
+void add_user_menu(CMenuItem curr_menu_item, int* gui_menu_add_item, int del) {
+	if (*gui_menu_add_item<10){
+		if (del) {
+			user_submenu_items[*gui_menu_add_item] = blank_menu_item;
+		} else {
+			user_submenu_items[*gui_menu_add_item] = curr_menu_item;
+			*gui_menu_add_item += 1;
+		}	
+	}
+}
 
 //-------------------------------------------------------------------
 void cb_step_25() {
@@ -1041,7 +1085,19 @@ const char* gui_av_override_enum(int change, int arg) {
 	}
 }
 
+const char* gui_user_menu_show_enum(int change, int arg) {
+    static const char* modes[]={ "Off", "On", "Edit" };
 
+	if (conf.user_menu_enable == 2) user_menu_save();
+
+    conf.user_menu_enable+=change;
+    if (conf.user_menu_enable<0)
+        conf.user_menu_enable=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.user_menu_enable>=(sizeof(modes)/sizeof(modes[0])))
+        conf.user_menu_enable=0;
+
+    return modes[conf.user_menu_enable];
+}
 
 //-------------------------------------------------------------------
 void gui_update_script_submenu() {
@@ -1116,6 +1172,7 @@ void gui_init()
     gui_restore = 0;
     gui_in_redraw = 0;
     gui_splash = (conf.splash_show)?SPLASH_TIME:0;
+    user_menu_restore();
     gui_lang_init();
     draw_init();
 
@@ -1233,6 +1290,7 @@ static inline void conf_store_old_settings() {
 //-------------------------------------------------------------------
 static inline int conf_save_new_settings_if_changed() {
     if (memcmp(&old_conf, &conf, sizeof(Conf)) != 0) {
+		user_menu_save();
         conf_save();
         conf_store_old_settings();
         return 1;
@@ -1250,6 +1308,9 @@ void gui_kbd_process()
     if (kbd_is_key_clicked(KEY_MENU)){
         switch (gui_mode) {
             case GUI_MODE_ALT:
+				if (conf.user_menu_enable == 1)
+					gui_menu_init(&user_submenu);
+				else
                 gui_menu_init(&root_menu);
                 gui_mode = GUI_MODE_MENU;
                 draw_restore();
@@ -1972,4 +2033,33 @@ void gui_draw_load_lang(int arg) {
     gui_fselect_init(LANG_STR_SELECT_LANG_FILE, path, gui_draw_lang_selected);
 }
 
-//-------------------------------------------------------------------
+int find_mnu(CMenu *curr_menu, int mnu, int count) 
+{
+	int gui_menu_curr_item;
+
+	gui_menu_curr_item = 0;
+	while(curr_menu->menu[gui_menu_curr_item].text) {
+		if (curr_menu->menu[gui_menu_curr_item].text == mnu){
+			user_submenu_items[count] = curr_menu->menu[gui_menu_curr_item];
+			return 1;
+		}
+		if ((curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK) == MENUITEM_SUBMENU) 
+			if (find_mnu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), mnu, count)) return 1;
+		gui_menu_curr_item++;
+	}
+	return 0;
+}
+
+void user_menu_save() {
+    int x;
+	for (x=0; x<10; x++) {
+		conf.user_menu_vars[x] = user_submenu_items[x].text;
+	}
+}
+
+void user_menu_restore() {
+    int x;
+	for (x=0; x<10; x++) {
+		find_mnu(&root_menu, conf.user_menu_vars[x], x);
+	}
+}

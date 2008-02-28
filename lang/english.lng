@@ -294,8 +294,8 @@
 218 "Show Depth of Field in Misc."
 
 
-219 "Miscelaneous Values"
-220 "Miscelaneous Values->"
+219 "Miscellaneous Values"
+220 "Miscellaneous Values->"
 221 "Show in Review Mode"	
 222 "Show Zoom"		
 223 "Show 'Real' Aperture"
@@ -393,6 +393,9 @@
 297 "Show values in video"
 
 298 "  Shutter speed enum type"
+"299 "User Menu Enable"
+"300 "User Menu"
+"301 " "
 
 
 

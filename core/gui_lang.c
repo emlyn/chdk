@@ -281,8 +281,8 @@ static char* gui_lang_default = \
 "217 \"Show Hyperfocal Dist. in Misc.\"\n"
 "218 \"Show Depth of Field in Misc.\"\n"
 
-"219 \"Miscelaneous Values\"\n"		
-"220 \"Miscelaneous Values->\"\n"		
+"219 \"Miscellaneous Values\"\n"		
+"220 \"Miscellaneous Values->\"\n"		
 "221 \"Show in Review mode\"\n"		
 "222 \"Show Zoom\"\n"		
 "223 \"Show 'real' Aperture\"\n"
@@ -378,6 +378,9 @@ static char* gui_lang_default = \
 "297 \"Show values in video\"\n"
 
 "298 \"  Shutter speed enum type\"\n"
+"299 \"User Menu Enable\"\n"
+"300 \"User Menu\"\n"
+"301 \" \"\n"
 
 ;
 

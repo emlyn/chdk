@@ -54,6 +54,7 @@ static int def_ubasic_vars[SCRIPT_NUM_PARAMS] = {0};
 static int def_batt_volts_max, def_batt_volts_min;
 static OSD_pos def_histo_pos, def_dof_pos, def_batt_icon_pos, def_space_icon_pos, def_batt_txt_pos, def_space_txt_pos, 
                def_mode_state_pos, def_mode_raw_pos, def_values_pos, def_clock_pos;
+static int def_user_menu_vars[10] = {0};
 
 static void conf_change_script_file();
 static void conf_change_histo_mode();
@@ -264,6 +265,9 @@ static const ConfInfo conf_info[] = {
     
     CONF_INFO(140, conf.show_values_in_video, CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(141, conf.tv_enum_type, CONF_DEF_VALUE, i:1, NULL),
+
+  	CONF_INFO(142, conf.user_menu_enable,  CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(143, conf.user_menu_vars,    CONF_DEF_PTR,   ptr:&def_user_menu_vars, NULL),
     
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
