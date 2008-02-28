@@ -196,10 +196,11 @@ static void gui_osd_draw_zebra_osd() {
             if (conf.show_osd) {
                 draw_set_draw_proc(draw_pixel_buffered);
                 if ((mode_get()&MODE_MASK) == MODE_REC) {
+                    if (conf.show_dof != DOF_DONT_SHOW) gui_osd_calc_dof();
                     if (conf.show_grid_lines) {
                         gui_grid_draw_osd(1);
                     }
-                    if (conf.show_dof) {
+                    if (conf.show_dof == DOF_SHOW_IN_DOF) {
                         gui_osd_draw_dof();
                     }
                     if (conf.show_state) {
@@ -423,16 +424,17 @@ void gui_osd_draw_histo() {
             draw_filled_ellipse(conf.histo_pos.x+HISTO_WIDTH-5, conf.histo_pos.y+5, 3, 3, MAKE_COLOR(conf.histo_color2>>8, conf.histo_color2>>8));
         }
     }
-
-    if ((histo_magnification) || (conf.show_overexp )) {
-        if ((conf.show_overexp ) && kbd_is_key_pressed(KEY_SHOOT_HALF) && (under_exposed || over_exposed))  
-		   draw_string(conf.histo_pos.x+HISTO_WIDTH-FONT_WIDTH*3, conf.histo_pos.y-FONT_HEIGHT, "EXP", conf.histo_color);
-        if (histo_magnification) {
-		   sprintf(osd_buf, " %d.%02dx ", histo_magnification/1000, histo_magnification/10%100);
-		   draw_string(conf.histo_pos.x, conf.histo_pos.y-FONT_HEIGHT, osd_buf, conf.histo_color);
-           }
-    } else {
+    if ((conf.show_overexp ) && kbd_is_key_pressed(KEY_SHOOT_HALF) && (under_exposed || over_exposed))
+      draw_string(conf.histo_pos.x+HISTO_WIDTH-FONT_WIDTH*3, conf.histo_pos.y-FONT_HEIGHT, "EXP", conf.histo_color);
+    if (conf.histo_auto_ajust){
+      if (histo_magnification) {
+        sprintf(osd_buf, " %d.%02dx ", histo_magnification/1000, histo_magnification/10%100);
+        draw_string(conf.histo_pos.x, conf.histo_pos.y-FONT_HEIGHT, osd_buf, conf.histo_color);
+      } else if (gui_get_mode()==GUI_MODE_OSD){
+        draw_string(conf.histo_pos.x, conf.histo_pos.y-FONT_HEIGHT, " 9.99x ", conf.histo_color);
+      } else {
         draw_filled_rect(conf.histo_pos.x, conf.histo_pos.y-FONT_HEIGHT, conf.histo_pos.x+8*FONT_WIDTH, conf.histo_pos.y-1, MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
+      }
     }
 }
 
@@ -693,12 +695,12 @@ void gui_osd_draw_state() {
     
     n=0;
 
-   if (((conf.tv_override_value) && (conf.tv_override_koef)) || gui_mode==GUI_MODE_OSD){
+    if (((conf.tv_override_value) && (conf.tv_override_koef)) || gui_mode==GUI_MODE_OSD){
     	if(kbd_is_key_pressed(KEY_SHOOT_HALF)) 
 		  { 
 		  t=(int)(shooting_get_shutter_speed_from_tv96(shooting_get_tv96())*100000);	
-		  gui_print_osd_state_string_float("TV:", "%d.%05d ", 100000, t);
-		  }
+        gui_print_osd_state_string_float("TV:", "%d.%05d ", 100000, t);
+    }
     	else 
 		 {
     	 if (conf.tv_enum_type) gui_print_osd_state_string_chr("TV:",shooting_get_tv_override_value()); 
@@ -789,6 +791,7 @@ void gui_osd_draw_values(int showtype) {
       if (conf.values_show_canon_overexposure	) gui_print_osd_misc_string_canon_values("dEc:", expo.dev96_canon);
       if (conf.values_show_luminance) gui_print_osd_misc_string_float("B  :", "%d.%02d ", 100, expo.b);
     }
+    
 }
 //-------------------------------------------------------------------
 void gui_osd_draw_clock() {
