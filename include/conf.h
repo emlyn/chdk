@@ -168,7 +168,7 @@ typedef struct {
     int remote_enable;			// remote enable
     int user_menu_enable;
     int user_menu_vars[10];
-
+    int zoom_scale;
 } Conf;
 
 extern Conf conf;

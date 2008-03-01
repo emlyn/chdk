@@ -266,9 +266,9 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(140, conf.show_values_in_video, CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(141, conf.tv_enum_type, CONF_DEF_VALUE, i:1, NULL),
 
-  	CONF_INFO(142, conf.user_menu_enable,  CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(142, conf.user_menu_enable,  CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(143, conf.user_menu_vars,    CONF_DEF_PTR,   ptr:&def_user_menu_vars, NULL),
-    
+    CONF_INFO(144, conf.zoom_scale,  CONF_DEF_VALUE, i:100, NULL),    
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

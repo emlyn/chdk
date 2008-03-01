@@ -392,8 +392,10 @@
 #define LANG_MENU_USER_MENU 300
 #define LANG_MENU_ITEM_BLANK 301
 
+#define LANG_MENU_OSD_ZOOM_SCALE        302
+
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  301
+#define GUI_LANG_ITEMS                  302
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

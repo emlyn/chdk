@@ -20,6 +20,12 @@
 #define ZOOM_SHOW_FL                    1
 #define ZOOM_SHOW_EFL                   2
 
+#define ZOOM_SCALE_042                  0
+#define ZOOM_SCALE_100                  1
+#define ZOOM_SCALE_175                  2
+#define ZOOM_SCALE_200                  3
+#define ZOOM_SCALE_300                  4
+
 //ARM begin
 #define DOF_DONT_SHOW                   0
 #define DOF_SHOW_IN_DOF                 1

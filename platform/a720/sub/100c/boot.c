@@ -2,6 +2,8 @@
 #include "platform.h"
 #include "core.h"
 
+const long new_sa = MEMISOSTART + MEMISOSIZE;
+
 /* Ours stuff */
 extern long wrs_kernel_bss_start;
 extern long wrs_kernel_bss_end;
@@ -108,8 +110,14 @@ void __attribute__((naked,noinline)) sub_FFC00FB8_my() { //#fs
               "BL      sub_FFE3B620\n"
               "MOV     R0, #0x53000\n"
               "STR     R0, [SP,#0x74-0x70]\n"
-              "LDR     R0, =0xDD024\n"          // 0x9d024 + 0x40000, note: 0x20000 *should* have been enough, but our code was overwritten...
+        );
+//              "LDR     R0, =0xDD024\n"          // 0x9d024 + 0x40000, note: 0x20000 *should* have been enough, but our code was overwritten...
                                                 // ...thus we push the memory pool a little more up (0x30000 = 192k)
+        asm volatile (
+              "LDR     R0, =new_sa\n"
+              "LDR     R0, [R2]\n"
+        );
+        asm volatile (
               "LDR     R2, =0x2ABC00\n"
               "LDR     R1, =0x2A4968\n"
               "STR     R0, [SP,#0x74-0x6C]\n"
