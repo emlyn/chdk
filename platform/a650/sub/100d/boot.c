@@ -92,7 +92,7 @@ void __attribute__((naked,noinline)) sub_FFC00FB8_my() {
               "BL      sub_FFE4A784\n"
               "MOV     R0, #0x53000\n"
               "STR     R0, [SP,#4]\n"
-              "LDR     R0, =0xD3F20\n"         // new heap start: 0xA3F20+0x30000
+              "LDR     R0, =0xE3F20\n"         // new heap start: 0xA3F20+0x40000
                                                 
               "LDR     R2, =0x2ABC00\n"        // DRY_SYS_MEM_START
               "LDR     R1, =0x2A4968\n"        // heap end

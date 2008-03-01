@@ -109,7 +109,7 @@ MODE_SCN_INDOOR         ,
 #define ASID_MIN (aperture_sizes_table[0].id)
 #define ASID_MAX (aperture_sizes_table[AS_SIZE-1].id)
 
-#if defined (CAMERA_g7) || defined (CAMERA_a710) || defined (CAMERA_s3is) || defined (CAMERA_a630) || defined (CAMERA_a640)
+#if defined (CAMERA_g7) || defined (CAMERA_a710) || defined (CAMERA_s3is) || defined (CAMERA_a630) || defined (CAMERA_a640) || defined (CAMERA_a560) || defined (CAMERA_a570)
 #define CAMERA_MULTIPART
 #endif
 

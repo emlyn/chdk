@@ -14,3 +14,5 @@ NHSTUB(SetPropertyCase,0xFFC0BB5C)
 NHSTUB(GetDrive_ClusterSize, 0xFFE463B8)
 NHSTUB(GetDrive_TotalClusters, 0xFFE463F4)
 NHSTUB(GetDrive_FreeClusters, 0xFFE46430)
+NHSTUB(WriteSDCard, 0xFFE58F60)
+
