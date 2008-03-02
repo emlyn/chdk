@@ -110,7 +110,7 @@ void gui_calendar_kbd_process() {
             }
             need_redraw = 1;
             break;
-      #if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_a560) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a460)
+      #if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_a560) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a460) || defined(CAMERA_ixus55_sd450)
         case KEY_DISPLAY:
       #else
         case KEY_ERASE:

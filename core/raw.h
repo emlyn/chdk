@@ -30,7 +30,7 @@
 #define ROWPIX 2888   // for 6 MP
 #define ROWS   2136   // for 6 MP
 
-#elif defined (CAMERA_a610) || defined (CAMERA_s2is)
+#elif defined (CAMERA_a610) || defined (CAMERA_s2is) || defined (CAMERA_ixus55_sd450)
 #define ROWPIX 2672   // for 5 MP
 #define ROWS   1968   // for 5 MP
 
