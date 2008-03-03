@@ -98,7 +98,7 @@ void __attribute__((naked,noinline)) sub_FFC00FB8_my() {
 //              "LDR     R0, =0xD3F20\n"         // new heap start: 0xA3F20+0x30000
         asm volatile (
               "LDR     R0, =new_sa\n"
-              "LDR     R0, [R2]\n"
+              "LDR     R0, [R0]\n"
         );
         asm volatile (
               "LDR     R2, =0x2ABC00\n"        // DRY_SYS_MEM_START

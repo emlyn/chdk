@@ -115,7 +115,7 @@ void __attribute__((naked,noinline)) sub_FFC00FB8_my() { //#fs
                                                 // ...thus we push the memory pool a little more up (0x30000 = 192k)
         asm volatile (
               "LDR     R0, =new_sa\n"
-              "LDR     R0, [R2]\n"
+              "LDR     R0, [R0]\n"
         );
         asm volatile (
               "LDR     R2, =0x2ABC00\n"
