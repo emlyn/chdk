@@ -1,4 +1,4 @@
-#define PARAM_FILE_COUNTER      0x2E
+#define PARAM_FILE_COUNTER      0x34
 
 #include "platform.h"
 
