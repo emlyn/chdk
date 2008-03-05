@@ -428,11 +428,19 @@ int rename(const char *oldname, const char *newname){
 }
 
 unsigned int GetFreeCardSpaceKb(void){
+#if defined(CAMERA_ixus65_sd630)
+ return 0;
+#else
  return (_GetDrive_FreeClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
+#endif
 }
 
 unsigned int GetTotalCardSpaceKb(void){
+#if defined(CAMERA_ixus65_sd630)
+ return 0;
+#else
  return (_GetDrive_TotalClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
+#endif
 }
 
 #if defined(CAMERA_MULTIPART)

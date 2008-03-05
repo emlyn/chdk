@@ -121,7 +121,7 @@ RANLIB=arm-elf-ranlib
 SIZE=arm-elf-size
 
 # -msoft-float is used per default but object files are marked as hard-float
-CFLAGS=-fno-inline -Os -fno-strict-aliasing
+CFLAGS=-fno-inline -Os -fno-strict-aliasing -msoft-float
 # flags for gcc v4
 # CFLAGS+=-mtune=arm946e-s
 CTHUMB=-mthumb

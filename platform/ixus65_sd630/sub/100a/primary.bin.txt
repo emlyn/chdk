@@ -1,0 +1,2 @@
+in:
+/branches/cail-abtrunk/platform/ixus65_sd630/sub/100a/PRIMARY.BIN

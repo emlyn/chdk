@@ -26,7 +26,7 @@
 #define ROWPIX 3152   // for 7 MP
 #define ROWS   2340   // for 7 MP
 
-#elif defined (CAMERA_a700) || defined (CAMERA_s3is) || defined (CAMERA_ixus800_sd700)
+#elif defined (CAMERA_a700) || defined (CAMERA_s3is) || defined (CAMERA_ixus65_sd630) || defined (CAMERA_ixus800_sd700)
 #define ROWPIX 2888   // for 6 MP
 #define ROWS   2136   // for 6 MP
 

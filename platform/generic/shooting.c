@@ -181,7 +181,7 @@ int shooting_get_user_av_id()
 }
 
 short shooting_get_real_aperture() {
-//#if defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus55_sd450)
+//#if defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_ixus65_sd630) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus55_sd450)
 //    return shooting_get_min_real_aperture();
 //#else
 //I hope that GetCurrentAvValue is correct for ixus70_sd1000 ixus700_sd500 now

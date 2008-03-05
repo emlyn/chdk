@@ -113,6 +113,10 @@ MODE_SCN_INDOOR         ,
 #define CAMERA_MULTIPART
 #endif
 
+/* Keyboard repeat and initial delays */
+#define KBD_REPEAT_DELAY  140
+#define KBD_INITIAL_DELAY 300
+
 typedef struct {
     short id; // hacks id
     short prop_id; // Canons id
