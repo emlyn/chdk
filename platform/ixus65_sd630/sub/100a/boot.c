@@ -1,7 +1,9 @@
 #include "lolevel.h"
 #include "platform.h"
 #include "core.h"
-#include "stdlib.h"
+//#include "stdlib.h"
+
+const long new_sa = MEMISOSTART + MEMISOSIZE;
 
 /* Ours stuff */
 extern long wrs_kernel_bss_start;
@@ -110,8 +112,14 @@ void  h_usrKernelInit()
 	"MOV     R12, #0x800\n"
 	"LDR     R0, =h_usrRoot\n"  // !!!
 	"MOV     R1, #0x4000\n"
+    );    
 //	"LDR     R2, =0xCC6B0\n"	// !!! 0x9C6B0 + 0x30000    MEMISOSIZE!!!
-	"LDR     R2, =0x18A6B0\n"   // !!! Increased size !!! 0x9C6B0+0x1ae000= 0x24A6B0-0x18A6B0=786432
+//	"LDR     R2, =0x18A6B0\n"   // !!! Increased size !!! 0x9C6B0+0x1ae000= 0x24A6B0-0x18A6B0=786432
+    asm volatile (
+        "LDR     R2, =new_sa\n"
+        "LDR     R2, [R2]\n"
+    );
+    asm volatile (
 	"STR     R12, [SP]\n"                    
 	"STR     R4, [SP,#4]\n"
 	"BL      sub_FFB1FE20\n"
@@ -154,6 +162,8 @@ long console_buf_line_ptr = 0;
 
 char cmd[100] = "ShowCameraLog\n\0";
 int cons_cmd_ptr = -1;
+
+void mytty_putc(char c);
 
 int ttyRead(MY_DEV* tty,  char* buffer, int nBytes)
 {
@@ -244,7 +254,7 @@ static void replaceConsoleDriver()
     int f6 = 0xFFB1910C;
     int fRead = (int)&ttyRead;
     int fWrite = (int)&ttyWrite;
-    int newdriver_id = _iosDrvInstall(f0, f1, f2, f3, fRead, fWrite, f6);
+    int newdriver_id = _iosDrvInstall((void*)f0, (void*)f1, (void*)f2, (void*)f3, (void*)fRead, (void*)fWrite, (void*)f6);
 
     *TTY_DRV_NUM = newdriver_id;
 }
