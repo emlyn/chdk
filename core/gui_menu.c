@@ -92,8 +92,13 @@ void gui_menu_kbd_process() {
 static char sbuf[7];
     switch (kbd_get_autoclicked_key()) {
 #if !defined (CAMERA_a460)
+
+#if defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus950_sd850)
+		case KEY_SHOOT_HALF:
+#else    
 	case KEY_ERASE:
-		if (conf.user_menu_enable == 2) {
+#endif
+		if (conf.user_menu_enable == 3) {
 			if (curr_menu->title != LANG_MENU_USER_MENU)
 				add_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_add_item, 0);
 			else

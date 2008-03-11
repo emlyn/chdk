@@ -34,7 +34,7 @@
 #define ROWPIX 2672   // for 5 MP
 #define ROWS   1968   // for 5 MP
 
-#elif defined (CAMERA_a720) || defined (CAMERA_s5is)
+#elif defined (CAMERA_a720) || defined (CAMERA_s5is) || defined (CAMERA_ixus950_sd850)
 #define ROWPIX 3336   // for new 8 MP
 #define ROWS   2480   // for new 8 MP
 
