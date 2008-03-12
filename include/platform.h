@@ -51,7 +51,7 @@ MODE_VIDEO_TIME_LAPSE   ,
 MODE_SCN_INDOOR         ,
 };
 
-#if defined(CAMERA_a570) || defined(CAMERA_a560) || defined(CAMERA_a720) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined(CAMERA_a650) || defined(CAMERA_a460)
+#if defined(CAMERA_a570) || defined(CAMERA_a560) || defined(CAMERA_a720) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined(CAMERA_a650) || defined(CAMERA_a460) || defined(CAMERA_a550)
  #define PROPCASE_DRIVE_MODE					102
  #define PROPCASE_FOCUS_MODE					133
  #define PROPCASE_FLASH_MODE    		        143
@@ -109,7 +109,7 @@ MODE_SCN_INDOOR         ,
 #define ASID_MIN (aperture_sizes_table[0].id)
 #define ASID_MAX (aperture_sizes_table[AS_SIZE-1].id)
 
-#if defined (CAMERA_g7) || defined (CAMERA_a710) || defined (CAMERA_s3is) || defined (CAMERA_a630) || defined (CAMERA_a640) || defined (CAMERA_a560) || defined (CAMERA_a570)
+#if defined (CAMERA_g7) || defined (CAMERA_a710) || defined (CAMERA_s3is) || defined (CAMERA_a630) || defined (CAMERA_a640) || defined (CAMERA_a560) || defined (CAMERA_a570) || defined(CAMERA_a550)
 #define CAMERA_MULTIPART
 #endif
 
