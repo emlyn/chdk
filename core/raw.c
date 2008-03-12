@@ -111,7 +111,7 @@ void raw_postprocess() {
 //-------------------------------------------------------------------
 
 void set_raw_pixel(unsigned int x, unsigned int y, unsigned short value){
- unsigned char* addr=hook_raw_image_addr()+y*ROWLEN+(x/8)*10;
+ unsigned char* addr=hook_raw_image_addr()+y*RAW_ROWLEN+(x/8)*10;
  switch (x%8) {
   case 0: addr[0]=(addr[0]&0x3F)|(value<<6); addr[1]=value>>2;                  break;
   case 1: addr[0]=(addr[0]&0xC0)|(value>>4); addr[3]=(addr[3]&0x0F)|(value<<4); break;
@@ -126,7 +126,7 @@ void set_raw_pixel(unsigned int x, unsigned int y, unsigned short value){
 
 //-------------------------------------------------------------------
 unsigned short get_raw_pixel(unsigned int x,unsigned  int y){
- unsigned char* addr=hook_raw_image_addr()+y*ROWLEN+(x/8)*10;
+ unsigned char* addr=hook_raw_image_addr()+y*RAW_ROWLEN+(x/8)*10;
  switch (x%8) {
   case 0: return ((0x3fc&(((unsigned short)addr[1])<<2)) | (addr[0] >> 6));
   case 1: return ((0x3f0&(((unsigned short)addr[0])<<4)) | (addr[3] >> 4));
@@ -142,7 +142,7 @@ unsigned short get_raw_pixel(unsigned int x,unsigned  int y){
 
 //-------------------------------------------------------------------
 void patch_bad_pixel(unsigned int x,unsigned  int y){
- if ((x>=2) && (x<ROWPIX-2) && (y>=2) && (y<ROWS-2)) 
+ if ((x>=2) && (x<CAM_RAW_ROWPIX-2) && (y>=2) && (y<CAM_RAW_ROWS-2)) 
   set_raw_pixel(x,y,(get_raw_pixel(x-2,y)+get_raw_pixel(x+2,y)+get_raw_pixel(x,y-2)+get_raw_pixel(x,y+2))/4);
 }
 

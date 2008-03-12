@@ -3,6 +3,7 @@
 #include "core.h"
 #include "keyboard.h"
 #include "conf.h"
+#include "camera.h"
 #include "ubasic.h"
 #include "font.h"
 #include "lang.h"
@@ -38,7 +39,7 @@
 //------------------------------------------------------------------
 // #define KEY_NONE (KEY_DUMMY+1)
 
-#if   defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_ixus65_sd630) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
+#if !CAM_HAS_ERASE_BUTTON
 //Alt mode
  #define SHORTCUT_TOGGLE_RAW          KEY_DISPLAY
  #define SHORTCUT_MF_TOGGLE           KEY_UP
@@ -135,7 +136,7 @@ static const char* gui_reader_codepage_enum(int change, int arg);
 static const char* gui_zoom_value_enum(int change, int arg);
 static const char* gui_show_values_enum(int change, int arg);
 static const char* gui_dof_show_value_enum(int change, int arg);
-#if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_g7)
+#if CAM_ADJUSTABLE_ALT_BUTTON
 static const char* gui_alt_mode_button_enum(int change, int arg);
 #endif
 static const char* gui_alt_power_enum(int change, int arg);
@@ -182,7 +183,7 @@ static CMenuItem script_submenu_items_top[] = {
 	// remote autostart
 	{LANG_MENU_SCRIPT_AUTOSTART,		MENUITEM_BOOL,						&conf.script_startup },
 
-#if !defined (CAMERA_a560) && !defined (CAMERA_a700)
+#if CAM_REMOTE
 	{LANG_MENU_SCRIPT_REMOTE_ENABLE,	MENUITEM_BOOL,						&conf.remote_enable},
 #endif
     {LANG_MENU_SCRIPT_CURRENT,          MENUITEM_SEPARATOR },
@@ -228,14 +229,14 @@ static CMenuItem misc_submenu_items[] = {
     {LANG_MENU_MISC_CALENDAR,           MENUITEM_PROC,    (int*)gui_draw_calendar },
     {LANG_MENU_MISC_TEXT_READER,        MENUITEM_SUBMENU, (int*)&reader_submenu },
     {LANG_MENU_MISC_GAMES,              MENUITEM_SUBMENU, (int*)&games_submenu },
-#if defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_a650) || defined (CAMERA_s2is) || defined (CAMERA_s3is) || defined (CAMERA_s5is)
+#if CAM_SWIVEL_SCREEN
     {LANG_MENU_MISC_FLASHLIGHT,         MENUITEM_BOOL,    &conf.flashlight },
 #endif
     {LANG_MENU_MISC_SHOW_SPLASH,        MENUITEM_BOOL,    &conf.splash_show },
-#if !defined(CAMERA_g7) && !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560) && !defined (CAMERA_ixus850_sd800)  && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a460) && !defined(CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_USE_ZOOM_FOR_MF
     {LANG_MENU_MISC_ZOOM_FOR_MF,        MENUITEM_BOOL,    &conf.use_zoom_mf },
 #endif
-#if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_g7)
+#if CAM_ADJUSTABLE_ALT_BUTTON
     {LANG_MENU_MISC_ALT_BUTTON,         MENUITEM_ENUM,    (int*)gui_alt_mode_button_enum },
 #endif
     {LANG_MENU_MISC_DISABLE_LCD_OFF,    MENUITEM_ENUM,    (int*)gui_alt_power_enum },
@@ -257,7 +258,7 @@ static CMenuItem debug_submenu_items[] = {
     {LANG_MENU_DEBUG_BENCHMARK,         MENUITEM_PROC,          (int*)gui_draw_bench },
     {LANG_MENU_DEBUG_DUMP_RAM,          MENUITEM_BOOL,          &conf.ns_enable_memdump },
     {LANG_MENU_DEBUG_MAKE_BOOTABLE,     MENUITEM_PROC, 	    	(int*)gui_menuproc_mkbootdisk },
-#if defined (CAMERA_MULTIPART)
+#if CAM_MULTIPART
     {LANG_MENU_DEBUG_CREATE_MULTIPART , MENUITEM_PROC, 	    	(int*)gui_menuproc_break_card },
     {LANG_MENU_DEBUG_SWAP_PART,         MENUITEM_PROC, 	    	(int*)gui_menuproc_swap_patitons },
 #endif
@@ -797,7 +798,7 @@ const char* gui_histo_show_enum(int change, int arg) {
 }
 
 //-------------------------------------------------------------------
-#if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_g7)
+#if CAM_ADJUSTABLE_ALT_BUTTON
 const char* gui_alt_mode_button_enum(int change, int arg) {
 #if defined(CAMERA_s2is) || defined(CAMERA_s3is)
     static const char* names[]={ "Shrtcut", "Flash", "Timer", "ISO", "Video" };
@@ -1153,7 +1154,7 @@ void gui_raw_develop(int arg){
 
 //-------------------------------------------------------------------
 
-#if defined (CAMERA_MULTIPART)
+#if CAM_MULTIPART
 void card_break_proc(unsigned int btn){
  if (btn==MBOX_BTN_YES) create_partitions();
 }
@@ -1443,23 +1444,23 @@ void gui_kbd_process()
                   shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
 				  }   
 				else  
-				switch (kbd_get_autoclicked_key()) {
-#if defined (CAMERA_a460)
-              case KEY_RIGHT:
+                  switch (kbd_get_autoclicked_key()) {
+#if CAM_HAS_ZOOM_LEVER
+                    case KEY_ZOOM_IN:
 #else
-				  case KEY_ZOOM_IN:
+                    case KEY_RIGHT:
 #endif
-                  gui_subj_dist_override_value_enum(1,0);
-                  shooting_set_focus(shooting_get_subject_distance_override_value(),SET_NOW);
-                  break;
-#if defined (CAMERA_a460)
-              case KEY_LEFT:
+                        gui_subj_dist_override_value_enum(1,0);
+                        shooting_set_focus(shooting_get_subject_distance_override_value(),SET_NOW);
+                        break;
+#if CAM_HAS_ZOOM_LEVER
+                    case KEY_ZOOM_OUT:
 #else
-                 case KEY_ZOOM_OUT:
+                    case KEY_LEFT:
 #endif
-                  gui_subj_dist_override_value_enum(-1,0);
-                  shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
-                  break;
+                        gui_subj_dist_override_value_enum(-1,0);
+                        shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
+                        break;
             	  }
               }
 #endif  	                 
@@ -1692,8 +1693,8 @@ void gui_draw_osd() {
         gui_osd_draw_clock();
     }
 
-#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_a460) 
-    if (gui_mode==GUI_MODE_NONE && kbd_is_key_pressed(KEY_SHOOT_HALF) && ((m&MODE_MASK)==MODE_REC) && ((m&MODE_SHOOTING_MASK))!=MODE_VIDEO_STD && (m&MODE_SHOOTING_MASK)!=MODE_VIDEO_COMPACT) {    
+#if CAM_DRAW_EXPOSITION
+    if (gui_mode==GUI_MODE_NONE && kbd_is_key_pressed(KEY_SHOOT_HALF) && ((m&MODE_MASK)==MODE_REC) && ((m&MODE_SHOOTING_MASK))!=MODE_VIDEO_STD && (m&MODE_SHOOTING_MASK)!=MODE_VIDEO_COMPACT) {
      strcpy(osd_buf,shooting_get_tv_str());
      strcat(osd_buf,"\"  F");
      strcat(osd_buf,shooting_get_av_str());

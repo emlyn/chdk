@@ -1,3 +1,4 @@
+#include "camera.h"
 #include "lolevel.h"
 #include "platform.h"
 
@@ -443,7 +444,7 @@ unsigned int GetTotalCardSpaceKb(void){
 #endif
 }
 
-#if defined(CAMERA_MULTIPART)
+#if CAM_MULTIPART
 static char mbr_buf[512];
 static unsigned long drive_sectors;
 

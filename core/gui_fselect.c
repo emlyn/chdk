@@ -706,11 +706,11 @@ void gui_fselect_kbd_process() {
                 }
             }
             break;
-    #if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_a560) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a460) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
-        case KEY_DISPLAY:
-    #else
+      #if CAM_HAS_ERASE_BUTTON
         case KEY_ERASE:
-    #endif
+      #else
+        case KEY_DISPLAY:
+      #endif
             if (selected && selected->attr != 0xFF) {
                 if (selected->attr & DOS_ATTR_DIRECTORY) {
                     if (selected->name[0]!='.' || selected->name[1]!='.' || selected->name[2]!=0)

@@ -93,10 +93,10 @@ static char sbuf[7];
     switch (kbd_get_autoclicked_key()) {
 #if !defined (CAMERA_a460)
 
-#if defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus950_sd850)
-		case KEY_SHOOT_HALF:
+#if CAM_HAS_ERASE_BUTTON
+        case KEY_ERASE:
 #else    
-	case KEY_ERASE:
+        case KEY_SHOOT_HALF:
 #endif
 		if (conf.user_menu_enable == 3) {
 			if (curr_menu->title != LANG_MENU_USER_MENU)
@@ -316,31 +316,7 @@ static char sbuf[7];
             }
             break;
 
-#if defined (CAMERA_a460)
-        case KEY_DISPLAY:
-            if (conf.user_menu_enable == 2) {
-               if (curr_menu->title != LANG_MENU_USER_MENU)
-                  add_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_add_item, 0);
-               else
-                  add_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_add_item, 1);
-               gui_menu_redraw=1;
-            }
-            else {
-               if (int_incr <= 1000){
-                   int_incr *= 10;
-               }
-               else {
-                  int_incr = 1;
-               }
-               sprintf(sbuf, "±%d",int_incr);
-               if (int_incr == 1) {
-                  draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
-               }
-               draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
-            }
-            break;
-
-#else
+#if CAM_HAS_ZOOM_LEVER
         case KEY_ZOOM_IN:
             if (int_incr >= 10){
                 int_incr /= 10;
@@ -365,6 +341,29 @@ static char sbuf[7];
                 gui_menu_redraw=2;
                 draw_restore();
                 gui_force_restore();
+            }
+            break;
+#else
+        case KEY_DISPLAY:
+            if (conf.user_menu_enable == 2) {
+               if (curr_menu->title != LANG_MENU_USER_MENU)
+                  add_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_add_item, 0);
+               else
+                  add_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_add_item, 1);
+               gui_menu_redraw=1;
+            }
+            else {
+               if (int_incr <= 1000){
+                   int_incr *= 10;
+               }
+               else {
+                  int_incr = 1;
+               }
+               sprintf(sbuf, "±%d",int_incr);
+               if (int_incr == 1) {
+                  draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
+               }
+               draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
             }
             break;
 #endif

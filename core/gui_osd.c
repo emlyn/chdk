@@ -468,10 +468,10 @@ void gui_osd_calc_dof() {
     int av, av_min, c_of_c, fl, v, v1, m;
     //long lfpfl=lens_get_focus_pos_fl();
 
-#if defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_ixus65_sd630) || defined(CAMERA_a560) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus950_sd850) || defined(CAMERA_a460) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
-    av=shooting_get_min_real_aperture();
-#else
+#if CAM_HAS_IRIS_DIAPHRAGM
     av=shooting_get_real_aperture();
+#else
+    av=shooting_get_min_real_aperture();
 #endif
     fl=get_focal_length(lens_get_zoom_point());	
     dof.far_limit=-1.0;
@@ -712,7 +712,7 @@ void gui_osd_draw_state() {
        }
     }
     if (conf.av_override_value || gui_mode==GUI_MODE_OSD) gui_print_osd_state_string_float("AV:", "%d.%02d ", 100, shooting_get_aperture_from_av96(shooting_get_av96_override_value()));
-#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined (CAMERA_a560) || defined (CAMERA_a570) || defined (CAMERA_a710) ||  defined (CAMERA_g7) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
+#if CAM_HAS_ND_FILTER
     if (conf.nd_filter_state || gui_mode==GUI_MODE_OSD) gui_print_osd_state_string_chr("NDFILTER:", ((conf.nd_filter_state==1)?"IN":"OUT"));
 #endif    
     if ((conf.subj_dist_override_value && conf.subj_dist_override_koef && shooting_can_focus()) || ((gui_mode==GUI_MODE_ALT) && shooting_get_common_focus_mode())	|| gui_mode==GUI_MODE_OSD)   {

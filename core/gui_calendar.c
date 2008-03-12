@@ -110,10 +110,10 @@ void gui_calendar_kbd_process() {
             }
             need_redraw = 1;
             break;
-      #if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_a560) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a460) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
-        case KEY_DISPLAY:
-      #else
+      #if CAM_HAS_ERASE_BUTTON
         case KEY_ERASE:
+      #else
+        case KEY_DISPLAY:
       #endif
             calendar_goto_today();
             need_redraw = 1;

@@ -20,7 +20,7 @@ static char namebuf[100];
 
 int raw_merge_start(int action){
  unsigned int req, avail;
- req=((ROWPIX*ROWS)>>18)+1;
+ req=((CAM_RAW_ROWPIX*CAM_RAW_ROWS)>>18)+1;
  avail=GetFreeCardSpaceKb()>>10;
  if (avail<req) {
   sprintf(namebuf,lang_str(LANG_AVERAGE_NO_CARD_SPACE),req,avail);
@@ -29,9 +29,9 @@ int raw_merge_start(int action){
  }
  raw_action=action;
  raw_count=0;
- row=malloc(ROWPIX*sizeof(unsigned short));
+ row=malloc(CAM_RAW_ROWPIX*sizeof(unsigned short));
  if (!row) return 0;
- rawrow=malloc(ROWLEN);
+ rawrow=malloc(RAW_ROWLEN);
  if (!rawrow) { free(row); return 0;}
  return 1;
 }
@@ -53,12 +53,12 @@ void raw_merge_add_file(char * filename){
      if (!raw_count || fbrawin){
        fbrawout=fopen(TEMP_FILE_NAME_1,"w+b");
         if (fbrawout){
-         fread(rawrow, 1, ROWLEN, fcraw);
-         if (raw_count) fread(row, 1, ROWPIX*sizeof(unsigned short), fbrawin); else for (i=0;i<ROWPIX;i++) row[i]=0;
+         fread(rawrow, 1, RAW_ROWLEN, fcraw);
+         if (raw_count) fread(row, 1, CAM_RAW_ROWPIX*sizeof(unsigned short), fbrawin); else for (i=0;i<CAM_RAW_ROWPIX;i++) row[i]=0;
 
-         for (nrow=0,j=0;nrow<ROWS;nrow++,j++){
+         for (nrow=0,j=0;nrow<CAM_RAW_ROWS;nrow++,j++){
          
-         for (i=0,src=0; i<ROWPIX; i+=8, src+=10){
+         for (i=0,src=0; i<CAM_RAW_ROWPIX; i+=8, src+=10){
 
            row[i+0]+=((0x3fc&(((unsigned short)rawrow[src+1])<<2)) | (rawrow[src+0] >> 6));
            row[i+1]+=((0x3f0&(((unsigned short)rawrow[src+0])<<4)) | (rawrow[src+3] >> 4));
@@ -70,10 +70,10 @@ void raw_merge_add_file(char * filename){
            row[i+7]+=((0x300&(((unsigned short)rawrow[src+9])<<8)) | (rawrow[src+8])); 
           
          }
-	 fwrite(row, 1, ROWPIX*sizeof(unsigned short), fbrawout);
-         if (raw_count) fread(row, 1, ROWPIX*sizeof(unsigned short), fbrawin); else for (i=0;i<ROWPIX;i++) row[i]=0;
-	 fread(rawrow, 1, ROWLEN, fcraw);
-	 if (j>=ROWS/10) {j-=ROWS/10; gui_browser_progress_show(filename, nrow*100/ROWS);}
+	 fwrite(row, 1, CAM_RAW_ROWPIX*sizeof(unsigned short), fbrawout);
+         if (raw_count) fread(row, 1, CAM_RAW_ROWPIX*sizeof(unsigned short), fbrawin); else for (i=0;i<CAM_RAW_ROWPIX;i++) row[i]=0;
+	 fread(rawrow, 1, RAW_ROWLEN, fcraw);
+	 if (j>=CAM_RAW_ROWS/10) {j-=CAM_RAW_ROWS/10; gui_browser_progress_show(filename, nrow*100/CAM_RAW_ROWS);}
        }
      raw_count++;
      strcpy(namebuf,filename);
@@ -100,16 +100,16 @@ void raw_merge_end(void){
     if (fbraw) {
      fcraw=fopen(namebuf,"w+b");
      if (fcraw) {
-        fread(row, 1, ROWPIX*sizeof(unsigned short), fbraw);
-        for (nrow=0,j=0;nrow<ROWS;nrow++,j++){
-         for (i=0;i<ROWPIX;i++){
+        fread(row, 1, CAM_RAW_ROWPIX*sizeof(unsigned short), fbraw);
+        for (nrow=0,j=0;nrow<CAM_RAW_ROWS;nrow++,j++){
+         for (i=0;i<CAM_RAW_ROWPIX;i++){
           if (raw_action==RAW_OPERATIOM_AVERAGE) row[i]/=raw_count; else {
            if (row[i]>BLACK_LEVEL*(raw_count-1)) row[i]-=BLACK_LEVEL*(raw_count-1); else row[i]=0;
            if (row[i]>0x3FF) row[i]=0x3FF;
          }
         }
          
-         for (i=0,src=0;i<ROWPIX;i+=8,src+=10) {
+         for (i=0,src=0;i<CAM_RAW_ROWPIX;i+=8,src+=10) {
             rawrow[src+0]=(row[i+0]<<6)|(row[i+1]>>4);
             rawrow[src+1]=(row[i+0]>>2);
             rawrow[src+2]=(row[i+2]<<2)|(row[i+3]>>8);
@@ -121,9 +121,9 @@ void raw_merge_end(void){
             rawrow[src+8]=(row[i+7]);
             rawrow[src+9]=(row[i+6]<<2)|(row[i+7]>>8);
          }
-         fwrite(rawrow, 1, ROWLEN, fcraw);
-         fread(row, 1, ROWPIX*sizeof(unsigned short), fbraw);
-         if (j>=ROWS/5) {j-=ROWS/5; gui_browser_progress_show(namebuf, nrow*100/ROWS);}
+         fwrite(rawrow, 1, RAW_ROWLEN, fcraw);
+         fread(row, 1, CAM_RAW_ROWPIX*sizeof(unsigned short), fbraw);
+         if (j>=CAM_RAW_ROWS/5) {j-=CAM_RAW_ROWS/5; gui_browser_progress_show(namebuf, nrow*100/CAM_RAW_ROWS);}
         }
     fclose(fcraw);
     }

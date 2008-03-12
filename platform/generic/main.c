@@ -1,3 +1,4 @@
+#include "camera.h"
 #include "lolevel.h"
 #include "platform.h"
 #include "core.h"
@@ -100,7 +101,7 @@ void createHook (void *pNewTcb)
 
 	if (my_ncmp(name, "tInitFileM", 10) == 0){
 	    init_file_modules_prev = (void*)(*entry);
-	  #if defined (CAMERA_MULTIPART)
+	  #if CAM_MULTIPART
 	    *entry = (long)init_file_modules_task;
 	  #else
 	    *entry = (long)init_file_modules_hook;

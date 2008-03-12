@@ -377,23 +377,23 @@ void gui_reversi_kbd_process() {
                 NewGame();
             need_redraw = 1;
             break;
-    #if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_a560) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_a460) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
-        case KEY_DISPLAY:
-    #else
+      #if CAM_HAS_ERASE_BUTTON
         case KEY_ERASE:
-    #endif
+      #else
+        case KEY_DISPLAY:
+      #endif
             if (InGame)
                 Computer=COMPUTER_ONLY;
             else 
                 NewGame();
             need_redraw = 1;
             break;
-    #if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_a460) && !defined(CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+      #if CAM_HAS_ERASE_BUTTON
         case KEY_DISPLAY:
             gui_mbox_init(LANG_MBOX_ABOUT_TITLE, (int)"REVERSI\n(c) GrAnd, 2007", MBOX_TEXT_CENTER, NULL);
             need_redraw_all = 1;
             break;
-    #endif
+      #endif
     }
 }
 

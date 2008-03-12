@@ -3,6 +3,7 @@
 #include "conf.h"
 #include "histogram.h"
 #include "font.h"
+#include "camera.h"
 #include "raw.h"
 #include "gui_draw.h"
 #include "gui_osd.h"
@@ -301,7 +302,7 @@ static void conf_change_menu_rbf_file() {
 }
 
 static void conf_change_alt_mode_button() {
-#if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_g7)
+#if CAM_ADJUSTABLE_ALT_BUTTON
     kbd_set_alt_mode_key_mask(conf.alt_mode_button);
 #else
     conf.alt_mode_button = KEY_PRINT;

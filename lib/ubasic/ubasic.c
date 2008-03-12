@@ -45,6 +45,7 @@
 #include "ubasic.h"
 #include "platform.h"
 #include "script.h"
+#include "camera.h"
 #endif
 #include "tokenizer.h"
 
