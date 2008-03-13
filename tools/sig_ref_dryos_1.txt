@@ -30,7 +30,7 @@ kbd_read_keys 0xFFC130CC
 kbd_p1_f 0xFFC131D0
 kbd_p1_f_cont 0xFFC131DC
 kbd_p2_f 0xFFC12A1C
-kbd_pwr_on 0xFFC370E8
+kbd_pwr_on 0xFFC37068
 kbd_pwr_off 0xFFC370C0
 kbd_read_keys_r2 0xFFC36B14
 mkdir 0xFFC153D0

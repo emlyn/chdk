@@ -69,8 +69,8 @@ NSTUB(kbd_p1_f_cont, 0xffc130d0)
 NSTUB(kbd_p2_f, 0xffc12910)
 // Best match: 95%
 NSTUB(kbd_pwr_off, 0xffc37c7c)
-// Best match: 88%
-NSTUB(kbd_pwr_on, 0xffc37ca4)
+// Best match: 92%
+NSTUB(kbd_pwr_on, 0xffc37c24)
 NSTUB(kbd_read_keys, 0xffc12fc0)
 // Best match: 86%
 NSTUB(kbd_read_keys_r2, 0xffc3764c)

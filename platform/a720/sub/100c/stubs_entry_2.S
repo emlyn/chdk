@@ -34,7 +34,7 @@ NHSTUB(kbd_read_keys, 0xFFC130CC)       // will be replaced in kbd.c
 NHSTUB(kbd_p1_f, 0xFFC131D0)
 NHSTUB(kbd_p1_f_cont, 0xFFC131DC)
 NHSTUB(kbd_p2_f, 0xFFC12A1C)
-NHSTUB(kbd_pwr_on, 0xFFC370E8)
+NHSTUB(kbd_pwr_on, 0xFFC37068)
 NHSTUB(kbd_pwr_off, 0xFFC370C0)
 NHSTUB(kbd_read_keys_r2, 0xFFC36B14)
 
