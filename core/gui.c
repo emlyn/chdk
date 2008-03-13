@@ -295,7 +295,7 @@ static CMenuItem dof_submenu_items[] = {
       {LANG_MENU_DOF_FAR_LIMIT_IN_MISC,        MENUITEM_BOOL,			 &conf.dof_far_limit_in_misc},	
       {LANG_MENU_DOF_HYPERFOCAL_IN_MISC,       MENUITEM_BOOL,      &conf.dof_hyperfocal_in_misc},				
       {LANG_MENU_DOF_DEPTH_LIMIT_IN_MISC,      MENUITEM_BOOL,      &conf.dof_depth_in_misc},			
-#if !defined(CAMERA_a650) && !defined(CAMERA_a720) 
+#if !CAM_DRYOS
       {LANG_MENU_DOF_DIST_FROM_LENS,           MENUITEM_BOOL,      &conf.dof_dist_from_lens},			
 #endif      
 	  {LANG_MENU_BACK,                    	   MENUITEM_UP },
@@ -337,7 +337,7 @@ static CMenu video_submenu = { LANG_MENU_VIDEO_PARAM_TITLE, NULL, video_submenu_
 
 static CMenuItem bracketing_in_continuous_submenu_items[] = {
 	  {LANG_MENU_TV_BRACKET_VALUE,             MENUITEM_ENUM,    (int*)gui_tv_bracket_values_enum },
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined(CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_IRIS_DIAPHRAGM
 	  {LANG_MENU_AV_BRACKET_VALUE,             MENUITEM_ENUM,    (int*)gui_av_bracket_values_enum },
 #endif	  
 	  {LANG_MENU_ISO_BRACKET_VALUE,            MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.iso_bracket_value, MENU_MINMAX(0, 100)}, 
@@ -368,10 +368,10 @@ static CMenuItem operation_submenu_items[] = {
 	  {LANG_MENU_OVERRIDE_TV_VALUE,        MENUITEM_ENUM,    (int*)gui_tv_override_value_enum}, 
 	  {LANG_MENU_OVERRIDE_TV_KOEF,         MENUITEM_ENUM,    (int*)gui_tv_override_koef_enum},
  	  {LANG_MENU_TV_ENUM_TYPE,             MENUITEM_ENUM,    (int*)gui_tv_enum_type_enum},
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_a560) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a460) && !defined(CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_IRIS_DIAPHRAGM
 	  {LANG_MENU_OVERRIDE_AV_VALUE,        MENUITEM_ENUM,    (int*)gui_av_override_enum },
 #endif	  
-#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined (CAMERA_a560) || defined (CAMERA_a570) ||  defined (CAMERA_g7) || defined (CAMERA_a460) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
+#if CAM_HAS_ND_FILTER
       {LANG_MENU_OVERRIDE_ND_FILTER,       MENUITEM_ENUM,    (int*)gui_nd_filter_state_enum },
 #endif      
 	  {LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)}, 
@@ -515,7 +515,7 @@ static CMenu zebra_submenu = { LANG_MENU_ZEBRA_TITLE, NULL, zebra_submenu_items 
 static CMenuItem root_menu_items[] = {
     {LANG_MENU_OPERATION_PARAM,         MENUITEM_SUBMENU,   (int*)&operation_submenu },
     {LANG_MENU_MAIN_OSD_PARAM,          MENUITEM_SUBMENU,   (int*)&osd_submenu },
-#if !defined (CAMERA_a720) && !defined(CAMERA_a650)
+#if !CAM_DRYOS
     {LANG_MENU_VIDEO_PARAM,             MENUITEM_SUBMENU,   (int*)&video_submenu },
 #endif
     {LANG_MENU_MAIN_RAW_PARAM,          MENUITEM_SUBMENU,   (int*)&raw_submenu },
@@ -800,12 +800,14 @@ const char* gui_histo_show_enum(int change, int arg) {
 //-------------------------------------------------------------------
 #if CAM_ADJUSTABLE_ALT_BUTTON
 const char* gui_alt_mode_button_enum(int change, int arg) {
-#if defined(CAMERA_s2is) || defined(CAMERA_s3is)
+#if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_s5is)
     static const char* names[]={ "Shrtcut", "Flash", "Timer", "ISO", "Video" };
     static const int keys[]={ KEY_PRINT, KEY_FLASH, KEY_TIMER, KEY_ISO, KEY_VIDEO };
-#else
+#elif defined(CAMERA_g7)
     static const char* names[]={ "Print", "FE"};
     static const int keys[]={ KEY_PRINT, KEY_MICROPHONE };
+#else
+    #error camera alt-buttons not defined
 #endif
     int i;
 

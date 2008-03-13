@@ -29,10 +29,8 @@ static int remote_key, remote_count;
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
 
-// #if defined(CAMERA_ixus950_sd850)
 #define USB_MASK 0x40000
 #define USB_REG 2
-// #endif
 
 #ifndef MALLOCD_STACK
 static char kbd_stack[NEW_SS];

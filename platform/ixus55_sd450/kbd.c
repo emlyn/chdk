@@ -20,21 +20,9 @@ static int remote_key, remote_count;
 
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
-#if defined(CAMERA_a710)
-#define USB_MASK 8
-#define USB_REG 0
-#endif
 
-#if defined(CAMERA_ixus55_sd450)
 #define USB_MASK 0x40 
 #define USB_REG 1
-#endif
-
-#if defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus70_sd1000)
-#define USB_MASK 0x8000000
-#define USB_REG 1
-#endif
-
 
 #ifndef MALLOCD_STACK
 static char kbd_stack[NEW_SS];

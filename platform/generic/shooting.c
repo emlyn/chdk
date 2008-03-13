@@ -628,7 +628,7 @@ void shooting_set_av96(short v, short is_now)
 
 void shooting_set_nd_filter_state(short v, short is_now)
 {
-#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined (CAMERA_a560) ||  defined (CAMERA_g7) || defined (CAMERA_a460) || defined (CAMERA_ixus55_sd450) || defined(CAMERA_a550)
+#if CAM_HAS_ND_FILTER
 	if (is_now) {
 	 if (v==1) _PutInNdFilter();
 	 else if (v==2) _PutOutNdFilter();

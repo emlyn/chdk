@@ -2,7 +2,7 @@
 #include "lolevel.h"
 #include "platform.h"
 
-#if defined (CAMERA_a720) || defined(CAMERA_a650)
+#if CAM_DRYOS
 #define _U	0x01	/* upper */
 #define _L	0x02	/* lower */
 #define _D	0x04	/* digit */
@@ -145,7 +145,7 @@ long stat_get_vbatt()
 long get_tick_count()
 {
 long t;
-#if !defined(CAMERA_a720) && !defined(CAMERA_a650)
+#if !CAM_DRYOS
     _GetSystemTime(&t);
     return t;
 #else
@@ -187,7 +187,7 @@ int remove(const char *name) {
 }
 
 int isdigit(int c) {
-#if !defined(CAMERA_a720)  && !defined(CAMERA_a650)
+#if !CAM_DRYOS
     return _isdigit(c);
 #else
     return _ctype[c]&_D;
@@ -195,7 +195,7 @@ int isdigit(int c) {
 }
 
 int isspace(int c) {
-#if !defined(CAMERA_a720)  && !defined(CAMERA_a650)
+#if !CAM_DRYOS
     return _isspace(c);
 #else
     return _ctype[c]&_S;
@@ -204,7 +204,7 @@ int isspace(int c) {
 }
 
 int isalpha(int c) {
-#if !defined(CAMERA_a720) && !defined(CAMERA_a650) 
+#if !CAM_DRYOS
     return _isalpha(c);
 #else
     return _ctype[c]&(_U|_L);
@@ -212,7 +212,7 @@ int isalpha(int c) {
 }
 
 int isupper(int c) {
-#if !defined(CAMERA_a720) && !defined(CAMERA_a650) 
+#if !CAM_DRYOS
     return _isupper(c);
 #else
     return _ctype[c]&_U;
@@ -257,7 +257,7 @@ long strtol(const char *nptr, char **endptr, int base) {
 }
 
 char *strpbrk(const char *s, const char *accept) {
-#if !defined(CAMERA_a720) && !defined(CAMERA_a650)  
+#if !CAM_DRYOS
     return _strpbrk(s, accept);
 #else
     const char *sc1,*sc2;
@@ -290,7 +290,7 @@ int utime(char *file, void *newTimes) {
 }
 
 void *localtime(const unsigned long *_tod) {
-#if !defined (CAMERA_a720) && !defined(CAMERA_a650)
+#if !CAM_DRYOS
     return _localtime(_tod);
 #else
 #warning  A650, A720 do something with this!  - sizeof(x[]) must be >= sizeof(struct tm) :  'static int x[9];'
@@ -352,7 +352,7 @@ void *opendir(const char* name) {
 }
 
 void* readdir(void *d) {
-# if !defined (CAMERA_a720) && !defined(CAMERA_a650)
+# if !CAM_DRYOS
     return _readdir(d);
 #else
 #warning  A650, A720  do something with this!  - sizeof(de[]) must be >= sizeof(struct dirent): 'static char de[40];'
@@ -398,7 +398,7 @@ void enable_shutdown() {
 }
 void camera_shutdown_in_a_second(void){
 int i;
-//#if defined(CAMERA_a720) || defined(CAMERA_a650)
+//#if CAM_DRYOS
 //#else
 _SetAutoShutdownTime(1); // 1 sec
 for (i=0;i<200;i++) _UnlockMainPower(); // set power unlock counter to 200 or more, because every keyboard function call try to lock power again ( if "Disable LCD off" menu is "alt" or "script"). 

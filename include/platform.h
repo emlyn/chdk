@@ -53,7 +53,7 @@ MODE_VIDEO_TIME_LAPSE   ,
 MODE_SCN_INDOOR         ,
 };
 
-#if CAM_DIGIC3
+#if CAM_PROPSET == 2
  #define PROPCASE_DRIVE_MODE					102
  #define PROPCASE_FOCUS_MODE					133
  #define PROPCASE_FLASH_MODE    		        143
@@ -74,7 +74,7 @@ MODE_SCN_INDOOR         ,
  #define PROPCASE_OVEREXPOSURE 					103
  #define PROPCASE_SHOOTING_MODE					49
 
-#elif CAM_DIGIC2
+#elif CAM_PROPSET == 1
  #define PROPCASE_DRIVE_MODE    				6
  #define PROPCASE_FOCUS_MODE    				12
  #define PROPCASE_FLASH_MODE       				16
