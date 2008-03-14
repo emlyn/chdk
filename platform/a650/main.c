@@ -65,7 +65,7 @@ static const int fl_tbl[] = {7400, 8210, 9040, 9860, 10670, 12730, 14780, 16820,
 const int zoom_points = NUM_FL;
 
 int get_effective_focal_length(int zp) {
-    return (CF_EFL*get_focal_length(zp))/10000;
+    return ((int)(CF_EFL/10000))*get_focal_length(zp);
 }
 
 int get_focal_length(int zp) {

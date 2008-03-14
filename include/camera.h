@@ -24,14 +24,15 @@
     #define CAM_HAS_ERASE_BUTTON        1   // Camera has dedicated erase button
     #define CAM_HAS_IRIS_DIAPHRAGM      1   // Camera has real diaphragm mechanism
     #undef  CAM_HAS_ND_FILTER               // Camera has build-in ND filter
-
-
-
-
+    #define CAM_CAN_SD_OVER_NOT_IN_MF   1   // Camera allows subject distance (focus) override when not in manual focus mode
+    #define CAM_CAN_SD_OVERRIDE         1   // Camera allows to do subject distance override
+    #define CAM_HAS_MANUAL_FOCUS        1   // Camera has manual focus mode
+    #define CAM_HAS_USER_TV_MODES       1   // Camera has tv-priority or manual modes with ability to set tv value
+    #undef  CAM_SHOW_OSD_IN_SHOOT_MENU       // On some cameras Canon shoot menu has additional functionality and useful in this case to see CHDK OSD in this mode  
 
 
 //----------------------------------------------------------
-// Overrided values for each camera
+// Overridden values for each camera
 //----------------------------------------------------------
 
 //==========================================================
@@ -64,6 +65,9 @@
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU   1
     
 //----------------------------------------------------------
 #elif defined (CAMERA_a550)
@@ -77,6 +81,9 @@
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a560)
@@ -90,6 +97,10 @@
     #define CAM_MULTIPART               1
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a570)
@@ -98,8 +109,6 @@
     #define CAM_RAW_ROWPIX              3152   // for 7 MP
     #define CAM_RAW_ROWS                2340   // for 7 MP
     #define CAM_MULTIPART               1
-    #define CAM_HAS_ND_FILTER           1
-
 //----------------------------------------------------------
 #elif defined (CAMERA_a610)
     #define CAM_PROPSET                 1
@@ -108,6 +117,7 @@
     #define CAM_RAW_ROWS                1968   // for 5 MP
     
     #define CAM_SWIVEL_SCREEN           1
+    #undef  CAM_CAN_SD_OVER_NOT_IN_MF 
 
 
 //----------------------------------------------------------
@@ -118,6 +128,7 @@
     #define CAM_RAW_ROWS                2340   // for 7 MP
     
     #define CAM_SWIVEL_SCREEN           1
+    #undef  CAM_CAN_SD_OVER_NOT_IN_MF
 
 
 //----------------------------------------------------------
@@ -129,6 +140,7 @@
     
     #define CAM_SWIVEL_SCREEN           1
     #define CAM_MULTIPART               1
+    #undef  CAM_CAN_SD_OVER_NOT_IN_MF
 
 
 //----------------------------------------------------------
@@ -140,6 +152,7 @@
     
     #define CAM_SWIVEL_SCREEN           1
     #define CAM_MULTIPART               1
+    #undef  CAM_CAN_SD_OVER_NOT_IN_MF
 
 
 //----------------------------------------------------------
@@ -170,8 +183,6 @@
     #define CAM_RAW_ROWS                2340   // for 7 MP
 
     #define CAM_MULTIPART               1
-    #define CAM_HAS_ND_FILTER           1      // really ???
-
 //----------------------------------------------------------
 #elif defined (CAMERA_a720)
     #define CAM_PROPSET                 2
@@ -194,6 +205,9 @@
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus65_sd630)
@@ -206,6 +220,9 @@
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus70_sd1000)
@@ -218,6 +235,9 @@
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus700_sd500)
@@ -231,6 +251,10 @@
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #undef  CAM_CAN_SD_OVERRIDE
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus800_sd700)
@@ -244,7 +268,10 @@
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
-
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus850_sd800)
     #define CAM_PROPSET                 1
@@ -253,11 +280,13 @@
     #define CAM_RAW_ROWS                2340   // for 7 MP
 
     #undef  CAM_USE_ZOOM_FOR_MF
-    #define CAM_DRAW_EXPOSITION         1
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
-
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus950_sd850)
     #define CAM_PROPSET                 2
@@ -269,6 +298,9 @@
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
 
 //==========================================================
 // S-Series
@@ -293,6 +325,7 @@
     #define CAM_SWIVEL_SCREEN           1
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #define CAM_MULTIPART               1
+    #undef  CAM_CAN_SD_OVER_NOT_IN_MF
 
 
 //----------------------------------------------------------

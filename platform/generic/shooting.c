@@ -83,11 +83,10 @@ char * get_debug()
 
 int shooting_get_user_tv_id()
 {
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined(CAMERA_ixus850_sd800) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined (CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_USER_TV_MODES 
     short tvv;
     long i;
     _GetPropertyCase(PROPCASE_USER_TV, &tvv, sizeof(tvv));
-    _GetPropertyCase(PROPCASE_TV, &tvv, sizeof(tvv));
     for (i=0;i<SS_SIZE;i++){
 	if (shutter_speeds_table[i].prop_id == tvv)
 	    return shutter_speeds_table[i].id;
@@ -110,7 +109,7 @@ const ShutterSpeed *shooting_get_tv_line()
 
 void shooting_set_user_tv_by_id(int v)
 {
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined(CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined (CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_USER_TV_MODES
     long i;
 //    if ((v<SSID_MIN) || (v>SSID_MAX))
 //	return;
@@ -160,7 +159,7 @@ int shooting_get_iso_mode()
 
 void shooting_set_user_tv_by_id_rel(int v)
 {
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined (CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_USER_TV_MODES
     int cv = shooting_get_user_tv_id();
     shooting_set_user_tv_by_id(cv+v);
 #endif    
@@ -168,7 +167,7 @@ void shooting_set_user_tv_by_id_rel(int v)
 
 int shooting_get_user_av_id()
 {
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined (CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_IRIS_DIAPHRAGM
     short avv;
     long i;
     _GetPropertyCase(PROPCASE_USER_AV, &avv, sizeof(avv));
@@ -181,7 +180,7 @@ int shooting_get_user_av_id()
 }
 
 short shooting_get_real_aperture() {
-//#if defined(CAMERA_ixus700_sd500) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_ixus65_sd630) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus55_sd450)
+//#if !CAM_HAS_IRIS_DIAPHRAGM
 //    return shooting_get_min_real_aperture();
 //#else
 //I hope that GetCurrentAvValue is correct for ixus70_sd1000 ixus700_sd500 now
@@ -509,7 +508,7 @@ short shooting_get_tv96()
 
 short shooting_get_user_tv96()
 {
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined (CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_USER_TV_MODES
     short tv;
     _GetPropertyCase(PROPCASE_USER_TV, &tv, sizeof(tv));
     return tv;
@@ -520,7 +519,7 @@ short shooting_get_user_tv96()
 
 void shooting_set_user_tv96(short v)
 {
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined (CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_USER_TV_MODES
 long i;
 //    if ((v<SSID_MIN) || (v>SSID_MAX))
 //	return;
@@ -603,18 +602,19 @@ short shooting_get_av_prop_id()
 
 short shooting_get_user_av96()
 {
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined (CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_IRIS_DIAPHRAGM
     short av;
     _GetPropertyCase(PROPCASE_USER_AV, &av, sizeof(av));
     return av;
 #else     
     return 0;
-#endif       
+#endif
 }
 
 
 void shooting_set_av96(short v, short is_now)
 {
+#if CAM_HAS_IRIS_DIAPHRAGM	
  long i;
 //    if ((v<ASID_MIN) || (v>ASID_MAX))
 //	return;
@@ -624,6 +624,7 @@ void shooting_set_av96(short v, short is_now)
 	   return;
 	}
   }
+#endif  
 }
 
 void shooting_set_nd_filter_state(short v, short is_now)
@@ -641,16 +642,18 @@ void shooting_set_nd_filter_state(short v, short is_now)
 
 void shooting_set_av96_direct(short v, short is_now)
 {  
+#if CAM_HAS_IRIS_DIAPHRAGM
  if(is_now) {
    _SetPropertyCase(PROPCASE_AV, &v, sizeof(v));
  }
  else photo_param_put_off.av96=v;
+#endif
 }
 
 
 void shooting_set_user_av96(short v)
 {
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined (CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_IRIS_DIAPHRAGM
     long i;
 
 //    if ((v<ASID_MIN) || (v>ASID_MAX))
@@ -675,7 +678,7 @@ short shooting_get_drive_mode()
 
 short shooting_can_focus()
 {
-#if defined (CAMERA_a620) || defined (CAMERA_a610) || defined (CAMERA_a630) || defined (CAMERA_a640)                 				   
+#if !CAM_CAN_SD_OVER_NOT_IN_MF && CAM_CAN_SD_OVERRIDE
  int m=mode_get()&MODE_SHOOTING_MASK;
  int mode_video=((m==MODE_VIDEO_STD) || 
 			    (m==MODE_VIDEO_SPEED) ||  
@@ -684,7 +687,7 @@ short shooting_can_focus()
 			    (m==MODE_VIDEO_TIME_LAPSE) ||
 			    (m==MODE_VIDEO_COLOR_ACCENT));
   return (shooting_get_focus_mode() || mode_video);
-#elif defined (CAMERA_ixus700_sd500)  
+#elif !CAM_CAN_SD_OVERRIDE
  int m=mode_get()&MODE_SHOOTING_MASK;
  int mode_video=((m==MODE_VIDEO_STD) || 
 			    (m==MODE_VIDEO_SPEED) ||  
@@ -703,9 +706,9 @@ short shooting_can_focus()
 
 short shooting_get_common_focus_mode()
 {
-#if defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined (CAMERA_a560) || defined (CAMERA_a460) || defined (CAMERA_ixus55_sd450) || defined(CAMERA_a550)
+#if !CAM_HAS_MANUAL_FOCUS && CAM_CAN_SD_OVERRIDE
   return shooting_get_subject_distance_override_koef();
-#elif defined (CAMERA_ixus700_sd500) 
+#elif !CAM_CAN_SD_OVERRIDE
   return 0;
 #else 
   return shooting_get_focus_mode();
@@ -732,7 +735,7 @@ short shooting_get_continuous_mode_shoot_count()
 
 void shooting_set_user_av_by_id(int v)
 {
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined (CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_IRIS_DIAPHRAGM
 long i;
 //    if ((v<ASID_MIN) || (v>ASID_MAX))
 //	return;
@@ -749,7 +752,7 @@ long i;
 
 void shooting_set_user_av_by_id_rel(int v)
 {
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined (CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if CAM_HAS_IRIS_DIAPHRAGM
     int cv = shooting_get_user_av_id();
     shooting_set_user_av_by_id(cv+v);
 #endif    
@@ -1096,7 +1099,7 @@ void shooting_expo_param_override(void){
   {
    shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
   }
-#if defined (CAMERA_ixus700_sd500) || defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined (CAMERA_a560) || defined (CAMERA_a570) ||  defined (CAMERA_g7) || defined (CAMERA_a460) || defined (CAMERA_ixus55_sd450) || defined(CAMERA_a550)
+#if CAM_HAS_ND_FILTER
  if ((state_kbd_script_run) && (photo_param_put_off.nd_filter)) {
    shooting_set_nd_filter_state(photo_param_put_off.nd_filter, SET_NOW);
    photo_param_put_off.nd_filter=0;  

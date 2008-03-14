@@ -342,7 +342,7 @@ static CMenuItem bracketing_in_continuous_submenu_items[] = {
 #endif	  
 	  {LANG_MENU_ISO_BRACKET_VALUE,            MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.iso_bracket_value, MENU_MINMAX(0, 100)}, 
 	  {LANG_MENU_ISO_BRACKET_KOEF,             MENUITEM_ENUM,    (int*)gui_iso_bracket_koef_enum},
-#if !defined (CAMERA_ixus700_sd500) 
+#if CAM_CAN_SD_OVERRIDE 
 	  {LANG_MENU_SUBJ_DIST_BRACKET_VALUE,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.subj_dist_bracket_value, MENU_MINMAX(0, 100)}, 
 	  {LANG_MENU_SUBJ_DIST_BRACKET_KOEF,       MENUITEM_ENUM,    (int*)gui_subj_dist_bracket_koef_enum},
 #endif	  
@@ -376,7 +376,7 @@ static CMenuItem operation_submenu_items[] = {
 #endif      
 	  {LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)}, 
 	  {LANG_MENU_OVERRIDE_ISO_KOEF,        MENUITEM_ENUM,    (int*)gui_iso_override_koef_enum},
-#if !defined (CAMERA_ixus700_sd500) 
+#if CAM_CAN_SD_OVERRIDE  
       {LANG_MENU_OVERRIDE_SUBJ_DIST_VALUE, MENUITEM_ENUM,    (int*)gui_subj_dist_override_value_enum},
 	  {LANG_MENU_OVERRIDE_SUBJ_DIST_KOEF,  MENUITEM_ENUM,    (int*)gui_subj_dist_override_koef_enum},
 #endif	  
@@ -1374,7 +1374,7 @@ void gui_kbd_process()
         case GUI_MODE_ALT:
             if (kbd_is_key_clicked(SHORTCUT_TOGGLE_RAW)) {
                 if (conf.ns_enable_memdump) dump_memory(); 
-#if defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined (CAMERA_a560) || defined (CAMERA_a460) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
+#if !CAM_HAS_ERASE_BUTTON && CAM_CAN_SD_OVERRIDE
                 else if (!shooting_get_common_focus_mode())
 #else                
 				else 
@@ -1389,7 +1389,7 @@ void gui_kbd_process()
                else
                   gui_subj_dist_override_koef_enum(1,0);
 				  }
-#elif defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined (CAMERA_a560) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
+#elif !CAM_HAS_ERASE_BUTTON && CAM_CAN_SD_OVERRIDE
                 else
 				  {
 				  conf.subj_dist_override_value=MAX_DIST;	
@@ -1401,7 +1401,7 @@ void gui_kbd_process()
                 gui_mode = GUI_MODE_MENU;
                 draw_restore();
             } else {
-#if defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined (CAMERA_a560) || defined (CAMERA_a460) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
+#if !CAM_HAS_MANUAL_FOCUS && CAM_CAN_SD_OVERRIDE
 	          	if (kbd_is_key_clicked(SHORTCUT_MF_TOGGLE)) {
 			      if (conf.subj_dist_override_koef>0)
 				     conf.subj_dist_override_koef=0;
@@ -1409,25 +1409,26 @@ void gui_kbd_process()
 			      draw_restore();
 			     }
                 else if (shooting_get_common_focus_mode())
-#elif !defined (CAMERA_ixus700_sd500)
+#elif CAM_CAN_SD_OVERRIDE
                if (shooting_get_common_focus_mode())
 #endif
-#if !defined (CAMERA_ixus700_sd500)           
+
+#if CAM_CAN_SD_OVERRIDE           
 			  {
-#if !defined (CAMERA_a460)
+  #if !defined (CAMERA_a460)
 				if (kbd_is_key_clicked(KEY_RIGHT)) {
 				  gui_subj_dist_override_koef_enum(1,0);
-#if defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined (CAMERA_a560) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
+    #if !CAM_HAS_MANUAL_FOCUS
                   if (conf.subj_dist_override_koef==0) conf.subj_dist_override_koef=1;
-#endif
+    #endif
                   shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
 				  }
 				else if (kbd_is_key_clicked(KEY_LEFT)) 
 				  {
 				  gui_subj_dist_override_koef_enum(-1,0);
-#if defined (CAMERA_ixus800_sd700) || defined (CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850) || defined (CAMERA_a560) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_a550)
+    #if !CAM_HAS_MANUAL_FOCUS
                   if (conf.subj_dist_override_koef==0) conf.subj_dist_override_koef=1;
-#endif
+    #endif
                   shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
 				  }
 				else if (kbd_is_key_clicked(SHORTCUT_SET_INFINITY)) 
@@ -1436,7 +1437,7 @@ void gui_kbd_process()
                   shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
 				  }
 				else
-#endif
+  #endif
 				if (kbd_is_key_clicked(SHORTCUT_SET_HYPERFOCAL))
 				  {	
 				  int m=mode_get()&MODE_SHOOTING_MASK;
@@ -1447,19 +1448,19 @@ void gui_kbd_process()
 				  }   
 				else  
                   switch (kbd_get_autoclicked_key()) {
-#if CAM_HAS_ZOOM_LEVER
+  #if CAM_HAS_ZOOM_LEVER
                     case KEY_ZOOM_IN:
-#else
+  #else
                     case KEY_RIGHT:
-#endif
+  #endif
                         gui_subj_dist_override_value_enum(1,0);
                         shooting_set_focus(shooting_get_subject_distance_override_value(),SET_NOW);
                         break;
-#if CAM_HAS_ZOOM_LEVER
+  #if CAM_HAS_ZOOM_LEVER
                     case KEY_ZOOM_OUT:
-#else
+  #else
                     case KEY_LEFT:
-#endif
+  #endif
                         gui_subj_dist_override_value_enum(-1,0);
                         shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
                         break;
@@ -1642,7 +1643,7 @@ void gui_draw_osd() {
         }
         return;
     }
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_ixus950_sd850) && !defined (CAMERA_a560) && !defined (CAMERA_a460) && !defined(CAMERA_ixus55_sd450) && !defined(CAMERA_a550)
+#if !CAM_SHOW_OSD_IN_SHOOT_MENU
     if (!(conf.show_osd && (canon_menu_active==(int)&canon_menu_active-4) && (canon_shoot_menu_active==0)))  return;    
 #else
     if (!(conf.show_osd && (canon_menu_active==(int)&canon_menu_active-4) /*&& (canon_shoot_menu_active==0)*/ ))  return;
@@ -1675,7 +1676,7 @@ void gui_draw_osd() {
            if (conf.values_show_real_iso || conf.values_show_market_iso || conf.values_show_ev_seted || conf.values_show_ev_measured || conf.values_show_bv_measured || conf.values_show_bv_seted || conf.values_show_overexposure || conf.values_show_canon_overexposure) gui_osd_calc_expo_param();           	           
         }
         if (conf.show_state && !mode_video) gui_osd_draw_state();
-        if (conf.save_raw && conf.show_raw_state && !mode_video) gui_osd_draw_raw_info();
+        if (conf.save_raw && conf.show_raw_state && !mode_video && (!kbd_is_key_pressed(KEY_SHOOT_HALF))) gui_osd_draw_raw_info();
         
 	    if ((conf.show_values==SHOW_ALWAYS && mode_photo) || (mode_video && conf.show_values_in_video) || ((kbd_is_key_pressed(KEY_SHOOT_HALF) || (recreview_hold==1)) && (conf.show_values==SHOW_HALF)))
 		   gui_osd_draw_values(1);
@@ -1686,12 +1687,12 @@ void gui_draw_osd() {
     }
 
 
-    if (recreview_hold==0) {
+    if ((recreview_hold==0) &&  (!kbd_is_key_pressed(KEY_SHOOT_HALF)))  {
         gui_batt_draw_osd();
         gui_space_draw_osd();
     }
     
-    if ((conf.show_clock) && (recreview_hold==0)) {
+    if ((conf.show_clock) && (recreview_hold==0) &&  (!kbd_is_key_pressed(KEY_SHOOT_HALF))) {
         gui_osd_draw_clock();
     }
 

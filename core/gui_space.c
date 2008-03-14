@@ -57,12 +57,12 @@ static void gui_space_draw_mb() {
 //-------------------------------------------------------------------
 
 void gui_space_draw_osd() {
-    if ((conf.space_icon_show)  &&  (kbd_is_key_pressed(KEY_SHOOT_HALF)!=1))  {
+    if (conf.space_icon_show)   {
         gui_space_draw_icon();
     }
-    if ((conf.space_perc_show)  &&  (kbd_is_key_pressed(KEY_SHOOT_HALF)!=1))  {
+    if (conf.space_perc_show)  {
         gui_space_draw_percent();
-    } else if ((conf.space_mb_show)  &&  (kbd_is_key_pressed(KEY_SHOOT_HALF)!=1)) {
+    } else if (conf.space_mb_show) {
         gui_space_draw_mb();
     }
 }
