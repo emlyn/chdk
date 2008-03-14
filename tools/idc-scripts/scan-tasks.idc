@@ -1,6 +1,10 @@
 #include <idc.idc>
 #include "scan-lib.idc"
 
+
+#define ROM_START   0xFF800000
+
+
 /*
  * Searches the interval of code for the invocation of CreateTask or CreateTaskStrictly
  * Renames appropriate task procedures with the full name of the task,
@@ -21,7 +25,7 @@ static AnasyzeTask(a)
      if (isCode(GetFlags(code)) && strstr(GetDisasm(code), "LDR") == 0 && (GetOpnd(code, 0) == "R0")) {
          
          d = Dword(GetOperandValue(code, 1));
-         if (d > 0xFF800000) {
+         if (d > ROM_START) {
              tname = getString(d);
          }
          break;
@@ -51,7 +55,7 @@ static AnasyzeTask(a)
          break;
      }
    }
-   if (d > 0xFF800000)
+   if (d > ROM_START)
    {
        MakeNameEx(d, "task_"+tname, SN_PUBLIC);
        Message("Renamed %x to %s\n", d, GetFunctionName(d));
@@ -85,7 +89,7 @@ static AnasyzeTask(a)
 static main()
 {
   auto sb, se, a, c, cnt, w, d, str, res, op, tname;
-  sb = 0xFF800000;
+  sb = ROM_START;
   se = GetSegmentAttr( sb, SEGATTR_END);
 
   cnt = 0;
