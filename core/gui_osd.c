@@ -30,7 +30,9 @@ static OSD_elem osd[]={
     {LANG_OSD_LAYOUT_EDITOR_RAW,     &conf.mode_raw_pos,   {7*FONT_WIDTH, FONT_HEIGHT}   },
     {LANG_OSD_LAYOUT_EDITOR_MISC,       &conf.values_pos,       {9*FONT_WIDTH, 9*FONT_HEIGHT}   },
     {LANG_OSD_LAYOUT_EDITOR_BAT_ICON,   &conf.batt_icon_pos,    {28, 12}                        },
-    {LANG_OSD_LAYOUT_EDITOR_SPACE_ICON,   &conf.space_icon_pos,    {103, 7}                        },
+    {LANG_OSD_LAYOUT_EDITOR_SPACE_ICON,   &conf.space_icon_pos,    {23, 15}                        },
+    {LANG_OSD_LAYOUT_EDITOR_SPACE_ICON,   &conf.space_ver_pos,    {3, 50}                        },
+    {LANG_OSD_LAYOUT_EDITOR_SPACE_ICON,   &conf.space_hor_pos,    {50, 3}                        },
     {LANG_OSD_LAYOUT_EDITOR_BAT_TEXT,   &conf.batt_txt_pos,     {5*FONT_WIDTH, FONT_HEIGHT}     },
     {LANG_OSD_LAYOUT_EDITOR_SPACE_TEXT,   &conf.space_txt_pos,     {5*FONT_WIDTH, FONT_HEIGHT}     },
     {LANG_OSD_LAYOUT_EDITOR_CLOCK,      &conf.clock_pos,        {5*FONT_WIDTH, FONT_HEIGHT}     },
@@ -645,7 +647,7 @@ void gui_osd_draw_raw_info()
     {
     int x, camera_jpeg_count,jpeg_size,raw_and_jpeg_count,raw_size;
     static int b;
-    
+
     if (conf.show_remaining_raw) 
       {
             raw_size = hook_raw_size() / 1024;
@@ -659,28 +661,24 @@ void gui_osd_draw_raw_info()
             else
                 raw_and_jpeg_count=0;
  
-            if (raw_and_jpeg_count>0)
+            if (raw_and_jpeg_count>conf.remaining_raw_treshold)
                 {
                 sprintf(osd_buf, "RAW:%3d", raw_and_jpeg_count);
                 draw_string(conf.mode_raw_pos.x, conf.mode_raw_pos.y, osd_buf, conf.osd_color);
                 }
             else
                 {
-                sprintf(osd_buf, "DISK FULL!");
 
-                if (conf.mode_raw_pos.x<=3*FONT_WIDTH) 
-                    x = 4*FONT_WIDTH;
-                else
-                    x = conf.mode_raw_pos.x;
+                sprintf(osd_buf, "RAW:%3d", raw_and_jpeg_count);
                 
                 if (b > 6)
                     {
-                    draw_string(x-3*FONT_WIDTH, conf.mode_raw_pos.y, osd_buf, conf.osd_color_warn); 
+                    draw_string(conf.mode_raw_pos.x, conf.mode_raw_pos.y, osd_buf, conf.osd_color_warn); 
                     b = (b>12) ? 0 : b+1;
                     }
                 else
                     {
-                    draw_string(x-3*FONT_WIDTH, conf.mode_raw_pos.y, osd_buf, conf.osd_color); 
+                    draw_string(conf.mode_raw_pos.x, conf.mode_raw_pos.y, osd_buf, conf.osd_color); 
                     b = b+1;
                     } 
                 }
@@ -802,8 +800,24 @@ void gui_osd_draw_clock() {
 
     t = time(NULL);
     ttm = localtime(&t);
+    if (conf.show_clock == 1)
+    {
     sprintf(osd_buf, "%2u:%02u", ttm->tm_hour, ttm->tm_min);
     draw_string(conf.clock_pos.x, conf.clock_pos.y, osd_buf, conf.osd_color);
+    }
+    else if (conf.show_clock == 2)
+    {
+        sprintf(osd_buf, "%2u:%02u:%02u", ttm->tm_hour, ttm->tm_min,ttm->tm_sec);
+        if (conf.clock_pos.x<3*FONT_WIDTH)
+        {
+            draw_string(conf.clock_pos.x, conf.clock_pos.y, osd_buf, conf.osd_color);
+        }
+        else
+        {
+            draw_string(conf.clock_pos.x-3*FONT_WIDTH, conf.clock_pos.y, osd_buf, conf.osd_color);
+        }
+    }
+    
 }
 
 //-------------------------------------------------------------------

@@ -383,6 +383,13 @@ static char* gui_lang_default = \
 "301 \" \"\n"
 
 "302 \" Adapter Lens Scale, 100=1x\"\n"
+"303 \"Show Space Bar\"\n"
+"304 \"  Size on Screen\"\n"
+"305 \"  Width/Height\"\n"
+"306 \"  % treshold\"\n"
+"307 \"  MB treshold\"\n"
+"308 \"Warning Unit\"\n"
+"309 \"  Warning treshold\"\n"
 ;
 
 //-------------------------------------------------------------------

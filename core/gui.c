@@ -160,6 +160,11 @@ static const char* gui_iso_exposure_order_enum(int change, int arg);
 static const char* gui_nd_filter_state_enum(int change, int arg);
 //static const char* gui_tv_enum(int change, int arg);
 const char* gui_user_menu_show_enum(int change, int arg);
+static const char* gui_show_clock_enum(int change, int arg);
+static const char* gui_space_bar_enum(int change, int arg);
+static const char* gui_space_bar_size_enum(int change, int arg);
+static const char* gui_space_bar_width_enum(int change, int arg);
+static const char* gui_space_warn_type_enum(int change, int arg);
 
 void rinit();
 
@@ -278,9 +283,15 @@ static CMenuItem battery_submenu_items[] = {
     {LANG_MENU_BATT_SHOW_VOLTS,         MENUITEM_BOOL|MENUITEM_ARG_CALLBACK,    &conf.batt_volts_show,  (int)cb_volts },
     {LANG_MENU_BATT_SHOW_ICON,          MENUITEM_BOOL,                          &conf.batt_icon_show },	
     {(int)"",                           MENUITEM_SEPARATOR },
-    {LANG_MENU_SPACE_SHOW_ICON,         MENUITEM_BOOL,                          &conf.space_icon_show },	
+    {LANG_MENU_SPACE_SHOW_ICON,         MENUITEM_BOOL,                          &conf.space_icon_show },
+    {LANG_MENU_SPACE_SHOW_BAR,      MENUITEM_ENUM,                       (int*)gui_space_bar_enum },
+    {LANG_MENU_SPACE_BAR_SIZE,      MENUITEM_ENUM,                       (int*)gui_space_bar_size_enum },	
+    {LANG_MENU_SPACE_BAR_WIDTH,      MENUITEM_ENUM,                       (int*)gui_space_bar_width_enum },
     {LANG_MENU_SPACE_SHOW_PERCENT,      MENUITEM_BOOL|MENUITEM_ARG_CALLBACK,    &conf.space_perc_show,   (int)cb_space_perc },
     {LANG_MENU_SPACE_SHOW_MB,           MENUITEM_BOOL|MENUITEM_ARG_CALLBACK,    &conf.space_mb_show,  (int)cb_space_mb },
+    {LANG_MENU_SPACE_WARN_TYPE,      MENUITEM_ENUM,                       (int*)gui_space_warn_type_enum },
+    {LANG_MENU_SPACE_WARN_PERCENT,     MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,   &conf.space_perc_warn, MENU_MINMAX(1, 99) },
+    {LANG_MENU_SPACE_WARN_MB,     MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,   &conf.space_mb_warn, MENU_MINMAX(1, 4000) },
     {LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
@@ -453,7 +464,7 @@ static CMenuItem osd_submenu_items[] = {
     {LANG_MENU_USER_MENU_ENABLE,		MENUITEM_ENUM,      (int*)gui_user_menu_show_enum },
     {LANG_MENU_OSD_SHOW_STATES,         MENUITEM_BOOL,      &conf.show_state },
     
-    {LANG_MENU_OSD_SHOW_CLOCK,          MENUITEM_BOOL,      &conf.show_clock },
+    {LANG_MENU_OSD_SHOW_CLOCK,          MENUITEM_ENUM,      (int*)gui_show_clock_enum },
     {LANG_MENU_OSD_LAYOUT_EDITOR,       MENUITEM_PROC,      (int*)gui_draw_osd_le },
     {LANG_MENU_OSD_VALUES,  	    	MENUITEM_SUBMENU,   (int*)&values_submenu },
     {LANG_MENU_OSD_DOF_CALC,            MENUITEM_SUBMENU,   (int*)&dof_submenu },
@@ -461,6 +472,7 @@ static CMenuItem osd_submenu_items[] = {
     {LANG_MENU_OSD_GRID_PARAMS,         MENUITEM_SUBMENU,   (int*)&grid_submenu },
     {LANG_MENU_OSD_SHOW_RAW_STATE,          MENUITEM_BOOL,      &conf.show_raw_state },    
     {LANG_MENU_OSD_SHOW_REMAINING_RAW,  MENUITEM_BOOL,      &conf.show_remaining_raw },    
+    {LANG_MENU_OSD_RAW_TRESHOLD,  MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.remaining_raw_treshold,   MENU_MINMAX(0, 200)},
     {LANG_MENU_OSD_SHOW_IN_REVIEW,      MENUITEM_BOOL,      &conf.show_osd_in_review},
 #ifndef OPTIONS_AUTOSAVE
     {LANG_MENU_MAIN_SAVE_OPTIONS,       MENUITEM_PROC,      (int*)gui_menuproc_save },
@@ -796,6 +808,67 @@ const char* gui_histo_show_enum(int change, int arg) {
 
     return modes[conf.show_histo];
 }
+
+const char* gui_show_clock_enum(int change, int arg) {
+    static const char* modes[]={ "Don't", "Normal", "Seconds"};
+
+    conf.show_clock+=change;
+    if (conf.show_clock<0)
+        conf.show_clock=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.show_clock>=(sizeof(modes)/sizeof(modes[0])))
+        conf.show_clock=0;
+
+    return modes[conf.show_clock];
+}
+
+const char* gui_space_bar_enum(int change, int arg) {
+    static const char* modes[]={ "Don't", "Horizontal", "Vertical"};
+
+    conf.space_bar_show+=change;
+    if (conf.space_bar_show<0)
+        conf.space_bar_show=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.space_bar_show>=(sizeof(modes)/sizeof(modes[0])))
+        conf.space_bar_show=0;
+
+    return modes[conf.space_bar_show];
+}
+
+const char* gui_space_bar_size_enum(int change, int arg) {
+    static const char* modes[]={ "1/4", "1/2", "1"};
+
+    conf.space_bar_size+=change;
+    if (conf.space_bar_size<0)
+        conf.space_bar_size=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.space_bar_size>=(sizeof(modes)/sizeof(modes[0])))
+        conf.space_bar_size=0;
+
+    return modes[conf.space_bar_size];
+}
+
+const char* gui_space_bar_width_enum(int change, int arg) {
+    static const char* modes[]={ "1", "2", "3","4","5","6","7","8","9","10"};
+
+    conf.space_bar_width+=change;
+    if (conf.space_bar_width<0)
+        conf.space_bar_width=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.space_bar_width>=(sizeof(modes)/sizeof(modes[0])))
+        conf.space_bar_width=0;
+
+    return modes[conf.space_bar_width];
+}
+
+const char* gui_space_warn_type_enum(int change, int arg) {
+    static const char* modes[]={ "Percent", "MB", "Don't"};
+
+    conf.space_warn_type+=change;
+    if (conf.space_warn_type<0)
+        conf.space_warn_type=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.space_warn_type>=(sizeof(modes)/sizeof(modes[0])))
+        conf.space_warn_type=0;
+
+    return modes[conf.space_warn_type];
+}
+
 
 //-------------------------------------------------------------------
 #if CAM_ADJUSTABLE_ALT_BUTTON

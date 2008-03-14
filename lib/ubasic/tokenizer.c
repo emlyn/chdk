@@ -99,8 +99,10 @@ static const struct keyword_token keywords[] = {
   {"get_av",                  TOKENIZER_GET_USER_AV_ID}, //FOR COMPATIBILITY
   {"get_bv96",                TOKENIZER_GET_BV96},
   {"get_day_seconds",         TOKENIZER_GET_DAY_SECONDS},
+  {"get_disk_size",          TOKENIZER_GET_DISK_SIZE},
   {"get_dof",                 TOKENIZER_GET_DOF},
   {"get_far_limit",           TOKENIZER_GET_FAR_LIMIT},
+  {"get_free_disk_space",           TOKENIZER_GET_FREE_DISK_SPACE},
   {"get_focus",               TOKENIZER_GET_FOCUS},
   {"get_hyp_dist",            TOKENIZER_GET_HYPERFOCAL_DIST},
   {"get_iso_market",          TOKENIZER_GET_ISO_MARKET},
@@ -118,6 +120,11 @@ static const struct keyword_token keywords[] = {
   {"get_user_tv96",           TOKENIZER_GET_USER_TV96},
   {"get_vbatt",               TOKENIZER_GET_VBATT},
   {"get_zoom",                TOKENIZER_GET_ZOOM},
+//  {"get_jpg_count",               TOKENIZER_GET_JPG_COUNT},
+//  {"get_raw_count",                TOKENIZER_GET_RAW_COUNT},
+
+
+
 //SET  
   {"set_av96_direct",         TOKENIZER_SET_AV96_DIRECT},
   {"set_av_rel",              TOKENIZER_SET_USER_AV_BY_ID_REL}, //FOR COMPATIBILITY

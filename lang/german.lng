@@ -1,0 +1,430 @@
+// CHDK language file: German
+// CHDK Sprach-Datei:  Deutsch
+// Version: CHDK build Allbest Build 31
+// 
+// -----------------------------------------------
+// Optimale Schriftart: Libsans16b (mit Umlauten)
+// und Codepage Win1252 (West European Latin) 
+// -----------------------------------------------
+// Format of language line:
+// <id> "<text>"
+//   <id>   - should be positive number
+//   <text> - any text enclosed into quotes
+  
+  1 "Hauptmenü"
+
+  2 "RAW Parameter ->"
+  3 "OSD Parameter ->"
+  4 "Histogram Parameter ->"
+  5 "Zebra Parameter ->"
+  6 "Scripting Parameter ->"
+  7 "Anzeige-Einstellungen ->"
+  8 "Diverses ->"
+  9 "Debug Parameter ->"
+ 10 "Auf Defaultwerte zurücksetzen"
+ 11 "Einstellungen speichern"
+
+ 12 "<- Zurück"
+
+
+ 13 "RAW"
+
+ 14 "RAW speichern"
+ 16 "Nur 1. Serienbild als RAW"
+ 17 "RAW File im Vezeichnis mit JPEG"
+ 18 "RAW-Dateipräfix"
+ 19 "RAW-Dateiendung"
+
+
+ 20 "OSD"
+
+ 21 "OSD aktivieren"
+ 22 "RAW/EXP Status anzeigen"
+ 23 "Weitere Werte anzeigen"
+ 24 "Zoom-Wert"
+ 25 "Zeige DOF Rechner"
+ 26 "Zeige Uhr"
+ 27 "OSD Layout Editor"
+ 28 "Batterie Parameter ->"
+
+
+ 29 "Histogram"
+
+ 30 "Zeige Live Histogram"
+ 31 "Histogram Layout"
+ 32 "Histogram Modus
+ 33 "Zeige Histogram Über/unter EXP"
+ 34 "Ignoriere Rand-Extremwerte"
+ 35 "Automatische Vergrößerung"
+
+
+ 36 "Zebra"
+
+ 37 "Zeige Zebra"
+ 38 "Zebra Modus"
+ 39 "Unterbelichtungs-Grenzwert"
+ 40 "Überbelichtungs-Grenzwert"
+ 41 "Originalanzeige wiederherst."
+ 42 "OSD wiederherstellen"
+ 43 "Zebra Überlagern mit:"
+
+
+ 44 "Skript-Einstellungen"
+ 
+ 45 "Skript laden..."
+ 46 "Skript-Verzögerung (.1s)"
+ 47 "Aktuelles Skript"
+ 48 "Skript-Parameter"
+
+ 49 "Anzeige-Einstellungen"
+
+ 50 "Sprachdatei laden..."
+ 51 "OSD-Codepage"
+ 52 "RBF-Schriftart laden..."
+ 53 "Farben"
+ 54 "OSD-Text"
+ 55 "OSD-Hintergrund"
+ 56 "Histogramm"
+ 57 "Histogramm-Hintergrund"
+ 58 "Histogramm-Rahmen"
+ 59 "Histogramm-EXP-Marker"
+ 60 "Zebra-Unterbelichtung"
+ 61 "Zebra-Überbelichtung"
+ 62 "Batterie-Symbol"
+ 63 "Menü-Text"
+ 64 "Menü-Hintergrund"
+ 65 "Textbetrachter-Text"
+ 66 "Textbetrachter-Hintergrund"
+
+ 67 "Diverses"
+
+ 68 "Datei-Browser"
+ 69 "Kalender"
+ 70 "Textbetrachter ->"
+ 71 "Spiele ->"
+ 72 "Taschenlampenfunktion"
+ 73 "Startbildschirm anzeigen"
+ 74 "Zoomtasten für MF nutzen"
+ 75 "<ALT>-Modus-Taste"
+ 76 "Farbpalette anzeigen"
+ 77 "Build-Info anzeigen"
+ 78 "Speicher-Info anzeigen"
+
+
+ 79 "Debugging-Einstellungen"
+
+ 80 "PropCases anzeigen"
+ 81 "PropCase-Seite"
+ 82 "Weitere Werte anzeigen"
+ 83 "Memory-Browser"
+ 84 "RAM-Dump bei ALT +/-"
+ 85 "SD-Karte bootfähig machen"
+
+
+ 86 "Batterie-Parameter"
+
+ 87 "Volt MAX"
+ 88 "Volt MIN"
+ 89 "25+ Schritte"
+ 90 "Prozent anzeigen"
+ 91 "Voltzahl anzeigen"
+ 92 "Symbol anzeigen"
+
+
+ 93 "Textbetrachter"
+
+ 94 "Datei öffnen..."
+ 95 "Zuletzt geöffnete Datei"
+ 96 "RBF-Schriftart laden..."
+ 97 "Codepage"
+ 98 "Wortweiser Zeilenumbruch"
+ 99 "Autoscroll aktivieren"
+100 "Autoscroll-Verzögerung (Sek)"
+
+
+
+101 "Spiele"
+
+102 "Reversi"
+103 "Sokoban"
+
+
+104 "*** Einstellungen zurücksetzen ***"
+105 "Sicher, daß Sie die\nOptionen zurücksetzen möchten?"
+
+106 "*** Build Info ***"
+107 "CHDK Ver: %s, #%s\nDatum:    %s\nZeit:    %s\nKamera:  %s\nFW Vers: 
+%s"
+
+108 "*** Speicher-Info ***"
+109 "Freier Speicher: %d Bytes"
+
+110 "*** Information ***"
+111 "Bitte in Wiedergabe-Modus\numschalten und\nerneut versuchen!"
+
+// file browser titles
+112 "Datei-Browser"
+
+
+113 "Bitte Skriptdatei auswählen:"
+114 "Bitte Textdatei auswählen:"
+115 "Bitte RBF-Schriftart auswählen:"
+116 "Bitte Sprachdatei auswählen:"
+
+
+// for calendar
+117 "Januar"
+118 "Februar"
+119 "März"
+120 "April"
+121 "Mai"
+122 "Juni"
+123 "Juli"
+124 "August"
+125 "September"
+126 "Oktober"
+127 "November"
+128 "Dezember"
+
+129 "Mo"
+130 "Di"
+131 "Mi"
+132 "Do"
+133 "Fr"
+134 "Sa"
+135 "So"
+
+136 "Heute:"
+
+// messagebox buttons
+137 "OK"
+138 "Ja"
+139 "Nein"
+140 "Abbruch"
+
+// OSD layout editor
+141 "Histogramm"
+142 "DOF-Rechner"
+143 "RAW/SCR/EXP"
+144 "Weitere Werte"
+145 "Batt.-Symbol"
+146 "Batt.-Text"
+147 "Uhr"
+
+// palette
+148 "SET für bestimmte Farbe drücken"
+149 "  MENU zum Verlassen drücken   "
+150 "Farbe"
+151 "Mit %s Farbe auswählen"
+
+
+// Reversi
+
+152 "*** Spielergebnis ***"
+153 "Sie haben gewonnen! :)"
+154 "Sie haben verloren! :("
+155 "Unentschieden! :/"
+
+156 "*** Falscher Zug ***"
+157 "Hier können Sie nicht setzen!"
+158 "Dieses Feld ist nicht leer!"
+
+159 "Zug: Spieler "
+160 "Zug: Computer"
+161 "  GAME  OVER  "
+162 " Weiß  Schwarz"
+
+163 "*** Über ***"
+
+
+// Sokoban
+
+164 "  Level"
+165 "  Züge"
+166 "*** Fertig ***"
+167 "Super!\nSie haben es geschafft!"
+
+// Konsole
+
+168 "*** GESTARTET ***"
+169 "*** UNTERBROCHEN ***"
+170 "*** BEENDET ***"
+
+
+// Datei-Browser
+
+171 "*** Ordner löschen ***"
+172 "Sicher, daß Sie\nALLE Dateien im Ordner\nlöschen möchten?"
+173 "*** Datei löschen ***"
+174 "SICHER, daß Sie\ndie ausgewählte Datei\nlöschen möchten?"
+
+// benchmark
+175 "Benchmark"
+
+176 "Berechne..."
+177 "Kamera-Benchmark       Starten mit [SET]"
+178 "Bildschirm"
+179 "Schreiben   :"
+180 "Lesen       :"
+181 "Arbeitsspeicher"
+182 "Speicherkarte"
+183 "Schreib.-RAW:"
+184 "Schreib.-Mem:"
+185 "Schreib.-64k:"
+186 "Lesen-64k   :"
+
+187 "LCD-Stromsparen aus"
+
+
+188 "Ausschneiden"
+189 "Kopieren"
+190 "Einfügen"
+191 "Löschen"
+192 "Auswahl umkehren"
+193 "*** Verschieben ***"
+194 "SICHER, daß Sie die\n%d ausgewählten Dateien\nvon %s/\n hierher 
+verschieben möchten?"
+195 "*** Kopieren ***"
+196 "SICHER, daß Sie die\n%d ausgewählten Dateien\nvon %s/\n hierher 
+kopieren möchten?"
+197 "*** Löschen ***"
+198 "SICHER, daß Sie die\n%d ausgewählten Dateien\n löschen möchten?"
+199 "Bitte warten..."
+
+//Gitternetz-Einblendung
+
+200 "Zeige Gitternetz-Linien"
+201 "Gitternetz laden..."
+202 "Gitternetz-Einstellungen"
+203 "Gitternetz-Einstellungen ->"
+204 "Gitternetz-Datei auswählen:"
+205 "Aktuelles Gitternetz"
+
+206 "Rausch-Reduktion"
+
+207 "Überschreibe Gitternetz-Farben"
+208 "Linien-Farbe"
+209 "Füll-Farbe"
+
+// DOF keine Ahnung!!
+210 "DOF Rechner"
+211 "DOF Rechner->"
+212 "Canon Subj. Dist. as Near Limit" 
+213 "Use EXIF Subj. Dist. (PC65)"
+214 "Show Subj. Dist. in Misc."
+215 "Show Near Limit in Misc."
+216 "Show Far Limit in Misc."
+217 "Show Hyperfocal Dist. in Misc."
+218 "Show Depth of Field in Misc."
+
+
+219 "Verschiedene Einstellungen"
+220 "Verschiedene Einstellungen->"
+221 "Anzeigen im Review Modus"	
+222 "Zoom anzeigen"		
+223 "'Echte' Apertur anzeigen"
+224 "'Echte' ISO anzeigen"
+225 "'Market' ISO anzeigen"
+226 "ISO nur im AutoISO Modus anzeigen"
+227 "Eingest. Belichtung Ev (Tv+Av) anz."
+228 "Gemessene Belichtung Ev (Bv+Sv) anz."
+229 "Eingest. Bv (Helligkeitswert) anz."
+230 "Gemessenen Bv anzeigen"
+231 "Überbel.-Wert anzeigen (Kein Blitz!)"
+232 "Scene Luminance anzeigen"
+
+233 "Video Parameter"
+234 "Video Parameter->"
+235 "Video Modus"
+236 "Video Bitrate"
+237 "Video Qualität"
+
+// keine Ahnung
+238 "Extra Foto-Einstellungen"
+239 "Extra Foto-Einstellungen"
+240 "Override Shutter Speed Value"
+241 "    Value Factor"
+242 "Override Aperture Value"
+243 "Override ISO Value"
+244 "    Value Factor"
+245 "Override Subj. Dist. Value"
+246 "    Value Factor (mm)"
+
+247 "Bracketing in Continuous Mode"
+248 "Bracketing in Continuous Mode->"
+249 "TV Bracketing Value"
+250 "AV Bracketing Value"
+251 "ISO Bracketing Value"
+252 "    Value Factor"
+253 "Subj. Dist. Bracket Value (MF)"
+254 "    Value Factor (mm)"
+255 "Bracketing Type"
+
+256 "Autostart"
+257 "Remote Enable (USB)"
+
+258 "Exposure Control (No Flash)"
+259 "Exposure Control (No Flash)->"
+260 "Recalc Exposure"
+261 "TV Exposure Recalc Order"
+262 "AV Exposure Recalc Order"
+263 "ISO Exposure Recalc Order"
+
+264 "Clear Override Values on Start"
+
+265 "Show Canon Overexposure Value"
+
+266 "RAW Entwicklung"
+267 "Bitte Kamera im Auf-\nnahmemodus starten und ein Bild\naufnehmen."
+268 "RAW-Datei auswählen"
+269 "RAW Summe"
+270 "RAW Durchschnitt"
+271 "Nicht genug Speicherkartenplatz:\n%dM benötigt, %dM verfügbar."
+
+272 "Zeige OSD im Wiedergabe-Modus"
+273 "Zeige Parameter-Daten"
+
+274 "Motiv Abstand zum Objektiv"
+
+275 "Lösche Bracket Werte beim Start"
+
+276 "Erzeuge Karte mit zwei Partitionen"
+277 "Tausche Partitionen"
+278 "Es werden ALLE Informationen auf der\n Karte gelöscht. Weitermachen?"
+279 "Diese Karte hat nur eine Partition."
+280 "Fehler"
+281 "Warnung"
+282 "Information"
+283 "RGB zebra (nur Überbel.)"
+
+284 "ND filter Status"
+
+285 "Zeige Histo Ev Gitternetz"
+
+286 "OSD Warnung"
+287 "OSD Warnung Hintergrund"
+288 "Freier Speicherplatz-Icon"
+289 "Zeige Freien Speicherplatz-Icon"
+290 "Freier Speicherplatz"
+291 "Zeige Speicherplatz in Prozent"
+292 "Zeige Speicherplatz in MB"
+293 "Speicherplatz Text"
+294 "  Zeige verbleibenden RAW counter"
+295 "Verbleibende RAW"
+
+296 "Zeige RAW status"
+
+297 "Zeige werte in video"
+
+298 "  Auslöser-Geschwindigkeits Zähl-typ"
+299 "Aktiviere User Menu"
+300 "User Menu"
+301 " "
+302 " Adapter Objektiv Faktor, 100=1x"
+303 "Zeige Space Bar"
+304 "  Groesse auf Display"
+305 "  Breite/Höhe"
+306 "  % Untergrenze"
+307 "  MB Untergrenze"
+308 " Einheit der Warnung"
+309 " Untergrenze Warnung"

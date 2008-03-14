@@ -146,6 +146,11 @@ typedef enum {
   TOKENIZER_EXIT_ALT,
   TOKENIZER_SHUT_DOWN,
   TOKENIZER_SET_ND_FILTER,
+  TOKENIZER_GET_DISK_SIZE,
+  TOKENIZER_GET_FREE_DISK_SPACE,
+//  TOKENIZER_GET_JPG_COUNT,
+//  TOKENIZER_GET_RAW_COUNT,
+  
 } ubasic_token;
 
 void tokenizer_init(const char *program);

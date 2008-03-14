@@ -398,4 +398,11 @@
 301 " "
 
 302 " Adapter Lens Scale, 100=1x"
+303 "Show Space Bar"
+304 "  Size on screen"
+305 "  Width/Height"
+306 "  Percent Treshold"
+307 "  MB Treshold"
+308 "Warning Unit"
+309 "  Warning treshold"
 

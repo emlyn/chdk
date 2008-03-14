@@ -1121,6 +1121,52 @@ static void get_hyperfocal_distance_statement()
 
 
 
+
+
+static void get_disk_size_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_DISK_SIZE);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, GetTotalCardSpaceKb());
+    accept_cr();
+}
+
+static void get_free_disk_space_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_FREE_DISK_SPACE);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, GetFreeCardSpaceKb());
+    accept_cr();
+}
+
+/*
+static void get_jpg_count_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_JPG_COUNT);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, GetJpgCount());
+    accept_cr();
+}
+static void get_raw_count_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_RAW_COUNT);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, GetRawCount());
+    accept_cr();
+}
+*/
+
+
+
+
 static void set_focus_statement()
 {
     int to;
@@ -1667,6 +1713,21 @@ statement(void)
   case TOKENIZER_GET_VBATT:
     get_vbatt_statement();
     break;
+  case TOKENIZER_GET_DISK_SIZE:
+    get_disk_size_statement();
+    break;
+  case TOKENIZER_GET_FREE_DISK_SPACE:
+    get_free_disk_space_statement();
+    break;
+/*
+  case TOKENIZER_GET_JPG_COUNT:
+    get_jpg_count_statement();
+    break;
+  case TOKENIZER_GET_RAW_COUNT:
+    get_raw_count_statement();
+    break;
+  */
+    
   case TOKENIZER_GET_PROP:
     get_prop_statement();
     break;

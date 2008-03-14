@@ -201,6 +201,24 @@ int get_usb_power(int edge)
 {
 	return 0;
 }
+int GetTotalCardSpaceKb()
+{
+	return 0;
+}
+int GetFreeCardSpaceKb()
+{
+	return 0;
+}
+/*
+int GetJpgCount()
+{
+	return 0;
+}
+int GetRawCount()
+{
+	return 0;
+}
+*/
 void exit_alt()
 {
     printf("*** exit alt ***\n");

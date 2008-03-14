@@ -30,15 +30,22 @@ typedef struct {
     int batt_perc_show;
     int batt_volts_show;
     int batt_icon_show;
+    int space_bar_show;
+    int space_bar_size;
+    int space_bar_width;
     int space_icon_show;
     int show_clock;
     int space_perc_show;
     int space_mb_show;
+    int space_perc_warn;
+    int space_mb_warn;
+    int space_warn_type;
 
     int zoom_value;
 
     int show_state;
     int show_remaining_raw;
+    int remaining_raw_treshold;
     int show_raw_state;
     int show_values;
     int show_values_in_video;
@@ -63,6 +70,8 @@ typedef struct {
     OSD_pos dof_pos;
     OSD_pos batt_icon_pos;
     OSD_pos space_icon_pos;
+    OSD_pos space_hor_pos;
+    OSD_pos space_ver_pos;
     OSD_pos batt_txt_pos;
     OSD_pos space_txt_pos;
     OSD_pos mode_state_pos;

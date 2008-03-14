@@ -393,9 +393,16 @@
 #define LANG_MENU_ITEM_BLANK 301
 
 #define LANG_MENU_OSD_ZOOM_SCALE        302
+#define LANG_MENU_SPACE_SHOW_BAR 303
+#define LANG_MENU_SPACE_BAR_SIZE 304
+#define LANG_MENU_SPACE_BAR_WIDTH 305
+#define LANG_MENU_SPACE_WARN_PERCENT 306
+#define LANG_MENU_SPACE_WARN_MB 307
+#define LANG_MENU_SPACE_WARN_TYPE 308
+#define LANG_MENU_OSD_RAW_TRESHOLD 309
 
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  302
+#define GUI_LANG_ITEMS                  309
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

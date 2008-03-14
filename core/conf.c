@@ -53,7 +53,7 @@ int debug_pardata_show;
 //-------------------------------------------------------------------
 static int def_ubasic_vars[SCRIPT_NUM_PARAMS] = {0};
 static int def_batt_volts_max, def_batt_volts_min;
-static OSD_pos def_histo_pos, def_dof_pos, def_batt_icon_pos, def_space_icon_pos, def_batt_txt_pos, def_space_txt_pos, 
+static OSD_pos def_histo_pos, def_dof_pos, def_batt_icon_pos, def_space_icon_pos, def_space_hor_pos, def_space_ver_pos, def_batt_txt_pos, def_space_txt_pos, 
                def_mode_state_pos, def_mode_raw_pos, def_values_pos, def_clock_pos;
 static int def_user_menu_vars[10] = {0};
 
@@ -260,7 +260,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(134, conf.space_perc_show,         CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(135, conf.space_mb_show,        CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(136, conf.space_txt_pos,           CONF_DEF_PTR,   ptr:&def_space_txt_pos , NULL),
-    CONF_INFO(137, conf.show_remaining_raw,             CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(137, conf.show_remaining_raw,             CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(138, conf.mode_raw_pos,         CONF_DEF_PTR,   ptr:&def_mode_raw_pos , NULL),
     CONF_INFO(139, conf.show_raw_state,  CONF_DEF_VALUE, i:1, NULL),
     
@@ -269,7 +269,17 @@ static const ConfInfo conf_info[] = {
 
     CONF_INFO(142, conf.user_menu_enable,  CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(143, conf.user_menu_vars,    CONF_DEF_PTR,   ptr:&def_user_menu_vars, NULL),
-    CONF_INFO(144, conf.zoom_scale,  CONF_DEF_VALUE, i:100, NULL),    
+    CONF_INFO(144, conf.zoom_scale,  CONF_DEF_VALUE, i:100, NULL), 
+    CONF_INFO(145, conf.space_bar_show,  CONF_DEF_VALUE, i:1, NULL), 
+    CONF_INFO(146, conf.space_bar_size,  CONF_DEF_VALUE, i:1, NULL), 
+    CONF_INFO(147, conf.space_ver_pos,          CONF_DEF_PTR, ptr:&def_space_ver_pos, NULL),
+    CONF_INFO(148, conf.space_hor_pos,          CONF_DEF_PTR, ptr:&def_space_hor_pos, NULL),   
+    CONF_INFO(149, conf.space_bar_width,  CONF_DEF_VALUE, i:2, NULL), 
+    CONF_INFO(150, conf.space_perc_warn,         CONF_DEF_VALUE, i:10, NULL),
+    CONF_INFO(151, conf.space_mb_warn,        CONF_DEF_VALUE, i:20, NULL),
+    CONF_INFO(152, conf.space_warn_type,         CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(153, conf.remaining_raw_treshold,             CONF_DEF_VALUE, i:0, NULL),
+
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 
@@ -331,7 +341,11 @@ static void conf_init_defaults() {
     def_batt_txt_pos.x=178;
     def_batt_txt_pos.y=1*FONT_HEIGHT;
     def_space_icon_pos.x = vid_get_bitmap_width()-100;
-    def_space_icon_pos.y = vid_get_bitmap_height()-7;
+    def_space_icon_pos.y = 0;
+    def_space_ver_pos.x = vid_get_bitmap_width()-7;
+    def_space_ver_pos.y = 0;
+    def_space_hor_pos.x = 0;
+    def_space_hor_pos.y = vid_get_bitmap_height()-7;
     def_space_txt_pos.x=128;
     def_space_txt_pos.y=0;
     def_mode_state_pos.x=35;
