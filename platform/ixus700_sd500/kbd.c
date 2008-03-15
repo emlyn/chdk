@@ -1,5 +1,6 @@
 #include "lolevel.h"
 #include "platform.h"
+#include "conf.h"
 #include "core.h"
 #include "keyboard.h"
 
@@ -15,6 +16,7 @@ static long kbd_mod_state;
 static KeyMap keymap[];
 static long last_kbd_key = 0;
 static int usb_power=0;
+static int remote_key, remote_count;
 
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
@@ -245,7 +247,28 @@ long kbd_use_zoom_as_mf() {
 int usb_power_status_override(int status){
  // for clear USB power flag  - return status &~USB_MASK;
  // for get USB power flag read status & USB_MASK
+	
+	if (conf.remote_enable) {
+		remote_key = (status & USB_MASK)==USB_MASK;
+		if (remote_key) 
+			remote_count += 1;
+		else if (remote_count) {
+			usb_power = remote_count;
+			remote_count = 0;
+		}
+		return status &~USB_MASK;
+	}
  return status;
+}
+
+int get_usb_power(int edge)
+{
+	int x;
+
+	if (edge) return remote_key;
+	x = usb_power;
+	usb_power = 0;
+	return x;
 }
 
 
@@ -271,4 +294,3 @@ static KeyMap keymap[] = {
 	{ 0, 0 }
 };
 
-int get_usb_power(int edge) {return usb_power;}
