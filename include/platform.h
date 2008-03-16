@@ -425,6 +425,10 @@ int get_part_count(void);
 void create_partitions(void);
 extern char * camera_jpeg_count_str();
 
+unsigned int GetJpgCount(void);
+unsigned int GetRawCount(void);
+
+
 #define started() debug_led(1)
 #define finished() debug_led(0)
 

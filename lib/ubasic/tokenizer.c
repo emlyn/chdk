@@ -109,8 +109,10 @@ static const struct keyword_token keywords[] = {
   {"get_iso_mode",            TOKENIZER_GET_ISO_MODE},
   {"get_iso_real",            TOKENIZER_GET_ISO_REAL},
   {"get_iso",                 TOKENIZER_GET_ISO_MODE}, //FOR COMPATIBILITY
+  {"get_jpg_count",           TOKENIZER_GET_JPG_COUNT},
   {"get_near_limit",          TOKENIZER_GET_NEAR_LIMIT},
   {"get_prop",                TOKENIZER_GET_PROP},
+  {"get_raw_count",           TOKENIZER_GET_RAW_COUNT},
   {"get_sv96",	              TOKENIZER_GET_SV96},
   {"get_tick_count",          TOKENIZER_GET_TICK_COUNT},
   {"get_tv96",                TOKENIZER_GET_TV96},
@@ -120,8 +122,6 @@ static const struct keyword_token keywords[] = {
   {"get_user_tv96",           TOKENIZER_GET_USER_TV96},
   {"get_vbatt",               TOKENIZER_GET_VBATT},
   {"get_zoom",                TOKENIZER_GET_ZOOM},
-//  {"get_jpg_count",               TOKENIZER_GET_JPG_COUNT},
-//  {"get_raw_count",                TOKENIZER_GET_RAW_COUNT},
 
 
 

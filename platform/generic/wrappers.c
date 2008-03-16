@@ -2,6 +2,7 @@
 #include "lolevel.h"
 #include "platform.h"
 
+
 #if CAM_DRYOS
 #define _U	0x01	/* upper */
 #define _L	0x02	/* lower */
@@ -444,18 +445,17 @@ unsigned int GetTotalCardSpaceKb(void){
 #endif
 }
 
-/*
+
 unsigned int GetJpgCount(void){
 
- return atoi(camera_jpeg_count_str());
-
+ return strtol(camera_jpeg_count_str(),((void*)0),0);
 }
 
 unsigned int GetRawCount(void){
  return GetFreeCardSpaceKb()/((hook_raw_size() / 1024)+GetFreeCardSpaceKb()/GetJpgCount());
 
 }
-*/
+
 
 #if CAM_MULTIPART
 static char mbr_buf[512];

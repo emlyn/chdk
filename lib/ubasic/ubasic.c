@@ -1143,7 +1143,7 @@ static void get_free_disk_space_statement()
     accept_cr();
 }
 
-/*
+
 static void get_jpg_count_statement()
 {
     int var;
@@ -1162,7 +1162,7 @@ static void get_raw_count_statement()
     ubasic_set_variable(var, GetRawCount());
     accept_cr();
 }
-*/
+
 
 
 
@@ -1719,14 +1719,14 @@ statement(void)
   case TOKENIZER_GET_FREE_DISK_SPACE:
     get_free_disk_space_statement();
     break;
-/*
+
   case TOKENIZER_GET_JPG_COUNT:
     get_jpg_count_statement();
     break;
   case TOKENIZER_GET_RAW_COUNT:
     get_raw_count_statement();
     break;
-  */
+  
     
   case TOKENIZER_GET_PROP:
     get_prop_statement();
