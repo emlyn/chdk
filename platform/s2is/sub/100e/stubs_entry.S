@@ -73,6 +73,7 @@ NSTUB(TakeSemaphore, 0xff821b6c)
 // Best match: 96%
 NSTUB(UnlockMainPower, 0xff9835a4)
 NSTUB(Unmount_FileSystem, 0xff8762d4)
+// ERROR: UnsetZoomForMovie is not found!
 // Best match: 96%
 NSTUB(UpdateMBROnFlash, 0xff876480)
 // ERROR: VbattGet is not found!

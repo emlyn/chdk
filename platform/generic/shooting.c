@@ -1113,5 +1113,9 @@ void shooting_expo_param_override(void){
   
 }
 
-
+#if CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+void unlock_optical_zoom(void){
+ if (conf.unlock_optical_zoom_for_video) _UnsetZoomForMovie();
+}
+#endif
 

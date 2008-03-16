@@ -66,6 +66,8 @@ NSTUB(SleepTask, 0xffc119d0)
 NSTUB(TakeSemaphore, 0xffc114cc)
 NSTUB(UnlockMainPower, 0xffd68108)
 NSTUB(Unmount_FileSystem, 0xffc608b4)
+// Best match: 89%
+NSTUB(UnsetZoomForMovie, 0xffda1ce4)
 NSTUB(UpdateMBROnFlash, 0xffc60a08)
 // Best match: 96%
 NSTUB(VbattGet, 0xffc1c6d0)

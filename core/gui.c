@@ -341,6 +341,9 @@ static CMenuItem video_submenu_items[] = {
 	  {LANG_MENU_VIDEO_MODE,              MENUITEM_ENUM,    (int*)gui_video_mode_enum}, 
       {LANG_MENU_VIDEO_BITRATE,           MENUITEM_ENUM,    (int*)gui_video_bitrate_enum}, 
       {LANG_MENU_VIDEO_QUALITY,           MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.video_quality, MENU_MINMAX(1, 99)}, 
+#if CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+      {LANG_MENU_OPTICAL_ZOOM_IN_VIDEO,   MENUITEM_BOOL,  &conf.unlock_optical_zoom_for_video},							
+#endif
       {LANG_MENU_BACK,                    MENUITEM_UP },
       {0}
 };

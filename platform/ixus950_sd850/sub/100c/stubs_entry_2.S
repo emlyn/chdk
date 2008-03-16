@@ -46,3 +46,5 @@ NHSTUB(GetDrive_FreeClusters, 0xFFAA2820)	// note "GetCatFs_FreeClusters"
 //NSTUB(Fwrite_Fut, 0xFFA9E7FC) // ok
 //NSTUB(Fclose_Fut, 0xFFA9E6EC) // ok
 //NSTUB(Fseek_Fut, 0xFFA9E89C) // ok
+
+NHSTUB(UnsetZoomForMovie, 0xFF83656C)

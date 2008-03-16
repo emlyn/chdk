@@ -400,9 +400,10 @@
 #define LANG_MENU_SPACE_WARN_MB 307
 #define LANG_MENU_SPACE_WARN_TYPE 308
 #define LANG_MENU_OSD_RAW_TRESHOLD 309
+#define LANG_MENU_OPTICAL_ZOOM_IN_VIDEO 310
 
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  309
+#define GUI_LANG_ITEMS                  310
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

@@ -26,12 +26,13 @@ NHSTUB(kbd_p1_2, 0xFF829464)
 NHSTUB(kbd_p1_3, 0xFF829848)
 
 
-//null stub
+//null stubs
 NHSTUB(PhySw_testgpio, 0xFF8118C0)
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF8118C0)
 NHSTUB(kbd_p1_f, 0xFF8118C0)
 NHSTUB(kbd_p2_f, 0xFF8118C0)
 NHSTUB(kbd_read_keys_r2, 0xFF8118C0)
+NHSTUB(UnsetZoomForMovie, 0xFF8118C0) 
 
 NHSTUB(GetDrive_ClusterSize, 0xFF86A150)
 NHSTUB(GetDrive_TotalClusters, 0xFF86A18C)

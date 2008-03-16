@@ -12,6 +12,8 @@ DEF(canon_menu_active,0xB55C)
 
 #warning A720 - incorrect value, points to zero: 'DEF(canon_shoot_menu_active,0xFFE9CDB4)'
 DEF(canon_shoot_menu_active,0xFFE9CDB4)
+//maybe DEF(canon_shoot_menu_active,0xAE15)   // 0xAE14+1
 
 #warning A720 - incorrect value, points to zero: 'DEF(recreview_hold, 0xFFE9CDB4)'
 DEF(recreview_hold, 0xFFE9CDB4)
+//maybe DEF(recreview_hold, 0xABE8) // 0xAB38+0xB0

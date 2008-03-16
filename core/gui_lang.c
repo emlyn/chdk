@@ -390,6 +390,7 @@ static char* gui_lang_default = \
 "307 \"  MB treshold\"\n"
 "308 \"Warning Unit\"\n"
 "309 \"  Warning treshold\"\n"
+"310 \"Enable optical zoom\"\n"
 ;
 
 //-------------------------------------------------------------------

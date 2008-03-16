@@ -73,6 +73,8 @@ NSTUB(TakeSemaphore, 0xff820f18)
 // Best match: 96%
 NSTUB(UnlockMainPower, 0xff95f9c0)
 NSTUB(Unmount_FileSystem, 0xff86d67c)
+// Best match: 89%
+NSTUB(UnsetZoomForMovie, 0xff996b94)
 NSTUB(UpdateMBROnFlash, 0xff86d7d4)
 // ERROR: VbattGet is not found!
 NSTUB(Write, 0xff86e360)

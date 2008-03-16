@@ -78,6 +78,7 @@ NSTUB(SleepTask, 0xff82156c)
 NSTUB(TakeSemaphore, 0xff821068)
 NSTUB(UnlockMainPower, 0xff98f1b0)
 NSTUB(Unmount_FileSystem, 0xff870244)
+// ERROR: UnsetZoomForMovie is not found!
 NSTUB(UpdateMBROnFlash, 0xff8703ec)
 // ERROR: VbattGet is not found!
 NSTUB(Write, 0xff871464)

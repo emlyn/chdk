@@ -111,3 +111,4 @@ Fwrite_Fut 0xffc55ca0
 SetAutoShutdownTime 0xffd48dd8
 PutInNdFilter 0xFFE71734
 PutOutNdFilter 0xFFE7177C 
+UnsetZoomForMovie 0xFFD81B80 

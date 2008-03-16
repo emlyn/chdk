@@ -279,6 +279,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(151, conf.space_mb_warn,        CONF_DEF_VALUE, i:20, NULL),
     CONF_INFO(152, conf.space_warn_type,         CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(153, conf.remaining_raw_treshold,             CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(154, conf.unlock_optical_zoom_for_video,  CONF_DEF_VALUE, i:0, NULL), 
 
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))

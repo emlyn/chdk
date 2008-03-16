@@ -20,3 +20,4 @@ NHSTUB(GetDrive_ClusterSize, 0xFF870710)
 NHSTUB(GetDrive_TotalClusters, 0xFF87076C)
 NHSTUB(GetDrive_FreeClusters, 0xFF8707A8)
 NHSTUB(WriteSDCard, 0xFF87FFF8)
+NHSTUB(UnsetZoomForMovie, 0xFF8117EC)  //null stub

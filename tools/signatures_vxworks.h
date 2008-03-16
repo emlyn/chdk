@@ -3116,6 +3116,30 @@ static FuncSig func_sig_PutOutNdFilter_1[] = {
 	/* 17/32 */
 };
 
+static FuncSig func_sig_UnsetZoomForMovie_1[] = {
+	{   1, 0xe1a00060, 0xfdffffff }, // mov:6:0xE3A00060
+	{   2, 0xe1a04000, 0xfdffffff }, // mov:6:0xE3A04000
+	{   3, 0xe59f1034, 0xfdffffff }, // ldr:4:0xE59F1034
+	{   4, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFA1830
+	{   5, 0xe59f2030, 0xfdffffff }, // ldr:4:0xE59F2030
+	{   6, 0xe5923000, 0xfdffffff }, // ldr:4:0xE5923000
+	{   7, 0xe1530004, 0xfdffffff }, // cmp:7:0xE1530004
+	{   9, 0xe5824000, 0xfdffffff }, // str:4:0xE5824000
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB00002F
+	{  11, 0xe59f201c, 0xfdffffff }, // ldr:4:0xE59F201C
+	{  12, 0xe5923000, 0xfdffffff }, // ldr:4:0xE5923000
+	{  13, 0xe1530004, 0xfdffffff }, // cmp:7:0xE1530004
+	{  15, 0xe5824000, 0xfdffffff }, // str:4:0xE5824000
+	{  17, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFFCD1
+	{  19, 0x00007ff8, 0xfdffffff }, // and:6:0x00007FF8
+	{  20, 0x00007ff4, 0xfdffffff }, // and:6:0x00007FF4
+	{  21, 0xe59f3004, 0xfdffffff }, // ldr:4:0xE59F3004
+	{  22, 0xe5930000, 0xfdffffff }, // ldr:4:0xE5930000
+	{  23, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 19/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   1, 0xe59f6030, 0xfdffffff }, // ldr:4:0xE59F6030
 	{   2, 0xe5965000, 0xfdffffff }, // ldr:4:0xE5965000
@@ -4648,6 +4672,7 @@ FuncsList func_list[] = {
 	{ "UnlockMainPower", func_sig_UnlockMainPower_1 },
 	{ "UnlockMainPower", func_sig_UnlockMainPower_2 },
 	{ "Unmount_FileSystem", func_sig_Unmount_FileSystem_1 },
+	{ "UnsetZoomForMovie", func_sig_UnsetZoomForMovie_1 },
 	{ "UpdateMBROnFlash", func_sig_UpdateMBROnFlash_1 },
 	{ "VbattGet", func_sig_VbattGet_1 },
 	{ "VbattGet", func_sig_VbattGet_2 },

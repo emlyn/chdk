@@ -36,3 +36,4 @@ NSTUB(iosInit, 0xFFB13780)
 
 STUB_DIR(vsprintf,0xFFB11278)
 
+NHSTUB(UnsetZoomForMovie ,0xFF9B1680)

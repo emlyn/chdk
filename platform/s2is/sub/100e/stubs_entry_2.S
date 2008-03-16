@@ -25,6 +25,7 @@ NHSTUB(kbd_p2_f, 0xFF829364)
 
 // null stubs
 NHSTUB(PhySw_testgpio, 0xFF8118C0)
+NHSTUB(UnsetZoomForMovie, 0xFF8118C0)
 
 NHSTUB(UniqueLedOn, 0xFF82EBDC)
 NHSTUB(UniqueLedOff, 0xFF82EC54)
