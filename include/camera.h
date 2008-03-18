@@ -259,7 +259,6 @@
     #undef  CAM_HAS_USER_TV_MODES
     #undef  CAM_CAN_SD_OVERRIDE
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
-    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus800_sd700)

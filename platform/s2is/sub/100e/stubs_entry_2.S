@@ -34,3 +34,4 @@ NHSTUB(GetDrive_ClusterSize, 0xFF8767A0)
 NHSTUB(GetDrive_TotalClusters, 0xFF8767FC)
 NHSTUB(GetDrive_FreeClusters, 0xFF876838)
 NHSTUB(GetFocusLensSubjectDistanceFromLens, 0xFFA8EEF4)
+

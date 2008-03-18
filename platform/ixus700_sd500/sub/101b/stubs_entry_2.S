@@ -32,7 +32,8 @@ NHSTUB(SetZoomActuatorSpeedPercent, 0xFF8118C0)
 NHSTUB(kbd_p1_f, 0xFF8118C0)
 NHSTUB(kbd_p2_f, 0xFF8118C0)
 NHSTUB(kbd_read_keys_r2, 0xFF8118C0)
-NHSTUB(UnsetZoomForMovie, 0xFF8118C0) 
+
+NHSTUB(UnsetZoomForMovie, 0xFF999FA0) 
 
 NHSTUB(GetDrive_ClusterSize, 0xFF86A150)
 NHSTUB(GetDrive_TotalClusters, 0xFF86A18C)

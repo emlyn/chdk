@@ -43,10 +43,10 @@ void __attribute__((naked,noinline)) movie_record_task(){
 "loc_FFEE6740:\n"
 
                 "BL      sub_FFEE6838\n"
-                "BL      unlock_optical_zoom\n"
                 "B       loc_FFEE6784\n"
 "loc_FFEE6748:\n"
 
+                "BL      unlock_optical_zoom\n"
                 "BL      sub_FFEE69EC\n"
                 "B       loc_FFEE6784\n"
 "loc_FFEE6750:\n"
