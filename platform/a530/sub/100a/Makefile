@@ -22,12 +22,12 @@ distclean: clean
 stubs_auto.S: boot.c capt_seq.c movie_rec.c
 	@echo $< \-\> $@
 ifeq ($(OSTYPE),Windows)
-#	cat $^ | \
-#	    grep 'BL\\?[[:space:]]*sub_[0-9A-Fa-f]' | \
-#	    sed 's/.*sub_\\([0-9A-Fa-f]*\\).*/\\1/' | \
-#	    $(SORT) | uniq | \
-#	    awk 'BEGIN {print "/* THIS FILE IS GENERATED */\n#include \"stubs_asm.h\"\n"} \
-#		{printf("STUB(%s)\n",$$1)}' > stubs_auto.S
+	cat $^ | \
+	    grep 'BL\\?[[:space:]]*sub_[0-9A-Fa-f]' | \
+	    sed 's/.*sub_\\([0-9A-Fa-f]*\\).*/\\1/' | \
+	    $(SORT) | uniq | \
+	    awk 'BEGIN {print "/* THIS FILE IS GENERATED */\n#include \"stubs_asm.h\"\n"} \
+		{printf("STUB(%s)\n",$$1)}' > stubs_auto.S
 else	
 	cat $^ | \
 	    grep 'BL\?[[:space:]]*sub_[0-9A-Fa-f]' | \
