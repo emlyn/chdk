@@ -30,6 +30,10 @@ static int remote_key, remote_count;
 #define USB_REG 1
 #endif
 
+#if defined(CAMERA_a530)
+#define USB_MASK 0x4000
+#define USB_REG 2
+#endif
 
 #ifndef MALLOCD_STACK
 static char kbd_stack[NEW_SS];

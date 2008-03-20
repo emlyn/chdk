@@ -68,8 +68,27 @@
     #define CAM_HAS_ND_FILTER           1
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
-    #define CAM_SHOW_OSD_IN_SHOOT_MENU   1
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     
+//----------------------------------------------------------
+#elif defined (CAMERA_a530)
+    #define CAM_PROPSET                 1
+
+//  2672x1968 image - like most other 5m sensors
+    #define CAM_RAW_ROWPIX              2672   // for 5 MP
+    #define CAM_RAW_ROWS                1968   // for 5 MP
+//  2672x1992 image - eventually probably real sensor size
+//  #define CAM_RAW_ROWPIX              2672   // for 5 MP
+//  #define CAM_RAW_ROWS                1992   // for 5 MP
+
+    #undef  CAM_USE_ZOOM_FOR_MF
+    #define CAM_HAS_ERASE_BUTTON	1
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define CAM_HAS_ND_FILTER           1
+    #define CAM_HAS_MANUAL_FOCUS	1
+    #define CAM_DRAW_EXPOSITION		1
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU	1
+
 //----------------------------------------------------------
 #elif defined (CAMERA_a550)
     #define CAM_PROPSET                 2
