@@ -1074,7 +1074,7 @@ void shooting_expo_param_override(void){
   shooting_set_tv96_direct(photo_param_put_off.tv96, SET_NOW);	
   photo_param_put_off.tv96=0;
  }
- else if ((conf.tv_override_value) && (conf.tv_override_koef))
+ else if (((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef))
    { 
    if (conf.tv_enum_type) shooting_set_tv96_direct(32*(conf.tv_override_value-18),SET_NOW);
    else   shooting_set_tv96_direct(shooting_get_tv96_from_shutter_speed(shooting_get_shutter_speed_override_value()), SET_NOW); 

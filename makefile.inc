@@ -30,6 +30,9 @@ PLATFORMSUB=100e
 #PLATFORM=a530
 #PLATFORMSUB=100a
 
+#PLATFORM=a540
+#PLATFORMSUB=100b
+
 #PLATFORM=a560
 #PLATFORMSUB=100a
 
@@ -117,8 +120,6 @@ HOSTCFLAGS=-g -O2 -Wall
 PAKWIF=$(topdir)tools/pakwif$(EXE)
 
 ##########################################################################
-
-export PATH+=:/net/mos127/export/home/gratchev/_distr/opt/arm/bin
 
 CC=arm-elf-gcc
 OBJCOPY=arm-elf-objcopy

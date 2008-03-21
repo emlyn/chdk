@@ -30,7 +30,7 @@ static int remote_key, remote_count;
 #define USB_REG 1
 #endif
 
-#if defined(CAMERA_a530)
+#if defined(CAMERA_a530) || defined(CAMERA_a540)
 #define USB_MASK 0x4000
 #define USB_REG 2
 #endif
@@ -142,7 +142,11 @@ void my_kbd_read_keys()
 #endif
 #if defined(USB_MASK) && defined(USB_REG)
 		if (conf.remote_enable) {
-	physw_status[USB_REG] = kbd_new_state[USB_REG] & ~USB_MASK;
+
+#if !defined(CAMERA_a530) && !defined(CAMERA_a540)
+        physw_status[USB_REG] = kbd_new_state[USB_REG] & ~USB_MASK;
+#endif
+
 remote_key = (kbd_new_state[USB_REG] & USB_MASK)==USB_MASK;
 
 			if (remote_key) 
