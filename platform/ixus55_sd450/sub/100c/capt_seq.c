@@ -27,7 +27,7 @@ void hook_raw_save_complete()
 
 void capt_seq_hook_set_nr()
 {
-    long *nrflag = (long*)0x6D68; // unknown value, check
+    long *nrflag = (long*)0x6D6C; 
 
     switch (core_get_noise_reduction_value()){
     case NOISE_REDUCTION_AUTO_CANON:
@@ -49,7 +49,7 @@ void __attribute__((naked,noinline)) sub_FF950464_my(long p)
                 "LDR     R3, =0x7D4BC\n"
                 "LDR     R5, =0x6D68\n"
                 "SUB     SP, SP, #4\n"
-//                "MOVL    R1, 0xFFFFFFFF\n"
+                "LDR     R1, =0xFFFFFFFF\n"
                 "STR     R0, [R5]\n"
                 "LDR     R0, [R3]\n"
                 "BL      sub_FF81FD18\n" // ClearEventFlag

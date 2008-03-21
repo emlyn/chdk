@@ -13,16 +13,10 @@ DEF(InvertData, 0x000114F0)
 DEF(GpioStatus, 0x00011500)
 DEF(SwitchStatus, 0x00011510)
 
-// Key values for 'Feather' on joystic
-// Could be retrieved from 'PhySW' Task
-DEF(touch_keys_angle, 0x0000E8C8)  // unknown, check
-// Semaphore address to disable Feather processing
-DEF(touch_keys_sema, 0x0000E874)  // unknown, check
 DEF(FlashParamsTable,0xFF961DF8) // ok BL sub_FF961F70 in ParameterManager.c
 DEF(canon_menu_active,0x8D88) // ok found in StartRecModeMenu
 DEF(canon_shoot_menu_active,0x80C5) // ok (0x80C8 -0x4 + 0x1) found in taskcreate_DSITask
-DEF(recreview_hold, 0x739F8) // wrong, check
-
 DEF(zoom_busy, 0x89638)  // ok found in "aZoomLens" sub_FFA6D684
 DEF(focus_busy, 0x89950) // ok found in "aFocuslenscontr" 
-DEF(movie_compression, 0x6CBC) // check
+DEF(playrec_mode, 0x6FA0) // found at unknown_libname_442 within task_SsStartupTask
+DEF(recreview_hold, 0x7EE0) // ok
