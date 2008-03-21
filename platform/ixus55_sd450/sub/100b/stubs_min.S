@@ -19,4 +19,4 @@ DEF(canon_shoot_menu_active,0x80C5) // ok (0x80C8 -0x4 + 0x1) found in taskcreat
 DEF(zoom_busy, 0x89638)  // ok found in "aZoomLens" sub_FFA6D684
 DEF(focus_busy, 0x89950) // found in "aFocuslenscontr"
 DEF(playrec_mode, 0x6FA0) // found at unknown_libname_442 within task_SsStartupTask
-DEF(recreview_hold, 0x7EE0) // (0x7EE4 - 0x4) found at aMycamfunc_pl_1 at FF993528
+DEF(recreview_hold, 0x86838)
