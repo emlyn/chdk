@@ -91,8 +91,6 @@ static void gui_menu_back() {
 void gui_menu_kbd_process() {
 static char sbuf[7];
     switch (kbd_get_autoclicked_key()) {
-#if !defined (CAMERA_a460)
-
 #if CAM_HAS_ERASE_BUTTON
         case KEY_ERASE:
 #else    
@@ -106,7 +104,6 @@ static char sbuf[7];
 	            gui_menu_redraw=1;
 		}
 		break;
-#endif		
         case KEY_UP:
             do {
                 if (gui_menu_curr_item>0) {
@@ -124,7 +121,7 @@ static char sbuf[7];
                      (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK)==MENUITEM_SEPARATOR);
             int_incr = 1;
             gui_menu_redraw=1;
-			if (curr_menu->title == LANG_MENU_USER_MENU) gui_menu_add_item = gui_menu_curr_item;
+            if (curr_menu->title == LANG_MENU_USER_MENU) gui_menu_add_item = gui_menu_curr_item;
             break;
         case KEY_DOWN:
             do {
@@ -142,7 +139,7 @@ static char sbuf[7];
                      (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK)==MENUITEM_SEPARATOR);
             int_incr = 1;
             gui_menu_redraw=1;
-			if (curr_menu->title == LANG_MENU_USER_MENU) gui_menu_add_item = gui_menu_curr_item;
+            if (curr_menu->title == LANG_MENU_USER_MENU) gui_menu_add_item = gui_menu_curr_item;
             break;
         case KEY_LEFT:
             if (gui_menu_curr_item>=0) {
@@ -345,26 +342,17 @@ static char sbuf[7];
             break;
 #else
         case KEY_DISPLAY:
-            if (conf.user_menu_enable == 2) {
-               if (curr_menu->title != LANG_MENU_USER_MENU)
-                  add_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_add_item, 0);
-               else
-                  add_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_add_item, 1);
-               gui_menu_redraw=1;
+            if (int_incr <= 1000){
+                int_incr *= 10;
             }
             else {
-               if (int_incr <= 1000){
-                   int_incr *= 10;
-               }
-               else {
-                  int_incr = 1;
-               }
-               sprintf(sbuf, "±%d",int_incr);
-               if (int_incr == 1) {
-                  draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
-               }
-               draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
+               int_incr = 1;
             }
+            sprintf(sbuf, "±%d",int_incr);
+            if (int_incr == 1) {
+               draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
+            }
+            draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
             break;
 #endif
     }

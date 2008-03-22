@@ -267,37 +267,6 @@ long kbd_get_autoclicked_key() {
 }
 
 long kbd_use_zoom_as_mf() {
-    static long zoom_key_pressed = 0;
-
-    if (kbd_is_key_pressed(KEY_ZOOM_IN) && (mode_get()&MODE_MASK) == MODE_REC) {
-
-        if (shooting_get_focus_mode()) {
-            kbd_key_release_all();
-            kbd_key_press(KEY_RIGHT);
-            zoom_key_pressed = KEY_ZOOM_IN;
-            return 1;
-        }
-    } else {
-        if (zoom_key_pressed==KEY_ZOOM_IN) {
-            kbd_key_release(KEY_RIGHT);
-            zoom_key_pressed = 0;
-            return 1;
-        }
-    }
-    if (kbd_is_key_pressed(KEY_ZOOM_OUT) && (mode_get()&MODE_MASK) == MODE_REC) {
-        if (shooting_get_focus_mode()) {
-            kbd_key_release_all();
-            kbd_key_press(KEY_LEFT);
-            zoom_key_pressed = KEY_ZOOM_OUT;
-            return 1;
-        }
-    } else {
-        if (zoom_key_pressed==KEY_ZOOM_OUT) {
-            kbd_key_release(KEY_LEFT);
-            zoom_key_pressed = 0;
-            return 1;
-        }
-    }
     return 0;
 }
 static KeyMap keymap[] = {
