@@ -693,7 +693,7 @@ void gui_osd_draw_state() {
     
     n=0;
 
-    if (((conf.tv_override_value) && (conf.tv_override_koef)) || gui_mode==GUI_MODE_OSD){
+    if ((((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef)) || gui_mode==GUI_MODE_OSD){
     	if(kbd_is_key_pressed(KEY_SHOOT_HALF)) 
 		  { 
 		  t=(int)(shooting_get_shutter_speed_from_tv96(shooting_get_tv96())*100000);	

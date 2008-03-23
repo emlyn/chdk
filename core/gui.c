@@ -1633,12 +1633,16 @@ extern long GetPropertyCase(long opt_id, void *buf, long bufsize);
 void gui_draw_osd() {
     unsigned int m, n = 0, mode_photo, mode_video;
     coord x;
-    static int flashlight = 0, zebra = 0, zebra_init = 0, pressed = 0;
+#if CAM_SWIVEL_SCREEN
+    static int flashlight = 0;
+#endif
+    static int zebra = 0, zebra_init = 0, pressed = 0;
     static int half_disp_press_old=0;
     int half_disp_press;
     
     m = mode_get();
 
+#if CAM_SWIVEL_SCREEN
     if (conf.flashlight && (m&MODE_SCREEN_OPENED) && (m&MODE_SCREEN_ROTATED) && (gui_mode==GUI_MODE_NONE /* || gui_mode==GUI_MODE_ALT */)) {
         draw_filled_rect(0, 0, screen_width-1, screen_height-1, MAKE_COLOR(COLOR_WHITE, COLOR_WHITE));
         flashlight = 1;
@@ -1650,6 +1654,7 @@ void gui_draw_osd() {
         }
         return;
     }
+#endif
     
     if (kbd_is_key_pressed(KEY_SHOOT_HALF)) {
         if (kbd_is_key_pressed(SHORTCUT_TOGGLE_ZEBRA)) {
