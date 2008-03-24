@@ -37,7 +37,7 @@ else
 		{printf("STUB(%s)\n",$$1)}' > stubs_auto.S
 endif
 
-stubs_entry.S: $(TARGET_PRIMARY) $(topdir)tools/signatures_$(PLATFORMOS).h
+stubs_entry.S: $(TARGET_PRIMARY) $(topdir)tools/signatures_$(PLATFORMOS).h $(topdir)tools/finsig
 	@echo \-\> $@
 	rm -f stubs_entry.S.err
 	if [ -s $(TARGET_PRIMARY) ] ; then \
