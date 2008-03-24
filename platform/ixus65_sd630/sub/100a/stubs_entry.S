@@ -73,6 +73,8 @@ NSTUB(SleepTask, 0xff821530)
 NSTUB(TakeSemaphore, 0xff82102c)
 NSTUB(UnlockMainPower, 0xff97390c)
 NSTUB(Unmount_FileSystem, 0xff86f940)
+// Best match: 89%
+NSTUB(UnsetZoomForMovie, 0xff9b1680)
 NSTUB(UpdateMBROnFlash, 0xff86fa90)
 // ERROR: VbattGet is not found!
 NSTUB(Write, 0xff87060c)
@@ -94,6 +96,7 @@ NSTUB(ints_enable, 0xff81daa8)
 NSTUB(ioctl, 0xffb12610)
 NSTUB(iosDevAdd, 0xffb136f0)
 NSTUB(iosDrvInstall, 0xffb139b4)
+NSTUB(iosDevFind, 0xffb1367c)
 NSTUB(isalpha, 0xffb099fc)
 // ALT: NSTUB(isalpha, 0xffb099fc) // 4/0
 NSTUB(isdigit, 0xffb09a2c)
@@ -165,3 +168,6 @@ NSTUB(utime, 0xffb0fab4)
 // ALT: NSTUB(utime, 0xffb0fab4) // 26/0
 NSTUB(vsprintf, 0xffb11278)
 NSTUB(write, 0xffb125a0)
+NSTUB(fprintf, 0xffb0a35c)
+NSTUB(fputs, 0xffb0a47c)
+NSTUB(puts, 0xffb11634)

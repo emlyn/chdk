@@ -32,7 +32,6 @@ NHSTUB(taskIdListGet, 0xFFB22B58)
 NSTUB(feof, 0xffb09d18)
 NSTUB(ferror, 0xffb09d84)
 
-NSTUB(iosInit, 0xFFB13780)
 
 STUB_DIR(vsprintf,0xFFB11278)
 

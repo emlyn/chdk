@@ -135,12 +135,21 @@ extern long mkdir(const char *dirname);
 #define fwrite(a,b,c,d) Fwrite_Fut(a,b,c,d)
 #define fseek(a,b,c) Fseek_Fut(a,b,c)
 #define fflush(a) Fflush_Fut(a)
+#define feof(a) Feof_Fut(a)
+#define fdelete(a) DeleteFile_Fut(a)
+
+typedef long FILE;
+
+/**
+ * No STUBS!
+ * You can't use these two directly from THUMB code (core), only from platform.
+ */
+extern int fprintf(FILE *fd, char*buf, ...);
+extern int printf(char *buf, ...);
 
 extern void msleep(long msec);
 extern long task_lock();
 extern long task_unlock();
-#define feof(a) Feof_Fut(a)
-#define fdelete(a) DeleteFile_Fut(a)
 
 #define DOS_ATTR_RDONLY         0x01            /* read-only file */
 #define DOS_ATTR_HIDDEN         0x02            /* hidden file */

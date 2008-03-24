@@ -31,6 +31,7 @@
     #undef  CAM_SHOW_OSD_IN_SHOOT_MENU      // On some cameras Canon shoot menu has additional functionality and useful in this case to see CHDK OSD in this mode  
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1 // Camera can unlock optical zoom in video (if it is locked)
 
+    #undef  CAM_CONSOLE_LOG_ENABLED         // Development: internal camera stdout -> A/stdout.txt
 
 //----------------------------------------------------------
 // Overridden values for each camera
@@ -263,6 +264,8 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+
+    #define CAM_CONSOLE_LOG_ENABLED     1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus70_sd1000)

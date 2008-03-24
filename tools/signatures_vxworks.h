@@ -2350,6 +2350,35 @@ static FuncSig func_sig_iosDevAdd_1[] = {
 	/* 28/32 */
 };
 
+static FuncSig func_sig_iosDevFind[] = {
+	{   1, 0xe1a0a000, 0xfdffffff }, // mov:6:0xE1A0A000
+	{   2, 0xe1a09001, 0xfdffffff }, // mov:6:0xE1A09001
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFFE2
+	{   4, 0xe1b0b000, 0xfdffffff }, // mov:6:0xE1B0B000
+	{   5, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000003
+	{   6, 0xe590000c, 0xfdffffff }, // ldr:4:0xE590000C
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFE8AA
+	{   8, 0xe08aa000, 0xfdffffff }, // add:6:0xE08AA000
+	{   9, 0xea000000, 0xff000000 }, // b, bl:3:0xEA000002
+	{  10, 0xe59f03e4, 0xfdffffff }, // ldr:4:0xE59F03E4
+	{  11, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFFDA
+	{  12, 0xe1a0b000, 0xfdffffff }, // mov:6:0xE1A0B000
+	{  13, 0xe15b0000, 0xfdffffff }, // cmp:7:0xE35B0000
+	{  14, 0xe589a000, 0xfdffffff }, // str:4:0xE589A000
+	{  15, 0x059f03d4, 0xfdffffff }, // ldr:4:0x059F03D4
+	{  16, 0x0b000000, 0xff000000 }, // b, bl:3:0x0BFFF2A6
+	{  17, 0xe1a0000b, 0xfdffffff }, // mov:6:0xE1A0000B
+	{  20, 0xe1a0b000, 0xfdffffff }, // mov:6:0xE1A0B000
+	{  21, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFF90
+	{  22, 0xe59f038c, 0xfdffffff }, // ldr:4:0xE59F038C
+	{  23, 0xe1a0100b, 0xfdffffff }, // mov:6:0xE1A0100B
+	{  24, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB0051D9
+	{  25, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFF8F
+	{  26, 0xe59b000c, 0xfdffffff }, // ldr:4:0xE59B000C
+	{ -1, -1, -1 },
+	/* 24/28 */
+};
+
 static FuncSig func_sig_iosDrvInstall_1[] = {
 	{   1, 0xe59d8024, 0xfdffffff }, // ldr:4:0xE59D8024
 	{   2, 0xe59d9028, 0xfdffffff }, // ldr:4:0xE59D9028
@@ -4593,6 +4622,61 @@ static FuncSig func_sig_GetFocusLensSubjectDistanceFromLens_3[] = {
 	/* 25/32 */
 };
 
+static FuncSig func_sig_fprintf[] = {
+	{   2, 0xe59f1054, 0xfdffffff }, // ldr:4:0xE59F1054
+	{   3, 0xe5902000, 0xfdffffff }, // ldr:4:0xE5902000
+	{   4, 0xe5911000, 0xfdffffff }, // ldr:4:0xE5911000
+	{   5, 0xe1520001, 0xfdffffff }, // cmp:7:0xE1520001
+	{   6, 0xe1a03001, 0xfdffffff }, // mov:6:0xE1A03001
+	{   7, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A00000A
+	{   8, 0xe1520000, 0xfdffffff }, // cmp:7:0xE3520000
+	{   9, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000003
+	{  10, 0xe591c024, 0xfdffffff }, // ldr:4:0xE591C024
+	{  11, 0xe1a03002, 0xfdffffff }, // mov:6:0xE1A03002
+	{  12, 0xe15c0002, 0xfdffffff }, // cmp:7:0xE15C0002
+	{  13, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000004
+	{  14, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB00175D
+	{  15, 0xe59fc024, 0xfdffffff }, // ldr:4:0xE59FC024
+	{  16, 0xe580c000, 0xfdffffff }, // str:4:0xE580C000
+	{ -1, -1, -1 },
+	/* 15/18 */
+};
+
+static FuncSig func_sig_fputs[] = {
+	{   1, 0xe04dd014, 0xfdffffff }, // sub:6:0xE24DD014
+	{   2, 0xe1a02000, 0xfdffffff }, // mov:6:0xE1A02000
+	{   3, 0xe59f006c, 0xfdffffff }, // ldr:4:0xE59F006C
+	{   4, 0xe591b000, 0xfdffffff }, // ldr:4:0xE591B000
+	{   5, 0xe1a0a001, 0xfdffffff }, // mov:6:0xE1A0A001
+	{   6, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
+	{   7, 0xe15b0000, 0xfdffffff }, // cmp:7:0xE15B0000
+	{   8, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000009
+	{   9, 0xe15b0000, 0xfdffffff }, // cmp:7:0xE35B0000
+	{  10, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000002
+	{  11, 0xe590c024, 0xfdffffff }, // ldr:4:0xE590C024
+	{  12, 0xe15c000b, 0xfdffffff }, // cmp:7:0xE15C000B
+	{  13, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000004
+	{  14, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB001715
+	{  15, 0xe59fc040, 0xfdffffff }, // ldr:4:0xE59FC040
+	{  16, 0xe580c000, 0xfdffffff }, // str:4:0xE580C000
+	{ -1, -1, -1 },
+	/* 16/18 */
+};
+
+static FuncSig func_sig_printf[] = {
+        {   2, 0xe59d0004, 0xfdffffff }, // ldr:4:0xE59D0004
+        {   3, 0xe59f27f4, 0xfdffffff }, // ldr:4:0xE59F27F4
+        {   4, 0xe1a03001, 0xfdffffff }, // mov:6:0xE3A03001
+        {   5, 0xe08d1008, 0xfdffffff }, // add:6:0xE28D1008
+        {   6, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFB7B
+        {   7, 0xe1a01000, 0xfdffffff }, // mov:6:0xE1A01000
+        {   9, 0xe08dd010, 0xfdffffff }, // add:6:0xE28DD010
+        {  10, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E    /* RET found, stopping... */
+        { -1, -1, -1 },
+        /* 8/28 */
+};
+
+
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory_1 },
 	{ "AllocateMemory", func_sig_AllocateMemory_2 },
@@ -4696,6 +4780,7 @@ FuncsList func_list[] = {
 	{ "ioctl", func_sig_ioctl_1 },
 	{ "iosDevAdd", func_sig_iosDevAdd_1 },
 	{ "iosDrvInstall", func_sig_iosDrvInstall_1 },
+	{ "iosDevFind",  func_sig_iosDevFind },
 	{ "isalpha", func_sig_isalpha_1 },
 	{ "isalpha", func_sig_isalpha_2 },
 	{ "isdigit", func_sig_isdigit_1 },
@@ -4759,5 +4844,8 @@ FuncsList func_list[] = {
 	{ "utime", func_sig_utime_2 },
 	{ "vsprintf", func_sig_vsprintf_1 },
 	{ "write", func_sig_write_1 },
+    { "fprintf",func_sig_fprintf },
+    { "fputs",func_sig_fputs },
+    { "puts",func_sig_printf },
 	{ NULL }
 };

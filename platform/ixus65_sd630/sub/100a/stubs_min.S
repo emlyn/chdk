@@ -1,5 +1,7 @@
 #include "stubs_asm.h"
 
+#include "stubs_entry_ida.S"
+
 DEF(physw_run, 0x1FAC)
 DEF(physw_status, 0xE758)
 
@@ -25,6 +27,7 @@ DEF(touch_keys_sema, 0x0000E874)
 DEF(zoom_busy, 0x79E20)
 DEF(focus_busy, 0x7A13C)
 DEF(movie_compression, 0x617C)
+
 
 // TODO: !!!!!!!!!!!!! THESE ARE INVALID !!!!!!!!
 DEF(FlashParamsTable,0xFFD4B62C)

@@ -8,6 +8,7 @@
 #include "raw.h"
 #include "motion_detector.h"
 
+
 static int raw_need_postprocess;
 static volatile int spytask_can_start;
 
@@ -41,7 +42,12 @@ void dump_memory()
 	sprintf(fn, "A/DCIM/100CANON/CRW_%04d.JPG", cnt++);
 	fd = open(fn, O_WRONLY|O_CREAT, 0777);
 	if (fd) {
+#ifdef CAMERA_ixus65_sd630 // Zero is not readable on ixus65!
+	    write(fd, (int*)0xFFFF0000, 4);
+	    write(fd, (int*)4, 0x1900-4);
+#else
 	    write(fd, (void*)0, 0x1900);
+#endif
 	    write(fd, (void*)0x1900, 32*1024*1024-0x1900);
 	    close(fd);
 	}
@@ -79,6 +85,10 @@ void core_spytask()
     conf_restore();
     gui_init();
     md_init();
+
+#if CAM_CONSOLE_LOG_ENABLED
+    console_init();
+#endif
 
     mkdir("A/CHDK");
     mkdir("A/CHDK/FONTS");
