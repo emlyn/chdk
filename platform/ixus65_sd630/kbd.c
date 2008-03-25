@@ -8,8 +8,6 @@
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
 
-#define FEATURE_FEATHER 1
-
 typedef struct {
     long hackkey;
     long canonkey;
@@ -95,10 +93,8 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f()
     return 0; // shut up the compiler
 }
 
-#if FEATURE_FEATHER
-extern int touch_keys_angle;
-extern int * touch_keys_sema;
-int touch_keys_sema_stored;
+#if CAM_FEATURE_FEATHER
+//extern int touch_keys_angle;
 #endif
 
 #define IN(base, value) ((value < base + 20) && (value > base - 20))
@@ -115,6 +111,15 @@ void hook_kbd_handle_keys()
     kbd_new_state[0] = physw_status[0];
     kbd_new_state[1] = physw_status[1];
     kbd_new_state[2] = physw_status[2];
+
+    static int taskFeatherID = 0;
+
+    if (taskFeatherID == 0) {
+        taskFeatherID = taskNameToId("tFeather");
+        printf("taskFeatherID:%x\n", taskFeatherID);
+    }
+
+
 
 /*
     int key_emu = 0;
@@ -150,23 +155,20 @@ void hook_kbd_handle_keys()
     
     if (kbd_process() == 0){
         // leave it ...
-#if FEATURE_FEATHER
-        if (*touch_keys_sema == 0) {
-            *touch_keys_sema = touch_keys_sema_stored;
-        }
+#if CAM_FEATURE_FEATHER
+        taskResume(taskFeatherID);
 #endif
     } else {
         // Drop platform keys to none, and simulate ordered key presses
         physw_status[2] = (physw_status[2] & (~KEY_MASK)) | (kbd_mod_state & KEY_MASK);
-#if FEATURE_FEATHER
-        if (*touch_keys_sema != 0) {
-            touch_keys_sema_stored = *touch_keys_sema;
-            *touch_keys_sema = 0;
-        }
+#if CAM_FEATURE_FEATHER
+        taskSuspend(taskFeatherID);
+
         // We still need this sema when simulating key presses
         if (kbd_mod_state != KEY_MASK) {
-            *touch_keys_sema = touch_keys_sema_stored;
+            taskResume(taskFeatherID);
         }
+
 #endif
     }
 

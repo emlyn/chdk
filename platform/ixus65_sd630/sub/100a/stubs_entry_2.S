@@ -23,9 +23,11 @@ NHSTUB(SetZoomActuatorSpeedPercent, 0xFF8117EC)
 NHSTUB(ZZZ, 0x0)
 
 
-NHSTUB(taskName, 0xFFB22A50)
-NHSTUB(taskIdListGet, 0xFFB22B58)
-
+NSTUB(taskName, 0xFFB22A50)
+NSTUB(taskIdListGet, 0xFFB22B58)
+NSTUB(taskResume, 0xFFB22E34)
+NSTUB(taskSuspend, 0xFFB22C60)
+NSTUB(taskNameToId, 0xFFB22A74)
 
 // These two are indistinguishable!!!!
 // ????

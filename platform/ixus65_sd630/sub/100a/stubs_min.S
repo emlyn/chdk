@@ -19,10 +19,6 @@ DEF(SwitchStatus, 0x0000E768)
 // Key values for 'Feather' on joystic
 // Could be retrieved from 'PhySW' Task function
 DEF(touch_keys_angle, 0x0000E8C8)
-// Semaphore address to disable Feather processing
-DEF(touch_keys_sema, 0x0000E874)
-
-
 
 DEF(zoom_busy, 0x79E20)
 DEF(focus_busy, 0x7A13C)
