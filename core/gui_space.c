@@ -19,17 +19,17 @@ unsigned long get_space_perc() {
 
 static void gui_space_draw_spacebar_horizontal () {
     coord x;
-    color cl = conf.space_color&0xFF;
+    color cl = conf.space_color;
     int perc = get_space_perc(),height = 2;
     float size = 0;
     if (conf.space_warn_type == 0){
-    cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color&0xFF);
+    cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 1){
-    cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:conf.osd_color;
+    cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 2){
-    cl = conf.space_color&0xFF;
+    cl = conf.space_color;
     }
        // space icon / bar
     height = conf.space_bar_width+1;
@@ -72,17 +72,17 @@ static void gui_space_draw_spacebar_horizontal () {
 
 static void gui_space_draw_spacebar_vertical () {
     coord y;
-    color cl = conf.space_color&0xFF;
+    color cl = conf.space_color;
     int perc = get_space_perc(), width = 2;
     float size = 0;
     if (conf.space_warn_type == 0){
-    cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color&0xFF);
+    cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 1){
-    cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:conf.osd_color;
+    cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 2){
-    cl = conf.space_color&0xFF;
+    cl = conf.space_color;
     }
     
        // space icon / bar
@@ -127,16 +127,16 @@ static void gui_space_draw_spacebar_vertical () {
 
 static void gui_space_draw_icon () {
     coord x;
-    color cl = conf.space_color&0xFF;
+    color cl = conf.space_color;
     int perc = get_space_perc();
     if (conf.space_warn_type == 0){
-    cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color&0xFF);
+    cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 1){
-    cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:conf.osd_color;
+    cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 2){
-    cl = conf.space_color&0xFF;
+    cl = conf.space_color;
     }
     int i;
     int le = 23;//length
@@ -177,15 +177,15 @@ static void gui_space_draw_icon () {
 //-------------------------------------------------------------------
 static void gui_space_draw_percent(){
     int perc = get_space_perc();
-    color cl = conf.space_color&0xFF;
+    color cl = conf.space_color;
     if (conf.space_warn_type == 0){
-    cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color&0xFF);
+    cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 1){
-    cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:conf.osd_color;
+    cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 2){
-    cl = conf.space_color&0xFF;
+    cl = conf.space_color;
     }
     sprintf(osd_buf, "%3d%%", get_space_perc());
     osd_buf[5]=0;
@@ -195,15 +195,15 @@ static void gui_space_draw_percent(){
 //-------------------------------------------------------------------
 static void gui_space_draw_mb() {
     int perc = get_space_perc();
-    color cl = conf.space_color&0xFF;
+    color cl = conf.space_color;
     if (conf.space_warn_type == 0){
-    cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color&0xFF);
+    cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 1){
-    cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:conf.osd_color;
+    cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 2){
-    cl = conf.space_color&0xFF;
+    cl = conf.space_color;
     }
   sprintf(osd_buf, "%3d%M",GetFreeCardSpaceKb()/1024 );
   osd_buf[5]=0;

@@ -38,7 +38,7 @@ static char* gui_lang_default = \
 " 25 \"Show DOF calculator\"\n"
 " 26 \"Show clock\"\n"
 " 27 \"OSD layout editor\"\n"
-" 28 \"Battery & Filespace ->\"\n"
+" 28 \"Battery->\"\n"
 
 
 " 29 \"Histogram\"\n"
@@ -115,7 +115,7 @@ static char* gui_lang_default = \
 " 84 \"Dump RAM on ALT +/- press\"\n"
 " 85 \"Make card bootable...\"\n"
 
-" 86 \"Battery & Filespace Settings\"\n"
+" 86 \"Battery showing settings\"\n"
 
 " 87 \"Battery MAX Voltage (mV)\"\n"
 " 88 \"Battery MIN Voltage (mV)\"\n"
@@ -261,7 +261,7 @@ static char* gui_lang_default = \
 "200 \"Show grid lines\"\n"
 "201 \"Load grid from file...\"\n"
 "202 \"Grid lines\"\n"
-"203 \"Grid settings ->\"\n"
+"203 \"Grid->\"\n"
 "204 \"Select grid file\"\n"
 "205 \"Current grid\"\n"
 
@@ -391,6 +391,20 @@ static char* gui_lang_default = \
 "308 \"Warning Unit\"\n"
 "309 \"  Warning treshold\"\n"
 "310 \"Enable optical zoom\"\n"
+"311 \"Clock->\"\n"
+"312 \"Clock Settings\"\n"
+"313 \"Clock format\"\n"
+"314 \"Remaining Space Background Color\"\n"
+"315 \"12h Clock Indicator\"\n"
+"316 \"@Shutter half-press show\"\n"
+
+"317 \"Raw showing settings\"\n"
+"318 \"Raw->\"\n"
+
+"319 \"Filespace showing settings\"\n"
+"320 \"Filespace->\"\n"
+
+
 ;
 
 //-------------------------------------------------------------------

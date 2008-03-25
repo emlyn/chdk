@@ -35,6 +35,9 @@ typedef struct {
     int space_bar_width;
     int space_icon_show;
     int show_clock;
+    int clock_format;
+    int clock_indicator;
+    int clock_halfpress;
     int space_perc_show;
     int space_mb_show;
     int space_perc_warn;

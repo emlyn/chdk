@@ -38,7 +38,7 @@
  25 "Show DOF Calculator"
  26 "Show Clock"
  27 "OSD Layout Editor"
- 28 "Battery & Filespace ->"
+ 28 "Battery->"
 
 
  29 "Histogram"
@@ -116,7 +116,7 @@
  85 "Make Card Bootable..."
 
 
-86 "Battery & Filespace Settings"
+86 "Battery showing settings"
 
  87 "Battery MAX Voltage (mV)"
  88 "Battery MIN Voltage (mV)"
@@ -273,7 +273,7 @@
 200 "Show Grid Lines"
 201 "Load Grid from File..."
 202 "Grid Lines"
-203 "Grid Settings ->"
+203 "Grid->"
 204 "Select Grid File"
 205 "Current Grid"
 
@@ -405,4 +405,19 @@
 307 "  MB Treshold"
 308 "Warning Unit"
 309 "  Warning treshold"
+310 "Enable Optical Zoom"
+311 "Clock->"
+312 "Clock Settings"
+313 "Clock format"
+314 "Remaining Space Background Color"
+315 "12h clock indicator"
+316 "@Shutter halfpress show"
+
+317 \"Raw showing settings\"\n"
+318 \"Raw->\"\n"
+
+319 \"Filespace showing settings\"\n"
+320 \"Filespace->\"\n"
+
+
 

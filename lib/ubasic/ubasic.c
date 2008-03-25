@@ -1178,7 +1178,7 @@ static void set_focus_statement()
 			    (m==MODE_VIDEO_COMPACT) ||
 			    (m==MODE_VIDEO_MY_COLORS) || 
 			    (m==MODE_VIDEO_COLOR_ACCENT));
-#if !defined (CAMERA_ixus700_sd500) && !defined (CAMERA_ixus800_sd700) && !defined (CAMERA_ixus850_sd800) && !defined (CAMERA_a560) && !defined (CAMERA_ixus70_sd1000) && !defined (CAMERA_a460) && !defined(CAMERA_a550)
+#if CAM_HAS_MANUAL_FOCUS
     if (shooting_get_focus_mode() || (mode_video)) shooting_set_focus(to, SET_NOW);
     else shooting_set_focus(to, SET_LATER);
 #else

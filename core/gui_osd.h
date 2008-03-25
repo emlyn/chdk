@@ -45,6 +45,7 @@ extern void gui_osd_draw_state();
 extern void gui_osd_draw_raw_info();
 extern void gui_osd_draw_values();
 extern void gui_osd_draw_clock();
+extern void gui_osd_draw_seconds();
 
 //ARM Begin
 extern void gui_osd_calc_dof();

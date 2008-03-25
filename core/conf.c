@@ -254,7 +254,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(129, conf.histo_show_ev_grid,  CONF_DEF_VALUE, i:0, NULL),							
     
     CONF_INFO(130, conf.osd_color_warn,   CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_BG, COLOR_RED), NULL),
-    CONF_INFO(131, conf.space_color,        CONF_DEF_VALUE, cl:COLOR_WHITE, NULL),
+    CONF_INFO(131, conf.space_color,              CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_BG, COLOR_FG), NULL),
     CONF_INFO(132, conf.space_icon_show,         CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(133, conf.space_icon_pos,          CONF_DEF_PTR, ptr:&def_space_icon_pos, NULL),
     CONF_INFO(134, conf.space_perc_show,         CONF_DEF_VALUE, i:0, NULL),
@@ -280,7 +280,9 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(152, conf.space_warn_type,         CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(153, conf.remaining_raw_treshold,             CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(154, conf.unlock_optical_zoom_for_video,  CONF_DEF_VALUE, i:0, NULL), 
-
+    CONF_INFO(155, conf.clock_format,             CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(156, conf.clock_indicator,             CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(157, conf.clock_halfpress,             CONF_DEF_VALUE, i:1, NULL),
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

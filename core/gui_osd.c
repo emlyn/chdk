@@ -645,31 +645,21 @@ void gui_print_osd_misc_string_canon_values(const char * title, short value) {
 //-------------------------------------------------------------------
 void gui_osd_draw_raw_info() 
     {
-    int x, camera_jpeg_count,jpeg_size,raw_and_jpeg_count,raw_size;
+    int x;
     static int b;
 
     if (conf.show_remaining_raw) 
-      {
-            raw_size = hook_raw_size() / 1024;
-            camera_jpeg_count = atoi(camera_jpeg_count_str());
-            
-            if (camera_jpeg_count>0)
+       {
+       int raw_count=GetRawCount();  
+            if (raw_count>conf.remaining_raw_treshold)
                 {
-                jpeg_size=GetFreeCardSpaceKb()/camera_jpeg_count;
-                raw_and_jpeg_count=GetFreeCardSpaceKb()/(raw_size+jpeg_size);
-                }
-            else
-                raw_and_jpeg_count=0;
- 
-            if (raw_and_jpeg_count>conf.remaining_raw_treshold)
-                {
-                sprintf(osd_buf, "RAW:%3d", raw_and_jpeg_count);
+                sprintf(osd_buf, "RAW:%3d", raw_count);
                 draw_string(conf.mode_raw_pos.x, conf.mode_raw_pos.y, osd_buf, conf.osd_color);
                 }
             else
                 {
 
-                sprintf(osd_buf, "RAW:%3d", raw_and_jpeg_count);
+                sprintf(osd_buf, "RAW:%3d", raw_count);
                 
                 if (b > 6)
                     {
@@ -793,31 +783,88 @@ void gui_osd_draw_values(int showtype) {
     }
     
 }
+
+#define CLOCK_FORMAT_24 0
+#define CLOCK_FORMAT_12 1
+#define CLOCK_WITHOUT_SEC 1
+#define CLOCK_WITH_SEC 2
+
 //-------------------------------------------------------------------
 void gui_osd_draw_clock() {
     unsigned long t;
     static struct tm *ttm;
-
+    int w = 0;
+    int z;
+    static char am[3];
+    static char pm[3];
+    static char curr[3];
     t = time(NULL);
     ttm = localtime(&t);
-    if (conf.show_clock == 1)
+    unsigned int hour=(ttm->tm_hour);
+    if (conf.clock_format == CLOCK_FORMAT_12) {
+     switch(conf.clock_indicator)
+      {
+    	case 1:
+    	    sprintf(pm, "P");
+            sprintf(am, "A");
+            w = 1;
+    		break;
+        case 2:
+       	    sprintf(pm, ".");
+            sprintf(am, " ");
+            w = 1;
+    		break;
+       	default:
+            sprintf(pm, " PM");
+            sprintf(am, " AM");
+            w = 3;
+    		break;
+      }
+     sprintf(curr, (((hour)>=12)?pm:am)); 
+     if (((ttm->tm_hour)==12) || ((ttm->tm_hour)==00))  hour=12;
+     else if ((ttm->tm_hour)>12)  hour=hour-12;
+    }
+    switch(conf.show_clock)
     {
-    sprintf(osd_buf, "%2u:%02u", ttm->tm_hour, ttm->tm_min);
+      case CLOCK_WITHOUT_SEC:
+        if (conf.clock_format == CLOCK_FORMAT_24) 
+		  sprintf(osd_buf, "%2u:%02u", hour, ttm->tm_min);
+        else 
+		  sprintf(osd_buf, "%2u:%02u%s", hour, ttm->tm_min,curr);
+	    z=0;
+        break;  
+      case CLOCK_WITH_SEC:
+      default:
+         if (conf.clock_format == CLOCK_FORMAT_24)  
+		   sprintf(osd_buf, "%2u:%02u:%02u", hour, ttm->tm_min,ttm->tm_sec);
+         else  
+		   sprintf(osd_buf, "%2u:%02u:%02u%s", hour, ttm->tm_min,ttm->tm_sec,curr);
+         z=3;
+         break;  
+    }
+    if ((conf.show_clock==CLOCK_WITH_SEC || (conf.clock_format==CLOCK_FORMAT_12)) && (conf.clock_pos.x>=(z+w)*FONT_WIDTH) ) 
+       draw_string(conf.clock_pos.x-(z+w)*FONT_WIDTH, conf.clock_pos.y, osd_buf, conf.osd_color);
+	else 
+	   draw_string(conf.clock_pos.x, conf.clock_pos.y, osd_buf, conf.osd_color);
+}
+
+
+void gui_osd_draw_seconds() {
+    unsigned long t;
+    static struct tm *ttm;
+ 
+    t = time(NULL);
+    ttm = localtime(&t);
+    sprintf(osd_buf, "%02u", ttm->tm_sec);
+    if (conf.clock_pos.x<4*FONT_WIDTH){
     draw_string(conf.clock_pos.x, conf.clock_pos.y, osd_buf, conf.osd_color);
     }
-    else if (conf.show_clock == 2)
+    else
     {
-        sprintf(osd_buf, "%2u:%02u:%02u", ttm->tm_hour, ttm->tm_min,ttm->tm_sec);
-        if (conf.clock_pos.x<3*FONT_WIDTH)
-        {
-            draw_string(conf.clock_pos.x, conf.clock_pos.y, osd_buf, conf.osd_color);
-        }
-        else
-        {
-            draw_string(conf.clock_pos.x-3*FONT_WIDTH, conf.clock_pos.y, osd_buf, conf.osd_color);
-        }
+    draw_string(conf.clock_pos.x+(3*FONT_WIDTH), conf.clock_pos.y, osd_buf, conf.osd_color);
     }
     
+
 }
 
 //-------------------------------------------------------------------

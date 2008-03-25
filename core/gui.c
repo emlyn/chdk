@@ -161,6 +161,9 @@ static const char* gui_nd_filter_state_enum(int change, int arg);
 //static const char* gui_tv_enum(int change, int arg);
 const char* gui_user_menu_show_enum(int change, int arg);
 static const char* gui_show_clock_enum(int change, int arg);
+static const char* gui_clock_format_enum(int change, int arg);
+static const char* gui_clock_indicator_enum(int change, int arg);
+static const char* gui_clock_halfpress_enum(int change, int arg);
 static const char* gui_space_bar_enum(int change, int arg);
 static const char* gui_space_bar_size_enum(int change, int arg);
 static const char* gui_space_bar_width_enum(int change, int arg);
@@ -282,7 +285,12 @@ static CMenuItem battery_submenu_items[] = {
     {LANG_MENU_BATT_SHOW_PERCENT,       MENUITEM_BOOL|MENUITEM_ARG_CALLBACK,    &conf.batt_perc_show,   (int)cb_perc },
     {LANG_MENU_BATT_SHOW_VOLTS,         MENUITEM_BOOL|MENUITEM_ARG_CALLBACK,    &conf.batt_volts_show,  (int)cb_volts },
     {LANG_MENU_BATT_SHOW_ICON,          MENUITEM_BOOL,                          &conf.batt_icon_show },	
-    {(int)"",                           MENUITEM_SEPARATOR },
+    {LANG_MENU_BACK,                    MENUITEM_UP },
+    {0}
+};
+static CMenu battery_submenu = { LANG_MENU_BATT_TITLE, cb_battery_menu_change, battery_submenu_items };
+
+static CMenuItem space_submenu_items[] = {
     {LANG_MENU_SPACE_SHOW_ICON,         MENUITEM_BOOL,                          &conf.space_icon_show },
     {LANG_MENU_SPACE_SHOW_BAR,      MENUITEM_ENUM,                       (int*)gui_space_bar_enum },
     {LANG_MENU_SPACE_BAR_SIZE,      MENUITEM_ENUM,                       (int*)gui_space_bar_size_enum },	
@@ -295,7 +303,7 @@ static CMenuItem battery_submenu_items[] = {
     {LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
-static CMenu battery_submenu = { LANG_MENU_BATT_TITLE, cb_battery_menu_change, battery_submenu_items };
+static CMenu space_submenu = { LANG_MENU_OSD_SPACE_PARAMS_TITLE, NULL, space_submenu_items};
 
 static CMenuItem dof_submenu_items[] = {
 	  {LANG_MENU_OSD_SHOW_DOF_CALC,            MENUITEM_ENUM,      (int*)gui_dof_show_value_enum },
@@ -337,6 +345,17 @@ static CMenuItem values_submenu_items[] = {
 };
 static CMenu values_submenu = { LANG_MENU_OSD_VALUES_TITLE, /*cb_values_menu_change*/ NULL, values_submenu_items };
 
+static CMenuItem clock_submenu_items[] = {
+    {LANG_MENU_OSD_SHOW_CLOCK,          MENUITEM_ENUM,      (int*)gui_show_clock_enum },
+    {LANG_MENU_OSD_CLOCK_FORMAT,          MENUITEM_ENUM,      (int*)gui_clock_format_enum },
+    {LANG_MENU_OSD_CLOCK_INDICATOR,          MENUITEM_ENUM,      (int*)gui_clock_indicator_enum },
+    {LANG_MENU_OSD_CLOCK_HALFPRESS,          MENUITEM_ENUM,      (int*)gui_clock_halfpress_enum },
+    {LANG_MENU_BACK,                           MENUITEM_UP },
+    {0}
+};
+static CMenu clock_submenu = { LANG_MENU_OSD_CLOCK_PARAMS_TITLE, NULL, clock_submenu_items };
+
+
 static CMenuItem video_submenu_items[] = {
 	  {LANG_MENU_VIDEO_MODE,              MENUITEM_ENUM,    (int*)gui_video_mode_enum}, 
       {LANG_MENU_VIDEO_BITRATE,           MENUITEM_ENUM,    (int*)gui_video_bitrate_enum}, 
@@ -354,12 +373,12 @@ static CMenuItem bracketing_in_continuous_submenu_items[] = {
 #if CAM_HAS_IRIS_DIAPHRAGM
 	  {LANG_MENU_AV_BRACKET_VALUE,             MENUITEM_ENUM,    (int*)gui_av_bracket_values_enum },
 #endif	  
-	  {LANG_MENU_ISO_BRACKET_VALUE,            MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.iso_bracket_value, MENU_MINMAX(0, 100)}, 
-	  {LANG_MENU_ISO_BRACKET_KOEF,             MENUITEM_ENUM,    (int*)gui_iso_bracket_koef_enum},
 #if CAM_CAN_SD_OVERRIDE 
 	  {LANG_MENU_SUBJ_DIST_BRACKET_VALUE,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.subj_dist_bracket_value, MENU_MINMAX(0, 100)}, 
 	  {LANG_MENU_SUBJ_DIST_BRACKET_KOEF,       MENUITEM_ENUM,    (int*)gui_subj_dist_bracket_koef_enum},
 #endif	  
+	  {LANG_MENU_ISO_BRACKET_VALUE,            MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.iso_bracket_value, MENU_MINMAX(0, 100)}, 
+	  {LANG_MENU_ISO_BRACKET_KOEF,             MENUITEM_ENUM,    (int*)gui_iso_bracket_koef_enum},
 	  {LANG_MENU_BRACKET_TYPE,                 MENUITEM_ENUM,    (int*)gui_bracket_type_enum },
 	  {LANG_MENU_CLEAR_BRACKET_VALUES,        MENUITEM_BOOL,        (int*)&conf.clear_bracket},
       {LANG_MENU_BACK,                         MENUITEM_UP },
@@ -388,12 +407,12 @@ static CMenuItem operation_submenu_items[] = {
 #if CAM_HAS_ND_FILTER
       {LANG_MENU_OVERRIDE_ND_FILTER,       MENUITEM_ENUM,    (int*)gui_nd_filter_state_enum },
 #endif      
-	  {LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)}, 
-	  {LANG_MENU_OVERRIDE_ISO_KOEF,        MENUITEM_ENUM,    (int*)gui_iso_override_koef_enum},
 #if CAM_CAN_SD_OVERRIDE  
       {LANG_MENU_OVERRIDE_SUBJ_DIST_VALUE, MENUITEM_ENUM,    (int*)gui_subj_dist_override_value_enum},
 	  {LANG_MENU_OVERRIDE_SUBJ_DIST_KOEF,  MENUITEM_ENUM,    (int*)gui_subj_dist_override_koef_enum},
 #endif	  
+	  {LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)}, 
+	  {LANG_MENU_OVERRIDE_ISO_KOEF,        MENUITEM_ENUM,    (int*)gui_iso_override_koef_enum},
 	  {LANG_MENU_BRACKET_IN_CONTINUOUS,	   MENUITEM_SUBMENU, (int*)&bracketing_in_continuous_submenu }, 
 	  {LANG_MENU_CLEAR_OVERRIDE_VALUES,    MENUITEM_BOOL,    (int*)&conf.clear_override},
       //{LANG_MENU_EXPOSURE,                 MENUITEM_SUBMENU,    (int*)&exposure_submenu },
@@ -432,7 +451,8 @@ static CMenuItem visual_submenu_items[] = {
     {LANG_MENU_VIS_ZEBRA_UNDER,         MENUITEM_COLOR_BG,  (int*)&conf.zebra_color },
     {LANG_MENU_VIS_ZEBRA_OVER,          MENUITEM_COLOR_FG,  (int*)&conf.zebra_color },
     {LANG_MENU_VIS_BATT_ICON,           MENUITEM_COLOR_FG,  (int*)&conf.batt_icon_color },
-    {LANG_MENU_VIS_SPACE_ICON,           MENUITEM_COLOR_FG,  (int*)&conf.space_color },
+    {LANG_MENU_VIS_SPACE_ICON,          MENUITEM_COLOR_FG,  (int*)&conf.space_color },
+    {LANG_MENU_VIS_SPACE_ICON_BKG,      MENUITEM_COLOR_BG,  (int*)&conf.space_color },    
     {LANG_MENU_VIS_MENU_TEXT,           MENUITEM_COLOR_FG,  (int*)&conf.menu_color },
     {LANG_MENU_VIS_MENU_BKG,            MENUITEM_COLOR_BG,  (int*)&conf.menu_color },
     {LANG_MENU_VIS_READER_TEXT,         MENUITEM_COLOR_FG,  (int*)&conf.reader_color },
@@ -461,21 +481,30 @@ static CMenuItem user_submenu_items[] = {
 };
 static CMenu user_submenu = { LANG_MENU_USER_MENU, NULL, user_submenu_items };
 
+static CMenuItem raw_state_submenu_items[] = {
+    {LANG_MENU_OSD_SHOW_RAW_STATE,      MENUITEM_BOOL,      &conf.show_raw_state },    
+    {LANG_MENU_OSD_SHOW_REMAINING_RAW,  MENUITEM_BOOL,      &conf.show_remaining_raw },    
+    {LANG_MENU_OSD_RAW_TRESHOLD,        MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.remaining_raw_treshold,   MENU_MINMAX(0, 200)},
+    {LANG_MENU_BACK,                    MENUITEM_UP },
+    {0}
+};
+
+static CMenu raw_state_submenu = { LANG_MENU_OSD_RAW_STATE_PARAMS_TITLE, NULL, raw_state_submenu_items };
+
+
 static CMenuItem osd_submenu_items[] = {
     {LANG_MENU_OSD_SHOW,                MENUITEM_BOOL,      &conf.show_osd },
     {LANG_MENU_USER_MENU,  	    		MENUITEM_SUBMENU,   (int*)&user_submenu},
     {LANG_MENU_USER_MENU_ENABLE,		MENUITEM_ENUM,      (int*)gui_user_menu_show_enum },
     {LANG_MENU_OSD_SHOW_STATES,         MENUITEM_BOOL,      &conf.show_state },
-    
-    {LANG_MENU_OSD_SHOW_CLOCK,          MENUITEM_ENUM,      (int*)gui_show_clock_enum },
     {LANG_MENU_OSD_LAYOUT_EDITOR,       MENUITEM_PROC,      (int*)gui_draw_osd_le },
+    {LANG_MENU_OSD_GRID_PARAMS,         MENUITEM_SUBMENU,   (int*)&grid_submenu },
     {LANG_MENU_OSD_VALUES,  	    	MENUITEM_SUBMENU,   (int*)&values_submenu },
     {LANG_MENU_OSD_DOF_CALC,            MENUITEM_SUBMENU,   (int*)&dof_submenu },
+    {LANG_MENU_OSD_RAW_STATE_PARAMS,    MENUITEM_SUBMENU,   (int*)&raw_state_submenu },
     {LANG_MENU_OSD_BATT_PARAMS,         MENUITEM_SUBMENU,   (int*)&battery_submenu },
-    {LANG_MENU_OSD_GRID_PARAMS,         MENUITEM_SUBMENU,   (int*)&grid_submenu },
-    {LANG_MENU_OSD_SHOW_RAW_STATE,          MENUITEM_BOOL,      &conf.show_raw_state },    
-    {LANG_MENU_OSD_SHOW_REMAINING_RAW,  MENUITEM_BOOL,      &conf.show_remaining_raw },    
-    {LANG_MENU_OSD_RAW_TRESHOLD,  MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.remaining_raw_treshold,   MENU_MINMAX(0, 200)},
+    {LANG_MENU_OSD_SPACE_PARAMS,        MENUITEM_SUBMENU,   (int*)&space_submenu },
+    {LANG_MENU_OSD_CLOCK_PARAMS,	 	MENUITEM_SUBMENU,   (int*)&clock_submenu },
     {LANG_MENU_OSD_SHOW_IN_REVIEW,      MENUITEM_BOOL,      &conf.show_osd_in_review},
 #ifndef OPTIONS_AUTOSAVE
     {LANG_MENU_MAIN_SAVE_OPTIONS,       MENUITEM_PROC,      (int*)gui_menuproc_save },
@@ -483,6 +512,7 @@ static CMenuItem osd_submenu_items[] = {
     {LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
+
 static CMenu osd_submenu = { LANG_MENU_OSD_TITLE, NULL, osd_submenu_items };
 
 static CMenuItem histo_submenu_items[] = {
@@ -822,6 +852,42 @@ const char* gui_show_clock_enum(int change, int arg) {
         conf.show_clock=0;
 
     return modes[conf.show_clock];
+}
+
+const char* gui_clock_format_enum(int change, int arg) {
+    static const char* modes[]={ "24h", "12h"};
+
+    conf.clock_format+=change;
+    if (conf.clock_format<0)
+        conf.clock_format=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.clock_format>=(sizeof(modes)/sizeof(modes[0])))
+        conf.clock_format=0;
+
+    return modes[conf.clock_format];
+}
+
+const char* gui_clock_indicator_enum(int change, int arg) {
+    static const char* modes[]={ "PM", "P","."};
+
+    conf.clock_indicator+=change;
+    if (conf.clock_indicator<0)
+        conf.clock_indicator=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.clock_indicator>=(sizeof(modes)/sizeof(modes[0])))
+        conf.clock_indicator=0;
+
+    return modes[conf.clock_indicator];
+}
+
+const char* gui_clock_halfpress_enum(int change, int arg) {
+    static const char* modes[]={ "Full", "Seconds","Don't"};
+
+    conf.clock_halfpress+=change;
+    if (conf.clock_halfpress<0)
+        conf.clock_halfpress=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.clock_halfpress>=(sizeof(modes)/sizeof(modes[0])))
+        conf.clock_halfpress=0;
+
+    return modes[conf.clock_halfpress];
 }
 
 const char* gui_space_bar_enum(int change, int arg) {
@@ -1773,8 +1839,11 @@ void gui_draw_osd() {
         gui_space_draw_osd();
     }
     
-    if ((conf.show_clock) && (recreview_hold==0) &&  (!kbd_is_key_pressed(KEY_SHOOT_HALF))) {
+    if ((conf.show_clock) && (recreview_hold==0) &&  (!kbd_is_key_pressed(KEY_SHOOT_HALF) || (conf.clock_halfpress==0) )) {
         gui_osd_draw_clock();
+    }
+    else if ((conf.show_clock) && (recreview_hold==0) &&  kbd_is_key_pressed(KEY_SHOOT_HALF) && conf.clock_halfpress==1) {
+        gui_osd_draw_seconds();
     }
 
 #if CAM_DRAW_EXPOSITION

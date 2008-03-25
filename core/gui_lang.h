@@ -401,9 +401,22 @@
 #define LANG_MENU_SPACE_WARN_TYPE 308
 #define LANG_MENU_OSD_RAW_TRESHOLD 309
 #define LANG_MENU_OPTICAL_ZOOM_IN_VIDEO 310
+#define LANG_MENU_OSD_CLOCK_PARAMS 311
+#define LANG_MENU_OSD_CLOCK_PARAMS_TITLE 312
+#define LANG_MENU_OSD_CLOCK_FORMAT 313
+#define LANG_MENU_VIS_SPACE_ICON_BKG 314
+#define LANG_MENU_OSD_CLOCK_INDICATOR 315
+#define LANG_MENU_OSD_CLOCK_HALFPRESS 316
+
+#define LANG_MENU_OSD_RAW_STATE_PARAMS_TITLE 317
+#define LANG_MENU_OSD_RAW_STATE_PARAMS       318
+
+#define LANG_MENU_OSD_SPACE_PARAMS_TITLE 319
+#define LANG_MENU_OSD_SPACE_PARAMS       320
+
 
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  310
+#define GUI_LANG_ITEMS                  320
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();
