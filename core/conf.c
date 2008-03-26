@@ -283,6 +283,15 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(155, conf.clock_format,             CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(156, conf.clock_indicator,             CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(157, conf.clock_halfpress,             CONF_DEF_VALUE, i:1, NULL),
+    
+    CONF_INFO(158, conf.autoiso_enable,  CONF_DEF_VALUE, i:0, NULL),	
+    CONF_INFO(159, conf.autoiso_shutter,  CONF_DEF_VALUE, i:0, NULL),	
+    CONF_INFO(160, conf.autoiso_user_factor,  CONF_DEF_VALUE, i:5, NULL),	
+    CONF_INFO(161, conf.autoiso_is_factor,  CONF_DEF_VALUE, i:2, NULL),	
+    CONF_INFO(162, conf.autoiso_max_iso_hi,  CONF_DEF_VALUE, i:55, NULL),	
+    CONF_INFO(163, conf.autoiso_max_iso_auto,  CONF_DEF_VALUE, i:35, NULL),	
+    CONF_INFO(164, conf.autoiso_min_iso,  CONF_DEF_VALUE, i:5, NULL),	
+
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

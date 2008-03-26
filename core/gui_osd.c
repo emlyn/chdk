@@ -682,16 +682,21 @@ void gui_osd_draw_state() {
     long t; 
     
     n=0;
-
+   ///////////////////////////
+   //sprintf(osd_buf,"%s",get_debug());
+   //draw_string(conf.mode_state_pos.x, conf.mode_state_pos.y+6*FONT_HEIGHT, osd_buf, conf.osd_color);
+   ////////////////////////////  
+      
     if ((((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef)) || gui_mode==GUI_MODE_OSD){
     	if(kbd_is_key_pressed(KEY_SHOOT_HALF)) 
-		  { 
+		 { 
 		  t=(int)(shooting_get_shutter_speed_from_tv96(shooting_get_tv96())*100000);	
-        gui_print_osd_state_string_float("TV:", "%d.%05d ", 100000, t);
-    }
+          gui_print_osd_state_string_float("TV:", "%d.%05d ", 100000, t);
+         }
     	else 
 		 {
-    	 if (conf.tv_enum_type) gui_print_osd_state_string_chr("TV:",shooting_get_tv_override_value()); 
+    	 if (conf.tv_enum_type) 
+		   gui_print_osd_state_string_chr("TV:",shooting_get_tv_override_value()); 
          else  
           {
 		  t=(int)(shooting_get_shutter_speed_override_value()*100000);
@@ -699,24 +704,32 @@ void gui_osd_draw_state() {
           }
        }
     }
-    if (conf.av_override_value || gui_mode==GUI_MODE_OSD) gui_print_osd_state_string_float("AV:", "%d.%02d ", 100, shooting_get_aperture_from_av96(shooting_get_av96_override_value()));
+    if (conf.av_override_value || gui_mode==GUI_MODE_OSD) 
+	   gui_print_osd_state_string_float("AV:", "%d.%02d ", 100, shooting_get_aperture_from_av96(shooting_get_av96_override_value()));
 #if CAM_HAS_ND_FILTER
-    if (conf.nd_filter_state || gui_mode==GUI_MODE_OSD) gui_print_osd_state_string_chr("NDFILTER:", ((conf.nd_filter_state==1)?"IN":"OUT"));
+    if (conf.nd_filter_state || gui_mode==GUI_MODE_OSD) 
+	   gui_print_osd_state_string_chr("NDFILTER:", ((conf.nd_filter_state==1)?"IN":"OUT"));
 #endif    
+    if ((conf.autoiso_enable && !shooting_is_flash() && shooting_get_iso_mode()<=0 && !(m==MODE_M || m==MODE_TV)) || gui_mode==GUI_MODE_OSD)  
+	    gui_print_osd_state_string_chr("AUTOISO:", "ON");
     if ((conf.subj_dist_override_value && conf.subj_dist_override_koef && shooting_can_focus()) || ((gui_mode==GUI_MODE_ALT) && shooting_get_common_focus_mode())	|| gui_mode==GUI_MODE_OSD)   {
     	gui_print_osd_state_string_int("SD:",shooting_get_subject_distance_override_value());
-        if (gui_mode==GUI_MODE_ALT)  gui_print_osd_state_string_int("FACTOR:",shooting_get_subject_distance_override_koef());   	
+        if (gui_mode==GUI_MODE_ALT)  
+		  gui_print_osd_state_string_int("FACTOR:",shooting_get_subject_distance_override_koef());   	
       }
     if ((conf.iso_override_value && conf.iso_override_koef)	 || gui_mode==GUI_MODE_OSD)
     	gui_print_osd_state_string_int("ISO:", shooting_get_iso_override_value());
     if ((gui_mode==GUI_MODE_OSD) || (shooting_get_drive_mode())) {
     if ((conf.tv_bracket_value) || (conf.av_bracket_value)  || (conf.iso_bracket_value && conf.iso_bracket_koef) || ((conf.subj_dist_bracket_value) && (conf.subj_dist_bracket_koef) && (shooting_can_focus())))  
         gui_print_osd_state_string_chr("BRACKET:", shooting_get_bracket_type());
-      if (conf.tv_bracket_value)  gui_print_osd_state_string_chr("TV:", shooting_get_tv_bracket_value());
-      else if  (conf.av_bracket_value) gui_print_osd_state_string_chr("AV:", shooting_get_av_bracket_value());
-      else if  (conf.iso_bracket_value && conf.iso_bracket_koef) gui_print_osd_state_string_int("ISO:", shooting_get_iso_bracket_value());
+      if (conf.tv_bracket_value)  
+	    gui_print_osd_state_string_chr("TV:", shooting_get_tv_bracket_value());
+      else if  (conf.av_bracket_value) 
+	    gui_print_osd_state_string_chr("AV:", shooting_get_av_bracket_value());
+      else if  (conf.iso_bracket_value && conf.iso_bracket_koef) 
+	    gui_print_osd_state_string_int("ISO:", shooting_get_iso_bracket_value());
       else if  ((conf.subj_dist_bracket_value) && (conf.subj_dist_bracket_koef) && (shooting_can_focus()))
-         gui_print_osd_state_string_int("SD:",shooting_get_subject_distance_bracket_value());
+        gui_print_osd_state_string_int("SD:",shooting_get_subject_distance_bracket_value());
      }
      
 /*
@@ -780,6 +793,7 @@ void gui_osd_draw_values(int showtype) {
       if (conf.values_show_overexposure) gui_print_osd_misc_string_canon_values("dE :", expo.dev96);
       if (conf.values_show_canon_overexposure	) gui_print_osd_misc_string_canon_values("dEc:", expo.dev96_canon);
       if (conf.values_show_luminance) gui_print_osd_misc_string_float("B  :", "%d.%02d ", 100, expo.b);
+	  
     }
     
 }
@@ -795,9 +809,9 @@ void gui_osd_draw_clock() {
     static struct tm *ttm;
     int w = 0;
     int z;
-    static char am[3];
-    static char pm[3];
-    static char curr[3];
+    static char am[4];
+    static char pm[4];
+    static char curr[4];
     t = time(NULL);
     ttm = localtime(&t);
     unsigned int hour=(ttm->tm_hour);
@@ -820,8 +834,8 @@ void gui_osd_draw_clock() {
             w = 3;
     		break;
       }
-     sprintf(curr, (((hour)>=12)?pm:am)); 
-     if (((ttm->tm_hour)==12) || ((ttm->tm_hour)==00))  hour=12;
+     sprintf(curr,((hour>=12)?pm:am)); 
+     if ((ttm->tm_hour)==00)  hour=12;
      else if ((ttm->tm_hour)>12)  hour=hour-12;
     }
     switch(conf.show_clock)

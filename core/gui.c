@@ -132,6 +132,7 @@ static const char* gui_font_enum(int change, int arg);
 static const char* gui_raw_prefix_enum(int change, int arg);
 static const char* gui_raw_ext_enum(int change, int arg);
 static const char* gui_raw_nr_enum(int change, int arg);
+static const char* gui_autoiso_shutter_enum(int change, int arg);
 static const char* gui_reader_codepage_enum(int change, int arg);
 static const char* gui_zoom_value_enum(int change, int arg);
 static const char* gui_show_values_enum(int change, int arg);
@@ -216,6 +217,19 @@ static CMenuItem games_submenu_items[] = {
     {0}
 };
 static CMenu games_submenu = { LANG_MENU_GAMES_TITLE, NULL, games_submenu_items };
+
+static CMenuItem autoiso_submenu_items[] = {
+    {LANG_MENU_AUTOISO_ENABLED,          MENUITEM_BOOL,	&conf.autoiso_enable},
+    {LANG_MENU_AUTOISO_MIN_SHUTTER,   MENUITEM_ENUM,    (int*)gui_autoiso_shutter_enum },
+    {LANG_MENU_AUTOISO_USER_FACTOR,   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.autoiso_user_factor, MENU_MINMAX(1, 8)  },
+    {LANG_MENU_AUTOISO_IS_FACTOR,       MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.autoiso_is_factor, MENU_MINMAX(1, 8)  },
+    {LANG_MENU_AUTOISO_MAX_ISO_HI,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.autoiso_max_iso_hi, MENU_MINMAX(20, 160)  },
+    {LANG_MENU_AUTOISO_MAX_ISO_AUTO, MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.autoiso_max_iso_auto, MENU_MINMAX(10, 80)  },
+    {LANG_MENU_AUTOISO_MIN_ISO,           MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.autoiso_min_iso, MENU_MINMAX(1, 20)  },
+    {LANG_MENU_BACK,                    MENUITEM_UP },
+    {0}
+};
+static CMenu autoiso_submenu = { LANG_MENU_AUTOISO_TITLE, NULL, autoiso_submenu_items };
 
 
 static CMenuItem reader_submenu_items[] = {
@@ -414,8 +428,9 @@ static CMenuItem operation_submenu_items[] = {
 	  {LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)}, 
 	  {LANG_MENU_OVERRIDE_ISO_KOEF,        MENUITEM_ENUM,    (int*)gui_iso_override_koef_enum},
 	  {LANG_MENU_BRACKET_IN_CONTINUOUS,	   MENUITEM_SUBMENU, (int*)&bracketing_in_continuous_submenu }, 
+	  {LANG_MENU_AUTOISO,                  MENUITEM_SUBMENU, (int*)&autoiso_submenu },
+      //{LANG_MENU_EXPOSURE,               MENUITEM_SUBMENU, (int*)&exposure_submenu },
 	  {LANG_MENU_CLEAR_OVERRIDE_VALUES,    MENUITEM_BOOL,    (int*)&conf.clear_override},
-      //{LANG_MENU_EXPOSURE,                 MENUITEM_SUBMENU,    (int*)&exposure_submenu },
 	  {LANG_MENU_BACK,                     MENUITEM_UP },
      {0}
 };
@@ -750,6 +765,19 @@ const char* gui_reader_codepage_enum(int change, int arg) {
         conf.reader_codepage=0;
 
     return cps[conf.reader_codepage];
+}
+
+//-------------------------------------------------------------------
+const char* gui_autoiso_shutter_enum(int change, int arg) {
+    static const char* shutter[]={ "Auto", "1/8s", "1/15s", "1/30s", "1/60s", "1/125s", "1/250s", "1/500s", "1/1000s"};
+
+    conf.autoiso_shutter+=change;
+    if (conf.autoiso_shutter<0)
+        conf.autoiso_shutter=(sizeof(shutter)/sizeof(shutter[0]))-1;
+    else if (conf.autoiso_shutter>=(sizeof(shutter)/sizeof(shutter[0])))
+        conf.autoiso_shutter=0;
+
+    return shutter[conf.autoiso_shutter];
 }
 
 //-------------------------------------------------------------------

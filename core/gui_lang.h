@@ -414,9 +414,18 @@
 #define LANG_MENU_OSD_SPACE_PARAMS_TITLE 319
 #define LANG_MENU_OSD_SPACE_PARAMS       320
 
-
+#define LANG_MENU_AUTOISO_TITLE		321
+#define LANG_MENU_AUTOISO		322
+#define LANG_MENU_AUTOISO_ENABLED	323
+#define LANG_MENU_AUTOISO_MIN_SHUTTER	324
+#define LANG_MENU_AUTOISO_USER_FACTOR	325
+#define LANG_MENU_AUTOISO_IS_FACTOR	326
+#define LANG_MENU_AUTOISO_MAX_ISO_HI	327
+#define LANG_MENU_AUTOISO_MAX_ISO_AUTO	328
+#define LANG_MENU_AUTOISO_MIN_ISO	329
 //-------------------------------------------------------------------
-#define GUI_LANG_ITEMS                  320
+
+#define GUI_LANG_ITEMS                  329
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

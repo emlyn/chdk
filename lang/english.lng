@@ -401,10 +401,10 @@
 303 "Show Space Bar"
 304 "  Size on screen"
 305 "  Width/Height"
-306 "  Percent Treshold"
-307 "  MB Treshold"
+306 "  Percent Threshold"
+307 "  MB Threshold"
 308 "Warning Unit"
-309 "  Warning treshold"
+309 "  Warning threshold"
 310 "Enable Optical Zoom"
 311 "Clock->"
 312 "Clock Settings"
@@ -413,11 +413,21 @@
 315 "12h clock indicator"
 316 "@Shutter halfpress show"
 
-317 \"Raw showing settings\"\n"
-318 \"Raw->\"\n"
+317 "Raw showing settings"
+318 "Raw->"
 
-319 \"Filespace showing settings\"\n"
-320 \"Filespace->\"\n"
+319 "Filespace showing settings"
+320 "Filespace->"
+
+321 "Custom Auto ISO (no flash)"
+322 "Custom Auto ISO (no flash)->"
+323 "Enable Custom Auto ISO"
+324 "Minimal Shutter speed"
+325 "User Factor (1/FL/factor)"
+326 "IS Factor (Tv*factor)"
+327 "Max ISO HI (x10)"
+328 "Max ISO AUTO (x10)"
+329 "Min ISO (x10)"
 
 
 

@@ -73,7 +73,7 @@ MODE_SCN_INDOOR         ,
  #define PROPCASE_IS_FLASH_READY      			208
  #define PROPCASE_OVEREXPOSURE 					103
  #define PROPCASE_SHOOTING_MODE					49
-
+ #define PROPCASE_IS_MODE					-1
 #elif CAM_PROPSET == 1
  #define PROPCASE_DRIVE_MODE    				6
  #define PROPCASE_FOCUS_MODE    				12
@@ -94,7 +94,7 @@ MODE_SCN_INDOOR         ,
  #define PROPCASE_IS_FLASH_READY   				221
  #define PROPCASE_OVEREXPOSURE 					76
  #define PROPCASE_SHOOTING_MODE					0
- 
+ #define PROPCASE_IS_MODE				        229
 #else
  #error unknown camera processor
 #endif
@@ -195,7 +195,7 @@ typedef struct {
     short ev96_measured; //Bv96+Sv96
     short dev96;// Ev96_external-Ev96_internal
     short dev96_canon;// Canon OverExposure
-    short b; //average scene luminance 
+    int b; //average scene luminance 
 } EXPO_TYPE;
 
 typedef struct {
@@ -280,7 +280,9 @@ long lens_get_target_distance();
 /******************************************************************/
 
 int shooting_in_progress();
+int shooting_is_flash();
 int shooting_is_flash_ready();
+
 
 /******************************************************************/
 int shooting_get_user_tv_id();
@@ -366,7 +368,7 @@ short shooting_get_iso_bracket_value();
 /******************************************************************/
 short shooting_get_canon_overexposure_value();
 short shooting_get_bv96();
-short shooting_get_luminance();
+int shooting_get_luminance();
 //const char* shooting_get_flash_light_value();
 /******************************************************************/
 int shooting_get_canon_subject_distance();

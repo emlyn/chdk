@@ -146,6 +146,14 @@ typedef struct {
     int subj_dist_override_koef;
     int clear_override;
     
+    int autoiso_enable;
+    int autoiso_shutter;
+    int autoiso_user_factor;
+    int autoiso_is_factor;
+    int autoiso_max_iso_hi;
+    int autoiso_max_iso_auto;
+    int autoiso_min_iso;
+
     int recalc_exposure;
     int tv_exposure_order;
     int av_exposure_order;

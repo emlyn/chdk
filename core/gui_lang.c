@@ -386,10 +386,10 @@ static char* gui_lang_default = \
 "303 \"Show Space Bar\"\n"
 "304 \"  Size on Screen\"\n"
 "305 \"  Width/Height\"\n"
-"306 \"  % treshold\"\n"
-"307 \"  MB treshold\"\n"
+"306 \"  % threshold\"\n"
+"307 \"  MB threshold\"\n"
 "308 \"Warning Unit\"\n"
-"309 \"  Warning treshold\"\n"
+"309 \"  Warning threshold\"\n"
 "310 \"Enable optical zoom\"\n"
 "311 \"Clock->\"\n"
 "312 \"Clock Settings\"\n"
@@ -403,6 +403,17 @@ static char* gui_lang_default = \
 
 "319 \"Filespace showing settings\"\n"
 "320 \"Filespace->\"\n"
+
+"321 \"Custom Auto ISO (no flash)\"\n"
+"322 \"Custom Auto ISO (no flash)->\"\n"
+"323 \"Enable Custom Auto ISO\"\n"
+"324 \"Minimal Shutter speed\"\n"
+"325 \"User Factor (1/FL/factor)\"\n"
+"326 \"IS Factor (Tv*factor)\"\n"
+"327 \"Max ISO HI (x10)\"\n"
+"328 \"Max ISO AUTO (x10)\"\n"
+"329 \"Min ISO (x10)\"\n"
+
 
 
 ;
