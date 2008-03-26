@@ -168,6 +168,7 @@ void __attribute__((naked,noinline)) capt_seq_task()
                  ".long loc_FF960474\n"
  "loc_FF960390:\n"
                  "BL      sub_FF961D60\n"
+                 "BL      shooting_expo_param_override\n"   // +
                  "BL      sub_FF95E090\n"
                  "LDR     R3, =0x99EC0\n"
                  "LDR     R2, [R3,#0x24]\n"
