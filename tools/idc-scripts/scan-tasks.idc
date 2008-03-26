@@ -22,9 +22,17 @@ static AnasyzeTask(a)
 
    for (code = a; code >= a-20; code = code-4) {
      
-     if (isCode(GetFlags(code)) && strstr(GetDisasm(code), "LDR") == 0 && (GetOpnd(code, 0) == "R0")) {
-         
+     if (isCode(GetFlags(code)) && strstr(GetDisasm(code), "LDR") == 0 && (GetOpnd(code, 0) == "R0"))
+     {
          d = Dword(GetOperandValue(code, 1));
+         if (d > ROM_START) {
+             tname = getString(d);
+         }
+         break;
+     }
+     if (isCode(GetFlags(code)) && strstr(GetDisasm(code), "ADR") == 0 && (GetOpnd(code, 0) == "R0"))
+     {
+         d = GetOperandValue(code, 1);
          if (d > ROM_START) {
              tname = getString(d);
          }
@@ -52,6 +60,11 @@ static AnasyzeTask(a)
      if (isCode(GetFlags(code)) && strstr(GetDisasm(code), "LDR") == 0 && (GetOpnd(code, 0) == "R3"))
      {
          d = Dword(GetOperandValue(code, 1));
+         break;
+     }
+     if (isCode(GetFlags(code)) && strstr(GetDisasm(code), "ADR") == 0 && (GetOpnd(code, 0) == "R3"))
+     {
+         d = GetOperandValue(code, 1);
          break;
      }
    }

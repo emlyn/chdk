@@ -1,4 +1,5 @@
 #include <idc.idc>
+#include "scan-lib.idc"
 
 /**
  * Searches for the strings in the area. IDA sometimes incorrectly detects strings as a code
@@ -7,7 +8,7 @@
 static main()
 {
   auto sb, se, a, c, cnt, w, d, str, isstr, res;
-  sb = 0x1900;
+  sb = ROM_START;
   se = GetSegmentAttr( sb, SEGATTR_END);
 
   cnt = 0;
@@ -16,7 +17,7 @@ static main()
     //d = Dword(a);
     d = a;
 
-    if (d > 0xFF800000 && d < 0xFFFF0000) {
+    if (d > ROM_START && d < 0xFFFF0000) {
       
       str = d;
       

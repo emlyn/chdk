@@ -1,9 +1,6 @@
 #include <idc.idc>
 #include "scan-lib.idc"
 
-
-#define ROM_START   0xFF800000
-
 /*
  * Searches the interval of code for the invocation of RegisterEventProcedure or similar
  * Renames appropriate procedures with the full name of the event procedure (prefix eventproc_,
@@ -35,21 +32,35 @@ static Anasyze(a, opname)
    fstart = GetFunctionAttr(a, FUNCATTR_START);
 
 
-   if (opname == "RegisterEventProcedure" || opname == "ExportToEventProcedure")
+   if (strstr(opname, "RegisterEventProcedure") == 0 || opname == "ExportToEventProcedure")
    {
        for (code = a; code >= a-20; code = code-4) {
          
 //         Message(GetDisasm(code)+"\n");
-         if (pname == 0 && isCode(GetFlags(code)) && strstr(GetDisasm(code), "LDR") == 0 && (GetOpnd(code, 0) == "R0")) {
-             
+         if (pname == 0 && isCode(GetFlags(code)) && strstr(GetDisasm(code), "LDR") == 0 && (GetOpnd(code, 0) == "R0"))
+         {
              d = Dword(GetOperandValue(code, 1));
              if (d > ROM_START) {
                  pname = getString(d);
              }
          }
-         if (paddr == 0 && isCode(GetFlags(code)) && strstr(GetDisasm(code), "LDR") == 0 && (GetOpnd(code, 0) == "R1")) {
-             
+         if (pname == 0 && isCode(GetFlags(code)) && strstr(GetDisasm(code), "ADR") == 0 && (GetOpnd(code, 0) == "R0"))
+         {            
+             d = GetOperandValue(code, 1);
+             if (d > ROM_START) {
+                 pname = getString(d);
+             }
+         }
+         if (paddr == 0 && isCode(GetFlags(code)) && strstr(GetDisasm(code), "LDR") == 0 && (GetOpnd(code, 0) == "R1"))
+         {             
              d = Dword(GetOperandValue(code, 1));
+             if (d > ROM_START) {
+                 paddr = d;
+             }
+         }
+         if (paddr == 0 && isCode(GetFlags(code)) && strstr(GetDisasm(code), "ADR") == 0 && (GetOpnd(code, 0) == "R1"))
+         {             
+             d = GetOperandValue(code, 1);
              if (d > ROM_START) {
                  paddr = d;
              }
@@ -122,6 +133,8 @@ static main()
       op = GetOpnd(a, 0);
 
       if (isCode(GetFlags(a)) && (op == "RegisterEventProcedure"
+                               || op == "RegisterEventProcedure2"
+                               || op == "RegisterEventProcedure3"
                                || op == "RegisterEventProcedureTable"
                                || op == "ExportToEventProcedure")
          )
