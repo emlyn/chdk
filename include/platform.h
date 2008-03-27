@@ -73,7 +73,7 @@ MODE_SCN_INDOOR         ,
  #define PROPCASE_IS_FLASH_READY      			208
  #define PROPCASE_OVEREXPOSURE 					103
  #define PROPCASE_SHOOTING_MODE					49
- #define PROPCASE_IS_MODE					-1
+ #define PROPCASE_IS_MODE					    145
 #elif CAM_PROPSET == 1
  #define PROPCASE_DRIVE_MODE    				6
  #define PROPCASE_FOCUS_MODE    				12

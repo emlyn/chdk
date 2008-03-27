@@ -883,7 +883,7 @@ void shooting_set_autoiso(int iso_mode) {
 			return;
 	}
 	int m=mode_get()&MODE_SHOOTING_MASK;
-	if (m==MODE_M || m==MODE_TV) return; //Only operate outside of M and Tv
+	if (m==MODE_M || m==MODE_TV || m==MODE_STITCH) return; //Only operate outside of M and Tv
 	static const short shutter[]={0, 8, 15, 30, 60, 125, 250, 500, 1000};
 	float current_shutter = shooting_get_shutter_speed_from_tv96(shooting_get_tv96());
 	
@@ -892,7 +892,7 @@ void shooting_set_autoiso(int iso_mode) {
 	short min_shutter = shutter[conf.autoiso_shutter];
 	if (min_shutter == 0)
 		{
-			short IS_factor = (shooting_get_is_mode()>0)?conf.autoiso_is_factor:1;
+			short IS_factor = (shooting_get_is_mode()<=1)?conf.autoiso_is_factor:1;
 			min_shutter = get_focal_length(lens_get_zoom_point())*conf.autoiso_user_factor / (IS_factor*100);
 	    	//min_shutter is NOT 1/Xs but optimized for the calculation.
 		}
