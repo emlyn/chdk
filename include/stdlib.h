@@ -1,3 +1,5 @@
+#include "camera.h"
+
 #ifndef STDLIB_H
 #define STDLIB_H
 
