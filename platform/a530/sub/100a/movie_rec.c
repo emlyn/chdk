@@ -44,6 +44,7 @@ void __attribute__((naked,noinline)) movie_record_task(){
 		"BL      sub_FFD2A474\n"
 		"B       sub_FFD2A3C4\n"
 	"sub_FFD2A388:\n"
+	        "BL      unlock_optical_zoom\n"
 		"BL      sub_FFD2A628\n"
 		"B       sub_FFD2A3C4\n"
 	"sub_FFD2A390:\n"

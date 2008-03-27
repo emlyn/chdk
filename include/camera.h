@@ -92,7 +92,6 @@
     #define CAM_DRAW_EXPOSITION		1
     #define CAM_SHOW_OSD_IN_SHOOT_MENU	1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
-    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a540)
