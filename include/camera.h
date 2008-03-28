@@ -31,6 +31,7 @@
     #undef  CAM_SHOW_OSD_IN_SHOOT_MENU      // On some cameras Canon shoot menu has additional functionality and useful in this case to see CHDK OSD in this mode  
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1 // Camera can unlock optical zoom in video (if it is locked)
     #undef  CAM_FEATURE_FEATHER             // Cameras with "feather" or touch wheel.
+    #define CAM_HAS_IS                  1   // Camera has image stabilizer
 
     #undef  CAM_CONSOLE_LOG_ENABLED         // Development: internal camera stdout -> A/stdout.txt
 
@@ -52,6 +53,7 @@
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #define CAM_MULTIPART               1
     #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_IS
     
 
 //==========================================================
@@ -72,6 +74,7 @@
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #undef  CAM_HAS_IS
     
 //----------------------------------------------------------
 #elif defined (CAMERA_a530)
@@ -92,6 +95,7 @@
     #define CAM_DRAW_EXPOSITION		1
     #define CAM_SHOW_OSD_IN_SHOOT_MENU	1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
+    #undef  CAM_HAS_IS
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a540)
@@ -107,6 +111,7 @@
     #define CAM_HAS_MANUAL_FOCUS	1
     #undef  CAM_DRAW_EXPOSITION
     #define CAM_SHOW_OSD_IN_SHOOT_MENU	1
+    #undef  CAM_HAS_IS
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a550)
@@ -123,6 +128,7 @@
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #undef  CAM_HAS_IS
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a560)
@@ -140,7 +146,8 @@
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
-
+    #undef  CAM_HAS_IS
+    
 //----------------------------------------------------------
 #elif defined (CAMERA_a570)
     #define CAM_PROPSET                 2
@@ -157,6 +164,7 @@
     
     #define CAM_SWIVEL_SCREEN           1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF 
+    #undef  CAM_HAS_IS
 
 
 //----------------------------------------------------------
@@ -168,6 +176,7 @@
     
     #define CAM_SWIVEL_SCREEN           1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
+    #undef  CAM_HAS_IS    
 
 
 //----------------------------------------------------------
@@ -180,7 +189,7 @@
     #define CAM_SWIVEL_SCREEN           1
     #define CAM_MULTIPART               1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
-
+    #undef  CAM_HAS_IS
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a640)
@@ -192,7 +201,7 @@
     #define CAM_SWIVEL_SCREEN           1
     #define CAM_MULTIPART               1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
-
+    #undef  CAM_HAS_IS
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a650)
@@ -214,6 +223,7 @@
     #define CAM_RAW_ROWS                2136   // for 6 MP
 
     #undef  CAM_REMOTE
+    #undef  CAM_HAS_IS
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a710)
@@ -249,6 +259,7 @@
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #undef  CAM_HAS_IS
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus65_sd630)
@@ -268,6 +279,7 @@
     #define CAM_FEATURE_FEATHER         1
 
     #define CAM_CONSOLE_LOG_ENABLED     1
+    #undef  CAM_HAS_IS
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus70_sd1000)
@@ -283,6 +295,7 @@
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #undef  CAM_HAS_IS
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus700_sd500)
@@ -300,6 +313,7 @@
     #undef  CAM_HAS_USER_TV_MODES
     #undef  CAM_CAN_SD_OVERRIDE
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #undef  CAM_HAS_IS
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus800_sd700)

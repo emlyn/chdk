@@ -282,6 +282,7 @@ long lens_get_target_distance();
 int shooting_in_progress();
 int shooting_is_flash();
 int shooting_is_flash_ready();
+short shooting_get_flash_mode();
 
 
 /******************************************************************/

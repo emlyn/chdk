@@ -360,6 +360,13 @@ short shooting_get_canon_overexposure_value()
 }
 
 
+short shooting_get_flash_mode()
+{
+    short fm = 0;
+    _GetPropertyCase(PROPCASE_FLASH_MODE, &fm, sizeof(fm));
+    return fm;
+}
+
 int shooting_get_luminance()// http://en.wikipedia.org/wiki/APEX_system
 {
     short bv = shooting_get_bv96();
@@ -893,7 +900,7 @@ void shooting_set_autoiso(int iso_mode) {
 	if (min_shutter == 0)
 		{
 			short IS_factor = (shooting_get_is_mode()<=1)?conf.autoiso_is_factor:1;
-			min_shutter = get_focal_length(lens_get_zoom_point())*conf.autoiso_user_factor / (IS_factor*100);
+			min_shutter = get_focal_length(lens_get_zoom_point())*conf.autoiso_user_factor / (IS_factor*1000);
 	    	//min_shutter is NOT 1/Xs but optimized for the calculation.
 		}
 
@@ -1142,7 +1149,7 @@ void shooting_expo_param_override(void){
   }
  else if ((conf.iso_override_value) && (conf.iso_override_koef)) 
   shooting_set_iso_real(shooting_get_iso_override_value(), SET_NOW);
- else if (conf.autoiso_enable && !shooting_is_flash())
+ else if (conf.autoiso_enable && shooting_get_flash_mode()/*NOT FOR FLASH AUTO MODE*/)
   shooting_set_autoiso(shooting_get_iso_mode());
  if ((state_kbd_script_run) && (photo_param_put_off.av96)) {
   shooting_set_av96_direct(photo_param_put_off.av96, SET_NOW);

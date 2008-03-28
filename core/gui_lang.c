@@ -404,8 +404,8 @@ static char* gui_lang_default = \
 "319 \"Filespace showing settings\"\n"
 "320 \"Filespace->\"\n"
 
-"321 \"Custom Auto ISO (no flash)\"\n"
-"322 \"Custom Auto ISO (no flash)->\"\n"
+"321 \"Custom Auto ISO\"\n"
+"322 \"Custom Auto ISO->\"\n"
 "323 \"Enable Custom Auto ISO\"\n"
 "324 \"Minimal Shutter speed\"\n"
 "325 \"User Factor (1/FL/factor)\"\n"

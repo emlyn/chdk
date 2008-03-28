@@ -45,7 +45,7 @@ static int step;
 static unsigned char *img_buf, *scr_buf;
 static int timer = 0;
 static char *buf = NULL;
-//ARM
+
 
 static DOF_TYPE dof;
 static EXPO_TYPE expo;
@@ -710,7 +710,7 @@ void gui_osd_draw_state() {
     if (conf.nd_filter_state || gui_mode==GUI_MODE_OSD) 
 	   gui_print_osd_state_string_chr("NDFILTER:", ((conf.nd_filter_state==1)?"IN":"OUT"));
 #endif    
-    if ((conf.autoiso_enable && !shooting_is_flash() && shooting_get_iso_mode()<=0 && !(m==MODE_M || m==MODE_TV)) || gui_mode==GUI_MODE_OSD)  
+    if ((conf.autoiso_enable && shooting_get_iso_mode()<=0 && !(m==MODE_M || m==MODE_TV) && shooting_get_flash_mode()) || gui_mode==GUI_MODE_OSD)  
 	    gui_print_osd_state_string_chr("AUTOISO:", "ON");
     if ((conf.subj_dist_override_value && conf.subj_dist_override_koef && shooting_can_focus()) || ((gui_mode==GUI_MODE_ALT) && shooting_get_common_focus_mode())	|| gui_mode==GUI_MODE_OSD)   {
     	gui_print_osd_state_string_int("SD:",shooting_get_subject_distance_override_value());
