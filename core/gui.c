@@ -2276,7 +2276,8 @@ int find_mnu(CMenu *curr_menu, int mnu, int count)
 			return 1;
 		}
 		if ((curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK) == MENUITEM_SUBMENU) 
-			if (find_mnu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), mnu, count)) return 1;
+			if (curr_menu->menu[gui_menu_curr_item].text != LANG_MENU_USER_MENU)
+				if (find_mnu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), mnu, count)) return 1;
 		gui_menu_curr_item++;
 	}
 	return 0;
