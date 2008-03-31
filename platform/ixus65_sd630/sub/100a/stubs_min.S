@@ -27,7 +27,7 @@ DEF(movie_compression, 0x617C)
 
 // TODO: !!!!!!!!!!!!! THESE ARE INVALID !!!!!!!!
 DEF(FlashParamsTable,0xFFD4B62C)
-DEF(canon_menu_active, 0x6CBC)
-DEF(canon_shoot_menu_active, 0x6CBC)
-DEF(recreview_hold, 0x6CBC)
+//DEF(canon_menu_active, 0x6CBC)
+//DEF(canon_shoot_menu_active, 0x6CBC)
+//DEF(recreview_hold, 0x6CBC)
 

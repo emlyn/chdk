@@ -71,6 +71,7 @@ const ISOTable iso_table[] = {
     {  2,  100,  "100", -1},
     {  3,  200,  "200", -1},
     {  4,  400,  "400", -1},
+    {  5,  800,  "800", -1},
 };          
 
 #include "../generic/shooting.c"

@@ -1,5 +1,11 @@
 #include "platform.h"
 
+int recreview_hold = 0;
+
+int canon_menu_active_xx = 10;
+int canon_menu_active = &canon_menu_active_xx;
+char canon_shoot_menu_active = 0;
+
 void *hook_raw_fptr()
 {
     return (void*)0x36A90;

@@ -38,3 +38,7 @@ NSTUB(ferror, 0xffb09d84)
 STUB_DIR(vsprintf,0xFFB11278)
 
 NHSTUB(UnsetZoomForMovie ,0xFF9B1680)
+
+NHSTUB(GetDrive_ClusterSize, 0xFF86FD58)
+NHSTUB(GetDrive_TotalClusters, 0xFF86FD94)
+NHSTUB(GetDrive_FreeClusters, 0xFF868AD4)
