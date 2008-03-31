@@ -1,5 +1,6 @@
 
-#define ROM_START   0xFF800000
+// Change to your ROM start
+#define ROM_START   0xFF810000
 
 
 static getString(addr)
