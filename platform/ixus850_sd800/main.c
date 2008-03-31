@@ -10,9 +10,9 @@ long get_vbatt_max()
     return 4100;
 }
 
-static const int fl_tbl[] = {5800, 7109, 8462, 10093, 12120, 14421, 17400}; // exif for each zoom step
+static const int fl_tbl[] = {4600, 6140, 7560, 9110, 10830, 12670, 14690, 17300};
 #define NUM_FL (sizeof(fl_tbl)/sizeof(fl_tbl[0]))
-#define CF_EFL 60345 // for 1/2,5" sensor (60345) for 1/1,8" sensor (47946)
+#define CF_EFL 60869
 
 const int zoom_points = NUM_FL;
 
