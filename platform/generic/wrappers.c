@@ -474,7 +474,7 @@ int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long 
          (*part_start_sector+*part_length<=drive_total_sectors) &&
          ((mbr_sector[offset+0x1BE]==0) || (mbr_sector[offset+0x1BE]==0x80)); // status: 0x80 (active) or 0 (non-active)
 
-  if (valid && (mbr_sector[0x1C2+offset]==0x0B)) break;   // FAT32 secondary partition
+  if (valid && ((mbr_sector[0x1C2+offset]==0x0B) || (mbr_sector[0x1C2+offset]==0x0C))) break;   // FAT32 secondary partition
 
   offset-=0x10;
 

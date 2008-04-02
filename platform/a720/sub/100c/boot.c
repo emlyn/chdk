@@ -1389,6 +1389,7 @@ void __attribute__((naked,noinline)) sub_FFC3EDA0_my() { //#fs  ; Partition tabl
                 "LDRB    R2, [R12, #0x1BE]\n"          // Partition status
                 "LDRB    R3, [R12, #0x1C2]\n"          // Partition type (FAT32 = 0xB)
                 "CMP     R3, #0xB\n"                   // Is this a FAT32 partition?
+                "CMPNE   R3, #0xC\n"                   // Not 0xB, is it 0xC (FAT32 LBA) then?
                 "BNE     dg_sd_fat32\n"                // No, it isn't.
                 "CMP     R2, #0x00\n"                  // It is, check the validity of the partition type
                 "CMPNE   R2, #0x80\n"
