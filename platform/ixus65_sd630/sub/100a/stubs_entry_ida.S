@@ -1,5 +1,6 @@
 
 NSTUB(eventproc_printclock, 0xff812e24)
+NSTUB(eventproc_StopClockSaver, 0xff812f28)
 NSTUB(eventproc_SetLClk72MHz, 0xff812f44)
 NSTUB(eventproc_SetLClk36MHz, 0xff812f54)
 NSTUB(eventproc_SetLClk18MHz, 0xff812f64)
@@ -13,6 +14,7 @@ NSTUB(eventproc_SetMClk18MHz, 0xff813128)
 
 NSTUB(eventproc_export_ExecuteEventProcedure, 0xff816bc8)
 
+NSTUB(eventproc_export_ExportToEventProcedure, 0xff816db0)
 NSTUB(eventproc_CreateProxyOfEventProcedure, 0xff817548)
 NSTUB(eventproc_DeleteProxyOfEventProcedure, 0xff8175d0)
 
@@ -33,6 +35,7 @@ NSTUB(eventproc_export_GetFirmwareVersion, 0xff81a5b0)
 NSTUB(eventproc_export_RomCheckSum, 0xff81a698)
 NSTUB(eventproc_export_CheckSumAll, 0xff81a72c)
 NSTUB(eventproc_SystemEventDelete, 0xff81a8e8)
+NSTUB(eventproc_SystemEventInit, 0xff81a92c)
 
 NSTUB(eventproc_export_Dump32, 0xff81a9f4)
 NSTUB(eventproc_FreeMemory, 0xff81ab08)
@@ -79,6 +82,24 @@ NSTUB(eventproc_LowBat_Result_Print_Off, 0xff82be0c)
 NSTUB(eventproc_BatVoltageToAd, 0xff82be20)
 
 NSTUB(eventproc_VbattGet, 0xff82d154)
+
+NSTUB(eventproc_CalculateBatSenseOffset, 0xff82d4ec)
+
+NSTUB(eventproc_ExecuteLoadTest, 0xff82d800)
+NSTUB(eventproc_TurnOn_LoadTest_DebugMode, 0xff82d810)
+NSTUB(eventproc_TurnOff_LoadTest_DebugMode, 0xff82d824)
+NSTUB(eventproc_LoadTest_Result_Print_On, 0xff82d838)
+NSTUB(eventproc_LoadTest_Result_Print_Off, 0xff82d84c)
+
+NSTUB(eventproc_LEDDrive, 0xff82e778)
+NSTUB(eventproc_AFAssistBeam, 0xff82e7c4)
+NSTUB(eventproc_PostLEDMessage, 0xff82e7e4)
+
+NSTUB(eventproc_BeepDrive, 0xff82f22c)
+NSTUB(eventproc_BeepDriveComp, 0xff82f240)
+
+NSTUB(eventproc_TurnOnVideoOutMode, 0xff82fa54)
+NSTUB(eventproc_TurnOffVideoOutMode, 0xff82faa4)
 
 NSTUB(eventproc_PrePro_Unpack, 0xff89ea3c)
 
@@ -134,6 +155,38 @@ NSTUB(eventproc_GetDefectCount, 0xff931f14)
 NSTUB(eventproc_RenewThermoLogNo, 0xff931f38)
 
 NSTUB(eventproc_DispDev_EnableEventProc, 0xff932940)
+
+NSTUB(eventproc_DispCon_SetVideoAdjParameter, 0xff934518)
+NSTUB(eventproc_DispCon_GetVideoAdjParameter, 0xff934588)
+NSTUB(eventproc_DispCon_ShowVideoAdjParameter, 0xff9345dc)
+NSTUB(eventproc_DispCon_SaveVideoAdjParameter, 0xff9345f8)
+NSTUB(eventproc_DispCon_ShowColorBar, 0xff934608)
+NSTUB(eventproc_DispCon_ShowFiveStep, 0xff93467c)
+
+NSTUB(eventproc_DispCon_ShowWhiteChart, 0xff934774)
+NSTUB(eventproc_DispCon_ShowBlackChart, 0xff9347b8)
+
+NSTUB(eventproc_DispCon_ShowBitmapColorBar, 0xff9347d4)
+NSTUB(eventproc_DispCon_ShowCustomColorBar, 0xff93483c)
+NSTUB(eventproc_DispCon_SetDisplayType, 0xff9348c4)
+NSTUB(eventproc_DispCon_TurnOnDisplay, 0xff9348e8)
+NSTUB(eventproc_DispCon_TurnOffDisplay, 0xff9348f8)
+NSTUB(eventproc_DispCon_SetMaxBackLightBrightness, 0xff934908)
+
+NSTUB(eventproc_LcdCon_SetLcdDriver, 0xff9373b0)
+NSTUB(eventproc_LcdCon_SetLcdAdjParameter, 0xff9374cc)
+NSTUB(eventproc_LcdCon_GetLcdAdjParameter, 0xff9375b0)
+NSTUB(eventproc_LcdCon_ShowLcdAdjParameter, 0xff937608)
+NSTUB(eventproc_LcdCon_SaveLcdAdjParameter, 0xff937658)
+
+NSTUB(eventproc_LcdCon_SetLcdBackLightBrightness, 0xff937800)
+NSTUB(eventproc_LcdCon_SetLcdBackLightParameter, 0xff937894)
+NSTUB(eventproc_LcdCon_GetLcdBackLightParameter, 0xff937938)
+NSTUB(eventproc_LcdCon_ShowLcdBackLightParameter, 0xff937990)
+NSTUB(eventproc_LcdCon_SaveLcdBackLightParameter, 0xff9379e0)
+
+NSTUB(eventproc_Movie_NormalCompressionRateMode, 0xff956f14)
+NSTUB(eventproc_Movie_HiCompressionRateMode, 0xff956f28)
 
 NSTUB(eventproc_NR_SetDarkSubType, 0xff9657a8)
 NSTUB(eventproc_NR_SetDefectCorrectType, 0xff965804)
@@ -313,7 +366,6 @@ NSTUB(eventproc_export_UIFS_StopPostingUIEvent, 0xff999cb4)
 NSTUB(eventproc_export_UIFS_RestartPostingUIEvent, 0xff999cc0)
 NSTUB(eventproc_export_UIFS_SetCaptureModeToP, 0xff999ccc)
 NSTUB(eventproc_export_UIFS_SetCaptureModeToM, 0xff999d08)
-NSTUB(eventproc_export_UIFS_SetCaptureModeToMacro, 0xff999d44)
 
 NSTUB(eventproc_export_UIFS_Capture, 0xff999d58)
 
@@ -439,7 +491,18 @@ NSTUB(eventproc_RefreshUSBMode, 0xffa71e68)
 NSTUB(eventproc_NotifyConnectPictBridge, 0xffa71eec)
 NSTUB(eventproc_NotifyDisconnectPictBridge, 0xffa71f0c)
 
+NSTUB(eventproc_PTPRspnd_StartUpPTPFrameworkClient, 0xffa89aa4)
+NSTUB(eventproc_PTPRspnd_ShutDownPTPFrameworkClient, 0xffa89b4c)
+
+NSTUB(eventproc_PTPRspnd_ResetTable, 0xffa933ac)
+NSTUB(eventproc_PTPRspnd_EnableGetTreeInfo, 0xffa933b8)
+NSTUB(eventproc_PTPRspnd_EnableStorage, 0xffa933f8)
+
 NSTUB(eventproc_PTPRspnd_ShowRemoteStg, 0xffa93760)
+
+NSTUB(eventproc_InitializeDCPClassFunctions, 0xffaa4970)
+
+NSTUB(eventproc_TerminateDCPClassFunctions, 0xffaa5e04)
 
 NSTUB(eventproc_CreateVcomUart, 0xffaa73ac)
 NSTUB(eventproc_DeleteVcomUart, 0xffaa74dc)
@@ -565,12 +628,326 @@ NSTUB(eventproc_MoveCZToPointEvent, 0xffac2800)
 NSTUB(eventproc_TurnOnAFLampEvent, 0xffac2a94)
 NSTUB(eventproc_TurnOffAFLampEvent, 0xffac2aac)
 
+NSTUB(eventproc_DisplayFactoryMode, 0xffac2b9c)
+NSTUB(eventproc_UndisplayFactoryMode, 0xffac2bb4)
+
+NSTUB(eventproc_ClearFactoryMode, 0xffac2ef8)
+NSTUB(eventproc_SetFactoryMode, 0xffac2f28)
+
+NSTUB(eventproc_IsFactoryMode, 0xffac2fe8)
+NSTUB(eventproc_StartFactoryModeController, 0xffac303c)
+
+NSTUB(eventproc_EraseAdjustmentArea, 0xffac39b8)
+NSTUB(eventproc_DumpAdjArea, 0xffac39d8)
+NSTUB(eventproc_DumpAdjMirror, 0xffac3a00)
+
+NSTUB(eventproc_GetAdjTableVersion, 0xffac3a58)
+NSTUB(eventproc_GetAdjTableMapVersion, 0xffac3aa0)
+NSTUB(eventproc_GetAdjTableValueVersion, 0xffac3ab0)
+NSTUB(eventproc_ShowDefaultAdjTableVersion, 0xffac3af4)
+NSTUB(eventproc_LoadAdjustmentTable, 0xffac3b28)
+NSTUB(eventproc_SaveAdjustmentTable, 0xffac3b40)
+NSTUB(eventproc_SaveAdjustmentValue, 0xffac3b5c)
+NSTUB(eventproc_LoadAdjustmentValue, 0xffac3b8c)
+NSTUB(eventproc_PrintAdjTableMap, 0xffac3cc8)
+NSTUB(eventproc_CreateAdjustmentTableMirror, 0xffac3f8c)
+
+NSTUB(eventproc_WRITEADJTABLETOFROM, 0xffac4278)
+NSTUB(eventproc_AddAdjDataToFRom, 0xffac42ac)
+
+NSTUB(eventproc_LoadParamDataFromAdjTableBin, 0xffac592c)
+NSTUB(eventproc_LoadDataFromAdjTableBin, 0xffac5a5c)
+
 NSTUB(eventproc_FA_Create, 0xffac5bf8)
 NSTUB(eventproc_FA_Delete, 0xffac5c2c)
+
+NSTUB(eventproc_PrintFirmVersion, 0xffac5d98)
+NSTUB(eventproc_PrintFaexeVersioin, 0xffac5de8)
+NSTUB(eventproc_CreateFADBGSingalID, 0xffac5dfc)
+NSTUB(eventproc_FADBGSingal, 0xffac5e14)
+
+NSTUB(eventproc_FADBGPrintf, 0xffac5efc)
+
+NSTUB(eventproc_FAPrintf, 0xffac6090)
+
+NSTUB(eventproc_OutputLogToFile, 0xffac61ac)
+NSTUB(eventproc_StopLogOut, 0xffac62e8)
+
+NSTUB(eventproc_GetLogData, 0xffac6528)
+NSTUB(eventproc_ActivateAdjLog, 0xffac6618)
+NSTUB(eventproc_InactivateAdjLog, 0xffac6638)
+NSTUB(eventproc_StartLogOut, 0xffac6658)
+NSTUB(eventproc_IsLogOutType, 0xffac6674)
 
 NSTUB(eventproc_InitializeAdjustmentSystem, 0xffac679c)
 NSTUB(eventproc_TerminateAdjustmentSystem, 0xffac67e4)
 NSTUB(eventproc_InitializeAdjustmentFunction, 0xffac682c)
+
+NSTUB(eventproc_PrintAllAEIntegData, 0xffac6aec)
+
+NSTUB(eventproc_GetAEIntegralValue, 0xffac7934)
+NSTUB(eventproc_GETMAINFLASHEVALUATIONVALUE, 0xffac79e0)
+NSTUB(eventproc_GETPREFLASHEVALUATIONVALUE, 0xffac7a94)
+NSTUB(eventproc_GETALTERNATEEVALUATIONVALUEWITHMECHASHUTTER, 0xffac7b50)
+NSTUB(eventproc_GETEVFEVALUATIONVALUEWITHMECHASHUTTER, 0xffac7bf4)
+NSTUB(eventproc_GETCRWEVALUATIONVALUEWITHMECHASHUTTER, 0xffac7c98)
+NSTUB(eventproc_GETCRWEVALUATIONVALUEWITHOUTMECHASHUTTER, 0xffac7d3c)
+NSTUB(eventproc_GETEVFEVALUATIONVALUEWITHOUTMECHASHUTTER, 0xffac7de0)
+NSTUB(eventproc_GETMOVIEEVALUATIONVALUEWITHMECHASHUTTER, 0xffac7e84)
+NSTUB(eventproc_AbortAEIntegralValue, 0xffac7f28)
+NSTUB(eventproc_SetAEIntegStrobeProperty, 0xffac7f88)
+NSTUB(eventproc_SetAEIntegralValueProperty, 0xffac7fc4)
+
+NSTUB(eventproc_GetAEIntegralValueWithFix, 0xffac81ec)
+
+NSTUB(eventproc_GetAllAEIntegralAllValueWithFix, 0xffac835c)
+
+NSTUB(eventproc_SetWhiteCoefficient, 0xffac84cc)
+
+NSTUB(eventproc_SetAEIntegWindowsMode, 0xffac8594)
+
+NSTUB(eventproc_SetAEIntegValueBit, 0xffac8654)
+NSTUB(eventproc_GetAEIntegralServiceMode, 0xffac8674)
+NSTUB(eventproc_StopAEIntegralService, 0xffac869c)
+NSTUB(eventproc_StartAEIntegralService, 0xffac8794)
+
+NSTUB(eventproc_SetLineDefMarkThroughMode, 0xffac8ad0)
+NSTUB(eventproc_SetAEIntegAverageOBData, 0xffac8b70)
+
+NSTUB(eventproc_SetDeltaCDSGain, 0xffaca278)
+NSTUB(eventproc_ReloadCdsAdjustment, 0xffaca2c8)
+NSTUB(eventproc_GetObClampValue, 0xffaca2e0)
+NSTUB(eventproc_SetObClamp, 0xffaca310)
+
+NSTUB(eventproc_GetCdsGainValue, 0xffaca364)
+NSTUB(eventproc_SetCDSGain, 0xffaca39c)
+
+NSTUB(eventproc_SetCDSGainStep, 0xffaca3e4)
+
+NSTUB(eventproc_SetAdjCdsMode, 0xffaca440)
+NSTUB(eventproc_CancelAdjCdsMode, 0xffaca45c)
+NSTUB(eventproc_IsAdjCdsMode, 0xffaca478)
+
+NSTUB(eventproc_ConvertTvToExposureTime, 0xffaca59c)
+NSTUB(eventproc_GetCurrentExposureTime, 0xffaca5d8)
+NSTUB(eventproc_GetCurrentShutterSpeed, 0xffaca5f0)
+NSTUB(eventproc_SetShutterSpeedWithMecha, 0xffaca604)
+
+NSTUB(eventproc_SetShutterSpeed, 0xffaca678)
+
+NSTUB(eventproc_GetUserSetShutterSPeed, 0xffaca720)
+NSTUB(eventproc_GetShutterSpeedRegularMaxLimit, 0xffaca730)
+NSTUB(eventproc_GetShutterSpeedRegularMinLimit, 0xffaca754)
+
+NSTUB(eventproc_MoveIrisToAv, 0xffaca8c8)
+
+NSTUB(eventproc_ReloadIrisAdjustment, 0xffaca934)
+NSTUB(eventproc_GetCurrentAvValue, 0xffaca940)
+
+NSTUB(eventproc_ReloadNdFilterAdjustment, 0xffacaa9c)
+NSTUB(eventproc_PutInNdFilter, 0xffacaac4)
+
+NSTUB(eventproc_PutOutNdFilter, 0xffacab0c)
+
+NSTUB(eventproc_CloseMShutter, 0xffacac18)
+
+NSTUB(eventproc_OpenMShutter, 0xffacac60)
+
+NSTUB(eventproc_CalculateLog2ToApex, 0xffacb6e0)
+
+NSTUB(eventproc_CalculatePow2FromApex, 0xffacb714)
+NSTUB(eventproc_CalcLog10, 0xffacb738)
+
+NSTUB(eventproc_ConvertApexToApexStd, 0xffacb7d0)
+NSTUB(eventproc_ConvertApexStdToApex, 0xffacb804)
+
+NSTUB(eventproc_OneShotWhigeBalance, 0xffacba04)
+
+NSTUB(eventproc_SetWBYlStandardWidth, 0xffacba84)
+NSTUB(eventproc_SetReferenceWBGainForCalibration, 0xffacbac8)
+NSTUB(eventproc_SetToolCorrectCoefficient, 0xffacbaf8)
+
+NSTUB(eventproc_ReloadWBAdjustment, 0xffacbb80)
+
+NSTUB(eventproc_ConvertCxCyToWBGain, 0xffacbe44)
+
+NSTUB(eventproc_GetCurrentZoomLensDirection, 0xffacbfc4)
+NSTUB(eventproc_GetZoomLensResetPlus, 0xffacbfe4)
+NSTUB(eventproc_MoveZoomLensToMechaEnd, 0xffacc00c)
+
+NSTUB(eventproc_MoveZoomLensToPositionByManual, 0xffacc0ec)
+
+NSTUB(eventproc_ResetZoomToAdjTerminatePoint, 0xffacc3cc)
+
+NSTUB(eventproc_ResetZoomToAdjFirstPoint, 0xffacc4b4)
+
+NSTUB(eventproc_GetCurrentZoomLensPoint, 0xffacc57c)
+NSTUB(eventproc_GetCurrentZoomLensPosition, 0xffacc590)
+NSTUB(eventproc_MoveZoomLensToPoint, 0xffacc5a4)
+
+NSTUB(eventproc_MoveZoomLensToPosition, 0xffacc5fc)
+
+NSTUB(eventproc_ResetZoomToTerminatePoint, 0xffacc654)
+
+NSTUB(eventproc_ResetZoomToFirstPoint, 0xffacc69c)
+
+NSTUB(eventproc_ResetZoom, 0xffacc6e4)
+NSTUB(eventproc_ReloadZoomAdjustment, 0xffacc72c)
+NSTUB(eventproc_GetZoomLensCurrent, 0xffacc738)
+NSTUB(eventproc_GetZoomLensSpeed, 0xffacc74c)
+
+NSTUB(eventproc_ConvertToPositionWithDistanceAndZoomPoint, 0xffacc9d8)
+
+NSTUB(eventproc_ReloadFocusLensAdjustment, 0xffacca1c)
+NSTUB(eventproc_GetFocusDefaultResetPosition, 0xffacca28)
+NSTUB(eventproc_GetFocusResetPosition, 0xffacca3c)
+NSTUB(eventproc_GetCurrentTargetDistance, 0xffacca50)
+
+NSTUB(eventproc_GetCurrentFocusLensPosition, 0xffaccaa8)
+NSTUB(eventproc_MoveFocusLensToTerminatePosition, 0xffaccabc)
+
+NSTUB(eventproc_MoveFocusLensToPositionWithMaxSpeed, 0xffaccb4c)
+
+NSTUB(eventproc_MoveFocusLensToPosition, 0xffaccbb0)
+
+NSTUB(eventproc_MoveFocusLensToDistance, 0xffacccf0)
+
+NSTUB(eventproc_ResetFocus, 0xffacce0c)
+
+NSTUB(eventproc_PrintScanTable, 0xffacd1d4)
+NSTUB(eventproc_PrintMultiWinScanTable, 0xffacd338)
+
+NSTUB(eventproc_CalculatePeakPositionByLeastSquare, 0xfface860)
+
+NSTUB(eventproc_SetFocusScanAutoStopProperty, 0xffaced24)
+NSTUB(eventproc_StartFocusScanWithAutoStopFix, 0xffaced4c)
+
+NSTUB(eventproc_StartFocusScanWithAutoStop, 0xffacee28)
+
+NSTUB(eventproc_StopFocusScan, 0xffaceff0)
+NSTUB(eventproc_StartFocusScanWithEnableToStop, 0xffaceffc)
+
+NSTUB(eventproc_StartFocusScanWithRange, 0xffacf1a8)
+
+NSTUB(eventproc_StartFocusScan, 0xffacf2f0)
+
+NSTUB(eventproc_StartMultiWinFocusScan, 0xffacf454)
+
+NSTUB(eventproc_StartDigiconService, 0xffacf5d8)
+
+NSTUB(eventproc_GetDigiconData, 0xffacf658)
+
+NSTUB(eventproc_StartDigiconFocusScan, 0xffacfc60)
+NSTUB(eventproc_StopDigiconService, 0xffacfcd0)
+NSTUB(eventproc_SetMultiWinPos, 0xffacfcfc)
+NSTUB(eventproc_SetAFSensorDriveMode, 0xffacfd68)
+NSTUB(eventproc_GetAFSensorDriveMode, 0xffacfe0c)
+NSTUB(eventproc_SetBPFForBestPintCorrect, 0xffacfe1c)
+NSTUB(eventproc_CancelBPFForBestPintCorrect, 0xffacfe30)
+NSTUB(eventproc_ReloadBPCoeffAdjustment, 0xffacfe3c)
+
+NSTUB(eventproc_ReloadEfAdjustment, 0xffad00f8)
+NSTUB(eventproc_ChargeStrobe, 0xffad0104)
+
+NSTUB(eventproc_ReloadColorAdjustment, 0xffad0200)
+
+NSTUB(eventproc_RegistColorMatrix, 0xffad02f0)
+NSTUB(eventproc_UnregistColorMatrix, 0xffad0334)
+
+NSTUB(eventproc_ShowCurrentExp, 0xffad0500)
+
+NSTUB(eventproc_SetAE_ShutterSpeed, 0xffad0598)
+
+NSTUB(eventproc_FocusAEWithCompensation, 0xffad06fc)
+
+NSTUB(eventproc_SetAE_CdsGainValue, 0xffad07f0)
+NSTUB(eventproc_FixAEWithCompensation, 0xffad0808)
+
+NSTUB(eventproc_SetAdj_AEMode, 0xffad08a4)
+
+NSTUB(eventproc_CancelAdj_AEMode, 0xffad08f4)
+NSTUB(eventproc_PreFixAE, 0xffad0924)
+
+NSTUB(eventproc_AfAEWithAperturePriority, 0xffad09a0)
+
+NSTUB(eventproc_AdjAEWithAperturePriority, 0xffad0a7c)
+
+NSTUB(eventproc_SleepAE, 0xffad0c0c)
+
+NSTUB(eventproc_AfAEWithCompensation, 0xffad0c54)
+
+NSTUB(eventproc_SwitchOffDisplay, 0xffad0ff0)
+NSTUB(eventproc_SwitchOnDisplay, 0xffad1024)
+NSTUB(eventproc_GetVideoOutType, 0xffad105c)
+NSTUB(eventproc_SetVideoOutType, 0xffad106c)
+
+NSTUB(eventproc_IsEVFDrive, 0xffad109c)
+NSTUB(eventproc_StopEVFDrive, 0xffad10fc)
+NSTUB(eventproc_StartEVFDriveWithMode, 0xffad114c)
+NSTUB(eventproc_StartEVFDrive, 0xffad1198)
+
+NSTUB(eventproc_IsEvfDriveMode, 0xffad1474)
+
+NSTUB(eventproc_GetVRAMHPixelsSize, 0xffad1778)
+NSTUB(eventproc_GetVRAMVPixelsSize, 0xffad1784)
+NSTUB(eventproc_StopContinuousVRAMData, 0xffad1790)
+
+NSTUB(eventproc_GetContinuousVRAMData, 0xffad1854)
+
+NSTUB(eventproc_GetPixelsOfViewangle, 0xffad1f84)
+
+NSTUB(eventproc_GetModelId, 0xffad26cc)
+NSTUB(eventproc_SetInputVoltage, 0xffad26d4)
+NSTUB(eventproc_SaveBatSenseOffsetAdjustmentTable, 0xffad26e8)
+NSTUB(eventproc_SetImageMode, 0xffad26f8)
+NSTUB(eventproc_SetDate, 0xffad2710)
+NSTUB(eventproc_SetYear, 0xffad2804)
+NSTUB(eventproc_SetMonth, 0xffad286c)
+NSTUB(eventproc_SetDay, 0xffad28d0)
+NSTUB(eventproc_SetHour, 0xffad2940)
+NSTUB(eventproc_SetMinute, 0xffad29ac)
+NSTUB(eventproc_SetSecond, 0xffad2a1c)
+NSTUB(eventproc_GetYear, 0xffad2a88)
+NSTUB(eventproc_GetMonth, 0xffad2ac0)
+NSTUB(eventproc_GetDay, 0xffad2af8)
+NSTUB(eventproc_GetHour, 0xffad2b28)
+NSTUB(eventproc_GetMinute, 0xffad2b58)
+NSTUB(eventproc_GetSecond, 0xffad2b88)
+NSTUB(eventproc_SetLangMenuType, 0xffad2bb8)
+
+NSTUB(eventproc_GetUnpackCrwIntegralValue, 0xffad3308)
+
+NSTUB(eventproc_ShowTransparentMemory, 0xffad4fb4)
+NSTUB(eventproc_DumpTransparentMemoryItem, 0xffad4fe4)
+NSTUB(eventproc_AddTransparentMemory, 0xffad5038)
+NSTUB(eventproc_AttachToTransparentMemory, 0xffad5080)
+NSTUB(eventproc_RemoveTransparentMemory, 0xffad50c8)
+NSTUB(eventproc_GetTransparentMemorySize, 0xffad50ec)
+NSTUB(eventproc_GetTransparentMemory, 0xffad510c)
+NSTUB(eventproc_GetTransparentMemoryPosition, 0xffad5164)
+
+NSTUB(eventproc_CompletePrepareTestRec, 0xffad8294)
+NSTUB(eventproc_StrobeChargeCompForTestRec, 0xffad82b0)
+
+NSTUB(eventproc_InitializeTestRec, 0xffad83bc)
+NSTUB(eventproc_TerminateTestRec, 0xffad8428)
+
+NSTUB(eventproc_ExecuteTestRec, 0xffad85e0)
+NSTUB(eventproc_ExecuteTestRecCF, 0xffad8764)
+
+NSTUB(eventproc_SetDefaultRecParameter, 0xffada65c)
+NSTUB(eventproc_SetDefectRecParameter, 0xffada8d8)
+
+NSTUB(eventproc_EnableDebugLogMode, 0xffada92c)
+NSTUB(eventproc_DisableDebugLogMode, 0xffada944)
+
+NSTUB(eventproc_FreeBufferForSoundRec, 0xffadaf48)
+
+NSTUB(eventproc_StartSoundRecord, 0xffadb080)
+
+NSTUB(eventproc_StartSoundPlay, 0xffadb2dc)
+NSTUB(eventproc_InitializeSoundRec, 0xffadb304)
+NSTUB(eventproc_TerminateSoundRec, 0xffadb344)
 
 NSTUB(eventproc_MakeBootDisk, 0xffaf5580)
 NSTUB(eventproc_MakeScriptDisk, 0xffaf5594)

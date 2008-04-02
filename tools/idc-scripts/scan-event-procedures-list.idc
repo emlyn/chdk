@@ -29,7 +29,7 @@ static main()
 
             d = substr(d, strlen("eventproc_"), -1);
 
-            fprintf(w, "NSTUB(%s, 0x%x)\n", replace(d, ".", "_"), a);
+            fprintf(w, "NSTUB(eventproc_%s, 0x%x)\n", replace(d, ".", "_"), a);
 //            a = GetFunctionAttr(a, FUNCATTR_END)-4;
             prevf = d;
             spaced = 0;

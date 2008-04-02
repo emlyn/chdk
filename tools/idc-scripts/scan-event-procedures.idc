@@ -9,8 +9,12 @@
 static MakeEventProcedure(pname, paddr)
 {
    if (strstr(pname, "EventProcedure") != -1) return;
+
+   if (strstr(GetFunctionName(paddr), "eventproc_") != -1) return;
    
    MakeCode(paddr);
+   MakeCode(paddr+4);
+   MakeCode(paddr+8);
    MakeFunction(paddr, BADADDR);
    MakeNameEx(paddr, "eventproc_"+pname, SN_PUBLIC);
    Message("Renamed %x to %s\n", paddr, "eventproc_"+pname);
@@ -32,7 +36,39 @@ static Anasyze(a, opname)
    fstart = GetFunctionAttr(a, FUNCATTR_START);
 
 
-   if (strstr(opname, "RegisterEventProcedure") == 0 || opname == "ExportToEventProcedure")
+   if (opname == "RegisterEventProcedureTable")
+   {
+       for (code = a; code >= a-20; code = code-4)
+       {
+           if (paddr == 0 && isCode(GetFlags(code)) && strstr(GetDisasm(code), "LDR") == 0 && (GetOpnd(code, 0) == "R0"))
+           {
+               d = Dword(GetOperandValue(code, 1));
+               if (d != 0) {
+                   paddr = d;
+               }
+           }
+       }
+
+       if (paddr == 0 || paddr < ROM_START) {
+           Message( "    NOT parsed table: %x (table=%x)\n", a, paddr);
+           return;
+       }
+
+       Message( "event proc table at:%x\n", paddr);
+       
+       for (table = paddr; 1 ;table = table+8)
+       {
+           if (Dword(table) == 0 || Dword(table) == 0xFFFFFFFF) return;
+
+           MakeDword(table);
+           MakeDword(table+4);
+
+           MakeEventProcedure(getString(Dword(table)), Dword(table+4));
+
+       }       
+
+   }
+   else if (strstr(opname, "RegisterEventProcedure") == 0 || opname == "ExportToEventProcedure")
    {
        for (code = a; code >= a-20; code = code-4) {
          
@@ -77,40 +113,6 @@ static Anasyze(a, opname)
            pname = "export_" + pname;
        }
        MakeEventProcedure(pname, paddr);
-   }
-
-
-   if (opname == "RegisterEventProcedureTable")
-   {
-       for (code = a; code >= a-20; code = code-4)
-       {
-           if (paddr == 0 && isCode(GetFlags(code)) && strstr(GetDisasm(code), "LDR") == 0 && (GetOpnd(code, 0) == "R0"))
-           {
-               d = Dword(GetOperandValue(code, 1));
-               if (d > ROM_START) {
-                   paddr = d;
-               }
-           }
-       }
-
-       if (paddr == 0 || paddr < ROM_START) {
-           Message( "    NOT parsed table: %x (table=%x)\n", a, paddr);
-           return;
-       }
-
-       Message( "event proc table at:%x\n", paddr);
-       
-       for (table = paddr; 1 ;table = table+8)
-       {
-           if (Dword(table) == 0 || Dword(table) == 0xFFFFFFFF) return;
-
-           MakeDword(table);
-           MakeDword(table+4);
-
-           MakeEventProcedure(getString(Dword(table)), Dword(table+4));
-
-       }       
-
    }
 
    return;
