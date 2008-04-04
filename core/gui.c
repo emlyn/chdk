@@ -50,6 +50,10 @@
 //Alt mode & Manual mode    
  #define SHORTCUT_SET_INFINITY        KEY_DISPLAY
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
+ // For models without ZOOM_LEVER  (#if !CAM_HAS_ZOOM_LEVER)
+ // SHORTCUT_SET_INFINITY is not used
+ // KEY_DISPLAY is used for gui_subj_dist_override_koef_enum;
+ // KEY_LEFT/KEY_RIGHT is used for gui_subj_dist_override_value_enum (because of no separate ZOOM_IN/OUT)
  
 #elif defined(CAMERA_g7)  
 //Alt mode
@@ -61,18 +65,6 @@
 //Alt mode & Manual mode  
  #define SHORTCUT_SET_INFINITY        KEY_UP
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
-
-#elif defined(CAMERA_a460)
-//Alt mode
- #define SHORTCUT_TOGGLE_RAW      KEY_DISPLAY
- #define SHORTCUT_MF_TOGGLE       KEY_UP
-//Half press shoot button
- #define SHORTCUT_TOGGLE_HISTO    KEY_UP
- #define SHORTCUT_TOGGLE_ZEBRA    KEY_LEFT
- #define SHORTCUT_TOGGLE_OSD      KEY_RIGHT
-//Alt mode & Manual mode  
-// #define SHORTCUT_SET_INFINITY    KEY_DISPLAY  // KEY_DISPLAY used for gui_subj_dist_override_koef_enum; KEY_LEFT/KEY_RIGHT used for gui_subj_dist_override_value_enum (because of no separate ZOOM_IN/OUT)
- #define SHORTCUT_SET_HYPERFOCAL  KEY_DOWN
 
 #else
 
@@ -1554,20 +1546,19 @@ void gui_kbd_process()
 				   {conf.save_raw = !conf.save_raw;
                     draw_restore();
                    }
-#if defined (CAMERA_a460)
+#if !CAM_HAS_ERASE_BUTTON && CAM_CAN_SD_OVERRIDE
 				else {
+   #if CAM_HAS_ZOOM_LEVER
+               conf.subj_dist_override_value=MAX_DIST;
+               shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
+   #else
                if (conf.subj_dist_override_koef==4)
                   gui_subj_dist_override_koef_enum(-3,0);
                else
                   gui_subj_dist_override_koef_enum(1,0);
-				  }
-#elif !CAM_HAS_ERASE_BUTTON && CAM_CAN_SD_OVERRIDE
-                else
-				  {
-				  conf.subj_dist_override_value=MAX_DIST;	
-                  shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
-				  } 
-#endif                   				                   
+   #endif
+				}
+#endif
             } else if (kbd_is_key_clicked(KEY_SET)) {
                 gui_menu_init(&script_submenu);
                 gui_mode = GUI_MODE_MENU;
@@ -1587,7 +1578,7 @@ void gui_kbd_process()
 
 #if CAM_CAN_SD_OVERRIDE           
 			  {
-  #if !defined (CAMERA_a460)
+  #if CAM_HAS_ZOOM_LEVER
 				if (kbd_is_key_clicked(KEY_RIGHT)) {
 				  gui_subj_dist_override_koef_enum(1,0);
     #if !CAM_HAS_MANUAL_FOCUS

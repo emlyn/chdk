@@ -342,18 +342,29 @@ static char sbuf[7];
             break;
 #else
         case KEY_DISPLAY:
-            if (int_incr <= 1000){
-                int_incr *= 10;
+            if (conf.user_menu_enable == 3 && curr_menu->title == LANG_MENU_USER_MENU) {
+               if (gui_menu_stack_ptr > 0){
+                  gui_menu_stack_ptr--;
+                  gui_menu_set_curr_menu(gui_menu_stack[gui_menu_stack_ptr].menu, gui_menu_stack[gui_menu_stack_ptr].toppos, gui_menu_stack[gui_menu_stack_ptr].curpos);
+                  gui_menu_redraw=2;
+                  draw_restore();
+                  gui_force_restore();
+               }
             }
             else {
-               int_incr = 1;
+               if (int_incr <= 1000){
+                  int_incr *= 10;
+               }
+               else {
+                  int_incr = 1;
+               }
+               sprintf(sbuf, "±%d",int_incr);
+               if (int_incr == 1) {
+                  draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
+               }
+               draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
+               break;
             }
-            sprintf(sbuf, "±%d",int_incr);
-            if (int_incr == 1) {
-               draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
-            }
-            draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
-            break;
 #endif
     }
 }
