@@ -2,6 +2,8 @@
 #include "platform.h"
 #include "core.h"
 
+const long new_sa = MEMISOSTART + MEMISOSIZE;
+
 /* Ours stuff */
 extern long wrs_kernel_bss_start;
 extern long wrs_kernel_bss_end;
@@ -100,7 +102,13 @@ void  h_usrKernelInit()
 	"MOV     R12, #0x800\n"
 	"LDR     R0, =h_usrRoot\n"	// !! has to be here
 	"MOV     R1, #0x4000\n"
-	"LDR     R2, =0xDC070\n"	// !! MEMISOSTART 0xAC070 + MEMISOSIZE 0x30000
+    );    
+//        "LDR     R2, =0xDC070\n"	// !! MEMISOSTART 0xAC070 + MEMISOSIZE 0x30000
+    asm volatile (
+        "LDR     R2, =new_sa\n"
+        "LDR     R2, [R2]\n"
+    );
+    asm volatile (
 	"STR     R12, [SP]\n"
 	"STR     R4, [SP,#4]\n"
 	"BL      sub_FF932E10\n" //kernelInit
