@@ -429,5 +429,10 @@
 328 "Max ISO AUTO (x10)"
 329 "Min ISO (x10)"
 
+330 "Menu Title Text Color"
+331 "Menu Title Background Color"
+332 "Cursor Text Color"
+333 "Cursor Background Color"
+334 "Center Menu"
 
 

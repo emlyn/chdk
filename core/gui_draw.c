@@ -108,7 +108,33 @@ void draw_rect(coord x1, coord y1, coord x2, coord y2, color cl) {
         draw_pixel(x, yMax, cl & 0xff);
     }
 }
+//-------------------------------------------------------------------
+void draw_round_rect(coord x1, coord y1, coord x2, coord y2, color cl) { 
+    unsigned int xMin, yMin, xMax, yMax, x, y; 
+    if (x1>x2) { 
+       xMax=x1; xMin=x2; 
+    } else { 
+       xMin=x1; xMax=x2; 
+    } 
+    if (y1>y2) { 
+       yMax=y1; yMin=y2; 
+    } else { 
+       yMin=y1; yMax=y2; 
+    } 
+    if (xMax>=screen_width) xMax=screen_width-1; 
+    if (xMin>=screen_width) xMin=screen_width-1; 
+    if (yMax>=screen_height) yMax=screen_height-1; 
+    if (yMin>=screen_height) yMin=screen_height-1; 
 
+    for (y=yMin+2; y<=yMax-2; ++y) { 
+      draw_pixel(xMin, y, cl & 0xff); 
+      draw_pixel(xMax, y, cl & 0xff); 
+    } 
+    for (x=xMin+2; x<=xMax-2; ++x) { 
+        draw_pixel(x, yMin, cl & 0xff); 
+        draw_pixel(x, yMax, cl & 0xff); 
+    } 
+} 
 //-------------------------------------------------------------------
 void draw_filled_rect(coord x1, coord y1, coord x2, coord y2, color cl) {
     unsigned int xMin, yMin, xMax, yMax, x, y;
@@ -134,7 +160,31 @@ void draw_filled_rect(coord x1, coord y1, coord x2, coord y2, color cl) {
 	}
     }
 }
+//-------------------------------------------------------------------
+void draw_filled_round_rect(coord x1, coord y1, coord x2, coord y2, color cl) { 
+    unsigned int xMin, yMin, xMax, yMax, x, y; 
+    if (x1>x2) { 
+       xMax=x1; xMin=x2; 
+    } else { 
+       xMin=x1; xMax=x2; 
+    } 
+    if (y1>y2) { 
+       yMax=y1; yMin=y2; 
+    } else { 
+       yMin=y1; yMax=y2; 
+    } 
+    if (xMax>=screen_width) xMax=screen_width-1; 
+    if (xMin>=screen_width) xMin=screen_width-1; 
+    if (yMax>=screen_height) yMax=screen_height-1; 
+    if (yMin>=screen_height) yMin=screen_height-1; 
 
+    draw_round_rect(x1, y1, x2, y2, cl); 
+    for (y=yMin+1; y<=yMax-1; ++y) { 
+     for (x=xMin+1; x<=xMax-1; ++x) { 
+       draw_pixel(x, y, cl>>8); 
+     } 
+    } 
+} 
 //-------------------------------------------------------------------
 void draw_char(coord x, coord y, const char ch, color cl) {
     const unsigned char *sym = (unsigned char*)current_font +

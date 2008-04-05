@@ -34,8 +34,10 @@ extern void draw_line(coord x1, coord y1, coord x2, coord y2, color cl);
 
 // draw frame
 extern void draw_rect(coord x1, coord y1, coord x2, coord y2, color cl);
+extern void draw_round_rect(coord x1, coord y1, coord x2, coord y2, color cl);
 // color: hi_byte - BG; lo_byte - FG
 extern void draw_filled_rect(coord x1, coord y1, coord x2, coord y2, color cl);
+extern void draw_filled_round_rect(coord x1, coord y1, coord x2, coord y2, color cl);
 
 extern void draw_char(coord x, coord y, const char ch, color cl);
 extern void draw_string(coord x, coord y, const char *s, color cl);

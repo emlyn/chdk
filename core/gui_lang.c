@@ -414,7 +414,11 @@ static char* gui_lang_default = \
 "328 \"Max ISO AUTO (x10)\"\n"
 "329 \"Min ISO (x10)\"\n"
 
-
+"330 \"Menu Title Text Color\"\n" 
+"331 \"Menu Title Background Color\"\n"
+"332 \"Cursor Text Color\"\n" 
+"333 \"Cursor Background Color\"\n"
+"334 \"Center Menu\"\n"
 
 ;
 

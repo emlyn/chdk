@@ -423,9 +423,15 @@
 #define LANG_MENU_AUTOISO_MAX_ISO_HI	327
 #define LANG_MENU_AUTOISO_MAX_ISO_AUTO	328
 #define LANG_MENU_AUTOISO_MIN_ISO	329
+
+#define LANG_MENU_VIS_MENU_TITLE_TEXT         330 
+#define LANG_MENU_VIS_MENU_TITLE_BKG          331
+#define LANG_MENU_VIS_MENU_CURSOR_TEXT        332 
+#define LANG_MENU_VIS_MENU_CURSOR_BKG         333
+#define LANG_MENU_VIS_MENU_CENTER             334
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  329
+#define GUI_LANG_ITEMS                  334
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

@@ -89,6 +89,9 @@ typedef struct {
     color batt_icon_color;
     color space_color;
     color menu_color;
+    color menu_title_color;
+    color menu_cursor_color;
+    int menu_center;
     color reader_color;
     color zebra_color; // under/over
     color grid_color;

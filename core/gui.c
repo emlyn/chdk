@@ -464,6 +464,10 @@ static CMenuItem visual_submenu_items[] = {
     {LANG_MENU_VIS_SPACE_ICON_BKG,      MENUITEM_COLOR_BG,  (int*)&conf.space_color },    
     {LANG_MENU_VIS_MENU_TEXT,           MENUITEM_COLOR_FG,  (int*)&conf.menu_color },
     {LANG_MENU_VIS_MENU_BKG,            MENUITEM_COLOR_BG,  (int*)&conf.menu_color },
+    {LANG_MENU_VIS_MENU_TITLE_TEXT,     MENUITEM_COLOR_FG,  (int*)&conf.menu_title_color }, 
+    {LANG_MENU_VIS_MENU_TITLE_BKG,      MENUITEM_COLOR_BG,  (int*)&conf.menu_title_color },
+    {LANG_MENU_VIS_MENU_CURSOR_TEXT,    MENUITEM_COLOR_FG,  (int*)&conf.menu_cursor_color }, 
+    {LANG_MENU_VIS_MENU_CURSOR_BKG,     MENUITEM_COLOR_BG,  (int*)&conf.menu_cursor_color },
     {LANG_MENU_VIS_READER_TEXT,         MENUITEM_COLOR_FG,  (int*)&conf.reader_color },
     {LANG_MENU_VIS_READER_BKG,          MENUITEM_COLOR_BG,  (int*)&conf.reader_color },
     {LANG_MENU_BACK,                    MENUITEM_UP },
@@ -503,6 +507,7 @@ static CMenu raw_state_submenu = { LANG_MENU_OSD_RAW_STATE_PARAMS_TITLE, NULL, r
 
 static CMenuItem osd_submenu_items[] = {
     {LANG_MENU_OSD_SHOW,                MENUITEM_BOOL,      &conf.show_osd },
+    {LANG_MENU_VIS_MENU_CENTER,         MENUITEM_BOOL,	    &conf.menu_center },    
     {LANG_MENU_USER_MENU,  	    		MENUITEM_SUBMENU,   (int*)&user_submenu},
     {LANG_MENU_USER_MENU_ENABLE,		MENUITEM_ENUM,      (int*)gui_user_menu_show_enum },
     {LANG_MENU_OSD_SHOW_STATES,         MENUITEM_BOOL,      &conf.show_state },
@@ -1399,7 +1404,7 @@ void gui_redraw()
     switch (gui_mode) {
         case GUI_MODE_MENU:
             gui_menu_draw();
-            draw_txt_string(20, 14, "<CNF>", MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
+//            draw_txt_string(20, 14, "<CNF>", MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
             break;
         case GUI_MODE_ALT:
             gui_draw_osd();
@@ -2082,7 +2087,7 @@ void gui_draw_splash() {
     w=w*FONT_WIDTH+10;
 
     x = (screen_width-w)>>1; y = (screen_height-h)>>1;
-    draw_filled_rect(x, y, x+w, y+h, cl);
+    draw_filled_round_rect(x, y, x+w, y+h, cl);
     for (i=0; i<sizeof(text)/sizeof(text[0]); ++i) {
         draw_string(x+((w-strlen(text[i])*FONT_WIDTH)>>1), y+i*FONT_HEIGHT+4, text[i], cl);
     }

@@ -268,3 +268,25 @@ int rbf_draw_string_right_len(int x, int y, int len, const char *str, color cl) 
     return l;
 }
 //-------------------------------------------------------------------
+int rbf_draw_string_center_len(int x, int y, int len, const char *str, color cl) { 
+    int l=0, strLen=0, i, yy, rund=2; 
+    const char *s=str; 
+
+    while (*s && l+rbf_char_width(*s)<=len) 
+        l+=rbf_char_width(*s++); 
+    strLen=l; 
+    l=(len-strLen)/2; 
+
+    for (i=l; i>=0; --i) { 
+        for (yy=y+rund; yy<y+rbf_font.height; ++yy) { 
+            draw_pixel(x+l-i, yy, cl>>8); 
+            draw_pixel(x+i+strLen+l-1, yy, cl>>8); 
+        } 
+        if (rund>0) rund--; 
+    } 
+    while (*str && l+rbf_char_width(*str)<=len) 
+        l+=rbf_draw_char(x+l, y, *str++, cl); 
+
+    return l; 
+} 
+//-------------------------------------------------------------------
