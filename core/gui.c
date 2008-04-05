@@ -1040,7 +1040,7 @@ const char* gui_video_bitrate_enum(int change, int arg) {
 
 //-------------------------------------------------------------------
 const char* gui_tv_bracket_values_enum(int change, int arg) {
-    static const char* modes[]={ "Off", "1/3 EV","2/3 EV", "1 EV", "1 1/3Ev", "1 2/3Ev", "2 Ev"};
+    static const char* modes[]={ "Off", "1/3 Ev","2/3 Ev", "1 Ev", "1 1/3Ev", "1 2/3Ev", "2 Ev", "2 1/3Ev", "2 2/3Ev", "3 Ev", "3 1/3Ev", "3 2/3Ev", "4 Ev"};
 
     conf.tv_bracket_value+=change;
     if (conf.tv_bracket_value<0)
@@ -1052,7 +1052,7 @@ const char* gui_tv_bracket_values_enum(int change, int arg) {
 }
 
 const char* gui_av_bracket_values_enum(int change, int arg) {
-    static const char* modes[]={ "Off", "1/3 EV","2/3 EV", "1 EV", "1 1/3Ev", "1 2/3Ev", "2 Ev"};
+    static const char* modes[]={ "Off", "1/3 Ev","2/3 Ev", "1 Ev", "1 1/3Ev", "1 2/3Ev", "2 Ev", "2 1/3Ev", "2 2/3Ev", "3 Ev", "3 1/3Ev", "3 2/3Ev", "4 Ev"};
 
     conf.av_bracket_value+=change;
     if (conf.av_bracket_value<0)
