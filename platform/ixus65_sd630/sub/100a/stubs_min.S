@@ -31,3 +31,14 @@ DEF(FlashParamsTable,0xFFD4B62C)
 //DEF(canon_shoot_menu_active, 0x6CBC)
 //DEF(recreview_hold, 0x6CBC)
 
+//DEF(canon_menu_active, 0x6CBC)
+//DEF(canon_shoot_menu_active, 0x6CBC)
+
+
+canon_menu_active_prev:
+	.word 0x10
+
+.globl canon_menu_active
+canon_menu_active:
+	.word canon_menu_active_prev
+
