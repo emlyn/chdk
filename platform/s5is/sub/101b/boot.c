@@ -29,11 +29,11 @@ void dump_chdk();
 #define DEBUG_LED 0xC02200D4 // Red led (lower-right corner) normally indicating SD read/write
 
 void boot() {
-    long *canon_data_src = (void*)0xFFE9C5D0;
+    long *canon_data_src = (void*)0xFFB07EB8;
     long *canon_data_dst = (void*)0x1900;
-    long canon_data_len = 0xfc04 - 0x1900; // data_end - data_start
-    long *canon_bss_start = (void*)0xfc04; // just after data (A710: 0xD680)
-    long canon_bss_len = 0x9d024 - (0xfc04 - 0x1900); // 0x9d024 - (0xfc04 - 0x1900) (a710: 0x9F9B0 - 0xD680)
+    long canon_data_len = 0x1056C - 0x1900; // data_end - data_start
+    long *canon_bss_start = (void*)0x1056C; // just after data
+    long canon_bss_len = 0x9B610 - 0x1056C;
 
     long i;
 
@@ -241,7 +241,7 @@ void __attribute__((naked,noinline)) sub_FF810FCC_my() {
           "MOV     R0, #0x53000\n"
           "STR     R0, [SP,#0x74-0x70]\n"
 //          "LDR     R0, =0x9B610\n"
-          "LDR     R0, =0xEB610\n"			// 0xAB610 (0x9B610 + 0x10000 (fixoff)) + 0x40000 (memsize) = 0xEB610
+          "LDR     R0, =0xDB610\n"			// 0x9B610 + 0x40000 (memsize) = 0xDB610
           "LDR     R2, =0x2ABC00\n"
           "LDR     R1, =0x2A4968\n"
           "STR     R0, [SP,#0x74-0x6C]\n"

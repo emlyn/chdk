@@ -92,7 +92,8 @@ static KeyMap keymap[] = {
 //	{ 0, KEY_OPEN_BATT , 0x00008000 }, // Indicates whether or not the battery compartment is about to be opened (slider is a button). Camera does not retract lens, though, shame. Not defined in CHDK
 //	{ 0, KEY_M_DISPLAY , 0x00000008 }, // Switch to display mode, not defined in CHDK (negative? Default 0, 1 when switching)
 //	{ 0, KEY_M_SHOOT   , 0x00000004 }, // Switch to shoot mode, not defined in CHDK (negative? Default 0, 1 when switching)
-	{ 0, KEY_SHOOT_FULL, 0x00000002 }, 
+//	{ 0, KEY_SHOOT_FULL, 0x00000002 }, // Listed for completeness, this is the 'single' key.
+	{ 0, KEY_SHOOT_FULL, 0x00000003 }, // This is SHOOT_FULL | SHOOT_HALF.
 	{ 0, KEY_SHOOT_HALF, 0x00000001 }, 
 
 

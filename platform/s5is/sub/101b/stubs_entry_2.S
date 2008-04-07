@@ -176,31 +176,8 @@ NSTUB(taskSuspend,				 0xFF81096C)
 NSTUB(taskUnlock,				 0xFF81096C)
 NSTUB(utime,					 0xFF81096C)
 NSTUB(Unmount_FileSystem,		 0xFF81096C)
+NSTUB(UIFS_WriteFirmInfoToFile,	 0xFF81096C)
+NSTUB(kbd_pwr_off,				 0xFF81096C) // Does not even exist, I think
+NSTUB(kbd_pwr_on,				 0xFF81096C) // Does not even exist, I think
 
 
-///////////
-// The following stubs are required because they are not detected by the scripts.
-// This is because it does not detect subs called by conditional B(L)'s or loaded
-// through a register.
-
-// Stubs required for boot.c
-STUB(FF814F00)
-STUB(FF8789D4)
-STUB(FF87B0E4)
-STUB(FF829CD8)
-STUB(FF880F94)
-STUB(FF8197D0)
-STUB(FF814A30)
-STUB(FF814B1C)
-STUB(FF813594)
-STUB(FF8194B8)
-STUB(FF8114E4)
-
-// Stubs required for capt_seq.c
-STUB(FF960CA0)
-STUB(FF960D20)
-STUB(FF95F5A8)
-STUB(FF861F40)
-STUB(FF861F28)
-STUB(FF960420)
-STUB(FF85FC7C)
