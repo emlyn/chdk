@@ -21,15 +21,23 @@ distclean: clean
 
 stubs_auto.S: boot.c capt_seq.c
 	@echo $< \-\> $@
-# UNIX shell magick )
+ifeq ($(OSTYPE),Windows)
 	cat $^ | \
-	    grep 'BL\?[[:space:]]*sub_[0-9A-Fa-f]' | \
+	    grep -E 'B.*[[:space:]]+sub_[0-9A-Fa-f]' | \
+	    sed 's/.*sub_\\([0-9A-Fa-f]*\\).*/\\1/' | \
+	    $(SORT) | uniq | \
+	    awk 'BEGIN {print "/* THIS FILE IS GENERATED */\n#include \"stubs_asm.h\"\n"} \
+		{printf("STUB(%s)\n",$$1)}' > stubs_auto.S
+else	
+	cat $^ | \
+	    grep 'B.*[[:space:]]*sub_[0-9A-Fa-f]' | \
 	    sed 's/.*sub_\([0-9A-Fa-f]*\).*/\1/' | \
 	    $(SORT) | uniq | \
 	    awk 'BEGIN {print "/* THIS FILE IS GENERATED */\n#include \"stubs_asm.h\"\n"} \
 		{printf("STUB(%s)\n",$$1)}' > stubs_auto.S
+endif
 
-stubs_entry.S: $(TARGET_PRIMARY) $(topdir)tools/finsig
+stubs_entry.S: $(TARGET_PRIMARY) $(topdir)tools/signatures_$(PLATFORMOS).h
 	@echo \-\> $@
 	rm -f stubs_entry.S.err
 	if [ -s $(TARGET_PRIMARY) ] ; then \
