@@ -446,7 +446,7 @@ static void sprintf_dist(char *buf, float dist) {
     if (dist<=0 || dist>=MAX_DIST) {
         sprintf(buf, " inf");
     } else if (dist<1000) {
-        sprintf(buf, "0.%03d", (int)dist);
+        sprintf(buf, ".%03d", (int)dist);
     } else if (dist<10000) {
         sprintf(buf, "%d.%02d", (int)(dist/1000), (int)(dist/10)%100);
     } else if (dist<100000) {
