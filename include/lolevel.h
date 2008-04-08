@@ -137,6 +137,9 @@ extern long playrec_mode; //used on S-series only
 extern void *led_table;
 extern void _UniqueLedOn(void *addr, long brightness);
 extern void _UniqueLedOff(void *addr);
+struct led_control {int led_num; int action; int brightness; int blink_count;};
+extern int _PostLEDMessage(struct led_control *);
+
 
 extern long _LockMainPower();
 extern long _UnlockMainPower();

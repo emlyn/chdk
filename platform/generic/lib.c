@@ -29,7 +29,7 @@ void debug_led(int state)
 }
 #define LED_AF 0xc0220080
 
-void ubasic_set_led(int led, int state, int bright)
+void __attribute__((weak)) ubasic_set_led(int led, int state, int bright)
 
 {
   int leds[] = {12,16,4,8,4,0,4};
