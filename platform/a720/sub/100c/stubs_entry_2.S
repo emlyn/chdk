@@ -104,7 +104,7 @@ NHSTUB(UpdateMBROnFlash, 0xFFC3F28C)
 NHSTUB(opendir, 0xFFDC1B04) // OpenFastDir
 NHSTUB(ReadFastDir, 0xFFDC1B98)
 NHSTUB(closedir, 0xFFDC1C68)  // CloseFastDir
-
+NHSTUB(UnsetZoomForMovie, 0xFFD22418)
 
 
 // dryos Test

@@ -104,7 +104,3 @@ long get_vbatt_max()
 {
     return 2550;
 }
-
-void change_video_tables(int a, int b){
-
-}
