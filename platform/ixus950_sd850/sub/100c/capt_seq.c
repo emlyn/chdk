@@ -27,7 +27,7 @@ void hook_raw_save_complete()
 
 void capt_seq_hook_set_nr()
 {
-    long *nrflag = (long*)0x61B0;
+    long *nrflag = (long*)0xED44;
 
     switch (core_get_noise_reduction_value()){
     case NOISE_REDUCTION_AUTO_CANON:
