@@ -76,6 +76,9 @@ PLATFORMSUB=100e
 #PLATFORMSUB=100c
 
 #PLATFORM=s5is
+#PLATFORMSUB=101a
+
+#PLATFORM=s5is
 #PLATFORMSUB=101b
 
 include $(topdir)version.inc

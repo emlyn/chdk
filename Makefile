@@ -119,6 +119,7 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=a450 PLATFORMSUB=100d NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=a460 PLATFORMSUB=100d NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=a550 PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=s5is PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=s5is PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
 	@echo "**** All firmwares created successfully"
 
@@ -165,6 +166,7 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=a450 PLATFORMSUB=100d NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=a460 PLATFORMSUB=100d NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=a550 PLATFORMSUB=100c NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=s5is PLATFORMSUB=101a NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=s5is PLATFORMSUB=101b NO_INC_BUILD=1 clean
 
 .PHONY: fir upload

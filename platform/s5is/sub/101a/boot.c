@@ -29,9 +29,7 @@ void dump_chdk();
 #define DEBUG_LED 0xC02200D4 // Red led (lower-right corner) normally indicating SD read/write
 
 void boot() {
-
     asm volatile ("B      sub_FF81000C_my\n");
-
 };
 
 
@@ -114,12 +112,12 @@ void __attribute__((naked,noinline)) sub_FF81000C_my() {
           "LDR     R1, [R2]\n"
           "ORR     R1, R1, #1\n"
           "STR     R1, [R2]\n"
-          "LDR     R0, =0xFFB07EB8\n"
+          "LDR     R0, =0xFFB07FA8\n"
           "LDR     R1, =0x1900\n"
           "LDR     R3, =0x1056C\n"
 
      "loc_FF81014C:\n"
-          "CMP     R1, R3\n"                     // Copy code from 0xFFB07EB8(inc) onwards to 0x1900(inc) .. 0x1056C (ex)
+          "CMP     R1, R3\n"                     // Copy code from 0xFFB07FA8(inc) onwards to 0x1900(inc) .. 0x1056C (ex)
           "LDRCC   R2, [R0],#4\n"
           "STRCC   R2, [R1],#4\n"
           "BCC     loc_FF81014C\n"               // loop
@@ -184,7 +182,7 @@ void __attribute__((naked,noinline)) sub_FF810FCC_my() {
           "SUB     SP, SP, #0x74\n"
           "MOV     R0, SP\n"
           "MOV     R1, #0x74\n"
-          "BL      sub_FFA92C10\n"
+          "BL      sub_FFA92D04\n"
           "MOV     R0, #0x53000\n"
           "STR     R0, [SP,#0x74-0x70]\n"
 //          "LDR     R0, =0x9B610\n"
@@ -236,7 +234,7 @@ void __attribute__((naked,noinline)) sub_FF814E0C_my() {
         asm volatile (
               "STMFD   SP!, {R4,LR}\n"
               "BL      sub_FF810970\n"
-              "BL      sub_FF8197D0\n"           // dmSetup
+              "BL      sub_FF819898\n"           // dmSetup
               "CMP     R0, #0\n"
 //              "ADRLT   R0, aDmsetup\n"
               "LDRLT   R0, =0xFF814F20\n"
@@ -260,7 +258,7 @@ void __attribute__((naked,noinline)) sub_FF814E0C_my() {
 //              "ADRLT   R0, aStdiosetup\n"
               "LDRLT   R0, =0xFF814F54\n"
               "BLLT    sub_FF814F00\n"           // err_init_task
-              "BL      sub_FF8194B8\n"           // stdlibSetup
+              "BL      sub_FF819580\n"           // stdlibSetup
               "CMP     R0, #0\n"
 //              "ADRLT   R0, aStdlibsetup\n"
               "LDRLT   R0, =0xFF814F60\n"
@@ -271,65 +269,65 @@ void __attribute__((naked,noinline)) sub_FF814E0C_my() {
               "LDRLT   R0, =0xFF814F6C\n"
               "BLLT    sub_FF814F00\n"           // err_init_task
               "LDMFD   SP!, {R4,LR}\n"
-              //"B       sub_FF81D9F0\n"         // CreateTaskStartup
-              "B       sub_FF81D9F0_my\n"        // +---------------------> Hook
+              //"B       sub_FF81DAB8\n"         // CreateTaskStartup
+              "B       sub_FF81DAB8_my\n"        // +---------------------> Hook
      ".ltorg\n"
         );
 };
 
 
-void __attribute__((naked,noinline)) sub_FF81D9F0_my() {
+void __attribute__((naked,noinline)) sub_FF81DAB8_my() {
      asm volatile (
           "STMFD   SP!, {R3,LR}\n"
-          "BL      sub_FF82CE28\n"
+          "BL      sub_FF82CEF0\n"
           "CMP     R0, #0\n"
-          "BNE     loc_FF81DA2C\n"
-          "BL      sub_FF824D04\n"
+          "BNE     loc_FF81DAF4\n"
+          "BL      sub_FF824DCC\n"
           "CMP     R0, #0\n"
           "LDREQ   R2, =0xC0220000\n"
           "LDREQ   R0, [R2,#0x10C]\n"
           "LDREQ   R1, [R2,#0x108]\n"
           "ORREQ   R0, R0, R1\n"
           "TSTEQ   R0, #1\n"
-          "BNE     loc_FF81DA2C\n"
+          "BNE     loc_FF81DAF4\n"
           "MOV     R0, #0x44\n"
           "STR     R0, [R2,#0x4C]\n"
 
-     "loc_FF81DA28:\n"
-          "B       loc_FF81DA28\n"
+     "loc_FF81DAF0:\n"
+          "B       loc_FF81DAF0\n"
 
 
-     "loc_FF81DA2C:\n"
-          "BL      sub_FF823630\n"
-          "BL      sub_FF82A9D0\n"
+     "loc_FF81DAF4:\n"
+          "BL      sub_FF8236F8\n"
+          "BL      sub_FF82AA98\n"
           "MOV     R1, #0x300000\n"
           "MOV     R0, #0\n"
-          "BL      sub_FF82AC18\n"
-          "BL      sub_FF82ABC4\n"
+          "BL      sub_FF82ACE0\n"
+          "BL      sub_FF82AC8C\n"
           "MOV     R3, #0\n"
           "STR     R3, [SP,#8-8]\n"
-//          "LDR     R3, sub_FF81D950\n"         // Startup, 0xFF81D950
-          "LDR     R3, =sub_FF81D950_my\n"       // +---------------------> Hook
+//          "LDR     R3, sub_FF81DA18\n"         // Startup, 0xFF81DA18
+          "LDR     R3, =sub_FF81DA18_my\n"       // +---------------------> Hook
           "MOV     R2, #0\n"
           "MOV     R1, #0x19\n"
 //          "ADR     R0, aStartup\n"
-          "LDR     R0, =0xFF81DA7C\n"
-          "BL      sub_FF81B8FC\n"               // CreateTask
+          "LDR     R0, =0xFF81DB44\n"
+          "BL      sub_FF81B9C4\n"               // CreateTask
           "MOV     R0, #0\n"
           "LDMFD   SP!, {R12,PC}\n"
      ".ltorg\n"
      );
 }
 
-void __attribute__((naked,noinline)) sub_FF81D950_my() {
+void __attribute__((naked,noinline)) sub_FF81DA18_my() {
      asm volatile (
           "STMFD   SP!, {R4,LR}\n"
-          "BL      sub_FF8151CC\n"
-          "BL      sub_FF824778\n"
-          "BL      sub_FF820D4C\n"
+          "BL      sub_FF81521C\n"
+          "BL      sub_FF824840\n"
+          "BL      sub_FF820E14\n"
           //"BL      j_nullsub_163\n"            
-          "BL      sub_FF82D018\n"
-//          "BL      sub_FF82CF00\n"            // Apparently responsible for
+          "BL      sub_FF82D0E0\n"
+//          "BL      sub_FF82CFC8\n"            // Apparently responsible for
                                                 // diskboot. Bypassing it does
                                                 // not seem to affect the camera
                                                 // negatively.
@@ -339,52 +337,52 @@ void __attribute__((naked,noinline)) sub_FF81D950_my() {
      
      asm volatile (
           "LDR     R4, =0x66A8\n"
-          "B       loc_FF81D97C\n"
+          "B       loc_FF81DA44\n"
 
-     "loc_FF81D974:\n"
+     "loc_FF81DA3C:\n"
           "SUBS    R4, R4, #1\n"
-          "BEQ     loc_FF81D98C\n"
+          "BEQ     loc_FF81DA54\n"
 
-     "loc_FF81D97C:\n"
+     "loc_FF81DA44:\n"
           "MOV     R0, #5\n"
-          "BL      sub_FF820E54\n"
+          "BL      sub_FF820F1C\n"
           "CMP     R0, #1\n"
-          "BEQ     loc_FF81D974\n"
+          "BEQ     loc_FF81DA3C\n"
 
-     "loc_FF81D98C:\n"
+     "loc_FF81DA54:\n"
           "MOV     R0, #5\n"
-          "BL      sub_FF82124C\n"
+          "BL      sub_FF821314\n"
           "SUBS    R12, R0, #0x300\n"
           "SUBGES  R12, R12, #0xF6\n"
-          "BLE     loc_FF81D9B0\n"
-          "BL      sub_FF829F0C\n"
+          "BLE     loc_FF81DA78\n"
+          "BL      sub_FF829FD4\n"
           "MOV     R1, #0xB5\n"
 //          "ADR     R0, aStartup_c\n"
-          "LDR     R0, =0xFF81DA6C\n"
-          "BL      sub_FF81BCCC\n"               // Assert, 0xFF81BCCC
+          "LDR     R0, =0xFF81DB34\n"
+          "BL      sub_FF81BD94\n"               // Assert, 0xFF81BD94
 
-     "loc_FF81D9B0:\n"
-          "BL      sub_FF82DABC\n"
-          "BL      sub_FF82D068\n"
-          "BL      sub_FF829F0C\n"
-          "BL      sub_FF82DACC\n"
-          //"BL      sub_FF8235D4\n"             // PhySw, bypass and create own
+     "loc_FF81DA78:\n"
+          "BL      sub_FF82DB84\n"
+          "BL      sub_FF82D130\n"
+          "BL      sub_FF829FD4\n"
+          "BL      sub_FF82DB94\n"
+          //"BL      sub_FF82369C\n"             // PhySw, bypass and create own
      );
 
      CreateTask_PhySw();
 
      asm volatile (
-//          "BL      sub_FF826988\n"             // CaptSeqTask and lots of other stuff
-          "BL      sub_FF826988_my\n"            // +---------------------> Hook (in capt_seq.c)
-          "BL      sub_FF82DAEC\n"
+//          "BL      sub_FF826A50\n"             // CaptSeqTask and lots of other stuff
+          "BL      sub_FF826A50_my\n"            // +---------------------> Hook (in capt_seq.c)
+          "BL      sub_FF82DBB4\n"
           //"BL      nullsub_2\n"
-          "BL      sub_FF822998\n"
-          "BL      sub_FF82CBF4\n"
-          "BL      sub_FF8230C0\n"
-          "BL      sub_FF8228A4\n"
-          //"BL      sub_FF82E570\n"
-          "BL      sub_FF82E570_my\n"            // +---> MAJOR HOOK (SDHC boot)
-          "BL      sub_FF822728\n"
+          "BL      sub_FF822A60\n"
+          "BL      sub_FF82CCBC\n"
+          "BL      sub_FF823188\n"
+          "BL      sub_FF82296C\n"
+          //"BL      sub_FF82E638\n"
+          "BL      sub_FF82E638_my\n"            // +---> MAJOR HOOK (SDHC boot)
+          "BL      sub_FF8227F0\n"
           "LDMFD   SP!, {R4,LR}\n"
           "B       sub_FF8150D8\n"
      ".ltorg\n"
@@ -396,48 +394,48 @@ void __attribute__((naked,noinline)) sub_FF81D950_my() {
 // Major SDHC boot fix hook starts here
 //
 // Paths that certainly do not (by itself) get the SDHC booting going:
-// sub_FF82E570 -> sub_FF824D18 -> sub_FF824A60 -> sub_FF87BF78 (entire 'right subtree')
-// sub_FF82E570 -> sub_FF82E120 -> sub_FF87AC88 -> sub_FF87A340 -> sub_FF87BF78 (shortest path (subroutine-count-wise) through 'left subtree')
-// sub_FF82E570 -> sub_FF82E120 -> sub_FF87AC88 -> sub_FF87A80C -> sub_FF87A340 -> sub_FF87BF78 (sub_FF87A80C does not appear to be called)
+// sub_FF82E638 -> sub_FF824DE0 -> sub_FF824B28 -> sub_FF87C040 (entire 'right subtree')
+// sub_FF82E638 -> sub_FF82E1E8 -> sub_FF87AD50 -> sub_FF87A408 -> sub_FF87C040 (shortest path (subroutine-count-wise) through 'left subtree')
+// sub_FF82E638 -> sub_FF82E1E8 -> sub_FF87AD50 -> sub_FF87A8D4 -> sub_FF87A408 -> sub_FF87C040 (sub_FF87A8D4 does not appear to be called)
 // 
 // Unexplored:
-// sub_FF82E570 -> sub_FF82E120 -> sub_FF87BD48 -> sub_FF87BB94 -> sub_FF87AC88 ->              -> sub_FF87A340 -> sub_FF87BF78
-//                                                                              -> sub_FF87A80C ->
+// sub_FF82E638 -> sub_FF82E1E8 -> sub_FF87BE10 -> sub_FF87BC5C -> sub_FF87AD50 ->              -> sub_FF87A408 -> sub_FF87C040
+//                                                                              -> sub_FF87A8D4 ->
 //
 // Final, working path:
-// sub_FF82E570 -> sub_FF82E120 -> sub_FF87BD48 -> sub_FF87BB94 -> sub_FF87AC88 -> sub_FF87A340 -> sub_FF87BF78
+// sub_FF82E638 -> sub_FF82E1E8 -> sub_FF87BE10 -> sub_FF87BC5C -> sub_FF87AD50 -> sub_FF87A408 -> sub_FF87C040
 //
 // That's the 'tree'-part, the rest of the subroutines are just straight on down, no junctions.
-// -> sub_FF87BF28 -> sub_FF874FDC -> sub_FF856910 -> sub_FF85674C -> sub_FF8565E4
+// -> sub_FF87BFF0 -> sub_FF8750A4 -> sub_FF8569D8 -> sub_FF856814 -> sub_FF8566AC
 /////////////////////////////////////////////////////////////////////////////////////
 
-void __attribute__((naked,noinline)) sub_FF82E570_my() {
+void __attribute__((naked,noinline)) sub_FF82E638_my() {
      asm volatile (
           "STMFD   SP!, {R4,LR}\n"
-          "BL      sub_FF878D88\n"
-          "BL      sub_FF824CD8\n"
+          "BL      sub_FF878E50\n"
+          "BL      sub_FF824DA0\n"
           "CMP     R0, #1\n"
-          "BNE     loc_FF82E590\n"
-          "BL      sub_FF87C08C\n"
+          "BNE     loc_FF82E658\n"
+          "BL      sub_FF87C154\n"
           "LDMFD   SP!, {R4,LR}\n"
-          "B       sub_FF824D18\n"
+          "B       sub_FF824DE0\n"
 
-     "loc_FF82E590:\n"
-          "BL      sub_FF87AF30\n"
+     "loc_FF82E658:\n"
+          "BL      sub_FF87AFF8\n"
           "LDR     R4, =0x1E80\n"
           "LDR     R0, [R4,#4]\n"
           "CMP     R0, #0\n"
           "LDMNEFD SP!, {R4,PC}\n"
           "MOV     R1, #0\n"
-          //"LDR     R0, =0xFF82E120\n"
-          "LDR     R0, =sub_FF82E120_my\n"       // +----> Hook for SDHC booting
-          "BL      sub_FF875938\n"
+          //"LDR     R0, =0xFF82E1E8\n"
+          "LDR     R0, =sub_FF82E1E8_my\n"       // +----> Hook for SDHC booting
+          "BL      sub_FF875A00\n"
           "STR     R0, [R4,#4]\n"
           "LDMFD   SP!, {R4,PC}\n"
      );
 }
 
-void __attribute__((naked,noinline)) sub_FF82E120_my() {
+void __attribute__((naked,noinline)) sub_FF82E1E8_my() {
      asm volatile (
           "STMFD   SP!, {R3-R11,LR}\n"
           "LDR     R6, =0x1E80\n"
@@ -445,50 +443,50 @@ void __attribute__((naked,noinline)) sub_FF82E120_my() {
           "LDR     R0, [R6,#0x14]\n"
           "MOV     R4, R3\n"
           "CMP     R0, #1\n"
-          "BNE     loc_FF82E144\n"
-          "BL      sub_FF8795E0\n"
-          "B       loc_FF82E1C8\n"
+          "BNE     loc_FF82E20C\n"
+          "BL      sub_FF8796A8\n"
+          "B       loc_FF82E290\n"
 
-     "loc_FF82E144:\n"
+     "loc_FF82E20C:\n"
           "LDR     R12, =0x1162\n"
           "LDR     R10, =0x1005\n"
           "CMP     R5, R12\n"
           "MOV     R7, #0\n"
           "MOV     R8, #1\n"
-          "BEQ     loc_FF82E4C4\n"
-          "BGT     loc_FF82E28C\n"
+          "BEQ     loc_FF82E58C\n"
+          "BGT     loc_FF82E354\n"
           "LDR     R12, =0x1062\n"
           "CMP     R5, R12\n"
-          "BEQ     loc_FF82E54C\n"
-          "BGT     loc_FF82E1F8\n"
+          "BEQ     loc_FF82E614\n"
+          "BGT     loc_FF82E2C0\n"
           "CMP     R5, R10\n"
-          "BEQ     loc_FF82E248\n"
-          "BGT     loc_FF82E1D0\n"
+          "BEQ     loc_FF82E310\n"
+          "BGT     loc_FF82E298\n"
           "SUB     R12, R5, #0x800\n"
           "SUBS    R12, R12, #3\n"
-          "BEQ     loc_FF82E3CC\n"
+          "BEQ     loc_FF82E494\n"
           "SUB     R12, R5, #0x800\n"
           "SUBS    R12, R12, #0x158\n"
-          "BEQ     loc_FF82E554\n"
+          "BEQ     loc_FF82E61C\n"
           "LDR     R4, =0x9A3\n"
           "CMP     R5, R4\n"
           "ADD     R7, R4, #2\n"
           "CMPNE   R5, R7\n"
-          "BNE     loc_FF82E4B4\n"
+          "BNE     loc_FF82E57C\n"
           "LDR     R0, [R6,#0xC]\n"
           "SUB     R12, R0, #0x8000\n"
           "SUBS    R12, R12, #2\n"
-          "BEQ     loc_FF82E1C8\n"
+          "BEQ     loc_FF82E290\n"
           "LDR     R0, =0x10A5\n"
-          "BL      sub_FF877A7C\n"
+          "BL      sub_FF877B44\n"
           "CMP     R0, #0\n"
-          "BEQ     loc_FF82E4A0\n"
+          "BEQ     loc_FF82E568\n"
 
-     "loc_FF82E1C8:\n"
+     "loc_FF82E290:\n"
           "MOV     R0, #0\n"
           "LDMFD   SP!, {R3-R11,PC}\n"
 
-     "loc_FF82E1D0:\n"
+     "loc_FF82E298:\n"
           "SUB     R12, R5, #0x1000\n"
           "SUBS    R12, R12, #0x56\n"
           "SUBNE   R12, R5, #0x1000\n"
@@ -497,694 +495,694 @@ void __attribute__((naked,noinline)) sub_FF82E120_my() {
           "SUBNES  R12, R12, #0x5E\n"
           "SUBNE   R12, R5, #0x1000\n"
           "SUBNES  R12, R12, #0x61\n"
-          "BNE     loc_FF82E4B4\n"
-          "B       loc_FF82E54C\n"
+          "BNE     loc_FF82E57C\n"
+          "B       loc_FF82E614\n"
 
-     "loc_FF82E1F8:\n"
+     "loc_FF82E2C0:\n"
           "LDR     R12, =0x10AD\n"
           "CMP     R5, R12\n"
-          "BEQ     loc_FF82E4EC\n"
-          "BGT     loc_FF82E250\n"
+          "BEQ     loc_FF82E5B4\n"
+          "BGT     loc_FF82E318\n"
           "SUB     R12, R5, #0x1000\n"
           "SUBS    R12, R12, #0x63\n"
           "SUBNE   R12, R5, #0x1000\n"
           "SUBNES  R12, R12, #0x65\n"
-          "BEQ     loc_FF82E54C\n"
+          "BEQ     loc_FF82E614\n"
           "SUB     R12, R5, #0x1000\n"
           "LDR     R0, =0x10A3\n"
           "SUBS    R12, R12, #0xA9\n"
-          "BEQ     loc_FF82E4E0\n"
+          "BEQ     loc_FF82E5A8\n"
           "SUB     R12, R5, #0x1000\n"
           "SUBS    R12, R12, #0xAA\n"
-          "BNE     loc_FF82E4B4\n"
-          "BL      sub_FF877A7C\n"
+          "BNE     loc_FF82E57C\n"
+          "BL      sub_FF877B44\n"
           "CMP     R0, #0\n"
-          "BNE     loc_FF82E1C8\n"
+          "BNE     loc_FF82E290\n"
 
-     "loc_FF82E244:\n"
-          "BL      sub_FF82EB04\n"
+     "loc_FF82E30C:\n"
+          "BL      sub_FF82EBCC\n"
 
-     "loc_FF82E248:\n"
+     "loc_FF82E310:\n"
           "MOV     R1, R4\n"
-          "B       loc_FF82E4B8\n"
+          "B       loc_FF82E580\n"
 
-     "loc_FF82E250:\n"
+     "loc_FF82E318:\n"
           "SUB     R12, R5, #0x1000\n"
           "SUBS    R12, R12, #0xAE\n"
-          "BEQ     loc_FF82E244\n"
+          "BEQ     loc_FF82E30C\n"
           "SUB     R12, R5, #0x1000\n"
           "SUBS    R12, R12, #0xAF\n"
-          "BEQ     loc_FF82E4EC\n"
+          "BEQ     loc_FF82E5B4\n"
           "SUB     R12, R5, #0x1000\n"
           "SUBS    R12, R12, #0xB0\n"
-          "BEQ     loc_FF82E244\n"
+          "BEQ     loc_FF82E30C\n"
           "SUB     R12, R5, #0x1000\n"
           "SUBS    R12, R12, #0xB2\n"
-          "BNE     loc_FF82E4B4\n"
+          "BNE     loc_FF82E57C\n"
           "LDR     R0, =0x1008\n"
           "MOV     R1, R4\n"
-          "B       loc_FF82E4BC\n"
+          "B       loc_FF82E584\n"
 
-     "loc_FF82E28C:\n"
+     "loc_FF82E354:\n"
           "LDR     R11, =0x201B\n"
           "LDR     R0, =0x1E80\n"
           "CMP     R5, R11\n"
           "LDR     R2, [R0,#0x10]!\n"
           "LDR     R1, [R0,#0x10]\n"
           "SUB     R9, R11, #0x17\n"
-          "BEQ     loc_FF82E480\n"
-          "BGT     loc_FF82E354\n"
+          "BEQ     loc_FF82E548\n"
+          "BGT     loc_FF82E41C\n"
           "LDR     R11, =0x116A\n"
           "CMP     R5, R11\n"
-          "BEQ     loc_FF82E46C\n"
-          "BGT     loc_FF82E308\n"
+          "BEQ     loc_FF82E534\n"
+          "BGT     loc_FF82E3D0\n"
           "SUB     R12, R5, #0x1100\n"
           "SUBS    R12, R12, #0x63\n"
           "MOVEQ   R1, #0\n"
           "MOVEQ   R0, #0x82\n"
-          "BEQ     loc_FF82E498\n"
+          "BEQ     loc_FF82E560\n"
           "SUB     R12, R5, #0x1100\n"
           "SUBS    R12, R12, #0x65\n"
-          "BEQ     loc_FF82E490\n"
+          "BEQ     loc_FF82E558\n"
           "LDR     R4, =0x1168\n"
           "SUB     R12, R5, #0x1100\n"
           "SUBS    R12, R12, #0x67\n"
           "CMPNE   R5, R4\n"
-          "BNE     loc_FF82E4B4\n"
+          "BNE     loc_FF82E57C\n"
           "STR     R8, [R6,#0x10]\n"
           "LDR     R6, =0x4508\n"
           "CMP     R1, #0\n"
-          "BEQ     loc_FF82E45C\n"
-          "BL      sub_FF879614\n"
-          "B       loc_FF82E460\n"
+          "BEQ     loc_FF82E524\n"
+          "BL      sub_FF8796DC\n"
+          "B       loc_FF82E528\n"
 
-     "loc_FF82E308:\n"
+     "loc_FF82E3D0:\n"
           "SUB     R12, R5, #0x2000\n"
           "SUBS    R12, R12, #2\n"
-          "BEQ     loc_FF82E518\n"
+          "BEQ     loc_FF82E5E0\n"
           "CMP     R5, R9\n"
           "MOV     R0, R9\n"
-          "BEQ     loc_FF82E524\n"
+          "BEQ     loc_FF82E5EC\n"
           "SUB     R12, R5, #0x2000\n"
           "SUBS    R12, R12, #5\n"
-          "BEQ     loc_FF82E518\n"
+          "BEQ     loc_FF82E5E0\n"
           "SUB     R12, R5, #0x2000\n"
           "SUBS    R12, R12, #0x19\n"
-          "BNE     loc_FF82E4B4\n"
+          "BNE     loc_FF82E57C\n"
           "CMP     R1, #0\n"
-          "BEQ     loc_FF82E1C8\n"
+          "BEQ     loc_FF82E290\n"
           "CMP     R2, #0\n"
-          "BNE     loc_FF82E1C8\n"
+          "BNE     loc_FF82E290\n"
 
-     "loc_FF82E348:\n"
+     "loc_FF82E410:\n"
           "MOV     R1, #0\n"
 
-     "loc_FF82E34C:\n"
-          "BL      sub_FF87AC88\n"
-          "B       loc_FF82E1C8\n"
+     "loc_FF82E414:\n"
+          "BL      sub_FF87AD50\n"
+          "B       loc_FF82E290\n"
 
-     "loc_FF82E354:\n"
+     "loc_FF82E41C:\n"
           "LDR     R12, =0x3110\n"
           "CMP     R5, R12\n"
-          "BEQ     loc_FF82E248\n"
-          "BGT     loc_FF82E39C\n"
+          "BEQ     loc_FF82E310\n"
+          "BGT     loc_FF82E464\n"
           "SUB     R12, R5, #0x2000\n"
           "SUBS    R12, R12, #0x1D\n"
-          "BEQ     loc_FF82E518\n"
+          "BEQ     loc_FF82E5E0\n"
           "LDR     R0, =0x2027\n"
           "CMP     R5, R0\n"
-          "BEQ     loc_FF82E4F8\n"
+          "BEQ     loc_FF82E5C0\n"
           "SUB     R12, R5, #0x3000\n"
           "SUBS    R12, R12, #6\n"
-          "BEQ     loc_FF82E248\n"
+          "BEQ     loc_FF82E310\n"
           "SUB     R12, R5, #0x3000\n"
           "SUBS    R12, R12, #0x10\n"
-          "BNE     loc_FF82E4B4\n"
-          "BL      sub_FF89A628\n"
-          "B       loc_FF82E1C8\n"
+          "BNE     loc_FF82E57C\n"
+          "BL      sub_FF89A6F0\n"
+          "B       loc_FF82E290\n"
 
-     "loc_FF82E39C:\n"
+     "loc_FF82E464:\n"
           "SUB     R12, R5, #0x3100\n"
           "SUBS    R12, R12, #0x11\n"
-          "BEQ     loc_FF82E248\n"
+          "BEQ     loc_FF82E310\n"
           "CMP     R5, #0x3140\n"
-          "BEQ     loc_FF82E540\n"
+          "BEQ     loc_FF82E608\n"
           "SUB     R12, R5, #0x3200\n"
           "SUBS    R12, R12, #1\n"
-          "BEQ     loc_FF82E4B4\n"
+          "BEQ     loc_FF82E57C\n"
           "SUB     R12, R5, #0x3200\n"
           "SUBS    R12, R12, #2\n"
-          "BEQ     loc_FF82E248\n"
-          "B       loc_FF82E4B4\n"
+          "BEQ     loc_FF82E310\n"
+          "B       loc_FF82E57C\n"
 
-     "loc_FF82E3CC:\n"
+     "loc_FF82E494:\n"
           "MOV     R4, #1\n"
           "MOV     R0, #2\n"
-          "BL      sub_FF878E1C\n"
+          "BL      sub_FF878EE4\n"
           "CMP     R0, #1\n"
           "MOVEQ   R4, #2\n"
           "MOV     R0, R4\n"
-          "BL      sub_FF822CC4\n"
+          "BL      sub_FF822D8C\n"
           "CMP     R0, #0\n"
           "STRNE   R8, [R6,#0x14]\n"
-          "BNE     loc_FF82E428\n"
-          "BL      sub_FF87F814\n"
-          "BL      sub_FF87CD38\n"
-          "BL      sub_FF87DBD8\n"
-          "BL      sub_FF87E0E8\n"
-          "BL      sub_FF87C310\n"
-          "BL      sub_FF87E4E4\n"
+          "BNE     loc_FF82E4F0\n"
+          "BL      sub_FF87F8DC\n"
+          "BL      sub_FF87CE00\n"
+          "BL      sub_FF87DCA0\n"
+          "BL      sub_FF87E1B0\n"
+          "BL      sub_FF87C3D8\n"
+          "BL      sub_FF87E5AC\n"
           "CMP     R0, #0\n"
-          "BEQ     loc_FF82E430\n"
-          "BL      sub_FF82DE8C\n"
-          "BL      sub_FF87E4D8\n"
+          "BEQ     loc_FF82E4F8\n"
+          "BL      sub_FF82DF54\n"
+          "BL      sub_FF87E5A0\n"
           "MOV     R1, R0\n"
           "LDR     R0, =0x1167\n"
-          "BL      sub_FF876100\n"
+          "BL      sub_FF8761C8\n"
 
-     "loc_FF82E428:\n"
+     "loc_FF82E4F0:\n"
           "MOV     R0, R7\n"
           "LDMFD   SP!, {R3-R11,PC}\n"
 
-     "loc_FF82E430:\n"
-          "BL      sub_FF826FA0\n"
+     "loc_FF82E4F8:\n"
+          "BL      sub_FF827068\n"
           "CMP     R0, #1\n"
           "LDRNE   R0, =0x310B\n"
           "LDREQ   R0, =0x310C\n"
           "MOV     R1, #0\n"
-          "BL      sub_FF876100\n"
-          //"BL      sub_FF87BD48\n"
-          "BL      sub_FF87BD48_my\n"            // +----> Hook for SDHC booting
-          "B       loc_FF82E428\n"
+          "BL      sub_FF8761C8\n"
+          //"BL      sub_FF87BE10\n"
+          "BL      sub_FF87BE10_my\n"            // +----> Hook for SDHC booting
+          "B       loc_FF82E4F0\n"
 
-     "loc_FF82E450:\n"
+     "loc_FF82E518:\n"
           "MOV     R0, R6\n"
-          "BL      sub_FF8641A8\n"
-          "B       loc_FF82E1C8\n"
+          "BL      sub_FF864270\n"
+          "B       loc_FF82E290\n"
 
-     "loc_FF82E45C:\n"
-          "BL      sub_FF826C98\n"
+     "loc_FF82E524:\n"
+          "BL      sub_FF826D60\n"
 
-     "loc_FF82E460:\n"
+     "loc_FF82E528:\n"
           "CMP     R5, R4\n"
-          "BNE     loc_FF82E1C8\n"
-          "B       loc_FF82E450\n"
+          "BNE     loc_FF82E290\n"
+          "B       loc_FF82E518\n"
 
-     "loc_FF82E46C:\n"
+     "loc_FF82E534:\n"
           "MOV     R0, #1\n"
-          "BL      sub_FF87972C\n"
+          "BL      sub_FF8797F4\n"
           "MOV     R1, R11\n"
           "MOV     R0, R10\n"
-          "B       loc_FF82E4BC\n"
+          "B       loc_FF82E584\n"
 
-     "loc_FF82E480:\n"
+     "loc_FF82E548:\n"
           "CMP     R2, #1\n"
-          "BNE     loc_FF82E248\n"
-          "BL      sub_FF879614\n"
-          "B       loc_FF82E1C8\n"
+          "BNE     loc_FF82E310\n"
+          "BL      sub_FF8796DC\n"
+          "B       loc_FF82E290\n"
 
-     "loc_FF82E490:\n"
+     "loc_FF82E558:\n"
           "MOV     R1, #0\n"
           "MOV     R0, #0x83\n"
 
-     "loc_FF82E498:\n"
-          "BL      sub_FF87E1BC\n"
-          "B       loc_FF82E1C8\n"
+     "loc_FF82E560:\n"
+          "BL      sub_FF87E284\n"
+          "B       loc_FF82E290\n"
 
-     "loc_FF82E4A0:\n"
+     "loc_FF82E568:\n"
           "CMP     R5, R4\n"
           "STREQ   R8, [R6,#0x34]\n"
-          "BEQ     loc_FF82E4B4\n"
+          "BEQ     loc_FF82E57C\n"
           "CMP     R5, R7\n"
           "STREQ   R8, [R6,#0x30]\n"
 
-     "loc_FF82E4B4:\n"
+     "loc_FF82E57C:\n"
           "MOV     R1, #0\n"
 
-     "loc_FF82E4B8:\n"
+     "loc_FF82E580:\n"
           "MOV     R0, R5\n"
 
-     "loc_FF82E4BC:\n"
-          "BL      sub_FF87AC88\n"
+     "loc_FF82E584:\n"
+          "BL      sub_FF87AD50\n"
           "LDMFD   SP!, {R3-R11,PC}\n"
 
-     "loc_FF82E4C4:\n"
-          "BL      sub_FF882260\n"
+     "loc_FF82E58C:\n"
+          "BL      sub_FF882328\n"
           "CMP     R0, #0\n"
-          "BEQ     loc_FF82E248\n"
-          "BL      sub_FF882B70\n"
+          "BEQ     loc_FF82E310\n"
+          "BL      sub_FF882C38\n"
           "CMP     R0, #0\n"
-          "BLEQ    sub_FF880F94\n"
-          "B       loc_FF82E248\n"
+          "BLEQ    sub_FF88105C\n"
+          "B       loc_FF82E310\n"
 
-     "loc_FF82E4E0:\n"
-          "BL      sub_FF877A7C\n"
+     "loc_FF82E5A8:\n"
+          "BL      sub_FF877B44\n"
           "CMP     R0, #0\n"
-          "BNE     loc_FF82E1C8\n"
+          "BNE     loc_FF82E290\n"
 
-     "loc_FF82E4EC:\n"
+     "loc_FF82E5B4:\n"
           "MOV     R0, R5\n"
-          "BL      sub_FF82DFAC\n"
+          "BL      sub_FF82E074\n"
           "LDMFD   SP!, {R3-R11,PC}\n"
 
-     "loc_FF82E4F8:\n"
+     "loc_FF82E5C0:\n"
           "MOV     R1, #0\n"
-          "BL      sub_FF87AC88\n"
+          "BL      sub_FF87AD50\n"
           "MOV     R1, #0\n"
           "MOV     R0, R11\n"
-          "BL      sub_FF87AC88\n"
+          "BL      sub_FF87AD50\n"
           "MOV     R1, #0\n"
           "MOV     R0, R9\n"
-          "B       loc_FF82E34C\n"
+          "B       loc_FF82E414\n"
 
-     "loc_FF82E518:\n"
+     "loc_FF82E5E0:\n"
           "STR     R7, [R6,#0x20]\n"
-          "BL      sub_FF82E7A4\n"
-          "B       loc_FF82E248\n"
+          "BL      sub_FF82E86C\n"
+          "B       loc_FF82E310\n"
 
-     "loc_FF82E524:\n"
+     "loc_FF82E5EC:\n"
           "STR     R7, [R6,#0x20]\n"
-          "BL      sub_FF82E7A4\n"
+          "BL      sub_FF82E86C\n"
           "LDR     R0, [R6,#0x10]\n"
           "CMP     R0, #1\n"
-          "BNE     loc_FF82E248\n"
-          "BL      sub_FF879640\n"
-          "B       loc_FF82E1C8\n"
+          "BNE     loc_FF82E310\n"
+          "BL      sub_FF879708\n"
+          "B       loc_FF82E290\n"
 
-     "loc_FF82E540:\n"
+     "loc_FF82E608:\n"
           "CMP     R1, #0\n"
-          "BLEQ    sub_FF82E7A4\n"
-          "B       loc_FF82E1C8\n"
+          "BLEQ    sub_FF82E86C\n"
+          "B       loc_FF82E290\n"
 
-     "loc_FF82E54C:\n"
+     "loc_FF82E614:\n"
           "MVN     R0, #0\n"
-          "B       loc_FF82E348\n"
+          "B       loc_FF82E410\n"
 
-     "loc_FF82E554:\n"
+     "loc_FF82E61C:\n"
           "TST     R4, #0x80000000\n"
           "MOVNE   R0, #1\n"
           "LDMNEFD SP!, {R3-R11,PC}\n"
-          "BL      sub_FF883D08\n"
+          "BL      sub_FF883DD0\n"
           "CMP     R0, #0\n"
-          "BLEQ    sub_FF829CD8\n"
-          "B       loc_FF82E1C8\n"
+          "BLEQ    sub_FF829DA0\n"
+          "B       loc_FF82E290\n"
      );
 }
 
-void __attribute__((naked,noinline)) sub_FF87BD48_my() {
+void __attribute__((naked,noinline)) sub_FF87BE10_my() {
      asm volatile (
           "STMFD   SP!, {R4,LR}\n"
-          "BL      sub_FF82E770\n"
+          "BL      sub_FF82E838\n"
           "MOV     R4, R0\n"
-          "BL      sub_FF87BE64\n"
+          "BL      sub_FF87BF2C\n"
           "MOV     R0, R4\n"
-          "BL      sub_FF87BBF8\n"
-          "BL      sub_FF82E770\n"
+          "BL      sub_FF87BCC0\n"
+          "BL      sub_FF82E838\n"
           "MOV     R4, R0\n"
           "LDR     R0, =0x6374\n"
           "LDR     R0, [R0]\n"
           "TST     R0, #1\n"
-          "BEQ     loc_FF87BD84\n"
+          "BEQ     loc_FF87BE4C\n"
 
-     "loc_FF87BD78:\n"
+     "loc_FF87BE40:\n"
           "MOV     R1, R4\n"
           "MOV     R0, #2\n"
-          "B       loc_FF87BDEC\n"
+          "B       loc_FF87BEB4\n"
 
-     "loc_FF87BD84:\n"
+     "loc_FF87BE4C:\n"
           "TST     R0, #0x2000\n"
-          "BEQ     loc_FF87BDA0\n"
+          "BEQ     loc_FF87BE68\n"
           "TST     R0, #0x200\n"
           "LDREQ   R1, =0x4004\n"
           "LDRNE   R1, =0x8002\n"
           "MOV     R0, #3\n"
-          "B       loc_FF87BDEC\n"
+          "B       loc_FF87BEB4\n"
 
-     "loc_FF87BDA0:\n"
+     "loc_FF87BE68:\n"
           "TST     R0, #0x10\n"
-          "BNE     loc_FF87BD78\n"
+          "BNE     loc_FF87BE40\n"
           "TST     R0, #0x40\n"
-          "BEQ     loc_FF87BDBC\n"
+          "BEQ     loc_FF87BE84\n"
 
-     "loc_FF87BDB0:\n"
+     "loc_FF87BE78:\n"
           "MOV     R1, R4\n"
           "MOV     R0, #1\n"
-          "B       loc_FF87BDEC\n"
+          "B       loc_FF87BEB4\n"
 
-     "loc_FF87BDBC:\n"
+     "loc_FF87BE84:\n"
           "TST     R0, #0x20\n"
-          "BEQ     loc_FF87BDD8\n"
+          "BEQ     loc_FF87BEA0\n"
           "TST     R0, #0x4000\n"
-          "BNE     loc_FF87BDD8\n"
+          "BNE     loc_FF87BEA0\n"
 
-     "loc_FF87BDCC:\n"
+     "loc_FF87BE94:\n"
           "MOV     R1, R4\n"
           "MOV     R0, #0\n"
-          "B       loc_FF87BDEC\n"
+          "B       loc_FF87BEB4\n"
 
-     "loc_FF87BDD8:\n"
+     "loc_FF87BEA0:\n"
           "LDR     R1, =0x102\n"
           "BICS    R1, R1, R0\n"
-          "BNE     loc_FF87BDF4\n"
+          "BNE     loc_FF87BEBC\n"
           "MOV     R1, R4\n"
           "MOV     R0, #6\n"
 
-     "loc_FF87BDEC:\n"
+     "loc_FF87BEB4:\n"
           "LDMFD   SP!, {R4,LR}\n"
-          //"B       sub_FF87BB94\n"
-          "B       sub_FF87BB94_my\n"            // +----> Hook for SDHC booting
+          //"B       sub_FF87BC5C\n"
+          "B       sub_FF87BC5C_my\n"            // +----> Hook for SDHC booting
 
-     "loc_FF87BDF4:\n"
+     "loc_FF87BEBC:\n"
           "TST     R0, #0x100\n"
-          "BNE     loc_FF87BD78\n"
+          "BNE     loc_FF87BE40\n"
           "TST     R0, #0x4000\n"
           "TSTEQ   R0, #0x400\n"
-          "BNE     loc_FF87BDB0\n"
+          "BNE     loc_FF87BE78\n"
           "TST     R0, #0x200\n"
           "TSTEQ   R0, #2\n"
-          "BNE     loc_FF87BDCC\n"
+          "BNE     loc_FF87BE94\n"
           "TST     R0, #0x40000\n"
-          "BEQ     loc_FF87BD78\n"
+          "BEQ     loc_FF87BE40\n"
           "TST     R0, #0x200000\n"
           "MOVEQ   R1, R4\n"
           "MOVEQ   R0, #1\n"
-          //"BLEQ    sub_FF87BB94\n"
-          "BLEQ    sub_FF87BB94_my\n"            // +----> Hook for SDHC booting
-          "B       loc_FF87BD78\n"
+          //"BLEQ    sub_FF87BC5C\n"
+          "BLEQ    sub_FF87BC5C_my\n"            // +----> Hook for SDHC booting
+          "B       loc_FF87BE40\n"
      );
 }
 
 
-void __attribute__((naked,noinline)) sub_FF87BB94_my() {
+void __attribute__((naked,noinline)) sub_FF87BC5C_my() {
      asm volatile (
           "STMFD   SP!, {R4-R6,LR}\n"
           "MOVS    R4, R0\n"
           "MOV     R0, #1\n"
           "MOV     R5, R1\n"
-          "BNE     loc_FF87BBD4\n"
+          "BNE     loc_FF87BC9C\n"
           "MOV     R1, #0\n"
           "MOV     R0, #0\n"
-          "BL      sub_FF878DAC\n"
-          "BL      sub_FF82E770\n"
+          "BL      sub_FF878E74\n"
+          "BL      sub_FF82E838\n"
           "SUB     R12, R0, #0x1000\n"
           "SUBS    R12, R12, #0x5B\n"
-          "BNE     loc_FF87BBCC\n"
+          "BNE     loc_FF87BC94\n"
 
-     "loc_FF87BBC4:\n"
-          "BL      sub_FF87BADC\n"
-          "B       loc_FF87BBDC\n"
+     "loc_FF87BC8C:\n"
+          "BL      sub_FF87BBA4\n"
+          "B       loc_FF87BCA4\n"
 
-     "loc_FF87BBCC:\n"
-          "BL      sub_FF87BB1C\n"
-          "B       loc_FF87BBDC\n"
+     "loc_FF87BC94:\n"
+          "BL      sub_FF87BBE4\n"
+          "B       loc_FF87BCA4\n"
 
-     "loc_FF87BBD4:\n"
+     "loc_FF87BC9C:\n"
           "CMP     R4, #5\n"
-          "BEQ     loc_FF87BBC4\n"
+          "BEQ     loc_FF87BC8C\n"
 
-     "loc_FF87BBDC:\n"
+     "loc_FF87BCA4:\n"
           "CMP     R0, #0\n"
           "LDREQ   R5, =0x1162\n"
           "MOVEQ   R4, #2\n"
           "MOV     R0, R4\n"
           "MOV     R1, R5\n"
           "LDMFD   SP!, {R4-R6,LR}\n"
-          //"B       sub_FF87AC88\n"
-          "B       sub_FF87AC88_my\n"            // +----> Hook for SDHC booting
+          //"B       sub_FF87AD50\n"
+          "B       sub_FF87AD50_my\n"            // +----> Hook for SDHC booting
      );
 }
 
-void __attribute__((naked,noinline)) sub_FF87AC88_my() {
+void __attribute__((naked,noinline)) sub_FF87AD50_my() {
      asm volatile (
           "STMFD   SP!, {R4-R8,LR}\n"
           "MOV     R8, R1\n"
           "MOV     R4, R0\n"
-          "BL      sub_FF879928\n"
+          "BL      sub_FF8799F0\n"
           "LDR     R5, =0x62AC\n"
           "MOV     R7, #1\n"
           "LDR     R0, [R5,#0x10]\n"
           "MOV     R6, #0\n"
           "CMP     R0, #0x15\n"
           "ADDLS   PC, PC, R0,LSL#2\n"
-          "B       loc_FF87AF28\n"
+          "B       loc_FF87AFF0\n"
 
-     "loc_FF87ACB4:\n"
-          "B       loc_FF87AD0C\n"
+     "loc_FF87AD7C:\n"
+          "B       loc_FF87ADD4\n"
 
-     "loc_FF87ACB8:\n"
-          "B       loc_FF87AD34\n"
-
-     "loc_FF87ACBC:\n"
-          "B       loc_FF87AD78\n"
-
-     "loc_FF87ACC0:\n"
-          "B       loc_FF87ADEC\n"
-
-     "loc_FF87ACC4:\n"
+     "loc_FF87AD80:\n"
           "B       loc_FF87ADFC\n"
 
-     "loc_FF87ACC8:\n"
-          "B       loc_FF87AE08\n"
-
-     "loc_FF87ACCC:\n"
-          "B       loc_FF87AE78\n"
-
-     "loc_FF87ACD0:\n"
-          "B       loc_FF87AE88\n"
-
-     "loc_FF87ACD4:\n"
-          "B       loc_FF87AD1C\n"
-
-     "loc_FF87ACD8:\n"
-          "B       loc_FF87AD28\n"
-
-     "loc_FF87ACDC:\n"
-          "B       loc_FF87AE88\n"
-
-     "loc_FF87ACE0:\n"
-          "B       loc_FF87AD6C\n"
-
-     "loc_FF87ACE4:\n"
-          "B       loc_FF87AF28\n"
-
-     "loc_FF87ACE8:\n"
-          "B       loc_FF87AF28\n"
-
-     "loc_FF87ACEC:\n"
-          "B       loc_FF87AD84\n"
-
-     "loc_FF87ACF0:\n"
-          "B       loc_FF87AD90\n"
-
-     "loc_FF87ACF4:\n"
-          "B       loc_FF87ADC4\n"
-
-     "loc_FF87ACF8:\n"
-          "B       loc_FF87AD40\n"
-
-     "loc_FF87ACFC:\n"
-          "B       loc_FF87AF10\n"
-
-     "loc_FF87AD00:\n"
-          "B       loc_FF87AE94\n"
-
-     "loc_FF87AD04:\n"
-          "B       loc_FF87AEC4\n"
-
-     "loc_FF87AD08:\n"
-          "B       loc_FF87AEC4\n"
-
-     "loc_FF87AD0C:\n"
-          "MOV     R1, R8\n"
-          "MOV     R0, R4\n"
-          "LDMFD   SP!, {R4-R8,LR}\n"
-          //"B       sub_FF87A340\n"
-          "B       sub_FF87A340_my\n"            // +----> Hook for SDHC booting
-
-     "loc_FF87AD1C:\n"
-          "MOV     R0, R4\n"
-          "LDMFD   SP!, {R4-R8,LR}\n"
-          "B       sub_FF87B658\n"
-
-     "loc_FF87AD28:\n"
-          "MOV     R0, R4\n"
-          "LDMFD   SP!, {R4-R8,LR}\n"
-          "B       sub_FF87A80C\n"
-
-     "loc_FF87AD34:\n"
-          "MOV     R0, R4\n"
-          "LDMFD   SP!, {R4-R8,LR}\n"
-          "B       sub_FF879F08\n"
-
-     "loc_FF87AD40:\n"
-          "SUB     R12, R4, #0x1000\n"
-          "SUBS    R12, R12, #0xA5\n"
-          "STREQ   R7, [R5,#0x84]\n"
-          "BEQ     loc_FF87AF20\n"
-          "SUB     R12, R4, #0x3000\n"
-          "SUBS    R12, R12, #6\n"
-          "BNE     loc_FF87AF28\n"
-          "MOV     R0, #0\n"
-          "BL      sub_FF82DCE4\n"
-          "BL      sub_FF87B57C\n"
-          "B       loc_FF87AF20\n"
-
-     "loc_FF87AD6C:\n"
-          "MOV     R0, R4\n"
-          "LDMFD   SP!, {R4-R8,LR}\n"
-          "B       sub_FF87B5B8\n"
-
-     "loc_FF87AD78:\n"
-          "MOV     R0, R4\n"
-          "LDMFD   SP!, {R4-R8,LR}\n"
-          "B       sub_FF87A104\n"
-
      "loc_FF87AD84:\n"
-          "MOV     R0, R4\n"
-          "LDMFD   SP!, {R4-R8,LR}\n"
-          "B       sub_FF87A9B8\n"
+          "B       loc_FF87AE40\n"
+
+     "loc_FF87AD88:\n"
+          "B       loc_FF87AEB4\n"
+
+     "loc_FF87AD8C:\n"
+          "B       loc_FF87AEC4\n"
 
      "loc_FF87AD90:\n"
-          "SUB     R12, R4, #0x3200\n"
-          "SUBS    R12, R12, #2\n"
-          "BNE     loc_FF87AF28\n"
-          "MOV     R0, #3\n"
-          "BL      sub_FF87980C\n"
-          "MOV     R0, #8\n"
-          "BL      sub_FF82DC50\n"
-          "MOV     R0, #6\n"
-          "BL      sub_FF84239C\n"
-          "BL      sub_FF87D148\n"
-          "BL      sub_FF87CFA4\n"
-          "BL      sub_FF87C380\n"
-          "B       loc_FF87AF20\n"
+          "B       loc_FF87AED0\n"
+
+     "loc_FF87AD94:\n"
+          "B       loc_FF87AF40\n"
+
+     "loc_FF87AD98:\n"
+          "B       loc_FF87AF50\n"
+
+     "loc_FF87AD9C:\n"
+          "B       loc_FF87ADE4\n"
+
+     "loc_FF87ADA0:\n"
+          "B       loc_FF87ADF0\n"
+
+     "loc_FF87ADA4:\n"
+          "B       loc_FF87AF50\n"
+
+     "loc_FF87ADA8:\n"
+          "B       loc_FF87AE34\n"
+
+     "loc_FF87ADAC:\n"
+          "B       loc_FF87AFF0\n"
+
+     "loc_FF87ADB0:\n"
+          "B       loc_FF87AFF0\n"
+
+     "loc_FF87ADB4:\n"
+          "B       loc_FF87AE4C\n"
+
+     "loc_FF87ADB8:\n"
+          "B       loc_FF87AE58\n"
+
+     "loc_FF87ADBC:\n"
+          "B       loc_FF87AE8C\n"
+
+     "loc_FF87ADC0:\n"
+          "B       loc_FF87AE08\n"
 
      "loc_FF87ADC4:\n"
-          "SUB     R12, R4, #0x3300\n"
-          "SUBS    R12, R12, #1\n"
-          "BNE     loc_FF87AF28\n"
-          "LDR     R0, =0x4010\n"
-          "BL      sub_FF82DC50\n"
-          "BL      sub_FF89EF88\n"
-          "BL      sub_FF87C380\n"
-          "MOV     R0, #4\n"
-          "BL      sub_FF87980C\n"
-          "B       loc_FF87AF20\n"
+          "B       loc_FF87AFD8\n"
 
-     "loc_FF87ADEC:\n"
+     "loc_FF87ADC8:\n"
+          "B       loc_FF87AF5C\n"
+
+     "loc_FF87ADCC:\n"
+          "B       loc_FF87AF8C\n"
+
+     "loc_FF87ADD0:\n"
+          "B       loc_FF87AF8C\n"
+
+     "loc_FF87ADD4:\n"
           "MOV     R1, R8\n"
           "MOV     R0, R4\n"
           "LDMFD   SP!, {R4-R8,LR}\n"
-          "B       sub_FF87AB20\n"
+          //"B       sub_FF87A408\n"
+          "B       sub_FF87A408_my\n"            // +----> Hook for SDHC booting
+
+     "loc_FF87ADE4:\n"
+          "MOV     R0, R4\n"
+          "LDMFD   SP!, {R4-R8,LR}\n"
+          "B       sub_FF87B720\n"
+
+     "loc_FF87ADF0:\n"
+          "MOV     R0, R4\n"
+          "LDMFD   SP!, {R4-R8,LR}\n"
+          "B       sub_FF87A8D4\n"
 
      "loc_FF87ADFC:\n"
           "MOV     R0, R4\n"
           "LDMFD   SP!, {R4-R8,LR}\n"
-          "B       sub_FF87B788\n"
+          "B       sub_FF879FD0\n"
 
      "loc_FF87AE08:\n"
+          "SUB     R12, R4, #0x1000\n"
+          "SUBS    R12, R12, #0xA5\n"
+          "STREQ   R7, [R5,#0x84]\n"
+          "BEQ     loc_FF87AFE8\n"
+          "SUB     R12, R4, #0x3000\n"
+          "SUBS    R12, R12, #6\n"
+          "BNE     loc_FF87AFF0\n"
+          "MOV     R0, #0\n"
+          "BL      sub_FF82DDAC\n"
+          "BL      sub_FF87B644\n"
+          "B       loc_FF87AFE8\n"
+
+     "loc_FF87AE34:\n"
+          "MOV     R0, R4\n"
+          "LDMFD   SP!, {R4-R8,LR}\n"
+          "B       sub_FF87B680\n"
+
+     "loc_FF87AE40:\n"
+          "MOV     R0, R4\n"
+          "LDMFD   SP!, {R4-R8,LR}\n"
+          "B       sub_FF87A1CC\n"
+
+     "loc_FF87AE4C:\n"
+          "MOV     R0, R4\n"
+          "LDMFD   SP!, {R4-R8,LR}\n"
+          "B       sub_FF87AA80\n"
+
+     "loc_FF87AE58:\n"
+          "SUB     R12, R4, #0x3200\n"
+          "SUBS    R12, R12, #2\n"
+          "BNE     loc_FF87AFF0\n"
+          "MOV     R0, #3\n"
+          "BL      sub_FF8798D4\n"
+          "MOV     R0, #8\n"
+          "BL      sub_FF82DD18\n"
+          "MOV     R0, #6\n"
+          "BL      sub_FF842464\n"
+          "BL      sub_FF87D210\n"
+          "BL      sub_FF87D06C\n"
+          "BL      sub_FF87C448\n"
+          "B       loc_FF87AFE8\n"
+
+     "loc_FF87AE8C:\n"
+          "SUB     R12, R4, #0x3300\n"
+          "SUBS    R12, R12, #1\n"
+          "BNE     loc_FF87AFF0\n"
+          "LDR     R0, =0x4010\n"
+          "BL      sub_FF82DD18\n"
+          "BL      sub_FF89F050\n"
+          "BL      sub_FF87C448\n"
+          "MOV     R0, #4\n"
+          "BL      sub_FF8798D4\n"
+          "B       loc_FF87AFE8\n"
+
+     "loc_FF87AEB4:\n"
+          "MOV     R1, R8\n"
+          "MOV     R0, R4\n"
+          "LDMFD   SP!, {R4-R8,LR}\n"
+          "B       sub_FF87ABE8\n"
+
+     "loc_FF87AEC4:\n"
+          "MOV     R0, R4\n"
+          "LDMFD   SP!, {R4-R8,LR}\n"
+          "B       sub_FF87B850\n"
+
+     "loc_FF87AED0:\n"
           "LDR     R8, =0x1182\n"
           "CMP     R4, R8\n"
           "STREQ   R7, [R5,#0xB0]\n"
-          "BEQ     loc_FF87AF20\n"
+          "BEQ     loc_FF87AFE8\n"
           "SUB     R12, R4, #0x1100\n"
           "SUBS    R12, R12, #0x86\n"
-          "BEQ     loc_FF87AE60\n"
+          "BEQ     loc_FF87AF28\n"
           "SUB     R12, R4, #0x3200\n"
           "SUBS    R12, R12, #0x16\n"
-          "BNE     loc_FF87AF28\n"
+          "BNE     loc_FF87AFF0\n"
           "MOV     R0, #8\n"
-          "BL      sub_FF82DC50\n"
+          "BL      sub_FF82DD18\n"
           "MOV     R0, #3\n"
-          "BL      sub_FF87980C\n"
+          "BL      sub_FF8798D4\n"
           "STR     R6, [R5,#0xB4]\n"
           "LDR     R0, [R5,#0xB0]\n"
           "CMP     R0, #0\n"
           "MOVNE   R1, #0\n"
           "MOVNE   R0, R8\n"
           "STRNE   R6, [R5,#0xB0]\n"
-          "BLNE    sub_FF87AB20\n"
-          "B       loc_FF87AF20\n"
+          "BLNE    sub_FF87ABE8\n"
+          "B       loc_FF87AFE8\n"
 
-     "loc_FF87AE60:\n"
+     "loc_FF87AF28:\n"
           "LDR     R0, [R5,#0xB4]\n"
           "CMP     R0, #0\n"
-          "BNE     loc_FF87AF20\n"
-          "BL      sub_FF89C658\n"
+          "BNE     loc_FF87AFE8\n"
+          "BL      sub_FF89C720\n"
           "STR     R7, [R5,#0xB4]\n"
-          "B       loc_FF87AF20\n"
+          "B       loc_FF87AFE8\n"
 
-     "loc_FF87AE78:\n"
+     "loc_FF87AF40:\n"
           "MOV     R1, R8\n"
           "MOV     R0, R4\n"
           "LDMFD   SP!, {R4-R8,LR}\n"
-          "B       sub_FF87B868\n"
+          "B       sub_FF87B930\n"
 
-     "loc_FF87AE88:\n"
+     "loc_FF87AF50:\n"
           "MOV     R0, R4\n"
           "LDMFD   SP!, {R4-R8,LR}\n"
-          "B       sub_FF87A704\n"
+          "B       sub_FF87A7CC\n"
 
-     "loc_FF87AE94:\n"
+     "loc_FF87AF5C:\n"
           "LDR     R12, =0x10B0\n"
           "CMP     R4, R12\n"
-          "BEQ     loc_FF87AEC0\n"
-          "BGT     loc_FF87AECC\n"
+          "BEQ     loc_FF87AF88\n"
+          "BGT     loc_FF87AF94\n"
           "CMP     R4, #4\n"
-          "BEQ     loc_FF87AEF4\n"
+          "BEQ     loc_FF87AFBC\n"
           "SUB     R12, R4, #0x1000\n"
           "SUBS    R12, R12, #0xAA\n"
           "SUBNE   R12, R4, #0x1000\n"
           "SUBNES  R12, R12, #0xAE\n"
-          "BNE     loc_FF87AF28\n"
+          "BNE     loc_FF87AFF0\n"
 
-     "loc_FF87AEC0:\n"
-          "BL      sub_FF879508\n"
+     "loc_FF87AF88:\n"
+          "BL      sub_FF8795D0\n"
 
-     "loc_FF87AEC4:\n"
+     "loc_FF87AF8C:\n"
           "MOV     R0, R6\n"
           "LDMFD   SP!, {R4-R8,PC}\n"
 
-     "loc_FF87AECC:\n"
+     "loc_FF87AF94:\n"
           "SUB     R12, R4, #0x2000\n"
           "SUBS    R12, R12, #4\n"
-          "BEQ     loc_FF87AF08\n"
+          "BEQ     loc_FF87AFD0\n"
           "SUB     R12, R4, #0x5000\n"
           "SUBS    R12, R12, #1\n"
           "SUBNE   R12, R4, #0x5000\n"
           "SUBNES  R12, R12, #6\n"
-          "BNE     loc_FF87AF28\n"
-          "BL      sub_FF879EA8\n"
-          "B       loc_FF87AF20\n"
+          "BNE     loc_FF87AFF0\n"
+          "BL      sub_FF879F70\n"
+          "B       loc_FF87AFE8\n"
 
-     "loc_FF87AEF4:\n"
+     "loc_FF87AFBC:\n"
           "LDR     R0, [R5,#0x2C]\n"
           "CMP     R0, #0\n"
-          "BNE     loc_FF87AF08\n"
-          "BL      sub_FF826C50\n"
-          "B       loc_FF87AF20\n"
+          "BNE     loc_FF87AFD0\n"
+          "BL      sub_FF826D18\n"
+          "B       loc_FF87AFE8\n"
 
-     "loc_FF87AF08:\n"
-          "BL      sub_FF879540\n"
-          "B       loc_FF87AF20\n"
+     "loc_FF87AFD0:\n"
+          "BL      sub_FF879608\n"
+          "B       loc_FF87AFE8\n"
 
-     "loc_FF87AF10:\n"
+     "loc_FF87AFD8:\n"
           "SUB     R12, R4, #0x3000\n"
           "SUBS    R12, R12, #0x130\n"
-          "BNE     loc_FF87AF28\n"
-          "BL      sub_FF8795E0\n"
+          "BNE     loc_FF87AFF0\n"
+          "BL      sub_FF8796A8\n"
 
-     "loc_FF87AF20:\n"
+     "loc_FF87AFE8:\n"
           "MOV     R0, #0\n"
           "LDMFD   SP!, {R4-R8,PC}\n"
 
-     "loc_FF87AF28:\n"
+     "loc_FF87AFF0:\n"
           "MOV     R0, #1\n"
           "LDMFD   SP!, {R4-R8,PC}\n"
      );
 }
 
-void __attribute__((naked,noinline)) sub_FF87A340_my() {
+void __attribute__((naked,noinline)) sub_FF87A408_my() {
      asm volatile (
           "STMFD   SP!, {R4-R8,LR}\n"
           "LDR     R7, =0x8002\n"
@@ -1192,165 +1190,165 @@ void __attribute__((naked,noinline)) sub_FF87A340_my() {
           "CMP     R0, #3\n"
           "MOV     R6, R1\n"
           "MOV     R5, #1\n"
-          "BEQ     loc_FF87A4B4\n"
-          "BGT     loc_FF87A37C\n"
+          "BEQ     loc_FF87A57C\n"
+          "BGT     loc_FF87A444\n"
           "CMP     R0, #0\n"
-          "BEQ     loc_FF87A3C0\n"
+          "BEQ     loc_FF87A488\n"
           "CMP     R0, #1\n"
-          "BEQ     loc_FF87A444\n"
+          "BEQ     loc_FF87A50C\n"
           "CMP     R0, #2\n"
-          "BNE     loc_FF87A53C\n"
-          "B       loc_FF87A394\n"
+          "BNE     loc_FF87A604\n"
+          "B       loc_FF87A45C\n"
 
-     "loc_FF87A37C:\n"
+     "loc_FF87A444:\n"
           "CMP     R0, #6\n"
           "STREQ   R5, [R4,#0x28]\n"
-          "BEQ     loc_FF87A4AC\n"
+          "BEQ     loc_FF87A574\n"
           "SUB     R12, R0, #0x2000\n"
           "SUBS    R12, R12, #4\n"
-          "BNE     loc_FF87A53C\n"
+          "BNE     loc_FF87A604\n"
 
-     "loc_FF87A394:\n"
+     "loc_FF87A45C:\n"
           "SUB     R12, R6, #0x1100\n"
           "SUBS    R12, R12, #0x62\n"
-          "BNE     loc_FF87A3B0\n"
+          "BNE     loc_FF87A478\n"
           "MOV     R1, R7\n"
           "MOV     R0, #0\n"
-          "BL      sub_FF87E1BC\n"
+          "BL      sub_FF87E284\n"
           "STR     R5, [R4,#0x60]\n"
 
-     "loc_FF87A3B0:\n"
-          "BL      sub_FF87D148\n"
-          "BL      sub_FF87CFA4\n"
-          "BL      sub_FF879E48\n"
-          "B       loc_FF87A534\n"
+     "loc_FF87A478:\n"
+          "BL      sub_FF87D210\n"
+          "BL      sub_FF87D06C\n"
+          "BL      sub_FF879F10\n"
+          "B       loc_FF87A5FC\n"
 
-     "loc_FF87A3C0:\n"
+     "loc_FF87A488:\n"
           "MOV     R0, #7\n"
-          "BL      sub_FF87980C\n"
+          "BL      sub_FF8798D4\n"
           "MOV     R0, R7\n"
-          "BL      sub_FF82DC50\n"
-          "BL      sub_FF87BFB4\n"
-          "BL      sub_FF87CE1C\n"
+          "BL      sub_FF82DD18\n"
+          "BL      sub_FF87C07C\n"
+          "BL      sub_FF87CEE4\n"
           "MOV     R1, R7\n"
           "MOV     R0, #0\n"
-          "BL      sub_FF87E1BC\n"
+          "BL      sub_FF87E284\n"
           //"ADR     R1, aAcBootrec\n"             // \"AC:BootRec\"
-          "LDR     R1, =0xFF87A574\n"             // \"AC:BootRec\"
+          "LDR     R1, =0xFF87A63C\n"             // \"AC:BootRec\"
           "MOV     R0, #0x20\n"
           "STR     R6, [R4,#0x18]\n"
-          "BL      sub_FF872A58\n"
+          "BL      sub_FF872B20\n"
           //"ADR     R1, aAcInitlens\n"            // \"AC:InitLens\"
-          "LDR     R1, =0xFF87A580\n"            // \"AC:InitLens\"
+          "LDR     R1, =0xFF87A648\n"            // \"AC:InitLens\"
           "MOV     R0, #0x20\n"
-          "BL      sub_FF872A58\n"
+          "BL      sub_FF872B20\n"
           "STR     R5, [R4,#0x28]\n"
-          "BL      sub_FF82DDF8\n"
-          "BL      sub_FF82DD3C\n"
+          "BL      sub_FF82DEC0\n"
+          "BL      sub_FF82DE04\n"
           "LDR     R0, [R4,#0x1C]\n"
           "LDR     R1, [R4,#0x20]\n"
           "ORRS    R0, R0, R1\n"
-          "BLNE    sub_FF87B0E4\n"
+          "BLNE    sub_FF87B1AC\n"
           "LDR     R0, [R4,#0x68]\n"
           "CMP     R0, #0\n"
-          "BNE     loc_FF87A430\n"
-          "BL      sub_FF82DE68\n"
-          "B       loc_FF87A438\n"
+          "BNE     loc_FF87A4F8\n"
+          "BL      sub_FF82DF30\n"
+          "B       loc_FF87A500\n"
 
-     "loc_FF87A430:\n"
-          "BL      sub_FF8269E8\n"
-          "BL      sub_FF82E700\n"
+     "loc_FF87A4F8:\n"
+          "BL      sub_FF826AB0\n"
+          "BL      sub_FF82E7C8\n"
 
-     "loc_FF87A438:\n"
-          //"BL      sub_FF87BF78\n"
-          "BL      sub_FF87BF78_my\n"            // +----> Hook for SDHC booting
-          "BL      sub_FF87BFF0\n"
-          "B       loc_FF87A534\n"
+     "loc_FF87A500:\n"
+          //"BL      sub_FF87C040\n"
+          "BL      sub_FF87C040_my\n"            // +----> Hook for SDHC booting
+          "BL      sub_FF87C0B8\n"
+          "B       loc_FF87A5FC\n"
 
-     "loc_FF87A444:\n"
+     "loc_FF87A50C:\n"
           "MOV     R0, #8\n"
-          "BL      sub_FF87980C\n"
-          "BL      sub_FF87BFB4\n"
-          "BL      sub_FF87CE1C\n"
+          "BL      sub_FF8798D4\n"
+          "BL      sub_FF87C07C\n"
+          "BL      sub_FF87CEE4\n"
           "LDR     R5, =0x4004\n"
           "MOV     R0, #0\n"
           "MOV     R1, R5\n"
-          "BL      sub_FF87E1BC\n"
+          "BL      sub_FF87E284\n"
           //"ADR     R1, aAcBootpb\n"              // \"AC:BootPB\"
-          "LDR     R1, =0xFF87A590\n"              // \"AC:BootPB\"
+          "LDR     R1, =0xFF87A658\n"              // \"AC:BootPB\"
           "MOV     R0, #0x20\n"
-          "BL      sub_FF872A58\n"
-          //"BL      sub_FF87BF78\n"
-          "BL      sub_FF87BF78_my\n"            // +----> Hook for SDHC booting
-          "BL      sub_FF87C08C\n"
-          "BL      sub_FF82E690\n"
+          "BL      sub_FF872B20\n"
+          //"BL      sub_FF87C040\n"
+          "BL      sub_FF87C040_my\n"            // +----> Hook for SDHC booting
+          "BL      sub_FF87C154\n"
+          "BL      sub_FF82E758\n"
           "MOV     R0, R5\n"
-          "BL      sub_FF82DC50\n"
+          "BL      sub_FF82DD18\n"
           "LDR     R0, [R4,#0x68]\n"
           "CMP     R0, #0\n"
-          "BNE     loc_FF87A498\n"
-          "BL      sub_FF82DE68\n"
-          "B       loc_FF87A49C\n"
+          "BNE     loc_FF87A560\n"
+          "BL      sub_FF82DF30\n"
+          "B       loc_FF87A564\n"
 
-     "loc_FF87A498:\n"
-          "BL      sub_FF8269E8\n"
+     "loc_FF87A560:\n"
+          "BL      sub_FF826AB0\n"
 
-     "loc_FF87A49C:\n"
-          "BL      sub_FF87C020\n"
+     "loc_FF87A564:\n"
+          "BL      sub_FF87C0E8\n"
           "LDR     R0, [R4,#0x30]\n"
           "CMP     R0, #0\n"
-          "BEQ     loc_FF87A534\n"
+          "BEQ     loc_FF87A5FC\n"
 
-     "loc_FF87A4AC:\n"
-          "BL      sub_FF87B108\n"
-          "B       loc_FF87A534\n"
+     "loc_FF87A574:\n"
+          "BL      sub_FF87B1D0\n"
+          "B       loc_FF87A5FC\n"
 
-     "loc_FF87A4B4:\n"
+     "loc_FF87A57C:\n"
           "MOV     R1, R6\n"
           "MOV     R0, #0\n"
-          "BL      sub_FF87E1BC\n"
+          "BL      sub_FF87E284\n"
           //"ADR     R1, aAcBootclock\n"           // \"AC:BootClock\"
-          "LDR     R1, =0xFF87A59C\n"           // \"AC:BootClock\"
+          "LDR     R1, =0xFF87A664\n"           // \"AC:BootClock\"
           "MOV     R0, #0x20\n"
-          "BL      sub_FF872A58\n"
+          "BL      sub_FF872B20\n"
           "STR     R5, [R4,#0x68]\n"
-          "BL      sub_FF87C08C\n"
-          "BL      sub_FF82E690\n"
-          "BL      sub_FF87B0B4\n"
-          "BL      sub_FF82E764\n"
+          "BL      sub_FF87C154\n"
+          "BL      sub_FF82E758\n"
+          "BL      sub_FF87B17C\n"
+          "BL      sub_FF82E82C\n"
           "CMP     R0, #0\n"
           "LDRNE   R0, =0x8045\n"
           "MOVNE   R1, #0\n"
-          "BLNE    sub_FF8789D4\n"
-          "BL      sub_FF87DFD0\n"
+          "BLNE    sub_FF878A9C\n"
+          "BL      sub_FF87E098\n"
           "MOV     R0, #0x80\n"
-          "BL      sub_FF82DC50\n"
-          "BL      sub_FF87D2D8\n"
-          "BL      sub_FF8B0EB4\n"
-          "BL      sub_FF973218\n"
-          "BL      sub_FF8AF708\n"
-          "BL      sub_FF87C9E4\n"
-          "BL      sub_FF87D180\n"
+          "BL      sub_FF82DD18\n"
+          "BL      sub_FF87D3A0\n"
+          "BL      sub_FF8B0F7C\n"
+          "BL      sub_FF9732E0\n"
+          "BL      sub_FF8AF7D0\n"
+          "BL      sub_FF87CAAC\n"
+          "BL      sub_FF87D248\n"
           "MOV     R0, #9\n"
-          "BL      sub_FF87980C\n"
+          "BL      sub_FF8798D4\n"
           "LDR     R0, =0x300E\n"
           "MOV     R1, R6\n"
-          "BL      sub_FF876100\n"
+          "BL      sub_FF8761C8\n"
           "MOV     R1, #0\n"
           "MOV     R0, #1\n"
-          "BL      sub_FF87E1BC\n"
+          "BL      sub_FF87E284\n"
 
-     "loc_FF87A534:\n"
+     "loc_FF87A5FC:\n"
           "MOV     R0, #0\n"
           "LDMFD   SP!, {R4-R8,PC}\n"
 
-     "loc_FF87A53C:\n"
+     "loc_FF87A604:\n"
           "MOV     R0, #1\n"
           "LDMFD   SP!, {R4-R8,PC}\n"
      );
 }
 
-void __attribute__((naked,noinline)) sub_FF87BF78_my() {
+void __attribute__((naked,noinline)) sub_FF87C040_my() {
      asm volatile (
 
           "LDR     R0, =0x6380\n"
@@ -1362,30 +1360,30 @@ void __attribute__((naked,noinline)) sub_FF87BF78_my() {
           "STR     R1, [R0,#0x10]\n"
           "MOV     R3, #0\n"
           "STR     R3, [SP,#8-8]\n"
-          //"LDR     R3, =sub_FF87BF28\n"
-          "LDR     R3, =sub_FF87BF28_my\n"       // +----> Hook for SDHC booting
+          //"LDR     R3, =sub_FF87BFF0\n"
+          "LDR     R3, =sub_FF87BFF0_my\n"       // +----> Hook for SDHC booting
           "MOV     R1, #0x19\n"
           //"LDR     R0, =aInitfilemodule\n"        // \"InitFileModules\"
-          "LDR     R0, =0xFF87C0F8\n"
+          "LDR     R0, =0xFF87C1C0\n"
           "MOV     R2, #0x1000\n"
-          "BL      sub_FF81B8FC\n"
+          "BL      sub_FF81B9C4\n"
 
      "locret_FF87BFB0:\n"
           "LDMFD   SP!, {R12,PC}\n"
      );
 }
 
-void __attribute__((naked,noinline)) sub_FF87BF28_my() {
+void __attribute__((naked,noinline)) sub_FF87BFF0_my() {
      asm volatile (
           "STMFD   SP!, {R4-R6,LR}\n"
-          "BL      sub_FF874FB0\n"
+          "BL      sub_FF875078\n"
           "LDR     R5, =0x5006\n"
           "MOVS    R4, R0\n"
           "MOVNE   R1, #0\n"
           "MOVNE   R0, R5\n"
-          "BLNE    sub_FF876100\n"
-          //"BL      sub_FF874FDC\n"
-          "BL      sub_FF874FDC_my\n"            // +----> Hook for SDHC booting
+          "BLNE    sub_FF8761C8\n"
+          //"BL      sub_FF8750A4\n"
+          "BL      sub_FF8750A4_my\n"            // +----> Hook for SDHC booting
 
           "BL      core_spytask_can_start\n"     // +----> CHDK: Set "it's-safe-to-start"-Flag for spytask
 
@@ -1393,63 +1391,63 @@ void __attribute__((naked,noinline)) sub_FF87BF28_my() {
           "MOVEQ   R0, R5\n"
           "LDMEQFD SP!, {R4-R6,LR}\n"
           "MOVEQ   R1, #0\n"
-          "BEQ     sub_FF876100\n"
+          "BEQ     sub_FF8761C8\n"
           "LDMFD   SP!, {R4-R6,PC}\n"
      );
 }
 
-void __attribute__((naked,noinline)) sub_FF874FDC_my() {
+void __attribute__((naked,noinline)) sub_FF8750A4_my() {
      asm volatile (
           "STMFD   SP!, {R4,LR}\n"
-          //"BL      sub_FF856910\n"
-          "BL      sub_FF856910_my\n"            // +----> Hook for SDHC booting
+          //"BL      sub_FF8569D8\n"
+          "BL      sub_FF8569D8_my\n"            // +----> Hook for SDHC booting
           "LDR     R4, =0x5C88\n"
           "LDR     R0, [R4,#4]\n"
           "CMP     R0, #0\n"
-          "BNE     loc_FF87500C\n"
-          "BL      sub_FF888178\n"
-          "BL      sub_FF9274EC\n"
-          "BL      sub_FF888178\n"
-          "BL      sub_FF933CC0\n"
-          "BL      sub_FF888188\n"
-          "BL      sub_FF927594\n"
+          "BNE     loc_FF8750D4\n"
+          "BL      sub_FF888240\n"
+          "BL      sub_FF9275B4\n"
+          "BL      sub_FF888240\n"
+          "BL      sub_FF933D88\n"
+          "BL      sub_FF888250\n"
+          "BL      sub_FF92765C\n"
 
-     "loc_FF87500C:\n"
+     "loc_FF8750D4:\n"
           "MOV     R0, #1\n"
           "STR     R0, [R4]\n"
           "LDMFD   SP!, {R4,PC}\n"
      );
 }
 
-void __attribute__((naked,noinline)) sub_FF856910_my() {
+void __attribute__((naked,noinline)) sub_FF8569D8_my() {
      asm volatile (
           "STMFD   SP!, {R4-R6,LR}\n"
           "MOV     R6, #0\n"
           "MOV     R0, R6\n"
-          "BL      sub_FF8564E0\n"
+          "BL      sub_FF8565A8\n"
           "LDR     R4, =0x131E4\n"
           "MOV     R5, #0\n"
           "LDR     R0, [R4,#0x38]\n"
-          "BL      sub_FF856EA8\n"
+          "BL      sub_FF856F70\n"
           "CMP     R0, #0\n"
           "LDREQ   R0, =0x2EB4\n"
           "STREQ   R5, [R0,#0xC]\n"
           "STREQ   R5, [R0,#0x10]\n"
           "STREQ   R5, [R0,#0x14]\n"
           "MOV     R0, R6\n"
-          "BL      sub_FF856520\n"
+          "BL      sub_FF8565E8\n"
           "MOV     R0, R6\n"
-          //"BL      sub_FF85674C\n"
-          "BL      sub_FF85674C_my\n"            // +----> Hook for SDHC booting
+          //"BL      sub_FF856814\n"
+          "BL      sub_FF856814_my\n"            // +----> Hook for SDHC booting
           "MOV     R5, R0\n"
           "MOV     R0, R6\n"
-          "BL      sub_FF8567B8\n" 
+          "BL      sub_FF856880\n" 
           "LDR     R1, [R4,#0x3C]\n"
           "AND     R2, R5, R0\n"
           "CMP     R1, #0\n"
           "MOV     R0, #0\n"
           "MOVEQ   R0, #0x80000001\n"
-          "BEQ     loc_FF8569A4\n"
+          "BEQ     loc_FF856A6C\n"
           "LDR     R3, [R4,#0x2C]\n"
           "CMP     R3, #2\n"
           "MOVEQ   R0, #4\n"
@@ -1462,13 +1460,13 @@ void __attribute__((naked,noinline)) sub_FF856910_my() {
           "BICNE   R0, R0, #0x80000000\n"
           "ORRNE   R0, R0, #2\n"
 
-     "loc_FF8569A4:\n"
+     "loc_FF856A6C:\n"
           "STR     R0, [R4,#0x40]\n"
           "LDMFD   SP!, {R4-R6,PC}\n"
      );
 }
 
-void __attribute__((naked,noinline)) sub_FF85674C_my() {
+void __attribute__((naked,noinline)) sub_FF856814_my() {
      asm volatile (
           "STMFD   SP!, {R4-R6,LR}\n"
           "LDR     R5, =0x2EB4\n"
@@ -1483,17 +1481,17 @@ void __attribute__((naked,noinline)) sub_FF85674C_my() {
           "ADD     R4, R0, R1,LSL#2\n"
           "LDR     R0, [R4,#0x38]\n"
           "MOV     R1, R6\n"
-          //"BL      sub_FF8565E4\n"
-          "BL      sub_FF8565E4_my\n"            // +----> Hook for SDHC booting
+          //"BL      sub_FF8566AC\n"
+          "BL      sub_FF8566AC_my\n"            // +----> Hook for SDHC booting
           "CMP     R0, #0\n"
           "LDMEQFD SP!, {R4-R6,PC}\n"
           "LDR     R0, [R4,#0x38]\n"
           "MOV     R1, R6\n"
-          "BL      sub_FF856FC0\n"
+          "BL      sub_FF857088\n"
           "CMP     R0, #0\n"
           "LDMEQFD SP!, {R4-R6,PC}\n"
           "MOV     R0, R6\n"
-          "BL      sub_FF856100\n"
+          "BL      sub_FF8561C8\n"
           "CMP     R0, #0\n"
           "MOVNE   R1, #1\n"
           "STRNE   R1, [R5,#0x10]\n"
@@ -1501,7 +1499,7 @@ void __attribute__((naked,noinline)) sub_FF85674C_my() {
      );
 }
 
-void __attribute__((naked,noinline)) sub_FF8565E4_my() {
+void __attribute__((naked,noinline)) sub_FF8566AC_my() {
      asm volatile (
           "STMFD   SP!, {R4-R8,LR}\n"
           "MOV     R8, R0\n"
@@ -1514,42 +1512,42 @@ void __attribute__((naked,noinline)) sub_FF8565E4_my() {
           "MOV     R5, #0\n"
           "CMP     R0, #6\n"
           "ADDLS   PC, PC, R0,LSL#2\n"
-          "B       loc_FF856730\n"
+          "B       loc_FF8567F8\n"
 
-     "loc_FF856614:\n"
-          "B       loc_FF856648\n"
+     "loc_FF8566DC:\n"
+          "B       loc_FF856710\n"
 
-     "loc_FF856618:\n"
-          "B       loc_FF856630\n"
+     "loc_FF8566E0:\n"
+          "B       loc_FF8566F8\n"
 
-     "loc_FF85661C:\n"
-          "B       loc_FF856630\n"
+     "loc_FF8566E4:\n"
+          "B       loc_FF8566F8\n"
 
-     "loc_FF856620:\n"
-          "B       loc_FF856630\n"
+     "loc_FF8566E8:\n"
+          "B       loc_FF8566F8\n"
 
-     "loc_FF856624:\n"
-          "B       loc_FF856630\n"
+     "loc_FF8566EC:\n"
+          "B       loc_FF8566F8\n"
 
-     "loc_FF856628:\n"
-          "B       loc_FF856728\n"
+     "loc_FF8566F0:\n"
+          "B       loc_FF8567F0\n"
 
-     "loc_FF85662C:\n"
-          "B       loc_FF856630\n"
+     "loc_FF8566F4:\n"
+          "B       loc_FF8566F8\n"
 
-     "loc_FF856630:\n"
+     "loc_FF8566F8:\n"
           "MOV     R2, #0\n"
           "MOV     R1, #0x200\n"
           "MOV     R0, #3\n"
-          "BL      sub_FF8716C4\n"
+          "BL      sub_FF87178C\n"
           "MOVS    R4, R0\n"
-          "BNE     loc_FF856650\n"
+          "BNE     loc_FF856718\n"
 
-     "loc_FF856648:\n"
+     "loc_FF856710:\n"
           "MOV     R0, #0\n"
           "LDMFD   SP!, {R4-R8,PC}\n"
 
-     "loc_FF856650:\n"
+     "loc_FF856718:\n"
           "LDR     R12, [R7,#0x4C]\n"
           "MOV     R3, R4\n"
           "MOV     R2, #1\n"
@@ -1559,18 +1557,18 @@ void __attribute__((naked,noinline)) sub_FF8565E4_my() {
           "MOV     LR, PC\n"     // 2-op workaround for 'normal' compiler
           "MOV     PC, R12\n"    // Does the same thing, effectively, because PC is always 8 bytes ahead.
           "CMP     R0, #1\n"
-          "BNE     loc_FF85667C\n"
+          "BNE     loc_FF856744\n"
           "MOV     R0, #3\n"
-          "BL      sub_FF871544\n"
-          "B       loc_FF856648\n"
+          "BL      sub_FF87160C\n"
+          "B       loc_FF856710\n"
 
 ///////
 // Offsets are fixed from here on, everything +0x10 for the second entry
 ///////
 
-     "loc_FF85667C:\n"
+     "loc_FF856744:\n"
           "MOV     R0, R8\n"
-          "BL      sub_FF94450C\n"
+          "BL      sub_FF9445D4\n"
 
           // Start of DataGhost's FAT32 autodetection code
           // Policy: If there is a partition which has type W95 FAT32, use the first one of those for image storage
@@ -1625,9 +1623,9 @@ void __attribute__((naked,noinline)) sub_FF8565E4_my() {
           "LDRB    R12, [LR,#0x1FE]\n"           // + First MBR signature byte (0x55), LR is original offset.
           "LDRB    LR, [LR,#0x1FF]\n"            // + Last MBR signature byte (0xAA), LR is original offset.
           "MOV     R4, #0\n"                     // This value previously held a pointer to the partition table :(
-          "BNE     loc_FF856704\n"               // Jump out if the partition is malformed (partition status \'other\')
+          "BNE     loc_FF8567CC\n"               // Jump out if the partition is malformed (partition status \'other\')
           "CMP     R0, R1\n"
-          "BCC     loc_FF856704\n"               // Jump out if R0 < R1 (probably checking for a valid LBA addr)
+          "BCC     loc_FF8567CC\n"               // Jump out if R0 < R1 (probably checking for a valid LBA addr)
           "ADD     R2, R1, R3\n"                 // R2 = partition start address + length = partition end address
           "CMP     R2, R0\n"                     // Guess: CMPLS is used to check for an overflow, the partition end address cannot be negative.
           "CMPLS   R12, #0x55\n"                 // Check MBR signature with original offset
@@ -1636,29 +1634,29 @@ void __attribute__((naked,noinline)) sub_FF8565E4_my() {
           "MOVEQ   R5, R3\n"
           "MOVEQ   R4, #1\n"
 
-     "loc_FF856704:\n"
+     "loc_FF8567CC:\n"
           "MOV     R0, #3\n"
-          "BL      sub_FF871544\n"
+          "BL      sub_FF87160C\n"
           "CMP     R4, #0\n"
-          "BNE     loc_FF85673C\n"
+          "BNE     loc_FF856804\n"
           "MOV     R6, #0\n"
           "MOV     R0, R8\n"
-          "BL      sub_FF94450C\n"
+          "BL      sub_FF9445D4\n"
           "MOV     R5, R0\n"
-          "B       loc_FF85673C\n"
+          "B       loc_FF856804\n"
 
-     "loc_FF856728:\n"
+     "loc_FF8567F0:\n"
           "MOV     R5, #0x40\n"
-          "B       loc_FF85673C\n"
+          "B       loc_FF856804\n"
 
-     "loc_FF856730:\n"
+     "loc_FF8567F8:\n"
           "LDR     R1, =0x365\n"
           //"ADR     R0, aMounter_c\n"             // \"Mounter.c\"
-          "LDR     R0, =0xFF8565D8\n"
+          "LDR     R0, =0xFF8566A0\n"
           //"BL      Assert\n"
-          "BL      sub_FF81BCCC\n"
+          "BL      sub_FF81BD94\n"
 
-     "loc_FF85673C:\n"
+     "loc_FF856804:\n"
           "STR     R6, [R7,#0x44]!\n"
           "MOV     R0, #1\n"
           "STR     R5, [R7,#4]\n"
@@ -1680,7 +1678,7 @@ unsigned long __attribute__((naked,noinline)) _time(unsigned long *timer) {
           "MVN     R0, #0\n"
           "STR     R0, [SP,#0x10-0x10]\n"
           "MOV     R0, SP\n"
-          "BL      sub_FF870BB8\n" // _GetTimeOfSystem\n"
+          "BL      sub_FF870C80\n" // _GetTimeOfSystem\n"
           "CMP     R0, #0\n"
           "BNE     loc_FFC55F38\n"
           "CMP     R4, #0\n"
@@ -1767,7 +1765,7 @@ void dump_chdk() { //#fs
     *led = 0x46; //on 
 
   //  _qDump("A/qdump", 0, (void*) 0x01900, 0xb0000);
-    //_qDump("A/firmdump", 0, (void*) 0xffc00000, 0x00400000);
+    //_qDump("A/firmdump", 0, (void*) 0xFFC00000, 0x00400000);
     //_qDump("A/firmlower", 0, (void*) 0xff800000, 0x00400000); // identical to 0xfc000000
 
     //started();
