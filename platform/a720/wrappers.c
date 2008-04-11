@@ -33,7 +33,7 @@ void ubasic_set_led(int led, int state, int bright)
         // 8 dp  
         // 9 af  
 
-        led_c.led_num=convert_table[led%6]; 
+        led_c.led_num=convert_table[led%11]; 
         led_c.action=state<=1 ? !state : state; 
         led_c.brightness=bright; 
         led_c.blink_count=255; 
