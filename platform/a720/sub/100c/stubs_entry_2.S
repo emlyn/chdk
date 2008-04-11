@@ -107,6 +107,9 @@ NHSTUB(closedir, 0xFFDC1C68)  // CloseFastDir
 NHSTUB(UnsetZoomForMovie, 0xFFD22418)
 
 
+NHSTUB(PostLEDMessage, 0xFFC366B8);
+
+
 // dryos Test
 NHSTUB(NewTaskShell, 0xFFC596B0)  // starts new shell on Console. GUI output?
 NHSTUB(UIFS_WriteFirmInfoToFile, 0xFFD4A934) // should write 'A/FirmInfo.txt'
