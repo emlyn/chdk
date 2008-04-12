@@ -921,9 +921,11 @@ void shooting_set_autoiso(int iso_mode) {
 }
 
 void shooting_video_bitrate_change(int v){
- int m[]={1,2,3,4,5,6,7,8,10,12};
+ int m[]={1,2,3,4,5,6,7,8,10,12};  // m[v]/4 = bitrate*1x
  if (v>=(sizeof(m)/sizeof(m[0]))) v=(sizeof(m)/sizeof(m[0]))-1;
+#if CAM_CHDK_HAS_EXT_VIDEO_MENU
  change_video_tables(m[v],4);
+#endif
 }
 
 float shooting_get_shutter_speed_override_value()

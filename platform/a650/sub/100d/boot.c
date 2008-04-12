@@ -975,7 +975,7 @@ void __attribute__((naked,noinline)) sub_FFC5F9E8_my() {
 "loc_FFC5FC14:\n"
                 "MOV     R0, R6\n"
                 "LDMFD   SP!, {R4-R8,LR}\n"
-                "B       sub_FFC5F6A8\n"
+                "B       sub_FFC5F6A8_my\n"  //---------> movie
 "loc_FFC5FC20:\n"
                 "LDR     R12, =0x10B0\n"
                 "CMP     R6, R12\n"

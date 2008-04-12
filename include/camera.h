@@ -34,6 +34,7 @@
     #define CAM_HAS_IS                  1   // Camera has image stabilizer
 
     #undef  CAM_CONSOLE_LOG_ENABLED         // Development: internal camera stdout -> A/stdout.txt
+    #define CAM_CHDK_HAS_EXT_VIDEO_MENU 1   // In CHDK for this camera realized adjustable video compression
 
 
 //----------------------------------------------------------
@@ -230,7 +231,6 @@
     #define CAM_RAW_ROWS                3048   // for 12 MP
     
     #define CAM_SWIVEL_SCREEN           1
-    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
 
 
 //----------------------------------------------------------
@@ -298,6 +298,7 @@
 
     #define CAM_CONSOLE_LOG_ENABLED     1
     #undef  CAM_HAS_IS
+    #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus70_sd1000)
@@ -379,6 +380,7 @@
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
     
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus950_sd850)
@@ -435,6 +437,7 @@
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+    #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
 
 
 //----------------------------------------------------------

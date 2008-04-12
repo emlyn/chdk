@@ -86,6 +86,7 @@ NHSTUB(UpdateMBROnFlash, 0xffc3fe4c)
 NHSTUB(opendir, 0xffdd05ac)
 NHSTUB(ReadFastDir, 0xffdd0640)
 NHSTUB(closedir, 0xffdd0710)
+NHSTUB(UnsetZoomForMovie, 0xFFD278C0)
 
 NHSTUB(ints_disable                           ,0xFFC00578)
 NHSTUB(ints_enable                            ,0xFFC005A0)

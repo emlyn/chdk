@@ -1,3 +1,77 @@
+void __attribute__((naked,noinline)) sub_FFC5E380_my(){
+asm volatile(
+                 "LDR     R12, =0x201E\n"
+                 "STMFD   SP!, {R4,LR}\n"
+                 "CMP     R0, R12\n"
+                 "BEQ     loc_FFC5E440\n"
+                 "BGT     loc_FFC5E3DC\n"
+                 "LDR     R12, =0x2004\n"
+                 "CMP     R0, R12\n"
+                 "BEQ     loc_FFC5E448\n"
+                 "BGT     loc_FFC5E3C4\n"
+                 "SUB     R12, R0, #0x1000\n"
+                 "SUBS    R12, R12, #0xA9\n"
+                 "SUBNE   R12, R0, #0x1000\n"
+                 "SUBNES  R12, R12, #0xAD\n"
+                 "SUBNE   R12, R0, #0x1000\n"
+                 "SUBNES  R12, R12, #0xAF\n"
+                 "BNE     loc_FFC5E458\n"
+                 "B       loc_FFC5E440\n"
+ "loc_FFC5E3C4:\n"
+                 "SUB     R12, R0, #0x2000\n"
+                 "SUBS    R12, R12, #5\n"
+                 "SUBNE   R12, R0, #0x2000\n"
+                 "SUBNES  R12, R12, #0x1D\n"
+                 "BNE     loc_FFC5E458\n"
+                 "B       loc_FFC5E440\n"
+ "loc_FFC5E3DC:\n"
+                 "LDR     R12, =0x5004\n"
+                 "CMP     R0, R12\n"
+                 "BEQ     loc_FFC5E440\n"
+                 "BGT     loc_FFC5E408\n"
+                 "SUB     R12, R0, #0x3000\n"
+                 "SUBS    R12, R12, #0xA\n"
+                 "BEQ     loc_FFC5E43C\n"
+                 "SUB     R12, R0, #0x5000\n"
+                 "SUBS    R12, R12, #1\n"
+                 "BNE     loc_FFC5E458\n"
+                 "B       loc_FFC5E440\n"
+ "loc_FFC5E408:\n"
+                 "SUB     R12, R0, #0x5000\n"
+                 "SUBS    R12, R12, #6\n"
+                 "BEQ     loc_FFC5E440\n"
+                 "SUB     R12, R0, #0x5000\n"
+                 "SUBS    R12, R12, #7\n"
+                 "BNE     loc_FFC5E458\n"
+                 "BL      sub_FFC1C7EC\n"
+                 "LDR     R1, =0x59EC\n"
+                 "LDR     R0, [R1,#0x10]\n"
+                 "CMP     R0, #7\n"
+                 "LDREQ   R0, [R1,#0x18]\n"
+                 "BLEQ    sub_FFC5EBE0\n"
+                 "B       loc_FFC5E450\n"
+ "loc_FFC5E43C:\n"
+                 "BL      sub_FFC1BDA4\n"
+ "loc_FFC5E440:\n"
+                 "LDMFD   SP!, {R4,LR}\n"
+                 "B       sub_FFC5E1E0_my\n" //------------->
+ "loc_FFC5E448:\n"
+                 "BL      sub_FFC5D208\n"
+                 "BL      sub_FFC5DC74\n"
+ "loc_FFC5E450:\n"
+                 "MOV     R0, #0\n"
+                 "LDMFD   SP!, {R4,PC}\n"
+ "loc_FFC5E458:\n"
+                 "MOV     R0, #1\n"
+                 "LDMFD   SP!, {R4,PC}\n"
+ );
+}
+
+
+
+
+
+
 void __attribute__((naked,noinline)) sub_FFC5E1E0_my(){
 asm volatile(
                  "STMFD   SP!, {R4-R6,LR}\n"
@@ -61,7 +135,7 @@ asm volatile(
                  "ORRNES  R0, R0, R1\n"
                  "BEQ     loc_FFC5E2D4\n"
                  "BL      sub_FFC5DB14\n"
-                 "BL      sub_FFC5DC74_my\n"
+                 "BL      sub_FFC5DC74\n"
                  "B       loc_FFC5E2FC\n"
  "loc_FFC5E2D4:\n"
                  "LDR     R0, [R4,#0x58]\n"
@@ -83,7 +157,7 @@ asm volatile(
                  "BNE     loc_FFC5E32C\n"
                  "LDR     R0, [R4,#0x7C]\n"
                  "CMP     R0, #0\n"
-                 "BLEQ    sub_FFC5EEA0_my\n"
+                 "BLEQ    sub_FFC5EEA0_my\n" //------------->
                  "MOV     R0, #0\n"
                  "STR     R0, [R4,#0x70]\n"
                  "STR     R0, [R4,#0x74]\n"
@@ -97,1192 +171,6 @@ asm volatile(
 
 
 
-
-void __attribute__((naked,noinline)) sub_FFC5E380_my(){
-asm volatile(
-                 "LDR     R12, =0x201E\n"
-                 "STMFD   SP!, {R4,LR}\n"
-                 "CMP     R0, R12\n"
-                 "BEQ     loc_FFC5E440\n"
-                 "BGT     loc_FFC5E3DC\n"
-                 "LDR     R12, =0x2004\n"
-                 "CMP     R0, R12\n"
-                 "BEQ     loc_FFC5E448\n"
-                 "BGT     loc_FFC5E3C4\n"
-                 "SUB     R12, R0, #0x1000\n"
-                 "SUBS    R12, R12, #0xA9\n"
-                 "SUBNE   R12, R0, #0x1000\n"
-                 "SUBNES  R12, R12, #0xAD\n"
-                 "SUBNE   R12, R0, #0x1000\n"
-                 "SUBNES  R12, R12, #0xAF\n"
-                 "BNE     loc_FFC5E458\n"
-                 "B       loc_FFC5E440\n"
- "loc_FFC5E3C4:\n"
-                 "SUB     R12, R0, #0x2000\n"
-                 "SUBS    R12, R12, #5\n"
-                 "SUBNE   R12, R0, #0x2000\n"
-                 "SUBNES  R12, R12, #0x1D\n"
-                 "BNE     loc_FFC5E458\n"
-                 "B       loc_FFC5E440\n"
- "loc_FFC5E3DC:\n"
-                 "LDR     R12, =0x5004\n"
-                 "CMP     R0, R12\n"
-                 "BEQ     loc_FFC5E440\n"
-                 "BGT     loc_FFC5E408\n"
-                 "SUB     R12, R0, #0x3000\n"
-                 "SUBS    R12, R12, #0xA\n"
-                 "BEQ     loc_FFC5E43C\n"
-                 "SUB     R12, R0, #0x5000\n"
-                 "SUBS    R12, R12, #1\n"
-                 "BNE     loc_FFC5E458\n"
-                 "B       loc_FFC5E440\n"
- "loc_FFC5E408:\n"
-                 "SUB     R12, R0, #0x5000\n"
-                 "SUBS    R12, R12, #6\n"
-                 "BEQ     loc_FFC5E440\n"
-                 "SUB     R12, R0, #0x5000\n"
-                 "SUBS    R12, R12, #7\n"
-                 "BNE     loc_FFC5E458\n"
-                 "BL      sub_FFC1C7EC\n"
-                 "LDR     R1, =0x59EC\n"
-                 "LDR     R0, [R1,#0x10]\n"
-                 "CMP     R0, #7\n"
-                 "LDREQ   R0, [R1,#0x18]\n"
-                 "BLEQ    sub_FFC5EBE0\n"
-                 "B       loc_FFC5E450\n"
- "loc_FFC5E43C:\n"
-                 "BL      sub_FFC1BDA4\n"
- "loc_FFC5E440:\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFC5E1E0_my\n"
- "loc_FFC5E448:\n"
-                 "BL      sub_FFC5D208\n"
-                 "BL      sub_FFC5DC74_my\n"
- "loc_FFC5E450:\n"
-                 "MOV     R0, #0\n"
-                 "LDMFD   SP!, {R4,PC}\n"
- "loc_FFC5E458:\n"
-                 "MOV     R0, #1\n"
-                 "LDMFD   SP!, {R4,PC}\n"
-                 ".ltorg\n" 
- );
-}
-
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC5F030_my(){
-asm volatile(
-                 "LDR     R12, =0x5001\n"
-                 "STMFD   SP!, {R4,LR}\n"
-                 "CMP     R0, R12\n"
-                 "BEQ     loc_FFC5F06C\n"
-                 "BGT     loc_FFC5F0A8\n"
-                 "SUB     R12, R0, #0x2000\n"
-                 "SUBS    R12, R12, #4\n"
-                 "BEQ     loc_FFC5F06C\n"
-                 "SUB     R12, R0, #0x3000\n"
-                 "SUBS    R12, R12, #0xA\n"
-                 "BNE     loc_FFC5F0BC\n"
-                 "LDR     R1, =0xFFC5F1E0\n"
-                 "MOV     R0, #0x20\n"
-                 "BL      sub_FFC57EC4\n"
-                 "BL      sub_FFC6873C\n"
- "loc_FFC5F06C:\n"
-                 "LDR     R4, =0x59EC\n"
-                 "LDR     R0, [R4,#0x38]\n"
-                 "CMP     R0, #0\n"
-                 "LDRNE   R0, [R4,#0x40]\n"
-                 "CMPNE   R0, #0\n"
-                 "LDRNE   R0, [R4,#0x44]\n"
-                 "CMPNE   R0, #0\n"
-                 "LDRNE   R0, [R4,#0x48]\n"
-                 "CMPNE   R0, #0\n"
-                 "LDRNE   R0, [R4,#0x1C]\n"
-                 "LDRNE   R1, [R4,#0x20]\n"
-                 "ORRNES  R0, R0, R1\n"
-                 "BEQ     loc_FFC5F0C4\n"
-                 "BL      sub_FFC5DB14\n"
-                 "B       loc_FFC5F0DC\n"
- "loc_FFC5F0A8:\n"
-                 "SUB     R12, R0, #0x5000\n"
-                 "SUBS    R12, R12, #3\n"
-                 "SUBNE   R12, R0, #0x5000\n"
-                 "SUBNES  R12, R12, #6\n"
-                 "BEQ     loc_FFC5F06C\n"
- "loc_FFC5F0BC:\n"
-                 "MOV     R0, #1\n"
-                 "LDMFD   SP!, {R4,PC}\n"
- "loc_FFC5F0C4:\n"
-                 "BL      sub_FFC5DBB0\n"
-                 "CMP     R0, #1\n"
-                 "BNE     loc_FFC5F104\n"
-                 "BL      sub_FFC5DA98\n"
-                 "CMN     R0, #1\n"
-                 "BEQ     loc_FFC5F0E4\n"
- "loc_FFC5F0DC:\n"
-                 "BL      sub_FFC5DC74_my\n"
-                 "B       loc_FFC5F104\n"
- "loc_FFC5F0E4:\n"
-                 "BL      sub_FFC5F22C\n"
-                 "LDR     R0, [R4,#0x68]\n"
-                 "CMP     R0, #0\n"
-                 "BLEQ    sub_FFC1BEE4\n"
-                 "MOV     R0, #0\n"
-                 "STR     R0, [R4,#0x68]\n"
-                 "MOV     R0, #0xB\n"
-                 "BL      sub_FFC5D5B0\n"
- "loc_FFC5F104:\n"
-                 "MOV     R0, #0\n"
-                 "LDMFD   SP!, {R4,PC}\n"
- );
-}
-
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC5EF64_my(){
-asm volatile(
- "var_10          = -0x10\n"
-                 "SUB     R12, R0, #0x3200\n"
-                 "SUBS    R12, R12, #1\n"
-                 "MOVNE   R0, #1\n"
-                 "STMFD   SP!, {R3-R5,LR}\n"
-                 "BNE     locret_FFC5F02C\n"
-                 "MOV     R1, #0\n"
-                 "MOV     R0, #1\n"
-                 "BL      sub_FFC60D1C\n"
-                 "MOV     R0, #2\n"
-                 "BL      sub_FFC5D5B0\n"
-                 "LDR     R4, =0x59EC\n"
-                 "LDR     R0, [R4,#0x30]\n"
-                 "CMP     R0, #0\n"
-                 "BEQ     loc_FFC5EFDC\n"
-                 "LDR     R1, =0xFFC5F1B8\n"
-                 "MOV     R0, #0x20\n"
-                 "BL      sub_FFC57EC4\n"
-                 "BL      sub_FFC5EB30\n"
-                 "LDR     R0, =0x406C\n"
-                 "MOV     R2, #4\n"
-                 "MOV     R1, SP\n"
-                 "BL      sub_FFC5CAE4\n"
-                 "LDR     R0, [SP,#0x10+var_10]\n"
-                 "MOV     R1, #0x3E8\n"
-                 "LDR     R2, =sub_FFC5DAE4_my\n"
-                 "MUL     R0, R1, R0\n"
-                 "ADD     R1, R2, #0\n"
-                 "MOV     R3, #0\n"
-                 "BL      sub_FFC5A978\n"
-                 "STR     R0, [R4,#0x88]\n"
- "loc_FFC5EFDC:\n"
-                 "BL      sub_FFC695F0\n"
-                 "BL      sub_FFC601F0\n"
-                 "BL      sub_FFD621F8\n"
-                 "BL      sub_FFD62184\n"
-                 "BL      sub_FFC5FEC0\n"
-                 "BL      sub_FFC603D4\n"
-                 "BL      sub_FFC1BE68\n"
-                 "LDR     R1, =0xFFC5F1D0\n"
-                 "MOV     R0, #0x20\n"
-                 "BL      sub_FFC57EC4\n"
-                 "BL      sub_FFC5DA98\n"
-                 "CMN     R0, #1\n"
-                 "BLEQ    sub_FFC5FB48\n"
-                 "BL      sub_FFC5DA98\n"
-                 "BL      sub_FFC5DE9C\n"
-                 "CMP     R0, #0\n"
-                 "LDRNE   R0, [R4,#0x54]\n"
-                 "CMPNE   R0, #0\n"
-                 "BLNE    sub_FFC5ECF8\n"
-                 "MOV     R0, #0\n"
-"locret_FFC5F02C:\n"
-                 "LDMFD   SP!, {R3-R5,PC}\n"
-                 ".ltorg\n"    
-);
-}
-
-void __attribute__((naked,noinline)) sub_FFC1C084_my(){
-asm volatile(
-                 "STMFD   SP!, {R4-R6,LR}\n"
-                 "LDR     R4, =0x1DCC\n"
-                 "MOV     R5, #1\n"
-                 "MOV     R6, R0\n"
-                 "STR     R5, [R4,#0x28]\n"
-                 "LDR     R0, [R4,#8]\n"
-                 "CMP     R0, #0\n"
-                 "BEQ     loc_FFC1C0C0\n"
-                 "MOV     R1, #0\n"
-                 "MOV     R0, #0\n"
-                 "BL      sub_FFC1CAA0\n"
-                 "LDR     R0, [R4,#8]\n"
-                 "BL      sub_FFC5AA28\n"
-                 "MOV     R0, #0\n"
-                 "STR     R0, [R4,#8]\n"
- "loc_FFC1C0C0:\n"
-                 "BL      sub_FFC15FE0\n"
-                 "CMP     R0, #0\n"
-                 "BEQ     loc_FFC1C150\n"
-                 "BL      sub_FFC65418\n"
-                 "CMP     R0, #1\n"
-                 "BEQ     loc_FFC1C0E4\n"
-                 "BL      sub_FFC65BBC\n"
-                 "CMP     R0, #7\n"
-                 "BNE     loc_FFC1C0F4\n"
- "loc_FFC1C0E4:\n"
-                 "BL      sub_FFC674CC\n"
-                 "BL      sub_FFC67508\n"
-                 "CMP     R0, #1\n"
-                 "BEQ     loc_FFC1C150\n"
- "loc_FFC1C0F4:\n"
-                 "BL      sub_FFC642E0\n"
-                 "CMP     R0, #0\n"
-                 "BEQ     loc_FFC1C110\n"
-                 "BL      sub_FFC674CC\n"
-                 "BL      sub_FFC67508\n"
-                 "CMP     R0, #1\n"
-                 "BEQ     loc_FFC1C150\n"
- "loc_FFC1C110:\n"
-                 "MOV     R0, #0\n"
-                 "BL      sub_FFC6AE64\n"
-                 "CMP     R0, #1\n"
-                 "BEQ     loc_FFC1C150\n"
-                 "BL      sub_FFC70D30\n"
-                 "CMP     R0, #1\n"
-                 "BEQ     loc_FFC1C150\n"
-                 "BL      sub_FFC3E2C0\n"
-                 "CMP     R0, #1\n"
-                 "BEQ     loc_FFC1C150\n"
-                 "BL      sub_FFC6C178\n"
-                 "CMP     R0, #1\n"
-                 "BEQ     loc_FFC1C150\n"
-                 "BL      sub_FFC6EA34\n"
-                 "CMP     R0, #0\n"
-                 "BEQ     loc_FFC1C1C8\n"
- "loc_FFC1C150:\n"
-                 "LDR     R1, =0xFFC1C270\n"
-                 "MOV     R0, #0x20\n"
-                 "BL      sub_FFC57EC4\n"
-                 "STR     R5, [R4,#0x18]\n"
- "loc_FFC1C160:\n"
-                 "LDR     R0, [R4,#0xC]\n"
-                 "SUB     R12, R0, #0x4000\n"
-                 "SUBS    R12, R12, #4\n"
-                 "SUBNE   R12, R0, #0x4000\n"
-                 "SUBNES  R12, R12, #0x10\n"
-                 "BEQ     loc_FFC1C1B4\n"
-                 "BL      sub_FFC65BF4\n"
-                 "CMP     R0, #1\n"
-                 "BEQ     loc_FFC1C1B4\n"
-                 "BL      sub_FFC65BBC\n"
-                 "CMP     R0, #7\n"
-                 "BEQ     loc_FFC1C1B4\n"
-                 "BL      sub_FFC65BBC\n"
-                 "CMP     R0, #8\n"
-                 "BEQ     loc_FFC1C1B4\n"
-                 "BL      sub_FFC65BBC\n"
-                 "CMP     R0, #0\n"
-                 "BEQ     loc_FFC1C1B4\n"
-                 "BL      sub_FFC64814\n"
-                 "CMP     R0, #0\n"
-                 "BNE     loc_FFC1C1B8\n"
- "loc_FFC1C1B4:\n"
-                 "BL      sub_FFC1BFF4_my\n"
- "loc_FFC1C1B8:\n"
-                 "MOV     R0, R6\n"
-                 "LDMFD   SP!, {R4-R6,LR}\n"
-                 "MOV     R1, #0\n"
-                 "B       sub_FFC5E6C0_my\n"
- "loc_FFC1C1C8:\n"
-                 "LDR     R1, =0xFFC1C280\n"
-                 "MOV     R0, #0x20\n"
-                 "BL      sub_FFC57EC4\n"
-                 "B       loc_FFC1C160\n"
-                 ".ltorg\n" 
-
-);
-}
-
-
-
- 
- 
- 
-void __attribute__((naked,noinline)) sub_FFC1CA74_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "LDR     R4, =0x1DCC\n"
-                 "LDR     R0, [R4]\n"
-                 "CMP     R0, #5\n"
-                 "LDMNEFD SP!, {R4,PC}\n"
-                 "MOV     R1, #0\n"
-                 "LDR     R0, =0x313E\n"
-                 "BL      sub_FFC5E6C0_my\n"
-                 "MOV     R0, #0\n"
-                 "STR     R0, [R4]\n"
-                 "LDMFD   SP!, {R4,PC}\n"
-);
-}
-
-
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC5D258_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "LDR     R1, =0xFFC5D46C\n"
-                 "MOV     R0, #0x20\n"
-                 "BL      sub_FFC57EC4\n"
-                 "LDR     R1, =0x59DC\n"
-                 "MOV     R0, #0\n"
-                 "STR     R0, [R1,#4]\n"
-                 "STR     R0, [R1]\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "MOV     R1, #0\n"
-                 "MOV     R0, #4\n"
-                 "B       sub_FFC5E6C0_my\n"
-);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC1BFF4_my(){
-asm volatile(
-                 "LDR     R0, =0x1DCC\n"
-                 "LDR     R1, [R0]\n"
-                 "ORR     R1, R1, #1\n"
-                 "STR     R1, [R0]\n"
-                 "B       sub_FFC1CA74_my\n"
-);
-}
-
-
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC1C008_my(){
-asm volatile(
-                 "LDR     R0, =0x1DCC\n"
-                 "LDR     R1, [R0]\n"
-                 "ORR     R1, R1, #4\n"
-                 "STR     R1, [R0]\n"
-                 "B       sub_FFC1CA74_my\n"
- );
-}
-
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC5D2C4_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "LDR     R4, =0x59DC\n"
-                 "LDR     R0, [R4,#4]\n"
-                 "CMP     R0, #0\n"
-                 "MOVEQ   R0, #1\n"
-                 "BEQ     loc_FFC5D2E8\n"
-                 "TST     R0, #1\n"
-                 "BEQ     loc_FFC5D2F0\n"
-                 "MOV     R0, #0xD\n"
- "loc_FFC5D2E8:\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFC5D568\n"
- "loc_FFC5D2F0:\n"
-                 "LDR     R0, =0x10B0\n"
-                 "BL      sub_FFC5BC60\n"
-                 "CMP     R0, #0\n"
-                 "LDMNEFD SP!, {R4,LR}\n"
-                 "BNE     sub_FFC5D288\n"
-                 "MOV     R1, #0\n"
-                 "MOV     R0, #0\n"
-                 "BL      sub_FFC5CB88\n"
-                 "BL      sub_FFC5D504\n"
-                 "MOV     R1, #0\n"
-                 "MOV     R0, #3\n"
-                 "BL      sub_FFC5D4D8\n"
-                 "LDR     R1, =0xFFC5D488\n"
-                 "MOV     R0, #0x20\n"
-                 "BL      sub_FFC57EC4\n"
-                 "LDR     R2, =sub_FFC5D258_my\n"
-                 "LDR     R0, =0x2BF20\n"
-                 "ADD     R1, R2, #0\n"
-                 "MOV     R3, #0\n"
-                 "BL      sub_FFC5A978\n"
-                 "STR     R0, [R4]\n"
-                 "LDMFD   SP!, {R4,PC}\n"
-                 ".ltorg\n" 
-
-);
-}
-
-
-
-
-
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC1C01C_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "LDR     R0, =sub_FFC1BFF4_my\n"
-                 "BL      sub_FFC6AE64\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "LDR     R0, =sub_FFC1C008_my\n"
-                 "B       sub_FFC68D64\n"
-);
-}
-
-
-
-
-
-
-
- void __attribute__((naked,noinline)) sub_FFC5DAE4_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "LDR     R1, =0xFFC5DCE0\n"
-                 "MOV     R0, #0x20\n"
-                 "BL      sub_FFC57EC4\n"
-                 "LDR     R1, =0x59EC\n"
-                 "MOV     R0, #0\n"
-                 "STR     R0, [R1,#0x88]\n"
-                 "BL      sub_FFC16188\n"
-                 "CMP     R0, #1\n"
-                 "LDMEQFD SP!, {R4,LR}\n"
-                 "BEQ     sub_FFC1C01C_my\n"
-                 "LDMFD   SP!, {R4,PC}\n"
-);
-}
-
-
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC5DC14_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "LDR     R4, =0x59EC\n"
-                 "LDR     R0, [R4,#0x60]\n"
-                 "CMP     R0, #0\n"
-                 "BEQ     loc_FFC5DC3C\n"
-                 "MOV     R1, #0\n"
-                 "MOV     R0, #5\n"
-                 "BL      sub_FFC5CB88\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFC5ECD8\n"
- "loc_FFC5DC3C:\n"
-                 "LDR     R1, [R4,#0x84]\n"
-                 "MOV     R0, #5\n"
-                 "BL      sub_FFC5CB88\n"
-                 "LDR     R0, [R4,#0x5C]\n"
-                 "CMP     R0, #0\n"
-                 "BEQ     loc_FFC5DC64\n"
-                 "MOV     R0, #0x14\n"
-                 "BL      sub_FFC5D5B0\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFC5D348\n"
- "loc_FFC5DC64:\n"
-                 "MOV     R0, #0x13\n"
-                 "BL      sub_FFC5D5B0\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFC5D2C4_my\n"
-);
-}
-
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC5DC74_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "LDR     R1, =0xFFC5DCFC\n"
-                 "MOV     R0, #0x20\n"
-                 "BL      sub_FFC57EC4\n"
-                 "LDR     R4, =0x59EC\n"
-                 "LDR     R0, [R4,#0x38]\n"
-                 "CMP     R0, #0\n"
-                 "LDMEQFD SP!, {R4,PC}\n"
-                 "BL      sub_FFC5F8AC\n"
-                 "CMP     R0, #1\n"
-                 "BNE     loc_FFC5DCAC\n"
-                 "LDR     R0, [R4,#0x44]\n"
-                 "CMP     R0, #0\n"
-                 "BNE     loc_FFC5DCC4\n"
- "loc_FFC5DCAC:\n"
-                 "LDR     R0, [R4,#0x38]\n"
-                 "CMP     R0, #0\n"
-                 "LDMEQFD SP!, {R4,PC}\n"
-                 "BL      sub_FFC5F8AC\n"
-                 "CMP     R0, #0\n"
-                 "LDMNEFD SP!, {R4,PC}\n"
- "loc_FFC5DCC4:\n"
-                 "BL      sub_FFC6039C\n"
-                 "BL      sub_FFC60610\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFC5DC14_my\n"
-);
-}
-//changes end
-
-void __attribute__((naked,noinline)) sub_FFC65D34_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "BL      sub_FFC65D14_my\n"
-                 "MOV     R0, #6\n"
-                 "BL      sub_FFC65C2C\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFC65528_my\n"
- );
-}
-
-
-
-void __attribute__((naked,noinline)) sub_FFC65604_my(){
-asm volatile(
-                 "LDR     R0, =0x5E18\n"
-                 "STMFD   SP!, {R4,LR}\n"
-                 "LDR     R1, [R0,#0x10]\n"
-                 "MOV     R4, #1\n"
-                 "CMP     R1, #0\n"
-                 "LDMEQFD SP!, {R4,PC}\n"
-                 "MOV     R1, #0\n"
-                 "STR     R1, [R0,#0x10]\n"
-                 "BL      sub_FFC64C10\n"
-                 "BL      sub_FFD2D200\n"
-                 "MOV     R1, R4\n"
-                 "MOV     R0, #0x60\n"
-                 "BL      sub_FFC661AC\n"
-                 "BL      sub_FFC601F0\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFC655EC\n"
- );
-}
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC64DB8_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "LDR     R1, =0xFFC64F58\n"
-                 "MOV     R0, #0x20\n"
-                 "BL      sub_FFC57EC4\n"
-                 "BL      sub_FFC64550\n"
-                 "BL      sub_FFD22418\n"
-                 "BL      sub_FFC65604_my\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFC64D70\n"
- );
-}
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC65D14_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "BL      sub_FFC1806C\n"
-                 "BL      sub_FFC64DB8_my\n"
-                 "LDR     R1, =0x5E5C\n"
-                 "MOV     R0, #0\n"
-                 "STR     R0, [R1,#0xC]\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFC65C2C\n"
- );
-}
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC65D4C_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "BL      sub_FFC65D14_my\n"
-                 "MOV     R0, #7\n"
-                 "BL      sub_FFC65C2C\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "MOV     R0, #0\n"
-                 "B       sub_FFC64EFC_my\n"
- );
-}
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC64EFC_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "MOV     R4, R0\n"
-                 "BL      sub_FFC65BC8\n"
-                 "CMP     R0, #0\n"
-                 "MOVNE   R0, R4\n"
-                 "LDMNEFD SP!, {R4,LR}\n"
-                 "MOVNE   R1, #0\n"
-                 "BNE     sub_FFC65828_my\n"
-                 "BL      sub_FFC6039C\n"
-                 "BL      sub_FFC60480\n"
-                 "MOV     R0, #0\n"
-                 "BL      sub_FFC6EF6C\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFD16674\n"
-                 ".ltorg\n"
- );
-}
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC65528_my(){
-asm volatile(
-                 "MOV     R1, #0\n"
-                 "MOV     R0, #0\n"
-                 "B       sub_FFC64C2C_my\n"
- );
-}
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC64E38_my(){
-asm volatile(
-                 "STMFD   SP!, {R4-R6,LR}\n"
-                 "MOV     R4, R0\n"
-                 "LDR     R0, =0x5E18\n"
-                 "MOV     R5, R1\n"
-                 "LDR     R0, [R0,#0x1C]\n"
-                 "CMP     R0, #0\n"
-                 "LDRNE   R1, =0xFFC64F68\n"
-                 "BNE     loc_FFC64EE4\n"
-                 "BL      sub_FFC65BC8\n"
-                 "CMP     R0, #1\n"
-                 "BNE     loc_FFC64E74\n"
- "loc_FFC64E64:\n"
-                 "MOV     R0, R4\n"
-                 "LDMFD   SP!, {R4-R6,LR}\n"
-                 "MOV     R1, #0\n"
-                 "B       sub_FFC65828_my\n"
- "loc_FFC64E74:\n"
-                 "CMP     R5, #2\n"
-                 "BNE     loc_FFC64E8C\n"
-                 "BL      sub_FFC64550\n"
-                 "CMP     R0, #0\n"
-                 "BEQ     loc_FFC64ED4\n"
-                 "B       loc_FFC64EA0\n"
- "loc_FFC64E8C:\n"
-                 "CMP     R5, #1\n"
-                 "BNE     loc_FFC64ED4\n"
-                 "BL      sub_FFC64568\n"
-                 "CMP     R0, #0\n"
-                 "BNE     loc_FFC64ED4\n"
- "loc_FFC64EA0:\n"
-                 "MOV     R0, #0\n"
-                 "BL      sub_FFC6EF6C\n"
-                 "SUB     R12, R4, #0x900\n"
-                 "SUBS    R12, R12, #0xA1\n"
-                 "SUBNE   R12, R4, #0x900\n"
-                 "SUBNES  R12, R12, #0xA3\n"
-                 "SUBNE   R12, R4, #0x900\n"
-                 "SUBNES  R12, R12, #0xA5\n"
-                 "LDREQ   R0, =0xC507\n"
-                 "MOVEQ   R1, #0\n"
-                 "BLEQ    sub_FFC4A82C\n"
- "loc_FFC64ECC:\n"
-                 "MOV     R0, #0\n"
-                 "LDMFD   SP!, {R4-R6,PC}\n"
- "loc_FFC64ED4:\n"
-                 "BL      sub_FFC64DDC\n"
-                 "CMP     R0, #0\n"
-                 "BNE     loc_FFC64EF0\n"
-                 "LDR     R1, =0xFFC64F78\n"
- "loc_FFC64EE4:\n"
-                 "MOV     R0, #0x60\n"
-                 "BL      sub_FFC57EC4\n"
-                 "B       loc_FFC64ECC\n"
- "loc_FFC64EF0:\n"
-                 "MOV     R0, R5\n"
-                 "BL      sub_FFD21504\n"
-                 "B       loc_FFC64E64\n"
-                 ".ltorg\n" 
- );
-}
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC65684_my(){
-asm volatile(
-                 "STMFD   SP!, {R4-R6,LR}\n"
-                 "LDR     R4, =0x5E18\n"
-                 "MOV     R5, #0\n"
-                 "MOV     R0, #1\n"
-                 "STR     R5, [R4,#0x14]\n"
-                 "STR     R0, [R4,#0x34]\n"
-                 "MOV     R0, #0x60\n"
-                 "LDR     R1, =0xFFC65740\n"
-                 "STR     R5, [R4,#0x20]\n"
-                 "BL      sub_FFC57EC4\n"
-                 "MOV     R1, #0\n"
-                 "MOV     R0, #0x45\n"
-                 "BL      sub_FFC661AC\n"
-                 "LDR     R0, [R4,#0x24]\n"
-                 "CMP     R0, #0\n"
-                 "LDRNE   R0, =0x3007\n"
-                 "LDMNEFD SP!, {R4-R6,LR}\n"
-                 "MOVNE   R1, #0\n"
-                 "BNE     sub_FFC5B69C\n"
-                 "LDR     R0, [R4,#0x28]\n"
-                 "CMP     R0, #0\n"
-                 "BEQ     loc_FFC656EC\n"
-                 "STR     R5, [R4,#0x28]\n"
-                 "BL      sub_FFC64DB8_my\n"
-                 "LDMFD   SP!, {R4-R6,LR}\n"
-                 "B       sub_FFC621B8\n"
- "loc_FFC656EC:\n"
-                 "LDR     R0, [R4,#0x1C]\n"
-                 "CMP     R0, #0\n"
-                 "LDMNEFD SP!, {R4-R6,PC}\n"
-                 "BL      sub_FFC1C744\n"
-                 "CMP     R0, #1\n"
-                 "LDREQ   R0, =0x9A1\n"
-                 "MOVEQ   R1, #0\n"
-                 "BLEQ    sub_FFC5B650\n"
-                 "BL      sub_FFC1C74C\n"
-                 "LDR     R5, =0x9A3\n"
-                 "CMP     R0, #1\n"
-                 "MOVEQ   R1, #0\n"
-                 "MOVEQ   R0, R5\n"
-                 "BLEQ    sub_FFC5B650\n"
-                 "LDR     R0, [R4,#4]\n"
-                 "CMP     R0, #0\n"
-                 "MOVNE   R0, R5\n"
-                 "LDMNEFD SP!, {R4-R6,LR}\n"
-                 "MOVNE   R1, #0\n"
-                 "BNE     sub_FFC5B650\n"
-                 "LDMFD   SP!, {R4-R6,PC}\n"
-                 ".ltorg\n"
- );
-}
-
-
-
-
-
-
-void __attribute__((naked,noinline)) sub_FFC64C2C_my(){
-asm volatile(
-                 "STMFD   SP!, {R4,LR}\n"
-                 "LDR     R4, =0x5E18\n"
-                 "LDR     R0, [R4,#0x10]\n"
-                 "LDR     R1, [R4,#0x20]\n"
-                 "ORRS    R0, R0, R1\n"
-                 "BNE     loc_FFC64C4C\n"
- "loc_FFC64C44:\n"
-                 "LDMFD   SP!, {R4,LR}\n"
-                 "B       sub_FFC621B8\n"
- "loc_FFC64C4C:\n"
-                 "BL      sub_FFC65BC8\n"
-                 "CMP     R0, #0\n"
-                 "LDRNE   R0, =0x1051\n"
-                 "LDMNEFD SP!, {R4,LR}\n"
-                 "MOVNE   R1, #0\n"
-                 "BNE     sub_FFC65828_my\n"
-                 "LDR     R0, [R4,#0x20]\n"
-                 "CMP     R0, #0\n"
-                 "BEQ     loc_FFC64C88\n"
-                 "MOV     R1, #0\n"
-                 "MOV     R0, #0x44\n"
-                 "BL      sub_FFC661AC\n"
-                 "MOV     R0, #1\n"
-                 "STR     R0, [R4,#0x28]\n"
-                 "LDMFD   SP!, {R4,PC}\n"
- "loc_FFC64C88:\n"
-                 "BL      sub_FFC65604_my\n"
-                 "B       loc_FFC64C44\n"
-                 ".ltorg\n" 
- );
-}
-
-
-
-
-//New code ends here
-
-
-
-void __attribute__((naked,noinline)) sub_FFC5F10C_my(){ 
- asm volatile(
-                "SUB     R12, R0, #0x1000\n"
-                "SUBS    R12, R12, #0x184\n"
-                "STMFD   SP!, {R4,LR}\n"
-                "BEQ     loc_FFC5F170\n"
-                "SUB     R12, R0, #0x3300\n"
-                "SUBS    R12, R12, #2\n"
-                "MOVNE   R0, #1\n"
-                "LDMNEFD SP!, {R4,PC}\n"
-                "BL      sub_FFD52058\n"
-                "LDR     R0, =0x4004\n"
-                "BL      sub_FFC1BDB8_my\n"  //--------------->
-                "MOV     R0, #2\n"
-                "BL      sub_FFC5D5B0\n"
-                "LDR     R1, =0xFFC5F1F4\n"
-                "MOV     R0, #0x20\n"
-                "BL      sub_FFC57EC4\n"
-                "BL      sub_FFC5DBF4\n"
-                "LDR     R1, =0x59EC\n"
-                "CMP     R0, #0\n"
-                "LDR     R0, [R1,#0x54]\n"
-                "BNE     loc_FFC5F17C\n"
-                "CMP     R0, #0\n"
-                "BNE     loc_FFC5F184\n"
-                "BL      sub_FFC5FB48\n"
-                "B       loc_FFC5F1B0\n"
-"loc_FFC5F170:\n"
-                "MOV     R0, #1\n"
-                "BL      sub_FFCC4B90\n"
-                "B       loc_FFC5F1B0\n"
-"loc_FFC5F17C:\n"
-                "CMP     R0, #0\n"
-                "BEQ     loc_FFC5F18C\n"
-"loc_FFC5F184:\n"
-                "BL      sub_FFC5ECF8\n"
-                "B       loc_FFC5F1B0\n"
-"loc_FFC5F18C:\n"
-                "MOV     R0, R1\n"
-                "LDR     R0, [R0,#0x20]\n"
-                "LDR     R1, [R1,#0x1C]\n"
-                "ORRS    R0, R1, R0\n"
-                "BEQ     loc_FFC5F1A8\n"
-                "BL      sub_FFC5DB14\n"
-                "B       loc_FFC5F1AC\n"
-"loc_FFC5F1A8:\n"
-                "BL      sub_FFC5D208\n"
-"loc_FFC5F1AC:\n"
-                "BL      sub_FFC5ED74\n"
-"loc_FFC5F1B0:\n"
-                "MOV     R0, #0\n"
-                "LDMFD   SP!, {R4,PC}\n"
-                ".ltorg\n"  
- );
-} 
-
-void __attribute__((naked,noinline)) sub_FFC5EED0_my(){ 
- asm volatile(
-                "STMFD   SP!, {R4,LR}\n"
-                "LDR     R1, =0xFFC5EF58\n"
-                "MOV     R0, #0x20\n"
-                "BL      sub_FFC57EC4\n"
-                "BL      sub_FFC5F84C\n"
-                "LDR     R0, =0x4004\n"
-                "BL      sub_FFC1BDB8_my\n"  //------------------>
-                "MOV     R0, #0xB\n"
-                "BL      sub_FFC5D5B0\n"
-                "BL      sub_FFC60718\n"
-                "BL      sub_FFC16154\n"
-                "BL      sub_FFC5F22C\n"
-                "LDMFD   SP!, {R4,LR}\n"
-                "B       sub_FFC1BEE4\n"
- );
-} 
-
-
-void __attribute__((naked,noinline)) sub_FFC5E5BC_my(){ 
- asm volatile(
-                "LDR     R12, =0x1162\n"
-                "STMFD   SP!, {R4,LR}\n"
-                "CMP     R0, R12\n"
-                "BEQ     loc_FFC5E6B0\n"
-                "BGT     loc_FFC5E618\n"
-                "LDR     R12, =0x10A9\n"
-                "CMP     R0, R12\n"
-                "BEQ     loc_FFC5E60C\n"
-                "BGT     loc_FFC5E5F8\n"
-                "SUB     R12, R0, #0x1000\n"
-                "SUBS    R12, R12, #5\n"
-                "SUBNE   R12, R0, #0x1000\n"
-                "SUBNES  R12, R12, #8\n"
-                "BNE     loc_FFC5E65C\n"
-                "B       loc_FFC5E610\n"
-"loc_FFC5E5F8:\n"
-                "SUB     R12, R0, #0x1000\n"
-                "SUBS    R12, R12, #0xAD\n"
-                "SUBNE   R12, R0, #0x1000\n"
-                "SUBNES  R12, R12, #0xAF\n"
-                "BNE     loc_FFC5E65C\n"
-"loc_FFC5E60C:\n"
-                "BL      sub_FFC5DB14\n"
-"loc_FFC5E610:\n"
-                "BL      sub_FFC5DC74_my\n"
-                "B       loc_FFC5E6B8\n"
-"loc_FFC5E618:\n"
-                "LDR     R12, =0x119B\n"
-                "CMP     R0, R12\n"
-                "BEQ     loc_FFC5E684\n"
-                "BGT     loc_FFC5E644\n"
-                "SUB     R12, R0, #0x1100\n"
-                "SUBS    R12, R12, #0x82\n"
-                "BEQ     loc_FFC5E684\n"
-                "SUB     R12, R0, #0x1100\n"
-                "SUBS    R12, R12, #0x85\n"
-                "BNE     loc_FFC5E65C\n"
-                "B       loc_FFC5E664\n"
-"loc_FFC5E644:\n"
-                "SUB     R12, R0, #0x1100\n"
-                "SUBS    R12, R12, #0xAB\n"
-                "BEQ     loc_FFC5E664\n"
-                "SUB     R12, R0, #0x1200\n"
-                "SUBS    R12, R12, #3\n"
-                "BEQ     loc_FFC5E6B8\n"
-"loc_FFC5E65C:\n"
-                "MOV     R0, #1\n"
-                "LDMFD   SP!, {R4,PC}\n"
-"loc_FFC5E664:\n"
-                "BL      sub_FFC602FC\n"
-                "BL      sub_FFC60330\n"
-                "MOV     R0, #0x4100\n"
-                "BL      sub_FFC1BDB8_my\n"  //-------------->
-                "BL      sub_FFD500BC\n"
-                "MOV     R0, #0x16\n"
-                "BL      sub_FFC5D5B0\n"
-                "B       loc_FFC5E6B8\n"
-"loc_FFC5E684:\n"
-                "LDR     R0, =0x59EC\n"
-                "LDR     R1, [R0,#0x58]\n"
-                "LDR     R0, [R0,#0x54]\n"
-                "ORRS    R0, R1, R0\n"
-                "BEQ     loc_FFC5E6A0\n"
-             // "BL      nullsub_26\n"
-                "B       loc_FFC5E610\n"
-"loc_FFC5E6A0:\n"
-                "BL      sub_FFC602FC\n"
-                "BL      sub_FFC60330\n"
-                "BL      sub_FFC5EED0_my\n" //------------------>
-                "B       loc_FFC5E6B8\n"
-"loc_FFC5E6B0:\n"
-            //  "BL      nullsub_26\n"
-                "BL      sub_FFC5D36C\n"
-"loc_FFC5E6B8:\n"
-                "MOV     R0, #0\n"
-                "LDMFD   SP!, {R4,PC}\n"
- );
-} 
-
-void __attribute__((naked,noinline)) sub_FFC5E460_my(){ 
- asm volatile(
-                "STMFD   SP!, {R4-R6,LR}\n"
-                "SUB     R12, R0, #0x2000\n"
-                "LDR     R5, =0x59EC\n"
-                "SUBS    R12, R12, #4\n"
-                "MOV     R4, #1\n"
-                "BEQ     loc_FFC5E48C\n"
-                "SUB     R12, R0, #0x3200\n"
-                "SUBS    R12, R12, #2\n"
-                "MOVNE   R0, #1\n"
-                "LDMNEFD SP!, {R4-R6,PC}\n"
-                "STR     R4, [R5,#0x94]\n"
-"loc_FFC5E48C:\n"
-                "LDR     R0, [R5,#0x2C]\n"
-                "CMP     R0, #0\n"
-                "BNE     loc_FFC5E5B4\n"
-                "LDR     R0, [R5,#0x94]\n"
-                "CMP     R0, #0\n"
-                "BEQ     loc_FFC5E5B4\n"
-                "BL      sub_FFC5DBF4\n"
-                "CMP     R0, #0\n"
-                "BEQ     loc_FFC5E4F4\n"
-                "LDR     R0, [R5,#0x98]\n"
-                "CMP     R0, #0\n"
-                "BNE     loc_FFC5E4F4\n"
-                "LDR     R0, [R5,#0x1C]\n"
-                "LDR     R1, [R5,#0x20]\n"
-                "ORRS    R0, R0, R1\n"
-                "BEQ     loc_FFC5E4D4\n"
-                "BL      sub_FFC5DB14\n"
-                "B       loc_FFC5E4D8\n"
-"loc_FFC5E4D4:\n"
-                "BL      sub_FFC5D208\n"
-"loc_FFC5E4D8:\n"
-                "LDR     R0, [R5,#0x34]\n"
-                "CMP     R0, #0\n"
-                "LDRNE   R0, [R5,#0x30]\n"
-                "CMPNE   R0, #0\n"
-                "STREQ   R4, [R5,#0x98]\n"
-                "LDMFD   SP!, {R4-R6,LR}\n"
-                "B       sub_FFC5EE18\n"
-"loc_FFC5E4F4:\n"
-                "LDR     R1, [R5,#0x24]\n"
-                "MOV     R6, R5\n"
-                "MOV     R0, #0\n"
-                "LDR     R5, =0x8002\n"
-                "CMP     R1, #0\n"
-                "STR     R0, [R6,#0x94]\n"
-                "BEQ     loc_FFC5E548\n"
-                "LDR     R1, =0xFFC5E7FC\n"
-                "MOV     R0, #0x20\n"
-                "BL      sub_FFC57EC4\n"
-                "MOV     R0, R5\n"
-                "BL      sub_FFC1BDB8_my\n"  //--------------->
-                "BL      sub_FFC60718\n"
-                "BL      sub_FFC5EBFC\n"
-                "BL      sub_FFC16120\n"
-                "BL      sub_FFC64550\n"
-                "MOV     R1, #0\n"
-                "MOV     R0, #0x48\n"
-                "BL      sub_FFC661AC\n"
-                "BL      sub_FFC5EEA0_my\n"  //--------------->
-                "B       loc_FFC5E5B4\n"
-"loc_FFC5E548:\n"
-                "LDR     R1, =0xFFC5E808\n"
-                "MOV     R0, #0x20\n"
-                "BL      sub_FFC57EC4\n"
-                "MOV     R0, #0xA\n"
-                "BL      sub_FFC5D5B0\n"
-                "MOV     R0, R5\n"
-                "BL      sub_FFC1BDB8_my\n"
-                "BL      sub_FFC60718\n"
-                "LDR     R1, =0xFFC5E81C\n"
-                "MOV     R0, #0x20\n"
-                "BL      sub_FFC57EC4\n"
-                "BL      sub_FFC5EBFC\n"
-                "BL      sub_FFC5F5AC\n"
-                "CMP     R0, #0\n"
-                "BNE     loc_FFC5E58C\n"
-                "BL      sub_FFC5ECD8\n"
-                "B       loc_FFC5E5B4\n"
-"loc_FFC5E58C:\n"
-                "BL      sub_FFC16120\n"
-                "BL      sub_FFC1BF24\n"
-                "MOV     R0, #0\n"
-                "STR     R4, [R6,#0x28]\n"
-                "BL      sub_FFC15CE0\n"
-                "BL      sub_FFC15E78\n"
-          //    "BL      nullsub_10\n"
-                "MOV     R0, R5\n"
-                "BL      sub_FFC1BDB8_my\n"
-                "BL      sub_FFC5F81C\n"
-"loc_FFC5E5B4:\n"
-                "MOV     R0, #0\n"
-                "LDMFD   SP!, {R4-R6,PC}\n"
- );
-} 
-
-
-void __attribute__((naked,noinline)) sub_FFC1BDB8_my(){ 
- asm volatile(
-                "STMFD   SP!, {R4,LR}\n"
-                "MOV     R4, R0\n"
-                "LDR     R0, =0x1DCC\n"
-                "STR     R4, [R0,#0xC]\n"
-                "MOV     R0, R4,LSL#16\n"
-                "MOV     R0, R0,LSR#16\n"
-                "BL      sub_FFC5C418\n"
-                "CMP     R4, #0x80\n"
-                "MOVNE   R1, R4\n"
-                "MOVNE   R0, #0\n"
-                "BLNE    sub_FFC60D1C\n"
-                "LDR     R12, =0x4010\n"
-                "CMP     R4, R12\n"
-                "BEQ     loc_FFC1BE38\n"
-                "BGT     loc_FFC1BE10\n"
-                "CMP     R4, #8\n"
-                "BEQ     loc_FFC1BE2C\n"
-                "CMP     R4, #0x80\n"
-                "SUBNE   R12, R4, #0x4000\n"
-                "SUBNES  R12, R12, #4\n"
-                "BEQ     loc_FFC1BE38\n"
-                "B       loc_FFC1BE30\n"
-"loc_FFC1BE10:\n"
-                "SUB     R12, R4, #0x4000\n"
-                "SUBS    R12, R12, #0x40\n"
-                "CMPNE   R4, #0x4100\n"
-                "BEQ     loc_FFC1BE38\n"
-                "SUB     R12, R4, #0x8000\n"
-                "SUBS    R12, R12, #0x20\n"
-                "BNE     loc_FFC1BE30\n"
-"loc_FFC1BE2C:\n"
-                "BL      sub_FFC62104_my\n" //------------->
-"loc_FFC1BE30:\n"
-                "MOV     R0, #2\n"
-                "B       loc_FFC1BE40\n"
-"loc_FFC1BE38:\n"
-                "BL      sub_FFC62104_my\n" //------------->
-                "MOV     R0, #0\n"
-"loc_FFC1BE40:\n"
-                "BL      sub_FFC11F08\n"
-                "BL      sub_FFC12048\n"
-                "LDMFD   SP!, {R4,LR}\n"
-                "B       sub_FFC60A74\n"
- );
-} 
-
-
-void __attribute__((naked,noinline)) sub_FFC62104_my(){ 
- asm volatile(
-                "STMFD   SP!, {R4,LR}\n"
-                "LDR     R4, =0x5C6C\n"
-                "LDRH    R0, [R4,#4]\n"
-                "BL      sub_FFC5C900\n"
-                "BL      sub_FFC1C70C\n"
-                "SUB     R12, R0, #0x4000\n"
-                "SUBS    R12, R12, #4\n"
-                "LDMNEFD SP!, {R4,PC}\n"
-                "LDR     R0, =0x5CDC\n"
-                "LDR     R1, =0xFFC6201C\n"
-                "BL      sub_FFC67B64\n"
-                "LDR     R0, =sub_FFC62064_my\n"  //------------->
-                "STR     R0, [R4,#0x6C]\n"
-           //   "BL      nullsub_28\n"
-                "LDR     R1, =0x5CE8\n"
-                "LDMFD   SP!, {R4,LR}\n"
-                "SUB     R0, R1, #0xC\n"
-                "B       sub_FFC67B10\n"
- );
-} 
-
-void __attribute__((naked,noinline)) sub_FFC62064_my(){ 
- asm volatile(
-                "STMFD   SP!, {R4,LR}\n"
-                "LDR     R1, =0xFFC6221C\n"
-                "MOV     R0, #0x20\n"
-                "BL      sub_FFC57EC4\n"
-                "BL      sub_FFC5AC2C\n"
-                "LDR     R1, =0x5C6C\n"
-                "STR     R0, [R1,#0x58]\n"
-                "LDMFD   SP!, {R4,LR}\n"
-                "B       sub_FFC62044_my\n" //-------------->
- );
-} 
 
 
 void __attribute__((naked,noinline)) sub_FFC5EEA0_my(){ 
@@ -1301,6 +189,9 @@ void __attribute__((naked,noinline)) sub_FFC5EEA0_my(){
                 "B       sub_FFC5DD0C\n"
  );
 } 
+
+
+
 
 
 void __attribute__((naked,noinline)) sub_FFC6226C_my(){ 
@@ -1334,6 +225,9 @@ void __attribute__((naked,noinline)) sub_FFC6226C_my(){
 } 
 
 
+
+
+
 void __attribute__((naked,noinline)) sub_FFC627E4_my(){ 
  asm volatile(
                 "STMFD   SP!, {R4,LR}\n"
@@ -1361,21 +255,27 @@ void __attribute__((naked,noinline)) sub_FFC627E4_my(){
  );
 } 
 
+
+
+
 // branches are together
 
 void __attribute__((naked,noinline)) sub_FFC62044_my(){ 
  asm volatile(
                 "STMFD   SP!, {R4,LR}\n"
                 "LDR     R0, =0x5CDC\n"
-                "LDR     R1, =sub_FFC61E1C_my\n"
+                "LDR     R1, =sub_FFC61E1C_my\n" //------------->
                 "BL      sub_FFC67B64\n"
                 "LDR     R1, =0x5C6C\n"
-                "LDR     R0, =sub_FFC61F54_my\n"
+                "LDR     R0, =sub_FFC61F54_my\n" //------------->
                 "STR     R0, [R1,#0x6C]\n"
                 "LDMFD   SP!, {R4,PC}\n"
  );
 } 
 
+
+
+//branch 1
 
 void __attribute__((naked,noinline)) sub_FFC61E1C_my(){ 
  asm volatile(
@@ -1429,6 +329,11 @@ void __attribute__((naked,noinline)) sub_FFC61E1C_my(){
                 "BX      R1\n"
  );
 } 
+
+
+
+
+//branch 2
 
 void __attribute__((naked,noinline)) sub_FFC61F54_my(){ 
  asm volatile(
@@ -1484,6 +389,11 @@ void __attribute__((naked,noinline)) sub_FFC61F54_my(){
                 "LDMFD   SP!, {R4-R6,PC}\n"
  );
 } 
+
+
+
+
+//branches are joining here
 
 void __attribute__((naked,noinline)) sub_FFC61244_my(){ 
  asm volatile(
@@ -1622,6 +532,10 @@ void __attribute__((naked,noinline)) sub_FFC61244_my(){
 } 
 
 
+
+
+
+
 void __attribute__((naked,noinline)) sub_FFC62528_my(){ 
  asm volatile(
                 "STMFD   SP!, {R4,LR}\n"
@@ -1637,6 +551,9 @@ void __attribute__((naked,noinline)) sub_FFC62528_my(){
                 "B       sub_FFC65380_my\n"  //----------->
  );
 } 
+
+
+
 
 
 void __attribute__((naked,noinline)) sub_FFC65380_my(){ 
@@ -1669,6 +586,10 @@ void __attribute__((naked,noinline)) sub_FFC65380_my(){
                 "B       sub_FFD24154\n"
  );
 } 
+
+
+
+
 
 
 void __attribute__((naked,noinline)) sub_FFC64F8C_my(){ 
@@ -1710,7 +631,7 @@ void __attribute__((naked,noinline)) sub_FFC64F8C_my(){
                 "SUBEQS  R12, R12, #0x1C\n"
                 "BNE     loc_FFC65020\n"
                 "MOV     R0, #0\n"
-                "BL      sub_FFC65684_my\n"
+                "BL      sub_FFC65684\n"
                 "B       loc_FFC65378\n"
 "loc_FFC65020:\n"
                 "BL      sub_FFC70D30\n"
@@ -1844,7 +765,7 @@ void __attribute__((naked,noinline)) sub_FFC64F8C_my(){
                 "LDMFD   SP!, {R3-R11,PC}\n"
 "loc_FFC651FC:\n"
                 "MOV     R0, R4\n"
-                "BL      sub_FFC64EFC_my\n"
+                "BL      sub_FFC64EFC\n"
                 "B       loc_FFC65378\n"
 "loc_FFC65208:\n"
                 "BL      sub_FFC6235C\n"
@@ -1890,7 +811,7 @@ void __attribute__((naked,noinline)) sub_FFC64F8C_my(){
                 "MOV     R1, #1\n"
                 "MOV     R0, R4\n"
 "loc_FFC652A4:\n"
-                "BL      sub_FFC64E38_my\n"
+                "BL      sub_FFC64E38_my\n" //------------->
                 "LDMFD   SP!, {R3-R11,PC}\n"
 "loc_FFC652AC:\n"
                 "MOV     R0, R11\n"
@@ -1961,6 +882,79 @@ void __attribute__((naked,noinline)) sub_FFC64F8C_my(){
 } 
 
 
+
+
+
+
+void __attribute__((naked,noinline)) sub_FFC64E38_my(){
+asm volatile(
+                 "STMFD   SP!, {R4-R6,LR}\n"
+                 "MOV     R4, R0\n"
+                 "LDR     R0, =0x5E18\n"
+                 "MOV     R5, R1\n"
+                 "LDR     R0, [R0,#0x1C]\n"
+                 "CMP     R0, #0\n"
+                 "LDRNE   R1, =0xFFC64F68\n"
+                 "BNE     loc_FFC64EE4\n"
+                 "BL      sub_FFC65BC8\n"
+                 "CMP     R0, #1\n"
+                 "BNE     loc_FFC64E74\n"
+ "loc_FFC64E64:\n"
+                 "MOV     R0, R4\n"
+                 "LDMFD   SP!, {R4-R6,LR}\n"
+                 "MOV     R1, #0\n"
+                 "B       sub_FFC65828_my\n" //------------->
+ "loc_FFC64E74:\n"
+                 "CMP     R5, #2\n"
+                 "BNE     loc_FFC64E8C\n"
+                 "BL      sub_FFC64550\n"
+                 "CMP     R0, #0\n"
+                 "BEQ     loc_FFC64ED4\n"
+                 "B       loc_FFC64EA0\n"
+ "loc_FFC64E8C:\n"
+                 "CMP     R5, #1\n"
+                 "BNE     loc_FFC64ED4\n"
+                 "BL      sub_FFC64568\n"
+                 "CMP     R0, #0\n"
+                 "BNE     loc_FFC64ED4\n"
+ "loc_FFC64EA0:\n"
+                 "MOV     R0, #0\n"
+                 "BL      sub_FFC6EF6C\n"
+                 "SUB     R12, R4, #0x900\n"
+                 "SUBS    R12, R12, #0xA1\n"
+                 "SUBNE   R12, R4, #0x900\n"
+                 "SUBNES  R12, R12, #0xA3\n"
+                 "SUBNE   R12, R4, #0x900\n"
+                 "SUBNES  R12, R12, #0xA5\n"
+                 "LDREQ   R0, =0xC507\n"
+                 "MOVEQ   R1, #0\n"
+                 "BLEQ    sub_FFC4A82C\n"
+ "loc_FFC64ECC:\n"
+                 "MOV     R0, #0\n"
+                 "LDMFD   SP!, {R4-R6,PC}\n"
+ "loc_FFC64ED4:\n"
+                 "BL      sub_FFC64DDC\n"
+                 "CMP     R0, #0\n"
+                 "BNE     loc_FFC64EF0\n"
+                 "LDR     R1, =0xFFC64F78\n"
+ "loc_FFC64EE4:\n"
+                 "MOV     R0, #0x60\n"
+                 "BL      sub_FFC57EC4\n"
+                 "B       loc_FFC64ECC\n"
+ "loc_FFC64EF0:\n"
+                 "MOV     R0, R5\n"
+                 "BL      sub_FFD21504\n"
+                 "B       loc_FFC64E64\n"
+ );
+}
+
+
+
+
+
+
+
+
 void __attribute__((naked,noinline)) sub_FFC65828_my(){ 
  asm volatile(
                 "STMFD   SP!, {R4-R8,LR}\n"
@@ -2020,7 +1014,7 @@ void __attribute__((naked,noinline)) sub_FFC65828_my(){
                 "SUBS    R12, R12, #0x4B\n"
                 "BNE     loc_FFC65B80\n"
 "loc_FFC658D4:\n"
-                "BL      sub_FFC64DB8_my\n"
+                "BL      sub_FFC64DB8\n"
                 "MOV     R0, #0\n"
                 "BL      sub_FFC65C2C\n"
                 "LDR     R0, [R5,#8]\n"
@@ -2037,10 +1031,10 @@ void __attribute__((naked,noinline)) sub_FFC65828_my(){
                 "BL      sub_FFC657B0\n"
                 "B       loc_FFC65B30\n"
 "loc_FFC65910:\n"
-                "BL      sub_FFC65D34_my\n"
+                "BL      sub_FFC65D34\n"
                 "B       loc_FFC65B30\n"
 "loc_FFC65918:\n"
-                "BL      sub_FFC65D4C_my\n"
+                "BL      sub_FFC65D4C\n"
                 "B       loc_FFC65B30\n"
 "loc_FFC65920:\n"
                 "SUB     R12, R4, #0x900\n"
@@ -2051,16 +1045,16 @@ void __attribute__((naked,noinline)) sub_FFC65828_my(){
                 "CMP     R4, R1\n"
                 "BEQ     loc_FFC65958\n"
                 "CMP     R4, R0\n"
-                "BLEQ    sub_FFC65D4C_my\n"
+                "BLEQ    sub_FFC65D4C\n"
                 "B       loc_FFC65B80\n"
 "loc_FFC65948:\n"
                 "BL      sub_FFC65754_my\n"  //---------------->
                 "B       loc_FFC65B80\n"
 "loc_FFC65950:\n"
-                "BL      sub_FFC65D14_my\n"
+                "BL      sub_FFC65D14\n"
                 "B       loc_FFC65B80\n"
 "loc_FFC65958:\n"
-                "BL      sub_FFC65D34_my\n"
+                "BL      sub_FFC65D34\n"
                 "B       loc_FFC65B80\n"
 "loc_FFC65960:\n"
                 "CMP     R4, LR\n"
@@ -2082,7 +1076,7 @@ void __attribute__((naked,noinline)) sub_FFC65828_my(){
                 "BNE     loc_FFC65B80\n"
 "loc_FFC65998:\n"
                 "BL      sub_FFC65D9C\n"
-                "BL      sub_FFC65D14_my\n"
+                "BL      sub_FFC65D14\n"
                 "B       loc_FFC65B30\n"
 "loc_FFC659A4:\n"
                 "BL      sub_FFC18464\n"
@@ -2153,9 +1147,9 @@ void __attribute__((naked,noinline)) sub_FFC65828_my(){
                 "CMP     R4, R2\n"
                 "BNE     loc_FFC65B80\n"
 "loc_FFC65AE0:\n"
-                "BL      sub_FFC65D14_my\n"
+                "BL      sub_FFC65D14\n"
                 "MOV     R0, #0\n"
-                "BL      sub_FFC64EFC_my\n"
+                "BL      sub_FFC64EFC\n"
                 "B       loc_FFC65B30\n"
 "loc_FFC65AF0:\n"
                 "SUB     R12, R4, #0x800\n"
@@ -2183,9 +1177,9 @@ void __attribute__((naked,noinline)) sub_FFC65828_my(){
                 "MOV     R1, #0\n"
                 "BL      sub_FFC5CA38\n"
                 "BL      sub_FFD214B8\n"
-                "BL      sub_FFC65D14_my\n"
+                "BL      sub_FFC65D14\n"
                 "BL      sub_FFD22594\n"
-                "BL      sub_FFC64DB8_my\n"
+                "BL      sub_FFC64DB8\n"
                 "MOV     R0, #0\n"
                 "B       loc_FFC659E0\n"
 "loc_FFC65B60:\n"
@@ -2201,9 +1195,15 @@ void __attribute__((naked,noinline)) sub_FFC65828_my(){
 "loc_FFC65B80:\n"
                 "MOV     R0, #1\n"
                 "LDMFD   SP!, {R4-R8,PC}\n"
-                ".ltorg\n"
+                ".ltorg\n"  
  );
 } 
+
+
+
+
+
+
 
 
 void __attribute__((naked,noinline)) sub_FFC65DC0_my(){ 
@@ -2222,7 +1222,7 @@ void __attribute__((naked,noinline)) sub_FFC65DC0_my(){
                 "SUB     R12, R0, #0x1000\n"
                 "SUBS    R12, R12, #0x51\n"
                 "BNE     loc_FFC65E7C\n"
-                "BL      sub_FFC65D34_my\n"
+                "BL      sub_FFC65D34\n"
                 "B       loc_FFC65E74\n"
 "loc_FFC65E00:\n"
                 "SUB     R12, R0, #0x3000\n"
@@ -2247,7 +1247,7 @@ void __attribute__((naked,noinline)) sub_FFC65DC0_my(){
                 "CMP     R0, #0\n"
                 "MOVNE   R0, #3\n"
                 "BNE     loc_FFC65E68\n"
-                "BL      sub_FFC65D14_my\n"
+                "BL      sub_FFC65D14\n"
                 "B       loc_FFC65E74\n"
 "loc_FFC65E58:\n"
                 "CMP     R1, #0\n"
@@ -2258,7 +1258,7 @@ void __attribute__((naked,noinline)) sub_FFC65DC0_my(){
                 "BL      sub_FFC65C2C\n"
                 "B       loc_FFC65E74\n"
 "loc_FFC65E70:\n"
-                "BL      sub_FFC65D4C_my\n"
+                "BL      sub_FFC65D4C\n"
 "loc_FFC65E74:\n"
                 "MOV     R0, #0\n"
                 "LDMFD   SP!, {R4,PC}\n"
@@ -2267,6 +1267,9 @@ void __attribute__((naked,noinline)) sub_FFC65DC0_my(){
                 "LDMFD   SP!, {R4,PC}\n"
  );
 } 
+
+
+
 
 
 void __attribute__((naked,noinline)) sub_FFC65754_my(){ 
@@ -2295,6 +1298,9 @@ void __attribute__((naked,noinline)) sub_FFC65754_my(){
                 "B       sub_FFD21374\n"
  );
 } 
+
+
+
 
 
 void __attribute__((naked,noinline)) sub_FFC65CE8_my(){ 
@@ -2342,6 +1348,9 @@ void __attribute__((naked,noinline)) sub_FFC65420_my(){
 } 
 
 
+
+
+
 void __attribute__((naked,noinline)) sub_FFC1842C_my(){ 
  asm volatile(
                 "STMFD   SP!, {R4,LR}\n"
@@ -2360,6 +1369,13 @@ void __attribute__((naked,noinline)) sub_FFC1842C_my(){
                 "B       sub_FFC4DB58_my\n" //----------------->
  );
 } 
+
+
+
+
+
+
+
 
 void __attribute__((naked,noinline)) sub_FFC4DB58_my(){ 
  asm volatile(
@@ -2934,37 +1950,3 @@ void change_video_tables(int a, int b){
 }
 
 long CompressionRateTable[]={0x60, 0x5D, 0x5A, 0x57, 0x54, 0x51, 0x4D, 0x48, 0x42, 0x3B, 0x32, 0x29, 0x22, 0x1D, 0x17, 0x14, 0x10, 0xE, 0xB, 9, 7, 6, 5, 4, 3, 2, 1};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

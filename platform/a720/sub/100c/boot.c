@@ -21,43 +21,43 @@ void boot() { //#fs
     long *canon_data_src = (void*)0xFFE9C5D0;
     long *canon_data_dst = (void*)0x1900;
     long canon_data_len = 0xfc04 - 0x1900; // data_end - data_start
-    long *canon_bss_start = (void*)0xfc04; // just after data
-    long canon_bss_len = 0x9d024 - 0xfc04;
+    long *canon_bss_start = (void*)0xfc04; // just after data 
+    long canon_bss_len = 0x9d024 - 0xfc04; 
 
     long i;
 
 
     // Code taken from VxWorks CHDK. Changes CPU speed?
     asm volatile (
- "MRC     p15, 0, R0,c1,c0\n"
- "ORR     R0, R0, #0x1000\n"
- "ORR     R0, R0, #4\n"
- "ORR     R0, R0, #1\n"
- "MCR     p15, 0, R0,c1,c0\n"
+	"MRC     p15, 0, R0,c1,c0\n"
+	"ORR     R0, R0, #0x1000\n"
+	"ORR     R0, R0, #4\n"
+	"ORR     R0, R0, #1\n"
+	"MCR     p15, 0, R0,c1,c0\n"
     :::"r0");
 
     for(i=0;i<canon_data_len/4;i++)
- canon_data_dst[i]=canon_data_src[i];
+	canon_data_dst[i]=canon_data_src[i];
 
     for(i=0;i<canon_bss_len/4;i++)
- canon_bss_start[i]=0;
+	canon_bss_start[i]=0;
 
 /*    asm volatile (
- "MRC     p15, 0, R0,c1,c0\n"
- "ORR     R0, R0, #0x1000\n"
- "BIC     R0, R0, #4\n"
- "ORR     R0, R0, #1\n"
- "MCR     p15, 0, R0,c1,c0\n"
+	"MRC     p15, 0, R0,c1,c0\n"
+	"ORR     R0, R0, #0x1000\n"
+	"BIC     R0, R0, #4\n"
+	"ORR     R0, R0, #1\n"
+	"MCR     p15, 0, R0,c1,c0\n"
     :::"r0");
 */
 
-    // jump to init-sequence that follows the data-copy-routine
+    // jump to init-sequence that follows the data-copy-routine 
     asm volatile ("B      sub_FFC001a4_my\n");
 }; //#fe
 
 
 // init
-void __attribute__((naked,noinline)) sub_FFC001a4_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC001a4_my() { //#fs 
         asm volatile (
                 "LDR     R0, =0xFFC0021C\n"
                 "MOV     R1, #0\n"
@@ -98,7 +98,7 @@ void __attribute__((naked,noinline)) sub_FFC001a4_my() { //#fs
         );
 } //#fe
 
-void __attribute__((naked,noinline)) sub_FFC00FB8_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC00FB8_my() { //#fs 
         asm volatile (
               //"STR     LR, [SP,#0xFFFFFFFC]!\n"
               "STR     LR, [SP,#-4]!\n"         // inspired by original CHDK-code
@@ -161,7 +161,7 @@ void __attribute__((naked,noinline)) sub_FFC00FB8_my() { //#fs
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) uHwSetup_my() { //#fs
+void __attribute__((naked,noinline)) uHwSetup_my() { //#fs 
         asm volatile (
               "STMFD   SP!, {R4,LR}\n"
               "BL      sub_FFC0095C\n"
@@ -198,7 +198,7 @@ void __attribute__((naked,noinline)) uHwSetup_my() { //#fs
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) CreateTask_Startup_my() { //#fs
+void __attribute__((naked,noinline)) CreateTask_Startup_my() { //#fs 
         asm volatile (
                 "STMFD   SP!, {R3,LR}\n"
                 //"BL      nullsub_3\n"
@@ -237,8 +237,8 @@ void __attribute__((naked,noinline)) CreateTask_Startup_my() { //#fs
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) task_Startup_my() { //#fs
-
+void __attribute__((naked,noinline)) task_Startup_my() { //#fs 
+        
         asm volatile (
                 "STMFD   SP!, {R4,LR}\n"
                 "BL      sub_FFC051CC\n"  // uRegClockSave
@@ -253,7 +253,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
 
         asm volatile (
                 "BL      sub_FFC1BD64\n"
-                "BL      sub_FFC1BBEC\n"
+                "BL      sub_FFC1BBEC\n"        
 
                 "BL      sub_FFC18A8C\n"
                 "BL      sub_FFC1BD68\n"
@@ -281,16 +281,16 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
         );
 }; //#fe
 
-void CreateTask_spytask() { //#fs
+void CreateTask_spytask() { //#fs 
         _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
 
 }; //#fe
 
-void CreateTask_PhySw() { //#fs
+void CreateTask_PhySw() { //#fs 
         _CreateTask("PhySw", 0x18, 0x800, mykbd_task, 0);
 }; //#fe
 
-void __attribute__((naked,noinline)) sub_FFC15BC8_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC15BC8_my() { //#fs 
         asm volatile (
                 "STMFD   SP!, {R4,LR}\n"
                 "LDR     R4, =0x1CB8\n"
@@ -314,7 +314,7 @@ void __attribute__((naked,noinline)) sub_FFC15BC8_my() { //#fs
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) sub_FFC4BDD8_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC4BDD8_my() { //#fs 
         asm volatile (
                 "STMFD   SP!, {R4,LR}\n"
                 "LDR     R4, =0x5630\n"
@@ -397,11 +397,11 @@ void __attribute__((naked,noinline)) sub_FFC4CDC0_my() { //#fs  // CreateTask_Ca
 //                   -> StartFactoryModeController =>||
 //
 // uAC_Boot:                   FFC5E06C
-// CreateTask_InitFileModules: FFC5F7A4
-// task_InitFileModules:       FFC5F754
+// CreateTask_InitFileModules: FFC5F7A4 
+// task_InitFileModules:       FFC5F754 
 
 
-void __attribute__((naked,noinline)) sub_FFC1C6C4_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC1C6C4_my() { //#fs  
         asm volatile (
                 "STMFD   SP!, {R4,LR}\n"
                 "BL      sub_FFC5CB64\n"
@@ -425,7 +425,7 @@ void __attribute__((naked,noinline)) sub_FFC1C6C4_my() { //#fs
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) sub_FFC1C294_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC1C294_my() { //#fs  
         asm volatile (
                 //"B sub_FFC1C294\n" // test: branch to original function
                 "STMFD   SP!, {R3-R11,LR}\n"
@@ -674,7 +674,7 @@ void __attribute__((naked,noinline)) sub_FFC1C294_my() { //#fs
                 "BNE     loc_FFC1C348\n"
         "loc_FFC1C608:\n"
                 "MOV     R0, R4\n"
-                "BL      sub_FFC1C084_my\n"
+                "BL      sub_FFC1C084\n"
                 "LDMFD   SP!, {R3-R11,PC}\n"
         "loc_FFC1C614:\n"
                 "BL      sub_FFC5BC60\n"        // IsControlEventActive
@@ -735,7 +735,7 @@ void __attribute__((naked,noinline)) sub_FFC1C294_my() { //#fs
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) sub_FFC5F474_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC5F474_my() { //#fs  
         asm volatile (
                 "STMFD   SP!, {R4,LR}\n"
                 "BL      sub_FFC1C83C\n"
@@ -806,7 +806,7 @@ void __attribute__((naked,noinline)) sub_FFC5F474_my() { //#fs
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) sub_FFC5F410_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC5F410_my() { //#fs  
         asm volatile (
                 "STMFD   SP!, {R4-R6,LR}\n"
                 "MOVS    R4, R0\n"
@@ -840,7 +840,7 @@ void __attribute__((naked,noinline)) sub_FFC5F410_my() { //#fs
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs  
         asm volatile (
                 "STMFD   SP!, {R4-R8,LR}\n"
                 "MOV     R7, R1\n"
@@ -911,7 +911,7 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
         "loc_FFC5E768:\n"
                 "MOV     R0, R6\n"
                 "LDMFD   SP!, {R4-R8,LR}\n"
-                "B       sub_FFC5F030_my\n"
+                "B       sub_FFC5F030\n"
         "loc_FFC5E774:\n"
                 "MOV     R0, R6\n"
                 "LDMFD   SP!, {R4-R8,LR}\n"
@@ -922,12 +922,12 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
                 "BNE     loc_FFC5E990\n"
                 "MOV     R0, #0\n"
                 "BL      sub_FFC1BE50\n"
-                "BL      sub_FFC5EED0_my\n"        // uAC_InitPB
+                "BL      sub_FFC5EED0\n"        // uAC_InitPB
                 "B       loc_FFC5E988\n"
         "loc_FFC5E79C:\n"
                 "MOV     R0, R6\n"
                 "LDMFD   SP!, {R4-R8,LR}\n"
-                "B       sub_FFC5EF64_my\n"
+                "B       sub_FFC5EF64\n"
         "loc_FFC5E7A8:\n"
                 "MOV     R0, R6\n"
                 "LDMFD   SP!, {R4-R8,LR}\n"
@@ -935,7 +935,7 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
         "loc_FFC5E7B4:\n"
                 "MOV     R0, R6\n"
                 "LDMFD   SP!, {R4-R8,LR}\n"
-                "B       sub_FFC5E460_my\n"
+                "B       sub_FFC5E460\n"
         "loc_FFC5E7C0:\n"
                 "SUB     R12, R6, #0x3200\n"
                 "SUBS    R12, R12, #2\n"
@@ -943,7 +943,7 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
                 "MOV     R0, #3\n"
                 "BL      sub_FFC5D5B0\n"        // uCameraConState
                 "MOV     R0, #8\n"
-                "BL      sub_FFC1BDB8_my\n"
+                "BL      sub_FFC1BDB8\n"
                 "MOV     R1, #0\n"
                 "MOV     R0, #0x19\n"
                 "BL      sub_FFC2C874\n"
@@ -957,7 +957,7 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
                 "SUBS    R12, R12, #1\n"
                 "BNE     loc_FFC5E990\n"
                 "LDR     R0, =0x4010\n"
-                "BL      sub_FFC1BDB8_my\n"
+                "BL      sub_FFC1BDB8\n"
                 "BL      sub_FFD51F70\n"
                 "BL      sub_FFC5FB90\n"
                 "MOV     R0, #4\n"
@@ -967,11 +967,11 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
                 "MOV     R1, R7\n"
                 "MOV     R0, R6\n"
                 "LDMFD   SP!, {R4-R8,LR}\n"
-                "B       sub_FFC5E5BC_my\n"
+                "B       sub_FFC5E5BC\n"
         "loc_FFC5E868:\n"
                 "MOV     R0, R6\n"
                 "LDMFD   SP!, {R4-R8,LR}\n"
-                "B       sub_FFC5F10C_my\n"
+                "B       sub_FFC5F10C\n"
         "loc_FFC5E874:\n"
                 "LDR     R7, =0x1182\n"
                 "MOV     R0, R6\n"
@@ -986,7 +986,7 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
                 "SUBS    R12, R12, #0x224\n"
                 "BNE     loc_FFC5E990\n"
                 "MOV     R0, #8\n"
-                "BL      sub_FFC1BDB8_my\n"
+                "BL      sub_FFC1BDB8\n"
                 "MOV     R0, #3\n"
                 "BL      sub_FFC5D5B0\n"        // uCameraConState
                 "STR     R5, [R4,#0xAC]\n"
@@ -995,7 +995,7 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
                 "MOVNE   R1, #0\n"
                 "MOVNE   R0, R7\n"
                 "STRNE   R5, [R4,#0xA8]\n"
-                "BLNE    sub_FFC5E5BC_my\n"
+                "BLNE    sub_FFC5E5BC\n"
                 "B       loc_FFC5E988\n"
         "loc_FFC5E8D4:\n"
                 "LDR     R0, [R4,#0xAC]\n"
@@ -1007,7 +1007,7 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
         "loc_FFC5E8EC:\n"
                 "MOV     R0, R6\n"
                 "LDMFD   SP!, {R4-R8,LR}\n"
-                "B       sub_FFC5E380_my\n"
+                "B       sub_FFC5E380_my\n"  //---------->
         "loc_FFC5E8F8:\n"
                 "LDR     R12, =0x10B0\n"
                 "CMP     R6, R12\n"
@@ -1034,7 +1034,7 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
                 "SUBNE   R12, R6, #0x5000\n"
                 "SUBNES  R12, R12, #6\n"
                 "BNE     loc_FFC5E990\n"
-                "BL      sub_FFC5DC74_my\n"
+                "BL      sub_FFC5DC74\n"
                 "B       loc_FFC5E988\n"
         "loc_FFC5E958:\n"
                 "LDR     R0, [R4,#0x2C]\n"
@@ -1044,7 +1044,7 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
                 "BL      sub_FFC15EA8\n"
                 "B       loc_FFC5E988\n"
         "loc_FFC5E970:\n"
-                "BL      sub_FFC5D2C4_my\n"
+                "BL      sub_FFC5D2C4\n"
                 "B       loc_FFC5E988\n"
         "loc_FFC5E978:\n"
                 "SUB     R12, R6, #0x3000\n"
@@ -1089,7 +1089,7 @@ void __attribute__((naked,noinline)) sub_FFC5E06C_my() { //#fs  uAC_Boot
                 "BL      sub_FFC5F8B0\n"
                 "BL      sub_FFC1C7B4\n"
                 "MOV     R0, R5\n"
-                "BL      sub_FFC1BDB8_my\n"
+                "BL      sub_FFC1BDB8\n"
                 "LDR     R0, [R4,#0x68]\n"
                 "CMP     R0, #0\n"
                 "BNE     loc_FFC5E1B8\n"
@@ -1113,13 +1113,13 @@ void __attribute__((naked,noinline)) sub_FFC5E06C_my() { //#fs  uAC_Boot
         "loc_FFC5E124:\n"
                 "BL      sub_FFC6039C\n"
                 "BL      sub_FFC60610\n"
-                "BL      sub_FFC5DC14_my\n"
+                "BL      sub_FFC5DC14\n"
                 "B       loc_FFC5E1D0\n"
         "loc_FFC5E134:\n"
                 "MOV     R0, #7\n"
                 "BL      sub_FFC5D5B0\n"        // uCameraConState
                 "MOV     R0, R7\n"
-                "BL      sub_FFC1BDB8_my\n"
+                "BL      sub_FFC1BDB8\n"
                 "BL      sub_FFC5F7E0\n"        // CreateTask_CommonDrivers
                 "BL      sub_FFC601B4\n"        // uDispSwLock
                 "MOV     R1, R7\n"
@@ -1190,7 +1190,7 @@ void __attribute__((naked,noinline)) sub_FFC5F7A4_my() { //#fs  CreateTask_InitF
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) task_InitFileModules_my() { //#fs
+void __attribute__((naked,noinline)) task_InitFileModules_my() { //#fs  
         asm volatile (
                 "STMFD   SP!, {R4-R6,LR}\n"
                 "BL      sub_FFC5A4BC\n"
@@ -1212,7 +1212,7 @@ void __attribute__((naked,noinline)) task_InitFileModules_my() { //#fs
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) sub_FFC5A4E8_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC5A4E8_my() { //#fs  
         asm volatile (
                 "STMFD   SP!, {R4,LR}\n"
                 "BL      sub_FFC3F0CC_my\n"    // continue to SDHC-hook here!
@@ -1233,7 +1233,7 @@ void __attribute__((naked,noinline)) sub_FFC5A4E8_my() { //#fs
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) sub_FFC3F0CC_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC3F0CC_my() { //#fs  
         asm volatile (
                 "STMFD   SP!, {R4-R6,LR}\n"
                 "MOV     R6, #0\n"
@@ -1278,7 +1278,7 @@ void __attribute__((naked,noinline)) sub_FFC3F0CC_my() { //#fs
         );
 }; //#fe
 
-void __attribute__((naked,noinline)) sub_FFC3EF08_my() { //#fs
+void __attribute__((naked,noinline)) sub_FFC3EF08_my() { //#fs  
         asm volatile (
                 "STMFD   SP!, {R4-R6,LR}\n"
                 "LDR     R5, =0x2BA0\n"
@@ -1394,10 +1394,10 @@ void __attribute__((naked,noinline)) sub_FFC3EDA0_my() { //#fs  ; Partition tabl
                 "BNE     dg_sd_fat32\n"                // Invalid, go to next partition
                                                        // This partition is valid, it's the first one, bingo!
                 "MOV     R4, R12\n"                    // Move the new MBR offset for the partition detection.
-
+                
            "dg_sd_fat32_end:\n"
-                // End of DataGhost's FAT32 autodetection code
-
+                // End of DataGhost's FAT32 autodetection code                
+      
                 "LDRB    R1, [R4,#0x1C9]\n"     // Continue with firmware
                 "LDRB    R3, [R4,#0x1C8]\n"
                 "LDRB    R12, [R4,#0x1CC]\n"
@@ -1458,3 +1458,5 @@ void __attribute__((naked,noinline)) sub_FFC3EDA0_my() { //#fs  ; Partition tabl
                 "LDMFD   SP!, {R4-R8,PC}\n"
         );
 }; //#fe
+
+
