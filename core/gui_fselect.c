@@ -488,8 +488,8 @@ static void fselect_marked_paste_cb(unsigned int btn) {
                             if (fdst>=0) {
                                 do {
                                     ss=read(fsrc, buf, MARKED_BUF_SIZE);
-                                    if (ss) sd=write(fdst, buf, ss);
-                                } while (ss && ss==sd);
+                                    if (ss>0) sd=write(fdst, buf, ss);
+                                } while (ss>0 && ss==sd);
                                 close(fdst);
                                 t.actime = t.modtime = ptr->mtime;
                                 utime(selected_file, &t);
