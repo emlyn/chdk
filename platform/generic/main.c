@@ -114,7 +114,9 @@ void createHook (void *pNewTcb)
 	}
 
 	if (my_ncmp(name, "tMovieReco", 10) == 0){
+	  #if CAM_CHDK_HAS_EXT_VIDEO_MENU
 	    *entry = (long)movie_record_hook;
+	  #endif
 	}
 
 	core_hook_task_create(pNewTcb);
