@@ -10,6 +10,10 @@ NHSTUB(time, 0xFF865744)
 //NHSTUB(OffPrintTouchWheel, 0xFF8E7120)
 
 
+NHSTUB(eventproc_ShowCameraLog, 0xFF867498)
+NHSTUB(eventproc_export_ShowAllTaskInfo, 0xFF860D2C)
+NHSTUB(eventproc_GetLogToFile, 0xFF861FF8)
+
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF810958)  //null stub
 
 
