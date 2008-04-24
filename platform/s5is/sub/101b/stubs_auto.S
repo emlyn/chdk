@@ -3,7 +3,6 @@
 
 #include "stubs_asm.h"
 
-STUB(FF810000)
 STUB(FF81000C)
 STUB(FF8101B8)
 STUB(FF810970)

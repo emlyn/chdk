@@ -312,7 +312,7 @@ static void mx_dump_memory(void *img){
 		sprintf(fn, "A/MD/%04d.FB", cnt );
 		fd = open(fn, O_WRONLY|O_CREAT, 0777);
 		if (fd) {
-	    write(fd, img, screen_width*screen_height*3);
+	    write(fd, img, screen_width*vid_get_viewport_height()*3);
 	    close(fd);
 		}
   vid_bitmap_refresh();

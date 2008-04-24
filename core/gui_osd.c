@@ -255,7 +255,7 @@ int gui_osd_draw_zebra() {
 
 
     if (!buf) {
-        buf = malloc(screen_size);
+        buf = malloc(screen_buffer_size);
         scr_buf = vid_get_bitmap_fb();
     }
 
@@ -289,10 +289,10 @@ int gui_osd_draw_zebra() {
                 if (conf.zebra_restore_screen || conf.zebra_restore_osd) {
                     draw_restore();
                 } else {
-                    memset(buf, COLOR_TRANSPARENT, screen_size);
+                    memset(buf, COLOR_TRANSPARENT, screen_buffer_size);
                     gui_osd_draw_zebra_osd();
-                    memcpy(scr_buf, buf, screen_size);
-                    memcpy(scr_buf+screen_size, buf, screen_size);
+                    memcpy(scr_buf, buf, screen_buffer_size);
+                    memcpy(scr_buf+screen_buffer_size, buf, screen_buffer_size);
                 }
                 need_restore=0;
             }
@@ -320,16 +320,17 @@ int gui_osd_draw_zebra() {
                         else if (((conf.zebra_mode == ZEBRA_MODE_ZEBRA_1 || conf.zebra_mode == ZEBRA_MODE_ZEBRA_2) && (y-x-timer)&f)) buf[s]=COLOR_TRANSPARENT;
                              else buf[s]=(yy>over)?cl_over:(yy<conf.zebra_under)?cl_under:COLOR_TRANSPARENT;
                     }
-                    if (y*screen_height/viewport_height == (s+screen_width)/screen_width) {
-                        memcpy(buf+s, buf+s-screen_width, screen_width);
-                        s+=screen_width;
+                    if (y*screen_height/viewport_height == (s+screen_buffer_width)/screen_buffer_width) {
+                        memcpy(buf+s, buf+s-screen_buffer_width, screen_buffer_width);
+                        s+=screen_buffer_width;
                     }
+                    s+=screen_buffer_width-screen_width;
                 }
             
             
             gui_osd_draw_zebra_osd();
-            memcpy(scr_buf, buf, screen_size);
-            memcpy(scr_buf+screen_size, buf, screen_size);
+            memcpy(scr_buf, buf, screen_buffer_size);
+            memcpy(scr_buf+screen_buffer_size, buf, screen_buffer_size);
 
             need_restore=1;
             return 1;

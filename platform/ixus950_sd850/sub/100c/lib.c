@@ -62,12 +62,12 @@ void *vid_get_viewport_fb_d()	// picture buffer (play mode)
     return (void*)(*(int*)0x812C8); // see before "ImagePlayer.c" in loc_FFAC3E90
 }
 
-long vid_get_bitmap_width()
+long vid_get_bitmap_screen_width()
 {
     return 360;
 }
 
-long vid_get_bitmap_height()
+long vid_get_bitmap_screen_height()
 {
     return 240;
 }
@@ -82,3 +82,7 @@ char *camera_jpeg_count_str()
     return (char*)0x143D0;
 }
 
+
+long vid_get_bitmap_buffer_width() { return 360; }
+
+long vid_get_bitmap_buffer_height() { return 240; }

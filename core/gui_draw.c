@@ -10,6 +10,7 @@
 //-------------------------------------------------------------------
 static char*    frame_buffer[2];
 unsigned int    screen_width=0, screen_height=0, screen_size=0;
+unsigned int    screen_buffer_width=0, screen_buffer_height=0, screen_buffer_size=0;
 void            (*draw_pixel_proc)(unsigned int offset, color cl);
 
 //-------------------------------------------------------------------
@@ -26,11 +27,14 @@ void draw_set_draw_proc(void (*pixel_proc)(unsigned int offset, color cl)) {
 void draw_init() {
     register int i;
 
-    screen_width = vid_get_bitmap_width();
-    screen_height  = vid_get_bitmap_height();
+    screen_width = vid_get_bitmap_screen_width();
+    screen_height  = vid_get_bitmap_screen_height();
     screen_size = screen_width * screen_height;
+    screen_buffer_width = vid_get_bitmap_buffer_width();
+    screen_buffer_height = vid_get_bitmap_buffer_height();
+    screen_buffer_size = screen_buffer_width * screen_buffer_height;
     frame_buffer[0] = vid_get_bitmap_fb();
-    frame_buffer[1] = frame_buffer[0] + screen_size;
+    frame_buffer[1] = frame_buffer[0] + screen_buffer_size;
     draw_set_draw_proc(NULL);
 }
 
@@ -38,7 +42,7 @@ void draw_init() {
 void draw_pixel(coord x, coord y, color cl) {
     if (x >= screen_width || y >= screen_height) return;
     else {
-        register unsigned int offset = y * screen_width + x;
+        register unsigned int offset = y * screen_buffer_width + x;
         draw_pixel_proc(offset, cl);
     }
 }
@@ -46,7 +50,7 @@ void draw_pixel(coord x, coord y, color cl) {
 //-------------------------------------------------------------------
 color draw_get_pixel(coord x, coord y) {
     if (x >= screen_width || y >= screen_height) return 0;
-    return frame_buffer[0][y * screen_width + x];
+    return frame_buffer[0][y * screen_buffer_width + x];
 }
 
 //-------------------------------------------------------------------
@@ -247,7 +251,7 @@ void draw_txt_char(coord col, coord row, const char ch, color cl) {
 //-------------------------------------------------------------------
 void draw_clear() {
     register unsigned int i;
-    for (i=0; i<screen_width*screen_height; ++i)
+    for (i=0; i<screen_buffer_size; ++i)
         frame_buffer[0][i] = frame_buffer[1][i] = COLOR_TRANSPARENT;
 }
 

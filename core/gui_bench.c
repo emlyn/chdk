@@ -83,8 +83,8 @@ void gui_bench_draw() {
             
             /* no break here */
         case 2:
-            gui_bench_draw_results_screen(3, bench.screen_output_bps, vid_get_bitmap_width() * vid_get_bitmap_height());
-            gui_bench_draw_results_screen(4, bench.screen_input_bps, vid_get_bitmap_width() * vid_get_viewport_height());
+            gui_bench_draw_results_screen(3, bench.screen_output_bps, screen_buffer_size);
+            gui_bench_draw_results_screen(4, bench.screen_input_bps, screen_width * vid_get_viewport_height() * 3);
 
             gui_bench_draw_results(7, bench.memory_write_bps);
             gui_bench_draw_results(8, bench.memory_read_bps);
@@ -116,7 +116,7 @@ static void gui_bench_run() {
     bench.screen_output_bps = 0;
     gui_bench_draw();
     scr = vid_get_bitmap_fb();
-    s = vid_get_bitmap_width() * vid_get_bitmap_height();
+    s = screen_buffer_size;
     t = get_tick_count();
     for (c=0; c<64; ++c)
         for (i=0; i<s; ++i)
@@ -128,7 +128,7 @@ static void gui_bench_run() {
     bench.screen_input_bps = 0;
     gui_bench_draw();
     scr = vid_get_viewport_fb();
-    s = vid_get_bitmap_width()*2 * vid_get_viewport_height();
+    s = screen_width * vid_get_viewport_height() * 3;
     t = get_tick_count();
     for (n=0; n<64; ++n)
         for (i=0; i<s; ++i)

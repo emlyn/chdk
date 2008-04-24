@@ -51,6 +51,18 @@ MODE_DIGITAL_MACRO      ,
 MODE_SCN_FOLIAGE        ,
 MODE_VIDEO_TIME_LAPSE   ,
 MODE_SCN_INDOOR         ,
+MODE_SCN_PORTRAIT       ,
+MODE_SUPER_MACRO        ,
+MODE_VIDEO_PORTRAIT     ,
+MODE_VIDEO_NIGHT        ,
+MODE_VIDEO_INDOOR       ,
+MODE_VIDEO_FOLIAGE      ,
+MODE_VIDEO_SNOW         ,
+MODE_VIDEO_BEACH        ,
+MODE_VIDEO_AQUARIUM     ,
+MODE_VIDEO_SUPER_MACRO  ,
+MODE_VIDEO_STITCH       ,
+MODE_VIDEO_MANUAL       ,
 };
 
 #if CAM_PROPSET == 2
@@ -248,8 +260,10 @@ int get_usb_power(int edge);
 
 long vid_is_bitmap_shown();
 void *vid_get_bitmap_fb();
-long vid_get_bitmap_width();
-long vid_get_bitmap_height();
+long vid_get_bitmap_screen_width();
+long vid_get_bitmap_screen_height();
+long vid_get_bitmap_buffer_width();
+long vid_get_bitmap_buffer_height();
 void *vid_get_viewport_fb();
 void *vid_get_viewport_fb_d();
 void *vid_get_viewport_live_fb();

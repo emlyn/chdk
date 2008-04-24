@@ -348,28 +348,28 @@ static void conf_init_defaults() {
     def_batt_volts_max = get_vbatt_max();
     def_batt_volts_min = get_vbatt_min();
     def_histo_pos.x = 45;
-    def_histo_pos.y = vid_get_bitmap_height()-HISTO_HEIGHT-40;
+    def_histo_pos.y = vid_get_bitmap_screen_height()-HISTO_HEIGHT-40;
     def_dof_pos.x = 90;
     def_dof_pos.y = 45;
     def_batt_icon_pos.x = 178;
     def_batt_icon_pos.y = 0;
     def_batt_txt_pos.x=178;
     def_batt_txt_pos.y=1*FONT_HEIGHT;
-    def_space_icon_pos.x = vid_get_bitmap_width()-100;
+    def_space_icon_pos.x = vid_get_bitmap_screen_width()-100;
     def_space_icon_pos.y = 0;
-    def_space_ver_pos.x = vid_get_bitmap_width()-7;
+    def_space_ver_pos.x = vid_get_bitmap_screen_width()-7;
     def_space_ver_pos.y = 0;
     def_space_hor_pos.x = 0;
-    def_space_hor_pos.y = vid_get_bitmap_height()-7;
+    def_space_hor_pos.y = vid_get_bitmap_screen_height()-7;
     def_space_txt_pos.x=128;
     def_space_txt_pos.y=0;
     def_mode_state_pos.x=35;
     def_mode_state_pos.y=0;
-    def_mode_raw_pos.x=vid_get_bitmap_width()-7*FONT_WIDTH-2;
-    def_mode_raw_pos.y=vid_get_bitmap_height()-3*FONT_HEIGHT-2;
-    def_values_pos.x=vid_get_bitmap_width()-9*FONT_WIDTH;
+    def_mode_raw_pos.x=vid_get_bitmap_screen_width()-7*FONT_WIDTH-2;
+    def_mode_raw_pos.y=vid_get_bitmap_screen_height()-3*FONT_HEIGHT-2;
+    def_values_pos.x=vid_get_bitmap_screen_width()-9*FONT_WIDTH;
     def_values_pos.y=30;
-    def_clock_pos.x=vid_get_bitmap_width()-5*FONT_WIDTH-2;
+    def_clock_pos.x=vid_get_bitmap_screen_width()-5*FONT_WIDTH-2;
     def_clock_pos.y=0;
 }
 

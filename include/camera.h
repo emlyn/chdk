@@ -440,9 +440,26 @@
     #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
 
 
+//==========================================================
+// TX-Series
+//==========================================================
+#elif defined (CAMERA_tx1)
+    #define CAM_PROPSET                 2
+    
+    #define CAM_RAW_ROWPIX              3152   // for 7 MP
+    #define CAM_RAW_ROWS                2340   // for 7 MP
+
+    #define CAM_SWIVEL_SCREEN           1
+    #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_ERASE_BUTTON
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+
+
 //----------------------------------------------------------
 #else
-#error camera type not defined
-#endif
+    #error camera type not defined
 
 #endif
+
+#endif /* CAMERA_H */

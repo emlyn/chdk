@@ -2,27 +2,28 @@
 #define GUI_DRAW_H
 //-------------------------------------------------------------------
 
-#define COLOR_TRANSPARENT	0x00
-#define COLOR_WHITE		0x11
-#define COLOR_RED		0x22
-#define COLOR_GREY		0x3F
-#define COLOR_GREEN		0x55
-#define COLOR_BLUE_LT		0xDD
-#define COLOR_BLUE		0xDF
-#define COLOR_YELLOW		0xEE
-#define COLOR_BLACK		0xFF
-//#define COLOR_BG 		0x0F
-#define COLOR_BG 		0x44
-#define COLOR_FG 		COLOR_WHITE
-#define COLOR_SELECTED_BG	COLOR_RED
-#define COLOR_SELECTED_FG	COLOR_WHITE
-#define COLOR_ALT_BG 		0xD4
+#define COLOR_TRANSPARENT   0x00
+#define COLOR_WHITE         0x11
+#define COLOR_RED           0x22
+#define COLOR_GREY          0x3F
+#define COLOR_GREEN         0x55
+#define COLOR_BLUE_LT       0xDD
+#define COLOR_BLUE          0xDF
+#define COLOR_YELLOW        0xEE
+#define COLOR_BLACK         0xFF
+//#define COLOR_BG            0x0F
+#define COLOR_BG            0x44
+#define COLOR_FG            COLOR_WHITE
+#define COLOR_SELECTED_BG   COLOR_RED
+#define COLOR_SELECTED_FG   COLOR_WHITE
+#define COLOR_ALT_BG        0xD4
 
-#define FONT_WIDTH 		8
-#define FONT_HEIGHT             16
+#define FONT_WIDTH          8
+#define FONT_HEIGHT         16
 
 //-------------------------------------------------------------------
-extern unsigned int		screen_width, screen_height, screen_size;
+extern unsigned int         screen_width, screen_height, screen_size;
+extern unsigned int         screen_buffer_width, screen_buffer_height, screen_buffer_size;
 
 //-------------------------------------------------------------------
 void draw_init();
