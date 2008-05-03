@@ -1,5 +1,6 @@
 #include "lolevel.h"
 #include "platform.h"
+#include "conf.h"
 #include "core.h"
 #include "keyboard.h"
 
@@ -16,6 +17,9 @@ static long kbd_mod_state[3];
 static KeyMap keymap[];
 static long last_kbd_key = 0;
 static int usb_power=0;
+static int remote_key, remote_count;
+#define USB_MASK (0x40000) 
+#define USB_REG 2
 
 
 #define KEYS_MASK0 (0x00000000)
@@ -121,15 +125,35 @@ void my_kbd_read_keys()
               (kbd_mod_state[2] & KEYS_MASK2);
     }
 
-
-
     _kbd_read_keys_r2(physw_status);
+
+	if (conf.remote_enable) {
+		remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
+		if (remote_key) 
+			remote_count += 1;
+		else if (remote_count) {
+			usb_power = remote_count;
+			remote_count = 0;
+		}
+		physw_status[2] = physw_status[2] & ~(SD_READONLY_FLAG | USB_MASK);
+	}
+	else
     physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
+
 
     _kbd_pwr_off();
 
 }
 
+int get_usb_power(int edge)
+{
+	int x;
+
+	if (edge) return remote_key;
+	x = usb_power;
+	usb_power = 0;
+	return x;
+}
 
 /* void kbd_set_alt_mode_key_mask(long key)
 {
@@ -309,7 +333,6 @@ static KeyMap keymap[] = {
 	{ 0, 0 }
 };
 
-int get_usb_power(int edge) {return usb_power;}
 
 
  void kbd_fetch_data(long *dst)
