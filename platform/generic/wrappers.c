@@ -534,12 +534,13 @@ void create_partitions(void){
 
 #endif
 
-#if CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO == 2
+#if CAM_CAN_MUTE_MICROPHONE
 int mute_on_zoom(int x){
- static int old_zoom_busy=0;
- if (old_zoom_busy!=zoom_busy) {
-  if (zoom_busy) _TurnOffMic(); else _TurnOnMic();
-  old_zoom_busy=zoom_busy;
+ static int old_busy=0;
+ int busy=zoom_busy||focus_busy;
+ if (old_busy!=busy) {
+  if (busy) _TurnOffMic(); else _TurnOnMic();
+  old_busy=busy;
  }
  return x; // preserve R0 if called from assembler
 }

@@ -23,4 +23,6 @@ NHSTUB(GetDrive_FreeClusters, 0xFFE21A04)
 //NSTUB(kbd_pwr_off, 0xFFDC90E4)	//sync with stubs_entry.s of a560
 //NSTUB(kbd_p1_f_cont, 0xffdc9d24) //punta a met… funzione, ma sembra corretto...
 
+NHSTUB(TurnOffMic, 0xffdcc210)
+NHSTUB(TurnOnMic, 0xffdcc1d4)
 

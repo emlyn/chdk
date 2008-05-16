@@ -24,3 +24,5 @@ NHSTUB(SetZoomActuatorSpeedPercent, 0xFFC19688)  //null stub
 
 //NHSTUB(PutInNdFilter, 0xFFE78410) 
 //NHSTUB(PutOutNdFilter, 0xFFE78458)
+NHSTUB(TurnOffMic, 0xffc1ec58)
+NHSTUB(TurnOnMic, 0xffc1ec10)

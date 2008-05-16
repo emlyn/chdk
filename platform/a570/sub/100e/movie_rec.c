@@ -342,6 +342,7 @@ void __attribute__((naked,noinline)) sub_FFE9A784_my(){
 
                 "STR     R7, [R0]\n"        
                 "STR     R3, [R8]\n"        
+                "BL      mute_on_zoom\n"     // +
                 "LDMFD   SP!, {R4-R8,PC}\n" 
  );
 }

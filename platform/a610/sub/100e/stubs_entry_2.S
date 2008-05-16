@@ -18,3 +18,5 @@ NHSTUB(GetDrive_ClusterSize, 0xFFC5BEE8)
 NHSTUB(GetDrive_TotalClusters, 0xFFC5BF24)
 NHSTUB(GetDrive_FreeClusters, 0xFFC5BF60)
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFFC20AD4)  //null stub
+NHSTUB(TurnOffMic, 0xffc1ec78)
+NHSTUB(TurnOnMic, 0xffc1ec30)

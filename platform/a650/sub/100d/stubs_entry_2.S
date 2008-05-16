@@ -90,6 +90,9 @@ NHSTUB(UnsetZoomForMovie, 0xFFD278C0)
 
 NHSTUB(ints_disable                           ,0xFFC00578)
 NHSTUB(ints_enable                            ,0xFFC005A0)
+NHSTUB(TurnOnMic, 0xFFC38288)
+NHSTUB(TurnOffMic, 0xFFC382B4)
+
 
 // null stubs
 

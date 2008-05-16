@@ -15,4 +15,6 @@ NHSTUB(GetDrive_ClusterSize, 0xFFE463B8)
 NHSTUB(GetDrive_TotalClusters, 0xFFE463F4)
 NHSTUB(GetDrive_FreeClusters, 0xFFE46430)
 NHSTUB(WriteSDCard, 0xFFE58F60)
+NHSTUB(TurnOffMic, 0xffde85bc)
+NHSTUB(TurnOnMic, 0xffde8580)
 

@@ -35,6 +35,7 @@
 
     #undef  CAM_CONSOLE_LOG_ENABLED         // Development: internal camera stdout -> A/stdout.txt
     #define CAM_CHDK_HAS_EXT_VIDEO_MENU 1   // In CHDK for this camera realized adjustable video compression
+    #undef  CAM_CAN_MUTE_MICROPHONE         // Camera has function to mute microphone
 
 
 //----------------------------------------------------------
@@ -76,6 +77,7 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
+    #define CAM_CAN_MUTE_MICROPHONE     1
     
 //----------------------------------------------------------
 #elif defined (CAMERA_a460)
@@ -94,6 +96,7 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
+    #define CAM_CAN_MUTE_MICROPHONE     1
     
 //----------------------------------------------------------
 #elif defined (CAMERA_a530)
@@ -115,6 +118,7 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU	1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_HAS_IS
+    #define CAM_CAN_MUTE_MICROPHONE     1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a540)
@@ -131,6 +135,7 @@
     #undef  CAM_DRAW_EXPOSITION
     #define CAM_SHOW_OSD_IN_SHOOT_MENU	1
     #undef  CAM_HAS_IS
+    #define CAM_CAN_MUTE_MICROPHONE     1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a550)
@@ -148,6 +153,7 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
+    #define CAM_CAN_MUTE_MICROPHONE     1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a560)
@@ -165,6 +171,7 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
+    #define CAM_CAN_MUTE_MICROPHONE     1
     
 //----------------------------------------------------------
 #elif defined (CAMERA_a570)
@@ -173,6 +180,7 @@
     #define CAM_RAW_ROWPIX              3152   // for 7 MP
     #define CAM_RAW_ROWS                2340   // for 7 MP
     #define CAM_MULTIPART               1
+    #define CAM_CAN_MUTE_MICROPHONE     1
 //----------------------------------------------------------
 #elif defined (CAMERA_a610)
     #define CAM_PROPSET                 1
@@ -183,6 +191,7 @@
     #define CAM_SWIVEL_SCREEN           1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF 
     #undef  CAM_HAS_IS
+    #define CAM_CAN_MUTE_MICROPHONE     1
 
 
 //----------------------------------------------------------
@@ -195,6 +204,7 @@
     #define CAM_SWIVEL_SCREEN           1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_HAS_IS    
+    #define CAM_CAN_MUTE_MICROPHONE     1
 
 
 //----------------------------------------------------------
@@ -208,6 +218,7 @@
     #define CAM_MULTIPART               1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_HAS_IS
+    #define CAM_CAN_MUTE_MICROPHONE     1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a640)
@@ -220,6 +231,7 @@
     #define CAM_MULTIPART               1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_HAS_IS
+    #define CAM_CAN_MUTE_MICROPHONE     1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a650)
@@ -230,6 +242,7 @@
     #define CAM_RAW_ROWS                3048   // for 12 MP
     
     #define CAM_SWIVEL_SCREEN           1
+    #define CAM_CAN_MUTE_MICROPHONE     1
 
 
 //----------------------------------------------------------
@@ -241,6 +254,7 @@
 
     #undef  CAM_REMOTE
     #undef  CAM_HAS_IS
+    #define CAM_CAN_MUTE_MICROPHONE     1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a710)
@@ -250,8 +264,7 @@
     #define CAM_RAW_ROWS                2340   // for 7 MP
 
     #define CAM_MULTIPART               1
-    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 
-    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  2 // can also mute microphone on this
+    #define CAM_CAN_MUTE_MICROPHONE     1
 //----------------------------------------------------------
 #elif defined (CAMERA_a720)
     #define CAM_PROPSET                 2
@@ -259,6 +272,7 @@
 
     #define CAM_RAW_ROWPIX              3336   // for new 8 MP
     #define CAM_RAW_ROWS                2480   // for new 8 MP
+    #define CAM_CAN_MUTE_MICROPHONE     1
 
 
 //==========================================================

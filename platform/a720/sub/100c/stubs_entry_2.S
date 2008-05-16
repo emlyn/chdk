@@ -107,7 +107,9 @@ NHSTUB(closedir, 0xFFDC1C68)  // CloseFastDir
 NHSTUB(UnsetZoomForMovie, 0xFFD22418)
 
 
-NHSTUB(PostLEDMessage, 0xFFC366B8);
+NHSTUB(PostLEDMessage, 0xFFC366B8)
+NHSTUB(TurnOnMic, 0xFFC376CC)
+NHSTUB(TurnOffMic, 0xFFC376F8)
 
 
 // dryos Test

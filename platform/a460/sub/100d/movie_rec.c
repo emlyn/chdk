@@ -126,6 +126,7 @@ void __attribute__((naked,noinline)) sub_FFE60F10_my(){
 
                 "STR     R6, [R0]\n"        
                 "STR     R3, [R7]\n"        
+                "BL      mute_on_zoom\n"     // +
                 "LDMFD   SP!, {R4-R7,PC}\n" 
 
  );

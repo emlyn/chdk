@@ -706,6 +706,7 @@ void __attribute__((naked,noinline)) sub_FFD3C5AC_my(){
                 "LDREQ   R3, [R3]\n"             // +
 
                 "STREQ   R3, [R6]\n"                  
+                "BL      mute_on_zoom\n"     // +
                 "LDMFD   SP!, {R4-R7,PC}\n"           
  );
 }
