@@ -173,5 +173,8 @@ extern unsigned long _GetDrive_TotalClusters(int drive);
 extern unsigned long _GetDrive_FreeClusters(int drive);
 extern int _WriteSDCard(unsigned int drive, unsigned int start_sect, unsigned int num_sect, void *buf);
 extern void _UnsetZoomForMovie(void);
+void _TurnOffMic(void);
+void _TurnOnMic(void);
+
 
 #endif

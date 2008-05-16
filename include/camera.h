@@ -250,6 +250,8 @@
     #define CAM_RAW_ROWS                2340   // for 7 MP
 
     #define CAM_MULTIPART               1
+    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 
+    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  2 // can also mute microphone on this
 //----------------------------------------------------------
 #elif defined (CAMERA_a720)
     #define CAM_PROPSET                 2
