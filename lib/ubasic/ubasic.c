@@ -525,6 +525,9 @@ if_statement(void)
 	  }                                                  
 	  accept(TOKENIZER_ENDIF);
 	  accept(TOKENIZER_CR);  	              
+          if(if_stack_ptr > 0) {
+    	     if_stack_ptr--;
+          }
   }else {
 	  if(r) {
 	    statement();

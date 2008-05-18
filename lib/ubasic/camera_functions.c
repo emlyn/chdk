@@ -4,6 +4,8 @@
 
 static int tv=0, av=0, zoom=0, focus=0, iso=0, raw=0, raw_nr=0,autostart=0; 
 
+#define MODE_REC                0x0100
+
 void ubasic_camera_press(const char *s)
 {
     printf("*** button press '%s' ***\n",s);
@@ -209,25 +211,206 @@ int GetFreeCardSpaceKb()
 {
 	return 0;
 }
-/*
+
 int GetJpgCount()
 {
-	return 0;
+    printf("*** GetJpgCount ***\n");
+    return 0;
 }
+
 int GetRawCount()
 {
-	return 0;
+    printf("*** GetRawCount ***\n");
+    return 0;
 }
-*/
+
 void exit_alt()
 {
     printf("*** exit alt ***\n");
 
 }
 
+void shooting_set_user_tv_by_id(int v)
+{
+    printf("*** shooting_set_user_tv_by_id %d ***\n", v);
+}
 
+void shooting_set_user_tv_by_id_rel(int v)
+{
+    printf("*** shooting_set_user_tv_by_id_rel %d ***\n", v);
+}
 
+void shooting_set_sv96(short sv96, short is_now)
+{
+    printf("*** shooting_set_sv96 %d %d ***\n", sv96, is_now);
+}
 
+short shooting_get_av96()
+{
+    printf("*** shooting_get_av96 ***\n");
+    return 0;
+}
+
+short shooting_get_user_av96()
+{
+    printf("*** shooting_get_user_av96 ***\n");
+    return 0;
+}
+
+int shooting_get_user_av_id()
+{
+    printf("*** shooting_get_user_av_id ***\n");
+    return 0;
+}
+
+void shooting_set_av96(short v,short is_now)
+{
+    printf("*** shooting_set_av96 %d %d ***\n", v, is_now);
+}
+
+void shooting_set_av96_direct(short v, short is_now)
+{
+    printf("*** shooting_set_av96_direct %d %d ***\n", v, is_now);
+}
+
+void shooting_set_user_av96(short v)
+{
+    printf("*** shooting_set_user_av96 %d ***\n", v);
+}
+
+void shooting_set_user_av_by_id(int v)
+{
+    printf("*** shooting_set_user_av_by_id %d ***\n", v);
+}
+
+void shooting_set_user_av_by_id_rel(int v)
+{
+    printf("*** shooting_set_user_av_by_id_rel %d ***\n", v);
+}
+
+int shooting_get_subject_distance()
+{
+    printf("*** shooting_get_subject_distance ***\n");
+    return 1000;
+}
+
+int shooting_get_near_limit_of_acceptable_sharpness()
+{
+    printf("*** shooting_get_near_limit_of_acceptable_sharpness ***\n");
+    return 500;
+}
+
+int shooting_get_far_limit_of_acceptable_sharpness()
+{
+    printf("*** shooting_get_far_limit_of_acceptable_sharpness ***\n");
+    return 1500;
+}
+
+int shooting_get_depth_of_field()
+{
+    printf("*** shooting_get_depth_of_field ***\n");
+    return 1000;
+}
+
+int shooting_get_hyperfocal_distance()
+{
+    printf("*** shooting_get_hyperfocal_distance ***\n");
+    return 1000;
+}
+
+int mode_get()
+{
+    printf("*** mode_get ***\n");
+    return MODE_REC;
+}
+
+short shooting_get_focus_mode()
+{
+    printf("*** shooting_get_focus_mode ***\n");
+    return 0;
+}
+
+short shooting_get_iso_market()
+{
+    printf("*** shooting_get_iso_market ***\n");
+    return 100;
+}
+
+short shooting_get_bv96()
+{
+    printf("*** shooting_get_bv96 ***\n");
+    return 32;
+}
+
+short shooting_get_sv96()
+{
+    printf("*** shooting_get_sv96 ***\n");
+    return 32;
+}
+
+void shooting_set_iso_real(short iso, short is_now)
+{
+    printf("*** shooting_set_iso_real %d %d ***\n", iso, is_now);
+}
+
+int shooting_get_iso_mode()
+{
+    printf("*** shooting_get_iso_mode ***\n");
+    return 0;
+}
+
+void shooting_set_iso_mode(int v)
+{
+    printf("*** shooting_set_iso_mode %d ***\n", v);
+}
+
+void shooting_set_nd_filter_state(short v, short is_now)
+{
+    printf("*** shooting_set_nd_filter_state %d %d ***\n", v, is_now);
+}
+
+void camera_shutdown_in_a_second()
+{
+    printf("*** camera_shutdown_in_a_second ***\n");
+}
+
+short shooting_get_tv96()
+{
+    printf("*** shooting_get_tv96 ***\n");
+    return 0;
+}
+
+short shooting_get_user_tv96()
+{
+    printf("*** shooting_get_user_tv96 ***\n");
+    return 0;
+}
+
+int shooting_get_user_tv_id()
+{
+    printf("*** shooting_get_user_tv_id ***\n");
+    return 0;
+}
+
+void shooting_set_tv96(short v, short is_now)
+{
+    printf("*** shooting_set_tv96 %d %d ***\n", v, is_now);
+}
+
+void shooting_set_shutter_speed_ubasic(int t, short is_now)
+{
+    printf("*** shooting_set_shutter_speed_ubasic %d %d ***\n", t, is_now);
+}
+
+void shooting_set_tv96_direct(short v, short is_now)
+{
+    printf("*** shooting_set_tv96_direct %d %d ***\n", v, is_now);
+}
+
+void shooting_set_user_tv96(short v)
+{
+    printf("*** shooting_set_user_tv96 %d ***\n", v);
+}
 
 
 

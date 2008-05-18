@@ -320,11 +320,11 @@ int gui_osd_draw_zebra() {
                         else if (((conf.zebra_mode == ZEBRA_MODE_ZEBRA_1 || conf.zebra_mode == ZEBRA_MODE_ZEBRA_2) && (y-x-timer)&f)) buf[s]=COLOR_TRANSPARENT;
                              else buf[s]=(yy>over)?cl_over:(yy<conf.zebra_under)?cl_under:COLOR_TRANSPARENT;
                     }
+                    s+=screen_buffer_width-screen_width;
                     if (y*screen_height/viewport_height == (s+screen_buffer_width)/screen_buffer_width) {
                         memcpy(buf+s, buf+s-screen_buffer_width, screen_buffer_width);
                         s+=screen_buffer_width;
                     }
-                    s+=screen_buffer_width-screen_width;
                 }
             
             
