@@ -38,7 +38,4 @@ NHSTUB(UnsetZoomForMovie, 0xFF999FA0)
 NHSTUB(GetDrive_ClusterSize, 0xFF86A150)
 NHSTUB(GetDrive_TotalClusters, 0xFF86A18C)
 NHSTUB(GetDrive_FreeClusters, 0xFF86A1C8)
-
-
-
-
+NHSTUB(WriteSDCard, 0xFF87CACC)

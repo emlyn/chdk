@@ -348,6 +348,7 @@
     #undef  CAM_CAN_SD_OVERRIDE
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
+    #define CAM_MULTIPART               1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus800_sd700)

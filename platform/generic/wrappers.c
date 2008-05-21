@@ -450,7 +450,9 @@ unsigned int GetRawCount(void){
 
 
 #if CAM_MULTIPART
-static char mbr_buf[512];
+
+#define SECTOR_SIZE 512
+char *mbr_buf;
 static unsigned long drive_sectors;
 
 int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long *part_start_sector,  unsigned long *part_length){
@@ -461,7 +463,8 @@ int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long 
   
  if ((mbr_sector[0x1FE]!=0x55) || (mbr_sector[0x1FF]!=0xAA)) return 0; // signature check 
 
- _memcpy(mbr_buf,mbr_sector,512);
+ mbr_buf=_AllocateUncacheableMemory(SECTOR_SIZE);
+ _memcpy(mbr_buf,mbr_sector,SECTOR_SIZE);
  drive_sectors=drive_total_sectors;
 
  while(offset>=0) {
@@ -506,16 +509,16 @@ void swap_partitions(void){
   mbr_buf[i+0x1BE]=mbr_buf[i+0x1CE];
   mbr_buf[i+0x1CE]=c;
  }
- _WriteSDCard(0,0,1,&mbr_buf);
+ _WriteSDCard(0,0,1,mbr_buf);
 }
 
 void create_partitions(void){
  unsigned long start, length;
  char type;
 
- _memset(mbr_buf,0,sizeof(mbr_buf));
+ _memset(mbr_buf,0,SECTOR_SIZE);
  
- start=1; length=2*1024*1024/512; //2 Mb
+ start=1; length=2*1024*1024/SECTOR_SIZE; //2 Mb
  type=1; // FAT primary
  mbr_buf[0x1BE + 4]=type;
  mbr_buf[0x1BE + 8]=start;   mbr_buf[0x1BE + 9]=start>>8;   mbr_buf[0x1BE + 10]=start>>16;  mbr_buf[0x1BE + 11]=start>>24;
@@ -529,7 +532,7 @@ void create_partitions(void){
 
  mbr_buf[0x1FE]=0x55; mbr_buf[0x1FF]=0xAA; // signature;
 
- _WriteSDCard(0,0,1,&mbr_buf);
+ _WriteSDCard(0,0,1,mbr_buf);
 }
 
 #endif

@@ -93,8 +93,8 @@ void createHook (void *pNewTcb)
 	    *entry = (long)mykbd_task;
 	}
 	if (my_ncmp(name, "tInitFileM", 10) == 0){
-	    taskfsprev = (void*)(*entry);
-	    *entry = (long)task_fs;
+	 //   taskfsprev = (void*)(*entry);
+	    *entry = (long)init_file_modules_task;
 	}
 
 	if (my_ncmp(name, "tCaptSeqTa", 10) == 0){
