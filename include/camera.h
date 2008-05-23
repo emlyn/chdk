@@ -470,6 +470,7 @@
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+    #define CAM_MULTIPART               1
 
 
 //----------------------------------------------------------

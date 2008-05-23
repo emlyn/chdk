@@ -100,7 +100,6 @@ NSTUB(ints_enable, 0xffb3fba4)
 NSTUB(ioctl, 0xff92857c)
 NSTUB(iosDevAdd, 0xff92965c)
 NSTUB(iosDrvInstall, 0xff929920)
-NSTUB(iosDevFind, 0xff9295e8)
 NSTUB(isalpha, 0xff91fa14)
 // ALT: NSTUB(isalpha, 0xff91fa14) // 4/0
 NSTUB(isdigit, 0xff91fa44)
@@ -177,7 +176,3 @@ NSTUB(utime, 0xffb7cd84)
 // ALT: NSTUB(utime, 0xffb7cd84) // 15/11
 NSTUB(vsprintf, 0xff9271e4)
 NSTUB(write, 0xff92850c)
-NSTUB(fprintf, 0xff920374)
-// ALT: NSTUB(fprintf, 0xff921b38) // 15/0
-NSTUB(fputs, 0xff920494)
-NSTUB(puts, 0xff9275a0)

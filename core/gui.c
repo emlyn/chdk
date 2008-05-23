@@ -1368,6 +1368,7 @@ void gui_init()
     exposition_thresh = screen_size/500;
     voltage_step = (conf.batt_step_25)?25:1;
     load_bad_pixels_list("A/CHDK/badpixel");
+    load_bad_pixels_list("A/CHDK/badpixel.txt");
 }
 
 //-------------------------------------------------------------------

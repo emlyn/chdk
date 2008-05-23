@@ -143,7 +143,8 @@ unsigned short get_raw_pixel(unsigned int x,unsigned  int y){
 //-------------------------------------------------------------------
 void patch_bad_pixel(unsigned int x,unsigned  int y){
  if ((x>=2) && (x<CAM_RAW_ROWPIX-2) && (y>=2) && (y<CAM_RAW_ROWS-2)) 
-  set_raw_pixel(x,y,(get_raw_pixel(x-2,y)+get_raw_pixel(x+2,y)+get_raw_pixel(x,y-2)+get_raw_pixel(x,y+2))/4);
+//  set_raw_pixel(x,y,(get_raw_pixel(x-2,y)+get_raw_pixel(x+2,y)+get_raw_pixel(x,y-2)+get_raw_pixel(x,y+2))/4);
+  set_raw_pixel(x,y,0);
 }
 
 struct point{
@@ -194,7 +195,6 @@ void make_pixel_list(char * ptr){
 #define PIXELS_BUF_SIZE 4096
 void load_bad_pixels_list(char* filename){
     char *buf;
-    const char *grid;
     int fd;
 
     if (filename) {
