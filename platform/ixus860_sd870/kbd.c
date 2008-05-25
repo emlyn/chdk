@@ -28,7 +28,8 @@ static int remote_key, remote_count;
 #define SD_READONLY_FLAG (0x20000)
 
 #define FEATURE_FEATHER 0
-//#define USB_MASK (0x40000)
+#define USB_MASK (0x40000)
+#define USB_REG 2 
 
 #ifndef MALLOCD_STACK
 static char kbd_stack[NEW_SS];
@@ -157,16 +158,16 @@ void my_kbd_read_keys()
 //    physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
 
 
-//    remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
+    remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
 
     if (conf.remote_enable) {
-//      remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
-//      if (remote_key)  remote_count += 1;
-//      else if (remote_count) {
-//         usb_power = remote_count;
-//         remote_count = 0;
-//      }
-      physw_status[2] = physw_status[2] & ~(SD_READONLY_FLAG /*| USB_MASK*/);
+      remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
+      if (remote_key)  remote_count += 1;
+      else if (remote_count) {
+         usb_power = remote_count;
+         remote_count = 0;
+      }
+      physw_status[2] = physw_status[2] & ~(SD_READONLY_FLAG | USB_MASK);
      }
     else physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
 
@@ -177,12 +178,12 @@ void my_kbd_read_keys()
 
 int get_usb_power(int edge)
 {
-//	int x;
+	int x;
 
-//	/*if (edge)*/ return remote_key;
-//	x = usb_power;
-//	usb_power = 0;
-//	return x;
+	if (edge) return remote_key;
+	x = usb_power;
+	usb_power = 0;
+	return x;
         return 0;
 }
 
