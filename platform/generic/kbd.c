@@ -20,6 +20,12 @@ static int remote_key, remote_count;
 
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
+
+#if defined(CAMERA_a700)
+#define USB_MASK 0x00000008
+#define USB_REG 3
+#endif
+
 #if defined(CAMERA_a710)
 #define USB_MASK 8
 #define USB_REG 0

@@ -252,7 +252,6 @@
     #define CAM_RAW_ROWPIX              2888   // for 6 MP
     #define CAM_RAW_ROWS                2136   // for 6 MP
 
-    #undef  CAM_REMOTE
     #undef  CAM_HAS_IS
     #define CAM_CAN_MUTE_MICROPHONE     1
 
