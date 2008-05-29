@@ -429,9 +429,11 @@
 #define LANG_MENU_VIS_MENU_CURSOR_TEXT        332 
 #define LANG_MENU_VIS_MENU_CURSOR_BKG         333
 #define LANG_MENU_VIS_MENU_CENTER             334
+
+#define LANG_MENU_MUTE_ON_ZOOM	335
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  334
+#define GUI_LANG_ITEMS                  335
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

@@ -419,7 +419,7 @@ static char* gui_lang_default = \
 "332 \"Cursor Text Color\"\n" 
 "333 \"Cursor Background Color\"\n"
 "334 \"Center Menu\"\n"
-
+"335 \"Mute during zooming\"\n"
 ;
 
 //-------------------------------------------------------------------

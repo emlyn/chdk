@@ -295,6 +295,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(165, conf.menu_title_color,         CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_WHITE, COLOR_BLACK), NULL),
     CONF_INFO(166, conf.menu_cursor_color,         CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG), NULL),
     CONF_INFO(167, conf.menu_center,         CONF_DEF_VALUE, i:1, NULL),
+
+    CONF_INFO(168, conf.mute_on_zoom,  CONF_DEF_VALUE, i:0, NULL), 
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

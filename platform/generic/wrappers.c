@@ -1,7 +1,7 @@
 #include "camera.h"
 #include "lolevel.h"
 #include "platform.h"
-
+#include "conf.h"
 
 #if CAM_DRYOS
 #define _U	0x01	/* upper */
@@ -541,7 +541,7 @@ void create_partitions(void){
 int mute_on_zoom(int x){
  static int old_busy=0;
  int busy=zoom_busy||focus_busy;
- if (old_busy!=busy) {
+ if (conf.mute_on_zoom && (old_busy!=busy)) {
   if (busy) _TurnOffMic(); else _TurnOnMic();
   old_busy=busy;
  }

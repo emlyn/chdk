@@ -193,6 +193,7 @@ typedef struct {
     int user_menu_vars[10];
     int zoom_scale;
     int unlock_optical_zoom_for_video;
+    int mute_on_zoom;
 } Conf;
 
 extern Conf conf;

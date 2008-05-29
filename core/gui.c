@@ -371,6 +371,10 @@ static CMenuItem video_submenu_items[] = {
 #if CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
       {LANG_MENU_OPTICAL_ZOOM_IN_VIDEO,   MENUITEM_BOOL,  &conf.unlock_optical_zoom_for_video},							
 #endif
+#if CAM_CAN_MUTE_MICROPHONE
+      {LANG_MENU_MUTE_ON_ZOOM,   MENUITEM_BOOL,  &conf.mute_on_zoom},
+#endif
+
       {LANG_MENU_BACK,                    MENUITEM_UP },
       {0}
 };
