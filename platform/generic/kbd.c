@@ -23,7 +23,7 @@ static int remote_key, remote_count;
 
 #if defined(CAMERA_a700)
 #define USB_MASK 0x00000008
-#define USB_REG 3
+#define USB_REG 0
 #endif
 
 #if defined(CAMERA_a710)
