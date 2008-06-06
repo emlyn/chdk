@@ -23,4 +23,3 @@ libplatform.a: $(OBJS)
 clean: clean-recursive
 	rm -f $(OBJS) libplatform.a
 
-include $(topdir)bottom.inc

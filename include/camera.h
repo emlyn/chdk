@@ -277,6 +277,23 @@
 //==========================================================
 // SD-Series (IXUS-Series)
 //==========================================================
+#elif defined (CAMERA_ixus50_sd400)
+    #define CAM_PROPSET                 1
+
+    #define CAM_RAW_ROWPIX              2672   // for 5 MP
+    #define CAM_RAW_ROWS                1968   // for 5 MP
+
+    #undef  CAM_USE_ZOOM_FOR_MF
+    #undef  CAM_HAS_ERASE_BUTTON
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #undef  CAM_HAS_IS
+	//#define CAM_CONSOLE_LOG_ENABLED     1
+
+//----------------------------------------------------------
 #elif defined (CAMERA_ixus55_sd450)
     #define CAM_PROPSET                 1
 
