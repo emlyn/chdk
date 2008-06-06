@@ -37,6 +37,8 @@
     #define CAM_CHDK_HAS_EXT_VIDEO_MENU 1   // In CHDK for this camera realized adjustable video compression
     #undef  CAM_CAN_MUTE_MICROPHONE         // Camera has function to mute microphone
 
+    #define CAM_EMUL_KEYPRESS_DELAY     40  // Delay to interpret <alt>-button press as longpress
+    #define CAM_EMUL_KEYPRESS_DURATION  5   // Length of keypress emulation
 
 //----------------------------------------------------------
 // Overridden values for each camera
@@ -181,6 +183,7 @@
     #define CAM_RAW_ROWS                2340   // for 7 MP
     #define CAM_MULTIPART               1
     #define CAM_CAN_MUTE_MICROPHONE     1
+
 //----------------------------------------------------------
 #elif defined (CAMERA_a610)
     #define CAM_PROPSET                 1
@@ -241,9 +244,12 @@
     #define CAM_RAW_ROWPIX              4104   // for 12 MP
     #define CAM_RAW_ROWS                3048   // for 12 MP
     
+    #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #define CAM_SWIVEL_SCREEN           1
     #define CAM_CAN_MUTE_MICROPHONE     1
 
+    #undef  CAM_EMUL_KEYPRESS_DURATION
+    #define CAM_EMUL_KEYPRESS_DURATION  10
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a700)
@@ -264,6 +270,7 @@
 
     #define CAM_MULTIPART               1
     #define CAM_CAN_MUTE_MICROPHONE     1
+
 //----------------------------------------------------------
 #elif defined (CAMERA_a720)
     #define CAM_PROPSET                 2

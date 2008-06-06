@@ -16,6 +16,8 @@ static long kbd_prev_state[3];
 static long kbd_mod_state[3];
 static KeyMap keymap[];
 static long last_kbd_key = 0;
+static long alt_mode_key_mask = 0x00001800; 
+static long alt_mode_key_reg  = 2;      //KEY PRINT
 static int usb_power=0;
 static int remote_key, remote_count;
 
@@ -115,6 +117,7 @@ void my_kbd_read_keys()
 	physw_status[0] = kbd_new_state[0];
 	physw_status[1] = kbd_new_state[1];
 	physw_status[2] = kbd_new_state[2];
+	/*if(!kbd_is_key_pressed(KEY_SHOOT_HALF))	*/physw_status[alt_mode_key_reg] |= alt_mode_key_mask;
     } else {
 	// override keys
 	physw_status[0] = (kbd_new_state[0] & (~KEYS_MASK0)) |
@@ -162,6 +165,17 @@ int get_usb_power(int edge)
 
 /****************/
 
+void kbd_set_alt_mode_key_mask(long key)
+{
+    int i;
+    for (i=0; keymap[i].hackkey; ++i) {
+	if (keymap[i].hackkey == key) {
+	    alt_mode_key_mask = keymap[i].canonkey;
+	    alt_mode_key_reg  = keymap[i].grp;
+	    return;
+	}
+    }
+}
 
 void kbd_key_press(long key)
 {

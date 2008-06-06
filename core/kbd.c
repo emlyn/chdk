@@ -3,6 +3,7 @@
 #include "core.h"
 #include "keyboard.h"
 #include "conf.h"
+#include "camera.h"
 #include "lang.h"
 #include "ubasic.h"
 #include "histogram.h"
@@ -340,10 +341,10 @@ long kbd_process()
 	if (key_pressed){
             if (kbd_is_key_pressed(conf.alt_mode_button)) {
                 ++key_pressed;
-                if (key_pressed==40) {
+                if (key_pressed==CAM_EMUL_KEYPRESS_DELAY) {
                     kbd_key_press(conf.alt_mode_button);
-                } else if (key_pressed==45) {
-                    kbd_key_release_all();
+                } else if (key_pressed==(CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION)) {
+                    kbd_key_release(conf.alt_mode_button);
                     key_pressed = 2;
         	    kbd_blocked = 0;
 //        	    gui_kbd_leave();
@@ -380,12 +381,10 @@ long kbd_process()
 	else {
 	    gui_kbd_process();
 	}
-/*        if (kbd_get_pressed_key() != 0 && !state_kbd_script_run) {
-            // emulate presskey to avoid camera turn off due to timeout
-            kbd_key_release_all();
-            kbd_key_press(KEY_DUMMY);
-        } */
     } else {
+
+        //if (kbd_is_key_pressed(KEY_SHOOT_HALF) && kbd_is_key_pressed(conf.alt_mode_button)) return 0;
+
 	if (!key_pressed && kbd_is_key_pressed(conf.alt_mode_button)){
 	    kbd_blocked = 1;
 	    key_pressed = 1;
