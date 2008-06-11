@@ -161,6 +161,7 @@ static const char* gui_space_bar_enum(int change, int arg);
 static const char* gui_space_bar_size_enum(int change, int arg);
 static const char* gui_space_bar_width_enum(int change, int arg);
 static const char* gui_space_warn_type_enum(int change, int arg);
+static const char* gui_bad_pixel_enum(int change, int arg);
 
 void rinit();
 
@@ -554,6 +555,7 @@ static CMenuItem raw_submenu_items[] = {
     {LANG_MENU_RAW_PREFIX,              MENUITEM_ENUM,      (int*)gui_raw_prefix_enum },
     {LANG_MENU_RAW_EXTENSION,           MENUITEM_ENUM,      (int*)gui_raw_ext_enum },
     {LANG_MENU_RAW_DEVELOP,             MENUITEM_PROC,      (int*)gui_raw_develop },
+    {LANG_MENU_BAD_PIXEL_REMOVAL,       MENUITEM_ENUM,      (int*)gui_bad_pixel_enum },
     {LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
@@ -1294,6 +1296,19 @@ const char* gui_user_menu_show_enum(int change, int arg) {
 
     return modes[conf.user_menu_enable];
 }
+
+
+const char* gui_bad_pixel_enum(int change, int arg) {
+    int modes[]={LANG_MENU_BAD_PIXEL_OFF, LANG_MENU_BAD_PIXEL_INTERPOLATION, LANG_MENU_BAD_PIXEL_RAW_CONVERTER};
+    conf.bad_pixel_removal+=change;
+    if (conf.bad_pixel_removal<0)
+        conf.bad_pixel_removal=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.bad_pixel_removal>=(sizeof(modes)/sizeof(modes[0])))
+        conf.bad_pixel_removal=0;
+
+    return lang_str(modes[conf.bad_pixel_removal]);
+}
+
 
 //-------------------------------------------------------------------
 void gui_update_script_submenu() {

@@ -297,6 +297,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(167, conf.menu_center,         CONF_DEF_VALUE, i:1, NULL),
 
     CONF_INFO(168, conf.mute_on_zoom,  CONF_DEF_VALUE, i:0, NULL), 
+
+    CONF_INFO(169, conf.bad_pixel_removal,  CONF_DEF_VALUE, i:2, NULL), 
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

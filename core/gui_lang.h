@@ -431,9 +431,14 @@
 #define LANG_MENU_VIS_MENU_CENTER             334
 
 #define LANG_MENU_MUTE_ON_ZOOM	335
+
+#define LANG_MENU_BAD_PIXEL_REMOVAL 336
+#define LANG_MENU_BAD_PIXEL_OFF 337
+#define LANG_MENU_BAD_PIXEL_INTERPOLATION 338
+#define LANG_MENU_BAD_PIXEL_RAW_CONVERTER 339
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  335
+#define GUI_LANG_ITEMS                  339
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

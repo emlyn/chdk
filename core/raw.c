@@ -39,7 +39,7 @@ int raw_savefile() {
      return 0;
     }
 
-    patch_bad_pixels();
+    if (conf.bad_pixel_removal) patch_bad_pixels();
 
     shooting_bracketing();
 
@@ -142,9 +142,12 @@ unsigned short get_raw_pixel(unsigned int x,unsigned  int y){
 
 //-------------------------------------------------------------------
 void patch_bad_pixel(unsigned int x,unsigned  int y){
- if ((x>=2) && (x<CAM_RAW_ROWPIX-2) && (y>=2) && (y<CAM_RAW_ROWS-2)) 
-//  set_raw_pixel(x,y,(get_raw_pixel(x-2,y)+get_raw_pixel(x+2,y)+get_raw_pixel(x,y-2)+get_raw_pixel(x,y+2))/4);
-  set_raw_pixel(x,y,0);
+ if ((x>=2) && (x<CAM_RAW_ROWPIX-2) && (y>=2) && (y<CAM_RAW_ROWS-2)) {
+  if (conf.bad_pixel_removal==1)   // interpolation
+   set_raw_pixel(x,y,(get_raw_pixel(x-2,y)+get_raw_pixel(x+2,y)+get_raw_pixel(x,y-2)+get_raw_pixel(x,y+2))/4);
+  else if (conf.bad_pixel_removal==2)  // or this makes RAW converter (internal/external)
+   set_raw_pixel(x,y,0);  
+ }
 }
 
 struct point{
