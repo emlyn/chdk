@@ -9,3 +9,4 @@ DEF(FlashParamsTable,0xFFEAC254) // sync with a560 and a630
 DEF(canon_menu_active,0x2E18)	// sync with a560 and a630
 DEF(canon_shoot_menu_active,0x2795) // not found
 DEF(recreview_hold, 0x2588)	// sync with a560 and a630
+DEF (movie_state,0x9BAFC)

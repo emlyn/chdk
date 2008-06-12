@@ -2,6 +2,8 @@
 #include "platform.h"
 #include "core.h"
 
+const long new_sa = MEMISOSTART + MEMISOSIZE;
+
 /* Our stuff */
 extern long wrs_kernel_bss_start;
 extern long wrs_kernel_bss_end;
@@ -186,7 +188,13 @@ void __attribute__((naked,noinline)) sub_FF810FCC_my() {
           "MOV     R0, #0x53000\n"
           "STR     R0, [SP,#0x74-0x70]\n"
 //          "LDR     R0, =0x9B610\n"
-          "LDR     R0, =0xDB610\n"			// 0x9B610 + 0x40000 (memsize) = 0xDB610
+          );    
+//          "LDR     R0, =0xDB610\n"			// 0x9B610 + 0x40000 (memsize) = 0xDB610
+          asm volatile (
+              "LDR     R0, =new_sa\n"
+              "LDR     R0, [R0]\n"
+          );
+          asm volatile (
           "LDR     R2, =0x2ABC00\n"
           "LDR     R1, =0x2A4968\n"
           "STR     R0, [SP,#0x74-0x6C]\n"

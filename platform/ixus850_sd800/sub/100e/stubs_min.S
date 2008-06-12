@@ -221,3 +221,4 @@ ROM:FF9E59E0                 SUB     SP, SP, #4
 
 
 DEF(recreview_hold, 0x7CF0) // (0x7CF4 - 0x4) found in "AR:Snd:0x%04x", LDR R3, =0x7CF4;
+DEF (movie_state,0x8BBF8)

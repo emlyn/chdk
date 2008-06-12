@@ -204,6 +204,7 @@ void __attribute__((naked,noinline)) sub_FFD37A98_my(long p)
 		"LDR     R0, [R3,#0x74]\n"
 		"BL      sub_FFC8C01C\n"
 		"BL      sub_FFD379EC\n"
+        //    "BL      wait_until_remote_button_is_released\n"
 		"BL      capt_seq_hook_set_nr\n" // +
 		"LDR     R3, =0x6168\n"
 		"LDR     R0, [R3]\n"

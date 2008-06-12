@@ -16,6 +16,9 @@ extern void script_load(const char *fn);
 extern void script_console_clear();
 extern void script_console_add_line(const char *str);
 extern void script_console_draw();
+extern void script_print_screen_init();
+extern void script_print_screen_end();
+extern void script_print_screen_statement(int val);
 
 //-------------------------------------------------------------------
 #endif

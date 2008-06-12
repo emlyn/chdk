@@ -230,8 +230,39 @@ void script_console_draw() {
 
 }
 
+static int  print_screen_p;             // print_screen predicate: 0-off 1-on.
+static int  print_screen_d = -1;        // print_screen file descriptor.
+static const char print_screen_file[] ="A/CHDK/SCRIPTS/PR_SCREEN.TXT";
+
+void script_print_screen_init()
+{
+  print_screen_p = 0;
+  if (print_screen_d >= 0) {
+    close(print_screen_d);
+    print_screen_d = -1;
+  }
+}
+
+void script_print_screen_end()
+{
+  if (print_screen_d >= 0) {
+    close(print_screen_d);
+    print_screen_d = -1;
+    print_screen_p = 0;
+  }
+}
+
+void script_print_screen_statement(int val)
+{
+  if (val && print_screen_d<0) {
+      print_screen_d = open(print_screen_file, O_WRONLY|O_CREAT|O_TRUNC, 0777);
+  }
+  print_screen_p = val;
+}
+
 //-------------------------------------------------------------------
-void script_console_add_line(const char *str) {
+
+static void script_console_add_impl(const char *str) {
     register int i;
 
     if (script_console_lines == SCRIPT_CONSOLE_NUM_LINES ) {
@@ -241,10 +272,28 @@ void script_console_add_line(const char *str) {
         --script_console_lines;
     }
 
-    strncpy(script_console_buf[script_console_lines], str, SCRIPT_CONSOLE_LINE_LENGTH);
-    script_console_buf[script_console_lines][SCRIPT_CONSOLE_LINE_LENGTH]=0;
+    if (strlen(str) > SCRIPT_CONSOLE_LINE_LENGTH) {
+      // let overlong lines wrap to the next line
+      memcpy(script_console_buf[script_console_lines], str, SCRIPT_CONSOLE_LINE_LENGTH);
+      script_console_buf[script_console_lines][SCRIPT_CONSOLE_LINE_LENGTH]=0;
+      ++script_console_lines;
+      script_console_add_impl(str+SCRIPT_CONSOLE_LINE_LENGTH);
+      return;
+    }
+    else
+      strcpy(script_console_buf[script_console_lines], str);
     
     ++script_console_lines;
+}
+
+void script_console_add_line(const char *str) {
+    script_console_add_impl(str);
+
+    if (print_screen_p && print_screen_d>=0) {
+      char nl = '\n';
+      write(print_screen_d, str, strlen(str) );
+      write(print_screen_d, &nl, 1);
+    }
 
     script_console_draw();
 }

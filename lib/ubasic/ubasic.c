@@ -47,11 +47,16 @@
 #include "script.h"
 #include "camera.h"
 #endif
+//#include "platform.h"
 #include "tokenizer.h"
+#include "shot_histogram.h"
+#include "../../include/conf.h"
 
 #include "camera_functions.h"
 
 #include "stdlib.h" /* exit() */
+
+#define INCLUDE_OLD_GET__SYNTAX
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -90,10 +95,6 @@ static int for_stack_ptr;
 #define MAX_VARNUM 52
 static int variables[MAX_VARNUM];
 
-static int  print_screen_p;             // print_screen predicate: 0-off 1-on.
-static int  print_screen_d = -1;        // print_screen file descriptor.
-static const char print_screen_file[] ="A/CHDK/SCRIPTS/PR_SCREEN.TXT";
-
 static int ended;
 
 static int expr(void);
@@ -129,11 +130,6 @@ ubasic_init(const char *program)
   for_stack_ptr = gosub_stack_ptr = while_stack_ptr = do_stack_ptr = if_stack_ptr = 0;
   tokenizer_init(program);
   ended = 0;
-  print_screen_p = 0;
-  if (print_screen_d >= 0) {
-    close(print_screen_d);
-    print_screen_d = -1;
-  }
   ubasic_error = UBASIC_E_NONE;
 }
 /*---------------------------------------------------------------------------*/
@@ -203,11 +199,11 @@ factor(void)
     break;
 case TOKENIZER_GET_VBATT:
     accept(TOKENIZER_GET_VBATT);
-    r = (unsigned short) stat_get_vbatt();     
+    r = (unsigned short) stat_get_vbatt();
     break;
  case TOKENIZER_GET_DAY_SECONDS:
     accept(TOKENIZER_GET_DAY_SECONDS);
-    r = shooting_get_day_seconds();     
+    r = shooting_get_day_seconds();
     break;
  case TOKENIZER_GET_TICK_COUNT:
     accept(TOKENIZER_GET_TICK_COUNT);
@@ -221,17 +217,198 @@ case TOKENIZER_GET_VBATT:
     accept(TOKENIZER_IS_KEY);
     tokenizer_string(string, sizeof(string));
     tokenizer_next();
-    r = ubasic_camera_is_clicked(string);     
+    r = ubasic_camera_is_clicked(string);
     break;
-case TOKENIZER_SCRIPT_AUTOSTART:
-    accept(TOKENIZER_SCRIPT_AUTOSTART);
-    r = ubasic_camera_script_autostart();     
+case TOKENIZER_SCRIPT_AUTOSTARTED:
+    accept(TOKENIZER_SCRIPT_AUTOSTARTED);
+    r = ubasic_camera_script_autostart();
     break;
- case TOKENIZER_GET_USB_POWER:
+case TOKENIZER_GET_SCRIPT_AUTOSTART:
+    accept(TOKENIZER_GET_SCRIPT_AUTOSTART);
+    r = conf.script_startup;
+    break;
+case TOKENIZER_GET_USB_POWER:
     accept(TOKENIZER_GET_USB_POWER);
     r = get_usb_power(0);     
     break;
+case TOKENIZER_GET_EXP_COUNT:
+    accept(TOKENIZER_GET_EXP_COUNT);
+    r = get_exposure_counter();
+    break;
+case TOKENIZER_IS_PRESSED:
+    accept(TOKENIZER_IS_PRESSED);
+    tokenizer_string(string, sizeof(string));
+    tokenizer_next();
+    r = ubasic_camera_is_pressed(string);
+    break;
+  case TOKENIZER_RANDOM:
+    accept(TOKENIZER_RANDOM);
+    srand((int)shooting_get_bv96()+(unsigned short)stat_get_vbatt()+get_tick_count());
+    ubasic_camera_sleep(rand()%10);
+    r = rand();
+   break;
+  case TOKENIZER_GET_MOVIESTATE:
+    accept(TOKENIZER_GET_MOVIESTATE);
+    r = movie_state;
+   break;
+  case TOKENIZER_GET_DRIVE_MODE:
+    accept(TOKENIZER_GET_DRIVE_MODE);
+    r = shooting_get_prop(PROPCASE_DRIVE_MODE);
+   break;
+  case TOKENIZER_GET_FOCUS_MODE:
+    accept(TOKENIZER_GET_FOCUS_MODE);
+    r = shooting_get_prop(PROPCASE_FOCUS_MODE);
+   break;
+  case TOKENIZER_GET_FLASH_MODE:
+    accept(TOKENIZER_GET_FLASH_MODE);
+    r = shooting_get_prop(PROPCASE_FLASH_MODE);
+   break;
+  case TOKENIZER_GET_SHOOTING:
+    accept(TOKENIZER_GET_SHOOTING);
+    r = shooting_get_prop(PROPCASE_SHOOTING);
+   break;
+  case TOKENIZER_GET_FLASH_READY:
+    accept(TOKENIZER_GET_FLASH_READY);
+    r = shooting_get_prop(PROPCASE_IS_FLASH_READY);
+   break;
+  case TOKENIZER_GET_IS_MODE:
+    accept(TOKENIZER_GET_IS_MODE);
+    r = shooting_get_prop(PROPCASE_IS_MODE);
+   break;
+  case TOKENIZER_GET_EV:
+    accept(TOKENIZER_GET_EV);
+    r = shooting_get_prop(PROPCASE_EV_CORRECTION_1);
+   break;
+  case TOKENIZER_GET_ORIENTATION_SENSOR:
+    accept(TOKENIZER_GET_ORIENTATION_SENSOR);
+    r = shooting_get_prop(PROPCASE_ORIENTATION_SENSOR);
+   break;
+  case TOKENIZER_GET_ZOOM_STEPS:
+    accept(TOKENIZER_GET_ZOOM_STEPS);
+    r = zoom_points;
+   break;
+  case TOKENIZER_GET_ND_PRESENT:
+    accept(TOKENIZER_GET_ND_PRESENT);
+    #if !CAM_HAS_ND_FILTER
+    r = 0;
+    #endif
+    #if CAM_HAS_ND_FILTER && !CAM_HAS_IRIS_DIAPHRAGM
+    r = 1;
+    #endif
+    #if CAM_HAS_ND_FILTER && CAM_HAS_IRIS_DIAPHRAGM
+    r = 2;
+    #endif
+   break;
+  case TOKENIZER_GET_PROPSET:
+    accept(TOKENIZER_GET_PROPSET);
+    #if CAM_PROPSET == 1
+    r = 1;
+    #elif CAM_PROPSET == 2
+    r = 2;
+    #endif
+   break;
 
+  case TOKENIZER_GET_TV96:
+    accept(TOKENIZER_GET_TV96);
+    r = shooting_get_tv96();
+    break;
+  case TOKENIZER_GET_USER_TV96:
+    accept(TOKENIZER_GET_USER_TV96);
+    r = shooting_get_user_tv96();
+    break;   
+  case TOKENIZER_GET_USER_TV_ID:
+    accept(TOKENIZER_GET_USER_TV_ID);
+    r = shooting_get_user_tv_id();
+    break;
+  case TOKENIZER_GET_AV96:
+    accept(TOKENIZER_GET_AV96);
+    r = shooting_get_av96();
+    break;  
+  case TOKENIZER_GET_USER_AV96:
+    accept(TOKENIZER_GET_USER_AV96);
+    r = shooting_get_user_av96();
+    break;    
+  case TOKENIZER_GET_USER_AV_ID:
+    accept(TOKENIZER_GET_USER_AV_ID);
+    r = shooting_get_user_av_id();
+    break;
+  case TOKENIZER_GET_ZOOM:
+    accept(TOKENIZER_GET_ZOOM);
+    r = shooting_get_zoom();
+    break;
+  case TOKENIZER_GET_FOCUS:
+    accept(TOKENIZER_GET_FOCUS);
+    r = shooting_get_subject_distance();
+    break;
+  case TOKENIZER_GET_NEAR_LIMIT:
+    accept(TOKENIZER_GET_NEAR_LIMIT);
+    r = shooting_get_near_limit_of_acceptable_sharpness();
+    break;
+  case TOKENIZER_GET_FAR_LIMIT:
+    accept(TOKENIZER_GET_FAR_LIMIT);
+    r = shooting_get_far_limit_of_acceptable_sharpness();
+    break;  
+   case TOKENIZER_GET_DOF:
+    accept(TOKENIZER_GET_DOF);
+    r = shooting_get_depth_of_field();
+    break;
+  case TOKENIZER_GET_HYPERFOCAL_DIST:
+    accept(TOKENIZER_GET_HYPERFOCAL_DIST);
+    r = shooting_get_hyperfocal_distance();
+    break;  
+  case TOKENIZER_GET_ISO_MARKET:
+    accept(TOKENIZER_GET_ISO_MARKET);
+    r = (int)shooting_get_iso_market();
+    break;
+  case TOKENIZER_GET_ISO_REAL:
+    accept(TOKENIZER_GET_ISO_REAL);
+    r = (int)shooting_get_iso_real();
+    break;
+  case TOKENIZER_GET_BV96:
+    accept(TOKENIZER_GET_BV96);
+    r = (int)shooting_get_bv96();
+    break;  
+  case TOKENIZER_GET_SV96:
+    accept(TOKENIZER_GET_SV96);
+    r = (int)shooting_get_sv96();
+    break;    
+  case TOKENIZER_GET_ISO_MODE:
+    accept(TOKENIZER_GET_ISO_MODE);
+    r = shooting_get_iso_mode();
+    break;
+  case TOKENIZER_GET_DISK_SIZE:
+    accept(TOKENIZER_GET_DISK_SIZE);
+    r = GetTotalCardSpaceKb();
+    break;
+  case TOKENIZER_GET_FREE_DISK_SPACE:
+    accept(TOKENIZER_GET_FREE_DISK_SPACE);
+    r = GetFreeCardSpaceKb();
+    break;
+
+  case TOKENIZER_GET_JPG_COUNT:
+    accept(TOKENIZER_GET_JPG_COUNT);
+    r = GetJpgCount();
+    break;
+  case TOKENIZER_GET_RAW_COUNT:
+    accept(TOKENIZER_GET_RAW_COUNT);
+    r = GetRawCount();
+    break;
+  case TOKENIZER_GET_PROP:
+    accept(TOKENIZER_GET_PROP);
+    int var = expr();
+    r = shooting_get_prop(var);
+    break;
+  case TOKENIZER_GET_HISTO_RANGE:
+    accept(TOKENIZER_GET_HISTO_RANGE);
+    int from = expr();
+    int to = expr();
+    if (shot_histogram_enabled) r = (unsigned short)shot_histogram_get_range(from, to);
+    else r = -1;
+    break;
+ case TOKENIZER_GET_RAW:
+    accept(TOKENIZER_GET_RAW);
+    r = conf.save_raw;     
+    break;
   default:
     r = varfactor();
     break;
@@ -447,10 +624,7 @@ print_screen_statement(void)
   accept(TOKENIZER_PRINT_SCREEN);
   val = expr();
   accept(TOKENIZER_CR);
-  if (val && print_screen_d<0) {
-      print_screen_d = open(print_screen_file, O_WRONLY|O_CREAT|O_TRUNC, 0777);
-  }
-  print_screen_p = val;
+  script_print_screen_statement(val);
 }
 /*---------------------------------------------------------------------------*/
 static void
@@ -476,11 +650,6 @@ print_statement(void)
     }
   } while(tokenizer_token() != TOKENIZER_CR && tokenizer_token() != TOKENIZER_ENDOFINPUT && tokenizer_token() != TOKENIZER_ELSE);
   script_console_add_line(buf);
-  if (print_screen_p && print_screen_d>=0) {
-    int bl = strlen(buf);
-    buf[bl]='\n';
-    write(print_screen_d, buf, bl+1);
-  }
   DEBUG_PRINTF("End of print\n");
   accept_cr();
 }
@@ -859,6 +1028,9 @@ shoot_statement(void)
 }
 
 /*---------------------------------------------------------------------------*/
+
+#ifdef INCLUDE_OLD_GET__SYNTAX
+
 static void get_tv96_statement()
 {
     int var;
@@ -889,6 +1061,212 @@ static void get_user_tv_id_statement()
     ubasic_set_variable(var, shooting_get_user_tv_id());
     accept_cr();
 }
+
+static void get_av96_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_AV96);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, shooting_get_av96());
+    accept_cr();
+}
+
+static void get_user_av96_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_USER_AV96);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, shooting_get_user_av96());
+    accept_cr();
+}
+
+static void get_user_av_id_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_USER_AV_ID);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, shooting_get_user_av_id());
+    accept_cr();
+}
+
+static void get_zoom_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_ZOOM);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, shooting_get_zoom());
+    accept_cr();
+}
+
+static void get_focus_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_FOCUS);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, shooting_get_subject_distance());
+    accept_cr();
+}
+
+static void get_near_limit_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_NEAR_LIMIT);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, shooting_get_near_limit_of_acceptable_sharpness());
+    accept_cr();
+}
+
+static void get_far_limit_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_FAR_LIMIT);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, shooting_get_far_limit_of_acceptable_sharpness());
+    accept_cr();
+}
+
+static void get_dof_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_DOF);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, shooting_get_depth_of_field());
+    accept_cr();
+}
+
+static void get_hyperfocal_distance_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_HYPERFOCAL_DIST);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, shooting_get_hyperfocal_distance());
+    accept_cr();
+}
+
+static void get_disk_size_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_DISK_SIZE);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, GetTotalCardSpaceKb());
+    accept_cr();
+}
+
+static void get_free_disk_space_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_FREE_DISK_SPACE);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, GetFreeCardSpaceKb());
+    accept_cr();
+}
+
+static void get_jpg_count_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_JPG_COUNT);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, GetJpgCount());
+    accept_cr();
+}
+
+static void get_raw_count_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_RAW_COUNT);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, GetRawCount());
+    accept_cr();
+}
+
+static void get_vbatt_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_VBATT);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, (unsigned short)stat_get_vbatt());
+	
+    accept_cr();
+}
+
+static void get_prop_statement()
+{
+    int var, var1;
+    accept(TOKENIZER_GET_PROP);
+    var = expr();
+    var1 = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var1, shooting_get_prop(var));
+	
+    accept_cr();
+}
+
+static void get_iso_market_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_ISO_MARKET);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, (int)shooting_get_iso_market());
+    accept_cr();
+}
+
+static void get_iso_real_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_ISO_REAL);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, (int)shooting_get_iso_real());
+    accept_cr();
+}
+
+static void get_bv96_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_BV96);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, (int)shooting_get_bv96());
+    accept_cr();
+}
+
+static void get_sv96_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_SV96);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, (int)shooting_get_sv96());
+    accept_cr();
+}
+
+static void get_iso_mode_statement()
+{
+    int var;
+    accept(TOKENIZER_GET_ISO_MODE);
+    var = tokenizer_variable_num();
+    accept(TOKENIZER_VARIABLE);
+    ubasic_set_variable(var, shooting_get_iso_mode());
+    accept_cr();
+}
+
+#endif
+
 
 static void set_tv96_statement()
 {
@@ -956,35 +1334,6 @@ static void set_sv96_statement()
 
 /*---------------------------------------------------------------------------*/
 
-static void get_av96_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_AV96);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, shooting_get_av96());
-    accept_cr();
-}
-
-static void get_user_av96_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_USER_AV96);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, shooting_get_user_av96());
-    accept_cr();
-}
-
-static void get_user_av_id_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_USER_AV_ID);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, shooting_get_user_av_id());
-    accept_cr();
-}
 
 static void set_av96_statement()
 {
@@ -1033,16 +1382,6 @@ static void set_user_av_by_id_rel_statement()
 
 /*---------------------------------------------------------------------------*/
 
-static void get_zoom_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_ZOOM);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, shooting_get_zoom());
-    accept_cr();
-}
-
 static void set_zoom_statement()
 {
     int to;
@@ -1072,103 +1411,16 @@ static void set_zoom_speed_statement()
 
 /*---------------------------------------------------------------------------*/
 
-static void get_focus_statement()
+
+static void set_ev_statement()
 {
-    int var;
-    accept(TOKENIZER_GET_FOCUS);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, shooting_get_subject_distance());
+    int to;
+    accept(TOKENIZER_SET_EV);
+    to = expr();
+	shooting_set_prop(PROPCASE_EV_CORRECTION_1, to);
+  	shooting_set_prop(PROPCASE_EV_CORRECTION_2, to);
     accept_cr();
 }
-
-static void get_near_limit_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_NEAR_LIMIT);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, shooting_get_near_limit_of_acceptable_sharpness());
-    accept_cr();
-}
-
-static void get_far_limit_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_FAR_LIMIT);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, shooting_get_far_limit_of_acceptable_sharpness());
-    accept_cr();
-}
-
-static void get_dof_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_DOF);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, shooting_get_depth_of_field());
-    accept_cr();
-}
-
-static void get_hyperfocal_distance_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_HYPERFOCAL_DIST);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, shooting_get_hyperfocal_distance());
-    accept_cr();
-}
-
-
-
-
-
-static void get_disk_size_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_DISK_SIZE);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, GetTotalCardSpaceKb());
-    accept_cr();
-}
-
-static void get_free_disk_space_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_FREE_DISK_SPACE);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, GetFreeCardSpaceKb());
-    accept_cr();
-}
-
-
-static void get_jpg_count_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_JPG_COUNT);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, GetJpgCount());
-    accept_cr();
-}
-static void get_raw_count_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_RAW_COUNT);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, GetRawCount());
-    accept_cr();
-}
-
-
-
-
 
 static void set_focus_statement()
 {
@@ -1191,28 +1443,6 @@ static void set_focus_statement()
     accept_cr();
 }
 
-static void get_vbatt_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_VBATT);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, (unsigned short)stat_get_vbatt());
-	
-    accept_cr();
-}
-
-static void get_prop_statement()
-{
-    int var, var1;
-    accept(TOKENIZER_GET_PROP);
-    var = expr();
-    var1 = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var1, shooting_get_prop(var));
-	
-    accept_cr();
-}
 static void set_led_statement()
 {
     int to, to1, to2;
@@ -1240,45 +1470,7 @@ static void set_prop_statement()
 
 /*---------------------------------------------------------------------------*/
 //ARM Begin
-static void get_iso_market_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_ISO_MARKET);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, (int)shooting_get_iso_market());
-    accept_cr();
-}
 
-static void get_iso_real_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_ISO_REAL);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, (int)shooting_get_iso_real());
-    accept_cr();
-}
-
-static void get_bv96_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_BV96);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, (int)shooting_get_bv96());
-    accept_cr();
-}
-
-static void get_sv96_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_SV96);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, (int)shooting_get_sv96());
-    accept_cr();
-}
 
 /*static void set_iso_market_statement()
 {
@@ -1309,16 +1501,6 @@ static void set_iso_real_statement()
 
 //ARM End
 
-
-static void get_iso_mode_statement()
-{
-    int var;
-    accept(TOKENIZER_GET_ISO_MODE);
-    var = tokenizer_variable_num();
-    accept(TOKENIZER_VARIABLE);
-    ubasic_set_variable(var, shooting_get_iso_mode());
-    accept_cr();
-}
 
 static void set_iso_mode_statement()
 {
@@ -1360,7 +1542,8 @@ static void set_autostart_statement()
     int to;
     accept(TOKENIZER_SET_SCRIPT_AUTOSTART);
     to = expr();
-    ubasic_camera_set_script_autostart(to);
+	if (to >= 0 && to <= 2) conf.script_startup=to;
+	conf_save();
     accept_cr();
 }
 static void exit_alt_statement()
@@ -1555,6 +1738,14 @@ static void md_detect_motion_statement()
 
 /*---------------------------------------------------------------------------*/
 
+static void shot_histo_enable_statement()
+{
+    int to;
+    accept(TOKENIZER_SHOT_HISTO_ENABLE);
+    to = expr();
+    shot_histogram_enabled = to;
+    accept_cr();
+}
 
 
 static void
@@ -1588,6 +1779,7 @@ statement(void)
   case TOKENIZER_SHOOT:
     shoot_statement();
     break;
+#ifdef INCLUDE_OLD_GET__SYNTAX
   case TOKENIZER_GET_TV96:
     get_tv96_statement();
     break; 
@@ -1597,6 +1789,67 @@ statement(void)
   case TOKENIZER_GET_USER_TV_ID:
     get_user_tv_id_statement();
     break;
+  case TOKENIZER_GET_AV96:
+    get_av96_statement();
+    break;  
+  case TOKENIZER_GET_USER_AV96:
+    get_user_av96_statement();
+    break;    
+  case TOKENIZER_GET_USER_AV_ID:
+    get_user_av_id_statement();
+    break;
+  case TOKENIZER_GET_ZOOM:
+    get_zoom_statement();
+    break;
+  case TOKENIZER_GET_FOCUS:
+    get_focus_statement();
+    break;
+  case TOKENIZER_GET_NEAR_LIMIT:
+    get_near_limit_statement();
+    break;
+  case TOKENIZER_GET_FAR_LIMIT:
+    get_far_limit_statement();
+    break;  
+  case TOKENIZER_GET_DOF:
+    get_dof_statement();
+    break;
+  case TOKENIZER_GET_HYPERFOCAL_DIST:
+    get_hyperfocal_distance_statement();
+    break;  
+  case TOKENIZER_GET_ISO_MARKET:
+    get_iso_market_statement();
+    break;
+  case TOKENIZER_GET_ISO_REAL:
+    get_iso_real_statement();
+    break;
+  case TOKENIZER_GET_BV96:
+    get_bv96_statement();
+    break;  
+  case TOKENIZER_GET_SV96:
+    get_sv96_statement();
+    break;    
+  case TOKENIZER_GET_ISO_MODE:
+    get_iso_mode_statement();
+    break;
+  case TOKENIZER_GET_VBATT:
+    get_vbatt_statement();
+    break;
+  case TOKENIZER_GET_DISK_SIZE:
+    get_disk_size_statement();
+    break;
+  case TOKENIZER_GET_FREE_DISK_SPACE:
+    get_free_disk_space_statement();
+    break;
+  case TOKENIZER_GET_JPG_COUNT:
+    get_jpg_count_statement();
+    break;
+  case TOKENIZER_GET_RAW_COUNT:
+    get_raw_count_statement();
+    break;
+  case TOKENIZER_GET_PROP:
+    get_prop_statement();
+    break;
+#endif
   case TOKENIZER_SET_TV96_DIRECT:
     set_tv96_direct_statement();
     break;    
@@ -1614,15 +1867,6 @@ statement(void)
     break;
   case TOKENIZER_SET_USER_TV_BY_ID_REL:
     set_user_tv_by_id_rel_statement();
-    break;
-  case TOKENIZER_GET_AV96:
-    get_av96_statement();
-    break;  
-  case TOKENIZER_GET_USER_AV96:
-    get_user_av96_statement();
-    break;    
-  case TOKENIZER_GET_USER_AV_ID:
-    get_user_av_id_statement();
     break;
   case TOKENIZER_SET_AV96_DIRECT:
     set_av96_direct_statement();
@@ -1645,9 +1889,6 @@ statement(void)
     set_nd_filter_statement();
     break;  
   
-  case TOKENIZER_GET_ZOOM:
-    get_zoom_statement();
-    break;
   case TOKENIZER_SET_ZOOM:
     set_zoom_statement();
     break;
@@ -1658,31 +1899,10 @@ statement(void)
     set_zoom_speed_statement();
     break;
 
-  case TOKENIZER_GET_FOCUS:
-    get_focus_statement();
-    break;
   case TOKENIZER_SET_FOCUS:
     set_focus_statement();
     break;
   //ARM Begin
-  case TOKENIZER_GET_NEAR_LIMIT:
-    get_near_limit_statement();
-    break;
-  case TOKENIZER_GET_FAR_LIMIT:
-    get_far_limit_statement();
-    break;  
-   case TOKENIZER_GET_DOF:
-    get_dof_statement();
-    break;
-  case TOKENIZER_GET_HYPERFOCAL_DIST:
-    get_hyperfocal_distance_statement();
-    break;  
-  case TOKENIZER_GET_ISO_MARKET:
-    get_iso_market_statement();
-    break;
-  case TOKENIZER_GET_ISO_REAL:
-    get_iso_real_statement();
-    break;
   /*case TOKENIZER_SET_ISO_MARKET:
     set_iso_market_statement();
     break;
@@ -1692,12 +1912,6 @@ statement(void)
   case TOKENIZER_SET_ISO_REAL:
     set_iso_real_statement();
     break;
-  case TOKENIZER_GET_BV96:
-    get_bv96_statement();
-    break;  
-  case TOKENIZER_GET_SV96:
-    get_sv96_statement();
-    break;    
   case TOKENIZER_SET_SV96:
     set_sv96_statement();
     break;  
@@ -1706,34 +1920,10 @@ statement(void)
   
     
 
-  case TOKENIZER_GET_ISO_MODE:
-    get_iso_mode_statement();
-    break;
   case TOKENIZER_SET_ISO_MODE:
     set_iso_mode_statement();
     break;
 
-  case TOKENIZER_GET_VBATT:
-    get_vbatt_statement();
-    break;
-  case TOKENIZER_GET_DISK_SIZE:
-    get_disk_size_statement();
-    break;
-  case TOKENIZER_GET_FREE_DISK_SPACE:
-    get_free_disk_space_statement();
-    break;
-
-  case TOKENIZER_GET_JPG_COUNT:
-    get_jpg_count_statement();
-    break;
-  case TOKENIZER_GET_RAW_COUNT:
-    get_raw_count_statement();
-    break;
-  
-    
-  case TOKENIZER_GET_PROP:
-    get_prop_statement();
-    break;
   case TOKENIZER_SET_PROP:
     set_prop_statement();
     break;
@@ -1741,7 +1931,10 @@ statement(void)
     set_led_statement();
     break;
 
-  
+  case TOKENIZER_SET_EV:
+        set_ev_statement();
+   break;
+
   case TOKENIZER_WAIT_CLICK:
     wait_click_statement();
     break;
@@ -1832,6 +2025,9 @@ statement(void)
 		break;
 // << mx3 . motion_detector
 
+  case TOKENIZER_SHOT_HISTO_ENABLE:
+    shot_histo_enable_statement();
+    break;
 
   default:
     DEBUG_PRINTF("ubasic.c: statement(): not implemented %d\n", token);
@@ -1895,12 +2091,12 @@ ubasic_get_variable(int varnum)
 /*---------------------------------------------------------------------------*/
 void
 ubasic_end() {
-  if (print_screen_d >= 0) {
-    close(print_screen_d);
-    print_screen_d = -1;
-    print_screen_p = 0;
-  }
 }
 /*---------------------------------------------------------------------------*/
+
+
+
+
+
 
 

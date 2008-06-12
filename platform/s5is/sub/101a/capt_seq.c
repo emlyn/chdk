@@ -778,6 +778,7 @@ void __attribute__((naked,noinline)) sub_FF961054_my() {
 
           "BL      sub_FFA40388\n" // 2 (NR) is set into 0xB704 in this sub! Still before shooting
 
+          "BL      wait_until_remote_button_is_released\n"
           "BL      capt_seq_hook_set_nr\n" // +-----------> so immediately override NR
 
           "LDR     R0, [R4,#0x18]\n"

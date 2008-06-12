@@ -54,9 +54,6 @@ color draw_get_pixel(coord x, coord y) {
 }
 
 //-------------------------------------------------------------------
-static inline int abs(int v) {
-    return ((v<0)?-v:v);
-}
 #define swap(v1, v2)   {v1^=v2; v2^=v1; v1^=v2;}
 //-------------------------------------------------------------------
 void draw_line(coord x1, coord y1, coord x2, coord y2, color cl) {

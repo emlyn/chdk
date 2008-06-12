@@ -18,6 +18,7 @@
     #define CAM_USE_ZOOM_FOR_MF         1   // Zoom lever can be used for manual focus adjustments
     #undef  CAM_ADJUSTABLE_ALT_BUTTON       // ALT-button can be set from menu
     #define CAM_REMOTE                  1   // Camera supports USB-remote
+    #define CAM_SYNCH                   1   // Camera supports SDM precision synch
     #undef  CAM_MULTIPART                   // Camera supports SD-card multipartitioning 
     #define CAM_HAS_ZOOM_LEVER          1   // Camera has dedicated zoom buttons
     #undef  CAM_DRAW_EXPOSITION             // Output expo-pair on screen (for cameras which (sometimes) don't do that)
@@ -37,8 +38,6 @@
     #define CAM_CHDK_HAS_EXT_VIDEO_MENU 1   // In CHDK for this camera realized adjustable video compression
     #undef  CAM_CAN_MUTE_MICROPHONE         // Camera has function to mute microphone
 
-    #define CAM_EMUL_KEYPRESS_DELAY     40  // Delay to interpret <alt>-button press as longpress
-    #define CAM_EMUL_KEYPRESS_DURATION  5   // Length of keypress emulation
 
 //----------------------------------------------------------
 // Overridden values for each camera
@@ -183,7 +182,6 @@
     #define CAM_RAW_ROWS                2340   // for 7 MP
     #define CAM_MULTIPART               1
     #define CAM_CAN_MUTE_MICROPHONE     1
-
 //----------------------------------------------------------
 #elif defined (CAMERA_a610)
     #define CAM_PROPSET                 1
@@ -244,12 +242,9 @@
     #define CAM_RAW_ROWPIX              4104   // for 12 MP
     #define CAM_RAW_ROWS                3048   // for 12 MP
     
-    #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #define CAM_SWIVEL_SCREEN           1
     #define CAM_CAN_MUTE_MICROPHONE     1
 
-    #undef  CAM_EMUL_KEYPRESS_DURATION
-    #define CAM_EMUL_KEYPRESS_DURATION  10
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a700)
@@ -270,7 +265,6 @@
 
     #define CAM_MULTIPART               1
     #define CAM_CAN_MUTE_MICROPHONE     1
-
 //----------------------------------------------------------
 #elif defined (CAMERA_a720)
     #define CAM_PROPSET                 2
@@ -284,23 +278,6 @@
 //==========================================================
 // SD-Series (IXUS-Series)
 //==========================================================
-#elif defined (CAMERA_ixus50_sd400)
-    #define CAM_PROPSET                 1
-
-    #define CAM_RAW_ROWPIX              2672   // for 5 MP
-    #define CAM_RAW_ROWS                1968   // for 5 MP
-
-    #undef  CAM_USE_ZOOM_FOR_MF
-    #undef  CAM_HAS_ERASE_BUTTON
-    #undef  CAM_HAS_IRIS_DIAPHRAGM
-    #define CAM_HAS_ND_FILTER           1
-    #undef  CAM_HAS_MANUAL_FOCUS
-    #undef  CAM_HAS_USER_TV_MODES
-    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
-    #undef  CAM_HAS_IS
-	//#define CAM_CONSOLE_LOG_ENABLED     1
-
-//----------------------------------------------------------
 #elif defined (CAMERA_ixus55_sd450)
     #define CAM_PROPSET                 1
 
@@ -361,6 +338,7 @@
     #define CAM_RAW_ROWPIX              3152   // for 7 MP
     #define CAM_RAW_ROWS                2340   // for 7 MP
 
+    #undef  CAM_SYNCH
     #undef  CAM_USE_ZOOM_FOR_MF
     #define CAM_DRAW_EXPOSITION         1
     #undef  CAM_HAS_ERASE_BUTTON
@@ -445,6 +423,7 @@
     #define CAM_RAW_ROWPIX              2672   // for 5 MP
     #define CAM_RAW_ROWS                1968   // for 5 MP
     
+    #undef  CAM_SYNCH   
     #define CAM_SWIVEL_SCREEN           1
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
@@ -457,6 +436,7 @@
     #define CAM_RAW_ROWPIX              2888   // for 6 MP
     #define CAM_RAW_ROWS                2136   // for 6 MP
     
+    #undef  CAM_SYNCH  
     #define CAM_SWIVEL_SCREEN           1
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #define CAM_MULTIPART               1

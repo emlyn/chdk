@@ -16,3 +16,4 @@ DEF(FlashParamsTable,0xFFD5AF48)
 
 DEF(lcd_brightness,0xC0910080) 
 DEF(lcd_brightness_saved,0x63570) 
+DEF (movie_state,0x64794)

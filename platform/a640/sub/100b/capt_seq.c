@@ -73,6 +73,7 @@ void __attribute__((naked,noinline)) sub_FFD5894C_my(long p)
 	    	"BL      capt_seq_hook_set_nr\n"
                 "LDR     R3, =0x6268\n"
                 "LDR     R0, [R3]\n"
+                "BL      wait_until_remote_button_is_released\n"
 
 		"B       sub_FFD589B0\n"
     );

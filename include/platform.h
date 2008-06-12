@@ -86,10 +86,19 @@ MODE_VIDEO_MANUAL       ,
  #define PROPCASE_OVEREXPOSURE 					103
  #define PROPCASE_SHOOTING_MODE					49
  #define PROPCASE_IS_MODE					    145
+ #define PROPCASE_EV_CORRECTION_1				107
+ #define PROPCASE_EV_CORRECTION_2				207
+ #define PROPCASE_ORIENTATION_SENSOR			219
 #elif CAM_PROPSET == 1
  #define PROPCASE_DRIVE_MODE    				6
  #define PROPCASE_FOCUS_MODE    				12
  #define PROPCASE_FLASH_MODE       				16
+// need corresponding values for propset2!!!
+// #define PROPCASE_FLASH_ADJUST_MODE       	15
+// #define PROPCASE_FLASH_CORRECTION               28      
+// #define PROPCASE_FLASH_MANUAL_OUTPUT    29
+//  #define PROPCASE_FOCUS_OK           67
+// also need max. zoom steps for each cam
  #define PROPCASE_USER_TV       				40
  #define PROPCASE_TV	        				69
  #define PROPCASE_USER_AV       				39
@@ -107,6 +116,9 @@ MODE_VIDEO_MANUAL       ,
  #define PROPCASE_OVEREXPOSURE 					76
  #define PROPCASE_SHOOTING_MODE					0
  #define PROPCASE_IS_MODE				        229
+ #define PROPCASE_EV_CORRECTION_1				25
+ #define PROPCASE_EV_CORRECTION_2				26
+ #define PROPCASE_ORIENTATION_SENSOR			37
 #else
  #error unknown camera processor
 #endif
@@ -238,6 +250,7 @@ long get_property_case(long id, void *buf, long bufsize);
 long set_property_case(long id, void *buf, long bufsize);
 
 long get_file_counter();
+long get_exposure_counter();
 long get_file_next_counter();
 long get_target_dir_num();
 long get_target_file_num();
@@ -254,6 +267,7 @@ long kbd_get_clicked_key();
 long kbd_get_autoclicked_key();
 void kbd_reset_autoclicked_key();
 long kbd_use_zoom_as_mf();
+long kbd_use_up_down_as_fast_ev();
 void kbd_set_alt_mode_key_mask(long key);
 int get_usb_power(int edge);
 /******************************************************************/
@@ -417,6 +431,8 @@ void ubasic_camera_set_script_autostart();
 void exit_alt();
 void camera_shutdown_in_a_second(void); 
 
+extern int shot_histogram_enabled;
+
 void disable_shutdown();
 void enable_shutdown();
 
@@ -434,6 +450,7 @@ extern int canon_menu_active;
 extern char canon_shoot_menu_active;  
 extern int recreview_hold;
 
+extern int movie_state;
 unsigned int GetFreeCardSpaceKb(void);
 unsigned int GetTotalCardSpaceKb(void);
 
@@ -444,6 +461,8 @@ extern char * camera_jpeg_count_str();
 
 unsigned int GetJpgCount(void);
 unsigned int GetRawCount(void);
+
+void wait_until_remote_button_is_released(void);
 
 
 #define started() debug_led(1)

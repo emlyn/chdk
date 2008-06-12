@@ -1,4 +1,4 @@
-VER=allbest
+VER=CHDK
 
 PLATFORM=a610
 PLATFORMSUB=100e
@@ -92,8 +92,10 @@ NOZERO100K=TRUE
 ##########################################################################
 ##########################################################################
 
+ESED = sed -r
+
 ifndef OSTYPE
-  HOSTPLATFORM:=$(shell uname -s | head -c 5)
+  HOSTPLATFORM:=$(patsubst MINGW%,MINGW,$(shell uname -s))
   ifeq ($(HOSTPLATFORM),MINGW)
     OSTYPE = Windows
     EXE = .exe
@@ -108,11 +110,20 @@ ifndef OSTYPE
       DEVNULL = /dev/null
       SORT = sort
     else
-      OSTYPE = Other
-      EXE =
-      SH =
-      DEVNULL = /dev/null
-      SORT = sort
+      ifeq ($(HOSTPLATFORM),Darwin)
+        OSTYPE = Darwin
+        EXE =
+        SH =
+        DEVNULL = /dev/null
+        SORT = sort
+        ESED = sed -E
+      else
+        OSTYPE = Other
+        EXE =
+        SH =
+        DEVNULL = /dev/null
+        SORT = sort
+      endif
     endif
   endif
 else

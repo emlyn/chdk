@@ -8,3 +8,4 @@ DEF(focus_busy, 0x9D50) //  0x9CB8
 DEF(canon_menu_active,0xB55C)
 DEF(canon_shoot_menu_active,0xAE15)   // 0xAE14+1
 DEF(recreview_hold, 0xABE8) // 0xAB38+0xB0
+DEF (movie_state,0x5538+0x38)

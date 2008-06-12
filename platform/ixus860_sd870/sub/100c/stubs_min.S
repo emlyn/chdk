@@ -15,3 +15,4 @@ DEF(focus_busy, 0xA65C) //0xA648 + 0x14 ??? to double check
 DEF(canon_menu_active,0xC04C) //0xC048 + 4
 DEF(canon_shoot_menu_active,0xB65D)   // 0xB65C+1
 DEF(recreview_hold, 0xB474) // 0xB3C8+0xAC
+DEF (movie_state,0x54E0+0x3C)

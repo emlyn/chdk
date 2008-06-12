@@ -11,6 +11,7 @@
 #define MPOPUP_RAW_ADD		0x0020
 #define MPOPUP_RAW_AVERAGE	0x0040
 #define MPOPUP_CANCEL           0x0100
+#define MPOPUP_PURGE            0x0080
 
 //-------------------------------------------------------------------
 extern void gui_mpopup_init(const unsigned int flags, void (*on_select)(unsigned int actn));

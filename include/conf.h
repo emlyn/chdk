@@ -4,12 +4,15 @@
 #include "gui.h"
 #include "script.h"
 
+#define USER_MENU_ITEMS 14
+
 typedef struct {
     unsigned short  x, y;
 } OSD_pos;
 
 typedef struct {
     int save_raw;
+    int save_raw_in_video;
     int raw_in_dir;
     int raw_prefix;
     int raw_ext;
@@ -17,6 +20,7 @@ typedef struct {
     int raw_nr;
 
     int show_osd;
+    int hide_osd_in_playback;
     int show_osd_in_review;
     int script_shoot_delay;
     int show_histo;
@@ -43,6 +47,9 @@ typedef struct {
     int space_perc_warn;
     int space_mb_warn;
     int space_warn_type;
+    int show_movie_time;
+    int show_movie_refresh;
+
 
     int zoom_value;
 
@@ -81,6 +88,8 @@ typedef struct {
     OSD_pos mode_raw_pos;
     OSD_pos values_pos;
     OSD_pos clock_pos;
+    OSD_pos mode_video_pos;
+    OSD_pos mode_ev_pos;
 
     color histo_color;
     color histo_color2; // markers/border
@@ -91,13 +100,17 @@ typedef struct {
     color menu_color;
     color menu_title_color;
     color menu_cursor_color;
+    color menu_symbol_color;
     int menu_center;
+    int menu_symbol_enable;
     color reader_color;
     color zebra_color; // under/over
     color grid_color;
+    color osd_color_override;
 
     int font_cp;
     char menu_rbf_file[100];
+    char menu_symbol_rbf_file[100];
 
     char lang_file[100];
 
@@ -112,6 +125,8 @@ typedef struct {
     int sokoban_level;
 
     int flashlight;
+    int fast_ev;
+    int fast_ev_step;
     int splash_show;
 
     int use_zoom_mf;
@@ -134,6 +149,9 @@ typedef struct {
     int subj_dist_bracket_koef;
     int bracket_type;
     int clear_bracket;
+    int clear_video;
+    int override_disable;
+    int override_disable_all;
 
 
     int tv_override_value;
@@ -190,10 +208,25 @@ typedef struct {
     int script_startup;			// remote autostart
     int remote_enable;			// remote enable
     int user_menu_enable;
-    int user_menu_vars[10];
+    int user_menu_vars[USER_MENU_ITEMS];
+    int user_menu_as_root;
     int zoom_scale;
     int unlock_optical_zoom_for_video;
     int mute_on_zoom;
+    int bad_pixel_removal;
+
+    char curve_file[100];
+    int curve_enable;
+    
+    int edge_overlay_enable;
+    int edge_overlay_thresh;
+    color edge_overlay_color;
+
+    int synch_enable;
+    int ricoh_ca1_mode;
+    int synch_delay_enable;
+    int synch_delay_value;
+    int synch_delay_coarse_value;
 } Conf;
 
 extern Conf conf;
@@ -223,5 +256,6 @@ extern void script_autostart();				// remote autostart
 extern void conf_save();
 extern void conf_restore();
 extern void conf_load_defaults();
+extern int shutter_int;
 
 #endif

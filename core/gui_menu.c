@@ -35,7 +35,8 @@ static int          gui_menu_add_item = 0;
 static int          count;
 static coord        x, y, w, num_lines;
 static int          len_bool, len_int, len_enum, len_space, len_br1, len_br2, cl_rect;
-static int          int_incr;
+static int          int_incr, incr_modified;
+static int          c, j;
 static unsigned char *item_color;
 
 //-------------------------------------------------------------------
@@ -48,7 +49,7 @@ static void gui_menu_set_curr_menu(CMenu *menu_ptr, int top_item, int curr_item)
 //-------------------------------------------------------------------
 void gui_menu_init(CMenu *menu_ptr) {
     if (menu_ptr) {
-        gui_menu_set_curr_menu(menu_ptr, 0, -1);
+        gui_menu_set_curr_menu(menu_ptr, 0, 0);
         gui_menu_stack_ptr = 0;
     }
     
@@ -104,6 +105,8 @@ static char sbuf[7];
 		}
 		break;
         case KEY_UP:
+			if (kbd_is_key_pressed(KEY_SHOOT_HALF) || kbd_is_key_pressed(KEY_ZOOM_IN) || kbd_is_key_pressed(KEY_ZOOM_OUT)) c=4; else c=1;
+            for (j=0;j<c;++j){
             do {
                 if (gui_menu_curr_item>0) {
                     if (gui_menu_curr_item-1==gui_menu_top_item && gui_menu_top_item>0) 
@@ -121,8 +124,11 @@ static char sbuf[7];
             int_incr = 1;
             gui_menu_redraw=1;
             if (curr_menu->title == LANG_MENU_USER_MENU) gui_menu_add_item = gui_menu_curr_item;
+			}
             break;
         case KEY_DOWN:
+			if (kbd_is_key_pressed(KEY_SHOOT_HALF) || kbd_is_key_pressed(KEY_ZOOM_IN) || kbd_is_key_pressed(KEY_ZOOM_OUT)) c=4; else c=1;
+            for (j=0;j<c;++j){
             do {
                 if (curr_menu->menu[gui_menu_curr_item+1].text) {
                     int i;
@@ -139,11 +145,26 @@ static char sbuf[7];
             int_incr = 1;
             gui_menu_redraw=1;
             if (curr_menu->title == LANG_MENU_USER_MENU) gui_menu_add_item = gui_menu_curr_item;
+			}
             break;
         case KEY_LEFT:
             if (gui_menu_curr_item>=0) {
                 switch (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK) {
                     case MENUITEM_INT:
+						{
+						if (kbd_is_key_pressed(KEY_ZOOM_OUT)) {
+						int_incr=10;
+						incr_modified=1;
+						}
+						if (kbd_is_key_pressed(KEY_ZOOM_IN)) {
+						int_incr=100;
+						incr_modified=1;
+						}
+						if (kbd_is_key_pressed(KEY_SHOOT_HALF)) {
+						int_incr=1000;
+						incr_modified=1;
+						}
+						}
                         switch (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_ARG_MASK) {
                             case MENUITEM_ARG_INC:
                                 *(curr_menu->menu[gui_menu_curr_item].value) -= curr_menu->menu[gui_menu_curr_item].arg;
@@ -176,11 +197,21 @@ static char sbuf[7];
                         if (curr_menu->on_change) {
                             curr_menu->on_change(gui_menu_curr_item);
                         }
+                        if (incr_modified) {
+						int_incr=1;
+						incr_modified=0;
+						draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
+						}
                         gui_menu_redraw=1;
                         break;
                     case MENUITEM_ENUM:
                         if (curr_menu->menu[gui_menu_curr_item].value) {
-                            ((const char* (*)(int change, int arg))(curr_menu->menu[gui_menu_curr_item].value))(-1, curr_menu->menu[gui_menu_curr_item].arg);
+							int c;
+							if (kbd_is_key_pressed(KEY_SHOOT_HALF)) c=3;
+							else if (kbd_is_key_pressed(KEY_ZOOM_IN)) c=6;
+							else if (kbd_is_key_pressed(KEY_ZOOM_OUT)) c=3;
+							else c=1;
+							((const char* (*)(int change, int arg))(curr_menu->menu[gui_menu_curr_item].value))(-c, curr_menu->menu[gui_menu_curr_item].arg);
                         }
                         gui_menu_redraw=1;
                         break;
@@ -196,6 +227,20 @@ static char sbuf[7];
             if (gui_menu_curr_item>=0) {
                 switch (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK){
                     case MENUITEM_INT:
+						{
+						if (kbd_is_key_pressed(KEY_ZOOM_OUT)) {
+						int_incr=10;
+						incr_modified=1;
+						}
+						if (kbd_is_key_pressed(KEY_ZOOM_IN)) {
+						int_incr=100;
+						incr_modified=1;
+						}
+						if (kbd_is_key_pressed(KEY_SHOOT_HALF)) {
+						int_incr=1000;
+						incr_modified=1;
+						}
+						}
                         switch (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_ARG_MASK) {
                             case MENUITEM_ARG_INC:
                                 *(curr_menu->menu[gui_menu_curr_item].value) += curr_menu->menu[gui_menu_curr_item].arg;
@@ -226,11 +271,21 @@ static char sbuf[7];
                         if (curr_menu->on_change) {
                             curr_menu->on_change(gui_menu_curr_item);
                         }
+                        if (incr_modified) {
+						int_incr=1;
+						incr_modified=0;
+						draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
+						}
                         gui_menu_redraw=1;
                         break;
                     case MENUITEM_ENUM:
                         if (curr_menu->menu[gui_menu_curr_item].value) {
-                            ((const char* (*)(int change, int arg))(curr_menu->menu[gui_menu_curr_item].value))(+1, curr_menu->menu[gui_menu_curr_item].arg);
+							int c;
+							if (kbd_is_key_pressed(KEY_SHOOT_HALF)) c=3;
+							else if (kbd_is_key_pressed(KEY_ZOOM_IN)) c=6;
+							else if (kbd_is_key_pressed(KEY_ZOOM_OUT)) c=3;
+							else c=1;
+							((const char* (*)(int change, int arg))(curr_menu->menu[gui_menu_curr_item].value))(+c, curr_menu->menu[gui_menu_curr_item].arg);
                         }
                         gui_menu_redraw=1;
                         break;
@@ -238,7 +293,7 @@ static char sbuf[7];
                         gui_menu_stack[gui_menu_stack_ptr].menu = curr_menu;
                         gui_menu_stack[gui_menu_stack_ptr].curpos = gui_menu_curr_item;
                         gui_menu_stack[gui_menu_stack_ptr].toppos = gui_menu_top_item;
-                        gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, -1);
+                        gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, 0);
                         gui_menu_stack_ptr++;
                         // FIXME check on stack overrun;
                         if (gui_menu_stack_ptr > MENUSTACK_MAXDEPTH){
@@ -255,6 +310,14 @@ static char sbuf[7];
         case KEY_SET:
             if (gui_menu_curr_item>=0) {
                 switch (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK){
+                    case MENUITEM_INT:
+                        switch (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_ARG_MASK) {
+							default:
+                                if (kbd_is_key_pressed(KEY_SHOOT_HALF)) *(curr_menu->menu[gui_menu_curr_item].value) = 0;
+								break;
+						}
+						gui_menu_redraw=1;
+						break;
                     case MENUITEM_BOOL:
                         *(curr_menu->menu[gui_menu_curr_item].value) =
                                 !(*(curr_menu->menu[gui_menu_curr_item].value));
@@ -272,7 +335,7 @@ static char sbuf[7];
                             if (curr_menu->on_change) {
                                 curr_menu->on_change(gui_menu_curr_item);
                             }
-                            gui_menu_set_curr_menu(curr_menu, 0, -1);
+                            gui_menu_set_curr_menu(curr_menu, 0, 0);
                             gui_menu_redraw=2;
                         }
                         break;
@@ -280,7 +343,7 @@ static char sbuf[7];
                         gui_menu_stack[gui_menu_stack_ptr].menu = curr_menu;
                         gui_menu_stack[gui_menu_stack_ptr].curpos = gui_menu_curr_item;
                         gui_menu_stack[gui_menu_stack_ptr].toppos = gui_menu_top_item;
-                        gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, -1);
+                        gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, 0);
                         gui_menu_stack_ptr++;
                         // FIXME check on stack overrun;
                         if (gui_menu_stack_ptr > MENUSTACK_MAXDEPTH){
@@ -386,15 +449,18 @@ void gui_menu_draw_initial() {
         y = ((screen_height-(num_lines-1)*rbf_font_height())>>1);  
       }
     }
-    rbf_draw_string_center_len(x, y-rbf_font_height(), w+wplus, lang_str(curr_menu->title), conf.menu_title_color); 
+    if (conf.menu_symbol_enable)
+      rbf_draw_string_center_len(x, y-rbf_font_height(), w+wplus, curr_menu->symbol, lang_str(curr_menu->title), conf.menu_title_color);
+    else
+      rbf_draw_string_center_len(x, y-rbf_font_height(), w+wplus, 0x0, lang_str(curr_menu->title), conf.menu_title_color);    
 //    if (cl!=COLOR_FG) 
 //      draw_line(x,y-1,x+w-1+wplus,y-1,COLOR_FG); 
 }
 //-------------------------------------------------------------------
 void gui_menu_draw() {
     static char tbuf[64];
-    int imenu, i, j, yy, xx;
-    color cl;
+    int imenu, i, j, yy, xx, symbol_width;
+    color cl, cl_symbol;
     const char *ch = "";
 
     if (gui_menu_redraw) {
@@ -405,30 +471,81 @@ void gui_menu_draw() {
 
         for (imenu=gui_menu_top_item, i=0, yy=y; curr_menu->menu[imenu].text && i<num_lines; ++imenu, ++i, yy+=rbf_font_height()){
             cl = (gui_menu_curr_item==imenu)?conf.menu_cursor_color:conf.menu_color;
+            cl_symbol=(gui_menu_curr_item==imenu)?MAKE_COLOR((cl>>8)&0xFF,(conf.menu_symbol_color>>8)&0xFF):conf.menu_symbol_color; //color 8Bit=Hintergrund 8Bit=Vordergrund
             xx = x;
 
             switch (curr_menu->menu[imenu].type & MENUITEM_MASK) {
             case MENUITEM_BOOL:
+                if (conf.menu_symbol_enable) {
+                  xx+=rbf_draw_char(xx, yy, ' ', cl_symbol);
+                  xx+=symbol_width=rbf_draw_symbol(xx, yy, curr_menu->menu[imenu].symbol, cl_symbol);
+                  symbol_width+=len_space;
+                } else {
+                  symbol_width=0;
+                }
                 xx+=rbf_draw_char(xx, yy, ' ', cl);
-                xx+=rbf_draw_string_len(xx, yy, w-len_space-len_space-len_br1-len_bool-len_br2-len_space, lang_str(curr_menu->menu[imenu].text), cl);
+                xx+=rbf_draw_string_len(xx, yy, w-len_space-len_space-len_br1-len_bool-len_br2-len_space-symbol_width, lang_str(curr_menu->menu[imenu].text), cl);
                 xx+=rbf_draw_string(xx, yy, " [", cl);
                 xx+=rbf_draw_string_len(xx, yy, len_bool, (*(curr_menu->menu[imenu].value))?"\x95":"", cl);
                 rbf_draw_string(xx, yy, "] ", cl);
                 break;
             case MENUITEM_INT:
+                if (conf.menu_symbol_enable) {
+                  xx+=rbf_draw_char(xx, yy, ' ', cl_symbol);
+                  xx+=symbol_width=rbf_draw_symbol(xx, yy, curr_menu->menu[imenu].symbol, cl_symbol);
+                  symbol_width+=len_space;
+                } else {
+                  symbol_width=0;
+                }
                 xx+=rbf_draw_char(xx, yy, ' ', cl);
-                xx+=rbf_draw_string_len(xx, yy, w-len_space-len_space-len_br1-len_int-len_br2-len_space, lang_str(curr_menu->menu[imenu].text), cl);
+                xx+=rbf_draw_string_len(xx, yy, w-len_space-len_space-len_br1-len_int-len_br2-len_space-symbol_width, lang_str(curr_menu->menu[imenu].text), cl);
                 xx+=rbf_draw_string(xx, yy, " [", cl);
                 sprintf(tbuf, "%d", *(curr_menu->menu[imenu].value));
                 xx+=rbf_draw_string_right_len(xx, yy, len_int, tbuf, cl);
                 rbf_draw_string(xx, yy, "] ", cl);
                 break;
-            case MENUITEM_UP:
             case MENUITEM_SUBMENU:
+                if (conf.menu_symbol_enable) {
+                  xx+=rbf_draw_char(xx, yy, ' ', cl_symbol);
+                  xx+=symbol_width=rbf_draw_symbol(xx, yy, curr_menu->menu[imenu].symbol, cl_symbol);
+                  symbol_width+=len_space+symbol_width;
+                  sprintf(tbuf, "%s", lang_str(curr_menu->menu[imenu].text));
+                } else {
+                  sprintf(tbuf, "%s ->", lang_str(curr_menu->menu[imenu].text));
+                  symbol_width=0;
+                }
+                xx+=rbf_draw_char(xx, yy, ' ', cl);
+                xx+=rbf_draw_string_len(xx, yy, w-len_space-len_space-symbol_width, tbuf, cl);
+                if (conf.menu_symbol_enable) {
+                  xx+=rbf_draw_symbol(xx, yy, 0x52, cl_symbol);
+                  rbf_draw_char(xx, yy, ' ', cl_symbol);
+                } else rbf_draw_char(xx, yy, ' ', cl);
+                break;
+            case MENUITEM_UP:
+                if (conf.menu_symbol_enable) {
+                  xx+=rbf_draw_char(xx, yy, ' ', cl_symbol);
+                  xx+=symbol_width=rbf_draw_symbol(xx, yy, curr_menu->menu[imenu].symbol, cl_symbol);
+                  symbol_width+=len_space;
+                  sprintf(tbuf, "%s", lang_str(curr_menu->menu[imenu].text));
+                } else {
+                  symbol_width=0;
+                  sprintf(tbuf, "<- %s", lang_str(curr_menu->menu[imenu].text));
+                }
+                xx+=rbf_draw_char(xx, yy, ' ', cl);
+                xx+=rbf_draw_string_len(xx, yy, w-len_space-len_space-symbol_width, tbuf, cl);
+                rbf_draw_char(xx, yy, ' ', cl);
+                break;
             case MENUITEM_PROC:
             case MENUITEM_TEXT:
+                if (conf.menu_symbol_enable) {
+                  xx+=rbf_draw_char(xx, yy, ' ', cl_symbol);
+                  xx+=symbol_width=rbf_draw_symbol(xx, yy, curr_menu->menu[imenu].symbol, cl_symbol);
+                  symbol_width+=len_space;
+                } else {
+                  symbol_width=0;
+                }
                 xx+=rbf_draw_char(xx, yy, ' ', cl);
-                xx+=rbf_draw_string_len(xx, yy, w-len_space-len_space, lang_str(curr_menu->menu[imenu].text), cl);
+                xx+=rbf_draw_string_len(xx, yy, w-len_space-len_space-symbol_width, lang_str(curr_menu->menu[imenu].text), cl);
                 rbf_draw_char(xx, yy, ' ', cl);
                 break;
             case MENUITEM_SEPARATOR:
@@ -436,7 +553,7 @@ void gui_menu_draw() {
                     j = rbf_str_width(lang_str(curr_menu->menu[imenu].text));
                     xx+=(w-j-len_space*2)>>1;
 
-                    rbf_draw_char(x, yy, ' ', cl);
+                    (conf.menu_symbol_enable)?rbf_draw_char(x, yy, ' ', cl_symbol):rbf_draw_char(x, yy, ' ', cl);
                     draw_filled_rect(x+len_space, yy, xx-1, yy+rbf_font_height()/2-1, MAKE_COLOR(cl>>8, cl>>8));
                     draw_line(x+len_space, yy+rbf_font_height()/2, xx-1, yy+rbf_font_height()/2, cl);
                     draw_filled_rect(x+len_space, yy+rbf_font_height()/2+1, xx-1, yy+rbf_font_height()-1, MAKE_COLOR(cl>>8, cl>>8));
@@ -459,8 +576,15 @@ void gui_menu_draw() {
                 break;
             case MENUITEM_COLOR_FG:
             case MENUITEM_COLOR_BG:
+                if (conf.menu_symbol_enable) {
+                  xx+=rbf_draw_char(xx, yy, ' ', cl_symbol);
+                  xx+=symbol_width=rbf_draw_symbol(xx, yy, curr_menu->menu[imenu].symbol, cl_symbol);
+                  symbol_width+=len_space;
+                } else {
+                  symbol_width=0;
+                }
                 xx+=rbf_draw_char(xx, yy, ' ', cl);
-                xx+=rbf_draw_string_len(xx, yy, w-len_space, lang_str(curr_menu->menu[imenu].text), cl);
+                xx+=rbf_draw_string_len(xx, yy, w-len_space-symbol_width, lang_str(curr_menu->menu[imenu].text), cl);
                 draw_filled_round_rect(x+w-1-cl_rect-2-len_space, yy+2, x+w-1-2-len_space, yy+rbf_font_height()-1-2, 
                                  MAKE_COLOR(((*(curr_menu->menu[imenu].value))>>(((curr_menu->menu[imenu].type & MENUITEM_MASK)==MENUITEM_COLOR_BG)?8:0))&0xFF, 
                                             ((*(curr_menu->menu[imenu].value))>>(((curr_menu->menu[imenu].type & MENUITEM_MASK)==MENUITEM_COLOR_BG)?8:0))&0xFF));
@@ -469,8 +593,15 @@ void gui_menu_draw() {
                 if (curr_menu->menu[imenu].value) {
                     ch=((const char* (*)(int change, int arg))(curr_menu->menu[imenu].value))(0, curr_menu->menu[imenu].arg);
                 }
+                if (conf.menu_symbol_enable) {
+                  xx+=rbf_draw_char(xx, yy, ' ', cl_symbol);
+                  xx+=symbol_width=rbf_draw_symbol(xx, yy, curr_menu->menu[imenu].symbol, cl_symbol);
+                  symbol_width+=len_space;
+                } else {
+                  symbol_width=0;
+                }
                 xx+=rbf_draw_char(xx, yy, ' ', cl);
-                xx+=rbf_draw_string_len(xx, yy, w-len_space-len_space-len_br1-len_enum-len_br2-len_space, lang_str(curr_menu->menu[imenu].text), cl);
+                xx+=rbf_draw_string_len(xx, yy, w-len_space-len_space-len_br1-len_enum-len_br2-len_space-symbol_width, lang_str(curr_menu->menu[imenu].text), cl);
                 xx+=rbf_draw_string(xx, yy, " [", cl);
                 xx+=rbf_draw_string_right_len(xx, yy, len_enum, ch, cl);
                 rbf_draw_string(xx, yy, "] ", cl);
@@ -496,4 +627,11 @@ void gui_menu_draw() {
         }
     }
 }
+
+
+
+
+
+
+
 

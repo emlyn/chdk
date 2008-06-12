@@ -70,6 +70,7 @@ void __attribute__((naked,noinline)) sub_FFB2E77C_my(long p)
                 "BL      sub_FFA4D830\n" //nullsub_135
                 "MOV     R0, R4\n"
                 "BL      sub_FFB2E584\n" 
+                "BL      wait_until_remote_button_is_released\n"
                 "BL      capt_seq_hook_set_nr\n" // +
                 "B       sub_FFB2E7D8\n"
     );

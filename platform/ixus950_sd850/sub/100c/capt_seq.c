@@ -76,6 +76,7 @@ void __attribute__((naked,noinline)) sub_FFB10B64_my(long p)
 "		BL	sub_FFA4226C\n"
 "		MOV	R0, R4\n"
 "		BL	sub_FFB1096C\n"
+            "BL      wait_until_remote_button_is_released\n"
                "BL      capt_seq_hook_set_nr\n"  // + <- ADDED !!!!!
 "		LDR	R3, =0xED48\n"
 "		LDR	R0, [R3]\n"

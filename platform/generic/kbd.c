@@ -4,6 +4,13 @@
 #include "core.h"
 #include "keyboard.h"
 
+volatile long *mmio0 = (void*)0xc0220200;		// Definition of input addresses
+volatile long *mmio1 = (void*)0xc0220204;
+volatile long *mmio2 = (void*)0xc0220208;
+volatile long *mmio3 = (void*)0xc022020C;
+
+#define DELAY_TIMEOUT 10000
+
 typedef struct {
 	long hackkey;
 	long canonkey;
@@ -17,13 +24,15 @@ static KeyMap keymap[];
 static long last_kbd_key = 0;
 static int usb_power=0;
 static int remote_key, remote_count;
+static int shoot_counter=0;
+#define DELAY_TIMEOUT 10000
 
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
 
 #if defined(CAMERA_a700)
 #define USB_MASK 0x00000008
-#define USB_REG 0
+#define USB_REG 3
 #endif
 
 #if defined(CAMERA_a710)
@@ -39,6 +48,166 @@ static int remote_key, remote_count;
 #if defined(CAMERA_a530) || defined(CAMERA_a540)
 #define USB_MASK 0x4000
 #define USB_REG 2
+#endif
+
+long get_mmio(void)
+{
+long x;	
+
+#if defined(CAMERA_a530) || defined(CAMERA_a540)
+    x = (long)*mmio2;
+#endif
+	
+#if defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_ixus800_sd700) 
+        x = (long)*mmio1;
+#endif
+
+#if defined(CAMERA_a700)
+        x = (long)*mmio3;
+#endif
+
+#if defined(CAMERA_a710)
+        x = (long)*mmio0;
+#endif
+	
+return x;	
+}
+
+#if defined(CAMERA_a530) || defined(CAMERA_a540) || defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_a700)|| defined(CAMERA_a710) || defined (CAMERA_ixus800_sd700)  
+void wait_until_remote_button_is_released(void)
+{
+long x;
+int count1;
+int count2;
+int tick,tick2,tick3;
+int nSW;
+int prev_usb_power,cur_usb_power;
+
+// ------ add by Masuji SUTO (start) --------------
+    static int nMode;
+// ------ add by Masuji SUTO (end)   --------------
+asm volatile ("STMFD SP!, {R0-R11,LR}\n"); // store R0-R11 and LR in stack
+
+
+debug_led(1);
+tick=get_tick_count();
+tick2 = tick;
+
+ if (conf.synch_enable && (!shooting_get_drive_mode()|| (shooting_get_drive_mode()==1) || ((shooting_get_drive_mode()==2) && state_shooting_progress != SHOOTING_PROGRESS_PROCESSING)))
+
+// if(conf.synch_enable)                                              // synch mode enable so wait for USB to disconnect
+  {
+if(conf.ricoh_ca1_mode)
+{
+   nMode=0;
+	x=get_mmio();
+
+    if(x&USB_MASK) nMode=1;
+// ------ add by Masuji SUTO (end)   --------------
+} // ricoh_ca1_mode
+
+
+if(conf.ricoh_ca1_mode)
+    {
+	if(shooting_get_drive_mode()==1 && state_shooting_progress == SHOOTING_PROGRESS_PROCESSING){			//continuous-shooting mode
+		if(conf.bracket_type>2){                          // alternating
+			if(shoot_counter<2) shutter_int=3;
+			shoot_counter--;
+			}
+		else{                                              // lighter/darker
+			prev_usb_power=0;
+			nSW = 0;
+			do
+				{     
+				x=get_mmio();
+				cur_usb_power = x&USB_MASK;
+				if(cur_usb_power)
+                            {
+					if(!prev_usb_power)
+                                   {
+						 tick2 = get_tick_count();
+						 prev_usb_power=cur_usb_power;
+						}
+					   else
+                                    {
+						 if((int)get_tick_count()-tick2>1000) {debug_led(0);}
+						}
+					}
+				else{
+					if(prev_usb_power)
+                                {
+						tick3 = (int)get_tick_count()-tick2;
+						if(nSW==10) 
+                                         {
+							 if(tick3>50) shutter_int=1;
+							 nSW=20;
+							}
+						if(nSW==0 && tick3>0) 
+                                          {
+							 if(tick3<50) 
+                                             {
+							    nSW=10;
+							   }
+						       else
+                                             {
+							      if(tick3>1000) shutter_int=1;
+								nSW=20;
+							    }
+						         }
+						      prev_usb_power=cur_usb_power;
+						}
+					  } // else
+
+				           if((int)get_tick_count()-tick >= DELAY_TIMEOUT) {nSW=20;shutter_int=2;}
+				      }
+
+			        while(nSW<20);
+			 }    // lighter/darker
+
+		  } 		//continuous-shooting mode
+ 
+		 else{		//nomal mode 
+			shoot_counter=0;
+			if(conf.bracket_type>1)
+                       {
+				shoot_counter=(conf.bracket_type-1)*2;
+				}
+           do
+             x=get_mmio();
+
+//   while((x&USB_MASK) &&  ((int)get_tick_count()-tick < DELAY_TIMEOUT));
+ 
+// ------ modif by Masuji SUTO (start) --------------
+        while(((!(x&USB_MASK) && (nMode==0)) || ((x&USB_MASK) && (nMode==1))) &&  ((int)get_tick_count()-tick < DELAY_TIMEOUT));
+// ------ modif by Masuji SUTO (end)   --------------
+}
+} // ricoh ca1 mode
+
+else
+{
+   do
+   x=get_mmio();
+
+   while((x&USB_MASK) &&  ((int)get_tick_count()-tick < DELAY_TIMEOUT));
+}
+
+
+if (conf.synch_delay_enable && conf.synch_delay_value>0)                                // if delay is switched on and greater than 0
+  {
+    for (count1=0;count1<conf.synch_delay_value+(conf.synch_delay_coarse_value*1000);count1++) // wait delay_value * 0.1ms
+    {
+      for (count2=0;count2<1400;count2++)            // delay approx. 0.1ms
+        {
+        }
+     }
+  }
+}
+debug_led(0);
+
+
+asm volatile ("LDMFD SP!, {R0-R11,LR}\n"); // restore R0-R11 and LR from stack
+}
+
 #endif
 
 #ifndef MALLOCD_STACK
@@ -145,15 +314,8 @@ void my_kbd_read_keys()
 	physw_status[1] = kbd_new_state[1];
 	physw_status[2] = (kbd_new_state[2] & (~0x1fff)) |
 			  (kbd_mod_state & 0x1fff);
-#endif
-#if defined(USB_MASK) && defined(USB_REG)
-		if (conf.remote_enable) {
-
-#if !defined(CAMERA_a530) && !defined(CAMERA_a540)
-        physw_status[USB_REG] = kbd_new_state[USB_REG] & ~USB_MASK;
-#endif
-
-remote_key = (kbd_new_state[USB_REG] & USB_MASK)==USB_MASK;
+    }
+    remote_key = (kbd_new_state[USB_REG] & USB_MASK)==USB_MASK;
 
 			if (remote_key) 
 				remote_count += 1;
@@ -161,9 +323,17 @@ remote_key = (kbd_new_state[USB_REG] & USB_MASK)==USB_MASK;
 				usb_power = remote_count;
 				remote_count = 0;
 			}
-		}
 #endif
-    }
+#if defined(USB_MASK) && defined(USB_REG)
+		if (conf.remote_enable) {
+
+#if !defined(CAMERA_a530) && !defined(CAMERA_a540)
+        physw_status[USB_REG] = kbd_new_state[USB_REG] & ~USB_MASK;
+#endif
+        }
+
+#endif
+
 
     _kbd_read_keys_r2(physw_status);
     physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;

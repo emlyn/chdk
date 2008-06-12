@@ -58,6 +58,7 @@ void __attribute__((naked,noinline)) sub_FF97DD78_my(long p)
                 "LDR     R0, [R3,#0x74]\n"
                 //"BL      nullsub_31\n"
                 "BL      sub_FF97DCCC\n"
+         //   "BL      wait_until_remote_button_is_released\n"
 	    	"BL      capt_seq_hook_set_nr\n"
                 "LDR     R3, =0x668C\n"
                 "LDR     R0, [R3]\n"

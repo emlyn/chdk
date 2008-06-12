@@ -85,11 +85,11 @@ static const struct keyword_token keywords[] = {
   {"cls",                     TOKENIZER_CLS},
   {"print_screen",            TOKENIZER_PRINT_SCREEN},
   {"print",                   TOKENIZER_PRINT},
-
+  {"random",                  TOKENIZER_RANDOM},
   {"click",                   TOKENIZER_CLICK},
   {"press",                   TOKENIZER_PRESS},
   {"release",                 TOKENIZER_RELEASE},
-  {"shot",                    TOKENIZER_SHOOT}, // for compatibility
+  //{"shot",                    TOKENIZER_SHOOT}, // for compatibility
   {"shoot",                   TOKENIZER_SHOOT},
   {"sleep",                   TOKENIZER_SLEEP}, 
 
@@ -99,10 +99,11 @@ static const struct keyword_token keywords[] = {
   {"get_av",                  TOKENIZER_GET_USER_AV_ID}, //FOR COMPATIBILITY
   {"get_bv96",                TOKENIZER_GET_BV96},
   {"get_day_seconds",         TOKENIZER_GET_DAY_SECONDS},
-  {"get_disk_size",          TOKENIZER_GET_DISK_SIZE},
+  {"get_disk_size",           TOKENIZER_GET_DISK_SIZE},
   {"get_dof",                 TOKENIZER_GET_DOF},
   {"get_far_limit",           TOKENIZER_GET_FAR_LIMIT},
-  {"get_free_disk_space",           TOKENIZER_GET_FREE_DISK_SPACE},
+  {"get_free_disk_space",     TOKENIZER_GET_FREE_DISK_SPACE},
+  {"get_focus_mode",          TOKENIZER_GET_FOCUS_MODE},
   {"get_focus",               TOKENIZER_GET_FOCUS},
   {"get_hyp_dist",            TOKENIZER_GET_HYPERFOCAL_DIST},
   {"get_iso_market",          TOKENIZER_GET_ISO_MARKET},
@@ -110,9 +111,13 @@ static const struct keyword_token keywords[] = {
   {"get_iso_real",            TOKENIZER_GET_ISO_REAL},
   {"get_iso",                 TOKENIZER_GET_ISO_MODE}, //FOR COMPATIBILITY
   {"get_jpg_count",           TOKENIZER_GET_JPG_COUNT},
+  {"get_moviestate",          TOKENIZER_GET_MOVIESTATE},
   {"get_near_limit",          TOKENIZER_GET_NEAR_LIMIT},
+  {"get_propset",             TOKENIZER_GET_PROPSET},
   {"get_prop",                TOKENIZER_GET_PROP},
   {"get_raw_count",           TOKENIZER_GET_RAW_COUNT},
+  {"get_raw_nr",              TOKENIZER_GET_RAW_NR},
+  {"get_raw",                 TOKENIZER_GET_RAW},
   {"get_sv96",	              TOKENIZER_GET_SV96},
   {"get_tick_count",          TOKENIZER_GET_TICK_COUNT},
   {"get_tv96",                TOKENIZER_GET_TV96},
@@ -121,7 +126,9 @@ static const struct keyword_token keywords[] = {
   {"get_user_tv_id",          TOKENIZER_GET_USER_TV_ID},
   {"get_user_tv96",           TOKENIZER_GET_USER_TV96},
   {"get_vbatt",               TOKENIZER_GET_VBATT},
+  {"get_zoom_steps",          TOKENIZER_GET_ZOOM_STEPS},
   {"get_zoom",                TOKENIZER_GET_ZOOM},
+  {"get_exp_count",           TOKENIZER_GET_EXP_COUNT},
 
 
 
@@ -157,6 +164,7 @@ static const struct keyword_token keywords[] = {
   
   
   {"wait_click",              TOKENIZER_WAIT_CLICK},
+  {"is_pressed",              TOKENIZER_IS_PRESSED},
   {"is_key",                  TOKENIZER_IS_KEY},
   
   {"wheel_right",             TOKENIZER_WHEEL_RIGHT},
@@ -168,13 +176,26 @@ static const struct keyword_token keywords[] = {
 
   {"md_detect_motion",        TOKENIZER_MD_DETECT_MOTION},
   {"md_get_cell_diff",        TOKENIZER_MD_GET_CELL_DIFF},
-  {"get_autostart",           TOKENIZER_SCRIPT_AUTOSTART},
+  {"autostarted",             TOKENIZER_SCRIPT_AUTOSTARTED},
+  {"get_autostart",           TOKENIZER_GET_SCRIPT_AUTOSTART},
   {"set_autostart",           TOKENIZER_SET_SCRIPT_AUTOSTART},
   {"get_usb_power",           TOKENIZER_GET_USB_POWER},
   {"exit_alt",                TOKENIZER_EXIT_ALT},
-  {"shut_down",        TOKENIZER_SHUT_DOWN},
+  {"shut_down",               TOKENIZER_SHUT_DOWN},
 
-
+  {"get_shooting",            TOKENIZER_GET_SHOOTING},
+  {"get_drive_mode",          TOKENIZER_GET_DRIVE_MODE},
+  {"get_flash_mode",          TOKENIZER_GET_FLASH_MODE},
+  {"get_flash_ready",         TOKENIZER_GET_FLASH_READY},
+  {"get_IS_mode",             TOKENIZER_GET_IS_MODE},
+  {"set_ev",                  TOKENIZER_SET_EV},
+  {"get_ev",                  TOKENIZER_GET_EV},
+  {"get_orientation_sensor",  TOKENIZER_GET_ORIENTATION_SENSOR},
+  {"get_nd_present",          TOKENIZER_GET_ND_PRESENT},
+  {"get_histo_range",         TOKENIZER_GET_HISTO_RANGE},
+  
+  {"shot_histo_enable",       TOKENIZER_SHOT_HISTO_ENABLE},
+  
   {"end",                     TOKENIZER_END},
 
   {NULL,                      TOKENIZER_ERROR}

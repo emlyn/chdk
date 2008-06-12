@@ -218,4 +218,8 @@ struct utimbuf {
 extern int utime(char *file, struct utimbuf *newTimes);
 extern unsigned long time(unsigned long *timer);
 
+static inline int abs( int v ) {
+  return v<0 ? -v : v;
+}
+
 #endif
