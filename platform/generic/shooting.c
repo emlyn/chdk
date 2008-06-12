@@ -996,8 +996,12 @@ void shooting_tv_bracketing(){
  int m=mode_get()&MODE_SHOOTING_MASK;
  if (bracketing.shoot_counter==0) { // first shoot
     bracketing.shoot_counter=1;
+    #if defined (CAMERA_tx1)
+    bracketing.tv96=shooting_get_tv96();
+    #else
     if (!(m==MODE_M || m==MODE_TV)) bracketing.tv96=shooting_get_tv96(); 
     else bracketing.tv96=shooting_get_user_tv96();
+    #endif
     bracketing.tv96_step=32*conf.tv_bracket_value;
  }
   // other shoots
