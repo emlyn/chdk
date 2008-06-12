@@ -2,6 +2,8 @@
 #include "platform.h"
 #include "core.h"
 
+const long new_sa = MEMISOSTART + MEMISOSIZE;
+
 /* Ours stuff */
 extern void createHook (void *pNewTcb);
 extern void deleteHook (void *pTcb);
@@ -179,7 +181,13 @@ void  h_usrKernelInit()
         
         "LDR     R0, =h_usrRoot\n"
         "MOV     R1, #0x4000\n"
-        "LDR     R2, =0xD22D0\n" // 0x922D0 + MEMISOSIZE(0x40000)
+        );    
+//        "LDR     R2, =0xD22D0\n" // 0x922D0 + MEMISOSIZE(0x40000)
+        asm volatile (
+            "LDR     R2, =new_sa\n"
+            "LDR     R2, [R2]\n"
+        );
+        asm volatile (
 
         "STR     R12, [SP]\n"
         "STR     R4, [SP,#4]\n"
