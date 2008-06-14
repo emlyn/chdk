@@ -575,7 +575,7 @@ jump_line(int linenum)
 }
 /*---------------------------------------------------------------------------*/
 // TODO: error handling?
-static int
+int
 jump_label(char * label)
 {
   char currLabel[MAX_STRINGLEN];
@@ -594,8 +594,10 @@ jump_label(char * label)
     }
   }
   if (tokenizer_token() == TOKENIZER_ENDOFINPUT) {
+    if (state_kbd_script_run == 1) {  
       DEBUG_PRINTF("Label %s not found", label);
       ubasic_error = UBASIC_E_UNK_LABEL;
+    }
       return 0;
   } else {
       return 1;

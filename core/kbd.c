@@ -4,6 +4,7 @@
 #include "core.h"
 #include "keyboard.h"
 #include "conf.h"
+#include "camera.h"
 #include "lang.h"
 #include "ubasic.h"
 #include "histogram.h"
@@ -518,58 +519,35 @@ unsigned int drmode;
 	mplay = (mmode&MODE_MASK)==MODE_PLAY;
 	mvideo= ((mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_STD || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_SPEED || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_COMPACT ||(mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_MY_COLORS || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_ACCENT);
   }
-    if (kbd_blocked && nRmt==0){
-// ------ modif by Masuji SUTO (end)   --------------
-
-	//if (kbd_blocked){
-	if (key_pressed){
-            if (kbd_is_key_pressed(conf.alt_mode_button)) {
-                ++key_pressed;
-                if (key_pressed==40) {
-                    kbd_key_press(conf.alt_mode_button);
-                } else if (key_pressed==45) {
-                    kbd_key_release_all();
-                    key_pressed = 2;
-        	    kbd_blocked = 0;
-//        	    gui_kbd_leave();
+       // deals with alt-mode switch and delay emulation
+        if (key_pressed)
+        {
+                if (kbd_is_key_pressed(conf.alt_mode_button) ||
+                        ((key_pressed >= CAM_EMUL_KEYPRESS_DELAY) && 
+                         (key_pressed < CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION)))
+                {
+                        if (key_pressed <= CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION) 
+                                key_pressed++;
+                        if (key_pressed == CAM_EMUL_KEYPRESS_DELAY) 
+                                kbd_key_press(conf.alt_mode_button);
+                        else if (key_pressed == +CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION) 
+                                kbd_key_release(conf.alt_mode_button);
+                        return 1;
+                } else 
+                if (kbd_get_pressed_key() == 0)
+                {
+                        if (key_pressed != 100 && (key_pressed < CAM_EMUL_KEYPRESS_DELAY))
+                        {
+                                kbd_blocked = 1-kbd_blocked;
+                                if (kbd_blocked) gui_kbd_enter(); else gui_kbd_leave();
+                        }
+                        key_pressed = 0;
+                        return 1;
                 }
-            } else if (kbd_get_pressed_key() == 0) {
-                if (key_pressed!=100)
-                    gui_kbd_enter();
-        	key_pressed = 0;
-            }    
-	    return 1;
-	}
-
-	if (kbd_is_key_pressed(conf.alt_mode_button)){
-	    key_pressed = 2;
-	    kbd_blocked = 0;
-	    gui_kbd_leave();
-	    return 1;
-	}
-
-	if (kbd_is_key_pressed(KEY_SHOOT_FULL)){
-	    key_pressed = 100;
-	    if (!state_kbd_script_run){
-		script_start( 0 );
-	    } else {
-                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
-		script_end();
-	    }
-	}
-
-	if (state_kbd_script_run)
-	    process_script();
-	else {
-	    gui_kbd_process();
-	}
-/*        if (kbd_get_pressed_key() != 0 && !state_kbd_script_run) {
-            // emulate presskey to avoid camera turn off due to timeout
-            kbd_key_release_all();
-            kbd_key_press(KEY_DUMMY);
-        } */
-    } else {
-
+                return 1;
+        }
+       
+#ifndef SCRIPTLESS_REMOTE_NOT_ENABLED
 if(conf.ricoh_ca1_mode)
 {
 
@@ -1114,28 +1092,57 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 // ------ add by Masuji SUTO (end)   --------------
 
 } // ricoh_ca1_mode
+#endif
+       // auto iso shift
+        if (kbd_is_key_pressed(KEY_SHOOT_HALF) && kbd_is_key_pressed(conf.alt_mode_button)) return 0;
+        
+        if (kbd_is_key_pressed(conf.alt_mode_button))
+        {
+                key_pressed = 1;
+                kbd_key_release_all();          
+                return 1;
+        }
 
-	if (!key_pressed && kbd_is_key_pressed(conf.alt_mode_button)){
-        if (conf.ricoh_ca1_mode)conf.synch_enable=1;
-	    kbd_blocked = 1;
-	    key_pressed = 1;
-	    kbd_key_release_all();
-//	    gui_kbd_enter();
-	    return 1;
-	} else 
-	if ((key_pressed == 2) && !kbd_is_key_pressed(conf.alt_mode_button)){
-	    key_pressed = 0;
-	}
-	
-	if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
-	    return 1;
-	}
-    if (conf.fast_ev && kbd_use_up_down_as_fast_ev()) {
-	    return 1;
-	}
-    }
+        // deals with the rest
+        if (kbd_blocked && nRmt==0)
+        {
+                if (kbd_is_key_pressed(KEY_SHOOT_FULL))
+                {
+                        key_pressed = 100;
+                        if (!state_kbd_script_run)
+                        {
+                                script_console_clear();
+                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
+                                script_start(0);
+                        } else if (state_kbd_script_run == 2)
+                        {
+                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
+                                script_end();
+                        } else
+                        {
+                            state_kbd_script_run = 2;
+                            if (jump_label("restore") == 0)
+                            {
+                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
+                                script_end();
+                            }
+                        }
+                }
 
-    return kbd_blocked;
+                if (state_kbd_script_run) 
+                        process_script(); else
+                        gui_kbd_process();
+        } else
+        {
+                if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
+                    return 1;
+                }
+                if (conf.fast_ev && kbd_use_up_down_as_fast_ev()) {
+                    return 1;
+                }
+        }
+
+        return kbd_blocked;
 }
 
 static const struct Keynames {
