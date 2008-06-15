@@ -552,6 +552,7 @@ unsigned int drmode;
         
         if (kbd_is_key_pressed(conf.alt_mode_button))
         {
+                if (conf.ricoh_ca1_mode) conf.synch_enable=1;
                 key_pressed = 1;
                 kbd_key_release_all();          
                 return 1;
@@ -565,8 +566,6 @@ unsigned int drmode;
                         key_pressed = 100;
                         if (!state_kbd_script_run)
                         {
-                                script_console_clear();
-                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
                                 script_start(0);
                         } else if (state_kbd_script_run == 2)
                         {
@@ -587,6 +586,7 @@ unsigned int drmode;
                         process_script(); else
                         gui_kbd_process();
         } else
+        {
 
 #ifndef SCRIPTLESS_REMOTE_NOT_ENABLED
 if(conf.ricoh_ca1_mode)
@@ -1135,7 +1135,6 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 } // ricoh_ca1_mode
 #endif
 
-        {
                 if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
                     return 1;
                 }
