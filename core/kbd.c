@@ -547,6 +547,47 @@ unsigned int drmode;
                 return 1;
         }
        
+       // auto iso shift
+        if (kbd_is_key_pressed(KEY_SHOOT_HALF) && kbd_is_key_pressed(conf.alt_mode_button)) return 0;
+        
+        if (kbd_is_key_pressed(conf.alt_mode_button))
+        {
+                key_pressed = 1;
+                kbd_key_release_all();          
+                return 1;
+        }
+
+        // deals with the rest
+        if (kbd_blocked && nRmt==0)
+        {
+                if (kbd_is_key_pressed(KEY_SHOOT_FULL))
+                {
+                        key_pressed = 100;
+                        if (!state_kbd_script_run)
+                        {
+                                script_console_clear();
+                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
+                                script_start(0);
+                        } else if (state_kbd_script_run == 2)
+                        {
+                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
+                                script_end();
+                        } else
+                        {
+                            state_kbd_script_run = 2;
+                            if (jump_label("restore") == 0)
+                            {
+                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
+                                script_end();
+                            }
+                        }
+                }
+
+                if (state_kbd_script_run) 
+                        process_script(); else
+                        gui_kbd_process();
+        } else
+
 #ifndef SCRIPTLESS_REMOTE_NOT_ENABLED
 if(conf.ricoh_ca1_mode)
 {
@@ -1093,46 +1134,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 
 } // ricoh_ca1_mode
 #endif
-       // auto iso shift
-        if (kbd_is_key_pressed(KEY_SHOOT_HALF) && kbd_is_key_pressed(conf.alt_mode_button)) return 0;
-        
-        if (kbd_is_key_pressed(conf.alt_mode_button))
-        {
-                key_pressed = 1;
-                kbd_key_release_all();          
-                return 1;
-        }
 
-        // deals with the rest
-        if (kbd_blocked && nRmt==0)
-        {
-                if (kbd_is_key_pressed(KEY_SHOOT_FULL))
-                {
-                        key_pressed = 100;
-                        if (!state_kbd_script_run)
-                        {
-                                script_console_clear();
-                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
-                                script_start(0);
-                        } else if (state_kbd_script_run == 2)
-                        {
-                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
-                                script_end();
-                        } else
-                        {
-                            state_kbd_script_run = 2;
-                            if (jump_label("restore") == 0)
-                            {
-                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
-                                script_end();
-                            }
-                        }
-                }
-
-                if (state_kbd_script_run) 
-                        process_script(); else
-                        gui_kbd_process();
-        } else
         {
                 if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
                     return 1;
