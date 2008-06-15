@@ -289,6 +289,7 @@
     #define CAM_RAW_ROWPIX              2672   // for 5 MP
     #define CAM_RAW_ROWS                1968   // for 5 MP
 
+    #undef  CAM_SYNCH  
     #undef  CAM_USE_ZOOM_FOR_MF
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
@@ -298,7 +299,6 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
 	//#define CAM_CONSOLE_LOG_ENABLED     1
-    #define SCRIPTLESS_REMOTE_NOT_ENABLED
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus55_sd450)
