@@ -113,6 +113,7 @@ static const struct keyword_token keywords[] = {
   {"get_near_limit",          TOKENIZER_GET_NEAR_LIMIT},
   {"get_prop",                TOKENIZER_GET_PROP},
   {"get_raw_count",           TOKENIZER_GET_RAW_COUNT},
+  {"get_raw_nr",              TOKENIZER_GET_RAW_NR},
   {"get_sv96",	              TOKENIZER_GET_SV96},
   {"get_tick_count",          TOKENIZER_GET_TICK_COUNT},
   {"get_tv96",                TOKENIZER_GET_TV96},
