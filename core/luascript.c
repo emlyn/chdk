@@ -456,7 +456,7 @@ static int luaCB_set_autostart( lua_State* L )
 
 static int luaCB_get_usb_power( lua_State* L )
 {
-  lua_pushboolean( L, get_usb_power(0) );
+  lua_pushnumber( L, get_usb_power(0) );
   return 1;
 }
 
@@ -504,15 +504,15 @@ static int luaCB_get_flash_mode( lua_State* L )
   return 1;
 }
 
-static int luaCB_shooting( lua_State* L )
+static int luaCB_get_shooting( lua_State* L )
 {
-  lua_pushnumber( L, shooting_get_prop(PROPCASE_SHOOTING) );
+  lua_pushboolean( L, shooting_get_prop(PROPCASE_SHOOTING) );
   return 1;
 }
 
 static int luaCB_get_flash_ready( lua_State* L )
 {
-  lua_pushnumber( L, shooting_get_prop(PROPCASE_IS_FLASH_READY) );
+  lua_pushboolean( L, shooting_get_prop(PROPCASE_IS_FLASH_READY) );
   return 1;
 }
 
@@ -546,7 +546,7 @@ static int luaCB_get_nd_present( lua_State* L )
   #if CAM_HAS_ND_FILTER && CAM_HAS_IRIS_DIAPHRAGM
   to = 2;
   #endif
-  lua_pushboolean( L, to );
+  lua_pushnumber( L, to );
   return 1;
 }
 
@@ -690,7 +690,7 @@ void register_lua_funcs( lua_State* L )
   FUNC(get_zoom_steps);
   FUNC(get_drive_mode);
   FUNC(get_flash_mode);
-  FUNC(shooting);
+  FUNC(get_shooting);
   FUNC(get_flash_ready);
   FUNC(get_IS_mode);
   FUNC(set_ev);
