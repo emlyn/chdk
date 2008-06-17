@@ -9,8 +9,6 @@ volatile long *mmio1 = (void*)0xc0220204;
 volatile long *mmio2 = (void*)0xc0220208;
 volatile long *mmio3 = (void*)0xc022020C;
 
-#define DELAY_TIMEOUT 10000
-
 typedef struct {
 	long hackkey;
 	long canonkey;

@@ -2253,7 +2253,7 @@ void gui_draw_bench(int arg) {
 void gui_draw_splash() {
     coord w, h, x, y;
     static const char *text[] = {
-        "CHDK Firmware '" HDK_VERSION ", #" BUILD_NUMBER "'" , 
+        "CHDK Firmware '" HDK_VERSION " " BUILD_NUMBER "'" , 
         "Build: " __DATE__ " " __TIME__ ,
         "Camera: " PLATFORM " - " PLATFORMSUB };
     int i, l;

@@ -236,7 +236,7 @@ static void script_start( int autostart )
     delay_target_ticks = 0;
     kbd_int_stack_ptr = 0;
     kbd_last_clicked = 0;
-	if (!autostart) kbd_key_release_all();
+	/*if (!autostart)*/ kbd_key_release_all();
 
     script_console_clear();
     script_print_screen_init();
