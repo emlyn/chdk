@@ -157,7 +157,7 @@ static char* gui_lang_default = \
 "105 \"Are you SURE to reset\\noptions to default?\"\n"
 
 "106 \"*** Build Info ***\"\n"
-"107 \"CHDK Ver: %s, #%s\\nDate:    %s\\nTime:    %s\\nCamera:  %s\\nFW Vers: %s\"\n"
+"107 \"CHDK Ver: %s %s\\nDate:    %s\\nTime:    %s\\nCamera:  %s\\nFW Vers: %s\"\n"
 
 "108 \"*** Memory Info ***\"\n"
 "109 \"Free memory: %d bytes\"\n"

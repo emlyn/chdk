@@ -243,7 +243,8 @@ int gui_osd_draw_zebra() {
     color cl_under=conf.zebra_color>>8, cl_over=conf.zebra_color&0xFF;
     static int need_restore=0;
     int viewport_height;
- int m = ((mode_get()&MODE_MASK) == MODE_REC);
+    int m = ((mode_get()&MODE_MASK) == MODE_REC);
+    int zebra_drawn=0;
     color cls[] = {
         COLOR_TRANSPARENT,
         (m)?0xDF:0xCC,
@@ -286,20 +287,7 @@ int gui_osd_draw_zebra() {
                 f = timer&4; 
                 break;
         }
-        if (!f) {
-            if (need_restore) {
-                if (conf.zebra_restore_screen || conf.zebra_restore_osd) {
-                    draw_restore();
-                } else {
-                    memset(buf, COLOR_TRANSPARENT, screen_buffer_size);
-                    gui_osd_draw_zebra_osd();
-                    memcpy(scr_buf, buf, screen_buffer_size);
-                    memcpy(scr_buf+screen_buffer_size, buf, screen_buffer_size);
-                }
-                need_restore=0;
-            }
-            return !(conf.zebra_restore_screen && conf.zebra_restore_osd);
-        } else {
+        if (f) {
             int step_x, step_v;
             over = 255-conf.zebra_over;
                 if (conf.zebra_multichannel) {step_x=2; step_v=6;} else {step_x=1; step_v=3;}
@@ -321,6 +309,7 @@ int gui_osd_draw_zebra() {
                          }
                         else if (((conf.zebra_mode == ZEBRA_MODE_ZEBRA_1 || conf.zebra_mode == ZEBRA_MODE_ZEBRA_2) && (y-x-timer)&f)) buf[s]=COLOR_TRANSPARENT;
                              else buf[s]=(yy>over)?cl_over:(yy<conf.zebra_under)?cl_under:COLOR_TRANSPARENT;
+                        if (buf[s] != COLOR_TRANSPARENT && !zebra_drawn) zebra_drawn = 1;
                     }
                     s+=screen_buffer_width-screen_width;
                     if (y*screen_height/viewport_height == (s+screen_buffer_width)/screen_buffer_width) {
@@ -328,6 +317,22 @@ int gui_osd_draw_zebra() {
                         s+=screen_buffer_width;
                     }
                 }
+            if (!zebra_drawn) f=0;
+        }
+        if (!f) {
+            if (need_restore) {
+                if (conf.zebra_restore_screen || conf.zebra_restore_osd) {
+                    draw_restore();
+                } else {
+                    memset(buf, COLOR_TRANSPARENT, screen_buffer_size);
+                    gui_osd_draw_zebra_osd();
+                    memcpy(scr_buf, buf, screen_buffer_size);
+                    memcpy(scr_buf+screen_buffer_size, buf, screen_buffer_size);
+                }
+                need_restore=0;
+            }
+            return !(conf.zebra_restore_screen && conf.zebra_restore_osd);
+        } else {
             
             
             gui_osd_draw_zebra_osd();

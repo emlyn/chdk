@@ -152,12 +152,12 @@ static void script_scan(const char *fn, int update_vars) {
     for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
         if (script_params[i][0]) break;
     }
-    if (i==SCRIPT_NUM_PARAMS) { // there was no @param in script
+    /*if (i==SCRIPT_NUM_PARAMS) { // there was no @param in script
         for (i=0; i<3; ++i) {
             strcpy(script_params[i], "Var. ? value");
             script_params[i][5]='a'+i;
         }
-    }
+    }*/
 }
 
 //-------------------------------------------------------------------
