@@ -420,10 +420,13 @@ static char* gui_lang_default = \
 "333 \"Cursor Background Color\"\n"
 "334 \"Center Menu\"\n"
 "335 \"Mute during zooming\"\n"
+
 "336 \"Bad pixel removal\"\n"
 "337 \"Off\"\n"
 "338 \"Averag.\"\n"
 "339 \"RAWconv\"\n"
+
+"340 \"AF key\"\n"
 ;
 
 //-------------------------------------------------------------------

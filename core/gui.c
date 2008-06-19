@@ -162,6 +162,7 @@ static const char* gui_space_bar_size_enum(int change, int arg);
 static const char* gui_space_bar_width_enum(int change, int arg);
 static const char* gui_space_warn_type_enum(int change, int arg);
 static const char* gui_bad_pixel_enum(int change, int arg);
+static const char* gui_video_af_key_enum(int change, int arg);
 
 void rinit();
 
@@ -375,7 +376,9 @@ static CMenuItem video_submenu_items[] = {
 #if CAM_CAN_MUTE_MICROPHONE
       {LANG_MENU_MUTE_ON_ZOOM,   MENUITEM_BOOL,  &conf.mute_on_zoom},
 #endif
-
+#if CAM_AF_SCAN_DURING_VIDEO_RECORD
+      {LANG_MENU_VIDEO_AF_KEY,   MENUITEM_ENUM,    (int*)gui_video_af_key_enum},
+#endif
       {LANG_MENU_BACK,                    MENUITEM_UP },
       {0}
 };
@@ -1297,6 +1300,26 @@ const char* gui_user_menu_show_enum(int change, int arg) {
     return modes[conf.user_menu_enable];
 }
 
+const char* gui_video_af_key_enum(int change, int arg){
+    static const char* names[]={ "", "Shutter", "Set"};
+    static const int keys[]={0, KEY_SHOOT_HALF, KEY_SET };
+    int i;
+
+    for (i=0; i<sizeof(names)/sizeof(names[0]); ++i) {
+        if (conf.video_af_key==keys[i]) {
+            break;
+        }
+    }
+
+    i+=change;
+    if (i<0)
+        i=(sizeof(names)/sizeof(names[0]))-1;
+    else if (i>=(sizeof(names)/sizeof(names[0])))
+        i=0;
+
+    conf.video_af_key = keys[i];
+    return names[i];
+}
 
 const char* gui_bad_pixel_enum(int change, int arg) {
     int modes[]={LANG_MENU_BAD_PIXEL_OFF, LANG_MENU_BAD_PIXEL_INTERPOLATION, LANG_MENU_BAD_PIXEL_RAW_CONVERTER};
@@ -1741,6 +1764,18 @@ void gui_kbd_leave()
     enable_shutdown();
     gui_mode = GUI_MODE_NONE;
 }
+//-------------------------------------------------------------------
+
+void other_kbd_process(){
+#if CAM_AF_SCAN_DURING_VIDEO_RECORD
+  
+ if (movie_status==VIDEO_RECORD_IN_PROGRESS) {
+  if (kbd_is_key_clicked(conf.video_af_key)) MakeAFScan();
+ }
+
+#endif
+}
+
 
 //-------------------------------------------------------------------
 extern long physw_status[3];

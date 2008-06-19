@@ -177,4 +177,11 @@ void _TurnOffMic(void);
 void _TurnOnMic(void);
 
 
+extern void _MakeAFScan(int*, int);
+extern void _ExpCtrlTool_StartContiAE(void);
+extern void _ExpCtrlTool_StopContiAE(void);
+
+extern int some_flag_for_af_scan;
+extern int parameter_for_af_scan;
+
 #endif

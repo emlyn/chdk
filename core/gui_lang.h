@@ -436,9 +436,11 @@
 #define LANG_MENU_BAD_PIXEL_OFF 337
 #define LANG_MENU_BAD_PIXEL_INTERPOLATION 338
 #define LANG_MENU_BAD_PIXEL_RAW_CONVERTER 339
+
+#define LANG_MENU_VIDEO_AF_KEY  340
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  339
+#define GUI_LANG_ITEMS                  340
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

@@ -16,3 +16,7 @@ DEF(FlashParamsTable,0xFFD5AF48)
 
 DEF(lcd_brightness,0xC0910080) 
 DEF(lcd_brightness_saved,0x63570) 
+
+DEF(movie_status, 0x64794)  
+DEF(some_flag_for_af_scan, 0x64DD0)
+DEF(parameter_for_af_scan, 0x64DC8)

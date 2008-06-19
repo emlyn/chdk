@@ -26,3 +26,6 @@ NHSTUB(SetZoomActuatorSpeedPercent, 0xFFC19688)  //null stub
 //NHSTUB(PutOutNdFilter, 0xFFE78458)
 NHSTUB(TurnOffMic, 0xffc1ec58)
 NHSTUB(TurnOnMic, 0xffc1ec10)
+NHSTUB(ExpCtrlTool_StopContiAE,  0xFFCE0A10) 
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFFCE09F8) 
+NHSTUB(MakeAFScan,  0xFFD384E4) 

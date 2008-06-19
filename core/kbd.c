@@ -399,6 +399,8 @@ long kbd_process()
 	if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
 	    return 1;
 	}
+
+	other_kbd_process(); // processed other keys in not <alt> mode
     }
 
     return kbd_blocked;

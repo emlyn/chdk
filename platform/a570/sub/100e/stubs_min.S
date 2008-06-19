@@ -10,3 +10,6 @@ DEF(FlashParamsTable,0xFFEE8478)
 DEF(canon_menu_active,0x2F38)
 DEF(canon_shoot_menu_active,0x27B1)
 DEF(recreview_hold, 0x2584)
+
+DEF(movie_status, 0xA30C8)  
+DEF(some_flag_for_af_scan, 0xC2F8)

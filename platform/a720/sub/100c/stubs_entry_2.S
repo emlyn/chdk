@@ -111,6 +111,12 @@ NHSTUB(PostLEDMessage, 0xFFC366B8)
 NHSTUB(TurnOnMic, 0xFFC376CC)
 NHSTUB(TurnOffMic, 0xFFC376F8)
 
+//NHSTUB(ExpCtrlTool_StopContiAE,  0xFFC8DA00) 
+//NHSTUB(ExpCtrlTool_StartContiAE, 0xFFC8D9C4) 
+NHSTUB(ExpCtrlTool_StopContiAE,  0xFFC00958) // null stub
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFFC00958) // null stub
+NHSTUB(MakeAFScan,  0xFFDD4AA4) 
+
 
 // dryos Test
 NHSTUB(NewTaskShell, 0xFFC596B0)  // starts new shell on Console. GUI output?
