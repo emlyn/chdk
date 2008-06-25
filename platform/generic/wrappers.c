@@ -562,6 +562,6 @@ void MakeAFScan(void){
 #endif
  _MakeAFScan(&a, 3);
  some_flag_for_af_scan=save;
- _ExpCtrlTool_StartContiAE();
+ _ExpCtrlTool_StartContiAE(0,0);
 }
 #endif

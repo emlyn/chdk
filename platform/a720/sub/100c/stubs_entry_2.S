@@ -111,10 +111,8 @@ NHSTUB(PostLEDMessage, 0xFFC366B8)
 NHSTUB(TurnOnMic, 0xFFC376CC)
 NHSTUB(TurnOffMic, 0xFFC376F8)
 
-//NHSTUB(ExpCtrlTool_StopContiAE,  0xFFC8DA00) 
-//NHSTUB(ExpCtrlTool_StartContiAE, 0xFFC8D9C4) 
-NHSTUB(ExpCtrlTool_StopContiAE,  0xFFC00958) // null stub
-NHSTUB(ExpCtrlTool_StartContiAE, 0xFFC00958) // null stub
+NHSTUB(ExpCtrlTool_StopContiAE,  0xFFC23A2C) 
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFFC23930) 
 NHSTUB(MakeAFScan,  0xFFDD4AA4) 
 
 
