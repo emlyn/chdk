@@ -79,7 +79,16 @@ ROM:FFB1975C                                         ; "VRAM Size     : 0x%x\r"
 
 void *vid_get_viewport_live_fb()
 {
-    return (void*)0; // 0x106571F0 + 0x7E900
+//    return (void*)0; // 0x106571F0 + 0x7E900
+    void **fb=(void **)0x5564;
+    unsigned char buff = *((unsigned char*)0x5574);
+    if (buff == 0) {
+        buff = 2;
+    }
+    else {
+        buff--;
+    }
+    return fb[buff];
 }
 
 /***********

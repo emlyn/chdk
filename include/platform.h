@@ -142,6 +142,11 @@ MODE_VIDEO_MANUAL       ,
 #define KBD_REPEAT_DELAY  140
 #define KBD_INITIAL_DELAY 300
 
+// Video recording current status constants, see movie_status variable  
+#define VIDEO_RECORD_NEVER_STARTED 0  
+#define VIDEO_RECORD_STOPPED 1  
+#define VIDEO_RECORD_IN_PROGRESS 4
+
 typedef struct {
     short id; // hacks id
     short prop_id; // Canons id
@@ -450,7 +455,7 @@ extern int canon_menu_active;
 extern char canon_shoot_menu_active;  
 extern int recreview_hold;
 
-extern int movie_state;
+extern int movie_status;
 unsigned int GetFreeCardSpaceKb(void);
 unsigned int GetTotalCardSpaceKb(void);
 
@@ -461,6 +466,9 @@ extern char * camera_jpeg_count_str();
 
 unsigned int GetJpgCount(void);
 unsigned int GetRawCount(void);
+
+void MakeAFScan(void); 
+extern int movie_status; 
 
 void wait_until_remote_button_is_released(void);
 

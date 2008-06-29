@@ -482,7 +482,7 @@ static int luaCB_print_screen( lua_State* L )
 
 static int luaCB_get_moviestate( lua_State* L )
 {
-  lua_pushnumber( L, movie_state );
+  lua_pushnumber( L, movie_status );
   return 1;
 }
 

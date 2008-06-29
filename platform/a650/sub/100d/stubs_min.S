@@ -14,4 +14,6 @@ DEF(canon_menu_active,0xEE9C)  // 0xEE98+4
 DEF(canon_shoot_menu_active,0xE6CD) 
 
 DEF(recreview_hold, 0xE480)
-DEF (movie_state,0x5518+0x38)
+
+DEF(movie_status, 0x5550)    // 0x5518 + 0x38
+DEF(some_flag_for_af_scan, 0x11040)

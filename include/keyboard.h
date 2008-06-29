@@ -28,6 +28,7 @@
 extern void gui_kbd_process();
 extern void gui_kbd_enter();
 extern void gui_kbd_leave();
+extern void other_kbd_process();
 
 #endif
 

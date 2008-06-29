@@ -26,3 +26,6 @@ NHSTUB(GetDrive_FreeClusters, 0xFFE21A04)
 NHSTUB(TurnOffMic, 0xffdcc210)
 NHSTUB(TurnOnMic, 0xffdcc1d4)
 
+NHSTUB(ExpCtrlTool_StopContiAE,  0xFFD0A714) 
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFFD0A6E4) 
+NHSTUB(MakeAFScan,               0xFFE708D4) 

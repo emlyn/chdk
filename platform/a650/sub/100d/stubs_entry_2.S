@@ -93,6 +93,10 @@ NHSTUB(ints_enable                            ,0xFFC005A0)
 NHSTUB(TurnOnMic, 0xFFC38288)
 NHSTUB(TurnOffMic, 0xFFC382B4)
 
+NHSTUB(ExpCtrlTool_StopContiAE,  0xFFC24410) 
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFFC24250) 
+NHSTUB(MakeAFScan,  0xFFDE3A8C) 
+
 
 // null stubs
 

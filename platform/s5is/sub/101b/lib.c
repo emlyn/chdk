@@ -39,7 +39,16 @@ void *vid_get_viewport_live_fb()
 	// Deprecated, still exists for historical reasons.
 	// Should return null pointer.
 	
-	return (void*)0x0;
+//	return (void*)0x0;
+    void **fb=(void **)0x7E900;
+    unsigned char buff = *((unsigned char*)0x218C);
+    if (buff == 0) {
+        buff = 2;
+    }
+    else {
+        buff--;
+    }
+    return fb[buff];
 }
 
 void *vid_get_bitmap_fb()

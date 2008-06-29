@@ -656,7 +656,7 @@ void gui_osd_draw_raw_info()
     int x;
     static int b;
 
-    if (!((movie_state > 1) && conf.save_raw_in_video   ))
+    if (!((movie_status > 1) && conf.save_raw_in_video   ))
     { 
     if (conf.show_remaining_raw) 
         {
@@ -903,7 +903,7 @@ static unsigned int skipcalls = 1;
 unsigned int hour=0, min=0, sec=0;
  
 
-    if (movie_state > 1) record_running = 1;
+    if (movie_status > 1) record_running = 1;
     else 
     {record_running = 0;
     init = 0;

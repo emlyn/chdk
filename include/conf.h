@@ -214,7 +214,8 @@ typedef struct {
     int unlock_optical_zoom_for_video;
     int mute_on_zoom;
     int bad_pixel_removal;
-
+    int video_af_key;
+    
     char curve_file[100];
     int curve_enable;
     

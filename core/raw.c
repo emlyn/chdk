@@ -55,7 +55,7 @@ int raw_savefile() {
     
     state_shooting_progress = SHOOTING_PROGRESS_PROCESSING;
 
-     if (conf.save_raw && (!((movie_state > 1) && conf.save_raw_in_video   ))) {
+     if (conf.save_raw && (!((movie_status > 1) && conf.save_raw_in_video   ))) {
         long v;
         
         started();

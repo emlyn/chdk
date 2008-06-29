@@ -249,7 +249,7 @@ case TOKENIZER_IS_PRESSED:
    break;
   case TOKENIZER_GET_MOVIESTATE:
     accept(TOKENIZER_GET_MOVIESTATE);
-    r = movie_state;
+    r = movie_status;
    break;
   case TOKENIZER_GET_DRIVE_MODE:
     accept(TOKENIZER_GET_DRIVE_MODE);

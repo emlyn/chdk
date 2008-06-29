@@ -1141,6 +1141,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
                 if (conf.fast_ev && kbd_use_up_down_as_fast_ev()) {
                     return 1;
                 }
+                other_kbd_process(); // processed other keys in not <alt> mode 
         }
 
         return kbd_blocked;
@@ -1187,7 +1188,7 @@ int keyid_by_name (const char *n)
 long kbd_use_up_down_as_fast_ev() {
     static long key_pressed = 0;
 if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_pressed = 0;
-    if (kbd_is_key_pressed(KEY_UP) && (mode_get()&MODE_MASK) == MODE_REC &&  ((mode_get()&MODE_SHOOTING_MASK) != MODE_M) &&  ((mode_get()&MODE_SHOOTING_MASK) != MODE_VIDEO_STD) && movie_state<4 && (canon_shoot_menu_active==0)) {
+    if (kbd_is_key_pressed(KEY_UP) && (mode_get()&MODE_MASK) == MODE_REC &&  ((mode_get()&MODE_SHOOTING_MASK) != MODE_M) &&  ((mode_get()&MODE_SHOOTING_MASK) != MODE_VIDEO_STD) && movie_status<4 && (canon_shoot_menu_active==0)) {
 
         if (conf.fast_ev && key_pressed == 0) {
 #if !CAM_DRYOS  
@@ -1202,7 +1203,7 @@ if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_presse
         }
 
     } 
-    if (kbd_is_key_pressed(KEY_DOWN) && (mode_get()&MODE_MASK) == MODE_REC &&  ((mode_get()&MODE_SHOOTING_MASK) != MODE_M) && ((mode_get()&MODE_SHOOTING_MASK) != MODE_VIDEO_STD) && movie_state<4 && (canon_shoot_menu_active==0)) {
+    if (kbd_is_key_pressed(KEY_DOWN) && (mode_get()&MODE_MASK) == MODE_REC &&  ((mode_get()&MODE_SHOOTING_MASK) != MODE_M) && ((mode_get()&MODE_SHOOTING_MASK) != MODE_VIDEO_STD) && movie_status<4 && (canon_shoot_menu_active==0)) {
 
             
         if (conf.fast_ev && key_pressed == 0) {

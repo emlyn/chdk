@@ -17,4 +17,6 @@ NHSTUB(GetDrive_FreeClusters, 0xFFE46430)
 NHSTUB(WriteSDCard, 0xFFE58F60)
 NHSTUB(TurnOffMic, 0xffde85bc)
 NHSTUB(TurnOnMic, 0xffde8580)
-
+NHSTUB(ExpCtrlTool_StopContiAE,  0xFFD1ED80) 
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFFD1ED50) 
+NHSTUB(MakeAFScan,               0xFFEAA2A4) 

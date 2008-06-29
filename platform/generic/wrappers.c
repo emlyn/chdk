@@ -548,3 +548,20 @@ int mute_on_zoom(int x){
  return x; // preserve R0 if called from assembler
 }
 #endif
+
+
+
+#if CAM_AF_SCAN_DURING_VIDEO_RECORD
+void MakeAFScan(void){
+ int a=0, save;
+ if (zoom_busy || focus_busy) return;
+ save=some_flag_for_af_scan;
+ some_flag_for_af_scan=0;
+#if CAM_AF_SCAN_DURING_VIDEO_RECORD == 2
+ parameter_for_af_scan=3;
+#endif
+ _MakeAFScan(&a, 3);
+ some_flag_for_af_scan=save;
+ _ExpCtrlTool_StartContiAE(0,0);
+}
+#endif

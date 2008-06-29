@@ -64,7 +64,7 @@ char *camera_jpeg_count_str()
 {
 	return (char*)0x58304;
 }
-int movie_state = 0;
+int movie_status = 0;
 
 
 

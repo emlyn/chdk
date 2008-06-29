@@ -482,9 +482,11 @@
 #define LANG_MENU_SYNCH_DELAY_ENABLE        379
 #define LANG_MENU_SYNCH_DELAY_VALUE         380
 #define LANG_MENU_SYNCH_DELAY_COARSE_VALUE  381
+
+#define LANG_MENU_VIDEO_AF_KEY  382
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  381
+#define GUI_LANG_ITEMS                  382
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

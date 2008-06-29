@@ -60,7 +60,6 @@ char *camera_jpeg_count_str()
 {
     return (char*)0x12988;
 }
-int movie_state = 0;
  
 long vid_get_bitmap_buffer_width() { return 480; }
 

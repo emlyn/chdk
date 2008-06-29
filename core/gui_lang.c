@@ -497,6 +497,8 @@ static char* gui_lang_default = \
 "379 \"Enable Synch Delay\"\n"
 "380 \"Synch Delay 0.1ms\"\n"
 "381 \"Synch Delay 0.1s\"\n"
+
+"382 \"AF key\"\n"
 ;
 
 //-------------------------------------------------------------------
