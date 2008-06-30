@@ -499,6 +499,8 @@ static char* gui_lang_default = \
 "381 \"Synch Delay 0.1s\"\n"
 
 "382 \"AF key\"\n"
+"383 \"Load default param values\"\n"
+"384 \"Parameters set\"\n"
 ;
 
 //-------------------------------------------------------------------

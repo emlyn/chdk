@@ -228,6 +228,8 @@ typedef struct {
     int synch_delay_enable;
     int synch_delay_value;
     int synch_delay_coarse_value;
+
+    int script_param_set;
 } Conf;
 
 extern Conf conf;

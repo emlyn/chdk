@@ -236,10 +236,12 @@ static void script_start( int autostart )
     delay_target_ticks = 0;
     kbd_int_stack_ptr = 0;
     kbd_last_clicked = 0;
-	/*if (!autostart)*/ kbd_key_release_all();
+    /*if (!autostart)*/ kbd_key_release_all();
 
     script_console_clear();
     script_print_screen_init();
+
+    save_params_values(0);
 
     if( autostart )
       script_console_add_line("***Autostart***");
@@ -249,16 +251,16 @@ static void script_start( int autostart )
     if( is_lua() ) {
       
       if( !lua_script_start(state_ubasic_script) ) {
-	script_print_screen_end();
-	return;
+    script_print_screen_end();
+    return;
       }
       for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
-	if( script_params[i][0] ) {
-	  char var = 'a'+i;
-	  lua_pushlstring( L, &var, 1 );
-	  lua_pushnumber( L, conf.ubasic_vars[i] );
-	  lua_settable( L, LUA_GLOBALSINDEX );
-	}
+    if( script_params[i][0] ) {
+    char var = 'a'+i;
+    lua_pushlstring( L, &var, 1 );
+    lua_pushnumber( L, conf.ubasic_vars[i] );
+    lua_settable( L, LUA_GLOBALSINDEX );
+    }
       }
     }
     else {

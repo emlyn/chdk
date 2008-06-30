@@ -335,7 +335,7 @@ static char sbuf[7];
                             if (curr_menu->on_change) {
                                 curr_menu->on_change(gui_menu_curr_item);
                             }
-                            gui_menu_set_curr_menu(curr_menu, 0, 0);
+                            //gui_menu_set_curr_menu(curr_menu, 0, 0); // restore this if it causes problems
                             gui_menu_redraw=2;
                         }
                         break;
@@ -627,6 +627,7 @@ void gui_menu_draw() {
         }
     }
 }
+
 
 
 

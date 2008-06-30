@@ -484,9 +484,11 @@
 #define LANG_MENU_SYNCH_DELAY_COARSE_VALUE  381
 
 #define LANG_MENU_VIDEO_AF_KEY  382
+#define LANG_MENU_SCRIPT_DEFAULT_VAL  383
+#define LANG_MENU_SCRIPT_PARAM_SET    384
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  382
+#define GUI_LANG_ITEMS                  384
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

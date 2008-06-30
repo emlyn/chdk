@@ -98,6 +98,7 @@ void core_spytask()
     mkdir("A/CHDK/BOOKS");
     mkdir("A/CHDK/GRIDS");
     mkdir("A/CHDK/CURVES");
+    mkdir("A/CHDK/DATA");
     auto_started = 0;
     
     clear_values();
@@ -133,6 +134,7 @@ void core_spytask()
 	msleep(20);
     }
 }
+
 
 
 

@@ -330,6 +330,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(191, conf.synch_delay_enable,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(192, conf.synch_delay_value,      CONF_DEF_VALUE, i:100, NULL),
     CONF_INFO(193, conf.synch_delay_coarse_value, CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(194, conf.script_param_set,       CONF_DEF_VALUE, i:0, NULL),
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 
@@ -352,7 +353,7 @@ static void conf_change_font_cp() {
 }
 
 static void conf_change_script_file() {
-    script_load(conf.script_file);
+    script_load(conf.script_file, 1);
 }
 
 static void conf_change_menu_rbf_file() {

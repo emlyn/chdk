@@ -35,7 +35,7 @@
 
 #define OPTIONS_AUTOSAVE
 #define SPLASH_TIME               20
-
+int script_params_has_changed=0;
 //shortcuts
 //------------------------------------------------------------------
 // #define KEY_NONE (KEY_DUMMY+1)
@@ -104,6 +104,7 @@ static void gui_draw_bench(int arg);
 static void gui_draw_fselect(int arg);
 static void gui_draw_osd_le(int arg);
 static void gui_load_script(int arg);
+static void gui_load_script_default(int arg);
 static void gui_draw_read(int arg);
 static void gui_draw_read_last(int arg);
 static void gui_draw_load_menu_rbf(int arg);
@@ -173,6 +174,7 @@ static const char* gui_bad_pixel_enum(int change, int arg);
 static const char* gui_video_af_key_enum(int change, int arg);
 static const char* gui_show_movie_time(int change, int arg);
 static const char* gui_script_autostart_enum(int change, int arg);
+static const char* gui_script_param_set_enum(int change, int arg);
 static const char* gui_override_disable_enum(int change, int arg);
 void rinit();
 
@@ -199,9 +201,12 @@ static CMenuItem script_submenu_items_top[] = {
 #if CAM_REMOTE
 	{0x71,LANG_MENU_SCRIPT_REMOTE_ENABLE,	MENUITEM_BOOL,						&conf.remote_enable},
 #endif
-    {0x0,LANG_MENU_SCRIPT_CURRENT,          MENUITEM_SEPARATOR },
-    {0x0,(int)script_title,                 MENUITEM_TEXT },
-    {0x0,LANG_MENU_SCRIPT_PARAMS,           MENUITEM_SEPARATOR }
+    {0x5d,LANG_MENU_SCRIPT_DEFAULT_VAL,     MENUITEM_PROC,                      (int*)gui_load_script_default },
+    {0x5e,LANG_MENU_SCRIPT_PARAM_SET,     MENUITEM_ENUM,                         (int*)gui_script_param_set_enum },
+    {0x0,(int)script_title,                 MENUITEM_SEPARATOR },
+//    {0x0,LANG_MENU_SCRIPT_CURRENT,          MENUITEM_SEPARATOR },
+//    {0x0,(int)script_title,                 MENUITEM_TEXT },
+//    {0x0,LANG_MENU_SCRIPT_PARAMS,           MENUITEM_SEPARATOR }
 };
 
 static CMenuItem script_submenu_items_bottom[] = {
@@ -745,6 +750,26 @@ const char* gui_script_autostart_enum(int change, int arg) {
 
     return modes[conf.script_startup];
 }
+
+//-------------------------------------------------------------------
+const char* gui_script_param_set_enum(int change, int arg) {
+    static const char* modes[]={ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
+	if (change != 0)
+	{
+        save_params_values(0);
+        
+		conf.script_param_set += change;
+		if (conf.script_param_set < 0) conf.script_param_set = (sizeof(modes)/sizeof(modes[0]))-1; else
+		if (conf.script_param_set >= (sizeof(modes)/sizeof(modes[0]))) conf.script_param_set=0;
+
+		if (!load_params_values(conf.script_file, 1, 0)) script_load(conf.script_file, 0);
+		gui_update_script_submenu();
+	}
+
+    return modes[conf.script_param_set];
+}
+
 
 //-------------------------------------------------------------------
 const char* gui_override_disable_enum(int change, int arg) {
@@ -2318,7 +2343,7 @@ void gui_draw_fselect(int arg) {
 //-------------------------------------------------------------------
 static void gui_load_script_selected(const char *fn) {
     if (fn)
-        script_load(fn);
+        script_load(fn, 1);
 }
 void gui_load_script(int arg) {
     DIR   *d;
@@ -2334,6 +2359,12 @@ void gui_load_script(int arg) {
 
     gui_fselect_init(LANG_STR_SELECT_SCRIPT_FILE, path, gui_load_script_selected);
 }
+
+void gui_load_script_default(int arg) {
+	script_load(conf.script_file, 0);
+    save_params_values(1);
+}
+
 
 //-------------------------------------------------------------------
 static void gui_grid_lines_load_selected(const char *fn) {
