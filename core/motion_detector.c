@@ -379,7 +379,8 @@ int md_detect_motion(void){
 	 img = vid_get_viewport_live_fb();
 		if(img==NULL){
 			img = vid_get_viewport_fb();
-#ifdef (CAMERA_s5is)
+        }
+#if defined (CAMERA_s5is)
 long bufoff = *((long *) 0x218C);
 if(bufoff == 0) {
     bufoff = 2;
@@ -388,7 +389,6 @@ if(bufoff == 0) {
 }
 img += bufoff * 0x7E900;
 #endif
-        }
 
 
 	if(motion_detector.comp_calls_cnt==50 && (motion_detector.parameters & MD_MAKE_RAM_DUMP_FILE) != 0 ){
