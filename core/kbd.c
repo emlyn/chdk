@@ -569,7 +569,7 @@ unsigned int drmode;
                         if (!state_kbd_script_run)
                         {
                                 script_start(0);
-                        } else if (state_kbd_script_run == 2)
+                        } else if (L || state_kbd_script_run == 2)
                         {
                                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
                                 script_end();
