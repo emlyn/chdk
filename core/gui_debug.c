@@ -74,9 +74,9 @@ void gui_debug_draw() {
             draw_txt_string(2, 11, "DOUBLE :", MAKE_COLOR(SCREEN_COLOR, COLOR_WHITE));
             draw_txt_string(2, 12, "STRING :", MAKE_COLOR(SCREEN_COLOR, COLOR_WHITE));
 
-            debug_to_draw = 2;
+            debug_to_draw = 0;
             break;
-        case 2:
+        default:
             sprintf(buf, "0x%08X", addr);
             draw_txt_string(10, 0, buf, MAKE_COLOR(COLOR_BLACK, COLOR_WHITE));
             sprintf(buf, "0x%08X", step);
@@ -84,9 +84,6 @@ void gui_debug_draw() {
             gui_debug_draw_values(2, addr);
             gui_debug_draw_values(8, *((void**)addr));
 
-            debug_to_draw = 0;
-            break;
-        default:
             debug_to_draw = 0;
             break;
     }
@@ -101,11 +98,9 @@ void gui_debug_kbd_process() {
         break;
     case KEY_LEFT:
         addr-=step;
-        debug_to_draw = 2;
         break;
     case KEY_RIGHT:
         addr+=step;
-        debug_to_draw = 2;
         break;
     case KEY_DISPLAY:
         switch (step) {
@@ -113,7 +108,6 @@ void gui_debug_kbd_process() {
             case 0x10000000: step = 0x00000004; break;
             default: step<<=4; break;
         }
-        debug_to_draw = 2;
         break;
     }
 }
