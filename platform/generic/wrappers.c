@@ -294,7 +294,7 @@ void *localtime(const unsigned long *_tod) {
 #if !CAM_DRYOS
     return _localtime(_tod);
 #else
-#warning  A650, A720 do something with this!  - sizeof(x[]) must be >= sizeof(struct tm) :  'static int x[9];'
+// for DRYOS cameras do something with this!  - sizeof(x[]) must be >= sizeof(struct tm) :  'static int x[9];'
   static int x[9];
   return _LocalTime(_tod, &x);   
 #endif
@@ -356,7 +356,7 @@ void* readdir(void *d) {
 # if !CAM_DRYOS
     return _readdir(d);
 #else
-#warning  A650, A720  do something with this!  - sizeof(de[]) must be >= sizeof(struct dirent): 'static char de[40];'
+// for DRYOS cameras  A650, A720  do something with this!  - sizeof(de[]) must be >= sizeof(struct dirent): 'static char de[40];'
   static char de[40];
   _ReadFastDir(d, &de);
   return de[0]? &de : (void*)0;

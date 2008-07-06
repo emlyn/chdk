@@ -16,3 +16,6 @@ DEF(canon_shoot_menu_active,0x27FD)	// after "DSITask.c", LDR R5, =0x2800; then
 					// 0x2800-4+1=0x27FD (quietschi's prescription, SD1000)
 DEF(recreview_hold, 0x25E0)		// after "AR:Snd:0x%04x", LDR R3, =0x25E4; then
 					// 0x25E4-4=0x25E0 (quietschi's prescription, SD1000)
+
+DEF(zoom_status, 0x26B4)
+DEF(movie_status, 0xA8640)

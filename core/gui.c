@@ -1767,6 +1767,7 @@ void gui_kbd_leave()
 //-------------------------------------------------------------------
 
 void other_kbd_process(){
+ int key;
 #if CAM_AF_SCAN_DURING_VIDEO_RECORD
   
  if (movie_status==VIDEO_RECORD_IN_PROGRESS) {
@@ -1774,6 +1775,24 @@ void other_kbd_process(){
  }
 
 #endif
+
+#if CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+
+#if CAM_HAS_ZOOM_LEVER
+   key=KEY_ZOOM_OUT;
+#else
+   key=KEY_DOWN;
+#endif
+    if ((movie_status==VIDEO_RECORD_IN_PROGRESS) &&  kbd_is_key_clicked(key)){
+     short x;
+     get_property_case(PROPCASE_DIGITAL_ZOOM_STATE, &x, sizeof(x));
+     if (x) {
+      get_property_case(PROPCASE_DIGITAL_ZOOM_POSITION, &x, sizeof(x));
+      if (x==0) zoom_status=ZOOM_OPTICAL_MEDIUM;
+     }
+    }
+#endif
+
 }
 
 
