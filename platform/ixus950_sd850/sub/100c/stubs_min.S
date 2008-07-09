@@ -19,3 +19,4 @@ DEF(recreview_hold, 0x25E0)		// after "AR:Snd:0x%04x", LDR R3, =0x25E4; then
 
 DEF(zoom_status, 0x26B4)
 DEF(movie_status, 0xA8640)
+DEF(some_flag_for_af_scan, 0xED58)

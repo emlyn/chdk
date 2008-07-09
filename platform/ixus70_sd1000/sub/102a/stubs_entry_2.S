@@ -24,4 +24,7 @@ NHSTUB(SetZoomActuatorSpeedPercent, 0xFF9AD778) //null stub
 NHSTUB(GetDrive_ClusterSize, 0xFFA997F4)
 NHSTUB(GetDrive_TotalClusters, 0xFFA99830)
 NHSTUB(GetDrive_FreeClusters, 0xFFA9986C)
+NHSTUB(ExpCtrlTool_StopContiAE,  0xFF96556C) 
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFF96553C) 
+NHSTUB(MakeAFScan,  0xFFB000D0) 
 

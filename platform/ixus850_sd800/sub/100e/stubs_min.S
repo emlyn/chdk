@@ -224,3 +224,4 @@ DEF(recreview_hold, 0x7CF0) // (0x7CF4 - 0x4) found in "AR:Snd:0x%04x", LDR R3, 
 
 DEF(zoom_status, 0x7DB0)
 DEF(movie_status, 0x8BC00)
+DEF(some_flag_for_af_scan, 0x6AE0)

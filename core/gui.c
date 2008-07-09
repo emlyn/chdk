@@ -1777,13 +1777,13 @@ void other_kbd_process(){
 #endif
 
 #if CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
-
+ // return from digital to optical zoom in video
 #if CAM_HAS_ZOOM_LEVER
    key=KEY_ZOOM_OUT;
 #else
    key=KEY_DOWN;
 #endif
-    if ((movie_status==VIDEO_RECORD_IN_PROGRESS) &&  kbd_is_key_clicked(key)){
+    if (conf.unlock_optical_zoom_for_video && (movie_status==VIDEO_RECORD_IN_PROGRESS) &&  kbd_is_key_clicked(key)){
      short x;
      get_property_case(PROPCASE_DIGITAL_ZOOM_STATE, &x, sizeof(x));
      if (x) {

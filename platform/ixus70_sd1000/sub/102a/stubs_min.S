@@ -12,3 +12,4 @@ DEF(canon_shoot_menu_active,0x27C9) // (0x27CC - 0x4 + 0x1) found in "taskcreate
 DEF(recreview_hold, 0x25AC) // (0x25B0 - 0x4) found in "AR:Snd:0x%04x"
 DEF(zoom_status, 0x2680)
 DEF(movie_status, 0xBB558)
+DEF(some_flag_for_af_scan, 0xCDB4)

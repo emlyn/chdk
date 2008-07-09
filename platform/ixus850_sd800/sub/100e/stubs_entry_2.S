@@ -33,3 +33,7 @@ NHSTUB(MFOff, 0xFF9961C8)
 
 NHSTUB(SetAutoShutdownTime, 0xFF9ADF84)
 NHSTUB(CreateTaskStrict, 0xFF823780)
+
+NHSTUB(ExpCtrlTool_StopContiAE,  0xFF926F10) 
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFF926EE0) 
+NHSTUB(MakeAFScan,  0xFF999CF8) 
