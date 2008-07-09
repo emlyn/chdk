@@ -1193,10 +1193,10 @@ if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_presse
     if (kbd_is_key_pressed(KEY_UP) && (mode_get()&MODE_MASK) == MODE_REC &&  ((mode_get()&MODE_SHOOTING_MASK) != MODE_M) &&  ((mode_get()&MODE_SHOOTING_MASK) != MODE_VIDEO_STD) && movie_status<4 && (canon_shoot_menu_active==0)) {
 
         if (conf.fast_ev && key_pressed == 0) {
-#if !CAM_DRYOS  
+#if (CAM_PROPSET == 1)
             shooting_set_prop(25,shooting_get_prop(25)+(conf.fast_ev_step+1)*16);
             shooting_set_prop(26,shooting_get_prop(26)+(conf.fast_ev_step+1)*16);
-#else 
+#elif (CAM_PROPSET == 2)
             shooting_set_prop(107,shooting_get_prop(107)+(conf.fast_ev_step+1)*16);
             shooting_set_prop(207,shooting_get_prop(207)+(conf.fast_ev_step+1)*16);
 #endif
@@ -1210,10 +1210,10 @@ if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_presse
             
         if (conf.fast_ev && key_pressed == 0) {
             kbd_key_release_all();
-#if !CAM_DRYOS  
+#if (CAM_PROPSET == 1)
             shooting_set_prop(25,shooting_get_prop(25)-(conf.fast_ev_step+1)*16);
             shooting_set_prop(26,shooting_get_prop(26)-(conf.fast_ev_step+1)*16);
-#else 
+#elif (CAM_PROPSET == 2)
             shooting_set_prop(107,shooting_get_prop(107)-(conf.fast_ev_step+1)*16);
             shooting_set_prop(207,shooting_get_prop(207)-(conf.fast_ev_step+1)*16);
 #endif

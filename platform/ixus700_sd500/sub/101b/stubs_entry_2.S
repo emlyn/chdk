@@ -40,6 +40,3 @@ NHSTUB(GetDrive_TotalClusters, 0xFF86A18C)
 NHSTUB(GetDrive_FreeClusters, 0xFF86A1C8)
 NHSTUB(WriteSDCard, 0xFF87CACC)
 
-NHSTUB(MakeAFScan, 0xFF95FDEC) // _sub_FF95FDEC__PrepareSeq.c__1280
-NHSTUB(ExpCtrlTool_StartContiAE, 0xFF90353C) // SetFocusLensDefaultCondition_3
-NHSTUB(ExpCtrlTool_StopContiAE,  0xFF90356C) // SetFocusLensDefaultCondition_5

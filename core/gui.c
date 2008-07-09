@@ -1476,11 +1476,11 @@ void gui_update_script_submenu() {
         script_submenu_items[p]=script_submenu_items_top[i];
     }
     for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
-        if (script_params[i][0]) {
+        if (script_param_order[i]) {
             script_submenu_items[p].symbol=0x0;
-            script_submenu_items[p].text=(int)script_params[i];
+            script_submenu_items[p].text=(int)script_params[script_param_order[i]-1];
             script_submenu_items[p].type=MENUITEM_INT;
-            script_submenu_items[p].value=&conf.ubasic_vars[i];
+            script_submenu_items[p].value=&conf.ubasic_vars[script_param_order[i]-1];
             ++p;
         }
     }
@@ -1934,6 +1934,7 @@ void gui_kbd_leave()
 //------------------------------------------------------------------- 
  
 void other_kbd_process(){ 
+ int key;
 #if CAM_AF_SCAN_DURING_VIDEO_RECORD 
    
  if (movie_status==VIDEO_RECORD_IN_PROGRESS) { 
@@ -1941,6 +1942,24 @@ void other_kbd_process(){
  } 
  
 #endif 
+
+#if CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+ // return from digital to optical zoom in video
+#if CAM_HAS_ZOOM_LEVER
+   key=KEY_ZOOM_OUT;
+#else
+   key=KEY_DOWN;
+#endif
+    if (conf.unlock_optical_zoom_for_video && (movie_status==VIDEO_RECORD_IN_PROGRESS) &&  kbd_is_key_clicked(key)){
+     short x;
+     get_property_case(PROPCASE_DIGITAL_ZOOM_STATE, &x, sizeof(x));
+     if (x) {
+      get_property_case(PROPCASE_DIGITAL_ZOOM_POSITION, &x, sizeof(x));
+      if (x==0) zoom_status=ZOOM_OPTICAL_MEDIUM;
+     }
+    }
+#endif
+
 } 
 
 //-------------------------------------------------------------------
@@ -2299,7 +2318,7 @@ void gui_draw_debug(int arg) {
 //    gui_debug_init(0x127E0);
 //    gui_debug_init(0x7F5B8);
 //    gui_debug_init(malloc(16));
-    gui_debug_init((void*)0xB054);
+    gui_debug_init((void*)conf.mem_view_addr_init);
 }
 
 //-------------------------------------------------------------------

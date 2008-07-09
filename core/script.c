@@ -76,6 +76,7 @@ static const char *ubasic_script_default =
 
 char script_title[36];
 char script_params[SCRIPT_NUM_PARAMS][28];
+int script_param_order[SCRIPT_NUM_PARAMS];
 char script_params_update[SCRIPT_NUM_PARAMS];
 int script_loaded_params[SCRIPT_NUM_PARAMS];
 char script_console_buf[SCRIPT_CONSOLE_NUM_LINES][SCRIPT_CONSOLE_LINE_LENGTH+1];
@@ -94,7 +95,7 @@ static void process_title(const char *title) {
 }
 
 //-------------------------------------------------------------------
-static void process_param(const char *param, int update) {
+static int process_param(const char *param, int update) {
     register const char *ptr = param;
     register int n, i=0;
 
@@ -111,7 +112,9 @@ static void process_param(const char *param, int update) {
             ++i;
         }
 		if (!update) script_params[n][i]=0;
-    } // ??? else produce error message
+        n++;
+    } else n=0; // ??? else produce error message    
+    return n; // n=1 if '@param a' was processed, n=2 for 'b' ... n=26 for 'z'. n=0 if failed.
 }
 
 //-------------------------------------------------------------------
@@ -134,7 +137,7 @@ static void process_default(const char *param, char update) {
 //-------------------------------------------------------------------
 static void script_scan(const char *fn, int update_vars) {
     register const char *ptr = state_ubasic_script;
-    register int i;
+    register int i, j=0, n;
     char *c;
 
     c=strrchr(fn, '/');
@@ -142,6 +145,7 @@ static void script_scan(const char *fn, int update_vars) {
     script_title[sizeof(script_title)-1]=0;
     for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
         script_params[i][0]=0;
+        script_param_order[i]=0;
     }
 
     while (ptr[0]) {
@@ -152,7 +156,11 @@ static void script_scan(const char *fn, int update_vars) {
                 process_title(ptr);
             } else if (strncmp("@param", ptr, 6)==0) {
                 ptr+=6;
-                process_param(ptr, 0);
+                n=process_param(ptr, 0); // n=1 if '@param a' was processed, n=2 for 'b' ... n=26 for 'z'. n=0 if failed.
+                if (n>0 && n<SCRIPT_NUM_PARAMS) {
+                  script_param_order[j]=n;
+                  j++;
+                }
             } else if (update_vars && strncmp("@default", ptr, 8)==0) {
                 ptr+=8;
                 process_default(ptr, 0);

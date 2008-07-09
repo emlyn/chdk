@@ -49,3 +49,6 @@ NHSTUB(GetDrive_FreeClusters, 0xFFAA2820)	// note "GetCatFs_FreeClusters"
 
 NHSTUB(UnsetZoomForMovie, 0xFF83656C)
 NHSTUB(WriteSDCard, 0xFFAB536C)
+NHSTUB(ExpCtrlTool_StopContiAE,  0xFF971658) 
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFF971628) 
+NHSTUB(MakeAFScan,  0xFFB0ECB0) 

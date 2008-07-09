@@ -331,6 +331,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(192, conf.synch_delay_value,      CONF_DEF_VALUE, i:100, NULL),
     CONF_INFO(193, conf.synch_delay_coarse_value, CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(194, conf.script_param_set,       CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(195, conf.mem_view_addr_init,     CONF_DEF_VALUE, i:0x1000, NULL),
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

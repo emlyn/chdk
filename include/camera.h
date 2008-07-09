@@ -331,6 +331,7 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 2
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus65_sd630)
@@ -369,6 +370,7 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus700_sd500)
@@ -405,6 +407,7 @@
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 2
     
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus850_sd800)
@@ -420,6 +423,7 @@
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus860_sd870)
@@ -453,6 +457,7 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #define CAM_MULTIPART               1
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     
 //==========================================================
 // S-Series
@@ -516,7 +521,20 @@
     #define CAM_MULTIPART               1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
 
+//==========================================================
+// SX-Series
+//==========================================================
+#elif defined (CAMERA_sx100is)
+    #define CAM_PROPSET                 2
+    #define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              3336   // for new 8 MP
+    #define CAM_RAW_ROWS                2480   // for new 8 MP
+    #undef CAM_CHDK_HAS_EXT_VIDEO_MENU
+    #undef CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+
 //----------------------------------------------------------
+
 #else
     #error camera type not defined
 

@@ -11,3 +11,5 @@ DEF(canon_shoot_menu_active,0x2795) // not found
 DEF(recreview_hold, 0x2588)	// sync with a560 and a630
 DEF(movie_status, 0x9BAFC)  
 DEF(some_flag_for_af_scan, 0xB92C)
+DEF(zoom_status, 0x2650)
+

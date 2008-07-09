@@ -11,6 +11,7 @@ extern const char *state_ubasic_script;
 
 extern char script_title[36];
 extern char script_params[SCRIPT_NUM_PARAMS][28];
+extern int script_param_order[SCRIPT_NUM_PARAMS];
 
 //-------------------------------------------------------------------
 extern void script_load(const char *fn, int saved_params);

@@ -14,4 +14,7 @@ NHSTUB(kbd_p1_3, 0xFF82DBF8)
 NHSTUB(GetDrive_ClusterSize, 0xFF86DE24)
 NHSTUB(GetDrive_TotalClusters, 0xFF86DE60)
 NHSTUB(GetDrive_FreeClusters, 0xFF86DE9C)
+NHSTUB(ExpCtrlTool_StopContiAE,  0xFF8F2DB0) 
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFF8F2D98) 
+NHSTUB(MakeAFScan,  0xFF94E9AC) 
 

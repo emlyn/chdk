@@ -20,3 +20,7 @@ DEF(zoom_busy, 0x89638)  // ok found in "aZoomLens" sub_FFA6D684
 DEF(focus_busy, 0x89950) // ok found in "aFocuslenscontr" 
 DEF(playrec_mode, 0x6FA0) // found at unknown_libname_442 within task_SsStartupTask
 DEF(recreview_hold, 0x86838)
+DEF(zoom_status, 0x7FBC)
+DEF(movie_status, 0x7CDBC)
+DEF(some_flag_for_af_scan, 0x7D4B0)
+DEF(parameter_for_af_scan, 0x7D4A8)

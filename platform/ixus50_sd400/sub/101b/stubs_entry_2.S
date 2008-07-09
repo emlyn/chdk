@@ -34,7 +34,7 @@ NHSTUB(kbd_p1_f, 0xFF8118C0)
 NHSTUB(kbd_p2_f, 0xFF8118C0)
 NHSTUB(kbd_read_keys_r2, 0xFF8118C0)
 
-NHSTUB(UnsetZoomForMovie, 0xFF9A4E54) // OK!
+NHSTUB(UnsetZoomForMovie, 0xFF9A4D1C) // OK!
 
 NHSTUB(GetDrive_ClusterSize, 0xFF8743BC) // OK!
 NHSTUB(GetDrive_TotalClusters, 0xFF8743F8) // OK!

@@ -230,6 +230,8 @@ typedef struct {
     int synch_delay_coarse_value;
 
     int script_param_set;
+    
+    long mem_view_addr_init;
 } Conf;
 
 extern Conf conf;

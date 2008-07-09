@@ -65,7 +65,7 @@ MODE_VIDEO_STITCH       ,
 MODE_VIDEO_MANUAL       ,
 };
 
-#if CAM_PROPSET == 2
+#if CAM_PROPSET == 2     // most digic3 cameras
  #define PROPCASE_DRIVE_MODE					102
  #define PROPCASE_FOCUS_MODE					133
  #define PROPCASE_FLASH_MODE    		        143
@@ -89,7 +89,9 @@ MODE_VIDEO_MANUAL       ,
  #define PROPCASE_EV_CORRECTION_1				107
  #define PROPCASE_EV_CORRECTION_2				207
  #define PROPCASE_ORIENTATION_SENSOR			219
-#elif CAM_PROPSET == 1
+ #define PROPCASE_DIGITAL_ZOOM_STATE                            94
+ #define PROPCASE_DIGITAL_ZOOM_POSITION                         95
+#elif CAM_PROPSET == 1   // most digic2 cameras
  #define PROPCASE_DRIVE_MODE    				6
  #define PROPCASE_FOCUS_MODE    				12
  #define PROPCASE_FLASH_MODE       				16
@@ -119,6 +121,8 @@ MODE_VIDEO_MANUAL       ,
  #define PROPCASE_EV_CORRECTION_1				25
  #define PROPCASE_EV_CORRECTION_2				26
  #define PROPCASE_ORIENTATION_SENSOR			37
+ #define PROPCASE_DIGITAL_ZOOM_STATE                            58
+ #define PROPCASE_DIGITAL_ZOOM_POSITION                         57
 #else
  #error unknown camera processor
 #endif
@@ -142,10 +146,24 @@ MODE_VIDEO_MANUAL       ,
 #define KBD_REPEAT_DELAY  140
 #define KBD_INITIAL_DELAY 300
 
-// Video recording current status constants, see movie_status variable  
+// Video recording current status constants, see movie_status variable 
 #define VIDEO_RECORD_NEVER_STARTED 0  
 #define VIDEO_RECORD_STOPPED 1  
 #define VIDEO_RECORD_IN_PROGRESS 4
+
+//Optical & digital zoom status constants, see zoom_status variable 
+#define ZOOM_OPTICAL_MIN         1
+#define ZOOM_OPTICAL_MAX         2
+#define ZOOM_OPTICAL_MEDIUM      3
+#define ZOOM_OPTICAL_IN          4
+#define ZOOM_OPTICAL_OUT         5
+#define ZOOM_OPTICAL_REACHED_MIN 7
+
+#define ZOOM_DIGITAL_MAX         9
+#define ZOOM_DIGITAL_MEDIUM      10
+#define ZOOM_DIGITAL_IN          11
+#define ZOOM_DIGITAL_OUT         12
+#define ZOOM_DIGITAL_REACHED_MAX 13
 
 typedef struct {
     short id; // hacks id
@@ -469,6 +487,7 @@ unsigned int GetRawCount(void);
 
 void MakeAFScan(void); 
 extern int movie_status; 
+extern int zoom_status;
 
 void wait_until_remote_button_is_released(void);
 

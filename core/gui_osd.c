@@ -950,9 +950,9 @@ draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y, osd_buf, conf.osd_col
         }
 
 void gui_osd_draw_ev() {
-#if !CAM_DRYOS  
+#if (CAM_PROPSET == 1)
     sprintf(osd_buf, "EV: %+d,%d", shooting_get_prop(25)/96,shooting_get_prop(25)%96);
-#else 
+#elif (CAM_PROPSET == 2)
     sprintf(osd_buf, "EV: %+d,%d", shooting_get_prop(107)/96,shooting_get_prop(107)%96);
 #endif
 
