@@ -125,6 +125,8 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=s5is PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=tx1  PLATFORMSUB=100g NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=tx1  PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
+	#$(MAKE) -s --no-print-directory PLATFORM=sx100is  PLATFORMSUB=100b NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=sx100is  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	@echo "**** All firmwares created successfully"
 
 batch-clean:
@@ -176,5 +178,7 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=s5is PLATFORMSUB=101b NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=tx1  PLATFORMSUB=100g NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=tx1  PLATFORMSUB=101b NO_INC_BUILD=1 clean
+	# $(MAKE) -s --no-print-directory PLATFORM=sx100is  PLATFORMSUB=100b NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=sx100is  PLATFORMSUB=100c NO_INC_BUILD=1 clean
 
 .PHONY: fir upload
