@@ -63,6 +63,7 @@ MODE_VIDEO_AQUARIUM     ,
 MODE_VIDEO_SUPER_MACRO  ,
 MODE_VIDEO_STITCH       ,
 MODE_VIDEO_MANUAL       ,
+MODE_SPORTS							,
 };
 
 #if CAM_PROPSET == 2     // most digic3 cameras
@@ -91,6 +92,8 @@ MODE_VIDEO_MANUAL       ,
  #define PROPCASE_ORIENTATION_SENSOR			219
  #define PROPCASE_DIGITAL_ZOOM_STATE                            94
  #define PROPCASE_DIGITAL_ZOOM_POSITION                         95
+ #define PROPCASE_DISPLAY_MODE                         105
+ #define PROPCASE_BRACKET_MODE                         278 //fictional value! need to find out!
 #elif CAM_PROPSET == 1   // most digic2 cameras
  #define PROPCASE_DRIVE_MODE    				6
  #define PROPCASE_FOCUS_MODE    				12
@@ -100,7 +103,6 @@ MODE_VIDEO_MANUAL       ,
 // #define PROPCASE_FLASH_CORRECTION               28      
 // #define PROPCASE_FLASH_MANUAL_OUTPUT    29
 //  #define PROPCASE_FOCUS_OK           67
-// also need max. zoom steps for each cam
  #define PROPCASE_USER_TV       				40
  #define PROPCASE_TV	        				69
  #define PROPCASE_USER_AV       				39
@@ -123,6 +125,8 @@ MODE_VIDEO_MANUAL       ,
  #define PROPCASE_ORIENTATION_SENSOR			37
  #define PROPCASE_DIGITAL_ZOOM_STATE                            58
  #define PROPCASE_DIGITAL_ZOOM_POSITION                         57
+ #define PROPCASE_DISPLAY_MODE                         181
+ #define PROPCASE_BRACKET_MODE                         36 //missing for dryos!
 #else
  #error unknown camera processor
 #endif

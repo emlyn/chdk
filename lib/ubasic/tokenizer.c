@@ -98,6 +98,7 @@ static const struct keyword_token keywords[] = {
   {"get_av96",                TOKENIZER_GET_AV96},
   {"get_av",                  TOKENIZER_GET_USER_AV_ID}, //FOR COMPATIBILITY
   {"get_bv96",                TOKENIZER_GET_BV96},
+  {"get_display_mode",        TOKENIZER_GET_DISPLAY_MODE},
   {"get_day_seconds",         TOKENIZER_GET_DAY_SECONDS},
   {"get_disk_size",           TOKENIZER_GET_DISK_SIZE},
   {"get_dof",                 TOKENIZER_GET_DOF},

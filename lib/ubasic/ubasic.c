@@ -259,6 +259,10 @@ case TOKENIZER_IS_PRESSED:
     accept(TOKENIZER_GET_FOCUS_MODE);
     r = shooting_get_prop(PROPCASE_FOCUS_MODE);
    break;
+  case TOKENIZER_GET_DISPLAY_MODE:
+    accept(TOKENIZER_GET_DISPLAY_MODE);
+    r = shooting_get_prop(PROPCASE_DISPLAY_MODE);
+   break;
   case TOKENIZER_GET_FLASH_MODE:
     accept(TOKENIZER_GET_FLASH_MODE);
     r = shooting_get_prop(PROPCASE_FLASH_MODE);
@@ -307,7 +311,6 @@ case TOKENIZER_IS_PRESSED:
     r = 2;
     #endif
    break;
-
   case TOKENIZER_GET_TV96:
     accept(TOKENIZER_GET_TV96);
     r = shooting_get_tv96();

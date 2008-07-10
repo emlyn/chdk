@@ -36,13 +36,14 @@ static OSD_elem osd[]={
     {LANG_OSD_LAYOUT_EDITOR_BAT_TEXT,   &conf.batt_txt_pos,     {5*FONT_WIDTH, FONT_HEIGHT}     },
     {LANG_OSD_LAYOUT_EDITOR_SPACE_TEXT,   &conf.space_txt_pos,     {5*FONT_WIDTH, FONT_HEIGHT}     },
     {LANG_OSD_LAYOUT_EDITOR_CLOCK,      &conf.clock_pos,        {5*FONT_WIDTH, FONT_HEIGHT}     },
-    {LANG_OSD_LAYOUT_EDITOR_VIDEO,     &conf.mode_video_pos,   {21*FONT_WIDTH, FONT_HEIGHT}   },
+    {LANG_OSD_LAYOUT_EDITOR_VIDEO,     &conf.mode_video_pos,   {9*FONT_WIDTH, 2*FONT_HEIGHT}   },
     {LANG_OSD_LAYOUT_EDITOR_EV,     &conf.mode_ev_pos,   {12*FONT_WIDTH, FONT_HEIGHT}   },
     {0}
 };
 static int osd_to_draw;
 static int curr_item;
 static char osd_buf[64];
+static char osd_buf2[64];
 static int step;
 static unsigned char *img_buf, *scr_buf;
 static int timer = 0;
@@ -653,10 +654,11 @@ void gui_print_osd_misc_string_canon_values(const char * title, short value) {
 //-------------------------------------------------------------------
 void gui_osd_draw_raw_info() 
     {
-    int x;
+    int x, m=(mode_get()&MODE_SHOOTING_MASK);
     static int b;
+    
 
-    if (!((movie_status > 1) && conf.save_raw_in_video   ))
+    if ((!((movie_status > 1) && conf.save_raw_in_video   )) && (!((m==MODE_SPORTS) && conf.save_raw_in_sports)) && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)==1) && conf.save_raw_in_burst && !(m==MODE_SPORTS)))  && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)==2) && conf.save_raw_in_timer)) && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) )
     { 
     if (conf.show_remaining_raw) 
         {
@@ -684,7 +686,13 @@ void gui_osd_draw_raw_info()
                 }
         }
     else draw_string(conf.mode_raw_pos.x, conf.mode_raw_pos.y, "RAW", conf.osd_color);
-	}            
+	}   
+	else if (conf.raw_exceptions_warn)
+		{
+			gui_print_osd_state_string_chr("RAW Disabled","");
+		}
+		
+		         
 }
 //-------------------------------------------------------------------
 void gui_osd_draw_state() {
@@ -928,7 +936,7 @@ unsigned int hour=0, min=0, sec=0;
     
        if (elapsed<5)
    {
-  sprintf(osd_buf, "Calculating...");
+  sprintf(osd_buf, "Calc...");
    draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y, osd_buf, conf.osd_color);
     }
     
@@ -936,12 +944,17 @@ unsigned int hour=0, min=0, sec=0;
     if (elapsed>5)
      {
      if (conf.show_movie_time == 3)
-      sprintf(osd_buf, "%02d:%02d:%02d - %d KB/s", hour, min, sec,avg_use);
+      sprintf(osd_buf, "%04d KB/s", avg_use);
+      draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y, osd_buf, conf.osd_color);
+      sprintf(osd_buf2, "-%02d:%02d:%02d", hour, min, sec);
+      draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y+FONT_HEIGHT, osd_buf2, conf.osd_color);
      if (conf.show_movie_time == 2)
-      sprintf(osd_buf, "%03d KB/s     ", avg_use);
+      sprintf(osd_buf, "%04d KB/s", avg_use);
+      draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y, osd_buf, conf.osd_color);
       if (conf.show_movie_time == 1)
-        sprintf(osd_buf, "%02d:%02d:%02d     ", hour, min, sec);
-draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y, osd_buf, conf.osd_color);
+        sprintf(osd_buf, "-%02d:%02d:%02d", hour, min, sec);
+        draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y, osd_buf, conf.osd_color);
+
       }
 
      skipcalls = conf.show_movie_refresh*5;
@@ -950,7 +963,7 @@ draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y, osd_buf, conf.osd_col
         }
 
 void gui_osd_draw_ev() {
-#if (CAM_PROPSET == 1)
+#if (CAM_PROPSET == 1)  
     sprintf(osd_buf, "EV: %+d,%d", shooting_get_prop(25)/96,shooting_get_prop(25)%96);
 #elif (CAM_PROPSET == 2)
     sprintf(osd_buf, "EV: %+d,%d", shooting_get_prop(107)/96,shooting_get_prop(107)%96);

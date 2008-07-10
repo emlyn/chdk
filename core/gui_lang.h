@@ -483,12 +483,24 @@
 #define LANG_MENU_SYNCH_DELAY_VALUE         380
 #define LANG_MENU_SYNCH_DELAY_COARSE_VALUE  381
 
+
 #define LANG_MENU_VIDEO_AF_KEY  382
 #define LANG_MENU_SCRIPT_DEFAULT_VAL  383
 #define LANG_MENU_SCRIPT_PARAM_SET    384
+
+#define LANG_MENU_RAW_SAVE_IN_SPORTS 	385
+#define LANG_MENU_RAW_SAVE_IN_BURST 	386
+#define LANG_MENU_RAW_SAVE_IN_EV_BRACKETING 	387
+#define LANG_MENU_RAW_SAVE_IN_TIMER 388
+
+#define LANG_MENU_OSD_RAW_EXCEPTIONS_PARAMS 389
+#define LANG_MENU_OSD_RAW_EXCEPTIONS_PARAMS_TITLE 390
+#define LANG_MENU_RAW_WARN				391
+
+
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  384
+#define GUI_LANG_ITEMS                  391
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

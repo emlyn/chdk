@@ -332,6 +332,11 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(193, conf.synch_delay_coarse_value, CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(194, conf.script_param_set,       CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(195, conf.mem_view_addr_init,     CONF_DEF_VALUE, i:0x1000, NULL),
+    CONF_INFO(196, conf.save_raw_in_sports,      CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(197, conf.save_raw_in_burst,      CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(198, conf.save_raw_in_ev_bracketing,      CONF_DEF_VALUE, i:0, NULL),
+   	CONF_INFO(199, conf.save_raw_in_timer,      CONF_DEF_VALUE, i:0, NULL),
+ 		CONF_INFO(200, conf.raw_exceptions_warn,      CONF_DEF_VALUE, i:1, NULL),
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

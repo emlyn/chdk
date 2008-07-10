@@ -69,7 +69,7 @@ static struct {
     { MODE_STITCH,              33290 },
     { MODE_MY_COLORS,           16921 },
     { MODE_SCN_NIGHT,           16395 },
-    { MODE_SCN_CHILD,           32775 },
+    { MODE_SPORTS,		          32775 },
     { MODE_SCN_PARTY,           16400 },
     { MODE_SCN_GRASS,           16401 },
     { MODE_SCN_SNOW,            16402 },

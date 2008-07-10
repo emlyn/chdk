@@ -26,7 +26,7 @@ void raw_prepare_develop(char* filename){
 void patch_bad_pixels(void);
 //-------------------------------------------------------------------
 int raw_savefile() {
-    int fd;
+		int fd, m=(mode_get()&MODE_SHOOTING_MASK);
     static struct utimbuf t;
 
     if (state_kbd_script_run && shot_histogram_enabled) build_shot_histogram();
@@ -55,7 +55,7 @@ int raw_savefile() {
     
     state_shooting_progress = SHOOTING_PROGRESS_PROCESSING;
 
-     if (conf.save_raw && (!((movie_status > 1) && conf.save_raw_in_video   ))) {
+     if (conf.save_raw && (!((movie_status > 1) && conf.save_raw_in_video   )) && (!((m==MODE_SPORTS) && conf.save_raw_in_sports)) && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)==1) && conf.save_raw_in_burst && !(m==MODE_SPORTS))) && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)==2) && conf.save_raw_in_timer)) && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) ) {
         long v;
         
         started();

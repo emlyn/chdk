@@ -390,11 +390,13 @@ static CMenuItem video_submenu_items[] = {
       {0x5c,LANG_MENU_OPTICAL_ZOOM_IN_VIDEO,   MENUITEM_BOOL,  &conf.unlock_optical_zoom_for_video},							
 #endif
 #if CAM_CAN_MUTE_MICROPHONE
-      {0x5c,LANG_MENU_MUTE_ON_ZOOM,   MENUITEM_BOOL,  &conf.mute_on_zoom},
+      {0x83,LANG_MENU_MUTE_ON_ZOOM,   MENUITEM_BOOL,  &conf.mute_on_zoom},
 #endif
 #if CAM_AF_SCAN_DURING_VIDEO_RECORD 
-      {0x5e,LANG_MENU_VIDEO_AF_KEY,   MENUITEM_ENUM,    (int*)gui_video_af_key_enum}, 
+      {0x82,LANG_MENU_VIDEO_AF_KEY,   MENUITEM_ENUM,    (int*)gui_video_af_key_enum}, 
 #endif
+		{0x5c,LANG_MENU_OSD_SHOW_VIDEO_TIME,         MENUITEM_ENUM,      (int*)gui_show_movie_time },
+    {0x60,LANG_MENU_OSD_SHOW_VIDEO_REFRESH,             MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.show_movie_refresh,   MENU_MINMAX(1, 20)},
       {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
       {0}
 };
@@ -536,7 +538,7 @@ static CMenuItem user_submenu_items[] = {
 	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
 	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
 	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-//	{0x0,LANG_MENU_MAIN_TITLE,      MENUITEM_PROC,  (int*)rinit},
+	{0x0,LANG_MENU_MAIN_TITLE,      MENUITEM_PROC,  (int*)rinit},
     {0}
 };
 static CMenu user_submenu = {0x2e,LANG_MENU_USER_MENU, NULL, user_submenu_items };
@@ -561,8 +563,6 @@ static CMenuItem osd_submenu_items[] = {
     {0x5f,LANG_MENU_USER_MENU_ENABLE,		MENUITEM_ENUM,      (int*)gui_user_menu_show_enum },
     {0x5c,LANG_MENU_USER_MENU_AS_ROOT,       MENUITEM_BOOL,      &conf.user_menu_as_root },
     {0x5f,LANG_MENU_OSD_SHOW_STATES,         MENUITEM_BOOL,      &conf.show_state },
-    {0x5c,LANG_MENU_OSD_SHOW_VIDEO_TIME,         MENUITEM_ENUM,      (int*)gui_show_movie_time },
-    {0x60,LANG_MENU_OSD_SHOW_VIDEO_REFRESH,             MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.show_movie_refresh,   MENU_MINMAX(1, 20)},
     {0x72,LANG_MENU_OSD_LAYOUT_EDITOR,       MENUITEM_PROC,      (int*)gui_draw_osd_le },
     {0x7f,LANG_MENU_EDGE_OVERLAY,         MENUITEM_SUBMENU,   (int*)&edge_overlay_submenu },
     {0x2f,LANG_MENU_OSD_GRID_PARAMS,         MENUITEM_SUBMENU,   (int*)&grid_submenu },
@@ -595,11 +595,29 @@ static CMenuItem histo_submenu_items[] = {
 };
 static CMenu histo_submenu = {0x25,LANG_MENU_HISTO_TITLE, NULL, histo_submenu_items };
 
-static CMenuItem raw_submenu_items[] = {
-    {0x5c,LANG_MENU_RAW_SAVE,                MENUITEM_BOOL,      &conf.save_raw },
+static CMenuItem raw_exceptions_submenu_items[] = {
     #if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_s5is)
      {0x5c,LANG_MENU_RAW_SAVE_IN_VIDEO,                MENUITEM_BOOL,      &conf.save_raw_in_video },
     #endif
+    #if defined(CAMERA_s3is)
+    	{0x5c,LANG_MENU_RAW_SAVE_IN_SPORTS,                MENUITEM_BOOL,      &conf.save_raw_in_sports },
+    #endif
+    {0x5c,LANG_MENU_RAW_SAVE_IN_BURST,                MENUITEM_BOOL,      &conf.save_raw_in_burst },
+    {0x5c,LANG_MENU_RAW_SAVE_IN_TIMER,                MENUITEM_BOOL,      &conf.save_raw_in_timer },
+
+		#if CAM_PROPSET == 1
+    	{0x5c,LANG_MENU_RAW_SAVE_IN_EV_BRACKETING,                MENUITEM_BOOL,      &conf.save_raw_in_ev_bracketing },
+		#endif
+    {0x5c,LANG_MENU_RAW_WARN,                MENUITEM_BOOL,      &conf.raw_exceptions_warn },
+    {0x51,LANG_MENU_BACK,                           MENUITEM_UP },
+    {0}
+};
+static CMenu raw_exceptions_submenu = {0x5c,LANG_MENU_OSD_RAW_EXCEPTIONS_PARAMS_TITLE, NULL, raw_exceptions_submenu_items };
+
+
+static CMenuItem raw_submenu_items[] = {
+    {0x5c,LANG_MENU_RAW_SAVE,                MENUITEM_BOOL,      &conf.save_raw },
+    {0x34,LANG_MENU_OSD_RAW_EXCEPTIONS_PARAMS,	 	MENUITEM_SUBMENU,   (int*)&raw_exceptions_submenu },
     {0x5f,LANG_MENU_RAW_NOISE_REDUCTION,     MENUITEM_ENUM,      (int*)gui_raw_nr_enum },
     {0x5c,LANG_MENU_RAW_FIRST_ONLY,          MENUITEM_BOOL,      &conf.raw_save_first_only },
     {0x5c,LANG_MENU_RAW_SAVE_IN_DIR,         MENUITEM_BOOL,      &conf.raw_in_dir },
@@ -657,8 +675,8 @@ static CMenuItem root_menu_items[] = {
     {0x25,LANG_MENU_MAIN_HISTO_PARAM,        MENUITEM_SUBMENU,   (int*)&histo_submenu },
     {0x26,LANG_MENU_MAIN_ZEBRA_PARAM,        MENUITEM_SUBMENU,   (int*)&zebra_submenu },
     {0x27,LANG_MENU_MAIN_SCRIPT_PARAM,       MENUITEM_SUBMENU,   (int*)&script_submenu },
-    {0x21,LANG_MENU_CURVE_PARAM,             MENUITEM_SUBMENU,   (int*)&curve_submenu },
-    {0x21,LANG_MENU_REMOTE_PARAM,            MENUITEM_SUBMENU,   (int*)&remote_submenu },
+    {0x85,LANG_MENU_CURVE_PARAM,             MENUITEM_SUBMENU,   (int*)&curve_submenu },
+    {0x86,LANG_MENU_REMOTE_PARAM,            MENUITEM_SUBMENU,   (int*)&remote_submenu },
 	{0x28,LANG_MENU_MAIN_VISUAL_PARAM,       MENUITEM_SUBMENU,   (int*)&visual_submenu },
     {0x29,LANG_MENU_MAIN_MISC,               MENUITEM_SUBMENU,   (int*)&misc_submenu },
     {0x2a,LANG_MENU_MAIN_DEBUG,              MENUITEM_SUBMENU,   (int*)&debug_submenu },

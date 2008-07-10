@@ -469,7 +469,7 @@
 342 "Disable Overrides"
 343 "  Include AutoIso & Bracketing?"
 344 "  Hide in Playback?"
-345 "  Disable @ Video Rec?"
+345 "Disable @ Video Rec?"
 346 "Show remaining videotime?"
 347 "  Refreshrate (~sec)"
 348 "Remaining video time"
@@ -518,4 +518,11 @@
 383 "Load default param values"
 384 "Parameters set"
 
+385 "Disable Raw @ Sports"
+386 "Disable Raw @ Burst"
+387 "Disable Raw @ EV Bracketing"
+388 "Disable Raw @ Timer"
 
+389 "Exceptions"
+390 "RAW Exceptions Menu"
+391 "Warn when Exception?"

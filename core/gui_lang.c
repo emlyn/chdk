@@ -453,7 +453,7 @@ static char* gui_lang_default = \
 "342 \"Disable Overrides\"\n"
 "343 \"  Include AutoIso & Bracketing?\"\n"
 "344 \"  Hide in Playback?\"\n"
-"345 \"  Disable @ Video Rec?\"\n"
+"345 \"Disable @ Video Rec?\"\n"
 "346 \"Show remaining videotime?\"\n"
 "347 \"  Refreshrate (~sec)\"\n"
 "348 \"Remaining video time\"\n"
@@ -501,6 +501,14 @@ static char* gui_lang_default = \
 "382 \"AF key\"\n"
 "383 \"Load default param values\"\n"
 "384 \"Parameters set\"\n"
+"385 \"Disable Raw @ Sports\"\n"
+"386 \"Disable RAW @ Burst\"\n"
+"387 \"Disable RAW @ EV Bracketing\"\n"
+"388 \"Disable RAW @ Timer\"\n"
+"389 \"Exceptions\"\n"
+"390 \"RAW Exceptions Menu\"\n"
+"391 \"Warn when exception?\"\n"
+
 ;
 
 //-------------------------------------------------------------------
