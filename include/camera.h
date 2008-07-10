@@ -530,6 +530,7 @@
 
     #define CAM_RAW_ROWPIX              3336   // for new 8 MP
     #define CAM_RAW_ROWS                2480   // for new 8 MP
+    #undef CAM_SYNCH  
     #undef CAM_CHDK_HAS_EXT_VIDEO_MENU
     #undef CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
 
