@@ -10,3 +10,6 @@ DEF(focus_busy, 0xA318) // 0xA308 + 0x10
 DEF(canon_menu_active,0xBAFC)
 DEF(canon_shoot_menu_active,0xB1FD)	// 0xB1FC+1
 DEF(recreview_hold, 0xAF6C)			// 0xAEA4+0xC8
+DEF(movie_status, 0x5588)  // 0x5550 + 0x38
+DEF(zoom_status, 0xDE14)
+DEF(some_flag_for_af_scan, 0xDD08)
