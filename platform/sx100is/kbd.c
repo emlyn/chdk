@@ -23,7 +23,7 @@ static int remote_key, remote_count;
 
 
 #define KEYS_MASK0 (0x0000000C)
-#define KEYS_MASK1 (0x1B1F0300)
+#define KEYS_MASK1 (0x171F0300)
 #define KEYS_MASK2 (0x00000000)
 
 #define NEW_SS (0x2000)
@@ -46,7 +46,7 @@ static KeyMap keymap[] = {
 	{ 1, KEY_UP       , 0x00020000 },
 	{ 1, KEY_DOWN     , 0x00080000 },
 	{ 1, KEY_MENU     , 0x02000000 },
-	{ 1, KEY_DISPLAY  , 0x08000000 },
+	{ 1, KEY_DISPLAY  , 0x04000000 },
 	{ 1, KEY_SET      , 0x00010000 },
 	{ 1, KEY_ERASE    , 0x01000000 },
 	{ 1, KEY_LEFT     , 0x00040000 },
