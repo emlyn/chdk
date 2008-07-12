@@ -118,7 +118,7 @@ NHSTUB(ExpCtrlTool_StopContiAE,  0xFFC24B78)
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFFC249B8) 
 NHSTUB(MakeAFScan,  0xFFDEFB6C) 
 
-
+NHSTUB(GiveSemaphore,  0xFFC0BB24)
 
 // dryos Test
 //NHSTUB(NewTaskShell, 0xFFC5B744)  // starts new shell on Console. GUI output?
