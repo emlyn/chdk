@@ -496,11 +496,11 @@
 #define LANG_MENU_OSD_RAW_EXCEPTIONS_PARAMS 389
 #define LANG_MENU_OSD_RAW_EXCEPTIONS_PARAMS_TITLE 390
 #define LANG_MENU_RAW_WARN				391
-
+#define LANG_MENU_SELECT_FIRST_ENTRY				392
 
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  391
+#define GUI_LANG_ITEMS                  392
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

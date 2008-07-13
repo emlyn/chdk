@@ -107,6 +107,7 @@ typedef struct {
     color menu_cursor_color;
     color menu_symbol_color;
     int menu_center;
+    int menu_select_first_entry;
     int menu_symbol_enable;
     color reader_color;
     color zebra_color; // under/over

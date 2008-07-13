@@ -508,7 +508,7 @@ static char* gui_lang_default = \
 "389 \"Exceptions\"\n"
 "390 \"RAW Exceptions Menu\"\n"
 "391 \"Warn when exception?\"\n"
-
+"392 \"Always select 1st entry in menu?\"\n"
 ;
 
 //-------------------------------------------------------------------

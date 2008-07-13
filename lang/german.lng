@@ -467,7 +467,7 @@
 
 343 "    Inkl. AutoIso & Bracket?"
 344 "    Aus bei Wiedergabe?"
-345 "Aus bei Videoaufn.?"
+345 "    Aus bei Videoaufn.?"
 
 // Videorestzeit
 346 "Zeige Restzeit Video?"
@@ -519,15 +519,17 @@
 381 "    Verzögerung 0.1s"
 
 382 "AF Taste"
+
+// Skripte
 383 "Lade Standardparameter ..."
 384 "Parameter-Satz"
 
-//RAW Deaktivierung
-385 "Aus bei Sportmodus?"
-386 "Aus bei Burstmodus?"
-387 "Aus bei EV Bracketing?"
-388 "Aus bei Timer?"
-
+// RAW-Ausnahmen
+385 "Raw im Sportmodus aus?"
+386 "Raw bei Reihenaufnahme aus?"
+387 "Raw bei Ev Bracketing aus?"
+388 "Raw bei Selbstauslöser aus?"
 389 "Ausnahmen"
-390 "RAW Ausnahmen Menü"
-391 "Warne bei Ausnahme?"
+390 "RAW-Ausnahmen"
+391 "Warnung bei Ausnahme?"
+392 "Erste Zeile selektiert?"

@@ -1,4 +1,5 @@
 #include "platform.h"
+#include "lolevel.h"
 
 //NOTE These functions not used
 
@@ -79,4 +80,15 @@ long vid_get_bitmap_buffer_width() { return 360; }
 
 long vid_get_bitmap_buffer_height() { return 240; }
 
-int movie_status = 0;
+void JogDial_CW(void){
+  (*(short*)(0x2590+2))--;
+  *(int*)(0x2590+0x18)=0x32;
+  _GiveSemaphore(*(int*)(0x2590+0x10));
+}
+
+void JogDial_CCW(void){
+  (*(short*)(0x2590+2))++;
+  *(int*)(0x2590+0x18)=0x32;
+  _GiveSemaphore(*(int*)(0x2590+0x10));
+}
+

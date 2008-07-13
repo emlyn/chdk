@@ -557,7 +557,8 @@ static CMenu raw_state_submenu = {0x24,LANG_MENU_OSD_RAW_STATE_PARAMS_TITLE, NUL
 static CMenuItem osd_submenu_items[] = {
     {0x5c,LANG_MENU_OSD_SHOW,                MENUITEM_BOOL,      &conf.show_osd },
     {0x5c,LANG_MENU_OSD_HIDE_PLAYBACK,       MENUITEM_BOOL,      &conf.hide_osd_in_playback },
-    {0x81,LANG_MENU_VIS_MENU_CENTER,         MENUITEM_BOOL,	    &conf.menu_center },    
+    {0x81,LANG_MENU_VIS_MENU_CENTER,         MENUITEM_BOOL,	    &conf.menu_center },
+    {0x81,LANG_MENU_SELECT_FIRST_ENTRY,         MENUITEM_BOOL,	    &conf.menu_select_first_entry },       
     {0x64,LANG_MENU_VIS_SYMBOL,             MENUITEM_BOOL,	    &conf.menu_symbol_enable },    
     {0x2e,LANG_MENU_USER_MENU,  	    		MENUITEM_SUBMENU,   (int*)&user_submenu},
     {0x5f,LANG_MENU_USER_MENU_ENABLE,		MENUITEM_ENUM,      (int*)gui_user_menu_show_enum },

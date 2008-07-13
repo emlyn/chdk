@@ -49,7 +49,10 @@ static void gui_menu_set_curr_menu(CMenu *menu_ptr, int top_item, int curr_item)
 //-------------------------------------------------------------------
 void gui_menu_init(CMenu *menu_ptr) {
     if (menu_ptr) {
+        if (conf.menu_select_first_entry)
         gui_menu_set_curr_menu(menu_ptr, 0, 0);
+        else 
+        gui_menu_set_curr_menu(menu_ptr, 0, -1);
         gui_menu_stack_ptr = 0;
     }
     
@@ -293,7 +296,10 @@ static char sbuf[7];
                         gui_menu_stack[gui_menu_stack_ptr].menu = curr_menu;
                         gui_menu_stack[gui_menu_stack_ptr].curpos = gui_menu_curr_item;
                         gui_menu_stack[gui_menu_stack_ptr].toppos = gui_menu_top_item;
-                        gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, 0);
+                        if (conf.menu_select_first_entry)
+        									gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, 0);
+        								else 
+        								gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, -1);
                         gui_menu_stack_ptr++;
                         // FIXME check on stack overrun;
                         if (gui_menu_stack_ptr > MENUSTACK_MAXDEPTH){
@@ -343,7 +349,11 @@ static char sbuf[7];
                         gui_menu_stack[gui_menu_stack_ptr].menu = curr_menu;
                         gui_menu_stack[gui_menu_stack_ptr].curpos = gui_menu_curr_item;
                         gui_menu_stack[gui_menu_stack_ptr].toppos = gui_menu_top_item;
-                        gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, 0);
+                        if (conf.menu_select_first_entry)
+       											gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, 0);
+        								else 
+        								gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, -1);
+                                           
                         gui_menu_stack_ptr++;
                         // FIXME check on stack overrun;
                         if (gui_menu_stack_ptr > MENUSTACK_MAXDEPTH){

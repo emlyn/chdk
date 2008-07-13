@@ -1007,7 +1007,7 @@ void __attribute__((naked,noinline)) sub_FFC622B4_my() { //#fs
 	"loc_FFC624C8:\n"
 		"MOV	R0, R4\n"
 		"LDMFD	SP!, {R4-R8,LR}\n"
-		"B		sub_FFC61ED8\n"			// <---------------		//NOTE this func is in movie_rec.c
+		"B		sub_FFC61ED8_my\n"	// <---------------	//NOTE this func is in movie_rec.c
 	"loc_FFC624D4:\n"
 		"LDR	R12, =0x10B0\n"
 		"CMP	R4, R12\n"

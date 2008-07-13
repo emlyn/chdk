@@ -943,18 +943,21 @@ unsigned int hour=0, min=0, sec=0;
    if (--skipcalls ==0) { 
     if (elapsed>5)
      {
-     if (conf.show_movie_time == 3)
+     if (conf.show_movie_time == 3){
       sprintf(osd_buf, "%04d KB/s", avg_use);
       draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y, osd_buf, conf.osd_color);
       sprintf(osd_buf2, "-%02d:%02d:%02d", hour, min, sec);
       draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y+FONT_HEIGHT, osd_buf2, conf.osd_color);
+    }
      if (conf.show_movie_time == 2)
-      sprintf(osd_buf, "%04d KB/s", avg_use);
+      {sprintf(osd_buf, "%04d KB/s", avg_use);
       draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y, osd_buf, conf.osd_color);
+    }
       if (conf.show_movie_time == 1)
+       {
         sprintf(osd_buf, "-%02d:%02d:%02d", hour, min, sec);
         draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y, osd_buf, conf.osd_color);
-
+				}
       }
 
      skipcalls = conf.show_movie_refresh*5;
