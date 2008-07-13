@@ -6,6 +6,11 @@ NHSTUB(kbd_pwr_off, 0xFF84448C)
 NHSTUB(kbd_pwr_on, 0xFF84443C)
 NHSTUB(kbd_read_keys_r2, 0xFF843FA8)
 NHSTUB(time, 0xFF865744)
+
+NSTUB(PutInNdFilter,  0xFF9E448C)
+NSTUB(PutOutNdFilter, 0xFF9E44C4)
+
+
 //NHSTUB(OnPrintTouchWheel, 0xFF8E7130)
 //NHSTUB(OffPrintTouchWheel, 0xFF8E7120)
 
@@ -85,6 +90,4 @@ NSTUB(taskName,				 0xFF810958)
 NSTUB(taskResume,			 0xFF810958)
 NSTUB(taskSuspend,			 0xFF810958)
 
-NSTUB(PutInNdFilter,    		 0xFF810958)
-NSTUB(PutOutNdFilter,   		 0xFF810958)
 NSTUB(UnsetZoomForMovie,       	         0xFF810958)
