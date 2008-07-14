@@ -176,6 +176,7 @@ static const char* gui_show_movie_time(int change, int arg);
 static const char* gui_script_autostart_enum(int change, int arg);
 static const char* gui_script_param_set_enum(int change, int arg);
 static const char* gui_override_disable_enum(int change, int arg);
+static const char* gui_conf_curve_enum(int change, int arg);
 void rinit();
 
 
@@ -647,12 +648,12 @@ static CMenuItem zebra_submenu_items[] = {
 static CMenu zebra_submenu = {0x26,LANG_MENU_ZEBRA_TITLE, NULL, zebra_submenu_items };
 
 static CMenuItem curve_submenu_items[] = {
-    {0x5c,LANG_MENU_CURVE_ENABLE,        MENUITEM_BOOL,      &conf.curve_enable  },    
-    {0x35,LANG_MENU_CURVE_LOAD,           MENUITEM_PROC,      (int*)gui_load_curve },    
-    {0x51,LANG_MENU_BACK,                  MENUITEM_UP },
+    {0x5f,LANG_MENU_CURVE_ENABLE,        MENUITEM_ENUM,      (int*)gui_conf_curve_enum },    
+    {0x35,LANG_MENU_CURVE_LOAD,          MENUITEM_PROC,      (int*)gui_load_curve },    
+    {0x51,LANG_MENU_BACK,                MENUITEM_UP },
     {0}
 };
-static CMenu curve_submenu = {0x21,LANG_MENU_CURVE_PARAM_TITLE, NULL, curve_submenu_items };
+static CMenu curve_submenu = {0x85,LANG_MENU_CURVE_PARAM_TITLE, NULL, curve_submenu_items };
 
 static CMenuItem remote_submenu_items[] = {
     {0x5c,LANG_MENU_REMOTE_ENABLE,            MENUITEM_BOOL,                    &conf.ricoh_ca1_mode            },    
@@ -663,7 +664,7 @@ static CMenuItem remote_submenu_items[] = {
     {0x51,LANG_MENU_BACK,                      MENUITEM_UP },
     {0}
 };
-static CMenu remote_submenu = {0x21,LANG_MENU_REMOTE_PARAM_TITLE, NULL, remote_submenu_items };
+static CMenu remote_submenu = {0x86,LANG_MENU_REMOTE_PARAM_TITLE, NULL, remote_submenu_items };
 
 
 static CMenuItem root_menu_items[] = {
@@ -755,6 +756,19 @@ void cb_zebra_restore_screen() {
 void cb_zebra_restore_osd() {
     if (conf.zebra_restore_osd)
         conf.zebra_restore_screen = 1;
+}
+
+//-------------------------------------------------------------------
+const char* gui_conf_curve_enum(int change, int arg) {
+    static const char* modes[]={ "None", "Custom", "+1EV", "+2EV", "Auto DR" };
+
+    conf.curve_enable+=change;
+    if (conf.curve_enable<0)
+        conf.curve_enable=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.curve_enable>=(sizeof(modes)/sizeof(modes[0])))
+        conf.curve_enable=0;
+
+    return modes[conf.curve_enable];
 }
 
 //-------------------------------------------------------------------
@@ -1570,6 +1584,7 @@ void gui_init()
     load_bad_pixels_list("A/CHDK/badpixel");
     load_bad_pixels_list("A/CHDK/badpixel.txt");
     curve_load(conf.curve_file); // load curve upon init 
+    drcurve_load("A/CHDK/SYSCURVES.CVF"); // load system L curves
 }
 
 //-------------------------------------------------------------------

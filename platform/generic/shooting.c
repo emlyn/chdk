@@ -856,6 +856,13 @@ long get_exposure_counter()
 #endif
 }
 
+short shooting_get_ev_correction1()
+{
+    short evc1 = 0;
+    _GetPropertyCase(PROPCASE_EV_CORRECTION_1, &evc1, sizeof(evc1));
+    return evc1;
+}
+
 int shooting_get_zoom() {
     return lens_get_zoom_point();
 }

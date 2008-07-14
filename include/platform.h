@@ -494,7 +494,7 @@ extern int movie_status;
 extern int zoom_status;
 
 void wait_until_remote_button_is_released(void);
-
+short shooting_get_ev_correction1();
 
 #define started() debug_led(1)
 #define finished() debug_led(0)
