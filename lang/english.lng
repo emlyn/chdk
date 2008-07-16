@@ -355,7 +355,7 @@
 255 "Bracketing Type"
 
 256 "Autostart"
-257 "Remote Enable (USB)"
+257 "Enable Remote"
 
 258 "Exposure Control (No Flash)"
 //259 "Exposure Control (No Flash) ->"
@@ -527,3 +527,6 @@
 390 "RAW Exceptions Menu"
 391 "Warn when Exception?"
 392 "Always select 1st entry in menu"
+
+393 "script"
+394 "scriptless"

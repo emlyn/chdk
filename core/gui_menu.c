@@ -296,10 +296,15 @@ static char sbuf[7];
                         gui_menu_stack[gui_menu_stack_ptr].menu = curr_menu;
                         gui_menu_stack[gui_menu_stack_ptr].curpos = gui_menu_curr_item;
                         gui_menu_stack[gui_menu_stack_ptr].toppos = gui_menu_top_item;
-                        if (conf.menu_select_first_entry)
-        									gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, 0);
-        								else 
-        								gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, -1);
+                        if (conf.menu_select_first_entry) {
+                            gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, 0);
+                            if ((curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK)==MENUITEM_TEXT || (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK)==MENUITEM_SEPARATOR) {
+//                                ++gui_menu_top_item;
+                                ++gui_menu_curr_item;
+                            }
+                        }
+                        else 
+                            gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, -1);
                         gui_menu_stack_ptr++;
                         // FIXME check on stack overrun;
                         if (gui_menu_stack_ptr > MENUSTACK_MAXDEPTH){
@@ -349,11 +354,15 @@ static char sbuf[7];
                         gui_menu_stack[gui_menu_stack_ptr].menu = curr_menu;
                         gui_menu_stack[gui_menu_stack_ptr].curpos = gui_menu_curr_item;
                         gui_menu_stack[gui_menu_stack_ptr].toppos = gui_menu_top_item;
-                        if (conf.menu_select_first_entry)
-       											gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, 0);
-        								else 
-        								gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, -1);
-                                           
+                        if (conf.menu_select_first_entry) {
+                            gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, 0);
+                            if ((curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK)==MENUITEM_TEXT || (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK)==MENUITEM_SEPARATOR) {
+//                                ++gui_menu_top_item;
+                                ++gui_menu_curr_item;
+                            }
+                        }
+                        else 
+                            gui_menu_set_curr_menu((CMenu*)(curr_menu->menu[gui_menu_curr_item].value), 0, -1);
                         gui_menu_stack_ptr++;
                         // FIXME check on stack overrun;
                         if (gui_menu_stack_ptr > MENUSTACK_MAXDEPTH){

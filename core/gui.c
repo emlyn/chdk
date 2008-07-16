@@ -193,6 +193,20 @@ static void cb_zebra_restore_osd();
 
 // Menu definition
 //-------------------------------------------------------------------
+static CMenuItem remote_submenu_items[] = {
+    {0x0,LANG_MENU_SCRIPT,                    MENUITEM_SEPARATOR },
+    {0x5c,LANG_MENU_SCRIPT_REMOTE_ENABLE,     MENUITEM_BOOL,                    &conf.remote_enable},    
+    {0x0,LANG_MENU_SCRIPTLESS,                MENUITEM_SEPARATOR },
+	{0x5c,LANG_MENU_REMOTE_ENABLE,            MENUITEM_BOOL,                    &conf.ricoh_ca1_mode            },    
+    {0x5c,LANG_MENU_SYNCH_ENABLE,             MENUITEM_BOOL,                    &conf.synch_enable              },    
+    {0x5c,LANG_MENU_SYNCH_DELAY_ENABLE,       MENUITEM_BOOL,                    &conf.synch_delay_enable        },    
+    {0x5c,LANG_MENU_SYNCH_DELAY_VALUE,        MENUITEM_INT|MENUITEM_F_UNSIGNED, &conf.synch_delay_value         },    
+    {0x5c,LANG_MENU_SYNCH_DELAY_COARSE_VALUE, MENUITEM_INT|MENUITEM_F_UNSIGNED, &conf.synch_delay_coarse_value  },    
+    {0x51,LANG_MENU_BACK,                     MENUITEM_UP },
+    {0}
+};
+static CMenu remote_submenu = {0x86,LANG_MENU_REMOTE_PARAM_TITLE, NULL, remote_submenu_items };
+
 static CMenuItem script_submenu_items_top[] = {
     {0x35,LANG_MENU_SCRIPT_LOAD,             MENUITEM_PROC,                      (int*)gui_load_script },
     {0x5f,LANG_MENU_SCRIPT_DELAY,            MENUITEM_INT|MENUITEM_F_UNSIGNED,   &conf.script_shoot_delay },
@@ -200,7 +214,8 @@ static CMenuItem script_submenu_items_top[] = {
 	{0x5f,LANG_MENU_SCRIPT_AUTOSTART,		MENUITEM_ENUM,						(int*)gui_script_autostart_enum },
 
 #if CAM_REMOTE
-	{0x71,LANG_MENU_SCRIPT_REMOTE_ENABLE,	MENUITEM_BOOL,						&conf.remote_enable},
+    {0x86,LANG_MENU_REMOTE_PARAM,            MENUITEM_SUBMENU,   (int*)&remote_submenu },
+	//{0x71,LANG_MENU_SCRIPT_REMOTE_ENABLE,	MENUITEM_BOOL,						&conf.remote_enable},
 #endif
     {0x5d,LANG_MENU_SCRIPT_DEFAULT_VAL,     MENUITEM_PROC,                      (int*)gui_load_script_default },
     {0x5e,LANG_MENU_SCRIPT_PARAM_SET,     MENUITEM_ENUM,                         (int*)gui_script_param_set_enum },
@@ -654,18 +669,6 @@ static CMenuItem curve_submenu_items[] = {
     {0}
 };
 static CMenu curve_submenu = {0x85,LANG_MENU_CURVE_PARAM_TITLE, NULL, curve_submenu_items };
-
-static CMenuItem remote_submenu_items[] = {
-    {0x5c,LANG_MENU_REMOTE_ENABLE,            MENUITEM_BOOL,                    &conf.ricoh_ca1_mode            },    
-    {0x5c,LANG_MENU_SYNCH_ENABLE,             MENUITEM_BOOL,                    &conf.synch_enable              },    
-    {0x5c,LANG_MENU_SYNCH_DELAY_ENABLE,       MENUITEM_BOOL,                    &conf.synch_delay_enable        },    
-    {0x5c,LANG_MENU_SYNCH_DELAY_VALUE,        MENUITEM_INT|MENUITEM_F_UNSIGNED, &conf.synch_delay_value         },    
-    {0x5c,LANG_MENU_SYNCH_DELAY_COARSE_VALUE, MENUITEM_INT|MENUITEM_F_UNSIGNED, &conf.synch_delay_coarse_value  },    
-    {0x51,LANG_MENU_BACK,                      MENUITEM_UP },
-    {0}
-};
-static CMenu remote_submenu = {0x86,LANG_MENU_REMOTE_PARAM_TITLE, NULL, remote_submenu_items };
-
 
 static CMenuItem root_menu_items[] = {
     {0x21,LANG_MENU_OPERATION_PARAM,         MENUITEM_SUBMENU,   (int*)&operation_submenu },

@@ -342,7 +342,7 @@ static char* gui_lang_default = \
 "255 \"Bracketing type\"\n"
 
 "256 \"Script Autostart\"\n"
-"257 \"Enable remote (USB)\"\n"
+"257 \"Enable Remote\"\n"
 
 "258 \"Exposure control (no flash)\"\n"
 //"259 \"Exposure control (no flash)->\"\n"
@@ -509,6 +509,9 @@ static char* gui_lang_default = \
 "390 \"RAW Exceptions Menu\"\n"
 "391 \"Warn when exception?\"\n"
 "392 \"Always select 1st entry in menu?\"\n"
+
+"393 \"script\"\n"
+"394 \"scriptless\"\n"
 ;
 
 //-------------------------------------------------------------------

@@ -498,9 +498,12 @@
 #define LANG_MENU_RAW_WARN				391
 #define LANG_MENU_SELECT_FIRST_ENTRY				392
 
+#define LANG_MENU_SCRIPT       393
+#define LANG_MENU_SCRIPTLESS   394
+
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  392
+#define GUI_LANG_ITEMS                  394
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();
