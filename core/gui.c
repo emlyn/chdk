@@ -629,12 +629,12 @@ static CMenuItem raw_exceptions_submenu_items[] = {
     {0x51,LANG_MENU_BACK,                           MENUITEM_UP },
     {0}
 };
-static CMenu raw_exceptions_submenu = {0x5c,LANG_MENU_OSD_RAW_EXCEPTIONS_PARAMS_TITLE, NULL, raw_exceptions_submenu_items };
+static CMenu raw_exceptions_submenu = {0x59,LANG_MENU_OSD_RAW_EXCEPTIONS_PARAMS_TITLE, NULL, raw_exceptions_submenu_items };
 
 
 static CMenuItem raw_submenu_items[] = {
     {0x5c,LANG_MENU_RAW_SAVE,                MENUITEM_BOOL,      &conf.save_raw },
-    {0x34,LANG_MENU_OSD_RAW_EXCEPTIONS_PARAMS,	 	MENUITEM_SUBMENU,   (int*)&raw_exceptions_submenu },
+    {0x59,LANG_MENU_OSD_RAW_EXCEPTIONS_PARAMS,	 	MENUITEM_SUBMENU,   (int*)&raw_exceptions_submenu },
     {0x5f,LANG_MENU_RAW_NOISE_REDUCTION,     MENUITEM_ENUM,      (int*)gui_raw_nr_enum },
     {0x5c,LANG_MENU_RAW_FIRST_ONLY,          MENUITEM_BOOL,      &conf.raw_save_first_only },
     {0x5c,LANG_MENU_RAW_SAVE_IN_DIR,         MENUITEM_BOOL,      &conf.raw_in_dir },
