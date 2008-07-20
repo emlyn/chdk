@@ -99,7 +99,15 @@ int mf_slider_active() // from 710 added
 void *vid_get_viewport_live_fb() // from 710 added
 {
    // return (void*)0x10670ee0;
-return (void*)0x0; 
+    void **fb=(void **)0x5288;
+    unsigned char buff = *((unsigned char*)0x5298);
+    if (buff == 0) {
+        buff = 2;
+    }
+    else {
+        buff--;
+    }
+    return fb[buff];
 }
 
 
