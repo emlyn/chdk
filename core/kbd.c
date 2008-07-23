@@ -443,3 +443,7 @@ static int keyid_by_name (const char *n)
 	    return keynames[i].keyid;
     return 0;
 }
+
+int kbd_is_blocked() {
+	return kbd_blocked;
+}

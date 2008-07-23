@@ -393,6 +393,26 @@
     #define CAM_MULTIPART               1
 
 //----------------------------------------------------------
+
+#elif defined (CAMERA_ixus750_sd550)
+    #define CAM_PROPSET                1
+
+    #define CAM_RAW_ROWPIX              3152  // for 7 MP
+    #define CAM_RAW_ROWS                2340  // for 7 MP
+
+    #define  CAM_USE_ZOOM_FOR_MF    1
+    #define CAM_DRAW_EXPOSITION        1
+    #undef  CAM_HAS_ERASE_BUTTON
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define CAM_HAS_ND_FILTER          1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define  CAM_CAN_SD_OVERRIDE    1
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #undef  CAM_HAS_IS
+    #define CAM_MULTIPART              1 
+    #undef CAM_SYNCH 
+//----------------------------------------------------------
 #elif defined (CAMERA_ixus800_sd700)
     #define CAM_PROPSET                 1
 
@@ -440,7 +460,8 @@
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
-    #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
+	#define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
+    #undef  CAM_CAN_MUTE_MICROPHONE
     
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus950_sd850)
