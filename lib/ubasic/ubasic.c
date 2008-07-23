@@ -1418,12 +1418,35 @@ static void set_zoom_speed_statement()
 
 
 static void set_ev_statement()
+ 	{
+ 	    int to;
+ 	    accept(TOKENIZER_SET_EV);
+ 	    to = expr();
+ 	        shooting_set_prop(PROPCASE_EV_CORRECTION_1, to);
+ 	        shooting_set_prop(PROPCASE_EV_CORRECTION_2, to);
+ 	    accept_cr();
+ 	}
+
+static void set_movie_status_statement()
 {
     int to;
-    accept(TOKENIZER_SET_EV);
+    accept(TOKENIZER_SET_MOVIE_STATUS);
     to = expr();
-	shooting_set_prop(PROPCASE_EV_CORRECTION_1, to);
-  	shooting_set_prop(PROPCASE_EV_CORRECTION_2, to);
+if (to==1) {
+	if (movie_status == 4) {
+	movie_status = 1;
+}}
+if (to==2) {
+	if (movie_status == 1) {
+	movie_status = 4;
+}
+}
+if (to==3) {
+	if (movie_status == 1 || 4) {
+	movie_status = 5;
+}}
+
+
     accept_cr();
 }
 
@@ -1940,6 +1963,10 @@ statement(void)
 
   case TOKENIZER_SET_EV:
         set_ev_statement();
+   break;
+   
+    case TOKENIZER_SET_MOVIE_STATUS:
+        set_movie_status_statement();
    break;
 
   case TOKENIZER_WAIT_CLICK:

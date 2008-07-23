@@ -143,6 +143,7 @@ static const struct keyword_token keywords[] = {
   {"set_iso_real",            TOKENIZER_SET_ISO_REAL},
   {"set_iso",                 TOKENIZER_SET_ISO_MODE}, //FOR COMPATIBILITY
   {"set_led",                 TOKENIZER_SET_LED},
+  {"set_movie_status",        TOKENIZER_SET_MOVIE_STATUS},  
   {"set_nd_filter",           TOKENIZER_SET_ND_FILTER},
   {"set_prop",                TOKENIZER_SET_PROP},
   {"set_raw_nr",              TOKENIZER_SET_RAW_NR},

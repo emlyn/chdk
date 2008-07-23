@@ -501,9 +501,11 @@
 #define LANG_MENU_SCRIPT       393
 #define LANG_MENU_SCRIPTLESS   394
 
+#define LANG_MENU_FAST_SWITCH_VIDEO 395
+
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  394
+#define GUI_LANG_ITEMS                  395
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

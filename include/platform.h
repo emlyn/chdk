@@ -294,7 +294,7 @@ long kbd_get_clicked_key();
 long kbd_get_autoclicked_key();
 void kbd_reset_autoclicked_key();
 long kbd_use_zoom_as_mf();
-long kbd_use_up_down_as_fast_ev();
+long kbd_use_up_down_left_right_as_fast_switch();
 void kbd_set_alt_mode_key_mask(long key);
 int get_usb_power(int edge);
 /******************************************************************/

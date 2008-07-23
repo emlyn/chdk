@@ -512,6 +512,7 @@ static char* gui_lang_default = \
 
 "393 \"script\"\n"
 "394 \"scriptless\"\n"
+"395 \"Fast Video Control?\"\n"
 ;
 
 //-------------------------------------------------------------------

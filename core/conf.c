@@ -338,6 +338,7 @@ static const ConfInfo conf_info[] = {
    	CONF_INFO(199, conf.save_raw_in_timer,      CONF_DEF_VALUE, i:0, NULL),
  		CONF_INFO(200, conf.raw_exceptions_warn,      CONF_DEF_VALUE, i:1, NULL),
  		CONF_INFO(201, conf.menu_select_first_entry,      CONF_DEF_VALUE, i:1, NULL),
+		CONF_INFO(202, conf.fast_movie_control,           CONF_DEF_VALUE, i:1, NULL),
 
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
