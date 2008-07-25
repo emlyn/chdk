@@ -44,7 +44,16 @@ long hook_raw_size()
 
 void *vid_get_viewport_live_fb() // live picture buffer (shoot not pressed)
 {
-	return ((void **)0x8C58)[*((unsigned char*)0x8C74)];
+//	return ((void **)0x8C58)[*((unsigned char*)0x8C74)];
+    void **fb=(void **)0x8C58;
+    unsigned char buff = *((unsigned char*)0x8C74);
+    if (buff == 0) {
+        buff = 2;
+    }
+    else {
+        buff--;
+    }
+    return fb[buff];
 }
 
 void *vid_get_bitmap_fb()	// OSD buffer

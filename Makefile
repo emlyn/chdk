@@ -129,6 +129,8 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=sx100is  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus750_sd550  PLATFORMSUB=100f NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus750_sd550  PLATFORMSUB=100g NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus60_sd600  PLATFORMSUB=100a NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus60_sd600  PLATFORMSUB=100d NO_INC_BUILD=1 firzipsub
 	@echo "**** All firmwares created successfully"
 
 batch-clean:
@@ -184,6 +186,8 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=sx100is  PLATFORMSUB=100c NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus750_sd550  PLATFORMSUB=100f NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus750_sd550  PLATFORMSUB=100g NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus60_sd600  PLATFORMSUB=100a NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus60_sd600  PLATFORMSUB=100d NO_INC_BUILD=1 clean
 	
 
 .PHONY: fir upload
