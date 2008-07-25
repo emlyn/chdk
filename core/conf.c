@@ -13,7 +13,7 @@
 #include "script.h"
 
 //-------------------------------------------------------------------
-#define CONF_FILE  "A/CHDK/CHDK.CFG"
+#define CONF_FILE  "A/CHDK/CCHDK.CFG"
 #define CONF_MAGICK_VALUE (0x33204741)
 
 #define CONF_INFO(id, param, type, def, func) { id, sizeof( param ), &param , type, {def}, func }

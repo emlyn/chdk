@@ -478,6 +478,7 @@ extern char canon_shoot_menu_active;
 extern int recreview_hold;
 
 extern int movie_status;
+unsigned int movie_reset;
 unsigned int GetFreeCardSpaceKb(void);
 unsigned int GetTotalCardSpaceKb(void);
 

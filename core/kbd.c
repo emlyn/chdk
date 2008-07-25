@@ -1225,7 +1225,7 @@ if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_presse
     else if (conf.video_bitrate>=(sizeof(modes)/sizeof(modes[0])))
         conf.video_bitrate=sizeof(modes)/sizeof(modes[0])-1;
     shooting_video_bitrate_change(conf.video_bitrate);
-        		
+movie_reset = 1;
         		
             key_pressed = KEY_UP;
             return 1;
@@ -1259,12 +1259,11 @@ if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_presse
     conf.video_bitrate+=-1;
     if (conf.video_bitrate<0)
         conf.video_bitrate=0;
-    else if (conf.video_bitrate>=(sizeof(modes)/sizeof(modes[0])))
-        conf.video_bitrate=0;
+
 
     shooting_video_bitrate_change(conf.video_bitrate);
+movie_reset = 1;
 
-    return modes[conf.video_bitrate];
         		
         		
             key_pressed = KEY_DOWN;

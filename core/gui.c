@@ -195,9 +195,9 @@ static void cb_zebra_restore_osd();
 //-------------------------------------------------------------------
 static CMenuItem remote_submenu_items[] = {
     {0x0,LANG_MENU_SCRIPT,                    MENUITEM_SEPARATOR },
-    {0x5c,LANG_MENU_SCRIPT_REMOTE_ENABLE,     MENUITEM_BOOL,                    &conf.remote_enable},    
+    {0x71,LANG_MENU_SCRIPT_REMOTE_ENABLE,     MENUITEM_BOOL,                    &conf.remote_enable},    
     {0x0,LANG_MENU_SCRIPTLESS,                MENUITEM_SEPARATOR },
-	{0x5c,LANG_MENU_REMOTE_ENABLE,            MENUITEM_BOOL,                    &conf.ricoh_ca1_mode            },    
+	{0x71,LANG_MENU_REMOTE_ENABLE,            MENUITEM_BOOL,                    &conf.ricoh_ca1_mode            },    
     {0x5c,LANG_MENU_SYNCH_ENABLE,             MENUITEM_BOOL,                    &conf.synch_enable              },    
     {0x5c,LANG_MENU_SYNCH_DELAY_ENABLE,       MENUITEM_BOOL,                    &conf.synch_delay_enable        },    
     {0x5c,LANG_MENU_SYNCH_DELAY_VALUE,        MENUITEM_INT|MENUITEM_F_UNSIGNED, &conf.synch_delay_value         },    

@@ -914,7 +914,11 @@ static int init = 0;
 static unsigned int skipcalls = 1;
 unsigned int hour=0, min=0, sec=0;
  
-
+if (movie_reset == 1)
+	{
+		init = 0;
+		movie_reset = 0;
+	}
     if (movie_status > 1) record_running = 1;
     else 
     {record_running = 0;
@@ -938,14 +942,14 @@ unsigned int hour=0, min=0, sec=0;
     min = (time_left % 3600) / 60;
     sec = (time_left % 3600) % 60;
     
-       if (elapsed<5)
+       if (elapsed<1)
    {
   sprintf(osd_buf, "Calc...");
    draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y, osd_buf, conf.osd_color);
     }
     
    if (--skipcalls ==0) { 
-    if (elapsed>5)
+    if (elapsed>1)
      {
      if (conf.show_movie_time == 3){
       sprintf(osd_buf, "%04d KB/s", avg_use);
