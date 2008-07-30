@@ -66,6 +66,17 @@
  #define SHORTCUT_SET_INFINITY        KEY_UP
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
 
+#elif defined(CAMERA_sx100is)
+//Alt mode
+ #define SHORTCUT_TOGGLE_RAW          KEY_ERASE
+//Half press shoot button    
+ #define SHORTCUT_TOGGLE_HISTO        KEY_UP
+ #define SHORTCUT_TOGGLE_ZEBRA        KEY_DOWN
+ #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
+//Alt mode & Manual mode  
+ #define SHORTCUT_SET_INFINITY        KEY_UP
+ #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
+
 #else
 
 //Alt mode
@@ -987,6 +998,9 @@ const char* gui_alt_mode_button_enum(int change, int arg) {
 #elif defined(CAMERA_a650)
     static const char* names[]={ "Print", "ISO"};
     static const int keys[]={ KEY_PRINT, KEY_ISO };
+#elif defined(CAMERA_sx100is)
+    static const char* names[]={ "Print", "Face"};
+    static const int keys[]={ KEY_PRINT, KEY_FACE };
 #else
     #error camera alt-buttons not defined
 #endif

@@ -431,8 +431,9 @@ static const struct Keynames {
     { KEY_TIMER,        "timer"      },
     { KEY_EXPO_CORR,    "expo_corr"  },
     { KEY_MICROPHONE,   "fe"         },
+    { KEY_FACE,         "face"       },
     { 0xFF,             "remote"     },
-	{ 0xFFFF,           "no_key"     },
+    { 0xFFFF,           "no_key"     },
 };
 
 static int keyid_by_name (const char *n)
