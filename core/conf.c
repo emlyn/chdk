@@ -55,7 +55,7 @@ int debug_pardata_show;
 static int def_ubasic_vars[SCRIPT_NUM_PARAMS] = {0};
 static int def_batt_volts_max, def_batt_volts_min;
 static OSD_pos def_histo_pos, def_dof_pos, def_batt_icon_pos, def_space_icon_pos, def_space_hor_pos, def_space_ver_pos, def_batt_txt_pos, def_space_txt_pos, 
-               def_mode_state_pos, def_mode_raw_pos, def_mode_video_pos, def_mode_ev_pos, def_values_pos, def_clock_pos;
+               def_mode_state_pos, def_mode_raw_pos, def_mode_video_pos, def_mode_ev_pos, def_values_pos, def_clock_pos, def_temp_pos;
 static int def_user_menu_vars[USER_MENU_ITEMS] = {0};
 
 static void conf_change_script_file();
@@ -186,7 +186,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO( 59, conf.use_zoom_mf,            CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 60, conf.raw_save_first_only,    CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 61, conf.reader_wrap_by_words,   CONF_DEF_VALUE, i:0, NULL),
-    CONF_INFO( 62, conf.menu_symbol_rbf_file,   CONF_DEF_PTR,   ptr:"", conf_change_menu_symbol_rbf_file),
+    CONF_INFO( 62, conf.menu_symbol_rbf_file,   CONF_DEF_PTR,   ptr:"A/CHDK/SYMBOLS/icon_10.rbf", conf_change_menu_symbol_rbf_file),
     CONF_INFO( 63, conf.alt_mode_button,        CONF_DEF_VALUE, i:KEY_PRINT, conf_change_alt_mode_button),
     CONF_INFO( 64, conf.lang_file,              CONF_DEF_PTR,   ptr:"", NULL),
     CONF_INFO( 65, conf.font_cp,                CONF_DEF_VALUE, i:FONT_CP_WIN_1251, conf_change_font_cp),
@@ -312,14 +312,14 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(173, conf.override_disable_all,   CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(174, conf.hide_osd_in_playback,   CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(175, conf.save_raw_in_video,      CONF_DEF_VALUE, i:0, NULL),
-    CONF_INFO(176, conf.show_movie_time,        CONF_DEF_VALUE, i:1, NULL),
+    CONF_INFO(176, conf.show_movie_time,        CONF_DEF_VALUE, i:3, NULL),
     CONF_INFO(177, conf.show_movie_refresh,     CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(178, conf.mode_video_pos,         CONF_DEF_PTR,   ptr:&def_mode_video_pos , NULL),
     CONF_INFO(179, conf.clear_video,            CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(180, conf.fast_ev,                CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(181, conf.fast_ev_step,           CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(182, conf.mode_ev_pos,            CONF_DEF_PTR,   ptr:&def_mode_ev_pos , NULL),
-    CONF_INFO(183, conf.menu_symbol_enable,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(183, conf.menu_symbol_enable,     CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(184, conf.menu_symbol_color,      CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_BG, COLOR_FG), NULL),
     CONF_INFO(185, conf.curve_file,             CONF_DEF_PTR, ptr:"", NULL),
     CONF_INFO(186, conf.curve_enable,           CONF_DEF_VALUE, i:0, NULL),
@@ -338,7 +338,10 @@ static const ConfInfo conf_info[] = {
    	CONF_INFO(199, conf.save_raw_in_timer,      CONF_DEF_VALUE, i:0, NULL),
  		CONF_INFO(200, conf.raw_exceptions_warn,      CONF_DEF_VALUE, i:1, NULL),
  		CONF_INFO(201, conf.menu_select_first_entry,      CONF_DEF_VALUE, i:1, NULL),
-		CONF_INFO(202, conf.fast_movie_control,           CONF_DEF_VALUE, i:1, NULL),
+		CONF_INFO(202, conf.fast_movie_control,           CONF_DEF_VALUE, i:0, NULL),
+		CONF_INFO(203, conf.show_temp,           CONF_DEF_VALUE, i:1, NULL),
+		CONF_INFO(204, conf.temp_pos,              CONF_DEF_PTR,   ptr:&def_temp_pos , NULL),
+		CONF_INFO(205, conf.fast_movie_quality_control,           CONF_DEF_VALUE, i:1, NULL),
 
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
@@ -424,6 +427,8 @@ static void conf_init_defaults() {
     def_values_pos.y=30;
     def_clock_pos.x=vid_get_bitmap_screen_width()-5*FONT_WIDTH-2;
     def_clock_pos.y=0;
+    def_temp_pos.x=vid_get_bitmap_screen_width()-8*FONT_WIDTH-2;
+    def_temp_pos.y=1*FONT_HEIGHT;
 }
 
 //-------------------------------------------------------------------

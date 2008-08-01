@@ -4,7 +4,7 @@ SKIPBUILDRULES=1
 
 include $(topdir)makefile.inc
 
-OBJS=pakwif.o finsig.o
+OBJS=pakwif.o finsig.o gensig.o
 
 all: pakwif$(EXE) finsig$(EXE)
 

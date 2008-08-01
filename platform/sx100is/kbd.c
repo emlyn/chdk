@@ -17,13 +17,12 @@ static long kbd_mod_state[3];
 
 static long last_kbd_key = 0;
 static long alt_mode_key_mask = 0x10000000;
-static int alt_mode_led=0;
 static int usb_power=0;
 static int remote_key, remote_count;
 
 
 #define KEYS_MASK0 (0x0000000C)
-#define KEYS_MASK1 (0x171F0300)
+#define KEYS_MASK1 (0x1F1F0300)
 #define KEYS_MASK2 (0x00000000)
 
 #define NEW_SS (0x2000)
@@ -50,6 +49,7 @@ static KeyMap keymap[] = {
 	{ 1, KEY_SET      , 0x00010000 },
 	{ 1, KEY_ERASE    , 0x01000000 },
 	{ 1, KEY_LEFT     , 0x00040000 },
+	{ 1, KEY_FACE     , 0x08000000 },
 
 	{ 0, KEY_SHOOT_FULL, 0x0000000C }, 
 	{ 0, KEY_SHOOT_HALF, 0x00000004 },

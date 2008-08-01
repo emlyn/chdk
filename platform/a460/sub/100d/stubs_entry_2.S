@@ -22,3 +22,8 @@ NHSTUB(TurnOnMic, 0xFFDC5808)
 NHSTUB(ExpCtrlTool_StopContiAE,  0xFFD0DCD8) 
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFFD0DCA8) 
 NHSTUB(MakeAFScan,               0xFFE70024) 
+NHSTUB(GetBatteryTemperature, 0xFFDC7D84)
+NHSTUB(GetCCDTemperature, 0xFFDC7D70)
+NHSTUB(GetOpticalTemperature, 0xFFDC7D5C)
+NHSTUB(PT_PlaySound, 0xFFE7A9F0)
+

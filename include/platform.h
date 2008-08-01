@@ -448,8 +448,12 @@ int mode_get();
 /******************************************************************/
 
 long stat_get_vbatt();
+int get_ccd_temp();
+int get_optical_temp();
+int get_battery_temp();
 long get_vbatt_min();
 long get_vbatt_max();
+void play_sound(short sound);
 void ubasic_camera_set_raw(int mode);
 void ubasic_camera_set_nr(int mode);
 int ubasic_camera_get_nr();

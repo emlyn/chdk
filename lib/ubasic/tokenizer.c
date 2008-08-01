@@ -69,6 +69,10 @@ static const struct keyword_token keywords[] = {
   {"then",                    TOKENIZER_THEN},
   {"else",                    TOKENIZER_ELSE},
   {"endif",                   TOKENIZER_ENDIF},
+  {"select",                  TOKENIZER_SELECT},
+  {"case_else",               TOKENIZER_CASE_ELSE},
+  {"case",                    TOKENIZER_CASE},
+  {"end_select",              TOKENIZER_END_SELECT},
   {"for",                     TOKENIZER_FOR},
   {"to",                      TOKENIZER_TO},
   {"next",                    TOKENIZER_NEXT},
@@ -87,6 +91,7 @@ static const struct keyword_token keywords[] = {
   {"print",                   TOKENIZER_PRINT},
   {"random",                  TOKENIZER_RANDOM},
   {"click",                   TOKENIZER_CLICK},
+  {"playsound",                   TOKENIZER_PLAY_SOUND},
   {"press",                   TOKENIZER_PRESS},
   {"release",                 TOKENIZER_RELEASE},
   //{"shot",                    TOKENIZER_SHOOT}, // for compatibility
@@ -112,7 +117,7 @@ static const struct keyword_token keywords[] = {
   {"get_iso_real",            TOKENIZER_GET_ISO_REAL},
   {"get_iso",                 TOKENIZER_GET_ISO_MODE}, //FOR COMPATIBILITY
   {"get_jpg_count",           TOKENIZER_GET_JPG_COUNT},
-  {"get_moviestate",          TOKENIZER_GET_MOVIESTATE},
+  {"get_movie_status",        TOKENIZER_GET_MOVIE_STATUS},
   {"get_near_limit",          TOKENIZER_GET_NEAR_LIMIT},
   {"get_propset",             TOKENIZER_GET_PROPSET},
   {"get_prop",                TOKENIZER_GET_PROP},
@@ -120,6 +125,7 @@ static const struct keyword_token keywords[] = {
   {"get_raw_nr",              TOKENIZER_GET_RAW_NR},
   {"get_raw",                 TOKENIZER_GET_RAW},
   {"get_sv96",	              TOKENIZER_GET_SV96},
+  {"get_temperature",         TOKENIZER_GET_TEMPERATURE},
   {"get_tick_count",          TOKENIZER_GET_TICK_COUNT},
   {"get_tv96",                TOKENIZER_GET_TV96},
   {"get_user_av_id",          TOKENIZER_GET_USER_AV_ID},
@@ -195,8 +201,7 @@ static const struct keyword_token keywords[] = {
   {"get_orientation_sensor",  TOKENIZER_GET_ORIENTATION_SENSOR},
   {"get_nd_present",          TOKENIZER_GET_ND_PRESENT},
   {"get_histo_range",         TOKENIZER_GET_HISTO_RANGE},
-  
-  {"shot_histo_enable",       TOKENIZER_SHOT_HISTO_ENABLE},
+   {"shot_histo_enable",       TOKENIZER_SHOT_HISTO_ENABLE},
   
   {"end",                     TOKENIZER_END},
 

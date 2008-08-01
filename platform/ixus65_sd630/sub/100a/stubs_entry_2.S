@@ -42,3 +42,8 @@ NHSTUB(UnsetZoomForMovie ,0xFF9B1680)
 NHSTUB(GetDrive_ClusterSize, 0xFF86FD58)
 NHSTUB(GetDrive_TotalClusters, 0xFF86FD94)
 NHSTUB(GetDrive_FreeClusters, 0xFF868AD4)
+NHSTUB(GetBatteryTemperature, 0xFF82E220)
+NHSTUB(GetCCDTemperature, 0xFF82E20C)
+NHSTUB(GetOpticalTemperature, 0xFF82E1F8)
+NHSTUB(PT_PlaySound, 0xFF96AA98)
+

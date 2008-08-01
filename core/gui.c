@@ -69,6 +69,19 @@ int script_params_has_changed=0;
  #define SHORTCUT_SET_INFINITY        KEY_UP
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
 
+#elif defined(CAMERA_sx100is)
+//Alt mode
+ #define SHORTCUT_TOGGLE_RAW          KEY_ERASE
+//Half press shoot button    
+ #define SHORTCUT_TOGGLE_HISTO        KEY_UP
+ #define SHORTCUT_TOGGLE_ZEBRA        KEY_DOWN
+ #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
+ #define SHORTCUT_DISABLE_OVERRIDES KEY_LEFT
+//Alt mode & Manual mode  
+ #define SHORTCUT_SET_INFINITY        KEY_UP
+ #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
+
+
 #else
 
 //Alt mode
@@ -125,6 +138,7 @@ static void gui_load_curve_selected(const char *fn);
 static void gui_load_curve(int arg);
 static const char* gui_histo_show_enum(int change, int arg);
 static const char* gui_histo_mode_enum(int change, int arg);
+static const char* gui_temp_mode_enum(int change, int arg);
 static const char* gui_histo_layout_enum(int change, int arg);
 static const char* gui_zebra_mode_enum(int change, int arg);
 static const char* gui_zebra_draw_osd_enum(int change, int arg);
@@ -403,6 +417,7 @@ static CMenuItem video_submenu_items[] = {
       {0x60,LANG_MENU_VIDEO_QUALITY,           MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.video_quality, MENU_MINMAX(1, 99)}, 
       {0x5c,LANG_MENU_CLEAR_VIDEO_VALUES,    MENUITEM_BOOL,    (int*)&conf.clear_video},
       {0x5c,LANG_MENU_FAST_SWITCH_VIDEO,   MENUITEM_BOOL,  &conf.fast_movie_control},
+      {0x5c,LANG_MENU_FAST_SWITCH_QUALITY_VIDEO,   MENUITEM_BOOL,  &conf.fast_movie_quality_control},
 #if CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
       {0x5c,LANG_MENU_OPTICAL_ZOOM_IN_VIDEO,   MENUITEM_BOOL,  &conf.unlock_optical_zoom_for_video},							
 #endif
@@ -581,6 +596,7 @@ static CMenuItem osd_submenu_items[] = {
     {0x5f,LANG_MENU_USER_MENU_ENABLE,		MENUITEM_ENUM,      (int*)gui_user_menu_show_enum },
     {0x5c,LANG_MENU_USER_MENU_AS_ROOT,       MENUITEM_BOOL,      &conf.user_menu_as_root },
     {0x5f,LANG_MENU_OSD_SHOW_STATES,         MENUITEM_BOOL,      &conf.show_state },
+    {0x5f,LANG_MENU_OSD_SHOW_TEMP,         MENUITEM_ENUM,      (int*)gui_temp_mode_enum },
     {0x72,LANG_MENU_OSD_LAYOUT_EDITOR,       MENUITEM_PROC,      (int*)gui_draw_osd_le },
     {0x7f,LANG_MENU_EDGE_OVERLAY,         MENUITEM_SUBMENU,   (int*)&edge_overlay_submenu },
     {0x2f,LANG_MENU_OSD_GRID_PARAMS,         MENUITEM_SUBMENU,   (int*)&grid_submenu },
@@ -834,6 +850,19 @@ const char* gui_histo_mode_enum(int change, int arg) {
     histogram_set_mode(conf.histo_mode);
 
     return modes[conf.histo_mode];
+}
+
+//-------------------------------------------------------------------
+const char* gui_temp_mode_enum(int change, int arg) {
+    static const char* modes[]={ "Off", "Optical","CCD","Battery","all" };
+
+    conf.show_temp+=change;
+    if (conf.show_temp<0)
+        conf.show_temp=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.show_temp>=(sizeof(modes)/sizeof(modes[0])))
+        conf.show_temp=0;
+
+    return modes[conf.show_temp];
 }
 
 //-------------------------------------------------------------------
@@ -1151,6 +1180,9 @@ const char* gui_alt_mode_button_enum(int change, int arg) {
 #elif defined(CAMERA_a650)
     static const char* names[]={ "Print", "ISO"};
     static const int keys[]={ KEY_PRINT, KEY_ISO };
+#elif defined(CAMERA_sx100is)
+    static const char* names[]={ "Print", "Face"};
+    static const int keys[]={ KEY_PRINT, KEY_FACE };
 #else
     #error camera alt-buttons not defined
 #endif
@@ -2158,11 +2190,15 @@ void gui_draw_osd() {
     
      if ((conf.show_clock) && (recreview_hold==0) &&  ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) && !conf.hide_osd_in_playback )))|| (conf.clock_halfpress==0) )) {
         gui_osd_draw_clock();
-    }
+            }
+    
     else if ((conf.show_clock) && (recreview_hold==0) &&  kbd_is_key_pressed(KEY_SHOOT_HALF) && conf.clock_halfpress==1) {
         gui_osd_draw_seconds();
     }
  
+      if ((conf.show_temp>0) && (recreview_hold==0) &&  ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) && !conf.hide_osd_in_playback )))|| (conf.clock_halfpress==0) )) {
+        gui_osd_draw_temp();
+      }
  if (conf.show_movie_time > 0)
  {
  gui_osd_draw_movie_time_left();
@@ -2187,14 +2223,16 @@ void gui_draw_osd() {
 	sprintf(osd_buf, "1:%8x  ", physw_status[0]);
 	draw_txt_string(28, 10, osd_buf, conf.osd_color);
 
-	sprintf(osd_buf, "2:%8x  ", physw_status[1]);
+ sprintf(osd_buf, "2:%8x  ", physw_status[1]);
+
 	draw_txt_string(28, 11, osd_buf, conf.osd_color);
 
-	sprintf(osd_buf, "3:%8x  ", physw_status[2]);
+sprintf(osd_buf, "3:%8x  ", physw_status[2]);
+
 	draw_txt_string(28, 12, osd_buf, conf.osd_color);
 
 //      sprintf(osd_buf, "4:%8x  ", vid_get_viewport_fb_d());
-        sprintf(osd_buf, "4:%8x  ", get_usb_power(1));
+         sprintf(osd_buf, "4:%8x  ", get_usb_power(1));
 	draw_txt_string(28, 13, osd_buf, conf.osd_color);
     }
 

@@ -137,11 +137,58 @@ void lens_set_focus_pos(long newpos)
     _SetPropertyCase(PROPCASE_SUBJECT_DIST2, &newpos, sizeof(newpos));
 }
 
+void play_sound(short sound)
+{
+	short tmp;
+    switch (sound)
+{
+  case 0:
+    tmp = 0x2001; //startup sound
+    break;
+  case 1:
+    tmp = 0x2002; //shutter sound
+    break;
+  case 2:
+    tmp = 0x2003; //button press sound
+    break;
+  case 3:
+    tmp = 0x2004; //self-timer sound
+    break;
+  case 4:
+   tmp = 0xC211; //short beep
+    break;
+  case 5:
+   tmp = 50000; // AF confirmation 
+    break;
+  case 6:
+   tmp = 0xC507; // error beep imo
+    break;
+  case 7:
+   tmp = 0x400D; // LONG ERROR BEEP CONTINIUOUS- warning, cannot be stopped (yet)
+    break;
+ }
+    _PT_PlaySound(tmp, 0);
+}
+
 long stat_get_vbatt()
 {
     return _VbattGet();
 }
 
+int get_battery_temp()
+{
+    return _GetBatteryTemperature();
+}
+
+int get_ccd_temp()
+{
+    return _GetCCDTemperature();
+}
+
+int get_optical_temp()
+{
+    return _GetOpticalTemperature();
+}
 
 long get_tick_count()
 {

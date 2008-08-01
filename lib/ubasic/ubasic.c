@@ -74,6 +74,16 @@ static int gosub_stack_ptr;
 static short if_stack[MAX_IF_STACK_DEPTH];
 static int if_stack_ptr;
 
+struct select_state {
+  int select_value;
+  short case_run;
+};
+#define MAX_SELECT_STACK_DEPTH 4
+static struct select_state select_stack[MAX_SELECT_STACK_DEPTH];
+static int select_stack_ptr;
+
+
+
 #define MAX_WHILE_STACK_DEPTH 4
 static short while_stack[MAX_WHILE_STACK_DEPTH];
 static int while_stack_ptr;
@@ -243,12 +253,14 @@ case TOKENIZER_IS_PRESSED:
     break;
   case TOKENIZER_RANDOM:
     accept(TOKENIZER_RANDOM);
+    int min = expr();
+    int max = expr();
     srand((int)shooting_get_bv96()+(unsigned short)stat_get_vbatt()+get_tick_count());
     ubasic_camera_sleep(rand()%10);
-    r = rand();
-   break;
-  case TOKENIZER_GET_MOVIESTATE:
-    accept(TOKENIZER_GET_MOVIESTATE);
+    r = min + rand()%(max-min+1);
+  break;
+  case TOKENIZER_GET_MOVIE_STATUS:
+    accept(TOKENIZER_GET_MOVIE_STATUS);
     r = movie_status;
    break;
   case TOKENIZER_GET_DRIVE_MODE:
@@ -259,7 +271,7 @@ case TOKENIZER_IS_PRESSED:
     accept(TOKENIZER_GET_FOCUS_MODE);
     r = shooting_get_prop(PROPCASE_FOCUS_MODE);
    break;
-  case TOKENIZER_GET_DISPLAY_MODE:
+ 	case TOKENIZER_GET_DISPLAY_MODE:
     accept(TOKENIZER_GET_DISPLAY_MODE);
     r = shooting_get_prop(PROPCASE_DISPLAY_MODE);
    break;
@@ -407,6 +419,22 @@ case TOKENIZER_IS_PRESSED:
     int to = expr();
     if (shot_histogram_enabled) r = (unsigned short)shot_histogram_get_range(from, to);
     else r = -1;
+    break;
+  case TOKENIZER_GET_TEMPERATURE:
+    accept(TOKENIZER_GET_TEMPERATURE);
+    int temp = expr();
+    switch (temp)
+    {
+    	case 0:
+    		r = get_optical_temp(); 
+    		break;
+     	case 1:
+    		r = get_ccd_temp(); 
+    		break;
+    	case 2:
+    		r = get_battery_temp();
+    		break;
+  }
     break;
  case TOKENIZER_GET_RAW:
     accept(TOKENIZER_GET_RAW);
@@ -764,6 +792,170 @@ endif_statement(void)
     }
 }
 /*---------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------*/
+/* SELECT-STATEMENT                                                          */
+
+static void
+dec_select_stack(void)
+{
+  if(select_stack_ptr > 0) {
+      select_stack_ptr--;
+  } else {
+    DEBUG_PRINTF("select_statement: SELECT-Stack fail\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_UNKNOWN_ERROR;  //besser neuer Fehler UBASIC_E_SELECT_STACK_EXHAUSTED,
+  }
+}
+/*---------------------------------------------------------------------------*/
+static void
+end_select(void)
+{
+  if(select_stack_ptr > 0) {
+    accept(TOKENIZER_END_SELECT);
+    accept(TOKENIZER_CR);
+    dec_select_stack();
+  } else {
+    DEBUG_PRINTF("ubasic.c: end_select(): end_select without select-statement\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_PARSE;
+  }
+}
+/*---------------------------------------------------------------------------*/
+static void
+case_statement(void)
+{
+  int select_value, case_value_1, case_value_2, case_value_eq;
+  short case_run, case_goto = 0, case_gosub = 0;
+  
+  accept(TOKENIZER_CASE);
+  if(select_stack_ptr > 0) {
+    select_value = select_stack[select_stack_ptr - 1].select_value;
+    case_run = select_stack[select_stack_ptr - 1].case_run;
+  
+    if (!case_run) {
+      case_value_1 = expr();
+      case_value_eq = (select_value == case_value_1);
+      if (case_value_eq) { DEBUG_PRINTF("case_statement: case_value_eq %d, case_value %d\n", case_value_eq, case_value_1); }  
+
+      if(tokenizer_token() == TOKENIZER_TO) {
+        accept(TOKENIZER_TO);
+        case_value_2 = expr();
+        if (case_value_1 < case_value_2) {
+          case_value_eq = ((select_value >= case_value_1) && (select_value <= case_value_2));
+          DEBUG_PRINTF("case_statement: case_value %d to %d\n", case_value_1, case_value_2);
+        } else {
+          case_value_eq = ((select_value >= case_value_2) && (select_value <= case_value_1));
+          DEBUG_PRINTF("case_statement: case_value %d to %d\n", case_value_2, case_value_1);
+        }
+      } else if (tokenizer_token() == TOKENIZER_COMMA) {
+        do {
+          accept(TOKENIZER_COMMA);
+          if (case_value_eq) {
+            case_value_2 = expr();
+          } else {
+            case_value_1 = expr();
+            case_value_eq = (select_value == case_value_1);
+          }
+        } while (tokenizer_token() == TOKENIZER_COMMA);
+        DEBUG_PRINTF("case_statement: case_value_eq %d, case_value_comma %d\n", case_value_eq, case_value_1);
+      }
+      
+      accept(TOKENIZER_SEMICOLON);
+      if (case_value_eq) {
+        case_goto = (tokenizer_token() == TOKENIZER_GOTO);
+        case_gosub = (tokenizer_token() == TOKENIZER_GOSUB);
+        statement();
+        DEBUG_PRINTF("case_statement: case execute\n");
+        case_run = 1;
+        select_stack[select_stack_ptr - 1].case_run = case_run;
+      } else {
+        DEBUG_PRINTF("case_statement: case jump; case_run: %d\n", case_run);
+        accept_cr();
+      }
+    } else {accept_cr();}
+    if (case_goto) { dec_select_stack(); } else {
+      if (!case_gosub) {
+        if ((tokenizer_token() != TOKENIZER_CASE) && (tokenizer_token() != TOKENIZER_CASE_ELSE) && 
+           (tokenizer_token() != TOKENIZER_END_SELECT)) {
+           DEBUG_PRINTF("ubasic.c: select_statement(): don't found case, case_else or end_select\n");
+           ended = 1;
+           ubasic_error = UBASIC_E_PARSE;
+        } else { 
+          if (tokenizer_token() == TOKENIZER_END_SELECT) { end_select(); }
+        }
+      }  
+    }
+  } else {
+    DEBUG_PRINTF("case_statement: SELECT-Stack fail\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_UNKNOWN_ERROR;  //besser neuer Fehler UBASIC_E_SELECT_STACK_EXHAUSTED,
+  }
+}
+/*---------------------------------------------------------------------------*/
+static void
+case_else_statement(void)
+{
+  short case_goto = 0, case_gosub = 0;
+  
+  accept(TOKENIZER_CASE_ELSE);
+  if(select_stack_ptr > 0) {
+    if (!select_stack[select_stack_ptr - 1].case_run) {
+      case_goto = (tokenizer_token() == TOKENIZER_GOTO); 
+      case_gosub = (tokenizer_token() == TOKENIZER_GOSUB); 
+      statement();
+      DEBUG_PRINTF("case_else_statement: case_else execute\n");
+    } else {
+      DEBUG_PRINTF("case_else_statement: case_else jump; case_run: %d\n", select_stack[select_stack_ptr - 1].case_run);
+      accept_cr();
+    }
+    if (case_goto) { dec_select_stack(); } else { 
+      if (!case_gosub) {
+        if (tokenizer_token() != TOKENIZER_END_SELECT) {
+          DEBUG_PRINTF("ubasic.c: select_statement(): don't found end_select\n");
+          ended = 1;
+          ubasic_error = UBASIC_E_PARSE;
+        } else { end_select(); }
+      }
+    }
+  } else {
+    DEBUG_PRINTF("case_else_statement: SELECT-Stack fault\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_UNKNOWN_ERROR;  //besser neuer Fehler UBASIC_E_SELECT_STACK_EXHAUSTED,
+  }
+}
+/*---------------------------------------------------------------------------*/
+static void
+select_statement(void)
+{
+ 
+  int select_value;
+  
+  accept(TOKENIZER_SELECT);
+  select_value = expr();  
+  accept(TOKENIZER_CR);
+  
+  if(select_stack_ptr < MAX_SELECT_STACK_DEPTH) {
+    select_stack[select_stack_ptr].select_value = select_value;
+    select_stack[select_stack_ptr].case_run = 0;
+    DEBUG_PRINTF("select_statement: new select, value %d\n",select_stack[select_stack_ptr].select_value);
+    select_stack_ptr++;
+    if (tokenizer_token() != TOKENIZER_CASE) {
+      DEBUG_PRINTF("ubasic.c: select_statement(): don't found case-statement\n");
+      ended = 1;
+      ubasic_error = UBASIC_E_PARSE;
+    }
+    //NEU f?r diekten "case"-befehl
+    else { case_statement(); }
+    //---------------------------
+  } else {
+    DEBUG_PRINTF("select_statement: SELECT-stack depth exceeded\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_UNKNOWN_ERROR;  //besser neuer Fehler UBASIC_E_SELECT_STACK_EXHAUSTED,
+  }
+}
+/* SELECT-STATEMENT END                                                      */
+
 /*---------------------------------------------------------------------------*/
 static void
 let_statement(void)
@@ -1282,6 +1474,14 @@ static void set_tv96_statement()
     accept_cr();
 }
 
+static void play_sound_statement()
+{
+    int to;
+    accept(TOKENIZER_PLAY_SOUND);
+    to = expr();
+    play_sound(to);
+    accept_cr();
+}
 static void set_shutter_speed_statement()
 {
     int to;
@@ -1886,6 +2086,9 @@ statement(void)
   case TOKENIZER_SET_TV96:
     set_tv96_statement();
     break;  
+  case TOKENIZER_PLAY_SOUND:
+    play_sound_statement();
+    break;  
   case TOKENIZER_SET_SHUTTER_SPEED:
     set_shutter_speed_statement();
     break;    
@@ -1991,6 +2194,15 @@ statement(void)
     break;
   case TOKENIZER_ENDIF:
     endif_statement();
+    break;
+  case TOKENIZER_SELECT:
+    select_statement();
+    break;
+  case TOKENIZER_CASE:
+    case_statement();
+    break;
+  case TOKENIZER_CASE_ELSE:
+    case_else_statement();
     break;
   case TOKENIZER_GOTO:
     goto_statement();

@@ -27,3 +27,8 @@ NHSTUB(GetDrive_FreeClusters, 0xFFA9986C)
 NHSTUB(MakeAFScan, 0xFFB00050)
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFF96553C)
 NHSTUB(ExpCtrlTool_StopContiAE,  0xFF96556C)
+NHSTUB(GetBatteryTemperature, 0xFFA344E4)
+NHSTUB(GetCCDTemperature, 0xFFA344D0)
+NHSTUB(GetOpticalTemperature, 0xFFA344BC)
+NHSTUB(PT_PlaySound, 0xFFB0B26C)
+

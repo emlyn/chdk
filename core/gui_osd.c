@@ -36,6 +36,7 @@ static OSD_elem osd[]={
     {LANG_OSD_LAYOUT_EDITOR_BAT_TEXT,   &conf.batt_txt_pos,     {5*FONT_WIDTH, FONT_HEIGHT}     },
     {LANG_OSD_LAYOUT_EDITOR_SPACE_TEXT,   &conf.space_txt_pos,     {5*FONT_WIDTH, FONT_HEIGHT}     },
     {LANG_OSD_LAYOUT_EDITOR_CLOCK,      &conf.clock_pos,        {5*FONT_WIDTH, FONT_HEIGHT}     },
+    {LANG_OSD_LAYOUT_EDITOR_TEMP,      &conf.temp_pos,        {8*FONT_WIDTH, FONT_HEIGHT}     },
     {LANG_OSD_LAYOUT_EDITOR_VIDEO,     &conf.mode_video_pos,   {9*FONT_WIDTH, 2*FONT_HEIGHT}   },
     {LANG_OSD_LAYOUT_EDITOR_EV,     &conf.mode_ev_pos,   {12*FONT_WIDTH, FONT_HEIGHT}   },
     {0}
@@ -79,6 +80,7 @@ void gui_osd_draw() {
         gui_osd_draw_raw_info();
         gui_osd_draw_values();
         gui_osd_draw_clock();
+        gui_osd_draw_temp();
         for (i=1; i<=2; ++i) {
             draw_rect((osd[curr_item].pos->x>=i)?osd[curr_item].pos->x-i:0, (osd[curr_item].pos->y>=i)?osd[curr_item].pos->y-i:0, 
                       osd[curr_item].pos->x+osd[curr_item].size.x+i-1, osd[curr_item].pos->y+osd[curr_item].size.y+i-1,
@@ -222,6 +224,9 @@ static void gui_osd_draw_zebra_osd() {
                 gui_space_draw_osd();
                 if (conf.show_clock) {
                     gui_osd_draw_clock();
+                }
+                if (conf.show_temp>0) {
+                    gui_osd_draw_temp();
                 }
                 draw_set_draw_proc(NULL);
             }
@@ -983,5 +988,37 @@ void gui_osd_draw_ev() {
     draw_string(conf.mode_ev_pos.x, conf.mode_ev_pos.y, osd_buf, conf.osd_color);
 
 }
+
+
+void gui_osd_draw_temp() {
+ 		if (conf.show_temp==1||0)
+ 			{
+ 				sprintf(osd_buf,"opt: %02i°",get_optical_temp());
+ 				draw_string(conf.temp_pos.x, conf.temp_pos.y, osd_buf, conf.osd_color);
+ 			}
+ 		if (conf.show_temp==2)
+ 			{
+ 				sprintf(osd_buf,"ccd: %02i°",get_ccd_temp());
+ 				draw_string(conf.temp_pos.x, conf.temp_pos.y, osd_buf, conf.osd_color);
+ 			}
+ 		if (conf.show_temp==3)
+ 			{
+ 				sprintf(osd_buf,"batt:%02i°",get_battery_temp());
+ 				draw_string(conf.temp_pos.x, conf.temp_pos.y, osd_buf, conf.osd_color);
+ 			}
+ 		if (conf.show_temp==4)
+ 			{
+ 				sprintf(osd_buf,"opt: %02i°",get_optical_temp());
+ 				draw_string(conf.temp_pos.x, conf.temp_pos.y, osd_buf, conf.osd_color);
+ 				sprintf(osd_buf,"ccd: %02i°",get_ccd_temp());
+ 				draw_string(conf.temp_pos.x, conf.temp_pos.y+FONT_HEIGHT, osd_buf, conf.osd_color);
+ 				sprintf(osd_buf,"batt:%02i°",get_battery_temp());
+ 				draw_string(conf.temp_pos.x, conf.temp_pos.y+2*FONT_HEIGHT, osd_buf, conf.osd_color);
+ 			}	
+    
+    }
+    
+
+
 
 //-------------------------------------------------------------------

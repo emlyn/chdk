@@ -28,3 +28,8 @@ NHSTUB(GetDrive_FreeClusters, 0xFFA9986C)
 NHSTUB(MakeAFScan, 0xFFB000D0) // _sub_FFB000D0__SsPrepareSeqBase.c__572
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFF96553C) // SetFocusLensDefaultCondition_3
 NHSTUB(ExpCtrlTool_StopContiAE,  0xFF96556C) // SetFocusLensDefaultCondition_5
+NHSTUB(GetBatteryTemperature, 0xFFA344E4)
+NHSTUB(GetCCDTemperature, 0xFFA344D0)
+NHSTUB(GetOpticalTemperature, 0xFFA344BC)
+NHSTUB(PT_PlaySound, 0xFFB0B2EC)
+

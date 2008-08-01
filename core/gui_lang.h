@@ -502,10 +502,15 @@
 #define LANG_MENU_SCRIPTLESS   394
 
 #define LANG_MENU_FAST_SWITCH_VIDEO 395
+#define LANG_OSD_LAYOUT_EDITOR_TEMP 396
+#define LANG_MENU_OSD_SHOW_TEMP 397
+#define LANG_MENU_FAST_SWITCH_QUALITY_VIDEO 398
+
+
 
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  395
+#define GUI_LANG_ITEMS                  398
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

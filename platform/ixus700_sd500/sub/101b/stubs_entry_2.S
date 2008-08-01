@@ -39,4 +39,8 @@ NHSTUB(GetDrive_ClusterSize, 0xFF86A150)
 NHSTUB(GetDrive_TotalClusters, 0xFF86A18C)
 NHSTUB(GetDrive_FreeClusters, 0xFF86A1C8)
 NHSTUB(WriteSDCard, 0xFF87CACC)
+NHSTUB(GetBatteryTemperature, 0xFFA4DA78)
+NHSTUB(GetCCDTemperature, 0xFFA4DA64)
+NHSTUB(GetOpticalTemperature, 0xFFA4DA50)
+NHSTUB(PT_PlaySound, 0xFF9600D0)
 

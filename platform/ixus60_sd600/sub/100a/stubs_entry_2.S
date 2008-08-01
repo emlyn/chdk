@@ -42,3 +42,8 @@ NSTUB(taskNameToId, 0xFFB18DB0)     // in names window
 NHSTUB(GetDrive_ClusterSize, 0xFF86EE78)    // same as 100d
 NHSTUB(GetDrive_TotalClusters, 0xFF86EEB4)  //   "  "
 NHSTUB(GetDrive_FreeClusters, 0xFF867C04)   //   "  "
+NHSTUB(GetBatteryTemperature, 0xFF82D270)
+NHSTUB(GetCCDTemperature, 0xFF82D25C)
+NHSTUB(GetOpticalTemperature, 0xFF82D248)
+NHSTUB(PT_PlaySound, 0xFF969874)
+

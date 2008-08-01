@@ -1144,7 +1144,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
                 if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
                     return 1;
                 }
-                if ((conf.fast_ev || conf.fast_movie_control) && kbd_use_up_down_left_right_as_fast_switch()) {
+                if ((conf.fast_ev || conf.fast_movie_control || conf.fast_movie_quality_control) && kbd_use_up_down_left_right_as_fast_switch()) {
                     return 1;
                 }
                 other_kbd_process(); // processed other keys in not <alt> mode 
@@ -1210,15 +1210,18 @@ if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_presse
             shooting_set_prop(207,shooting_get_prop(207)+(conf.fast_ev_step+1)*16);
 #endif
             key_pressed = KEY_UP;
+            	
             return 1;
         }
 
     } 
     if (kbd_is_key_pressed(KEY_UP) && (mode_get()&MODE_MASK) == MODE_REC && movie_status == 4 && (canon_shoot_menu_active==0)) {
 
-        if (conf.fast_movie_control && key_pressed == 0) {
+        if (conf.fast_movie_quality_control && key_pressed == 0) {
         		
         		
+if (conf.video_mode==0)
+	{
         		    conf.video_bitrate+=1;
     if (conf.video_bitrate<0)
         conf.video_bitrate=sizeof(modes)/sizeof(modes[0])-1;
@@ -1226,7 +1229,17 @@ if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_presse
         conf.video_bitrate=sizeof(modes)/sizeof(modes[0])-1;
     shooting_video_bitrate_change(conf.video_bitrate);
 movie_reset = 1;
-        		
+  }    
+  
+ if (conf.video_mode==1)
+	{
+        		    conf.video_quality+=1;
+    if (conf.video_quality<1)
+        conf.video_quality=1;
+    else if (conf.video_quality>99)
+        conf.video_quality=99;
+    movie_reset = 1;
+  }      		
             key_pressed = KEY_UP;
             return 1;
         }
@@ -1253,9 +1266,10 @@ movie_reset = 1;
        if (kbd_is_key_pressed(KEY_DOWN) && (mode_get()&MODE_MASK) == MODE_REC && movie_status == 4 && (canon_shoot_menu_active==0)) {
 
             
-       if (conf.fast_movie_control && key_pressed == 0) {
+       if (conf.fast_movie_quality_control && key_pressed == 0) {
         		
-        		
+if (conf.video_mode==0)
+	{        		
     conf.video_bitrate+=-1;
     if (conf.video_bitrate<0)
         conf.video_bitrate=0;
@@ -1263,6 +1277,16 @@ movie_reset = 1;
 
     shooting_video_bitrate_change(conf.video_bitrate);
 movie_reset = 1;
+}
+ if (conf.video_mode==1)
+	{
+        		    conf.video_quality-=1;
+    if (conf.video_quality<1)
+        conf.video_quality=1;
+    else if (conf.video_quality>99)
+        conf.video_quality=99;
+    movie_reset = 1;
+  }      	
 
         		
         		
@@ -1292,6 +1316,7 @@ movie_status = 1;
        if (conf.fast_movie_control && key_pressed == 0) {
         		
 movie_status = 4;
+movie_reset = 1;
         		
         		
             key_pressed = KEY_RIGHT;

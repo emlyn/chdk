@@ -1,0 +1,383 @@
+first version of a history file. will be automated and cleaned hopefully soon.
+
+Revision: 461, version 0.10
+Author: PhyrePhoX
+Message:
+
++ new OSD Element - Temperature
+		- Enabled by default (optical temperature)
+		- set in OSD Menu to either show optical, ccd, battery or ALL temps at once
+		- position can edited in OSD Layout editor
+		- thread about temperature: http://chdk.setepontos.com/index.php/topic,2021.0.html
++ video quality control added. when enabled (in video overrides), by the use of the up/down button you can increase or decrease movie quality OR bitrate (depends on what you enabled in the video override menu) - WHILE you are recording!
+* changed Fast video control so that it isnt enabled at default, only works on a few cameras (pause and unpause movie by pressing left/right while recording) - needs further development
+* when using fast video control switch and the pause function now the remaining time calculation is reset, so it reflects the change in bitrate faster
+* changed a few default conf values (symbols now enabled at default, because symbol file now is served together with binary)
++ introduced new versioning system: 0.10 now, X.10 will be major release (and probably without bugs, with proper documentation, scripts, optimized etc), 0.X0 will be something like "new features, a bit ironing out etc", 0.1X will be just bugfixes and really small changes
++ added vers.req to svn, will be included in zipfile when autobuilded, will definitly be useful...
++ wrote two sample readmes, one for dryos, one for vxworks, they are included in the batch-zip-complete archives, in respect to OS version. these are just drafts, need input from you. yeah you heard me, from YOU!
++ added version.txt that will also be included in said archive, reflecting latest changes. it is not cleaned up as of now, probably never will be, but gives a rough overview over latest development
++ added ubasic statement case/select switch by CHDKLover from here: http://chdk.setepontos.com/index.php/topic,1995.0.html as of now i chose the "safe" method, the multi statement, due to people not reacting. hopefully they test it in this build so we can decide on one option!
+* renamed get_movie_state to get_movie_status in ubasic
++ added command get_temperature (example: "get_temperature 0", 0 returns optical, 1 returns CCD and 2 returns battery temp)
++ added a few grids from the wiki
++ changed makefile bigtime: now with new command batch-zip-complete you now have an environment to compile a complete CHDK archive for each cam including binaries, readmes (according to OS), scripts, version history and so on. it is planned that the archive will be crammed with useful information (readmes, howtos - into the books folder), grids, scripts (working ones, universal ones, and also code fragments that will serve as examples), curves, symbols, fonts (copyright!?) and so on. as of now i just added a few of these, and some dummy texts so that zip file will accept the folders. again i need YOU to help on developing a good structure and good scripts, readmes and so on. with this build, people no longer need to sift through the wiki or the forum to find all the good stuff. at least i do hope so.
+* changed random command, now you can supply two values min & max.
+		example: "playsound random 3 6" will play the sounds 3,4,5,6 in random order (if repeated in a while loop) 
++ added ewavrs sx100 patch from here: http://tools.assembla.com/chdk/changeset/460 (adjustable alt button)
++ added new command playsound. can and should be used from ubasic, via "playsound 0", where 0 is the startup sound. there are sounds ranging from 0 to 7, 7 being a nasty long beep. the first few sounds can only be played if they are NOT muted by the camera, the other beeps will be played though (cam must be unmuted though, didnt test it with the nasty error beep though i gotta admit). this feature will lead to many more features, for example anti theft protection together with DGs Disco lights ;)
+		0 = startup sound, 1 = shutter sound, 2 = button press sound, 3 = selftimer, 4 = short beep, 5 = af confirmation, 6 = error beep, 7 = long beeeeeeeeeeeeeeeeeeep (nasty!)
+* adjusted makefile.inc so that all cameras are in it now (defaulted to my s3is by the way, not that it should matter)
+
+* adjusted memisosize on ixus860. soon gonna adjust the size of all cams, we're getting low on space ;)
+* adjusted videotables on ixus860 (see patch from ewavr http://tools.assembla.com/chdk/changeset/455
++ added whoever's fix for ixus950's touchwheel behaviour from here: http://chdk.setepontos.com/index.php/topic,2024.0.html
+
+* lng files (german & english), also copied to new folder CHDK\LANG (for gmake batch-zip-complete)
+
+
+
+thanks to Ewavr, Hacki, reyalp, ljl, jucifer and all the guys hanging out in the irc chan ;)
+
+ps: i hope i didnt forget anything or anyone.
+
+Revision: 459
+Author: Jucifer
+Date: 21:03:58, Freitag, 25. Juli 2008
+Message:
++ added beta ixus60_sd600 support (Novex, danielmewes, http://chdk.setepontos.com/index.php/topic,1215.msg11116.html#msg11116)
+- modified ixus950's lib.c (whoever, http://chdk.setepontos.com/index.php/topic,405.msg18448.html#msg18448)
+
+
+Revision: 457
+Author: phyrephox
+Date: 16:47:49, Freitag, 25. Juli 2008
+Message:
+* renamed CHDK.CFG to CCHDK.CFG ("collaborative CHDK") to end conflicts when you switch from branch to trunk or vice versa.
+* fixed bug in "fast switch" for movie recording, now you can decrease bitrate smoothly
+* when bitrate is changed, calculation process is restarted so you can see the changes in bitrate way better now (bug: display has to be redrawn somehow, also the workaround via the global var movie_reset isnt really beautiful, my whole code isnt beautiful, to be exact :D)
+* changed symbols
+* updated german.lng
+
+
+thx to the users in the german chdk forum (msl, gehtnix) for bugreporting, testing
+
+also this is a test if tortoise svn still fails on me when committing. 
+
+
+Revision: 453
+Author: phyrephox
+Date: 02:10:40, Mittwoch, 23. Juli 2008
+Message:
+* added video_overrides, SDHC & touchwheel "patch" from mil22 from here: http://chdk.setepontos.com/index.php/topic,1962.msg18265.html#msg18265
+ -> needs a bit ironing out (supposedly bitrate setting is fubared)
++ added fast movie switches:
+it is now possible to quickly change video quality during recording via the up/down buttons
+also you can pause a movie by pressing left, unpause it by pressing right
+for this feature a new option has been added to the video override menu.
+
+drawbacks: there is no visual feedback yet on quality change/pause/unpause functions
++ new ubasic command: set_movie_status. If you set it to 1, movie will be paused. 2 will unpause movie and 3 will stop movie. 
+
+needs proper testing, proper visual representation
+
+thanks to Hacki & ewavr
+  
+
+Revision: 452
+Author: Jucifer
+Date: 11:58:25, Sonntag, 20. Juli 2008
+Message:
+- modified a540's lib.c (yvesson)
+----
+
+Revision: 451
+Author: phyrephox
+Date: 19:49:34, Samstag, 19. Juli 2008
+Message:
++ added beta ixus750_sd550 support ( from http://chdk.setepontos.com/index.php/topic,1888.0.html with modifications by Hacki and a small modification regarding movie_status)
+* changed some default conf.c values (clock is now showing as default, zooming during video is now enabled by default, symbols & synch disabled by default)
+* fixed a bug in raw_exceptions (didnt work in digic III cams with the timer mode)
+
+Revision: 450
+Author: Jucifer
+Date: 12:23:11, Samstag, 19. Juli 2008
+Message:
+- modified ixus860's lib.c (chris07, http://chdk.setepontos.com/index.php/topic,405.msg17875.html#msg17875)
+
+Revision: 449
+Author: Jucifer
+Date: 17:10:58, Donnerstag, 17. Juli 2008
+Message:
+- modified OSD to include the new curve options
+
+
+Revision: 448
+Author: Jucifer
+Date: 20:29:39, Mittwoch, 16. Juli 2008
+Message:
+- modified remote-related menus
+
+- gui_menu.c: if first menu item is selected when submenu is opened and the item is text or separator, select next item
+
+Revision: 447
+Author: Jucifer
+Date: 10:44:42, Montag, 14. Juli 2008
+Message:
+- updated toinech's custom JPEG processing (http://chdk.setepontos.com/index.php/topic,932.msg17419.html#msg17419)
+
+Revision: 446
+Author: phyrephox
+Date: 02:40:15, Montag, 14. Juli 2008
+Message:
+fixed small error
+
+Revision: 445
+Author: phyrephox
+Date: 01:55:37, Montag, 14. Juli 2008
+Message:
+Includes revisions 441-444 from ewavr to trunk
+
++ conf.menu_select_first_entry - changes behaviour in menu. if enabled, while browsing the menu the first entry always is preselected. if disabled, no entry is selected as default, makes browsing easier.
+* fixed remaining_video time in gui_osd.c
+
+Revision: 440
+Author: Jucifer
+Date: 23:31:25, Donnerstag, 10. Juli 2008
+Message:
++ guessed some usb remote related stuff for sx100 (now compiles)
+
+Revision: 439
+Author: Jucifer
+Date: 22:30:29, Sonntag, 6. Juli 2008
+Message:
+- copied a fix from trunk
+
+Revision: 438
+Author: Jucifer
+Date: 22:24:30, Sonntag, 6. Juli 2008
+Message:
+- applied fudgey's disable script parameter list sorting (http://chdk.setepontos.com/index.php/topic,1865.msg16886.html#msg16886)
+
+Revision: 437
+Author: phyrephox
+Date: 16:13:53, Donnerstag, 10. Juli 2008
+Message:
+
++ RAW Exceptions: Disable RAW in Sportsmode, Burstmode (continious), EV Bracketing, Timer
+  Also added Option to be warned when RAW exception is in effect
+  Hint: Sports Mode Exception only is visible on S3is. EV Bracketing only visible on VXworks (digic II) cameras
+
++ new mode MODE_SPORTS (removed scn_child from s3is' definition)
++ new propcases defined in platform.h - DISPLAY_MODE & BRACKET_MODE (needs dryos part!)
++ new ubasic command: get_display_mode (0 = show info icons, 1 = Do not show info icons, 2 = LCD off, 3 = EVF) 
+  Maybe we should also add a get_EVF_present?
+  
+* readded mainmenu entry to usermenu
+* remaining video now smaller and can be positioned more to the sides
+* moved remaining video time to video overrides menu
+* changed some symbols in menus
+* english & german lng files
+
+
+Revision: 435
+Author: Jucifer
+Date: 13:06:12, Sonntag, 6. Juli 2008
+Message:
+- updated Bg~'s memory viewer patch (http://chdk.setepontos.com/index.php/topic,1829.msg16814.html#msg16814)
+- updated stuff from trunk
+
+Revision: 434
+Author: Jucifer
+Date: 14:59:17, Mittwoch, 9. Juli 2008
+Message:
+re-committing old revisions 434-439
+
+trunk: (changes by ewavr)
+- add AF in video for ixus series
+- small AF in video fix
+
+juciphox branch:
+- applied fudgey's disable script parameter list sorting (http://chdk.setepontos.com/index.php/topic,1865.msg16886.html#msg16886)
+- updated Bg~'s memory viewer patch (http://chdk.setepontos.com/index.php/topic,1829.msg16814.html#msg16814)
+- copied stuff from trunk
+
+
+Revision: 432
+Author: Jucifer
+Date: 19:37:55, Samstag, 5. Juli 2008
+Message:
+- updated curves.c (toinech, http://chdk.setepontos.com/index.php/topic,932.msg16700.html#msg16700)
+- patched gui_debug.c to continuously update memory viewer (Bg~, http://chdk.setepontos.com/index.php/topic,1829.msg16614.html#msg16614)
++ added some AF in video -related addresses for ixus70 and ixus700 (cyril42e) — before adding #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1 for them in camera.h, find the addresses also for ixus70_sd1000-100c and ixus700_sd500-101a..?
+- fixed platform/a720/sub/100c/lib.c (vid_get_viewport_live_fb()) (http://chdk.setepontos.com/index.php/topic,405.msg16620.html#msg16620)
+
+Revision: 431
+Author: Jucifer
+Date: 14:03:01, Donnerstag, 3. Juli 2008
+Message:
+- quick fix for interrupting Lua scripts without hanging the cam
+
+- more modifications to speed up motion detection (so far added mods based on posts of (at least) mx3, DataGhost, oidipos, cyril42e, fudgey, Bg~ and anonymous)
+
+
+Revision: 430
+Author: Jucifer
+Date: 11:45:55, Dienstag, 1. Juli 2008
+Message:
+(I really should always double check everything...)
+
+
+Revision: 429
+Author: Jucifer
+Date: 11:39:28, Dienstag, 1. Juli 2008
+Message:
+- changed s5is motion detection speedup implementation (hopefully it'll work on both, 101a and 101b)
+
+
+Revision: 428
+Author: Jucifer
+Date: 16:24:57, Montag, 30. Juni 2008
+Message:
++ added cyril42e's script parameter sets (r5)
+
+
+Revision: 427
+Author: Jucifer
+Date: 18:27:10, Sonntag, 29. Juni 2008
+Message:
+- Updated stuff from the two last trunk commits.
+
++ Modified a few models to detect motion faster. I hope I got them right.
+  The rest will follow. I hope.
+
+
+Revision: 424
+Author: Jucifer
+Date: 09:30:51, Mittwoch, 18. Juni 2008
+Message:
++ added cyril42e's "display zebra only when necessary" and "don't show script params if no param" tweaks, http://chdk.setepontos.com/index.php/topic,1687.msg15345.html#msg15345
+
+Revision: 423
+Author: Jucifer
+Date: 21:59:29, Dienstag, 17. Juni 2008
+Message:
+- have to kbd_release_all() after all, when running an autostart script (some buttons are pressed on startup?)
+
+
+Revision: 421
+Author: Jucifer
+Date: 21:44:04, Sonntag, 15. Juni 2008
+Message:
++ added the missing get_raw_nr line to trunk/lib/ubasic/tokenizer.c
+
++ trying to add scriptless remote support for ixus50_sd400
+
+
+Revision: 420
+Author: Jucifer
+Date: 19:06:36, Sonntag, 15. Juni 2008
+Message:
+still fixing kbd_process()
+
+
+Revision: 419
+Author: Jucifer
+Date: 15:15:19, Sonntag, 15. Juni 2008
+Message:
+- some Lua fixes
+
+
+Revision: 418
+Author: Jucifer
+Date: 12:19:59, Sonntag, 15. Juni 2008
+Message:
+kbd_process() should now have the remote code in right place
+
+
+Revision: 417
+Author: Jucifer
+Date: 23:44:25, Samstag, 14. Juni 2008
+Message:
++ added cyril42e's script restoring (script jumps to label "restore" on interrupt) and alt-button fix, http://chdk.setepontos.com/index.php/topic,1687.msg15345.html#msg15345
+
+- updated some alt-menu stuff to be the same as in trunk
+
+(- ixus50 without scriptless remote support for now)
+
+
+Revision: 416
+Author: Jucifer
+Date: 21:24:03, Donnerstag, 12. Juni 2008
+Message:
+(pretty much from http://chdk.setepontos.com/index.php/topic,688.0.html:)
+
+- all uBASIC commands beginning with "get_" can now use the "new" syntax (e.g. [f=]get_focus, S=get_prop 205), the ones listed in Wikia work as they used to
+
++ applied PhyrePhox's customizations (the newest commands have the new syntax ([x=]command)), http://chdk.setepontos.com/index.php/topic,978.msg8339.html#msg8339 
+
++ applied wontolla's RAW purge, http://chdk.setepontos.com/index.php/topic,557.msg5849.html#msg5849
+
++ applied m2tk's gui_fselect.c-patch, http://chdk.setepontos.com/index.php/topic,1059.msg9530.html#msg9530
+
++ applied CHDKLover's and msl's Symbol Mod, http://chdk.setepontos.com/index.php/topic,1133.msg10043.html#msg10043
+
+- applied toinech's custom JPG processing (and added a reminder in state-display), http://chdk.setepontos.com/index.php/topic,932.msg10359.html#msg10359
+
++ applied Velo's Lua Scripting Integration (and added all new uBASIC-commands), http://chdk.setepontos.com/index.php/topic,1194.msg11413.html#msg11413
+
++ added scripting command get_exp_count (value incremented by 1 on every exposure, returns numbers as in the files saved by the camera (1-9999, should be taken into account when scripting, maybe something along these lines:
+T=get_exp_count+N
+if T>9999 then T=T-9999
+press "shoot_half"
+press "shoot_full"
+do
+until get_exp_count=T
+release "shoot_full"
+), ubasic syntax: [x=]get_exp_count ([]=optional))
+
++ added scripting command is_pressed. Usage is similar to is_key, but checks, if a button is pressed, when the command is called. This can be really useful in autostart-scripts.
+
++ added script command autostarted, returns 1/true if script was autostarted, 0/false if not
+
+- modified get_script_autostart and set_script_autostart to read & write conf.script_startup (values: 0=off, 1=on, 2=once)
+
+- new script autostart option(s): Off, On, Once
+
+- user menu modified
+  - now with 14 entries (that's what fits on my screen with the default font)
+  - main menu -entry removed
+  - invoked also with shoot_half + menu
+  - can be used as root menu, main menu becomes accessible with shoot_half + menu
+
+- faster menu navigation
+  - in alt menus and file browser, shoot_half can be used with up/down to move 4 items up/down at a time
+  - int-variable changing behaviour is modified: zoom rocker works also a bit like shift: when "held down" while pressing left/right, zoom_out changes values by 10, zoom_in by 100, shoot_half by 1000.
+  - int-variables can be set to 0 with shoot_half+set
+  - when changing enum-type-variables (e.g. Tv bracketing value), zoom_in(+left/right) changes value by 6 (2EV), zoom_out and(/or) shoot_half by 3 (1EV).
+
++ added numbers 2, 4 and 5 from cyril42e's modification list, http://chdk.setepontos.com/index.php/topic,1687.msg15345.html#msg15345
+
++ added scriptless Ricoh & home hacked remote support from SDM 1.70
+
++ added fbonomi's shot histogram, commands shot_histo_enable 0|1, get_histo_range from to, http://chdk.setepontos.com/index.php/topic,1145.msg13008.html#msg13008
+
++ added hiker_jon's edge overlay code for testing, may or may not work, http://chdk.setepontos.com/index.php/topic,1192.msg11317.html#msg11317
+
++ and last and perhaps least, added the missing get_raw_nr to tokenizer.c
+
+I may have forgotten something. Hopefully nothing major, though.
+
+
+Revision: 412
+Author: phyrephox
+Date: 23:52:06, Samstag, 7. Juni 2008
+Message:
+Branch time.
+This branch will be the playground of Jucifer and me (PhyrePhoX) - although others can join in on the fun :)
+We are trying to deliver actual working features, bug fixes and enhancements, most of them already being tested and accepted amongst a wide "audience".
+
+For more information see here: http://chdk.setepontos.com/index.php/topic,688.0.html
+
+Lot of these new features can and will be merged with the official trunk. 
+

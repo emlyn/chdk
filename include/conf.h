@@ -44,6 +44,7 @@ typedef struct {
     int space_bar_width;
     int space_icon_show;
     int show_clock;
+    int show_temp;
     int clock_format;
     int clock_indicator;
     int clock_halfpress;
@@ -95,6 +96,7 @@ typedef struct {
     OSD_pos clock_pos;
     OSD_pos mode_video_pos;
     OSD_pos mode_ev_pos;
+    OSD_pos temp_pos;
 
     color histo_color;
     color histo_color2; // markers/border
@@ -134,6 +136,7 @@ typedef struct {
     int fast_ev;
     int fast_ev_step;
     int fast_movie_control;
+    int fast_movie_quality_control;
     int splash_show;
 
     int use_zoom_mf;
