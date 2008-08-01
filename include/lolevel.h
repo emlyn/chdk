@@ -37,6 +37,9 @@ extern int _CreateTask (const char *name, int prio, int stack_size /*?*/,
     void *entry, long parm /*?*/);
 extern void _SleepTask(long msec);
 extern void __attribute__((noreturn)) _ExitTask();
+extern int _taskNameToId(char* taskName); // VxWorks only, task's name first letter must be 't', maximum 10 chars total
+extern void _taskSuspend(int taskId);
+extern void _taskResume(int taskId);
 extern long _GetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _SetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _IsStrobeChargeCompleted();
