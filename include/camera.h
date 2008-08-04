@@ -503,6 +503,22 @@
     #define CAM_MULTIPART               1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     
+//----------------------------------------------------------
+#elif defined (CAMERA_ixus960_sd950)
+    #define CAM_PROPSET                 2
+    #define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              4104   
+    #define CAM_RAW_ROWS                3048   
+
+    #undef  CAM_USE_ZOOM_FOR_MF
+    #undef  CAM_HAS_ERASE_BUTTON
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+
 //==========================================================
 // S-Series
 //==========================================================

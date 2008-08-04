@@ -116,8 +116,8 @@ if(conf.ricoh_ca1_mode)
 		} 		//continuous-shooting mode 
 		else{		//nomal mode 
 			shoot_counter=0;
-			if(conf.bracket_type>1){
-				shoot_counter=(conf.bracket_type-1)*2;
+			if(conf.bracket_type>2){
+				shoot_counter=(conf.bracket_type-2)*2;
 				}
    do
          {     
@@ -224,14 +224,13 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f()	// original kbd_p1_f is sub
 
 void my_kbd_read_keys()
 {
+    static int handle_taskTouchW = 0, isRunning_taskTouchW = 1;
     kbd_prev_state[0] = kbd_new_state[0];
     kbd_prev_state[1] = kbd_new_state[1];
     kbd_prev_state[2] = kbd_new_state[2];
     _kbd_pwr_on();
     kbd_fetch_data(kbd_new_state);
-    static int handle_taskTouchW = 0, isRunning_taskTouchW = 1;
-    extern int _taskNameToId(void*);
-    extern void _taskSuspend(int), _taskResume(int);
+    
     if (handle_taskTouchW == 0) { handle_taskTouchW = _taskNameToId("tTouchW"); }
 
     if (kbd_process() == 0){

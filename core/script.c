@@ -185,7 +185,7 @@ void set_params_values_name(const char *fn, int param_set)
 {
 	int shift;
 	register char *ptr = (param_set >= 0 ? cfg_set_name : cfg_name);
-	char *name;
+	const char *name;
 	
 	if (fn == NULL || fn[0] == 0) { ptr[0] = 0; return; }
 	
@@ -197,7 +197,7 @@ void set_params_values_name(const char *fn, int param_set)
 	shift = strlen(ptr); if (shift >= 100) shift=99;
 
 	if (param_set >= 0) 
-		sprintf(ptr+shift-4, "_%d\0etlasuite\n", param_set); else
+		sprintf(ptr+shift-4, "_%d\0", param_set); else
 		strcpy(ptr+shift-3, "cfg\0");
 }
 
@@ -305,10 +305,10 @@ void save_params_values(int unconditional)
 void script_load(const char *fn, int saved_params) {
     int fd=-1, i, update_vars;
     
-    save_params_values(0);
+//    save_params_values(0);
 
     state_ubasic_script = ubasic_script_default;
-    update_vars = (strcmp(fn, conf.script_file) != 0) || !saved_params;  // update if new file
+    update_vars = (strcmp(fn, conf.script_file) != 0) || !saved_params || (saved_params == 2);  // update if new file
 
     if (!fn[0]) { // load internal script
         if (!conf.script_file[0]) { // internal script was used last time
@@ -346,7 +346,7 @@ void script_load(const char *fn, int saved_params) {
         }
     }
     script_scan(fn, update_vars);
-	if (saved_params) load_params_values(fn, update_vars, 1);	
+	if (saved_params) load_params_values(fn, update_vars, (saved_params!=2));	
     gui_update_script_submenu();
 }
 

@@ -506,11 +506,12 @@
 #define LANG_MENU_OSD_SHOW_TEMP 397
 #define LANG_MENU_FAST_SWITCH_QUALITY_VIDEO 398
 
-
+#define LANG_MENU_REMOTE_ZOOM_ENABLE  399
+#define LANG_MENU_REMOTE_ZOOM_TIMEOUT 400
 
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  398
+#define GUI_LANG_ITEMS                  400
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

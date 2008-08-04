@@ -216,6 +216,8 @@ static CMenuItem remote_submenu_items[] = {
     {0x5c,LANG_MENU_SYNCH_DELAY_ENABLE,       MENUITEM_BOOL,                    &conf.synch_delay_enable        },    
     {0x5c,LANG_MENU_SYNCH_DELAY_VALUE,        MENUITEM_INT|MENUITEM_F_UNSIGNED, &conf.synch_delay_value         },    
     {0x5c,LANG_MENU_SYNCH_DELAY_COARSE_VALUE, MENUITEM_INT|MENUITEM_F_UNSIGNED, &conf.synch_delay_coarse_value  },    
+    {0x5c,LANG_MENU_REMOTE_ZOOM_ENABLE,       MENUITEM_BOOL,                    &conf.remote_zoom_enable        },
+    {0x5f,LANG_MENU_REMOTE_ZOOM_TIMEOUT,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.zoom_timeout,MENU_MINMAX(2,10)},
     {0x51,LANG_MENU_BACK,                     MENUITEM_UP },
     {0}
 };

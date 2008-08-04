@@ -28,12 +28,7 @@ static int shoot_counter=0;
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
 
-#if defined(CAMERA_a700)
-#define USB_MASK 0x00000008
-#define USB_REG 3
-#endif
-
-#if defined(CAMERA_a710)
+#if defined(CAMERA_a710) || defined(CAMERA_a700)
 #define USB_MASK 8
 #define USB_REG 0
 #endif
@@ -60,11 +55,7 @@ long x;
         x = (long)*mmio1;
 #endif
 
-#if defined(CAMERA_a700)
-        x = (long)*mmio3;
-#endif
-
-#if defined(CAMERA_a710)
+#if defined(CAMERA_a710) || defined(CAMERA_a700)
         x = (long)*mmio0;
 #endif
 	
@@ -166,9 +157,9 @@ if(conf.ricoh_ca1_mode)
  
 		 else{		//nomal mode 
 			shoot_counter=0;
-			if(conf.bracket_type>1)
+			if(conf.bracket_type>2)
                        {
-				shoot_counter=(conf.bracket_type-1)*2;
+				shoot_counter=(conf.bracket_type-2)*2;
 				}
            do
              x=get_mmio();

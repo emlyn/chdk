@@ -115,8 +115,8 @@ if(conf.ricoh_ca1_mode)
 		} 		//continuous-shooting mode 
 		else{		//nomal mode 
 			shoot_counter=0;
-			if(conf.bracket_type>1){
-				shoot_counter=(conf.bracket_type-1)*2;
+			if(conf.bracket_type>2){
+				shoot_counter=(conf.bracket_type-2)*2;
 				}
    do
          {     

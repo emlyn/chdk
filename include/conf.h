@@ -238,6 +238,8 @@ typedef struct {
     int synch_delay_enable;
     int synch_delay_value;
     int synch_delay_coarse_value;
+    int remote_zoom_enable;
+    int zoom_timeout;
 
     int script_param_set;
     

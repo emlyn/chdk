@@ -1,5 +1,17 @@
 first version of a history file. will be automated and cleaned hopefully soon.
 
+Revision: 463, version 0.2.0
+Author: Jucifer
+Message:
+
+- changed version numbering
+- added cyril42e's fix for scripting parameter sets
+- updated some remote-related stuff from SDM
+- modified ixus950_sd850 touchwheel patch to match trunk
++ added ixus960_sd950-100d support from SDM
+
+
+
 Revision: 461, version 0.10
 Author: PhyrePhoX
 Message:

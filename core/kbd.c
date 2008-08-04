@@ -40,6 +40,7 @@ static int kbd_int_stack_ptr;
 #define KBD_STACK_PUSH(v) kbd_int_stack[kbd_int_stack_ptr++] = (v);
 #define KBD_STACK_PREV(p) (kbd_int_stack[kbd_int_stack_ptr-(p)])
 
+static int soft_half_press = 0;
 static int kbd_blocked;
 static int key_pressed;
 int state_kbd_script_run;
@@ -63,6 +64,10 @@ static int nReczoom=0;
 static int nTxtblcr=0;
 int shutter_int=0;
 
+#if defined(CAMERA_ixus960_sd950)
+static int nFirst=1;
+#endif
+
 #if defined(CAMERA_a450) || defined(CAMERA_ixus50_sd400) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_ixus60_sd600) || defined(CAMERA_ixus65_sd630) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus750_sd550) || defined(CAMERA_ixus850_sd800)
 #define ZSTEP_TABLE_SIZE 7
 static int nTxtbl[]={0,1,2,3,4,5,6};
@@ -78,7 +83,7 @@ static int nTxtbl[]={0,11,25,41,64,86,105,128};
 static int nTxtbl[]={0,18,43,55,76,93,113,124};
 #endif
 
-#if defined(CAMERA_a460) || defined(CAMERA_a530) || defined (CAMERA_a540) || defined(CAMERA_a550) || defined(CAMERA_a560) || defined(CAMERA_a570) || defined(CAMERA_ixus860_sd870)
+#if defined(CAMERA_a460) || defined(CAMERA_a530) || defined (CAMERA_a540) || defined(CAMERA_a550) || defined(CAMERA_a560) || defined(CAMERA_a570) || defined(CAMERA_ixus860_sd870) || defined(CAMERA_ixus960_sd950)
 #define ZSTEP_TABLE_SIZE 8
 static int nTxtbl[]={0,1,2,3,4,5,6,7};
 #endif
@@ -600,6 +605,34 @@ if(conf.ricoh_ca1_mode)
 
 // ------ add by Masuji SUTO (start) --------------
 if(nWt>0) {nWt--;return 1;}
+#if defined(CAMERA_ixus960)
+if(nFirst==1){
+    if(nSW==0){
+        nSW=1;
+        nWt=10;
+        kbd_key_release_all();
+        kbd_key_press(KEY_SHOOT_HALF); 
+        soft_half_press = 1;
+        set_key_press(1);
+        return 1;
+    }
+    else if(nSW==1){
+        nSW=2;
+        nWt=10;
+        kbd_key_release(KEY_SHOOT_HALF); 
+        soft_half_press = 0;
+        set_key_press(1);
+        return 1;
+    }
+    else if(nSW==2){
+        set_key_press(0);
+        nWt=10;
+        nSW=0;
+        nFirst=0;
+        return 1;
+    }
+}
+#endif
 if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 	if (kbd_is_key_pressed(KEY_SHOOT_HALF) && nTxzoom>0) {
 		nCount2=0;
@@ -653,7 +686,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 		}
 	if(!get_usb_power(1) && nSW<100 && nCount==0 && nTxzoom>0) {
 		nCount2++;
-		if(nCount2>1000){
+		if(nCount2>conf.zoom_timeout*100){
 			if(nTxzoom>0){
 				nTxzoom=0;
 				nReczoom=0;
@@ -705,7 +738,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 		if(nSW==109){
 		//	nSW=110;
 			nCER=0;
-			if(nTxzoom>0){
+			if(nTxzoom>0 && conf.remote_zoom_enable){
 				if(nTxzoom<100){
 					nIntzpos=lens_get_zoom_point();
 					for(i=0;i<ZSTEP_TABLE_SIZE;i++){
@@ -732,7 +765,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 				nTxzoom=0;
 				nReczoom=0;
 				}
-			if(nTxvideo>0) {nSW=121;return 1;}
+			if(nTxvideo>0 && conf.remote_zoom_enable) {nSW=121;return 1;}
                                     nSW=110;
 			nWt=2;
 			kbd_key_release_all();
@@ -740,10 +773,11 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 		//	key_pressed = 1;
 		//	kbd_blocked = 1;
 		//	nRmt=1;
+                  soft_half_press = 1;
                   set_key_press(1);
 			return 1;
 			}
-			if(nTxzoom>0 && nSW==108){
+			if(nTxzoom>0 && nSW==108 && conf.remote_zoom_enable){
 				nCrzpos=lens_get_zoom_point();
 				if(nIntzpos!=nCrzpos) {nReczoom=0;}
 				if(nIntzpos==nCrzpos && nCER>50){
@@ -763,11 +797,17 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 						i=1;
 						if(nTxzname==KEY_ZOOM_IN){
 							nTxtblcr++;
-							if(nTxtblcr>(ZSTEP_TABLE_SIZE-1)) {nTxtblcr=(ZSTEP_TABLE_SIZE-1);i=0;}
+							if(nTxtblcr>(ZSTEP_TABLE_SIZE-1)){
+                            nTxtblcr=(ZSTEP_TABLE_SIZE-1);
+                            nTxzname=KEY_ZOOM_OUT;
+                            }
 							}
 						else{
 							nTxtblcr--;
-							if(nTxtblcr<0) {nTxtblcr=0;i=0;}
+							if(nTxtblcr<0){
+                            nTxtblcr=0;
+                            nTxzname=KEY_ZOOM_IN;
+                            }
 							}
 						if(i==1) return 1;
 						}
@@ -843,7 +883,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 			else if(!get_usb_power(1) && mvideo) nSW=114;
 			else return 1;
 			}
-		if(nTxzoom>0 && nSW==120){
+		if(nTxzoom>0 && nSW==120 && conf.remote_zoom_enable){
 			nCrzpos=lens_get_zoom_point();
 			if((nTxzname==KEY_ZOOM_IN && nCrzpos<=nTxtbl[nTxtblcr]) || (nTxzname==KEY_ZOOM_OUT && nCrzpos>=nTxtbl[nTxtblcr])){
 				kbd_key_release_all();
@@ -883,6 +923,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 			nWt=2;
 			kbd_key_release(KEY_SHOOT_FULL); 
                                     set_key_press(1);
+                                    soft_half_press = 0;
 		//	kbd_blocked = 1;
 		//	nRmt=1;
 			return 1;
@@ -908,7 +949,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 		if(nSW==109){
 		//	nSW=110;
 			nCER=0;
-			if(nTxzoom>0){
+			if(nTxzoom>0 && conf.remote_zoom_enable){
 				if(nTxzoom<100){
 					nIntzpos=lens_get_zoom_point();
 					for(i=0;i<ZSTEP_TABLE_SIZE;i++){
@@ -935,12 +976,13 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 				nTxzoom=0;
 				nReczoom=0;
 				}
-			if(nTxvideo>0) {nSW=121;return 1;}
+			if(nTxvideo>0 && conf.remote_zoom_enable) {nSW=121;return 1;}
                   nSW=110;
 			nWt=2;
 			kbd_key_release_all();
 			kbd_key_press(KEY_SHOOT_HALF); 
 //			debug_led(1);
+                                    soft_half_press = 1;
                                     set_key_press(1);
 		//	key_pressed = 1;
 		//	kbd_blocked = 1;
@@ -1001,7 +1043,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 			    }
 			else {nCER++;return 1;}
 			}
-		if(nTxzoom>0 && nSW==114){
+		if(nTxzoom>0 && nSW==114 && conf.remote_zoom_enable){
 			nCrzpos=lens_get_zoom_point();
 			if(nIntzpos!=nCrzpos) {nReczoom=0;}
 			if(nIntzpos==nCrzpos && nCER>50){
@@ -1021,11 +1063,17 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 					i=1;
 					if(nTxzname==KEY_ZOOM_IN){
 						nTxtblcr++;
-						if(nTxtblcr>(ZSTEP_TABLE_SIZE-1)) {nTxtblcr=(ZSTEP_TABLE_SIZE-1);i=0;}
+						if(nTxtblcr>(ZSTEP_TABLE_SIZE-1)){
+                        nTxtblcr=(ZSTEP_TABLE_SIZE-1);
+                        nTxzname=KEY_ZOOM_OUT;
+                        }
 						}
 					else{
 						nTxtblcr--;
-						if(nTxtblcr<0) {nTxtblcr=0;i=0;}
+						if(nTxtblcr<0){
+                        nTxtblcr=0;
+                        nTxzname=KEY_ZOOM_IN;
+                        }
 						}
 					if(i==1) return 1;
 					}
@@ -1043,7 +1091,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 			nCER++;
 			return 1;
 			}
-		if(nTxzoom>0 && nSW==115){
+		if(nTxzoom>0 && nSW==115 && conf.remote_zoom_enable){
 			if(nCount==0) return 1;
 			nCrzpos=lens_get_zoom_point();
 			if((nTxzname==KEY_ZOOM_IN && nCrzpos<=nTxtbl[nTxtblcr]) || (nTxzname==KEY_ZOOM_OUT && nCrzpos>=nTxtbl[nTxtblcr])){
@@ -1070,7 +1118,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 			}
 		if(nCount>0 && nSW==113){
 			if(nCount<9){
-				if(nTxzoom>0){
+				if(nTxzoom>0 && conf.remote_zoom_enable){
 					kbd_key_release_all();
 					set_key_press(0);
 					nTxzoom=0;
@@ -1086,14 +1134,15 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 				nSW=125;
 				nWt=10;
 				kbd_key_release(KEY_SHOOT_HALF); 
-	                                    set_key_press(1);
+	                                    soft_half_press = 0;
+                                        set_key_press(1);
 			//	kbd_blocked = 1;
 			//	nRmt=1;
 				nCount=0;
 				return 1;
 				}
 			else{
-				if(nTxzoom>0){
+				if(nTxzoom>0 && conf.remote_zoom_enable){
 					nCount=0;
 					nSW=114;
 					return 1;
@@ -1118,6 +1167,7 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 			nSW=125;
 			nWt=2;
 			kbd_key_release(KEY_SHOOT_FULL);
+                  soft_half_press = 0;
                   set_key_press(1);
 		//	kbd_blocked = 1;
 		//	nRmt=1;

@@ -516,6 +516,10 @@ static char* gui_lang_default = \
 "396 \"Temperature\"\n"
 "397 \"Show Temperature?\"\n"
 "398 \"Video Quality Control?\"\n"
+
+"399 \"Enable Remote Zoom\"\n"
+"400 \"Zoom Time-out 0.1s\"\n"
+
 ;
 
 //-------------------------------------------------------------------

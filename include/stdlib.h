@@ -126,7 +126,7 @@ extern long Fflush_Fut(long file);
 extern int creat (const char *name, int flags);
 extern int open (const char *name, int flags, int mode );
 extern int close (int fd);
-extern int write (int fd, void *buffer, long nbytes);
+extern int write (int fd, const void *buffer, long nbytes);
 extern int read (int fd, void *buffer, long nbytes);
 extern int lseek (int fd, long offset, int whence);
 extern long mkdir(const char *dirname);

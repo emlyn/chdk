@@ -54,7 +54,7 @@ void __attribute__((naked,noinline)) sub_FF961D24_my(long p)
                 "STR     R0, [R5]\n"
                 "LDR     R0, [R3]\n"
                 "BL      sub_FF81FF08\n" //ClearEventFlag
-                "BL      wait_until_remote_button_is_released\n"
+                //"BL      wait_until_remote_button_is_released\n"
                 "LDR     R3, =0x99F00\n"
                 "LDR     R0, [R3,#0x7C]\n"
                 "BL      sub_FF89E02C\n" //IsEmptyWriteCache_42
