@@ -1,5 +1,23 @@
 first version of a history file. will be automated and cleaned hopefully soon.
 
+Revision: 464, version 0.2.1
+Author: PhyrePhoX
+Message:
+
+
++ added syscurves.cfv
++ added eggtimer example script thx to gehtnix from german forum
++ in osd menu you can now set new option: Hide on Display. Means: When you press the display button to cycle through the original canon display states (symbols on, symbols off, evf, display off), CHDK symbols are now hidden when canon symbols are hidden as well (this does not work in EVF, as the propertycase does not update).
++ visual feedback during fast_video_quality changes - now when you enable fast_video_quality_control, you can see in OSD the quality/bitrate that you change via up/down
+
+
+*makefile.inc (added ixus960)
+* updated/added finnish, english, german langfiles* changed default conf values again: shootdelay (from 11 to 0), remote_enable from 1 to 0, renamed hide_osd_in_playback
+* small cosmetic change: splash screen color now is red, to distinguish our beta build from the trunk. this is likely to get changed someday anyhow. adds a little spice though ;)
+* fixed a bug in CHDKLovers select/case statement, got a diff from him (thanks!)
+
+as always, code is ugly but should work. 
+
 Revision: 463, version 0.2.0
 Author: Jucifer
 Message:
