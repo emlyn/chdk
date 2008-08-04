@@ -25,4 +25,3 @@ NHSTUB(GetBatteryTemperature, 0xFF82D37C)
 NHSTUB(GetCCDTemperature, 0xFF82D368)
 NHSTUB(GetOpticalTemperature, 0xFF82D354)
 NHSTUB(PT_PlaySound, 0xFF986518)
-//NHSTUB(PT_PlaySound, 0xFFB3163C) //alternate adress ewavr found, the other one is easier to find

@@ -127,7 +127,7 @@ static const ConfInfo conf_info[] = {
 /* !!! Do NOT change ID for items defined already! Append a new one at the end! !!! */
     CONF_INFO(  1, conf.show_osd,               CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(  2, conf.save_raw,               CONF_DEF_VALUE, i:0, NULL),
-    CONF_INFO(  3, conf.script_shoot_delay,     CONF_DEF_VALUE, i:11, NULL),
+    CONF_INFO(  3, conf.script_shoot_delay,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(  4, conf.show_histo,             CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(  5, conf.ubasic_vars,            CONF_DEF_PTR,   ptr:&def_ubasic_vars, NULL),
     CONF_INFO(  6, conf.script_param_set,       CONF_DEF_VALUE, i:0, NULL),
@@ -247,7 +247,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(119, conf.iso_exposure_order,     CONF_DEF_VALUE, i:3, NULL),
     
     CONF_INFO(120, conf.script_startup,         CONF_DEF_VALUE, i:0, NULL),
-    CONF_INFO(121, conf.remote_enable,          CONF_DEF_VALUE, i:1, NULL),
+    CONF_INFO(121, conf.remote_enable,          CONF_DEF_VALUE, i:0, NULL),
     
     CONF_INFO(122, conf.values_show_canon_overexposure, CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(123, conf.clear_override,         CONF_DEF_VALUE, i:1, NULL),
@@ -310,7 +310,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(171, conf.osd_color_override,     CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_BG, COLOR_RED), NULL),
     CONF_INFO(172, conf.override_disable,       CONF_DEF_VALUE, i:2, NULL),
     CONF_INFO(173, conf.override_disable_all,   CONF_DEF_VALUE, i:1, NULL),
-    CONF_INFO(174, conf.hide_osd_in_playback,   CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(174, conf.hide_osd,   CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(175, conf.save_raw_in_video,      CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(176, conf.show_movie_time,        CONF_DEF_VALUE, i:3, NULL),
     CONF_INFO(177, conf.show_movie_refresh,     CONF_DEF_VALUE, i:1, NULL),
@@ -344,7 +344,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(205, conf.fast_movie_quality_control, CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(206, conf.remote_zoom_enable,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(207, conf.zoom_timeout,           CONF_DEF_VALUE, i:5, NULL),
-
+			
+			
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

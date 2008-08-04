@@ -25,7 +25,7 @@ typedef struct {
     int raw_nr;
 
     int show_osd;
-    int hide_osd_in_playback;
+    int hide_osd;
     int show_osd_in_review;
     int script_shoot_delay;
     int show_histo;

@@ -946,7 +946,7 @@ if (movie_reset == 1)
     hour = time_left / 3600;
     min = (time_left % 3600) / 60;
     sec = (time_left % 3600) % 60;
-    
+
        if (elapsed<1)
    {
   sprintf(osd_buf, "Calc...");

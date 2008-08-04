@@ -176,6 +176,7 @@ static const char* gui_iso_exposure_order_enum(int change, int arg);
 static const char* gui_nd_filter_state_enum(int change, int arg);
 //static const char* gui_tv_enum(int change, int arg);
 const char* gui_user_menu_show_enum(int change, int arg);
+static const char* gui_hide_osd_enum(int change, int arg);
 static const char* gui_show_clock_enum(int change, int arg);
 static const char* gui_clock_format_enum(int change, int arg);
 static const char* gui_clock_indicator_enum(int change, int arg);
@@ -590,7 +591,7 @@ static CMenu raw_state_submenu = {0x24,LANG_MENU_OSD_RAW_STATE_PARAMS_TITLE, NUL
 
 static CMenuItem osd_submenu_items[] = {
     {0x5c,LANG_MENU_OSD_SHOW,                MENUITEM_BOOL,      &conf.show_osd },
-    {0x5c,LANG_MENU_OSD_HIDE_PLAYBACK,       MENUITEM_BOOL,      &conf.hide_osd_in_playback },
+    {0x5c,LANG_MENU_OSD_HIDE_PLAYBACK,       MENUITEM_ENUM,      (int*)gui_hide_osd_enum },
     {0x81,LANG_MENU_VIS_MENU_CENTER,         MENUITEM_BOOL,	    &conf.menu_center },
     {0x81,LANG_MENU_SELECT_FIRST_ENTRY,         MENUITEM_BOOL,	    &conf.menu_select_first_entry },       
     {0x64,LANG_MENU_VIS_SYMBOL,             MENUITEM_BOOL,	    &conf.menu_symbol_enable },    
@@ -1072,6 +1073,18 @@ const char* gui_show_clock_enum(int change, int arg) {
         conf.show_clock=0;
 
     return modes[conf.show_clock];
+}
+
+const char* gui_hide_osd_enum(int change, int arg) {
+    static const char* modes[]={ "Don't", "In Playback", "On Disp Press", "both"};
+
+    conf.hide_osd+=change;
+    if (conf.hide_osd<0)
+        conf.hide_osd=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.hide_osd>=(sizeof(modes)/sizeof(modes[0])))
+        conf.hide_osd=0;
+
+    return modes[conf.hide_osd];
 }
 
 const char* gui_clock_format_enum(int change, int arg) {
@@ -2185,12 +2198,12 @@ void gui_draw_osd() {
     }
 
 
-     if ((recreview_hold==0) &&  (!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) && !conf.hide_osd_in_playback ))))   {
+     if ((recreview_hold==0) &&  (!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) &&  !((conf.hide_osd == 1) || (conf.hide_osd == 3)) )) && !(((conf.hide_osd == 2) || (conf.hide_osd == 3))&& (shooting_get_prop(PROPCASE_DISPLAY_MODE) == 1))))   {
         gui_batt_draw_osd();
         gui_space_draw_osd();
     }
     
-     if ((conf.show_clock) && (recreview_hold==0) &&  ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) && !conf.hide_osd_in_playback )))|| (conf.clock_halfpress==0) )) {
+     if ((conf.show_clock) && (recreview_hold==0) &&  ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) &&  !((conf.hide_osd == 1) || (conf.hide_osd == 3)) )) && !(((conf.hide_osd == 2) || (conf.hide_osd == 3))&& (shooting_get_prop(PROPCASE_DISPLAY_MODE) == 1)))|| (conf.clock_halfpress==0) )) {
         gui_osd_draw_clock();
             }
     
@@ -2198,15 +2211,26 @@ void gui_draw_osd() {
         gui_osd_draw_seconds();
     }
  
-      if ((conf.show_temp>0) && (recreview_hold==0) &&  ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) && !conf.hide_osd_in_playback )))|| (conf.clock_halfpress==0) )) {
+      if ((conf.show_temp>0) && (recreview_hold==0) &&  ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) &&  !((conf.hide_osd == 1) || (conf.hide_osd == 3)) )) && !(((conf.hide_osd == 2) || (conf.hide_osd == 3))&& (shooting_get_prop(PROPCASE_DISPLAY_MODE) == 1)) )|| (conf.clock_halfpress==0) )) {
         gui_osd_draw_temp();
       }
  if (conf.show_movie_time > 0)
  {
  gui_osd_draw_movie_time_left();
- }
  
- if ((conf.fast_ev) && (recreview_hold==0) && ((mode_get()&MODE_SHOOTING_MASK) != MODE_VIDEO_STD) && ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) && !conf.hide_osd_in_playback ))) )) {
+ if ((movie_status > 1) && (conf.fast_movie_quality_control==1)){
+    if (conf.video_mode == 0 )
+    	{
+    gui_print_osd_state_string_chr("Bitrate: ",gui_video_bitrate_enum(0,0));
+	}
+	else
+		{
+  	gui_print_osd_state_string_int("Quality: ",conf.video_quality);
+    }
+ }
+}
+ 
+ if ((conf.fast_ev) && (recreview_hold==0) && ((mode_get()&MODE_SHOOTING_MASK) != MODE_VIDEO_STD) && ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) &&  !((conf.hide_osd == 1) || (conf.hide_osd == 3)) )) && !(((conf.hide_osd == 2) || (conf.hide_osd == 3))&& (shooting_get_prop(PROPCASE_DISPLAY_MODE) == 1))) )) {
        gui_osd_draw_ev();
  }
 #if CAM_DRAW_EXPOSITION
@@ -2413,7 +2437,9 @@ void gui_draw_splash() {
         "Build: " __DATE__ " " __TIME__ ,
         "Camera: " PLATFORM " - " PLATFORMSUB };
     int i, l;
-    color cl = MAKE_COLOR((gui_splash_mode==MODE_REC)?0xDA:0xD9, COLOR_WHITE);
+   // color cl = MAKE_COLOR((gui_splash_mode==MODE_REC)?0xDA:0xD9, COLOR_WHITE);
+ color cl = MAKE_COLOR(COLOR_RED, COLOR_WHITE);
+
 
     gui_splash_mode = (mode_get()&MODE_MASK);
 

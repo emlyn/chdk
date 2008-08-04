@@ -150,6 +150,8 @@ PLATFORMSUB=100a
 #PLATFORM=tx1
 #PLATFORMSUB=101b
 
+#PLATFORM=ixus960_sd950
+#PLATFORM=100d
 
 include $(topdir)version.inc
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc

@@ -82,8 +82,6 @@ struct select_state {
 static struct select_state select_stack[MAX_SELECT_STACK_DEPTH];
 static int select_stack_ptr;
 
-
-
 #define MAX_WHILE_STACK_DEPTH 4
 static short while_stack[MAX_WHILE_STACK_DEPTH];
 static int while_stack_ptr;
@@ -809,14 +807,14 @@ dec_select_stack(void)
 }
 /*---------------------------------------------------------------------------*/
 static void
-end_select(void)
+end_select_statement(void)
 {
   if(select_stack_ptr > 0) {
     accept(TOKENIZER_END_SELECT);
     accept(TOKENIZER_CR);
     dec_select_stack();
   } else {
-    DEBUG_PRINTF("ubasic.c: end_select(): end_select without select-statement\n");
+    DEBUG_PRINTF("ubasic.c: end_select_statement(): end_select without select-statement\n");
     ended = 1;
     ubasic_error = UBASIC_E_PARSE;
   }
@@ -827,6 +825,7 @@ case_statement(void)
 {
   int select_value, case_value_1, case_value_2, case_value_eq;
   short case_run, case_goto = 0, case_gosub = 0;
+  int cur_ln, gosub_ln;
   
   accept(TOKENIZER_CASE);
   if(select_stack_ptr > 0) {
@@ -865,7 +864,17 @@ case_statement(void)
       if (case_value_eq) {
         case_goto = (tokenizer_token() == TOKENIZER_GOTO);
         case_gosub = (tokenizer_token() == TOKENIZER_GOSUB);
+//GOSUB - save curr linenumber
+        cur_ln = tokenizer_line_number();
+//GOSUB
         statement();
+//GOSUB  - save new linenumber, reset to curr linenumber
+      if (case_gosub) { 
+        gosub_ln = tokenizer_line_number();
+        jump_line(cur_ln+1);
+        DEBUG_PRINTF("case_statement: GOSUB: toLN=%d, nextLN=%d\n", gosub_ln, cur_ln+1);
+      }
+//GOSUB
         DEBUG_PRINTF("case_statement: case execute\n");
         case_run = 1;
         select_stack[select_stack_ptr - 1].case_run = case_run;
@@ -874,17 +883,25 @@ case_statement(void)
         accept_cr();
       }
     } else {accept_cr();}
+//REM
+    while ((tokenizer_token() == TOKENIZER_REM) && (!case_goto)) {statement();}
+//REM
     if (case_goto) { dec_select_stack(); } else {
-      if (!case_gosub) {
-        if ((tokenizer_token() != TOKENIZER_CASE) && (tokenizer_token() != TOKENIZER_CASE_ELSE) && 
-           (tokenizer_token() != TOKENIZER_END_SELECT)) {
-           DEBUG_PRINTF("ubasic.c: select_statement(): don't found case, case_else or end_select\n");
-           ended = 1;
-           ubasic_error = UBASIC_E_PARSE;
-        } else { 
-          if (tokenizer_token() == TOKENIZER_END_SELECT) { end_select(); }
+      if ((tokenizer_token() != TOKENIZER_CASE) && (tokenizer_token() != TOKENIZER_CASE_ELSE) && 
+         (tokenizer_token() != TOKENIZER_END_SELECT)) {
+         DEBUG_PRINTF("ubasic.c: select_statement(): don't found case, case_else or end_select\n");
+         ended = 1;
+         ubasic_error = UBASIC_E_PARSE;
+      } else { 
+//GOSUB test for end_select and set to gosub-linenumber
+        if (tokenizer_token() == TOKENIZER_END_SELECT) { end_select_statement(); }
+        if (case_gosub) {
+          gosub_stack[gosub_stack_ptr-1] = tokenizer_line_number();
+          jump_line(gosub_ln);
+          DEBUG_PRINTF("end_select_statement: GOSUB: returnLN=%d\n", gosub_stack[gosub_stack_ptr-1]);
         }
       }  
+//GOSUB        
     }
   } else {
     DEBUG_PRINTF("case_statement: SELECT-Stack fail\n");
@@ -897,26 +914,47 @@ static void
 case_else_statement(void)
 {
   short case_goto = 0, case_gosub = 0;
+  int cur_ln, gosub_ln;
   
   accept(TOKENIZER_CASE_ELSE);
   if(select_stack_ptr > 0) {
     if (!select_stack[select_stack_ptr - 1].case_run) {
       case_goto = (tokenizer_token() == TOKENIZER_GOTO); 
       case_gosub = (tokenizer_token() == TOKENIZER_GOSUB); 
+//GOSUB - save curr linenumber
+      cur_ln = tokenizer_line_number();
+//GOSUB
       statement();
+//GOSUB  - save new linenumber, reset to curr linenumber
+      if (case_gosub) { 
+        gosub_ln = tokenizer_line_number();
+        jump_line(cur_ln+1);
+        DEBUG_PRINTF("case_else_statement: GOSUB: toLN=%d, nextLN=%d\n", gosub_ln, cur_ln+1);
+      }
+//GOSUB
       DEBUG_PRINTF("case_else_statement: case_else execute\n");
     } else {
       DEBUG_PRINTF("case_else_statement: case_else jump; case_run: %d\n", select_stack[select_stack_ptr - 1].case_run);
       accept_cr();
     }
+//REM
+    while ((tokenizer_token() == TOKENIZER_REM) && (!case_goto)) {statement();}
+//REM
     if (case_goto) { dec_select_stack(); } else { 
-      if (!case_gosub) {
-        if (tokenizer_token() != TOKENIZER_END_SELECT) {
-          DEBUG_PRINTF("ubasic.c: select_statement(): don't found end_select\n");
-          ended = 1;
-          ubasic_error = UBASIC_E_PARSE;
-        } else { end_select(); }
-      }
+//GOSUB test for end_select and set to gosub-linenumber
+      if (tokenizer_token() != TOKENIZER_END_SELECT) {
+        DEBUG_PRINTF("ubasic.c: select_statement(): don't found end_select\n");
+        ended = 1;
+        ubasic_error = UBASIC_E_PARSE;
+      } else { 
+          end_select_statement(); 
+        if (case_gosub) {
+          gosub_stack[gosub_stack_ptr-1] = tokenizer_line_number();
+          jump_line(gosub_ln);
+          DEBUG_PRINTF("end_select_statement: GOSUB: returnLN=%d\n", gosub_stack[gosub_stack_ptr-1]);
+        }
+      }  
+//GOSUB      
     }
   } else {
     DEBUG_PRINTF("case_else_statement: SELECT-Stack fault\n");
@@ -934,6 +972,9 @@ select_statement(void)
   accept(TOKENIZER_SELECT);
   select_value = expr();  
   accept(TOKENIZER_CR);
+//REM
+    while (tokenizer_token() == TOKENIZER_REM) {statement();}
+//REM
   
   if(select_stack_ptr < MAX_SELECT_STACK_DEPTH) {
     select_stack[select_stack_ptr].select_value = select_value;
@@ -945,9 +986,7 @@ select_statement(void)
       ended = 1;
       ubasic_error = UBASIC_E_PARSE;
     }
-    //NEU f?r diekten "case"-befehl
     else { case_statement(); }
-    //---------------------------
   } else {
     DEBUG_PRINTF("select_statement: SELECT-stack depth exceeded\n");
     ended = 1;
@@ -955,7 +994,6 @@ select_statement(void)
   }
 }
 /* SELECT-STATEMENT END                                                      */
-
 /*---------------------------------------------------------------------------*/
 static void
 let_statement(void)

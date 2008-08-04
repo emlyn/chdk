@@ -452,7 +452,7 @@ static char* gui_lang_default = \
 "341 \"Override Background\"\n"
 "342 \"Disable Overrides\"\n"
 "343 \"  Include AutoIso & Bracketing?\"\n"
-"344 \"  Hide in Playback?\"\n"
+"344 \"  Hide OSD?\"\n"
 "345 \"Disable @ Video Rec?\"\n"
 "346 \"Show remaining videotime?\"\n"
 "347 \"  Refreshrate (~sec)\"\n"
