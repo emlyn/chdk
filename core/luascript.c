@@ -478,12 +478,30 @@ static int luaCB_print_screen( lua_State* L )
   return 0;
 }
 
-
-
-static int luaCB_get_moviestate( lua_State* L )
+static int luaCB_get_movie_status( lua_State* L )
 {
   lua_pushnumber( L, movie_status );
   return 1;
+}
+
+static int luaCB_set_movie_status( lua_State* L )
+{
+  int to;
+  to = luaL_checknumber( L, 1 );
+if (to==1) {
+	if (movie_status == 4) {
+	movie_status = 1;
+}}
+if (to==2) {
+	if (movie_status == 1) {
+	movie_status = 4;
+}
+}
+if (to==3) {
+	if (movie_status == 1 || 4) {
+	movie_status = 5;
+}}
+  return 0;
 }
 
 static int luaCB_get_drive_mode( lua_State* L )
@@ -592,6 +610,31 @@ static int luaCB_shot_histo_enable( lua_State* L )
   return 0;
 }
 
+static int luaCB_play_sound( lua_State* L )
+{
+  play_sound(luaL_checknumber( L, 1 ));
+  return 0;
+}
+
+static int luaCB_get_temperature( lua_State* L )
+{
+  int which = (luaL_checknumber( L, 1 ));
+  int temp;
+  switch (which)
+  {
+    case 0:
+      temp = get_optical_temp(); 
+      break;
+    case 1:
+      temp = get_ccd_temp(); 
+      break;
+    case 2:
+      temp = get_battery_temp();
+      break;
+  }
+  lua_pushnumber( L, temp );
+  return 1;
+}
 
 void register_lua_funcs( lua_State* L )
 {
@@ -671,7 +714,7 @@ void register_lua_funcs( lua_State* L )
   FUNC(wait_click);
   FUNC(is_pressed);
   FUNC(is_key);
-#if defined (CAMERA_g7)
+#if defined (CAMERA_g7) || defined (CAMERA_sx100is)
   FUNC(wheel_right);
   FUNC(wheel_left);
 #endif
@@ -697,8 +740,11 @@ void register_lua_funcs( lua_State* L )
   FUNC(get_ev);
   FUNC(get_orientation_sensor);
   FUNC(get_nd_present);
-  FUNC(get_moviestate);
+  FUNC(get_movie_status);
+  FUNC(set_movie_status);
   
   FUNC(get_histo_range);
   FUNC(shot_histo_enable);
+  FUNC(play_sound);
+  FUNC(get_temperature);
 }
