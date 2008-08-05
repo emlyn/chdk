@@ -3,18 +3,18 @@ rem has to be started in record mode, uses sounds (unmute cam!)
 rem disables display for energy saving
 rem Die Eieruhr - für juciphox User und alle Kameras!!!, Autor: gehtnix  
 rem Timer zum Eierkochen
-@title Die Eieruhr
-@param a Weich Minuten
+@title eggtimer
+@param a soft minutes
 @default a 5
-@param b Mittel Minuten
+@param b medium minutes
 @default b 7
-@param c Hart Minuten
+@param c hard minutes
 @default c 10
-@param d Sekunden f. Mittel
+@param d seconds f. medium
 @default d 30
-@param e Sekunden f. Alle
+@param e seconds f. all
 @default e 0
-@param r USB-Taster 0=ein 1=aus
+@param r USB-remote 0=On 1=off
 @default r 1
 
 rem --- Werte für Taster
@@ -32,26 +32,25 @@ end_select
 rem --- Menü
 while 1
   cls
-  print             "  **** DIE EIERUHR ****"
-  if r=1 then print "  <<<       =     Weich"  else print "  Kurz      =     Weich"	
-  if r=1 then print "  Set       =     Mittel" else print "  Lang      =     Mittel"
-  if r=1 then print "  >>>       =     Hart" else print "  Länger    =     Hart"
-  if r=1 then print "  Ausl.     =     Ende" else print "  Ausl.     =     Ende"
+  print             "  **** EGGTIMER ****"
+  if r=1 then print "  <<<       =     Soft"  else print 	"  short     =     soft"	
+  if r=1 then print "  Set       =     medium" else print "  long      =     medium"
+  if r=1 then print "  >>>       =     hard" else print 	"  longer    =     hard"
+  if r=1 then print "  USB       =     Ende" else print 	"  USB       =     Ende"
   gosub "taster"
   cls
 
   select P
-    case 0 to X; gosub "weich"
-    case X to Y; gosub "mittel"
-		case Y to Z; gosub "hart"
-	  case_else print "Und nu?"
+    case 0 to X; gosub "soft"
+    case X to Y; gosub "medium"
+		case Y to Z; gosub "hard"
   end_select
   
 wend
 
 end
 
-:weich
+:soft
 select e
 	case 0; A=a*60*1000
 	case 1 to 59; A=(e+a*60)*1000
@@ -59,13 +58,13 @@ end_select
 cls
 print "************************"
 print "*                      *"
-print "*      Weiches Ei      *"
+print "*   Softboiled egg     *"
 print "*                      *"
 print "************************"
 gosub "eieruhr"
 return
 
-:mittel
+:medium
 select e
 	case 0; A=(d+b*60)*1000
 	case 1 to 59; A=(e+b*60)*1000
@@ -73,13 +72,13 @@ end_select
 cls
 print "************************"
 print "*                      *"
-print "*   Mittelweiches Ei   *"
+print "*   mediumboiled egg   *"
 print "*                      *"
 print "************************"
 gosub "eieruhr"
 return
 
-:hart
+:hard
 select e
 	case 0; A=c*60*1000
 	case 1 to 59; A=(e+c*60)*1000
@@ -87,7 +86,7 @@ end_select
 cls
 print "************************"
 print "*                      *"
-print "*      Hartes Ei       *"
+print "*   hardboiled egg     *"
 print "*                      *"
 print "************************"
 gosub "eieruhr"
@@ -102,7 +101,7 @@ gosub "dispein"
 cls
 print "************************"
 print "*                      *"
-print "*  Das Ei ist fertig!   *"
+print "*    Yay! Finished!    *"
 print "*                      *"
 print "************************"
 for i=1 to 3

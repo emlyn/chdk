@@ -1,5 +1,12 @@
 first version of a history file. will be automated and cleaned hopefully soon.
 
+467 / 0.2.31
+PhyrePhoX
+
+* cleaned out a little bit, deleted & moved some stuff (now grids, fonts & all lang files are zipped into the big zip)
+* changed a few conf values 
++ added Fahrenheit conversion of the temperature. Kicks in when you enable the 12h clock format, there is NO extra menu item
+
 Revision: 468, version 0.2.3
 Author: Jucifer
 Message:

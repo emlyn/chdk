@@ -264,7 +264,7 @@ static const ConfInfo conf_info[] = {
     
     CONF_INFO(130, conf.osd_color_warn,         CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_BG, COLOR_RED), NULL),
     CONF_INFO(131, conf.space_color,            CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_BG, COLOR_FG), NULL),
-    CONF_INFO(132, conf.space_icon_show,        CONF_DEF_VALUE, i:1, NULL),
+    CONF_INFO(132, conf.space_icon_show,        CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(133, conf.space_icon_pos,         CONF_DEF_PTR, ptr:&def_space_icon_pos, NULL),
     CONF_INFO(134, conf.space_perc_show,        CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(135, conf.space_mb_show,          CONF_DEF_VALUE, i:1, NULL),
@@ -430,7 +430,7 @@ static void conf_init_defaults() {
     def_values_pos.y=30;
     def_clock_pos.x=vid_get_bitmap_screen_width()-5*FONT_WIDTH-2;
     def_clock_pos.y=0;
-    def_temp_pos.x=vid_get_bitmap_screen_width()-8*FONT_WIDTH-2;
+    def_temp_pos.x=vid_get_bitmap_screen_width()-9*FONT_WIDTH-2;
     def_temp_pos.y=1*FONT_HEIGHT;
 }
 
