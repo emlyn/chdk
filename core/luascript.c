@@ -381,7 +381,7 @@ static int luaCB_is_key( lua_State* L )
   return 1;
 }
 
-#if defined (CAMERA_g7)
+#if defined (CAMERA_g7) || defined (CAMERA_sx100is)
 static int luaCB_wheel_right( lua_State* L )
 {
   JogDial_CW();
@@ -636,6 +636,78 @@ static int luaCB_get_temperature( lua_State* L )
   return 1;
 }
 
+static int luaCB_peek( lua_State* L )
+{
+  int addr = (luaL_checknumber(L,1));
+  lua_pushnumber( L, *(unsigned *)(addr) );
+  return 1;
+}
+
+#if 0
+static int luaCB_poke( lua_State* L )
+{
+  int addr = (luaL_checknumber(L,1));
+  int val = (luaL_checknumber(L,2));
+  *(unsigned *)(addr) = val;
+  return 0;
+}
+#endif
+
+static int luaCB_bitand( lua_State* L )
+{
+  int v1 = (luaL_checknumber(L,1));
+  int v2 = (luaL_checknumber(L,2));
+  lua_pushnumber( L, v1 & v2 );
+  return 1;
+}
+
+static int luaCB_bitor( lua_State* L )
+{
+  int v1 = (luaL_checknumber(L,1));
+  int v2 = (luaL_checknumber(L,2));
+  lua_pushnumber( L, v1 | v2 );
+  return 1;
+}
+
+static int luaCB_bitxor( lua_State* L )
+{
+  int v1 = (luaL_checknumber(L,1));
+  int v2 = (luaL_checknumber(L,2));
+  lua_pushnumber( L, v1 ^ v2 );
+  return 1;
+}
+
+static int luaCB_bitshl( lua_State* L )
+{
+  int val = (luaL_checknumber(L,1));
+  unsigned shift = (luaL_checknumber(L,2));
+  lua_pushnumber( L, val << shift );
+  return 1;
+}
+
+static int luaCB_bitshri( lua_State* L )
+{
+  int val = (luaL_checknumber(L,1));
+  unsigned shift = (luaL_checknumber(L,2));
+  lua_pushnumber( L, val >> shift );
+  return 1;
+}
+
+static int luaCB_bitshru( lua_State* L )
+{
+  unsigned val = (luaL_checknumber(L,1));
+  unsigned shift = (luaL_checknumber(L,2));
+  lua_pushnumber( L, val >> shift );
+  return 1;
+}
+
+static int luaCB_bitnot( lua_State* L )
+{
+  unsigned val = (luaL_checknumber(L,1));
+  lua_pushnumber( L, ~val );
+  return 1;
+}
+
 void register_lua_funcs( lua_State* L )
 {
 #define FUNC( X )			\
@@ -747,4 +819,16 @@ void register_lua_funcs( lua_State* L )
   FUNC(shot_histo_enable);
   FUNC(play_sound);
   FUNC(get_temperature);
+  FUNC(peek);
+#if 0
+  FUNC(poke);
+#endif
+  FUNC(bitand);
+  FUNC(bitor);
+  FUNC(bitxor);
+  FUNC(bitshl);
+  FUNC(bitshri);
+  FUNC(bitshru);
+  FUNC(bitnot);
+
 }

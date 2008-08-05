@@ -1,5 +1,29 @@
 first version of a history file. will be automated and cleaned hopefully soon.
 
+Revision: 468, version 0.2.3
+Author: Jucifer
+Message:
+
+- added reyalp's scripting commands "peek" (read the contents of a memory address) and bitwise operations (bitand, bitor, bitxor, bitshl, bitshri, bitshru, bitnot) to Lua
+- fixing self-generated error
+
+
+Revision: 467, version 0.2.2
+Author: Jucifer
+Message:
+
+- adding missing scripting commands to Lua 
+
+
+
+Revision: 466
+Author: Jucifer
+Message:
+
+- moved syscurves.CVF to where it's loaded from
+
+
+
 Revision: 464, version 0.2.1
 Author: PhyrePhoX
 Message:
