@@ -1,5 +1,14 @@
 first version of a history file. will be automated and cleaned hopefully soon.
 
+471 / 0.2.5
+Jucifer
+
+- tried to make get_usb_power behave similarly on as many cams as possible, hopefully I didn't break anything
+- modified Lua/get_usb_power(): behaves as get_usb_power(int edge)
+- optionalized parameters in Lua/md_detect_motion() as described in documentation (well, only the first 6 params are mandatory)
+- messed around with the language files a bit
+
+
 
 470 / 0.2.4
 Jucifer

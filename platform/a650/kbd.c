@@ -256,14 +256,12 @@ void my_kbd_read_keys()
 //    physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
 
 
-    remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
-
-//      remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
-//      if (remote_key)  remote_count += 1;
-//      else if (remote_count) {
-//         usb_power = remote_count;
-//         remote_count = 0;
-//      }
+      remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
+      if (remote_key)  remote_count += 1;
+      else if (remote_count) {
+         usb_power = remote_count;
+         remote_count = 0;
+      }
 
     if (conf.remote_enable) {
       physw_status[2] = physw_status[2] & ~(SD_READONLY_FLAG | USB_MASK);
@@ -277,12 +275,12 @@ void my_kbd_read_keys()
 
 int get_usb_power(int edge)
 {
-//	int x;
+	int x;
 
-	/*if (edge)*/ return remote_key;
-//	x = usb_power;
-//	usb_power = 0;
-//	return x;
+	if (edge) return remote_key;
+	x = usb_power;
+	usb_power = 0;
+	return x;
 }
 
 /****************/

@@ -41,7 +41,7 @@
  20 "OSD"
 
  21 "Show OSD"
- 22 "Show State"
+ 22 "Show State Displays"
  23 "Show Misc Values"
  24 " Zoom Value"
  25 "Show DOF Calculator"
@@ -207,7 +207,7 @@
 // OSD layout editor
 141 "Histogram"
 142 "DOF Calc"
-143 "RAW/EXP"
+143 "State Displays"
 144 "Misc Values"
 145 "Batt Icon"
 146 "Batt Text"

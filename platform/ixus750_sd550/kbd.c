@@ -130,8 +130,6 @@ void my_kbd_read_keys()
 			  (kbd_mod_state & 0xaffe);
 #endif
 #if defined(USB_MASK) && defined(USB_REG)
-		if (conf.remote_enable) {
-	physw_status[USB_REG] = kbd_new_state[USB_REG] & ~USB_MASK;
 remote_key = (kbd_new_state[USB_REG] & USB_MASK)==USB_MASK;
 
 			if (remote_key) 
@@ -140,6 +138,8 @@ remote_key = (kbd_new_state[USB_REG] & USB_MASK)==USB_MASK;
 				usb_power = remote_count;
 				remote_count = 0;
 			}
+		if (conf.remote_enable) {
+	physw_status[USB_REG] = kbd_new_state[USB_REG] & ~USB_MASK;
 		}
 #endif
     }

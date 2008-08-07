@@ -330,6 +330,12 @@ void my_kbd_read_keys()
 	}
 	
 	remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
+		if (remote_key) 
+			remote_count += 1;
+		else if (remote_count) {
+			usb_power = remote_count;
+			remote_count = 0;
+		}
 	if (conf.remote_enable) {
 		physw_status[2] = physw_status[2] & ~(SD_READONLY_FLAG | USB_MASK);
 		// As much as I'd like to immediately shoot, this trigger is intended for use in scripts, so don't shoot here.
@@ -523,5 +529,10 @@ long kbd_use_zoom_as_mf() {
 
 int get_usb_power(int edge)
 {
-	return remote_key;
+	int x;
+
+	if (edge) return remote_key;
+	x = usb_power;
+	usb_power = 0;
+	return x;
 }

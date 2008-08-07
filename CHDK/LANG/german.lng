@@ -154,7 +154,7 @@
 105 "Sicher, daß Sie die\nOptionen zurücksetzen möchten?"
 
 106 "***Versions-Info***"
-107 "CHDK Ver: %s, #%s\nDatum:    %s\nZeit:    %s\nKamera:  %s\nFW Vers: %s"
+107 "CHDK Ver: %s %s\nDatum:    %s\nZeit:    %s\nKamera:  %s\nFW Vers: %s"
 
 108 "***Speicher Info***"
 109 "Freier Speicher: %d Byte"

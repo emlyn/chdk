@@ -411,17 +411,17 @@ static int luaCB_md_detect_motion( lua_State* L )
   int detection_timeout = (luaL_checknumber(L,4));
   int measure_interval = (luaL_checknumber(L,5));
   int threshold = (luaL_checknumber(L,6));
-  int draw_grid = (luaL_checknumber(L,7));
+  int draw_grid = (luaL_optnumber(L,7,1));
    // arg 8 is the return value in ubasic. We
    // ignore it here. - AUJ
-  int clipping_region_mode = (luaL_checknumber(L,9));
-  int clipping_region_column1 = (luaL_checknumber(L,10));
-  int clipping_region_row1 = (luaL_checknumber(L,11));
-  int clipping_region_column2 = (luaL_checknumber(L,12));
-  int clipping_region_row2 = (luaL_checknumber(L,13));
-  int parameters = (luaL_checknumber(L,14));
-  int pixels_step = (luaL_checknumber(L,15));
-  int msecs_before_trigger = (luaL_checknumber(L,16));
+  int clipping_region_mode = (luaL_optnumber(L,9,0));
+  int clipping_region_column1 = (luaL_optnumber(L,10,0));
+  int clipping_region_row1 = (luaL_optnumber(L,11,0));
+  int clipping_region_column2 = (luaL_optnumber(L,12,0));
+  int clipping_region_row2 = (luaL_optnumber(L,13,0));
+  int parameters = (luaL_optnumber(L,14,0));
+  int pixels_step = (luaL_optnumber(L,15,4));
+  int msecs_before_trigger = (luaL_optnumber(L,16,0));
   ubasic_set_variable(0, 0);
   md_init_motion_detector(
     columns, rows, pixel_measure_mode, detection_timeout, 
@@ -458,7 +458,8 @@ static int luaCB_set_autostart( lua_State* L )
 
 static int luaCB_get_usb_power( lua_State* L )
 {
-  lua_pushnumber( L, get_usb_power(0) );
+  if (luaL_optnumber( L, 1, 0 )) lua_pushnumber( L, get_usb_power(1) );
+  else lua_pushnumber( L, get_usb_power(0) );
   return 1;
 }
 

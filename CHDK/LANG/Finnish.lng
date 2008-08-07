@@ -32,8 +32,8 @@
 20 "Kuvaruutunäytön asetukset"
 
 21 "Näytä kuvaruutunäyttö"
-22 "Näytä RAW/EXP-arvo"
-23 "Näytä arvot"
+22 "Näytä tilailmaisimet"
+23 "Näytä sekalaiset arvot"
 24 " Zoomin arvo"
 25 "Näytä terävyysalue"
 26 "Näytä kello"
@@ -66,7 +66,7 @@
 44 "Skripti asetukset"
 
 45 "Avaa skripti tiedosto..."
-46 "Skriptin aloitusviive (.1s)"
+46 "Skriptin jatkamisviive (.1s)"
 47 "Nykyinen skripti"
 48 "Skriptin parametrit"
 
@@ -150,7 +150,7 @@
 105 "Haluatko varmasti\npalauttaa asetukset?"
 
 106 "*** Buildin tiedot ***"
-107 "CHDK Ver: %s, #%s\nPvm:     %s\nAika:    %s\nKamera:  %s\nFW Ver:  %s"
+107 "CHDK Ver: %s %s\nPvm:     %s\nAika:    %s\nKamera:  %s\nFW Ver:  %s"
 
 108 "*** Muistin tiedot ***"
 109 "Vapaa muisti: %d tavua"
@@ -198,7 +198,7 @@
 // OSD layout editor
 141 "Histogrammi"
 142 "DOF-arvot"
-143 "RAW/EXP"
+143 "Tilailmaisimet"
 144 "Sekal. arvot"
 145 "Akun kuvake"
 146 "Akun teksti"
@@ -308,7 +308,7 @@
 224 "Todellinen ISO"
 225 "Ilmoitettu ISO"
 226 " Näytä vain AutoISO-tilassa"
-227 "Asetettu valoitus (Tv+Av)"
+227 "Asetettu valotus (Tv+Av)"
 228 "Mitattu valotus (Bv+Sv)"
 229 "Asetettu kirkkaus (BV)"
 230 "Mitattu kirkkaus"
@@ -323,9 +323,9 @@
 237 "Videolaatu"
  
  
-238 "Kuvien asetukset"
+238 "Kuvausasetukset"
 
-239 "Kuvat"
+239 "Kuvausasetukset"
 240 "Sulkijannopeus arvo"
 241 " Arvon kerroin"
 242 "Aukon-arvo"
@@ -334,9 +334,9 @@
 245 "Etäisyys-arvo"
 246 " Arvon muutos(mm)"
 
-247 "Jatkuva haarukointi-tila"
+247 "Haarukointi jatkuvassa kuvauksessa"
 
-248 "Jatkuva haarukointi-tila"
+248 "Haarukointi jatkuvassa kuvauksessa"
 249 "TV Haarukointi"
 250 "AV Haarukointi"
 251 "ISO Haarukointi"
@@ -348,13 +348,13 @@
 256 "Automaatti käynnistys"
 257 "Kaukokäyttö-tila (USB)"
 
-258 "Valoitustila (Ei salamaa)"
+258 "Valotustila (Ei salamaa)"
 
-259 "Valoitustila (Ei salamaa)"
-260 "Valoituksen laskeminen"
-261 "TV-valoituksen laskujärjestys"
-262 "AV-valoituksen laskujärjestys"
-263 "ISO-valoituksen laskujärjestys"
+259 "Valotustila (Ei salamaa)"
+260 "Valotuksen laskeminen"
+261 "TV-valotuksen laskujärjestys"
+262 "AV-valotuksen laskujärjestys"
+263 "ISO-valotuksen laskujärjestys"
 
 264 "Tyhjennä arvot käynnistyksessä"
 
@@ -470,9 +470,9 @@
 352 "EV korjaus"
 353 "Haluatko varmasti poistaa kaikki\nRAW tiedostot ilman JPG:tä\nDCIM-kansiossa?"
 354 "Haluatko varmasti poistaa kaikki\nRAW tiedostot ilman JPG:tä\nvalitusta kansiosta?"
-355 "Haluatko varmasti poistaa RAW tiedostot\nilman liittyviä JPG:tä?\n(liittyvät jää)"
+355 "Haluatko varmasti poistaa RAW tiedostot\nilman liittyviä JPG:tä?\n(poislukien valitut)"
 356 "Raw poiston valinta\nei toteuta toimintaa"
-357 "*** Purge RAW files ***"
+357 "*** Poista RAW-tiedostot ***"
 358 "Poista RAW-tiedostot"
  
 359 "Oma valikko ensimmäisenä"
@@ -514,9 +514,9 @@
 387 "Raw @ EV haaruikointi ei käytössä"
 388 "Raw @ ajastin ei käytössä"
 
-389 "Poikkeavuudet"
-390 "RAW poikkeavuudet"
-391 "Varoita poikkeavuuksista"
+389 "Poikkeukset"
+390 "RAW poikkeukset"
+391 "Varoita poikkeuksista"
 392 "Valitse valikon ensimmäinen"
 
 393 "Odotusviive 0.1s"

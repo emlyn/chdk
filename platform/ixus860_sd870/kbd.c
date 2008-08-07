@@ -303,7 +303,6 @@ int get_usb_power(int edge)
 	x = usb_power;
 	usb_power = 0;
 	return x;
-        return 0;
 }
 
 /****************/

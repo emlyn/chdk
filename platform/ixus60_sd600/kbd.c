@@ -21,6 +21,8 @@ long debug_kbd_state_diff;
 static KeyMap keymap[];
 static long last_kbd_key = 0;
 static int usb_power=0;
+static int remote_key=0;
+static int remote_count=0;
 
 #ifndef MALLOCD_STACK
 static char kbd_stack[NEW_SS];
@@ -324,7 +326,12 @@ long kbd_use_zoom_as_mf() {
 
 int get_usb_power(int edge)
 {
-	return usb_power;
+	int x;
+
+	if (edge) return remote_key;
+	x = usb_power;
+	usb_power = 0;
+	return x;
 }
 
 static KeyMap keymap[] = {

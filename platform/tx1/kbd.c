@@ -19,6 +19,7 @@ static KeyMap keymap[];
 static long last_kbd_key = 0;
 static int usb_power=0;
 static int shoot_counter=0;
+static int remote_key, remote_count;
 volatile long *mmio0 = (void*)0xc0220200;
 volatile long *mmio1 = (void*)0xc0220204;
 volatile long *mmio2 = (void*)0xc0220208;
@@ -254,7 +255,13 @@ void my_kbd_read_keys()
     }
 
 
-        usb_power = (physw_status[USB_REG] & USB_MASK)==USB_MASK; 
+        remote_key = (physw_status[USB_REG] & USB_MASK)==USB_MASK; 
+			if (remote_key) 
+				remote_count += 1;
+			else if (remote_count) {
+				usb_power = remote_count;
+				remote_count = 0;
+			}
      
       if (conf.remote_enable) 
      {
@@ -444,5 +451,12 @@ static KeyMap keymap[] = {
     dst[2] = *mmio2 & 0xffff;
 }
 
-int get_usb_power(int edge) {return usb_power;}
+int get_usb_power(int edge)
+{
+	int x;
 
+	if (edge) return remote_key;
+	x = usb_power;
+	usb_power = 0;
+	return x;
+}

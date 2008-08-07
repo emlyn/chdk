@@ -41,7 +41,7 @@ static char* gui_lang_default = \
 " 20 \"OSD\"\n"
 
 " 21 \"Show OSD\"\n"
-" 22 \"Show State\"\n"
+" 22 \"Show State Displays\"\n"
 " 23 \"Show misc values\"\n"
 " 24 \" Show Zoom value as\"\n"
 " 25 \"Show DOF calculator\"\n"
@@ -201,7 +201,7 @@ static char* gui_lang_default = \
 
 "141 \"Histogram\"\n"
 "142 \"DOF calc\"\n"
-"143 \"RAW/EXP\"\n"
+"143 \"State Displays\"\n"
 "144 \"Misc values\"\n"
 "145 \"Batt icon\"\n"
 "146 \"Batt text\"\n"
