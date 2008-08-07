@@ -492,7 +492,7 @@ static char* gui_lang_default = \
 
 "375 \"Remote parameters\"\n"
 "376 \"Remote parameters\"\n"
-"377 \"Enable Remote\"\n"
+"377 \"Enable Synchable Remote\"\n"
 "378 \"Enable Synch\"\n"
 "379 \"Enable Synch Delay\"\n"
 "380 \"Synch Delay 0.1ms\"\n"
@@ -510,8 +510,8 @@ static char* gui_lang_default = \
 "391 \"Warn when exception?\"\n"
 "392 \"Always select 1st entry in menu?\"\n"
 
-"393 \"script\"\n"
-"394 \"scriptless\"\n"
+"393 \"Time-out (0.1s)\"\n"
+"394 \"synchable remote\"\n"
 "395 \"Fast Video Control?\"\n"
 "396 \"Temperature\"\n"
 "397 \"Show Temperature?\"\n"

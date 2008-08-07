@@ -528,9 +528,11 @@
 391 "Warn when Exception?"
 392 "Always select 1st entry in menu"
 
-393 "script"
-394 "scriptless"
+393 "Time-out (0.1s)"
+394 "synchable remote"
 395 "Fast Video Control?"
 396 "Temperature"
 397 "Show temperature?"
 398 "Video Quality Control?"
+399 "Enable Remote Zoom"
+400 "Zoom Time-out 0.1s"

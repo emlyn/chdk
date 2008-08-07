@@ -8,6 +8,7 @@
 #include "lauxlib.h"
 #include "../include/conf.h"
 #include "shot_histogram.h"
+#include "ubasic.h"
 
 static int luaCB_shoot( lua_State* L )
 {
@@ -411,7 +412,8 @@ static int luaCB_md_detect_motion( lua_State* L )
   int measure_interval = (luaL_checknumber(L,5));
   int threshold = (luaL_checknumber(L,6));
   int draw_grid = (luaL_checknumber(L,7));
-  int ret_var_num = (luaL_checknumber(L,8));
+   // arg 8 is the return value in ubasic. We
+   // ignore it here. - AUJ
   int clipping_region_mode = (luaL_checknumber(L,9));
   int clipping_region_column1 = (luaL_checknumber(L,10));
   int clipping_region_row1 = (luaL_checknumber(L,11));
@@ -420,17 +422,17 @@ static int luaCB_md_detect_motion( lua_State* L )
   int parameters = (luaL_checknumber(L,14));
   int pixels_step = (luaL_checknumber(L,15));
   int msecs_before_trigger = (luaL_checknumber(L,16));
-  
-  	md_init_motion_detector(
-			columns, rows, pixel_measure_mode, detection_timeout, 
-			measure_interval, threshold, draw_grid, ret_var_num,
-			clipping_region_mode,
-			clipping_region_column1, clipping_region_row1,
-			clipping_region_column2, clipping_region_row2,
-			parameters, pixels_step, msecs_before_trigger
-	);
+  ubasic_set_variable(0, 0);
+  md_init_motion_detector(
+    columns, rows, pixel_measure_mode, detection_timeout, 
+    measure_interval, threshold, draw_grid, 0,
+    clipping_region_mode,
+    clipping_region_column1, clipping_region_row1,
+    clipping_region_column2, clipping_region_row2,
+    parameters, pixels_step, msecs_before_trigger
+  );
 
-  return 1;
+  return lua_yield(L, 0);
 }
 
 static int luaCB_autostarted( lua_State* L )

@@ -499,7 +499,7 @@
 
 375 "Kaukokäyttö asetukset"
 376 "Kaukokäyttö"
-377 "Kaukokäyttö käytössä"
+377 "Tahdist. kaukokäyttö käytössä"
 378 "Tahdistus käytössä"
 379 "Tahdistuksen viive käytössä"
 380 "Tahdistuksen viive 0.1ms"
@@ -510,17 +510,17 @@
 384 "Parametri valinnat"
 
 385 "Raw @ Sports ei käytössä"
-386 "Raw @ Burst ei käytössä"
-387 "Raw @ EV Bracketing ei käytössä"
-388 "Raw @ Timer ei käytössä"
+386 "Raw @ purske ei käytössä"
+387 "Raw @ EV haaruikointi ei käytössä"
+388 "Raw @ ajastin ei käytössä"
 
 389 "Poikkeavuudet"
 390 "RAW poikkeavuudet"
 391 "Varoita poikkeavuuksista"
 392 "Valitse valikon ensimmäinen"
 
-393 "Skriptit"
-394 "Ei skriptejä"
+393 "Odotusviive 0.1s"
+394 "tahdistettava kaukokäyttö"
 395 "Nopea videon säätö"
 396 "Lämpötila"
 397 "Näytä lämpötila"

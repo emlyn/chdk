@@ -44,6 +44,7 @@ static int soft_half_press = 0;
 static int kbd_blocked;
 static int key_pressed;
 int state_kbd_script_run;
+int state_lua_kbd_first_call_to_resume;	// AUJ
 static long delay_target_ticks;
 static long kbd_last_clicked;
 
@@ -271,6 +272,7 @@ static void script_start( int autostart )
     lua_settable( L, LUA_GLOBALSINDEX );
     }
       }
+      state_lua_kbd_first_call_to_resume = 1;
     }
     else {
       ubasic_init(state_ubasic_script);
@@ -319,6 +321,13 @@ void process_script()
 	case SCRIPT_MOTION_DETECTOR:
 			if(md_detect_motion()==0){
 				kbd_int_stack_ptr-=1;
+ 				if (L)
+ 				{
+ 					  // We need to recover the motion detector's
+ 					  // result from ubasic variable 0 and push
+ 					  // it onto the thread's stack. -- AUJ
+ 					  lua_pushnumber( Lt, ubasic_get_variable(0) );
+ 				}
 			}
 			return;
 
@@ -399,7 +408,17 @@ void process_script()
     }
 
     if( L ) {
-      Lres = lua_resume( Lt, 0 );
+ 		int top;
+ 		if (state_lua_kbd_first_call_to_resume)
+ 		{
+ 			state_lua_kbd_first_call_to_resume = 0;
+ 			top = 0;
+ 		}
+ 		else
+ 		{
+ 			top = lua_gettop(Lt);
+ 		}
+       Lres = lua_resume( Lt, top );
 
       if (Lres != LUA_YIELD && Lres != 0) {
 	script_console_add_line( lua_tostring( Lt, -1 ) );
@@ -511,6 +530,11 @@ void set_key_press(int nSet)
 }
 // ------ add by Masuji SUTO (end) --------------
 
+/*------------------- Alex scriptless remote additions start --------------------*/
+static int remoteHalfShutter=0, remoteFullShutter=0, remoteShooting=0, remoteClickTimer=0;
+#define REMOTE_MAX_CLICK_LENGTH	50
+/*-------------------- Alex scriptless remote additions end ---------------------*/
+
 long kbd_process()
 {
 /* Alternative keyboard mode stated/exited by pressing print key.
@@ -572,6 +596,43 @@ unsigned int drmode;
         // deals with the rest
         if (kbd_blocked && nRmt==0)
         {
+/*------------------- Alex scriptless remote additions start --------------------*/
+        if (remoteShooting) {
+
+          if (remoteHalfShutter) {
+            if (get_usb_power(1)) {
+              if (remoteClickTimer < REMOTE_MAX_CLICK_LENGTH) {
+                remoteHalfShutter=0;
+                remoteFullShutter=1;
+                kbd_key_press(KEY_SHOOT_FULL);
+              }
+              return 1;
+            } else {
+              --remoteClickTimer;
+              if ( remoteClickTimer == 0 ) {
+                kbd_key_release_all();
+                remoteHalfShutter=0;
+                remoteShooting=0;
+                kbd_blocked=0;
+                return 0;
+              }
+            }
+          }
+
+          if (remoteFullShutter) {
+            if (get_usb_power(1)) {
+              return 1;
+            } else {
+              kbd_key_release_all();
+              remoteFullShutter=0;
+              remoteShooting=0;
+              kbd_blocked=0;
+              return 0;
+            }
+          }
+
+        }
+/*-------------------- Alex scriptless remote additions end ---------------------*/
                 if (kbd_is_key_pressed(KEY_SHOOT_FULL))
                 {
                         key_pressed = 100;
@@ -599,7 +660,7 @@ unsigned int drmode;
         } else
         {
 
-#ifndef SCRIPTLESS_REMOTE_NOT_ENABLED
+#ifndef SYNCHABLE_REMOTE_NOT_ENABLED
 if(conf.ricoh_ca1_mode)
 {
 
@@ -1190,6 +1251,22 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
 
 } // ricoh_ca1_mode
 #endif
+/*------------------- Alex scriptless remote additions start --------------------*/
+        if (conf.remote_enable && !conf.ricoh_ca1_mode && key_pressed != 2 && get_usb_power(1)) {
+          remoteShooting = 1;
+          kbd_blocked = 1;
+          kbd_key_release_all();
+          remoteClickTimer = REMOTE_MAX_CLICK_LENGTH;
+          if (shooting_get_focus_mode()) {
+            remoteFullShutter = 1;
+            kbd_key_press(KEY_SHOOT_FULL);
+          } else {
+            remoteHalfShutter = 1;
+            kbd_key_press(KEY_SHOOT_HALF);
+          }
+          return 1;
+        }
+/*-------------------- Alex scriptless remote additions end ---------------------*/
 
                 if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
                     return 1;

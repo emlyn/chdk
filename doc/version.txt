@@ -1,5 +1,15 @@
 first version of a history file. will be automated and cleaned hopefully soon.
 
+
+470 / 0.2.4
+Jucifer
+
+- added auj's motion detection/Lua patch: now returns the number of detected cells
++ added whoever's scriptless remote code (http://chdk.setepontos.com/index.php/topic,2041.msg18833.html#msg18833)
+- changed the remote submenu a bit
+
+
+
 467 / 0.2.31
 PhyrePhoX
 
