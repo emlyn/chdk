@@ -405,12 +405,12 @@ static int luaCB_md_get_cell_diff( lua_State* L )
 
 static int luaCB_md_detect_motion( lua_State* L )
 {
-  int columns = (luaL_checknumber(L,1));
-  int rows = (luaL_checknumber(L,2));
-  int pixel_measure_mode = (luaL_checknumber(L,3));
-  int detection_timeout = (luaL_checknumber(L,4));
-  int measure_interval = (luaL_checknumber(L,5));
-  int threshold = (luaL_checknumber(L,6));
+  int columns = (luaL_optnumber(L,1,6));
+  int rows = (luaL_optnumber(L,2,4));
+  int pixel_measure_mode = (luaL_optnumber(L,3,1));
+  int detection_timeout = (luaL_optnumber(L,4,10000));
+  int measure_interval = (luaL_optnumber(L,5,7));
+  int threshold = (luaL_optnumber(L,6,10));
   int draw_grid = (luaL_optnumber(L,7,1));
    // arg 8 is the return value in ubasic. We
    // ignore it here. - AUJ
@@ -419,8 +419,8 @@ static int luaCB_md_detect_motion( lua_State* L )
   int clipping_region_row1 = (luaL_optnumber(L,11,0));
   int clipping_region_column2 = (luaL_optnumber(L,12,0));
   int clipping_region_row2 = (luaL_optnumber(L,13,0));
-  int parameters = (luaL_optnumber(L,14,0));
-  int pixels_step = (luaL_optnumber(L,15,4));
+  int parameters = (luaL_optnumber(L,14,1));
+  int pixels_step = (luaL_optnumber(L,15,6));
   int msecs_before_trigger = (luaL_optnumber(L,16,0));
   ubasic_set_variable(0, 0);
   md_init_motion_detector(
