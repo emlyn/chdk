@@ -138,6 +138,7 @@ typedef struct {
     int fast_movie_control;
     int fast_movie_quality_control;
     int splash_show;
+    int start_sound;
 
     int use_zoom_mf;
     long alt_mode_button; //for S-series

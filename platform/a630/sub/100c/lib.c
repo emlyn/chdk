@@ -71,3 +71,6 @@ char *camera_jpeg_count_str()
 long vid_get_bitmap_buffer_width() { return 360; }
 
 long vid_get_bitmap_buffer_height() { return 240; }
+
+void _EnterToCompensationEVF() {} // Dummy function. To be removed after stub is found. See stubs_entry_2.S.
+void _ExitFromCompensationEVF() {} // Dummy function. To be removed after stub is found. See stubs_entry_2.S.

@@ -486,6 +486,8 @@ unsigned int movie_reset;
 unsigned int GetFreeCardSpaceKb(void);
 unsigned int GetTotalCardSpaceKb(void);
 
+
+
 void swap_partitions(void);
 int get_part_count(void);
 void create_partitions(void);
@@ -497,6 +499,8 @@ unsigned int GetRawCount(void);
 void MakeAFScan(void); 
 extern int movie_status; 
 extern int zoom_status;
+void EnterToCompensationEVF(void);
+void ExitFromCompensationEVF(void);
 
 void wait_until_remote_button_is_released(void);
 short shooting_get_ev_correction1();

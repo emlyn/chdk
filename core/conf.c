@@ -344,6 +344,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(205, conf.fast_movie_quality_control, CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(206, conf.remote_zoom_enable,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(207, conf.zoom_timeout,           CONF_DEF_VALUE, i:5, NULL),
+   	CONF_INFO(208, conf.start_sound,     CONF_DEF_VALUE, i:0, NULL),
 			
 			
 };

@@ -298,6 +298,7 @@ static CMenuItem misc_submenu_items[] = {
     {0x28,LANG_MENU_MISC_FLASHLIGHT,         MENUITEM_BOOL,    &conf.flashlight },
 #endif
     {0x5c,LANG_MENU_MISC_SHOW_SPLASH,        MENUITEM_BOOL,    &conf.splash_show },
+		{0x5c,LANG_MENU_MISC_START_SOUND,        MENUITEM_BOOL,    &conf.start_sound },
 #if CAM_USE_ZOOM_FOR_MF
     {0x59,LANG_MENU_MISC_ZOOM_FOR_MF,        MENUITEM_BOOL,    &conf.use_zoom_mf },
 #endif
@@ -1624,6 +1625,10 @@ void gui_init()
     gui_mode = GUI_MODE_NONE;
     gui_restore = 0;
     gui_in_redraw = 0;
+    if (conf.start_sound>0)
+    {
+    	play_sound(4);
+    }
     gui_splash = (conf.splash_show)?SPLASH_TIME:0;
     user_menu_restore();
     gui_lang_init();

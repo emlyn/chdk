@@ -6,7 +6,17 @@ author
 log
 
 
+473 - 0.2.6 - PP
+* updated langfiles
++ added option in misc - startsound. if enabled (disable as default) you will hear a short beep right before the splash screen. will someday be the antitheft function (yet to be coded...)
+* small fix in OSD element fast_ev, should be better now, but still not perfect
++ added functions EnterToCompensationEVF() & ExitFromCompensationEVF(); -> read about it here http://chdk.setepontos.com/index.php/topic,2051.msg19300.html#msg19300
+    --> prepared the sources so that adding the adresses to other cams will be easy - needs ASM people though
+* small patch in symbol mod by CHDKLover
+* fixed bug in makefile
++ batch-zip-complete: filename of the zip now gets an "_complete" appended
 
+oh, and thanks Hacki for letting me steal endless hours of your sleep ;)
 
 
 472

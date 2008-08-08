@@ -980,9 +980,9 @@ if (movie_reset == 1)
 
 void gui_osd_draw_ev() {
 #if (CAM_PROPSET == 1)  
-    sprintf(osd_buf, "EV: %+d,%d", shooting_get_prop(25)/96,shooting_get_prop(25)%96);
+    sprintf(osd_buf, "EV: %+d,%2d", shooting_get_prop(25)/96,shooting_get_prop(25)%96);
 #elif (CAM_PROPSET == 2)
-    sprintf(osd_buf, "EV: %+d,%d", shooting_get_prop(107)/96,shooting_get_prop(107)%96);
+    sprintf(osd_buf, "EV: %+d,%2d", shooting_get_prop(107)/96,shooting_get_prop(107)%96);
 #endif
 
     draw_string(conf.mode_ev_pos.x, conf.mode_ev_pos.y, osd_buf, conf.osd_color);

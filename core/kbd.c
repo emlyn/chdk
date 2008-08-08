@@ -1336,6 +1336,7 @@ if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_presse
             shooting_set_prop(107,shooting_get_prop(107)+(conf.fast_ev_step+1)*16);
             shooting_set_prop(207,shooting_get_prop(207)+(conf.fast_ev_step+1)*16);
 #endif
+            EnterToCompensationEVF();
             key_pressed = KEY_UP;
             	
             return 1;
@@ -1385,6 +1386,7 @@ movie_reset = 1;
             shooting_set_prop(207,shooting_get_prop(207)-(conf.fast_ev_step+1)*16);
 #endif
             key_pressed = KEY_DOWN;
+            EnterToCompensationEVF();
             return 1;
         }
 

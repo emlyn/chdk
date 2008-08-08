@@ -292,7 +292,7 @@ int rbf_draw_symbol(int x, int y, int ch, color cl) {
           draw_pixel(x+xx ,y+yy, (rbf_symbol_font.cTable[ch][yy*rbf_symbol_font.width/8+xx/8] & (1<<(xx%8)))? cl&0xff : cl>>8);
         }
       }
-      if (rbf_font.height>rbf_symbol_font.height) draw_filled_rect(x, y+yy, x+rbf_symbol_width(ch), y+rbf_font.height-2, MAKE_COLOR(cl>>8, cl>>8));
+      if (rbf_font.height>rbf_symbol_font.height) draw_filled_rect(x, y+yy, x+rbf_symbol_width(ch), y-space+rbf_font.height-1, MAKE_COLOR(cl>>8, cl>>8));
     }
     return rbf_symbol_font.wTable[ch];
 }

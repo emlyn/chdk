@@ -519,7 +519,7 @@ static char* gui_lang_default = \
 
 "399 \"Enable Remote Zoom\"\n"
 "400 \"Zoom Time-out 0.1s\"\n"
-
+"401 \"Startup sound\"\n"
 ;
 
 //-------------------------------------------------------------------

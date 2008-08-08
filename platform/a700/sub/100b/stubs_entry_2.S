@@ -23,3 +23,6 @@ NHSTUB(GetBatteryTemperature, 0xFFC1C9BC)
 NHSTUB(GetCCDTemperature, 0xFFC1C9A8)
 NHSTUB(GetOpticalTemperature, 0xFFC1C994)
 NHSTUB(PT_PlaySound, 0xFFD5030C)
+
+//NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
+//NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.

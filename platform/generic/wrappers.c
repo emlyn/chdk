@@ -495,6 +495,15 @@ unsigned int GetRawCount(void){
 
 }
 
+void EnterToCompensationEVF(void)
+{
+  _EnterToCompensationEVF();
+}
+
+void ExitFromCompensationEVF()
+{
+  _ExitFromCompensationEVF();
+}
 
 #if CAM_MULTIPART
 
@@ -532,6 +541,12 @@ int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long 
 
  return valid;
 }
+
+
+
+
+
+
 
 int get_part_count(void){
  unsigned long part_start_sector, part_length;
@@ -612,3 +627,4 @@ void MakeAFScan(void){
  _ExpCtrlTool_StartContiAE(0,0);
 }
 #endif
+

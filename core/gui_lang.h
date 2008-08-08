@@ -509,9 +509,11 @@
 #define LANG_MENU_REMOTE_ZOOM_ENABLE  399
 #define LANG_MENU_REMOTE_ZOOM_TIMEOUT 400
 
+#define LANG_MENU_MISC_START_SOUND 401
+
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  400
+#define GUI_LANG_ITEMS                  401
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();
