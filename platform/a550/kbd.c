@@ -53,8 +53,8 @@ debug_led(1);
 tick = get_tick_count();
 tick2 = tick;
 static long usb_physw[3];
-      if (conf.synch_enable && (!shooting_get_drive_mode()|| (shooting_get_drive_mode()==1) || ((shooting_get_drive_mode()==2) && state_shooting_progress != SHOOTING_PROGRESS_PROCESSING)))                                   
- //  if (conf.synch_enable && (!shooting_get_drive_mode()|| ((shooting_get_drive_mode()==2) && state_shooting_progress != SHOOTING_PROGRESS_PROCESSING)))                                       // synch mode enable so wait for USB to disconnect
+      if (conf.synch_enable && conf.ricoh_ca1_mode && conf.remote_enable && (!shooting_get_drive_mode()|| (shooting_get_drive_mode()==1) || ((shooting_get_drive_mode()==2) && state_shooting_progress != SHOOTING_PROGRESS_PROCESSING)))                                   
+ //  if (conf.synch_enable && conf.ricoh_ca1_mode && conf.remote_enable && (!shooting_get_drive_mode()|| ((shooting_get_drive_mode()==2) && state_shooting_progress != SHOOTING_PROGRESS_PROCESSING)))                                       // synch mode enable so wait for USB to disconnect
   {
 
 // ------ add by Masuji SUTO (start) --------------
@@ -63,7 +63,7 @@ static long usb_physw[3];
         _kbd_read_keys_r2(usb_physw);
         if((usb_physw[2] & USB_MASK)==USB_MASK) nMode=1;
 // ------ add by Masuji SUTO (end)   --------------
-if(conf.ricoh_ca1_mode)
+if(conf.ricoh_ca1_mode && conf.remote_enable)
 {
 	if(shooting_get_drive_mode()==1 && state_shooting_progress == SHOOTING_PROGRESS_PROCESSING){			//continuous-shooting mode
 		if(conf.bracket_type>2){

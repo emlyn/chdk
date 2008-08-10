@@ -66,7 +66,7 @@
 44 "Skripti asetukset"
 
 45 "Avaa skripti tiedosto..."
-46 "Skriptin jatkamisviive (.1s)"
+46 "Skriptin jatkoviive (.1s)"
 47 "Nykyinen skripti"
 48 "Skriptin parametrit"
 
@@ -511,7 +511,7 @@
 
 385 "Raw @ Sports ei käytössä"
 386 "Raw @ purske ei käytössä"
-387 "Raw @ EV haaruikointi ei käytössä"
+387 "Raw @ EV haarukointi ei käytössä"
 388 "Raw @ ajastin ei käytössä"
 
 389 "Poikkeukset"
@@ -527,3 +527,4 @@
 398 "Videolaadun valvonta"
 399 "Kauko-ohjattu zoomaus"
 400 "Zoomin odotusviive 0.1s"
+401 "Käynnistysääni"

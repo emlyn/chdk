@@ -236,6 +236,15 @@ static int lua_script_start( char const* script )
   return 1;
 }
 
+static void wait_and_end(void)
+{
+	script_console_add_line("PRESS SHUTTER TO CLOSE");
+
+	// We're not running any more, but we have scheduled stuff that
+	// needs to finish. So keep the script marked as running, but don't
+	// call any more scripting functions.
+	state_kbd_script_run = 3;	
+}
 
 static void script_start( int autostart )
 {
@@ -262,6 +271,7 @@ static void script_start( int autostart )
       
       if( !lua_script_start(state_ubasic_script) ) {
     script_print_screen_end();
+    wait_and_end();
     return;
       }
       for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
@@ -407,34 +417,39 @@ void process_script()
 	}
     }
 
-    if( L ) {
- 		int top;
- 		if (state_lua_kbd_first_call_to_resume)
- 		{
- 			state_lua_kbd_first_call_to_resume = 0;
- 			top = 0;
- 		}
- 		else
- 		{
- 			top = lua_gettop(Lt);
- 		}
-       Lres = lua_resume( Lt, top );
-
-      if (Lres != LUA_YIELD && Lres != 0) {
-	script_console_add_line( lua_tostring( Lt, -1 ) );
-      }
-
-      if (Lres != LUA_YIELD) {
-        script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
-	script_end();
-      }    
-    } 
-    else {
-      ubasic_run();
-      if (ubasic_finished()) {
-	script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
- 	script_end();
-      }    
+ 	if (state_kbd_script_run != 3)
+ 	{
+ 		if( L ) {
+ 			int top;
+ 			if (state_lua_kbd_first_call_to_resume)
+ 			{
+ 				state_lua_kbd_first_call_to_resume = 0;
+ 				top = 0;
+ 			}
+ 			else
+ 			{
+ 				top = lua_gettop(Lt);
+ 			}
+ 		   Lres = lua_resume( Lt, top );
+ 
+ 		  if (Lres != LUA_YIELD && Lres != 0) {
+ 		script_console_add_line( lua_tostring( Lt, -1 ) );
+ 		wait_and_end();
+ 		return;
+ 		  }
+ 
+ 		  if (Lres != LUA_YIELD) {
+ 			script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
+ 		script_end();
+ 		  }    
+ 		} 
+ 		else {
+ 		  ubasic_run();
+ 		  if (ubasic_finished()) {
+ 		script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
+ 		script_end();
+ 		  }    
+ 	}
     }
 }
 
@@ -547,7 +562,7 @@ unsigned int mmode;
 unsigned int nCrzpos,i;
 unsigned int drmode;
 
-   if(conf.ricoh_ca1_mode)
+   if(conf.ricoh_ca1_mode && conf.remote_enable)
   {
 	drmode = shooting_get_drive_mode();
 	mmode = mode_get();
@@ -587,7 +602,7 @@ unsigned int drmode;
         
         if (kbd_is_key_pressed(conf.alt_mode_button))
         {
-                if (conf.ricoh_ca1_mode) conf.synch_enable=1;
+                if (conf.ricoh_ca1_mode && conf.remote_enable) conf.synch_enable=1;
                 key_pressed = 1;
                 kbd_key_release_all();          
                 return 1;
@@ -639,11 +654,25 @@ unsigned int drmode;
                         if (!state_kbd_script_run)
                         {
                                 script_start(0);
-                        } else if (L || state_kbd_script_run == 2)
+                        } else if (state_kbd_script_run == 2 || state_kbd_script_run == 3)
                         {
                                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
                                 script_end();
-                        } else
+                        } else if (L)
+                        {
+                            state_kbd_script_run = 2;
+                            lua_getglobal(Lt, "restore");
+                            if (lua_isfunction(Lt, -1))
+                                {
+                                if (lua_pcall( Lt, 0, 0, 0 ))
+                                {
+                                    script_console_add_line( lua_tostring( Lt, -1 ) );
+                                }
+                            }
+                            script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
+                            script_end();
+                        }
+                        else
                         {
                             state_kbd_script_run = 2;
                             if (jump_label("restore") == 0)
@@ -661,7 +690,7 @@ unsigned int drmode;
         {
 
 #ifndef SYNCHABLE_REMOTE_NOT_ENABLED
-if(conf.ricoh_ca1_mode)
+if(conf.ricoh_ca1_mode && conf.remote_enable)
 {
 
 // ------ add by Masuji SUTO (start) --------------

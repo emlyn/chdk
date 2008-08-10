@@ -183,7 +183,12 @@
 
 #elif defined(__GNUC__) && ((__GNUC__*100 + __GNUC_MINOR__) >= 302) && \
       defined(__ELF__)
+/* reyalp: hidden is irrelevant if not dynamically linked*/
+#if defined(HDK_VERSION)
+#define LUAI_FUNC	extern
+#else
 #define LUAI_FUNC	__attribute__((visibility("hidden"))) extern
+#endif
 #define LUAI_DATA	LUAI_FUNC
 
 #else

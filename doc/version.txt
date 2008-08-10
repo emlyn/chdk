@@ -5,6 +5,15 @@ author
 
 log
 
+474 / 0.2.7
+Jucifer
+
++ Lua scripts now try to call restore() when interrupted (auj)
+- applied reyalp's patches: a540-modes-2 and lua-warnings-1
+- added a few more checks for synchable remote related stuff
+- fixed finnish.lng a bit (Mikko70)
+
+
 
 473 - 0.2.6 - PP
 * updated langfiles

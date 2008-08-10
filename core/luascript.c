@@ -622,7 +622,7 @@ static int luaCB_play_sound( lua_State* L )
 static int luaCB_get_temperature( lua_State* L )
 {
   int which = (luaL_checknumber( L, 1 ));
-  int temp;
+  int temp = -100; // do something insane if users passes bad value
   switch (which)
   {
     case 0:
