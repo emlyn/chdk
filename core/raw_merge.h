@@ -7,5 +7,5 @@
 int raw_merge_start(int action);
 void raw_merge_add_file(char * filename);
 void raw_merge_end(void);
-
+int raw_subtract(const char *from, const char *sub, const char *dest); 
 #endif

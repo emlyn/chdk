@@ -51,6 +51,13 @@ int debug_propcase_page;
 int debug_vals_show;
 int debug_pardata_show;
 
+// reyalp: putting these in conf, since the conf values are lookups for them
+// prefixes and extentions available for raw images (index with conf.raw_prefix etc)
+const char* img_prefixes[NUM_IMG_PREFIXES]={ "IMG_", "CRW_", "SND_" /*, "AUT_", "ETC_","SDR_", "MVI_", "MRK_"*/};
+const char* img_exts[NUM_IMG_EXTS]={ ".JPG", ".CRW", ".CR2", ".THM", ".WAV"/*, ".AVI", ".MRK"*/};
+// ugh
+const char *video_bitrate_strings[VIDEO_BITRATE_STEPS]={ "0.25x", "0.5x","0.75x", "1x", "1.25x", "1.5x", "1.75x", "2x", "2.5x", "3x"};
+
 //-------------------------------------------------------------------
 static int def_ubasic_vars[SCRIPT_NUM_PARAMS] = {0};
 static int def_batt_volts_max, def_batt_volts_min;
@@ -116,10 +123,10 @@ void clear_values()
 	}
      if (conf.clear_video)
  	{
-	conf.video_mode = 0;
-	conf.video_quality = 84;
-        conf.video_bitrate = 3;
-     shooting_video_bitrate_change(conf.video_bitrate);
+	 conf.video_mode = 0;
+	 conf.video_quality = VIDEO_DEFAULT_QUALITY;
+	 conf.video_bitrate = VIDEO_DEFAULT_BITRATE;
+	 shooting_video_bitrate_change(conf.video_bitrate);
  	}
 }
 
@@ -158,7 +165,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO( 31, conf.reader_color,           CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_GREY, COLOR_WHITE), NULL),
     CONF_INFO( 32, conf.ricoh_ca1_mode,         CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 33, conf.flashlight,             CONF_DEF_VALUE, i:0, NULL),
-    CONF_INFO( 34, conf.ns_enable_memdump,      CONF_DEF_VALUE, i:0, NULL),
+//    CONF_INFO( 34, conf.ns_enable_memdump,      CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO( 34, conf.debug_shortcut_action,  CONF_DEF_VALUE, i:0, NULL), // backwards compatible
     CONF_INFO( 35, conf.raw_in_dir,             CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 36, conf.raw_prefix,             CONF_DEF_VALUE, i:RAW_PREFIX_CRW, NULL),
     CONF_INFO( 37, conf.raw_ext,                CONF_DEF_VALUE, i:RAW_EXT_CRW, NULL),
@@ -220,8 +228,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO( 98, conf.values_show_luminance,    CONF_DEF_VALUE, i:0, NULL),
 
     CONF_INFO( 99, conf.video_mode,             CONF_DEF_VALUE, i:0, NULL),
-    CONF_INFO(100, conf.video_quality,          CONF_DEF_VALUE, i:84,NULL),
-    CONF_INFO(101, conf.video_bitrate,          CONF_DEF_VALUE, i:3, conf_change_video_bitrate),
+    CONF_INFO(100, conf.video_quality,          CONF_DEF_VALUE, i:VIDEO_DEFAULT_QUALITY,NULL),
+    CONF_INFO(101, conf.video_bitrate,          CONF_DEF_VALUE, i:VIDEO_DEFAULT_BITRATE, conf_change_video_bitrate),
     
     CONF_INFO(102, conf.tv_override_value,      CONF_DEF_VALUE, i:0, NULL),	
     CONF_INFO(103, conf.tv_override_koef,       CONF_DEF_VALUE, i:0, NULL),	
@@ -345,6 +353,12 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(206, conf.remote_zoom_enable,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(207, conf.zoom_timeout,           CONF_DEF_VALUE, i:5, NULL),
    	CONF_INFO(208, conf.start_sound,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(209, conf.sub_batch_prefix,  CONF_DEF_VALUE, i:2, NULL), // SND_
+    CONF_INFO(210, conf.sub_batch_ext,  CONF_DEF_VALUE, i:1, NULL), // .CRW
+    CONF_INFO(211, conf.sub_in_dark_value,  CONF_DEF_VALUE, i:30, NULL), 
+    CONF_INFO(212, conf.sub_out_dark_value,  CONF_DEF_VALUE, i:0, NULL), 
+   	CONF_INFO(213, conf.debug_display,     CONF_DEF_VALUE, i:0, NULL),
+   	CONF_INFO(214, conf.script_param_save,     CONF_DEF_VALUE, i:0, NULL),
 			
 			
 };

@@ -1,0 +1,42 @@
+********************************
+
+02 - Installation
+
+
+- Exract the archive onto your SD card using an SD card-reader. You MUST use a card-reader. You cannot copy files to your SD card by just using "Windows File Explorer" and your camera connected by USB cable. The USB connection to the camera is just for downloading images, not uploading files.
+
+- Now that all the CHDK files are on your SD card, make sure that you have the right version of CHDK for your camera.
+
+- Insert the SD card into your camera.
+
+- Start camera IN PLAYBACK-MODE.
+
+- When you extracted the archive it placed a file on your card called "vers.req" (or "ver.req" depending on the camera model). This will allow you to see, with the right camera-button presses, the TRUE firmware version of your camera (and other interesting information).
+
+- Press your "Set" button, hold it down. While holding down your "Set" button press your "Display" button. You will see the version of the firmware in your camera. Confirm that it is the right firmware to match up with the CHDK that you downloaded. Your real firmware version is NOT 1.0.1.0 nor 1.0.0.0 Your REAL firmware version will look something like: "Firmware Ver GM1.00A". (Pressing "Display" again a few times while still holding down your "Set" button will let you see even more information about your camera, including total number of shots taken since it was made.)
+
+- If all went well, correct camera, correct firmware, correct CHDK, now you can actually load and run CHDK.
+
+- While still in PLAYBACK MODE press your camera's "Menu" button to open Canon's Menu
+
+- Scroll to the bottom of the menu to the "Firm Update" option which should now be available. If by chance that you fail to see the "Firm Update" menu option try pressing your Playback button twice. You might have to wait 2 seconds between presses. When this is done right the lens will retract and go into a power-saving viewer/slideshow playback mode. This seems to be an option on most Powershot Cameras.
+
+- Now that your menu cursor is on the "Firm Update" option, press your "Set" button or "Right" navigation button to enter the "Firmware Update" Screen. Either button press will work.
+
+- Press your "Right" navigational button to select OK. Press your "Set" button to confirm your choice.
+
+- Your camera will now load CHDK. You should see the blue "Print" button on the back of your camera flash a few times to let you know that CHDK is booting, and the CHDK Splash-Screen will appear in your viewfinder or LCD display. When fully loaded you will see a new battery-meter icon and several other things on your LCD or EVF display. Don't worry if they look like clutter, all of them can be turned on and off and repositioned on your screen in CHDK's configuration menu system. (CHDK <ALT> mode / Menu / OSD Parameters / OSD Layout Editor)
+
+- To enter CHDK's alternate menu system, press your "Shortcut" button. A small "<ALT>" will appear at the bottom of your screen. Whenever <ALT> is showing you may now press your camera's "Menu" button to enter CHDK's new menus. To exit <ALT> mode and return to your camera's normal operation just press your "Shortcut" button again. The settings that you apply in CHDK's menus will now be applied when using the camera normally (while not in <ALT> mode). The only time you will use <ALT> mode for actually taking pictures is if you run an automated CHDK script to take your photos for you. If you want to use your "Shortcut" button's normal function just press and hold it down a little longer. Some cameras allow you to reconfigure your CHDK "<ALT>" toggle button in the CHDK "Miscellaneous Stuff" menu in case you don't like it being the "Shortcut" button.
+
+- If you would like to have CHDK auto-load every time you power on your camera, then go into CHDK's menu system. (Press "Shortcut" to enter <ALT> mode, then your "Menu" button to enter CHDK's menus.) Scroll to the bottom of the main CHDK menu to the "Debug Parameters" option.
+
+- Enter the "Debug" menu and scroll to "Make Card Bootable...". Press your "Set" button.
+
+- Now remove your SD card and slide its little "write protect" tab to the locked position. Insert the card back in your camera. Now when you power-up your camera CHDK will automatically load. If you want to turn off CHDK's auto-loading feature just take out the SD card and put the write-protect tab back to the unlocked position. Don't worry about using the card either way. CHDK is designed to work with a locked card in this manner and all photos taken will be written to the card even when it is locked/write-protected.
+
+- Or for Windows users: use the "CardTricks" program (will be included here later).
+
+
+(to be expanded)
+

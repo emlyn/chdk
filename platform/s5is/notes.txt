@@ -1,0 +1,7 @@
+****************************************
+
+Camera depending notes: 
+
+These don't work on the S5IS: Video Overrides and subsequently all things that have to do with video (remaining time etc).
+
+

@@ -213,11 +213,8 @@ static int luaCB_set_focus( lua_State* L )
 {
     int to = luaL_checknumber( L, 1 );
     int m=mode_get()&MODE_SHOOTING_MASK;
-    int mode_video=((m==MODE_VIDEO_STD) || 
-			    (m==MODE_VIDEO_SPEED) ||  
-			    (m==MODE_VIDEO_COMPACT) ||
-			    (m==MODE_VIDEO_MY_COLORS) || 
-			    (m==MODE_VIDEO_COLOR_ACCENT));
+    int mode_video=MODE_IS_VIDEO(m);
+
 #if CAM_HAS_MANUAL_FOCUS
     if (shooting_get_focus_mode() || (mode_video)) shooting_set_focus(to, SET_NOW);
     else shooting_set_focus(to, SET_LATER);

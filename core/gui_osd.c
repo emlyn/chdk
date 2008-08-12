@@ -702,6 +702,7 @@ void gui_osd_draw_raw_info()
 //-------------------------------------------------------------------
 void gui_osd_draw_state() {
     int a,  gui_mode=gui_get_mode(), m=(mode_get()&MODE_SHOOTING_MASK); 
+    int mode_video = MODE_IS_VIDEO(m);
     long t; 
     
     n=0;
@@ -709,6 +710,19 @@ void gui_osd_draw_state() {
    //sprintf(osd_buf,"%s",get_debug());
    //draw_string(conf.mode_state_pos.x, conf.mode_state_pos.y+6*FONT_HEIGHT, osd_buf, conf.osd_color);
    ////////////////////////////  
+    if (mode_video || movie_status > 1) {
+        // if manual adjust, show the field item to be adjusted
+        // if any value overriden, show the override value
+        if ((conf.video_mode == 0 && conf.fast_movie_quality_control==1) || conf.video_bitrate != VIDEO_DEFAULT_BITRATE) {
+            gui_print_osd_state_string_chr("Bitrate: ",video_bitrate_strings[conf.video_bitrate]);
+        }
+        if ((conf.video_mode == 1 && conf.fast_movie_quality_control==1) || conf.video_quality != VIDEO_DEFAULT_QUALITY) {
+            gui_print_osd_state_string_int("Quality: ",conf.video_quality);
+        }
+        // everything else is for stills
+		if(mode_video)
+			return;
+    }
       
     if ((((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef)  && !(conf.override_disable==1)) || gui_mode==GUI_MODE_OSD){
     	if(kbd_is_key_pressed(KEY_SHOOT_HALF)) 
@@ -991,7 +1005,7 @@ void gui_osd_draw_ev() {
 
 
 void gui_osd_draw_temp() {
- 		if (conf.show_temp==1||0)
+ 		if (conf.show_temp == 1)
  			{
  				if (conf.clock_format == 0)
  						{

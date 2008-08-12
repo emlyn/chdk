@@ -8,13 +8,11 @@
 //-------------------------------------------------------------------
 #define RAW_TARGET_DIRECTORY    "A/DCIM/%03dCANON"
 //#define RAW_TMP_FILENAME        "HDK_RAW.TMP"
-#define RAW_TARGET_FILENAME     "%s_%04d.%s"
+#define RAW_TARGET_FILENAME     "%s%04d%s"
 
 //-------------------------------------------------------------------
 static char fn[64];
 static char dir[32];
-static char prefixes[][4] = { "IMG", "CRW", "SND" };
-static char exts[][4] = { "JPG", "CRW", "CR2", "THM", "WAV" };
 static int develop_raw=0;
 //-------------------------------------------------------------------
 void raw_prepare_develop(char* filename){
@@ -67,7 +65,7 @@ int raw_savefile() {
         mkdir(dir);
 
         sprintf(fn, "%s/", dir);
-        sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, prefixes[conf.raw_prefix], get_target_file_num(), exts[conf.raw_ext]);
+        sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), img_exts[conf.raw_ext]);
 
         fd = open(fn, O_WRONLY|O_CREAT, 0777);
         if (fd>=0) {

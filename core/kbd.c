@@ -260,8 +260,10 @@ static void script_start( int autostart )
     script_console_clear();
     script_print_screen_init();
 
-    save_params_values(0);
-
+			if (conf.script_param_save)
+				{
+        save_params_values(0);
+      }
     if( autostart )
       script_console_add_line("***Autostart***");
     else
@@ -567,7 +569,8 @@ unsigned int drmode;
 	drmode = shooting_get_drive_mode();
 	mmode = mode_get();
 	mplay = (mmode&MODE_MASK)==MODE_PLAY;
-	mvideo= ((mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_STD || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_SPEED || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_COMPACT ||(mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_MY_COLORS || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_ACCENT);
+//	mvideo= ((mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_STD || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_SPEED || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_COMPACT ||(mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_MY_COLORS || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_ACCENT);
+	mvideo=MODE_IS_VIDEO(mmode);
   }
        // deals with alt-mode switch and delay emulation
         if (key_pressed)
@@ -1352,136 +1355,99 @@ int kbd_is_blocked() {
 }
 
 long kbd_use_up_down_left_right_as_fast_switch() {
-	    static const char* modes[]={ "0.25x", "0.5x","0.75x", "1x", "1.25x", "1.5x", "1.75x", "2x", "2.5x", "3x"};
-    static long key_pressed = 0;
-if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_pressed = 0;
-    if (kbd_is_key_pressed(KEY_UP) && (mode_get()&MODE_MASK) == MODE_REC &&  ((mode_get()&MODE_SHOOTING_MASK) != MODE_M) &&  ((mode_get()&MODE_SHOOTING_MASK) != MODE_VIDEO_STD) && movie_status<4 && (canon_shoot_menu_active==0)) {
+    static long key_pressed = 0; // ??? static masking a global
+    int m=mode_get(); 
+    int mode_video = MODE_IS_VIDEO(m) || (movie_status > 1);
 
+    if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_pressed = 0;
+
+    if (canon_shoot_menu_active!=0 || (m&MODE_MASK) != MODE_REC)
+        return 0;
+
+    if (kbd_is_key_pressed(KEY_UP) && ((m&MODE_SHOOTING_MASK) != MODE_M) && !mode_video) {
         if (conf.fast_ev && key_pressed == 0) {
-#if (CAM_PROPSET == 1) 
-            shooting_set_prop(25,shooting_get_prop(25)+(conf.fast_ev_step+1)*16);
-            shooting_set_prop(26,shooting_get_prop(26)+(conf.fast_ev_step+1)*16);
-#elif (CAM_PROPSET == 2)
-            shooting_set_prop(107,shooting_get_prop(107)+(conf.fast_ev_step+1)*16);
-            shooting_set_prop(207,shooting_get_prop(207)+(conf.fast_ev_step+1)*16);
-#endif
+            shooting_set_prop(PROPCASE_EV_CORRECTION_1,shooting_get_prop(PROPCASE_EV_CORRECTION_1)+(conf.fast_ev_step+1)*16);
+            shooting_set_prop(PROPCASE_EV_CORRECTION_2,shooting_get_prop(PROPCASE_EV_CORRECTION_2)+(conf.fast_ev_step+1)*16);
             EnterToCompensationEVF();
             key_pressed = KEY_UP;
-            	
+                
             return 1;
         }
 
     } 
-    if (kbd_is_key_pressed(KEY_UP) && (mode_get()&MODE_MASK) == MODE_REC && movie_status == 4 && (canon_shoot_menu_active==0)) {
-
+    if (kbd_is_key_pressed(KEY_UP) && mode_video && movie_status == 4 ) {
         if (conf.fast_movie_quality_control && key_pressed == 0) {
-        		
-        		
-if (conf.video_mode==0)
-	{
-        		    conf.video_bitrate+=1;
-    if (conf.video_bitrate<0)
-        conf.video_bitrate=sizeof(modes)/sizeof(modes[0])-1;
-    else if (conf.video_bitrate>=(sizeof(modes)/sizeof(modes[0])))
-        conf.video_bitrate=sizeof(modes)/sizeof(modes[0])-1;
-    shooting_video_bitrate_change(conf.video_bitrate);
-movie_reset = 1;
-  }    
-  
- if (conf.video_mode==1)
-	{
-        		    conf.video_quality+=1;
-    if (conf.video_quality<1)
-        conf.video_quality=1;
-    else if (conf.video_quality>99)
-        conf.video_quality=99;
-    movie_reset = 1;
-  }      		
+            if (conf.video_mode==0) {
+                conf.video_bitrate+=1;
+                if (conf.video_bitrate>=VIDEO_BITRATE_STEPS)
+                    conf.video_bitrate=VIDEO_BITRATE_STEPS-1;
+                shooting_video_bitrate_change(conf.video_bitrate);
+                movie_reset = 1;
+            }    
+            else if (conf.video_mode==1) {
+                conf.video_quality+=1;
+                if (conf.video_quality>VIDEO_MAX_QUALITY)
+                    conf.video_quality=VIDEO_MAX_QUALITY;
+                movie_reset = 1;
+            }              
             key_pressed = KEY_UP;
             return 1;
         }
-
     } 
-    if (kbd_is_key_pressed(KEY_DOWN) && (mode_get()&MODE_MASK) == MODE_REC &&  ((mode_get()&MODE_SHOOTING_MASK) != MODE_M) && ((mode_get()&MODE_SHOOTING_MASK) != MODE_VIDEO_STD) && movie_status<4 && (canon_shoot_menu_active==0)) {
-
-            
+    if (kbd_is_key_pressed(KEY_DOWN) && ((m&MODE_SHOOTING_MASK) != MODE_M) && !mode_video) {
         if (conf.fast_ev && key_pressed == 0) {
             kbd_key_release_all();
-#if (CAM_PROPSET == 1)
-            shooting_set_prop(25,shooting_get_prop(25)-(conf.fast_ev_step+1)*16);
-            shooting_set_prop(26,shooting_get_prop(26)-(conf.fast_ev_step+1)*16);
-#elif (CAM_PROPSET == 2)
-            shooting_set_prop(107,shooting_get_prop(107)-(conf.fast_ev_step+1)*16);
-            shooting_set_prop(207,shooting_get_prop(207)-(conf.fast_ev_step+1)*16);
-#endif
+            shooting_set_prop(PROPCASE_EV_CORRECTION_1,shooting_get_prop(PROPCASE_EV_CORRECTION_1)-(conf.fast_ev_step+1)*16);
+            shooting_set_prop(PROPCASE_EV_CORRECTION_2,shooting_get_prop(PROPCASE_EV_CORRECTION_2)-(conf.fast_ev_step+1)*16);
             key_pressed = KEY_DOWN;
             EnterToCompensationEVF();
             return 1;
         }
-
     } 
     
-       if (kbd_is_key_pressed(KEY_DOWN) && (mode_get()&MODE_MASK) == MODE_REC && movie_status == 4 && (canon_shoot_menu_active==0)) {
+    if (kbd_is_key_pressed(KEY_DOWN) && mode_video && movie_status == 4) {
+        if (conf.fast_movie_quality_control && key_pressed == 0) {
+            if (conf.video_mode==0) {                
+                conf.video_bitrate-=1;
+                if (conf.video_bitrate<0)
+                    conf.video_bitrate=0;
 
-            
-       if (conf.fast_movie_quality_control && key_pressed == 0) {
-        		
-if (conf.video_mode==0)
-	{        		
-    conf.video_bitrate+=-1;
-    if (conf.video_bitrate<0)
-        conf.video_bitrate=0;
-
-
-    shooting_video_bitrate_change(conf.video_bitrate);
-movie_reset = 1;
-}
- if (conf.video_mode==1)
-	{
-        		    conf.video_quality-=1;
-    if (conf.video_quality<1)
-        conf.video_quality=1;
-    else if (conf.video_quality>99)
-        conf.video_quality=99;
-    movie_reset = 1;
-  }      	
-
-        		
-        		
+                shooting_video_bitrate_change(conf.video_bitrate);
+                movie_reset = 1;
+            }
+            else if (conf.video_mode==1) {
+                conf.video_quality-=1;
+                if (conf.video_quality<1)
+                    conf.video_quality=1;
+                movie_reset = 1;
+            }          
             key_pressed = KEY_DOWN;
             return 1;
         }
-
     } 
     
-       if (kbd_is_key_pressed(KEY_LEFT) && (mode_get()&MODE_MASK) == MODE_REC && movie_status == 4 && (canon_shoot_menu_active==0)) {
-
-            
-       if (conf.fast_movie_control && key_pressed == 0) {
-        		
-movie_status = 1;
-        		
-        		
+    if (kbd_is_key_pressed(KEY_LEFT) && mode_video && movie_status == 4) {
+        if (conf.fast_movie_control && key_pressed == 0) {
+            movie_status = VIDEO_RECORD_STOPPED;
             key_pressed = KEY_LEFT;
             return 1;
         }
-
     } 
-    
-       if (kbd_is_key_pressed(KEY_RIGHT) && (mode_get()&MODE_MASK) == MODE_REC && movie_status == 1 && (canon_shoot_menu_active==0)) {
-
-            
-       if (conf.fast_movie_control && key_pressed == 0) {
-        		
-movie_status = 4;
-movie_reset = 1;
-        		
-        		
+	// reyalp - HACK for cams that can do video in any mode
+	// note that this means this will probably run whenever you press right
+    if (kbd_is_key_pressed(KEY_RIGHT) &&
+#ifndef CAM_HAS_VIDEO_BUTTON 
+            mode_video &&
+#endif
+	        movie_status == 1) {
+        // BUG this doesn't know whether recording was stopped or paused.
+        if (conf.fast_movie_control && key_pressed == 0) {
+            movie_status = VIDEO_RECORD_IN_PROGRESS;
+            movie_reset = 1;
             key_pressed = KEY_RIGHT;
             return 1;
         }
-
     } 
-    
+
     return 0;
 }

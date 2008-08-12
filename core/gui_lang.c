@@ -120,11 +120,11 @@ static char* gui_lang_default = \
 
 " 79 \"Debug\"\n"
 
-" 80 \"Show PropCases\"\n"
+" 80 \"Debug data display\"\n"
 " 81 \"PropCase/ParamsData page\"\n"
 " 82 \"Show misc. values\"\n"
 " 83 \"Memory browser\"\n"
-" 84 \"Dump RAM on ALT +/- press\"\n"
+" 84 \"ALT +/- debug action\"\n"
 " 85 \"Make card bootable...\"\n"
 
 " 86 \"Battery showing settings\"\n"
@@ -364,7 +364,7 @@ static char* gui_lang_default = \
 "271 \"Not enough memory card space:\\n%dM required, %dM available.\"\n"
 
 "272 \"Show OSD in Review Mode\"\n"
-"273 \"Show Parameter Data\"\n"
+"273 \"Task list start\"\n"
 
 "274 \"Subject distance from lens\"\n"
 
@@ -520,6 +520,15 @@ static char* gui_lang_default = \
 "399 \"Enable Remote Zoom\"\n"
 "400 \"Zoom Time-out 0.1s\"\n"
 "401 \"Startup sound\"\n"
+"402 \"Raw subtract prefix\"\n"
+"403 \"Raw subtract extension\"\n"
+"404 \"Subtract input dark value\"\n"
+"405 \"Subtract output dark value\"\n"
+"406 \"from\"\n"
+"407 \"...%d more files\"\n"
+"408 \"Subtract\"\n"
+"409 \"Sub from marked\"\n"
+"410 \"Save params\"\n"
 ;
 
 //-------------------------------------------------------------------

@@ -1,0 +1,70 @@
+Index:
+	01 - Introduction & Camera Specific Notes
+
+	02 - Installation
+
+	03 - FAQ
+
+	04 - Links, Urls
+
+	05 - GPL, License
+
+
+************************************
+
+
+01 - Introduction
+
+Hi, 
+
+this is the small readme to CHDK. It provides just enough info to get you rolling, for more information use the links in the bottom.
+
+
+CHDK is a firmware enhancement that operates on a number of Canon Cameras. CHDK gets loaded into your camera's memory upon bootup (either manually or automatically). It provides additional functionality beyond that currently provided by the native camera firmware.
+
+CHDK is not a permanent firmware upgrade: you decide how it is loaded (manually or automatically) and you can always easily remove it. 
+
+Main features:
+
+    * Save images in RAW format
+    * Ability to run "Scripts" to automate the camera
+    * Live histogram (RGB, blended, luminance and for each RGB channel)
+    * Zebra mode (blinking highlights and shadows to show over/under exposed areas)
+    * An "always on" full range Battery indicator
+    * Ability to turn off automatic dark-frame subtraction
+    * a higher compression movie mode, and double the maximum video file size
+    * exposure times as long as 65 seconds
+    * exposure times as little as 1/10,000 of a second
+    * ability to use the USB port for a remote trigger input 
+
+Additional features:
+
+    * a depth-of-field (DOF)-calculator
+    * File browser
+    * Text reader
+    * Calendar
+    * Some fun tools and games 
+
+Why would I want to use CHDK?
+
+    * To get Raw file capability on cameras that don't have that ability
+    * To get the ability to use scripts
+    * to be able to know the battery status at all times (not just when it's about to run out of power)
+    * you want or need any of the other enhancement features that CHDK provides 
+
+What are scripts? Scripts are BASIC language programs that give you the ability to control the operation of the camera under program control. They have been used to add or extend the native capability of the camera: more flexible intervalometers, extended-range exposure compensation, extended bracketing ability, lightning photography, etc. See the script pages for more details.
+
+Beyond "Standard" CHDK
+
+Several developers have extended the basic features of CHDK to add additional major functions. You'll find these extended features in "special builds".
+
+There are several "Motion Detection" versions available that allow scripts to detect when motion (or any change in light intensity) occurs in one or more predefined regions of the images (the script can then take a photograph, a video, start a timer, etc) and there are some *very* cool applications based on this implementation.
+
+There is a "Stereo Data Maker" (SDM) version, specifically geared to stereo image applications (which also incorporates the Motion Detection routines).
+
+Additional video compression options (more or less), and the ability to go beyond the 1 Gbyte limit.
+
+Use your USB port as a remote control / "cable release".
+
+(to be expanded)
+

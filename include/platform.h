@@ -65,9 +65,27 @@ MODE_VIDEO_AQUARIUM     ,
 MODE_VIDEO_SUPER_MACRO  ,
 MODE_VIDEO_STITCH       ,
 MODE_VIDEO_MANUAL       ,
-MODE_SPORTS							,
+MODE_SPORTS			    ,
 };
 
+// this is nasty, but not as nasty as checking each of the flags all over the place
+#define MODE_IS_VIDEO(m)   (((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_STD || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_SPEED ||  \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_COMPACT || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_MY_COLORS || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_ACCENT || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_SWAP || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_TIME_LAPSE || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_PORTRAIT || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_NIGHT || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_INDOOR || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_FOLIAGE || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_SNOW  || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_BEACH || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_AQUARIUM || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_SUPER_MACRO || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_STITCH || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_MANUAL)
 #if CAM_PROPSET == 2     // most digic3 cameras
  #define PROPCASE_DRIVE_MODE					102
  #define PROPCASE_FOCUS_MODE					133
@@ -143,7 +161,6 @@ MODE_SPORTS							,
 #define MODE_SCREEN_MASK        0x0C00
 #define MODE_SCREEN_OPENED      0x0400
 #define MODE_SCREEN_ROTATED     0x0800
-
 #define AS_SIZE (sizeof(aperture_sizes_table)/sizeof(aperture_sizes_table[0]))
 #define ASID_MIN (aperture_sizes_table[0].id)
 #define ASID_MAX (aperture_sizes_table[AS_SIZE-1].id)
@@ -455,7 +472,7 @@ int get_optical_temp();
 int get_battery_temp();
 long get_vbatt_min();
 long get_vbatt_max();
-void play_sound(short sound);
+void play_sound(unsigned sound);
 void ubasic_camera_set_raw(int mode);
 void ubasic_camera_set_nr(int mode);
 int ubasic_camera_get_nr();

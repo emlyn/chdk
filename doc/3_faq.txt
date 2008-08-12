@@ -1,0 +1,37 @@
+****************************************
+
+03 - FAQ
+
+1. What is CHDK?
+
+    CHDK is not just one thing! The term CHDK refers to free software – currently available for many (but not all) Canon PowerShot compact digital cameras – that you can load onto your camera's memory card to give your camera greatly enhanced capabilities. 
+
+2. Am I likely to be interested in CHDK?
+
+    The enhanced capabilities that CHDK provides are most likely to be of interest to experienced photographers - if you believe that your Canon PowerShot camera already has more features than you will ever need, you probably won't be interested in CHDK. 
+
+3. Is CHDK safe to use?
+
+    Yes CHDK is safe. CHDK doesn't make any actual changes to your camera. If you delete the CHDK software from your memory card, or if you choose not to activate the CHDK software on the card (or remove and replace the batteries), then the camera will behave absolutely normally - nothing has been (or ever is) changed, so the warranty is not affected. 
+
+4. How does CHDK work?
+
+    CHDK makes use of the microprocessor that controls the camera (every digital camera contains a microprocessor) to act as a programmable computer that provides the extra capabilities. 
+
+5. What extra capabilities does CHDK provide?
+
+    The current set of extra capabilities fall into six categories:
+
+        a. Enhanced ways of recording images - you can capture still pictures in RAW format (as well as JPEG), and for video images you can have increased recording time and length (1 hour or 2 GB), and a greatly increased range of compression options. 
+        b. Additional data displays on the LCD screen - histogram, battery life indicator, depth of field, and many more. 
+        c. Additional photographic settings that are not available on the camera by itself - longer exposure times (up to 65 seconds), faster shutter speeds (1/25,000 sec, and faster in some cases), automatic bracketing of exposure, etc. 
+        d. The ability for the camera to run programs ('scripts', written in a micro-version of the BASIC language) stored on the memory card - these programs allow you to set the camera to perform a sequence of operations under the control of the program. For example, a camera can be programmed to take multiple pictures for focus bracketing, or take a picture when it detects that something in the field of view moves or changes brightness. 
+        e. The ability to take a picture, or start a program on the memory card, by sending a signal into the USB port - you can use the USB cable to take a picture remotely. 
+        f. The ability to do a number of other more useful (and fun) things, such as act as a mini file browser for the memory card, let you play games on the LCD screen, etc. 
+
+6. What else should I know?
+
+    Developers around the world are continuing to add new features to CHDK. Because the idea of using the camera's microprocessor is so flexible, various developers have made different versions of CHDK, and new features continue to be developed - for example, one version of CHDK has features assist in taking stereo photographs, and even allows two cameras to be synchronized to take pictures at the same time (with an accuracy of better than 0.1 milliseconds, providing they are the same camera model). 
+
+(to be expanded)
+

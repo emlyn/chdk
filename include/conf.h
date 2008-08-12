@@ -23,6 +23,10 @@ typedef struct {
     int raw_ext;
     int raw_save_first_only; //for series shooting
     int raw_nr;
+    int sub_batch_prefix; // output of batch subtracts
+    int sub_batch_ext;
+    int sub_in_dark_value; // values <= to this are not subtracted, i.e. the dark value of your darkframe
+    int sub_out_dark_value; // minimum value to output from subtract, i.e. dark value of your final image
 
     int show_osd;
     int hide_osd;
@@ -215,7 +219,9 @@ typedef struct {
     int values_show_canon_overexposure;
     int values_show_luminance;
 
-    int ns_enable_memdump;
+    int debug_shortcut_action;  // 0=none, 1=dump, 2=page display
+    int debug_display;          // 0=none, 1=props, 2=flash param, 3=tasks
+
     int script_startup;			// remote autostart
     int remote_enable;			// remote enable
     int user_menu_enable;
@@ -243,6 +249,7 @@ typedef struct {
     int zoom_timeout;
 
     int script_param_set;
+    int script_param_save;
     
     long mem_view_addr_init;
 } Conf;
@@ -257,6 +264,11 @@ extern Conf conf;
 #define SHOOTING_PROGRESS_STARTED       1
 #define SHOOTING_PROGRESS_PROCESSING    2
 #define SHOOTING_PROGRESS_DONE          3
+
+// video quality defaults. Ideally, these should match the camera default settings
+#define VIDEO_DEFAULT_QUALITY   84  // ? where does 84 come from
+#define VIDEO_MAX_QUALITY       99
+#define VIDEO_DEFAULT_BITRATE   3 // should be 1 for all cams
 
 extern int state_kbd_script_run;
 extern int state_shooting_progress;
@@ -276,4 +288,13 @@ extern void conf_restore();
 extern void conf_load_defaults();
 extern int shutter_int;
 
+// reyalp: putting these in conf, since the conf values are lookups for them
+// prefixes and extentions available for raw images (index with conf.raw_prefix etc)
+#define NUM_IMG_PREFIXES 3 // IMG_ CRW_ SND_ (could add ETC_ SDR_ AUT_ MVI_ MRK_)
+#define NUM_IMG_EXTS 5 // .JPG .CRW .CR2 .THM .WAV (could add .AVI .MRK)
+extern const char* img_prefixes[NUM_IMG_PREFIXES];
+extern const char* img_exts[NUM_IMG_EXTS];
+// ugh, but various things need it
+#define VIDEO_BITRATE_STEPS 10
+extern const char *video_bitrate_strings[VIDEO_BITRATE_STEPS];
 #endif

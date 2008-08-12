@@ -10,6 +10,7 @@
 #include "gui_mpopup.h"
 #include "gui_fselect.h"
 #include "raw_merge.h"
+#include "conf.h"
 
 //-------------------------------------------------------------------
 #define HEAD_LINES              1
@@ -711,7 +712,7 @@ static void fselect_marked_paste_cb(unsigned int btn) {
 }
 
 //-------------------------------------------------------------------
-static unsigned int fselect_marked_count() {
+static inline unsigned int fselect_real_marked_count() {
     struct fitem  *ptr;
     register unsigned int cnt=0;
 
@@ -719,6 +720,12 @@ static unsigned int fselect_marked_count() {
         if (ptr->attr != 0xFF && !(ptr->attr & DOS_ATTR_DIRECTORY) && ptr->marked) 
             ++cnt;
     }
+    return cnt;
+}
+//-------------------------------------------------------------------
+static unsigned int fselect_marked_count() {
+    struct fitem  *ptr;
+    register unsigned int cnt=fselect_real_marked_count();
 
     if (!cnt) {
         if (selected && selected->attr != 0xFF && !(selected->attr & DOS_ATTR_DIRECTORY)) 
@@ -784,6 +791,63 @@ void process_raw_files(void){
  }
 }
 
+static void fselect_subtract_cb(unsigned int btn) {
+    struct fitem *ptr;
+    char *raw_subtract_from;
+    char *raw_subtract_sub;
+    char *raw_subtract_dest;
+    if (btn != MBOX_BTN_YES) return;
+
+    if(!(raw_subtract_from = malloc(300))) //3x full path
+        return;
+    raw_subtract_sub = raw_subtract_from + 100;
+    raw_subtract_dest = raw_subtract_sub + 100;
+    sprintf(raw_subtract_sub,"%s/%s",current_dir,selected->name);
+    for (ptr=head; ptr; ptr=ptr->next) {
+        if (ptr->marked && ptr->attr != 0xFF && 
+            !(ptr->attr & DOS_ATTR_DIRECTORY) &&
+            ptr->size == hook_raw_size() &&
+            (strcmp(ptr->name,selected->name)) != 0) {
+            sprintf(raw_subtract_from,"%s/%s",current_dir,ptr->name);
+            sprintf(raw_subtract_dest,"%s/%s%s",current_dir,img_prefixes[conf.sub_batch_prefix],ptr->name+4);
+            strcpy(raw_subtract_dest + strlen(raw_subtract_dest) - 4,img_exts[conf.sub_batch_ext]);
+			// don't let users attempt to write one of the files being read
+			if( strcmp(raw_subtract_dest,raw_subtract_from) != 0 && strcmp(raw_subtract_dest,raw_subtract_sub) != 0) {
+                raw_subtract(raw_subtract_from,raw_subtract_sub,raw_subtract_dest);
+			}
+        }
+    }
+    free(raw_subtract_from);
+    gui_fselect_read_dir(current_dir);
+    gui_fselect_redraw = 2;
+}
+
+
+#define MAX_SUB_NAMES 6
+static void setup_batch_subtract(void) {
+    struct fitem *ptr;
+    int i;
+    char *p = buf + sprintf(buf,"%s %s\n",selected->name,lang_str(LANG_FSELECT_SUB_FROM));
+    for (ptr=head, i=0; ptr; ptr=ptr->next) {
+        if (ptr->marked && ptr->attr != 0xFF && !(ptr->attr & DOS_ATTR_DIRECTORY) && ptr->size == hook_raw_size()) {
+            if ( i < MAX_SUB_NAMES ) {
+                sprintf(p, "%s\n",ptr->name);
+                // keep a pointer to the one before the end, so we can stick ...and more on
+                if (i < MAX_SUB_NAMES - 1) {
+                    p += strlen(p);
+                }
+            }
+            i++;
+        }
+    }
+    if (i > MAX_SUB_NAMES) {
+//      "...%d more files"
+        sprintf(p,lang_str(LANG_FSELECT_SUB_AND_MORE),i - (MAX_SUB_NAMES - 1));
+    }
+    gui_mbox_init(LANG_FSELECT_SUBTRACT, (int)buf,
+                  MBOX_TEXT_CENTER|MBOX_BTN_YES_NO|MBOX_DEF_BTN2, fselect_subtract_cb);
+}
+
 //-------------------------------------------------------------------
 static void fselect_mpopup_cb(unsigned int actn) {
     switch (actn) {
@@ -847,6 +911,11 @@ static void fselect_mpopup_cb(unsigned int actn) {
             raw_operation=RAW_OPERATIOM_SUM;
             process_raw_files();
             break;
+        case MPOPUP_SUBTRACT:
+        {
+            setup_batch_subtract();
+            break;
+        }
     }
     gui_fselect_redraw = 2;
 }
@@ -892,8 +961,12 @@ void gui_fselect_kbd_process() {
         case KEY_LEFT:
             if (selected && selected->attr != 0xFF) {
                 i=MPOPUP_CUT|MPOPUP_COPY|MPOPUP_SELINV|MPOPUP_RAW_ADD|MPOPUP_RAW_AVERAGE;
-                if (fselect_marked_count() > 0)
+                if (fselect_marked_count() > 0) {
                     i |= MPOPUP_DELETE;
+                    // doesn't make sense to subtract from itself!
+                    if( selected->marked == 0 && fselect_real_marked_count() > 0)
+                        i |= MPOPUP_SUBTRACT;
+                }
                 if (marked_operation == MARKED_OP_CUT || marked_operation == MARKED_OP_COPY)
                     i |= MPOPUP_PASTE;
                 if (!(selected->attr & DOS_ATTR_DIRECTORY) || !(selected->name[0] == '.' && selected->name[1] == '.' && selected->name[2] == 0) ||//If item is not a folder or UpDir

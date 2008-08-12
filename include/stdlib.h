@@ -152,6 +152,8 @@ extern int printf(char *buf, ...);
 extern void msleep(long msec);
 extern long task_lock();
 extern long task_unlock();
+extern const char *task_name(int id);
+int task_id_list_get(int *idlist,int size);
 
 #define DOS_ATTR_RDONLY         0x01            /* read-only file */
 #define DOS_ATTR_HIDDEN         0x02            /* hidden file */

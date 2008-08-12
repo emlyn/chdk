@@ -42,6 +42,7 @@
     #define CAM_EMUL_KEYPRESS_DURATION  5   // Length of keypress emulation
 
     #undef  CAM_AF_SCAN_DURING_VIDEO_RECORD // CHDK can make single AF scan during video record 
+    #undef  CAM_HAS_VIDEO_BUTTON            // Camera can take stills in video mode, and vice versa
 
 //----------------------------------------------------------
 // Overridden values for each camera
@@ -532,6 +533,7 @@
     #define CAM_SWIVEL_SCREEN           1
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+    #define  CAM_HAS_VIDEO_BUTTON       1
 
 
 //----------------------------------------------------------
@@ -547,6 +549,7 @@
     #define CAM_MULTIPART               1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+    #define  CAM_HAS_VIDEO_BUTTON       1
 
 
 //----------------------------------------------------------
@@ -562,6 +565,7 @@
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
     #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
+    #define  CAM_HAS_VIDEO_BUTTON       1
 
 
 //==========================================================

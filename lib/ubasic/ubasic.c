@@ -432,6 +432,8 @@ case TOKENIZER_IS_PRESSED:
     	case 2:
     		r = get_battery_temp();
     		break;
+		default: // do something sane if given a bad index
+			r = 0;
   }
     break;
  case TOKENIZER_GET_RAW:
@@ -1694,11 +1696,7 @@ static void set_focus_statement()
     accept(TOKENIZER_SET_FOCUS);
     to = expr();
     int m=mode_get()&MODE_SHOOTING_MASK;
-    int mode_video=((m==MODE_VIDEO_STD) || 
-			    (m==MODE_VIDEO_SPEED) ||  
-			    (m==MODE_VIDEO_COMPACT) ||
-			    (m==MODE_VIDEO_MY_COLORS) || 
-			    (m==MODE_VIDEO_COLOR_ACCENT));
+	int mode_video=MODE_IS_VIDEO(m);
 #if CAM_HAS_MANUAL_FOCUS
     if (shooting_get_focus_mode() || (mode_video)) shooting_set_focus(to, SET_NOW);
     else shooting_set_focus(to, SET_LATER);

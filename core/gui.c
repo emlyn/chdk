@@ -30,7 +30,7 @@
 #include "motion_detector.h"
 #include "raw.h"
 #include "curves.h"
-
+#include "gui_logo.h"
 //-------------------------------------------------------------------
 
 #define OPTIONS_AUTOSAVE
@@ -145,6 +145,9 @@ static const char* gui_zebra_draw_osd_enum(int change, int arg);
 static const char* gui_font_enum(int change, int arg);
 static const char* gui_raw_prefix_enum(int change, int arg);
 static const char* gui_raw_ext_enum(int change, int arg);
+static const char* gui_sub_batch_prefix_enum(int change, int arg);
+static const char* gui_sub_batch_ext_enum(int change, int arg);
+
 static const char* gui_raw_nr_enum(int change, int arg);
 static const char* gui_autoiso_shutter_enum(int change, int arg);
 static const char* gui_reader_codepage_enum(int change, int arg);
@@ -192,6 +195,10 @@ static const char* gui_script_autostart_enum(int change, int arg);
 static const char* gui_script_param_set_enum(int change, int arg);
 static const char* gui_override_disable_enum(int change, int arg);
 static const char* gui_conf_curve_enum(int change, int arg);
+static const char* gui_debug_shortcut_enum(int change, int arg);
+static const char* gui_debug_display_enum(int change, int arg);
+static void gui_debug_shortcut(void);
+
 void rinit();
 
 
@@ -206,6 +213,8 @@ static void cb_battery_menu_change(unsigned int item);
 static void cb_zebra_restore_screen();
 static void cb_zebra_restore_osd();
 
+static int debug_tasklist_start;
+static int debug_display_direction=1;
 // Menu definition
 //-------------------------------------------------------------------
 static CMenuItem remote_submenu_items[] = {
@@ -235,6 +244,7 @@ static CMenuItem script_submenu_items_top[] = {
 #endif
     {0x5d,LANG_MENU_SCRIPT_DEFAULT_VAL,     MENUITEM_PROC,                      (int*)gui_load_script_default },
     {0x5e,LANG_MENU_SCRIPT_PARAM_SET,     MENUITEM_ENUM,                         (int*)gui_script_param_set_enum },
+    {0x5c,LANG_MENU_SCRIPT_PARAM_SAVE,             MENUITEM_BOOL,                    &conf.script_param_save              },    
     {0x0,(int)script_title,                 MENUITEM_SEPARATOR },
 //    {0x0,LANG_MENU_SCRIPT_CURRENT,          MENUITEM_SEPARATOR },
 //    {0x0,(int)script_title,                 MENUITEM_TEXT },
@@ -316,13 +326,13 @@ static CMenu misc_submenu = {0x29,LANG_MENU_MISC_TITLE, NULL, misc_submenu_items
 
 
 static CMenuItem debug_submenu_items[] = {
-    {0x5c,LANG_MENU_DEBUG_SHOW_PROPCASES,    MENUITEM_BOOL,          &debug_propcase_show },
-    {0x5c,LANG_MENU_DEBUG_SHOW_PARAMETER_DATA,        MENUITEM_BOOL,          &debug_pardata_show },
+    {0x5c,LANG_MENU_DEBUG_DISPLAY,           MENUITEM_ENUM,          (int*)gui_debug_display_enum },
     {0x2a,LANG_MENU_DEBUG_PROPCASE_PAGE,     MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,   &debug_propcase_page, MENU_MINMAX(0, 128) },
+    {0x2a,LANG_MENU_DEBUG_TASKLIST_START,    MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,   &debug_tasklist_start, MENU_MINMAX(0, 63) },
     {0x5c,LANG_MENU_DEBUG_SHOW_MISC_VALS,    MENUITEM_BOOL,          &debug_vals_show },
     {0x2a,LANG_MENU_DEBUG_MEMORY_BROWSER,    MENUITEM_PROC,          (int*)gui_draw_debug },
     {0x2a,LANG_MENU_DEBUG_BENCHMARK,         MENUITEM_PROC,          (int*)gui_draw_bench },
-    {0x5c,LANG_MENU_DEBUG_DUMP_RAM,          MENUITEM_BOOL,          &conf.ns_enable_memdump },
+    {0x5c,LANG_MENU_DEBUG_SHORTCUT_ACTION,   MENUITEM_ENUM,          (int*)gui_debug_shortcut_enum },
     {0x33,LANG_MENU_DEBUG_MAKE_BOOTABLE,     MENUITEM_PROC, 	    	(int*)gui_menuproc_mkbootdisk },
 #if CAM_MULTIPART
     {0x33,LANG_MENU_DEBUG_CREATE_MULTIPART , MENUITEM_PROC, 	    	(int*)gui_menuproc_break_card },
@@ -660,6 +670,10 @@ static CMenuItem raw_submenu_items[] = {
     {0x5c,LANG_MENU_RAW_SAVE_IN_DIR,         MENUITEM_BOOL,      &conf.raw_in_dir },
     {0x5f,LANG_MENU_RAW_PREFIX,              MENUITEM_ENUM,      (int*)gui_raw_prefix_enum },
     {0x5f,LANG_MENU_RAW_EXTENSION,           MENUITEM_ENUM,      (int*)gui_raw_ext_enum },
+    {0x5f,LANG_MENU_SUB_PREFIX,              MENUITEM_ENUM,      (int*)gui_sub_batch_prefix_enum },
+    {0x5f,LANG_MENU_SUB_EXTENSION,           MENUITEM_ENUM,      (int*)gui_sub_batch_ext_enum },
+    {0x60,LANG_MENU_SUB_IN_DARK_VALUE,       MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.sub_in_dark_value, MENU_MINMAX(0, 1023)},
+    {0x60,LANG_MENU_SUB_OUT_DARK_VALUE,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.sub_out_dark_value, MENU_MINMAX(0, 1023)},
     {0x2a,LANG_MENU_RAW_DEVELOP,             MENUITEM_PROC,      (int*)gui_raw_develop },
     {0x5c,LANG_MENU_BAD_PIXEL_REMOVAL,       MENUITEM_ENUM,      (int*)gui_bad_pixel_enum },
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
@@ -813,8 +827,10 @@ const char* gui_script_param_set_enum(int change, int arg) {
 
 	if (change != 0)
 	{
+			if (conf.script_param_save)
+				{
         save_params_values(0);
-        
+      }
 		conf.script_param_set += change;
 		if (conf.script_param_set < 0) conf.script_param_set = (sizeof(modes)/sizeof(modes[0]))-1; else
 		if (conf.script_param_set >= (sizeof(modes)/sizeof(modes[0]))) conf.script_param_set=0;
@@ -910,28 +926,46 @@ const char* gui_font_enum(int change, int arg) {
 
 //-------------------------------------------------------------------
 const char* gui_raw_prefix_enum(int change, int arg) {
-    static const char* prefixes[]={ "IMG_", "CRW_", "SND_"};
-
     conf.raw_prefix+=change;
     if (conf.raw_prefix<0)
-        conf.raw_prefix=(sizeof(prefixes)/sizeof(prefixes[0]))-1;
-    else if (conf.raw_prefix>=(sizeof(prefixes)/sizeof(prefixes[0])))
+        conf.raw_prefix=NUM_IMG_PREFIXES-1;
+    else if (conf.raw_prefix>=NUM_IMG_PREFIXES)
         conf.raw_prefix=0;
 
-    return prefixes[conf.raw_prefix];
+    return img_prefixes[conf.raw_prefix];
 }
 
 //-------------------------------------------------------------------
 const char* gui_raw_ext_enum(int change, int arg) {
-    static const char* exts[]={ ".JPG", ".CRW", ".CR2", ".THM", ".WAV"};
-
     conf.raw_ext+=change;
     if (conf.raw_ext<0)
-        conf.raw_ext=(sizeof(exts)/sizeof(exts[0]))-1;
-    else if (conf.raw_ext>=(sizeof(exts)/sizeof(exts[0])))
+        conf.raw_ext=NUM_IMG_EXTS-1;
+    else if (conf.raw_ext>=NUM_IMG_EXTS)
         conf.raw_ext=0;
 
-    return exts[conf.raw_ext];
+    return img_exts[conf.raw_ext];
+}
+
+//-------------------------------------------------------------------
+const char* gui_sub_batch_prefix_enum(int change, int arg) {
+    conf.sub_batch_prefix+=change;
+    if (conf.sub_batch_prefix<0)
+        conf.sub_batch_prefix=NUM_IMG_PREFIXES-1;
+    else if (conf.sub_batch_prefix>=NUM_IMG_PREFIXES)
+        conf.sub_batch_prefix=0;
+
+    return img_prefixes[conf.sub_batch_prefix];
+}
+
+//-------------------------------------------------------------------
+const char* gui_sub_batch_ext_enum(int change, int arg) {
+    conf.sub_batch_ext+=change;
+    if (conf.sub_batch_ext<0)
+        conf.sub_batch_ext=NUM_IMG_EXTS-1;
+    else if (conf.sub_batch_ext>=NUM_IMG_EXTS)
+        conf.sub_batch_ext=0;
+
+    return img_exts[conf.sub_batch_ext];
 }
 
 //-------------------------------------------------------------------
@@ -1256,17 +1290,15 @@ const char* gui_video_mode_enum(int change, int arg) {
 
 //-------------------------------------------------------------------
 const char* gui_video_bitrate_enum(int change, int arg) {
-    static const char* modes[]={ "0.25x", "0.5x","0.75x", "1x", "1.25x", "1.5x", "1.75x", "2x", "2.5x", "3x"};
-
     conf.video_bitrate+=change;
     if (conf.video_bitrate<0)
-        conf.video_bitrate=sizeof(modes)/sizeof(modes[0])-1;
-    else if (conf.video_bitrate>=(sizeof(modes)/sizeof(modes[0])))
+        conf.video_bitrate=VIDEO_BITRATE_STEPS-1;
+    else if (conf.video_bitrate>=VIDEO_BITRATE_STEPS)
         conf.video_bitrate=0;
 
     shooting_video_bitrate_change(conf.video_bitrate);
 
-    return modes[conf.video_bitrate];
+    return video_bitrate_strings[conf.video_bitrate];
 }
 
 
@@ -1591,6 +1623,98 @@ void gui_raw_develop(int arg){
 }
 
 //-------------------------------------------------------------------
+#define TASKLIST_MAX_LINES 12 // probably as much as will fit on screen
+#define TASKLIST_NUM_TASKS 64 // should be enough ?
+static void gui_debug_draw_tasklist(void) {
+#ifndef CAM_DRYOS
+    int tasklist[TASKLIST_NUM_TASKS]; // max number of tasks we will look at
+    char buf[40]; // a single line of the list
+    int n_tasks,n_show_tasks,show_start;
+    const char *name;
+    int i;
+    n_tasks = task_id_list_get(tasklist,sizeof(tasklist)/sizeof(tasklist[0]));
+    show_start = debug_tasklist_start;
+    n_show_tasks = n_tasks - show_start;
+    // auto adjust to show the last N tasks
+    if(n_show_tasks < TASKLIST_MAX_LINES) {
+        show_start = n_tasks - TASKLIST_MAX_LINES;
+        if(show_start<0)
+            show_start = 0;
+         n_show_tasks = n_tasks - show_start;
+    }
+    else if( n_show_tasks > TASKLIST_MAX_LINES ) {
+        n_show_tasks = TASKLIST_MAX_LINES;
+    }
+    sprintf(buf,"%d-%d of %d tasks %c",show_start,show_start+n_show_tasks,n_tasks,debug_display_direction > 0?'+':'-');
+    draw_string(64,0,buf, conf.osd_color);
+    for( i = 0;  i < n_show_tasks; i++ ) {
+        // TODO get full task info
+        name = task_name(tasklist[show_start+i]);
+        if ( !name || !*name ) {
+            name = "(unknown)";
+        }
+        sprintf(buf,"%10s %8X",name,tasklist[show_start+i]);
+        draw_string(64,16+16*i,buf, conf.osd_color);
+    }
+#endif //CAM_DRYOS
+}
+
+#define DEBUG_DISPLAY_NONE 0
+#define DEBUG_DISPLAY_PROPS 1
+#define DEBUG_DISPLAY_PARAMS 2
+#define DEBUG_DISPLAY_TASKS 3
+static const char * gui_debug_shortcut_enum(int change, int arg) {
+    static const char* modes[]={ "None", "Dmp RAM", "Page"};
+
+    conf.debug_shortcut_action += change;
+    if (conf.debug_shortcut_action < 0) 
+        conf.debug_shortcut_action = sizeof(modes)/sizeof(modes[0])-1;
+    else if (conf.debug_shortcut_action >= (sizeof(modes)/sizeof(modes[0])))
+        conf.debug_shortcut_action = 0;
+    
+    return modes[conf.debug_shortcut_action]; 
+}
+
+static const char * gui_debug_display_enum(int change, int arg) {
+    static const char* modes[]={ "None", "Props", "Params", "Tasks"};
+
+    conf.debug_display += change;
+    if (conf.debug_display < 0) 
+        conf.debug_display=sizeof(modes)/sizeof(modes[0])-1;
+    else if (conf.debug_display >= (sizeof(modes)/sizeof(modes[0])))
+        conf.debug_display = 0;
+    
+    return modes[conf.debug_display]; 
+}
+
+static void gui_debug_shortcut(void) {
+    static int lastcall = -1;
+    int t=get_tick_count();
+    if ( lastcall != -1) {
+        if (t-lastcall <= 400)
+            debug_display_direction = -debug_display_direction;
+    }
+    lastcall=t;
+    switch(conf.debug_shortcut_action) {
+        case 1:
+            dump_memory();
+        break;
+        case 2:
+            if(conf.debug_display == DEBUG_DISPLAY_TASKS) {
+                debug_tasklist_start += debug_display_direction*(TASKLIST_MAX_LINES-2); // a little intentional overlap
+                if(debug_tasklist_start >= TASKLIST_NUM_TASKS || debug_tasklist_start < 0)
+                    debug_tasklist_start = 0;
+            }
+            else if (conf.debug_display == DEBUG_DISPLAY_PROPS || conf.debug_display == DEBUG_DISPLAY_PARAMS) {
+                debug_propcase_page += debug_display_direction*1;
+                if(debug_propcase_page > 128 || debug_propcase_page < 0) 
+                    debug_propcase_page = 0;
+            }
+        break;
+    }
+}
+
+//-------------------------------------------------------------------
 
 #if CAM_MULTIPART
 void card_break_proc(unsigned int btn){
@@ -1846,7 +1970,7 @@ void gui_kbd_process()
     switch (gui_mode) {
         case GUI_MODE_ALT:
             if (kbd_is_key_clicked(SHORTCUT_TOGGLE_RAW)) {
-                if (conf.ns_enable_memdump) dump_memory(); 
+                if (conf.debug_shortcut_action > 0) gui_debug_shortcut(); 
 #if !CAM_HAS_ERASE_BUTTON && CAM_CAN_SD_OVERRIDE
                 else if (!shooting_get_common_focus_mode())
 #else                
@@ -2124,14 +2248,9 @@ void gui_draw_osd() {
         pressed = 0;
     }
     
-    mode_video = ((m&MODE_SHOOTING_MASK)==MODE_VIDEO_STD || 
-				 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_SPEED ||  
-				 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_COMPACT ||
-				 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_MY_COLORS || 
-				 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_ACCENT || 
-                 (m&MODE_SHOOTING_MASK)==MODE_VIDEO_TIME_LAPSE);
-    
-    
+	// TODO some of the ifs below should probably use this
+	mode_video = MODE_IS_VIDEO(m);
+
     mode_photo = (m&MODE_MASK) == MODE_PLAY || 
                  !( mode_video ||
 				 (m&MODE_SHOOTING_MASK)==MODE_STITCH);
@@ -2182,7 +2301,7 @@ void gui_draw_osd() {
         if (conf.show_grid_lines) {
             gui_grid_draw_osd(1);
         }
-        if ((gui_mode==GUI_MODE_NONE || gui_mode==GUI_MODE_ALT) && (((kbd_is_key_pressed(KEY_SHOOT_HALF) || (state_kbd_script_run) || (shooting_get_common_focus_mode())) && (mode_photo || (m&MODE_SHOOTING_MASK)==MODE_STITCH )) || (mode_video && conf.show_values_in_video) )) {
+        if ((gui_mode==GUI_MODE_NONE || gui_mode==GUI_MODE_ALT) && (((kbd_is_key_pressed(KEY_SHOOT_HALF) || (state_kbd_script_run) || (shooting_get_common_focus_mode())) && (mode_photo || (m&MODE_SHOOTING_MASK)==MODE_STITCH )) || ((mode_video || movie_status > 1) && conf.show_values_in_video) )) {
         	 
            if (conf.show_dof!=DOF_DONT_SHOW) gui_osd_calc_dof();
            
@@ -2190,10 +2309,10 @@ void gui_draw_osd() {
            
            if (conf.values_show_real_iso || conf.values_show_market_iso || conf.values_show_ev_seted || conf.values_show_ev_measured || conf.values_show_bv_measured || conf.values_show_bv_seted || conf.values_show_overexposure || conf.values_show_canon_overexposure) gui_osd_calc_expo_param();           	           
         }
-        if (conf.show_state && !mode_video) gui_osd_draw_state();
+        if (conf.show_state) gui_osd_draw_state();
         if (conf.save_raw && conf.show_raw_state && !mode_video && (!kbd_is_key_pressed(KEY_SHOOT_HALF))) gui_osd_draw_raw_info();
         
-	    if ((conf.show_values==SHOW_ALWAYS && mode_photo) || (mode_video && conf.show_values_in_video) || ((kbd_is_key_pressed(KEY_SHOOT_HALF) || (recreview_hold==1)) && (conf.show_values==SHOW_HALF)))
+	    if ((conf.show_values==SHOW_ALWAYS && mode_photo) || ((mode_video || movie_status > 1)&& conf.show_values_in_video) || ((kbd_is_key_pressed(KEY_SHOOT_HALF) || (recreview_hold==1)) && (conf.show_values==SHOW_HALF)))
 		   gui_osd_draw_values(1);
         else if  (shooting_get_common_focus_mode() && mode_photo && conf.show_values && !(conf.show_dof==DOF_SHOW_IN_DOF) )   
            gui_osd_draw_values(2);
@@ -2218,20 +2337,9 @@ void gui_draw_osd() {
       if ((conf.show_temp>0) && (recreview_hold==0) &&  ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) &&  !((conf.hide_osd == 1) || (conf.hide_osd == 3)) )) && !(((conf.hide_osd == 2) || (conf.hide_osd == 3))&& (shooting_get_prop(PROPCASE_DISPLAY_MODE) == 1)) )|| (conf.clock_halfpress==0) )) {
         gui_osd_draw_temp();
       }
- if (conf.show_movie_time > 0)
+ if (conf.show_movie_time > 0 && (mode_video || movie_status > 1))
  {
  gui_osd_draw_movie_time_left();
- 
- if ((movie_status > 1) && (conf.fast_movie_quality_control==1)){
-    if (conf.video_mode == 0 )
-    	{
-    gui_print_osd_state_string_chr("Bitrate: ",gui_video_bitrate_enum(0,0));
-	}
-	else
-		{
-  	gui_print_osd_state_string_int("Quality: ",conf.video_quality);
-    }
- }
 }
  
  if ((conf.fast_ev) && (recreview_hold==0) && ((mode_get()&MODE_SHOOTING_MASK) != MODE_VIDEO_STD) && ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) &&  !((conf.hide_osd == 1) || (conf.hide_osd == 3)) )) && !(((conf.hide_osd == 2) || (conf.hide_osd == 3))&& (shooting_get_prop(PROPCASE_DISPLAY_MODE) == 1))) )) {
@@ -2269,7 +2377,7 @@ sprintf(osd_buf, "3:%8x  ", physw_status[2]);
    {
 	static char sbuf[100];
     int r,i, p, len;
-    if (debug_propcase_show){
+    if (conf.debug_display == DEBUG_DISPLAY_PROPS){
 
 	for (i=0;i<10;i++){
 	    r = 0;
@@ -2280,7 +2388,7 @@ sprintf(osd_buf, "3:%8x  ", physw_status[2]);
 	}
     }
 
-if (debug_pardata_show){
+    if (conf.debug_display == DEBUG_DISPLAY_PARAMS){
         extern long* FlashParamsTable[]; 
 	char s[30];
 	int count;
@@ -2307,6 +2415,9 @@ if (debug_pardata_show){
     }
    }
 
+    if(conf.debug_display == DEBUG_DISPLAY_TASKS) {
+        gui_debug_draw_tasklist();
+    }
 
     if (ubasic_error){
 	const char *msg;
@@ -2442,7 +2553,7 @@ void gui_draw_splash() {
         "Camera: " PLATFORM " - " PLATFORMSUB };
     int i, l;
    // color cl = MAKE_COLOR((gui_splash_mode==MODE_REC)?0xDA:0xD9, COLOR_WHITE);
- color cl = MAKE_COLOR(COLOR_RED, COLOR_WHITE);
+    color cl = MAKE_COLOR(COLOR_RED, COLOR_WHITE);
 
 
     gui_splash_mode = (mode_get()&MODE_MASK);
@@ -2455,10 +2566,21 @@ void gui_draw_splash() {
     }
     w=w*FONT_WIDTH+10;
 
-    x = (screen_width-w)>>1; y = (screen_height-h)>>1;
-    draw_filled_round_rect(x, y, x+w, y+h, cl);
+    x = (screen_width-w)>>1; y = ((screen_height-h)>>1) + 20;
+    draw_filled_round_rect(x, y, x+w, y+h, MAKE_COLOR(COLOR_RED, COLOR_RED));
     for (i=0; i<sizeof(text)/sizeof(text[0]); ++i) {
         draw_string(x+((w-strlen(text[i])*FONT_WIDTH)>>1), y+i*FONT_HEIGHT+4, text[i], cl);
+    }
+    int mx,my;
+    int offset_x = (screen_width-150)>>1;
+    int offset_y = ((screen_height-84)>>1) - 42;
+    
+    for(mx=0; mx<150; mx++){
+        for(my=0; my<84; my++){
+            color c = header_data[my*150+mx];
+            if (c != 0x00)
+                draw_pixel(offset_x+mx,offset_y+my,c);
+        }
     }
 }
 
@@ -2489,8 +2611,10 @@ void gui_load_script(int arg) {
 
 void gui_load_script_default(int arg) {
 	script_load(conf.script_file, 0);
-    save_params_values(1);
-}
+			if (conf.script_param_save)
+				{
+        save_params_values(1);
+      }}
 
 
 //-------------------------------------------------------------------

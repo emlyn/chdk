@@ -25,10 +25,11 @@ static struct {
         { MPOPUP_RAW_ADD,       LANG_POPUP_RAW_SUM},
         { MPOPUP_RAW_AVERAGE,   LANG_POPUP_RAW_AVERAGE },
         { MPOPUP_PURGE,         LANG_POPUP_PURGE  },
+        { MPOPUP_SUBTRACT,      LANG_POPUP_SUB_FROM_MARKED  },
 };
 
 #define ACTIONSNUM              (sizeof(actions)/sizeof(actions[0]))
-#define MAX_ACTIONS             8
+#define MAX_ACTIONS             9
 static int                      mpopup_actions[MAX_ACTIONS], mpopup_actions_num, mpopup_actions_active;
 static coord                    mpopup_actions_x, mpopup_actions_y;
 static unsigned int             mpopup_actions_w;

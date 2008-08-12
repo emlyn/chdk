@@ -54,6 +54,18 @@ void task_unlock()
     _taskUnlock();
 }
 
+#ifndef CAM_DRYOS
+const char *task_name(int id)
+{
+    return _taskName(id);
+}
+
+int task_id_list_get(int *idlist,int size)
+{
+    return _taskIdListGet(idlist,size);
+}
+#endif
+
 long get_property_case(long id, void *buf, long bufsize)
 {
     return _GetPropertyCase(id, buf, bufsize);
@@ -137,37 +149,21 @@ void lens_set_focus_pos(long newpos)
     _SetPropertyCase(PROPCASE_SUBJECT_DIST2, &newpos, sizeof(newpos));
 }
 
-void play_sound(short sound)
+void play_sound(unsigned sound)
 {
-	short tmp;
-    switch (sound)
-{
-  case 0:
-    tmp = 0x2001; //startup sound
-    break;
-  case 1:
-    tmp = 0x2002; //shutter sound
-    break;
-  case 2:
-    tmp = 0x2003; //button press sound
-    break;
-  case 3:
-    tmp = 0x2004; //self-timer sound
-    break;
-  case 4:
-   tmp = 0xC211; //short beep
-    break;
-  case 5:
-   tmp = 50000; // AF confirmation 
-    break;
-  case 6:
-   tmp = 0xC507; // error beep imo
-    break;
-  case 7:
-   tmp = 0x400D; // LONG ERROR BEEP CONTINIUOUS- warning, cannot be stopped (yet)
-    break;
- }
-    _PT_PlaySound(tmp, 0);
+	static const int sounds[]={ 0x2001, //startup sound
+                                0x2002, //shutter sound
+                                0x2003, //button press sound
+                                0x2004, //self-timer sound
+                                0xC211, //short beep
+                                50000,  // AF confirmation 
+                                0xC507, // error beep imo
+                                0x400D, // LONG ERROR BEEP CONTINIUOUS- warning, cannot be stopped (yet)
+                            };
+    if(sound >= sizeof(sounds)/sizeof(sounds[0]))
+        return;
+
+    _PT_PlaySound(sounds[sound], 0);
 }
 
 long stat_get_vbatt()

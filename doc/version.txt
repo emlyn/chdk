@@ -5,6 +5,19 @@ author
 
 log
 
+479 / 0.3.0
+PhyrePhoX (PP)
+
++ added taskviewer by reyalp http://chdk.setepontos.com/index.php/topic,2110.msg19622.html#msg19622
++ added Fishpeppers Boot Logo from here: http://chdk.setepontos.com/index.php/topic,2122.0.html
++ raw subtract for filebrowser by reyalp - http://chdk.setepontos.com/index.php/topic,2099.msg19362.html#msg19362
+* makefile changes: 
+		added several docs in the /docs dir, these are "catted" together during compilation -> one big readme file's gonna be put into the zip. Also includes camera specific notes, if existing (placeholders for now) (thx for helping with this, Hacki).
+* Ixus 860is / SD870 - fixed ubasic_set_led (diff provided by FE50)
+* patched symboldmod and changed splashscreen a little (diff sent in by CHDKLover)
+* added toggle in scripts menu: now the saving of script params can be turned on/off (default: off)
+
+
 474 / 0.2.7
 Jucifer
 

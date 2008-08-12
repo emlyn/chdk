@@ -111,6 +111,7 @@ int rbf_load(char *file) {
         need_free = 1;
 
         close(fd);
+        conf.menu_symbol_enable=(rbf_font.height>=rbf_symbol_font.height);
         return 1;
     }
 
@@ -167,6 +168,7 @@ int rbf_load_symbol(char *file) {
         need_free = 1;
 
         close(fd);
+        conf.menu_symbol_enable=(rbf_font.height>=rbf_symbol_font.height);
         return 1;
     }
 
