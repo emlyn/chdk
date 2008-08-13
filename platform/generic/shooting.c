@@ -825,8 +825,8 @@ int shooting_is_flash_ready()
    // _GetPropertyCase(204, &t, 4);
    // if (t == 3){
    _GetPropertyCase(PROPCASE_FLASH_MODE, &t, sizeof(&t));
-   if ((t != 2) && (shooting_in_progress())) 
-    return (shooting_is_flash() && _IsStrobeChargeCompleted());
+   if ((t != 2) && (shooting_in_progress()))
+     if (shooting_is_flash()) return _IsStrobeChargeCompleted();
    return 1;
 }
 

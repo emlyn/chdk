@@ -392,9 +392,12 @@ long kbd_process()
 //	    gui_kbd_enter();
 	    return 1;
 	} else 
-	if ((key_pressed == 2) && !kbd_is_key_pressed(conf.alt_mode_button)){
-	    key_pressed = 0;
-	}
+   if (key_pressed == 2) {
+     if (kbd_is_key_pressed(conf.alt_mode_button))
+       return 1;   // wait until Alt released before unblocking kbd
+     else
+       key_pressed = 0;
+   }
 	
 	if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
 	    return 1;
