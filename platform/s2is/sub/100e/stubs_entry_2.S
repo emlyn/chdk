@@ -37,7 +37,7 @@ NHSTUB(GetFocusLensSubjectDistanceFromLens, 0xFFA8EEF4)
 NHSTUB(GetBatteryTemperature, 0xFF82E368)
 NHSTUB(GetCCDTemperature, 0xFF82E354)
 NHSTUB(GetOpticalTemperature, 0xFF82E340)
-NHSTUB(PT_PlaySound, 0xFF97B4A0)
+NHSTUB(PT_PlaySound, 0xFF97BD40)
 
 
 //NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.

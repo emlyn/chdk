@@ -5,6 +5,18 @@ author
 
 log
 
+0.3.1 / PP
+
+* changed adresses of PT_PLAYSOUND in s2is
+* changed memisosize of ixus860/sd870 (needed in more cams all to soon...)
+* changed makefile
+	* decreased verbose-level of zipping (major logfile decrease)
+	* in batch-zip-complete you now get a _complete zip with all the extra stuff, and also a _bins file with just the binaries included
+* fixed some warnings, see http://chdk.setepontos.com/index.php/topic,265.msg19700.html#msg19700 (though the math stuff i havent touched)
+* fixed a bug in shooting.c -> http://chdk.setepontos.com/index.php/topic,265.msg19688.html#msg19688 (fixed this also in trunk)
+* fixed bug in trunk (already fixed in branch) -> http://chdk.setepontos.com/index.php/topic,265.msg19753.html#msg19753
+
+
 479 / 0.3.0
 PhyrePhoX (PP)
 

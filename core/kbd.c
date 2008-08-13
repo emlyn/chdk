@@ -562,7 +562,7 @@ static int nCER=0;
 
 unsigned int mmode;
 unsigned int nCrzpos,i;
-unsigned int drmode;
+unsigned int drmode = 0;
 
    if(conf.ricoh_ca1_mode && conf.remote_enable)
   {

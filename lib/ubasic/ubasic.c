@@ -827,7 +827,7 @@ case_statement(void)
 {
   int select_value, case_value_1, case_value_2, case_value_eq;
   short case_run, case_goto = 0, case_gosub = 0;
-  int cur_ln, gosub_ln;
+  int cur_ln, gosub_ln = 0;
   
   accept(TOKENIZER_CASE);
   if(select_stack_ptr > 0) {
@@ -916,7 +916,7 @@ static void
 case_else_statement(void)
 {
   short case_goto = 0, case_gosub = 0;
-  int cur_ln, gosub_ln;
+  int cur_ln, gosub_ln = 0;
   
   accept(TOKENIZER_CASE_ELSE);
   if(select_stack_ptr > 0) {
