@@ -5,6 +5,10 @@ author
 
 log
 
+0.3.4 / PP
+
+* small modifications in notes.txt of each platform: added can do's and not can do's (by no means complete, just a start to get into the right direction) so in each individual readme you now get to see camera specific notes (for example when video overrides are not working for a special platform yet)
+
 0.3.3 / PP
 
 * makefile changes: instead of _complete, the big zips now have a -full suffix, also _bins got removed and replaced by NULL.

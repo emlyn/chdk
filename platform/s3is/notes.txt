@@ -2,6 +2,8 @@
 
 Camera depending notes: 
 
-This cam should work with CHDK as is, no special notes existing.
-
+- s3is uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
+- s3is does have a REAL IRIS Diaphragm, it does NOT have an an ND Filter! 
+Mind this.
+- cam supports multipartitions
 

@@ -2,6 +2,9 @@
 
 Camera depending notes: 
 
-This cam should work with CHDK as is, no special notes existing.
+- G7 uses Propset 1 (see http://tinyurl.com/6zbv9b, digic II)
+- G7 has adjustable alt-button
+- G7 supports Multipartition
+- G7 has an ND Filter AND real iris diaphragm (which can be set via photo overrides)
 
 

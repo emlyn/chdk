@@ -2,6 +2,7 @@
 
 Camera depending notes: 
 
-This cam should work with CHDK as is, no special notes existing.
-
+- s2is uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
+- s2is does have a REAL IRIS Diaphragm, it does NOT have an an ND Filter! 
+Mind this.
 

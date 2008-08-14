@@ -2,6 +2,7 @@
 
 Camera depending notes: 
 
-This cam should work with CHDK as is, no special notes existing.
-
+- A460 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+- A460 does NOT have a real IRIS Diaphragm, it only has an ND Filter! 
+Mind this.
 

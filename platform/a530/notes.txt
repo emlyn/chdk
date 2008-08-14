@@ -2,6 +2,6 @@
 
 Camera depending notes: 
 
-This cam should work with CHDK as is, no special notes existing.
-
+- A530 uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
+- A530 does not have a real IRIS Diaphragm, it does have an ND Filter! 
 

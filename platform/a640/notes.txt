@@ -2,6 +2,8 @@
 
 Camera depending notes: 
 
-This cam should work with CHDK as is, no special notes existing.
-
+- A640 uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
+- A640 does have a real IRIS Diaphragm, it does not have an ND Filter! 
+Mind this.
+- cam supports multipartitions
 
