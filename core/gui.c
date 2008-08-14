@@ -1746,6 +1746,7 @@ static Conf old_conf;
 //-------------------------------------------------------------------
 void gui_init()
 {
+
     gui_mode = GUI_MODE_NONE;
     gui_restore = 0;
     gui_in_redraw = 0;
@@ -1808,12 +1809,13 @@ void gui_redraw()
 {
     enum Gui_Mode gui_mode_old;
     static int show_script_console=0;
-
     if (gui_splash) {
         if (gui_splash>(SPLASH_TIME-4)) {
             gui_draw_splash();
+           	conf.show_osd = 0;
         } else if (gui_splash==1 && (mode_get()&MODE_MASK) == gui_splash_mode && (gui_mode==GUI_MODE_NONE || gui_mode==GUI_MODE_ALT)) {
             draw_restore();
+            conf.show_osd = 1;
         }
         --gui_splash;
     }
@@ -2571,15 +2573,27 @@ void gui_draw_splash() {
     for (i=0; i<sizeof(text)/sizeof(text[0]); ++i) {
         draw_string(x+((w-strlen(text[i])*FONT_WIDTH)>>1), y+i*FONT_HEIGHT+4, text[i], cl);
     }
-    int mx,my;
+    int pos;
+    int mx=0;
+    int my=0;
     int offset_x = (screen_width-150)>>1;
     int offset_y = ((screen_height-84)>>1) - 42;
+    const color color_lookup[8] = {0xFF, 0x2E, 0x22, 0x3D, 0x1F,  0x21, 0x00, 0x11};
     
-    for(mx=0; mx<150; mx++){
-        for(my=0; my<84; my++){
-            color c = header_data[my*150+mx];
-            if (c != 0x00)
+    for(pos=0; pos<HEADER_DATA_LEN; pos++){
+        char data = header_data[pos];
+        color c = color_lookup[(data>>5) & 0x07];
+        for(i=0; i<(data&0x1F)+1; i++){
+            if (c!=0x00){
                 draw_pixel(offset_x+mx,offset_y+my,c);
+            }
+            if (mx==149){
+                mx=0;
+                my++;
+            }else{
+                mx++;
+            }
+            
         }
     }
 }

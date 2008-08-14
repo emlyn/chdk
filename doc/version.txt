@@ -5,6 +5,14 @@ author
 
 log
 
+0.3.2 / PP
+
++ added beta support for ixus40_sd300
++ italian language file (assembla bugtracker)
+* finnish language file (assembla bugtracker)
+* bootlogo: now OSD disabled while bootlogo is shown (not very clever code, i know) - idea from MSL (german forum)
+* bootlogo: http://chdk.setepontos.com/index.php/topic,2122.msg19745.html#msg19745 (decreased bin size)
+
 0.3.1 / PP
 
 * changed adresses of PT_PLAYSOUND in s2is

@@ -9,7 +9,7 @@ SUBDIRS=sub
 
 all: all-recursive libplatform.a
 
-OBJS=main.o lib.o wrappers.o kbd.o shooting.o
+OBJS=main.o lib.o wrappers.o kbd.o shooting.o stubs_auto.o
 # stubs_init.o
 
 kbd.o: kbd.c ../generic/kbd.c

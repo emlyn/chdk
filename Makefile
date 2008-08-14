@@ -35,7 +35,7 @@ ifdef PLATFORMOS
 	    $(PLATFORMID) 0x01000101
   endif
   ifeq ($(PLATFORMOS),dryos)
-	@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FI2
+	#@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FI2
   endif
 endif
 	mv $(topdir)/bin/main.bin $(topdir)/bin/DISKBOOT.BIN
@@ -146,7 +146,7 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus850_sd800   PLATFORMSUB=100e NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus860_sd870   PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus950_sd850   PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub	
-	#$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100k NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100k NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus50_sd400    PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus50_sd400    PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus55_sd450    PLATFORMSUB=100b NO_INC_BUILD=1 firzipsub
@@ -204,7 +204,7 @@ batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus850_sd800   PLATFORMSUB=100e NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus860_sd870   PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus950_sd850   PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete	
-	#$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100k NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100k NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus50_sd400    PLATFORMSUB=101a NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus50_sd400    PLATFORMSUB=101b NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus55_sd450    PLATFORMSUB=100b NO_INC_BUILD=1 firzipsubcomplete
@@ -264,7 +264,7 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=ixus850_sd800   PLATFORMSUB=100e NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus860_sd870   PLATFORMSUB=100c NO_INC_BUILD=1 clean	
 	$(MAKE) -s --no-print-directory PLATFORM=ixus950_sd850   PLATFORMSUB=100c NO_INC_BUILD=1 clean	
-	#$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100k NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100k NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus50_sd400    PLATFORMSUB=101a NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus50_sd400    PLATFORMSUB=101b NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus55_sd450    PLATFORMSUB=100b NO_INC_BUILD=1 clean

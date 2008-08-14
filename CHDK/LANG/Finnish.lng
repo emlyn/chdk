@@ -3,8 +3,10 @@
 // <id> "<text>"
 //   <id>   - pit‰isi olla positiivinen numero
 //   <text> - teksti suljettuna lainausmerkkeihin
-//  juciphox 5.8.2008 based on English rev 461
+//  12.8.2008 based on English rev 479
 1 "P‰‰valikko"
+
+
 2 "RAW-kuvat"
 3 "Kuvaruutun‰yttˆ"
 4 "Histogrammi"
@@ -68,7 +70,7 @@
 45 "Avaa skripti tiedosto..."
 46 "Skriptin jatkoviive (.1s)"
 47 "Nykyinen skripti"
-48 "Skriptin parametrit"
+48 "Skriptin asetukset"
 
 
 49 "N‰yttˆasetukset"
@@ -111,11 +113,13 @@
 
 79 "Debug-asetukset"
 
-80 "N‰yt‰ PropCaset"
+
+80 "Debug datan n‰yttˆ"
 81 "PropCase-sivu"
 82 "N‰yt‰ sekalaiset arvot"
 83 "Muistiselaaja"
-84 "Dumppaa muisti +/- napilla"
+
+84 "ALT +/- debuggaus toiminto"
 85 "Tee kortista boottaava..."
 
 
@@ -292,16 +296,16 @@
 211 "Ter‰vyysalueen n‰yttˆ"
 212 "Canon koht. et‰is. l‰hell‰ rajoja"
 213 "K‰yt‰ EXIF-koht.et‰is.arvoa"
-214 "N‰yt‰ koht.et‰is. muita arvoissa"
-215 "N‰yt‰ l‰hel. rajaa muita arvoissa"
-216 "N‰yt‰ kaukana rajasta muita arvoissa"
-217 "N‰yt‰ hyperfokaal.et‰is. muita arvoissa"
-218 "N‰yt‰ ter‰vyysal. muita arvoissa"
+214 "N‰yt‰ koht.et‰is.sekal.arvoissa"
+215 "N‰yt‰ l‰hel.rajaa sekal.arvoissa"
+216 "N‰yt‰ kaukana rajasta sekal.arvoissa"
+217 "N‰yt‰ hyperfokaal.et‰is.sekal.arvoissa"
+218 "N‰yt‰ ter‰vyysal.sekal.arvoissa"
 
 
-219 "Muita n‰ytett‰vi‰ arvoja"
+219 "Sekalaisia n‰ytett‰vi‰ arvoja"
 
-220 "Muita arvoja"
+220 "Sekalaisia arvoja"
 221 "N‰yt‰ esikatselussa"      
 222 "Zoomaus"        
 223 "Todellinen aukko"
@@ -312,14 +316,14 @@
 228 "Mitattu valotus (Bv+Sv)"
 229 "Asetettu kirkkaus (BV)"
 230 "Mitattu kirkkaus"
-231 "Ylivalotus arvo (Ei salamaa!)"
+231 "Ylivalotusarvo (Ei salamaa!)"
 232 "Alueen valotiheys"
  
 233 "Videoasetukset"
 
-234 "Videot"
+234 "Videokuvaus"
 235 "Videomuoto"
-236 "Video bittivirta"
+236 "Videon bittinopeus"
 237 "Videolaatu"
  
  
@@ -368,7 +372,8 @@
 271 "Muistikortilla ei ole tilaa:\n%dM tarvitaan, %dM k‰ytett‰viss‰."
  
 272 "Kuvaruutun‰yttˆ esikatselussa"
-273 "N‰yt‰ parametrin tiedot"
+
+273 "Teht‰v‰listan aloitus"
  
 274 "Kohteen et‰isyys"
  
@@ -381,7 +386,7 @@
 280 "Virhe"
 281 "Varoitus"
 282 "Tietoja"
-283 "RGB seepra (ylivaloitus)"
+283 "RGB-seepra (ylivaloitus)"
 
 284 "ND suodatuksen tila"
  
@@ -506,8 +511,8 @@
 381 "Tahdistuksen viive 0.1s"
 
 382 "AF nappi"
-383 "Lataa valitut asetukset"
-384 "Parametri valinnat"
+383 "Lataa oletusasetukset"
+384 "Asetusten valinta"
 
 385 "Raw @ Sports ei k‰ytˆss‰"
 386 "Raw @ purske ei k‰ytˆss‰"
@@ -528,3 +533,12 @@
 399 "Kauko-ohjattu zoomaus"
 400 "Zoomin odotusviive 0.1s"
 401 "K‰ynnistys‰‰ni"
+402 "Raw v‰hennyksen etuliite"
+403 "Raw v‰hennyksen lopputunniste"
+404 "Tumman taustan pidett‰v‰ arvo"
+405 "Pienin v‰hennett‰v‰ tumman arvo"
+406 "->"
+407 "...lis‰‰ %d tiedostoa"
+408 "V‰henn‰"
+409 "V‰henn‰ merkityt"
+410 "Tallenna arvot"
