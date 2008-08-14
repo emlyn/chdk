@@ -5,9 +5,13 @@ author
 
 log
 
+0.3.3 / PP
+
+* makefile changes: instead of _complete, the big zips now have a -full suffix, also _bins got removed and replaced by NULL.
+
 0.3.2 / PP
 
-+ added beta support for ixus40_sd300
++ added beta support for ixus40_sd300 -> http://chdk.setepontos.com/index.php/topic,2042.msg19516.html#msg19516 thx to fishpepper
 + italian language file (assembla bugtracker)
 * finnish language file (assembla bugtracker)
 * bootlogo: now OSD disabled while bootlogo is shown (not very clever code, i know) - idea from MSL (german forum)

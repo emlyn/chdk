@@ -77,40 +77,40 @@ endif
 	rm -f $(topdir)bin/DISKBOOT.BIN
 
 firzipsubcomplete: infoline clean firsub
-	@echo \-\> $(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip
-	rm -f $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip
-	@echo \-\> $(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_bins.zip
-	rm -f $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_bins.zip
+	@echo \-\> $(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip
+	rm -f $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip
+	@echo \-\> $(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip
+	rm -f $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip
 	LANG=C echo -e "CHDK-$(VER) for $(PLATFORM) fw:$(PLATFORMSUB) build:$(BUILD_NUMBER) date:`date -R`" | \
-	zip -9jz $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)bin/DISKBOOT.BIN > $(DEVNULL)
+	zip -9jz $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)bin/DISKBOOT.BIN > $(DEVNULL)
 	LANG=C echo -e "CHDK-$(VER) for $(PLATFORM) fw:$(PLATFORMSUB) build:$(BUILD_NUMBER) date:`date -R`" | \
-	zip -9jz $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_bins.zip $(topdir)bin/DISKBOOT.BIN > $(DEVNULL)
-	zip -9 $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)CHDK/SYMBOLS/*  > $(DEVNULL)
-	zip -9 $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)CHDK/BOOKS/*  > $(DEVNULL)
-	zip -9 $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)CHDK/CURVES/*  > $(DEVNULL)
-	zip -9 $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)CHDK/FONTS/*  > $(DEVNULL)
-	zip -9 $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)CHDK/GRIDS/* > $(DEVNULL)
-	zip -9 $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)CHDK/LANG/*   > $(DEVNULL)
-	zip -9 $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)CHDK/SCRIPTS/*  > $(DEVNULL)
-	zip -9 $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)CHDK/SCRIPTS/examples/* 	 > $(DEVNULL)
-	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)doc/version.txt  > $(DEVNULL)
-	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)tools/vers.req  > $(DEVNULL)
+	zip -9jz $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/DISKBOOT.BIN > $(DEVNULL)
+	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/SYMBOLS/*  > $(DEVNULL)
+	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/BOOKS/*  > $(DEVNULL)
+	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/CURVES/*  > $(DEVNULL)
+	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/FONTS/*  > $(DEVNULL)
+	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/GRIDS/* > $(DEVNULL)
+	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/LANG/*   > $(DEVNULL)
+	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/SCRIPTS/*  > $(DEVNULL)
+	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/SCRIPTS/examples/* 	 > $(DEVNULL)
+	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)doc/version.txt  > $(DEVNULL)
+	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)tools/vers.req  > $(DEVNULL)
 ifdef PLATFORMOS
   ifeq ($(PLATFORMOS),vxworks)
 	cp $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR $(topdir)bin/PS.FIR
-	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)bin/PS.FIR > $(DEVNULL)
-	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_bins.zip $(topdir)bin/PS.FIR > $(DEVNULL)
+	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)bin/PS.FIR > $(DEVNULL)
+	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FIR > $(DEVNULL)
 	cat $(topdir)doc/1_intro.txt $(topdir)/platform/$(PLATFORM)/notes.txt $(topdir)doc/2_vxworks.txt $(topdir)doc/3_faq.txt $(topdir)doc/4_urls.txt $(topdir)doc/5_gpl.txt > $(topdir)doc/readme.txt
-	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)doc/readme.txt  > $(DEVNULL)
+	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)doc/readme.txt  > $(DEVNULL)
 	rm -f $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR
 	rm -f $(topdir)bin/PS.FIR
   endif
   ifeq ($(PLATFORMOS),dryos)
 	cat $(topdir)doc/1_intro.txt $(topdir)/platform/$(PLATFORM)/notes.txt $(topdir)doc/2_dryos.txt $(topdir)doc/3_faq.txt $(topdir)doc/4_urls.txt $(topdir)doc/5_gpl.txt > $(topdir)doc/readme.txt
-	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)doc/readme.txt  > $(DEVNULL)
+	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)doc/readme.txt  > $(DEVNULL)
 	#cp $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FI2 $(topdir)bin/PS.FI2
-	#zip -9jc $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_complete.zip $(topdir)bin/PS.FI2 > $(DEVNULL)
-	#zip -9jc $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)_bins.zip $(topdir)bin/PS.FI2 > $(DEVNULL)
+	#zip -9jc $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)bin/PS.FI2 > $(DEVNULL)
+	#zip -9jc $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
 	#rm -f $(topdir)bin/PS.FI2
   endif
 endif
