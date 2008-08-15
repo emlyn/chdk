@@ -316,6 +316,7 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
     #undef CAM_CONSOLE_LOG_ENABLED
+    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus50_sd400)
     #define CAM_PROPSET                 1

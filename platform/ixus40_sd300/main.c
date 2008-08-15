@@ -39,7 +39,7 @@ static void task_start_hook(
     _CreateTask("SpyTask", 0x19, 0x2000, spytask, 0); // First creates the SpyTask, i.e. the main CHDK loop
     
     //create our second keypress task
-		_CreateTask("SpyTask2", 0x17, 0x2000, kbd_process_task, 0); 
+		_CreateTask("SpyTask2", 0x18, 0x2000, kbd_process_task, 0); 
     
     taskprev(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9 ); // then, whatever was the call intended to be...
 	}
@@ -62,6 +62,14 @@ static void capt_seq_hook(
     capt_seq_task();
 	}
 
+static void movie_record_hook(
+    long p0,    long p1,    long p2,    long p3,    long p4,
+    long p5,    long p6,    long p7,    long p8,    long p9)
+	{
+    movie_record_task();
+	}
+
+
 
 static int my_ncmp(const char *s1, const char *s2, long len)
 	{
@@ -75,38 +83,42 @@ static int my_ncmp(const char *s1, const char *s2, long len)
 	}
 
 void createHook (void *pNewTcb)
-	{
+{
     char *name = (char*)(*(long*)((char*)pNewTcb+0x34));
     long *entry = (long*)((char*)pNewTcb+0x74);
-
+    
     //volatile long *p; p=(void*) 0xc02200E0; *p=0x46; //debug led
-
+    
     // always hook first task creation
     // to create SpyTask
-    if (!stop_hooking)
-		{
-		taskprev = (void*)(*entry);
-		*entry = (long)task_start_hook;
-		stop_hooking = 1;
-		}
-	else
-		{
-		// hook/replace another tasks
- 		if (my_ncmp(name, "tSwitchChe", 10) == 0) // Replace the call to "SwitchCheckTask" with our own procedure
- 			{
- 			*entry = (long)mykbd_task;
- 			}
-		if (my_ncmp(name, "tInitFileM", 10) == 0) // Replace the call to "InitFileModules" with our own procedure
-			{
-			taskfsprev = (void*)(*entry);
-			*entry = (long)task_fs;
-			}
-		if (my_ncmp(name, "tCaptSeqTa", 10) == 0) // Replace the call to "CaptSeqTask" with our own procedure
-			{
-			*entry = (long)capt_seq_hook;
-			}
-		core_hook_task_create(pNewTcb);
-		}
+    if (!stop_hooking){
+        taskprev = (void*)(*entry);
+        *entry = (long)task_start_hook;
+        stop_hooking = 1;
+    }else{
+        // hook/replace another tasks
+        // Replace the call to "SwitchCheckTask" with our own procedure
+        if (my_ncmp(name, "tSwitchChe", 10) == 0){
+            *entry = (long)mykbd_task;
+        }
+        
+        // Replace the call to "InitFileModules" with our own procedure
+        if (my_ncmp(name, "tInitFileM", 10) == 0){
+            taskfsprev = (void*)(*entry);
+            *entry = (long)task_fs;
+        }
+        
+        // Replace the call to "CaptSeqTask" with our own procedure
+        if (my_ncmp(name, "tCaptSeqTa", 10) == 0){
+            *entry = (long)capt_seq_hook;
+        }
+
+        if (my_ncmp(name, "tMovieRecT", 10) == 0){
+            *entry = (long)movie_record_hook;
+        }
+
+core_hook_task_create(pNewTcb);
+}
 	}
 
 void deleteHook (void *pTcb)
