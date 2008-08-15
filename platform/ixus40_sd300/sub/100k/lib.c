@@ -23,6 +23,11 @@ long hook_raw_size()
 // buffer of live picture when shoot button is not pressed
 void *vid_get_viewport_live_fb()
 {
+//there seem to be 3 buffers:
+//pointer -> buffer
+//0x52E4  -> 0x109CBD20
+//0x52F0  -> 0x10A6A760
+//0x52FC  -> 0x10B02560
 return (void*)0x10B02560;
 }
 

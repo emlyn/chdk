@@ -1,8 +1,7 @@
 #include "stubs_asm.h"
-
-
-
-
+NHSTUB(GetBatteryTemperature, 0xFFA48900)  //ok
+NHSTUB(GetCCDTemperature, 0xFFA488EC) //ok
+NHSTUB(GetOpticalTemperature, 0xFFA488D8) //ok but returns -10deg all the time
 
 NHSTUB(GetDrive_ClusterSize, 0xFF8707EC) //OK
 NHSTUB(GetDrive_TotalClusters, 0xFF87082C) //OK
@@ -48,6 +47,10 @@ NHSTUB(UniqueLedOff, 0xFFAAAED0)
 //seems correct here as well... see ixus40.../lib.c
 NHSTUB(IsStrobeChargeCompleted, IsStrobeChargeCompleted_my)
 NHSTUB(sub_FF821D04, 0xFF821D04)
+
+//test to use this for kbd action
+NHSTUB(semBCreate, 0xFFACF180)
+NHSTUB(GiveSemaphore, 0xFF823144)
          
 //should be ok but sd300 doesnt have all cases :(
 //NHSTUB(GetPropertyCase, 0xFF82CB54)
@@ -82,7 +85,6 @@ NHSTUB(ExecuteEventProcedure, 0xFF81756C) //checked
 NHSTUB(CreatePhysicalVram, 0xFF927B0C)
 NHSTUB(DisplayImagePhysicalScreen, 0xFF927098)
 NHSTUB(FreeUncacheableMemory, 0xFF8152BC)
-
 
 NHSTUB(GetCurrentMachineTime, 0xFF81FEFC)
 NHSTUB(free, 0xFFAC5900)
@@ -123,12 +125,9 @@ NHSTUB(kbd_read_keys_r2, 0xFFAAAED0)
 
 //from sd400
 
-
+//sd300 doesnt seem to have this feature !
 NHSTUB(UnsetZoomForMovie, 0xFFAAAED0) //00xFF9A4D1C) 
 
-NHSTUB(GetBatteryTemperature, 0xFFA48900)
-NHSTUB(GetCCDTemperature, 0xFFA488EC)
-NHSTUB(GetOpticalTemperature, 0xFFA488D8)
 NHSTUB(PT_PlaySound, 0xFF94EB3C)
 
 

@@ -5,6 +5,12 @@ author
 
 log
 
+0.3.5 / PP
+
+* patched ixus40_sd300 in trunk and branch (http://chdk.setepontos.com/index.php/topic,2042.msg19849.html#msg19849)
+* language update in trunk (finnish)
+* makefile: small zips now include readme and version history
+
 0.3.4 / PP
 
 * small modifications in notes.txt of each platform: added can do's and not can do's (by no means complete, just a start to get into the right direction) so in each individual readme you now get to see camera specific notes (for example when video overrides are not working for a special platform yet)

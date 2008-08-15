@@ -20,16 +20,50 @@ static long last_kbd_key = 0;
 static int usb_power=0;
 static int remote_key, remote_count;
 
+//get some vxworks defines for semaphore stuff
+#define STATUS int
+#define BOOL   int
+#define OK    0
+#define ERROR (-1)
 
-#define KBD_REQUEST_IDLE 0
-#define KBD_REQUEST_GUI_KBD_PROCESS (1<<0)
-#define KBD_REQUEST_GUI_KBD_ENTER (1<<1)
-#define KBD_REQUEST_GUI_KBD_LEAVE (1<<2)
-#define KBD_REQUEST_SCRIPT_START (1<<3)
-#define KBD_REQUEST_SCRIPT_PROCESS (1<<4)
-#define KBD_REQUEST_SCRIPT_END (1<<5)
+#define SEM_Q_FIFO           0x0
+#define SEM_Q_PRIORITY       0x1
+#define SEM_DELETE_SAFE      0x4
+#define SEM_INVERSION_SAFE   0x8
+#define SEM_OPTION_MASK     (SEM_Q_FIFO|SEM_Q_PRIORITY|SEM_DELETE_SAFE|SEM_INVERSION_SAFE)
 
-static long kbd_newdata_available=KBD_REQUEST_IDLE;
+#define NO_WAIT         0
+#define WAIT_FOREVER    (-1)
+
+typedef enum {
+
+	SEM_EMPTY =0,
+	SEM_FULL =1
+
+} SEM_B_STATE;
+
+typedef void *SEM_ID; 
+extern SEM_ID _semBCreate(int options, SEM_B_STATE initialState);
+extern STATUS _TakeSemaphore(SEM_ID, int);
+//extern STATUS _GiveSemaphore(SEM_ID);
+SEM_ID semBinary;
+
+
+// #define KBD_REQUEST_IDLE 0
+// #define KBD_REQUEST_GUI_KBD_PROCESS (1<<0)
+// #define KBD_REQUEST_GUI_KBD_ENTER (1<<1)
+// #define KBD_REQUEST_GUI_KBD_LEAVE (1<<2)
+// #define KBD_REQUEST_SCRIPT_START (1<<3)
+// #define KBD_REQUEST_SCRIPT_PROCESS (1<<4)
+// #define KBD_REQUEST_SCRIPT_END (1<<5)
+
+// static long kbd_newdata_available=KBD_REQUEST_IDLE;
+
+
+
+// static int kbd_data_process_request=0;
+// static int kbd_data_process_request_done=0;
+static int kbd_data_process_request_data=0;
 
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
@@ -46,13 +80,13 @@ long __attribute__((naked)) wrap_kbd_p1_f();
 void __attribute__((naked,noinline)) mykbd_task_proceed_2();
 
 //KBD HACK
-long kbd_process_copy();
-static int key_pressed;
-extern void script_start();
-extern void script_end();
-extern void process_script();
+// long kbd_process_copy();
+// static int key_pressed;
+// extern void script_start();
+// extern void script_end();
+// extern void process_script();
 extern void msleep(long);
-static int kbd_blocked;
+// static int kbd_blocked;
 
 
 // extern void h_kbd_p2_f();
@@ -208,6 +242,11 @@ void __attribute__((naked,noinline))
 		:: "r"(((char*)newstack)+NEW_SS)
 		: "memory"
 		);
+    
+    //create semaphore, empty = not available
+     semBinary = _semBCreate(SEM_Q_FIFO|SEM_INVERSION_SAFE, SEM_EMPTY);
+    //lock until 2nd rtask frees it
+    //_TakeSemaphore(semBinary,WAIT_FOREVER);
 
     mykbd_task_proceed();
 
@@ -344,15 +383,29 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f()
 }
 
 
-long my_kbd_read_keys(long x)
-	{
+long my_kbd_read_keys(long x){
 	kbd_new_state[1]=x & 0xFFFF;
-	if (kbd_process_copy() == 0)
+  
+  //give semaphore away
+  _GiveSemaphore(semBinary);
+  //this should allow other tasks to grab it: (maybe not necessary)
+  msleep(0);
+  
+  //take semaphore again
+  //volatile long *p2; p2=(void*) 0xc02200D8; *p2=0x46;
+  _TakeSemaphore(semBinary, WAIT_FOREVER); 
+  //*p2=0;
+  
+  //data is now in kbd_data_process_request_data :)
+  
+  //if (kbd_process_copy() == 0)
+  if (kbd_data_process_request_data == 0){
 		return x;
-		else
-			return (kbd_new_state[1]&~0x2FFE) | (kbd_mod_state & 0x2FFE);
+  }else{
+    return (kbd_new_state[1]&~0x2FFE) | (kbd_mod_state & 0x2FFE);
+  }
 		
-	}
+}
 
 /*asm volatile 
 				(
@@ -657,121 +710,25 @@ static KeyMap keymap[] = {
 	{ 0, 0 }
 };
 
-
-//hack: copied from core/kbd.c:
-long kbd_process_copy()
-{
-/* Alternative keyboard mode stated/exited by pressing print key.
- * While running Alt. mode shoot key will start a script execution.
- */
-
-	if (kbd_blocked){
-	if (key_pressed){
-            if (kbd_is_key_pressed(conf.alt_mode_button)) {
-                ++key_pressed;
-                if (key_pressed==CAM_EMUL_KEYPRESS_DELAY) {
-                    kbd_key_press(conf.alt_mode_button);
-                } else if (key_pressed==(CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION)) {
-                    kbd_key_release(conf.alt_mode_button);
-                    key_pressed = 2;
-        	    kbd_blocked = 0;
-//        	    gui_kbd_leave();
-                }
-            } else if (kbd_get_pressed_key() == 0) {
-                if (key_pressed!=100)
-                    kbd_newdata_available |= KBD_REQUEST_GUI_KBD_ENTER; //gui_kbd_enter();
-        	key_pressed = 0;
-            }    
-	    return 1;
-	}
-
-	if (kbd_is_key_pressed(conf.alt_mode_button)){
-	    key_pressed = 2;
-	    kbd_blocked = 0;
-	    kbd_newdata_available |= KBD_REQUEST_GUI_KBD_LEAVE; //gui_kbd_leave();
-	    return 1;
-	}
-
-	if (kbd_is_key_pressed(KEY_SHOOT_FULL)){
-    key_pressed = 100;
-    if (!state_kbd_script_run){
-        script_console_clear();
-        script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
-        kbd_newdata_available |= KBD_REQUEST_SCRIPT_START; //script_start();
-    } else {
-        script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
-        kbd_newdata_available |= KBD_REQUEST_SCRIPT_END; //script_end();
-    }
-	}
-
-	if (state_kbd_script_run)
-	    kbd_newdata_available |= KBD_REQUEST_SCRIPT_PROCESS; //process_script();
-	else {
-	    //gui_kbd_process();
-      kbd_newdata_available |= KBD_REQUEST_GUI_KBD_PROCESS;
-	}
-    } else {
-
-        //if (kbd_is_key_pressed(KEY_SHOOT_HALF) && kbd_is_key_pressed(conf.alt_mode_button)) return 0;
-
-	if (!key_pressed && kbd_is_key_pressed(conf.alt_mode_button)){
-	    kbd_blocked = 1;
-	    key_pressed = 1;
-	    kbd_key_release_all();
-//	    gui_kbd_enter();
-	    return 1;
-	} else 
-	if ((key_pressed == 2) && !kbd_is_key_pressed(conf.alt_mode_button)){
-	    key_pressed = 0;
-	}
-	
-	if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
-	    return 1;
-	}
-
-	other_kbd_process(); // processed other keys in not <alt> mode
-    }
-
-    return kbd_blocked;
-}
-
 //hack to get a second thread for the keyboard:
 //purpose: check if kbd_new_data flag is set 
 void kbd_process_task()
 {
-    
-    while (1){
-        volatile long *p; p=(void*) 0xc02200E4; *p=0x0;
-        while(kbd_newdata_available == KBD_REQUEST_IDLE){
-            msleep(10);
-        }
-        while(kbd_newdata_available != KBD_REQUEST_IDLE){
-            //process & clear all flags
-            //NOTE: order might be important
-            if(kbd_newdata_available & KBD_REQUEST_GUI_KBD_ENTER){
-                gui_kbd_enter();
-                kbd_newdata_available  &= ~(KBD_REQUEST_GUI_KBD_ENTER);
-            }
-            if(kbd_newdata_available & KBD_REQUEST_GUI_KBD_PROCESS){
-                gui_kbd_process();
-                kbd_newdata_available  &= ~(KBD_REQUEST_GUI_KBD_PROCESS);
-            }
-            if(kbd_newdata_available & KBD_REQUEST_GUI_KBD_LEAVE){
-                gui_kbd_leave();
-                kbd_newdata_available  &= ~(KBD_REQUEST_GUI_KBD_LEAVE);
-            }
-            if(kbd_newdata_available & KBD_REQUEST_SCRIPT_START){
-                script_start();
-                kbd_newdata_available  &= ~(KBD_REQUEST_SCRIPT_START);
-            }
-            if(kbd_newdata_available & KBD_REQUEST_SCRIPT_PROCESS){
-                process_script();
-                kbd_newdata_available  &= ~(KBD_REQUEST_SCRIPT_PROCESS);
-            }
-            if(kbd_newdata_available & KBD_REQUEST_SCRIPT_END){
-                script_end();
-                kbd_newdata_available  &= ~(KBD_REQUEST_SCRIPT_END);
-            }
-        }
+    while(1){
+        //try to get semaphore
+        //volatile long *p; p=(void*) 0xc02200E4; *p=0x46;
+        _TakeSemaphore(semBinary, WAIT_FOREVER);
+        //*p=0x0;
+        
+        //process data & store result
+        kbd_data_process_request_data = kbd_process(); //kbd_process_copy();
+        
+        //give semaphore
+        //volatile long *p2; p2=(void*) 0xc02200E0; *p2=0x46;
+        _GiveSemaphore(semBinary);
+        //*p2=0x0;
+        
+        //sleep to allow other task to grab it
+        msleep(10);
     }
 }

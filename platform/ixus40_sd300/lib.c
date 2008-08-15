@@ -34,16 +34,16 @@ long IsStrobeChargeCompleted_my(){
 //i think this should be done with a semaphore... for now it should work
 volatile long shooting_status_=0;
 
-volatile long shbuf[100];
-volatile long shbufi=0;
+// volatile long shbuf[100];
+// volatile long shbufi=0;
 
 void set_shooting_status(long l){
-    if (shbufi<100){
-        if (shbuf[shbufi] != l){
-            shbufi++;
-            shbuf[shbufi] = l;
-        }
-    }
+//     if (shbufi<100){
+//         if (shbuf[shbufi] != l){
+//             shbufi++;
+//             shbuf[shbufi] = l;
+//         }
+//     }
     
     //shooting_status_=l;
     //return;
