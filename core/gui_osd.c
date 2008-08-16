@@ -46,7 +46,7 @@ static int curr_item;
 static char osd_buf[64];
 static char osd_buf2[64];
 static int step;
-static unsigned char *img_buf, *scr_buf;
+static unsigned char *img_buf, *scr_buf, *cur_buf;
 static int timer = 0;
 static char *buf = NULL;
 
@@ -194,8 +194,22 @@ static void draw_pixel_buffered(unsigned int offset, color cl) {
     buf[offset] = cl;
 }
 
+int draw_guard_pixel() {
+    unsigned char* buffer1 = vid_get_bitmap_fb()+screen_buffer_size/2;
+    unsigned char* buffer2 = buffer1+screen_buffer_size;
+    int has_disappeared=0;
+
+    if(*buffer1!=COLOR_GREEN) has_disappeared=1;
+    if(*buffer2!=COLOR_GREEN) has_disappeared=2;
+    *buffer1 = *buffer2 = COLOR_GREEN;
+    return has_disappeared;
+}
+
+
 //-------------------------------------------------------------------
 static void gui_osd_draw_zebra_osd() {
+    color old_osd_color=conf.osd_color;
+    conf.osd_color=MAKE_COLOR(COLOR_TRANSPARENT, conf.osd_color);
     switch (conf.zebra_draw_osd) {
         case ZEBRA_DRAW_NONE:
             break;
@@ -240,6 +254,7 @@ static void gui_osd_draw_zebra_osd() {
             }
             break;
     }
+    conf.osd_color=old_osd_color;
 }
 
 
@@ -266,9 +281,24 @@ int gui_osd_draw_zebra() {
     if (!buf) {
         buf = malloc(screen_buffer_size);
         scr_buf = vid_get_bitmap_fb();
+        cur_buf = malloc(screen_buffer_size);
     }
 
     if (buf) {
+        if(timer==0) {
+            draw_guard_pixel();
+            timer=1;
+            return 0;
+        }
+        if(timer==1) {
+            short ready;
+            static int n=0;
+            get_property_case(PROPCASE_SHOOTING, &ready, 4);
+            n=draw_guard_pixel();
+            if(!ready || n==0) return 0;
+            if(n==1) memcpy(cur_buf, scr_buf, screen_buffer_size);
+            else memcpy(cur_buf, scr_buf+screen_buffer_size, screen_buffer_size);
+        }
         ++timer;
         img_buf=((mode_get()&MODE_MASK) == MODE_PLAY)?vid_get_viewport_fb_d():vid_get_viewport_fb();
         viewport_height = vid_get_viewport_height();
@@ -283,14 +313,14 @@ int gui_osd_draw_zebra() {
                 f = 1; 
                 break;
             case ZEBRA_MODE_BLINKED_1:
-                f = timer&2; 
+                f = timer&1; 
                 break;
             case ZEBRA_MODE_BLINKED_3:
-                f = timer&8; 
+                f = timer&4; 
                 break;
             case ZEBRA_MODE_BLINKED_2:
             default:
-                f = timer&4; 
+                f = timer&2; 
                 break;
         }
         if (f) {
@@ -315,7 +345,9 @@ int gui_osd_draw_zebra() {
                          }
                         else if (((conf.zebra_mode == ZEBRA_MODE_ZEBRA_1 || conf.zebra_mode == ZEBRA_MODE_ZEBRA_2) && (y-x-timer)&f)) buf[s]=COLOR_TRANSPARENT;
                              else buf[s]=(yy>over)?cl_over:(yy<conf.zebra_under)?cl_under:COLOR_TRANSPARENT;
-                        if (buf[s] != COLOR_TRANSPARENT && !zebra_drawn) zebra_drawn = 1;
+                       if (buf[s] != COLOR_TRANSPARENT && !zebra_drawn) zebra_drawn = 1;
+                        if(cur_buf[s]!=COLOR_TRANSPARENT) buf[s]=cur_buf[s];
+                        if(conf.zebra_multichannel && cur_buf[s+1]!=COLOR_TRANSPARENT) buf[s+1]=cur_buf[s+1];
                     }
                     s+=screen_buffer_width-screen_width;
                     if (y*screen_height/viewport_height == (s+screen_buffer_width)/screen_buffer_width) {
@@ -330,7 +362,7 @@ int gui_osd_draw_zebra() {
                 if (conf.zebra_restore_screen || conf.zebra_restore_osd) {
                     draw_restore();
                 } else {
-                    memset(buf, COLOR_TRANSPARENT, screen_buffer_size);
+                    memcpy(buf, cur_buf, screen_buffer_size);
                     gui_osd_draw_zebra_osd();
                     memcpy(scr_buf, buf, screen_buffer_size);
                     memcpy(scr_buf+screen_buffer_size, buf, screen_buffer_size);
@@ -391,6 +423,7 @@ static void gui_osd_draw_blended_histo(coord x, coord y) {
 
 //-------------------------------------------------------------------
 void gui_osd_draw_histo() {
+    static long old_histo_magnification=0;
     switch (conf.histo_layout) {
         case OSD_HISTO_LAYOUT_Y:
                 gui_osd_draw_single_histo(HISTO_Y, conf.histo_pos.x, conf.histo_pos.y, 0);
@@ -441,17 +474,18 @@ void gui_osd_draw_histo() {
         }
     }
     if ((conf.show_overexp ) && kbd_is_key_pressed(KEY_SHOOT_HALF) && (under_exposed || over_exposed))
-      draw_string(conf.histo_pos.x+HISTO_WIDTH-FONT_WIDTH*3, conf.histo_pos.y-FONT_HEIGHT, "EXP", conf.histo_color);
+      draw_string(conf.histo_pos.x+HISTO_WIDTH-FONT_WIDTH*3, conf.histo_pos.y-FONT_HEIGHT, "EXP", conf.osd_color);
     if (conf.histo_auto_ajust){
       if (histo_magnification) {
         sprintf(osd_buf, " %d.%02dx ", histo_magnification/1000, histo_magnification/10%100);
-        draw_string(conf.histo_pos.x, conf.histo_pos.y-FONT_HEIGHT, osd_buf, conf.histo_color);
+        draw_string(conf.histo_pos.x, conf.histo_pos.y-FONT_HEIGHT, osd_buf, conf.osd_color);
       } else if (gui_get_mode()==GUI_MODE_OSD){
         draw_string(conf.histo_pos.x, conf.histo_pos.y-FONT_HEIGHT, " 9.99x ", conf.histo_color);
-      } else {
+      } else if (old_histo_magnification) {
         draw_filled_rect(conf.histo_pos.x, conf.histo_pos.y-FONT_HEIGHT, conf.histo_pos.x+8*FONT_WIDTH, conf.histo_pos.y-1, MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
       }
     }
+    old_histo_magnification=histo_magnification;
 }
 
 //-------------------------------------------------------------------

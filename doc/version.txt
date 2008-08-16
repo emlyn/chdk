@@ -5,6 +5,13 @@ author
 
 log
 
+486 / 0.3.6
+Jucifer
+
++ added LjL's cropped zebra -mod (http://chdk.setepontos.com/index.php/topic,1849.msg17467.html#msg17467)
++ added get_time("unit") for Lua, where unit can be Y[ear], M[onth], D[ay], h[our], m[inute] or s[econd] ([]=optional/example)
+
+
 0.3.5 / PP
 
 * patched ixus40_sd300 in trunk and branch (http://chdk.setepontos.com/index.php/topic,2042.msg19849.html#msg19849)
