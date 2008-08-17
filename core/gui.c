@@ -583,7 +583,7 @@ static CMenuItem user_submenu_items[] = {
 	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
 	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
 	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_MAIN_TITLE,      MENUITEM_PROC,  (int*)rinit},
+	{0x20,LANG_MENU_MAIN_TITLE,      MENUITEM_PROC,  (int*)rinit},
     {0}
 };
 static CMenu user_submenu = {0x2e,LANG_MENU_USER_MENU, NULL, user_submenu_items };
@@ -732,9 +732,11 @@ static int gui_user_menu_flag;
 
 void rinit(){
 	gui_menu_init(&root_menu);
+    draw_restore();
+    gui_force_restore();
 }
 
-static CMenuItem blank_menu_item = {'0',LANG_MENU_ITEM_BLANK, MENUITEM_PROC, (int*)blank_menu,0};
+static CMenuItem blank_menu_item = {0x0,LANG_MENU_ITEM_BLANK, MENUITEM_PROC, (int*)blank_menu,0};
 
 void add_user_menu(CMenuItem curr_menu_item, int* gui_menu_add_item, int del) {
 	if (*gui_menu_add_item<USER_MENU_ITEMS){

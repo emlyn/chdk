@@ -539,7 +539,6 @@
 #define luai_nummul(a,b)	((a)*(b))
 #define luai_numdiv(a,b)	((a)/(b))
 #define luai_nummod(a,b)	((a)%(b))
-LUA_NUMBER luai_ipow(LUA_NUMBER, LUA_NUMBER);
 #define luai_numpow(a,b)	(luai_ipow(a,b))
 #define luai_numunm(a)		(-(a))
 #define luai_numeq(a,b)		((a)==(b))
@@ -548,6 +547,10 @@ LUA_NUMBER luai_ipow(LUA_NUMBER, LUA_NUMBER);
 #define luai_numisnan(a)	(!luai_numeq((a), (a)))
 #endif
 
+// reyalp - used in lib too
+#if defined(LUA_CORE) || defined(LUA_LIB)
+LUA_NUMBER luai_ipow(LUA_NUMBER, LUA_NUMBER);
+#endif
 
 /*
 @@ lua_number2int is a macro to convert lua_Number to int.
@@ -765,4 +768,5 @@ union luai_Cast { double l_d; long l_l; };
 
 
 #endif
+
 
