@@ -5,6 +5,11 @@ author
 
 log
 
+0.3.8 / PP
+
++ added sx100 100b - http://chdk.setepontos.com/index.php/topic,237.msg19899.html#msg19899
+* changed osd item "remaining video time" - now the quality/bitrate you set via the fast video function is shown directly beneath the remaining time/bitrate
+* applied reyalps Patch, now you can develop raws directly from within the filebrowser (not only from the RAW menu anymore)
 
 487 / 0.3.7
 Jucifer

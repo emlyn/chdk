@@ -37,14 +37,17 @@ static OSD_elem osd[]={
     {LANG_OSD_LAYOUT_EDITOR_SPACE_TEXT,   &conf.space_txt_pos,     {5*FONT_WIDTH, FONT_HEIGHT}     },
     {LANG_OSD_LAYOUT_EDITOR_CLOCK,      &conf.clock_pos,        {5*FONT_WIDTH, FONT_HEIGHT}     },
     {LANG_OSD_LAYOUT_EDITOR_TEMP,      &conf.temp_pos,        {9*FONT_WIDTH, FONT_HEIGHT}     },
-    {LANG_OSD_LAYOUT_EDITOR_VIDEO,     &conf.mode_video_pos,   {9*FONT_WIDTH, 2*FONT_HEIGHT}   },
+    {LANG_OSD_LAYOUT_EDITOR_VIDEO,     &conf.mode_video_pos,   {9*FONT_WIDTH, 4*FONT_HEIGHT}   },
     {LANG_OSD_LAYOUT_EDITOR_EV,     &conf.mode_ev_pos,   {12*FONT_WIDTH, FONT_HEIGHT}   },
     {0}
 };
 static int osd_to_draw;
 static int curr_item;
 static char osd_buf[64];
-static char osd_buf2[64];
+static char osd_buf2[10];
+static char osd_buf3[10];
+static char osd_buf4[10];
+
 static int step;
 static unsigned char *img_buf, *scr_buf, *cur_buf;
 static int timer = 0;
@@ -736,7 +739,6 @@ void gui_osd_draw_raw_info()
 //-------------------------------------------------------------------
 void gui_osd_draw_state() {
     int a,  gui_mode=gui_get_mode(), m=(mode_get()&MODE_SHOOTING_MASK); 
-    int mode_video = MODE_IS_VIDEO(m);
     long t; 
     
     n=0;
@@ -744,19 +746,7 @@ void gui_osd_draw_state() {
    //sprintf(osd_buf,"%s",get_debug());
    //draw_string(conf.mode_state_pos.x, conf.mode_state_pos.y+6*FONT_HEIGHT, osd_buf, conf.osd_color);
    ////////////////////////////  
-    if (mode_video || movie_status > 1) {
-        // if manual adjust, show the field item to be adjusted
-        // if any value overriden, show the override value
-        if ((conf.video_mode == 0 && conf.fast_movie_quality_control==1) || conf.video_bitrate != VIDEO_DEFAULT_BITRATE) {
-            gui_print_osd_state_string_chr("Bitrate: ",video_bitrate_strings[conf.video_bitrate]);
-        }
-        if ((conf.video_mode == 1 && conf.fast_movie_quality_control==1) || conf.video_quality != VIDEO_DEFAULT_QUALITY) {
-            gui_print_osd_state_string_int("Quality: ",conf.video_quality);
-        }
-        // everything else is for stills
-		if(mode_video)
-			return;
-    }
+
       
     if ((((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef)  && !(conf.override_disable==1)) || gui_mode==GUI_MODE_OSD){
     	if(kbd_is_key_pressed(KEY_SHOOT_HALF)) 
@@ -966,7 +956,27 @@ static int record_running = 0;
 static int init = 0;
 static unsigned int skipcalls = 1;
 unsigned int hour=0, min=0, sec=0;
- 
+int mode_video = MODE_IS_VIDEO(m); 
+
+
+if (mode_video || movie_status > 1) {
+    // if manual adjust, show the field item to be adjusted
+   // if any value overriden, show the override value
+   if ((conf.video_mode == 0 && conf.fast_movie_quality_control==1) || conf.video_bitrate != VIDEO_DEFAULT_BITRATE) {
+       // gui_print_osd_state_string_chr("Bitrate: ",video_bitrate_strings[conf.video_bitrate]);
+       sprintf(osd_buf3, "Bit:%5s",video_bitrate_strings[conf.video_bitrate]);
+       draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y+2*FONT_HEIGHT, osd_buf3, conf.osd_color);
+   }
+   if ((conf.video_mode == 1 && conf.fast_movie_quality_control==1) || conf.video_quality != VIDEO_DEFAULT_QUALITY) {
+       // gui_print_osd_state_string_int("Quality: ",conf.video_quality);
+			 sprintf(osd_buf4, "Qual:%2i",conf.video_quality);
+       draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y+3*FONT_HEIGHT, osd_buf4, conf.osd_color);
+   }
+   // everything else is for stills
+	 if(mode_video)
+	 return;
+    }
+
 if (movie_reset == 1)
 	{
 		init = 0;
