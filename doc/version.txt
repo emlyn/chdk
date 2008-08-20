@@ -5,6 +5,14 @@ author
 
 log
 
+
+489 / 0.3.9
+Jucifer
+
+- hacked print_screen a bit: e.g. "print_screen 123" (or print_screen(123)) should output file to chdk/logs/log_0123.txt
+
+
+
 0.3.8 / PP
 
 + added sx100 100b - http://chdk.setepontos.com/index.php/topic,237.msg19899.html#msg19899

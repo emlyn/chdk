@@ -99,6 +99,7 @@ void core_spytask()
     mkdir("A/CHDK/GRIDS");
     mkdir("A/CHDK/CURVES");
     mkdir("A/CHDK/DATA");
+    mkdir("A/CHDK/LOGS");
     auto_started = 0;
     
     clear_values();

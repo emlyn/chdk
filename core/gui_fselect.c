@@ -10,6 +10,7 @@
 #include "gui_mpopup.h"
 #include "gui_fselect.h"
 #include "raw_merge.h"
+#include "raw.h"
 #include "conf.h"
 
 //-------------------------------------------------------------------

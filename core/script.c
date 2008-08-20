@@ -377,7 +377,10 @@ void script_console_draw() {
 
 static int  print_screen_p;             // print_screen predicate: 0-off 1-on.
 static int  print_screen_d = -1;        // print_screen file descriptor.
-static const char print_screen_file[] ="A/CHDK/SCRIPTS/PR_SCREEN.TXT";
+//static const char print_screen_file[] ="A/CHDK/SCRIPTS/PR_SCREEN.TXT";
+static const char print_screen_file_prefix[] = "A/CHDK/LOGS/LOG_";
+char print_screen_file[25];
+static const char extension_txt[] = ".TXT";
 
 void script_print_screen_init()
 {
@@ -399,8 +402,20 @@ void script_print_screen_end()
 
 void script_print_screen_statement(int val)
 {
-  if (val && print_screen_d<0) {
-      print_screen_d = open(print_screen_file, O_WRONLY|O_CREAT|O_TRUNC, 0777);
+  if (val) {
+    if (print_screen_d>=0) close(print_screen_d);
+    int i=0;
+    int c=0;
+    static char file_number[5];
+    strcpy(print_screen_file, print_screen_file_prefix);
+    if (val<0) val = -val;
+    while (val > 9999) val += -10000;
+    for (i=10; i<=1000; i=i*10) { if (val<i) ++c; }
+    for (i=1; i<=c; ++i) { sprintf(file_number, "%d", 0); strcat(print_screen_file, file_number); }
+    sprintf(file_number, "%d", val);
+    strcat(print_screen_file, file_number);
+    strcat(print_screen_file, extension_txt);
+    print_screen_d = open(print_screen_file, O_WRONLY|O_CREAT|O_TRUNC, 0777);
   }
   print_screen_p = val;
 }
