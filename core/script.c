@@ -402,6 +402,7 @@ void script_print_screen_end()
 
 void script_print_screen_statement(int val)
 {
+  print_screen_p = val;
   if (val) {
     if (print_screen_d>=0) close(print_screen_d);
     int i=0;
@@ -417,7 +418,6 @@ void script_print_screen_statement(int val)
     strcat(print_screen_file, extension_txt);
     print_screen_d = open(print_screen_file, O_WRONLY|O_CREAT|O_TRUNC, 0777);
   }
-  print_screen_p = val;
 }
 
 //-------------------------------------------------------------------
