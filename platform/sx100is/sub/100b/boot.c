@@ -900,7 +900,7 @@ void __attribute__((naked,noinline)) sub_FFC62280_my() { //#fs
 		"MOV	R1, R8\n"
 		"MOV	R0, R4\n"
 		"LDMFD	SP!, {R4-R8,LR}\n"
-		"B		sub_FFC61B88\n"				// <----------// uAC_Boot // divert for SDHC-boot
+		"B		sub_FFC61B88_my\n"				// <----------// uAC_Boot // divert for SDHC-boot
 	"loc_FFC6232C:\n"
 		"MOV	R0, R4\n"
 		"LDMFD	SP!, {R4-R8,LR}\n"
@@ -1180,7 +1180,7 @@ void __attribute__((naked,noinline)) sub_FFC635A8_my() { //#fs taskcreate_InitFi
 		 "STR	R1, [R0,#4]\n"
 		 "MOV	R3, #0\n"
 		 "STR	R3, [SP]\n"
-		 "LDR	R3, task_InitFileModules_my\n"	// continue for SDHC-boot (orig: FFC63558)	// <---------------
+		 "LDR	R3, =task_InitFileModules_my\n"	// continue for SDHC-boot (orig: FFC63558)	// <---------------
 		 "MOV	R1, #0x19\n"
 		 "LDR	R0, =0xFFC6370C\n"			// aInitfilemodule
 		 "MOV	R2, #0x1000\n"
