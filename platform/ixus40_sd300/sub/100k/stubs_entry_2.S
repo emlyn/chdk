@@ -94,28 +94,6 @@ NHSTUB(kbd_p1_f_cont, 0xFF830AB4)
 NHSTUB(PhySw_testgpio, 0xFF82FA8C)
 
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-
-
-
-
-
-
 
 //null stub
 
@@ -131,6 +109,6 @@ NHSTUB(UnsetZoomForMovie, 0xFFAAAED0) //00xFF9A4D1C)
 NHSTUB(PT_PlaySound, 0xFF94EB3C)
 
 
-//NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
-//NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
+NHSTUB(EnterToCompensationEVF, 0xff93e1e0) 
+NHSTUB(ExitFromCompensationEVF, 0xff93e220) 
 

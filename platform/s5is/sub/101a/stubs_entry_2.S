@@ -180,9 +180,5 @@ NSTUB(UIFS_WriteFirmInfoToFile,	 0xFF81096C)
 NSTUB(kbd_pwr_off,				 0xFF81096C) // Does not even exist, I think
 NSTUB(kbd_pwr_on,				 0xFF81096C) // Does not even exist, I think
 NHSTUB(PT_PlaySound, 0xFF86B5A4)
-
-
-
-
-//NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
-//NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
+NHSTUB(EnterToCompensationEVF, 0xff828070) 
+NHSTUB(ExitFromCompensationEVF, 0xff828164) 

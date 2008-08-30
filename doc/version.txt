@@ -7,6 +7,16 @@ log
 
 
 
+0.4.0 / PP
+
++ added adresses for ev compensation stuff to a lot more cameras, thx to fudgey - http://chdk.setepontos.com/index.php/topic,2051.msg20516.html#msg20516 (probably needs verification)
+* merged ewavrs latest patch from trunk (regarding sx100 multipartion)
+* fixed a bug in script.c - now param z should be shown in the param list (see http://chdk.setepontos.com/index.php/topic,1865.msg20624.html#msg20624) - thx 2 fudgey
+* enabled file reader "wrap by words" as default in the cgf
+* set the readme as "last read file" in the filereader
+* updated german lng file (thx to msl & gehtnix)
++ added ubasic command: get_video_button - returns 1 if dedicated video record button is present (like on s-series or tx-1). One more step on the road of universal scripts.
+
 490
 Jucifer
 

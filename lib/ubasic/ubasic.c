@@ -402,6 +402,14 @@ case TOKENIZER_IS_PRESSED:
     accept(TOKENIZER_GET_JPG_COUNT);
     r = GetJpgCount();
     break;
+  case TOKENIZER_GET_VIDEO_BUTTON:
+    accept(TOKENIZER_GET_VIDEO_BUTTON);
+    #if CAM_HAS_VIDEO_BUTTON
+    r = 1;
+    #else
+    r = 0;
+    #endif
+    break;
   case TOKENIZER_GET_RAW_COUNT:
     accept(TOKENIZER_GET_RAW_COUNT);
     r = GetRawCount();

@@ -157,7 +157,7 @@ static void script_scan(const char *fn, int update_vars) {
             } else if (strncmp("@param", ptr, 6)==0) {
                 ptr+=6;
                 n=process_param(ptr, 0); // n=1 if '@param a' was processed, n=2 for 'b' ... n=26 for 'z'. n=0 if failed.
-                if (n>0 && n<SCRIPT_NUM_PARAMS) {
+                if (n>0 && n<=SCRIPT_NUM_PARAMS) {
                   script_param_order[j]=n;
                   j++;
                 }
