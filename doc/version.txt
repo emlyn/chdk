@@ -7,6 +7,10 @@ log
 
 
 
+0.4.1 / PP
+
+increased memisosize in sx100is/sub/100b/makefile.inc
+
 0.4.0 / PP
 
 + added adresses for ev compensation stuff to a lot more cameras, thx to fudgey - http://chdk.setepontos.com/index.php/topic,2051.msg20516.html#msg20516 (probably needs verification)
