@@ -184,5 +184,11 @@ NSTUB(taskName,				 0xFFC00958)
 NSTUB(taskResume,			 0xFFC00958)
 NSTUB(taskSuspend,			 0xFFC00958)
 
+NHSTUB(GetBatteryTemperature, 0xFFC39178)
+NHSTUB(GetCCDTemperature, 0xFFC39108)
+NHSTUB(GetOpticalTemperature, 0xFFC391E8)
+NHSTUB(PT_PlaySound, 0xFFC50F40)
+
+
 NHSTUB(EnterToCompensationEVF, 0xffc170a4) 
 NHSTUB(ExitFromCompensationEVF, 0xffc170f4) 

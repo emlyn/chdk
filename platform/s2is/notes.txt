@@ -5,4 +5,4 @@ Camera depending notes:
 - s2is uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
 - s2is does have a REAL IRIS Diaphragm, it does NOT have an an ND Filter! 
 Mind this.
-
+- CHDK for firmware 1.00i is the SAME for 1.00g

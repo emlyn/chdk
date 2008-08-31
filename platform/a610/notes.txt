@@ -5,6 +5,6 @@ Camera depending notes:
 - A610 uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
 - A610 does have a real IRIS Diaphragm, it does not have an ND Filter! 
 Mind this.
-
+- CHDK for firmware 1.00d is the SAME for 1.00e
 
 

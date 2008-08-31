@@ -5,7 +5,7 @@ Camera depending notes:
 - ixus850_sd800 uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
 - ixus850_sd800 does NOT have a real IRIS Diaphragm, it only has an ND Filter! 
 Mind this.
-
+- CHDK for firmware 1.00d is the SAME for 1.00e
 
 
 

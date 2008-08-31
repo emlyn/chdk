@@ -5,7 +5,12 @@ author
 
 log
 
+0.4.2 / PP
 
+* fixed glitch in a720 files - see http://chdk.setepontos.com/index.php/topic,688.msg20696.html#msg20696
++ added copy command in makefile to copy CHDK for same hardwares with similar firmwares (see lenghty thread about it here: http://chdk.setepontos.com/index.php/topic,2202.msg20540.html#msg20540
+* fixes from Fudgey - http://chdk.setepontos.com/index.php/topic,2051.msg20683.html#msg20683
+* small changes in gui.c - symbols, see http://www.wirklemms.de/chdk/forum/viewtopic.php?p=3792#3792
 
 0.4.1 / PP
 

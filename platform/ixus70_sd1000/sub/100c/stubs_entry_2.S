@@ -31,8 +31,5 @@ NHSTUB(GetBatteryTemperature, 0xFFA34470)
 NHSTUB(GetCCDTemperature, 0xFFA3445C)
 NHSTUB(GetOpticalTemperature, 0xFFA34448)
 NHSTUB(PT_PlaySound, 0xFFB0B1F8)
-
-
-
 NHSTUB(EnterToCompensationEVF, 0xffafaa6c)
 NHSTUB(ExitFromCompensationEVF, 0xffafaaf0)

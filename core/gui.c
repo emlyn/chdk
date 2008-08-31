@@ -503,7 +503,7 @@ static CMenuItem operation_submenu_items[] = {
 	  {0x51,LANG_MENU_BACK,                     MENUITEM_UP },
      {0}
 };
-static CMenu operation_submenu = {0x20,LANG_MENU_OPERATION_PARAM_TITLE, NULL, operation_submenu_items };
+static CMenu operation_submenu = {0x21,LANG_MENU_OPERATION_PARAM_TITLE, NULL, operation_submenu_items };
 
 static CMenuItem edge_overlay_submenu_items[] = {
     {0x7f,LANG_MENU_EDGE_OVERLAY_ENABLE,     MENUITEM_BOOL,          &conf.edge_overlay_enable },
@@ -521,7 +521,7 @@ static CMenuItem grid_submenu_items[] = {
     {0x0,LANG_MENU_GRID_CURRENT,            MENUITEM_SEPARATOR },
     {0x0,(int)grid_title,                   MENUITEM_TEXT },
     {0x0,(int)"",                           MENUITEM_SEPARATOR },
-    {0x4c,LANG_MENU_GRID_FORCE_COLOR,        MENUITEM_BOOL,          &conf.grid_force_color },
+    {0x5c,LANG_MENU_GRID_FORCE_COLOR,        MENUITEM_BOOL,          &conf.grid_force_color },
     {0x65,LANG_MENU_GRID_COLOR_LINE,         MENUITEM_COLOR_FG,      (int*)&conf.grid_color },
     {0x65,LANG_MENU_GRID_COLOR_FILL,         MENUITEM_COLOR_BG,      (int*)&conf.grid_color },
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
