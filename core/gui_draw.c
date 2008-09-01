@@ -40,7 +40,7 @@ void draw_init() {
 
 //-------------------------------------------------------------------
 void draw_pixel(coord x, coord y, color cl) {
-    if (x < 0 || y < 0 || x >= screen_width || y >= screen_height) return;
+    if (x >= screen_width || y >= screen_height) return;
     else {
         register unsigned int offset = y * screen_buffer_width + x;
         draw_pixel_proc(offset, cl);
@@ -195,18 +195,9 @@ void draw_char(coord x, coord y, const char ch, color cl) {
 
     // XXX optimize. probably use 4bit -> 32bit lookup table
     // so 4(8) pixels were drawn at a time
-    for (i=-1; i<=FONT_HEIGHT; i++){
-	for (ii=-1; ii<=FONT_WIDTH; ii++){
-            int inside_box = (i>=0 && i<FONT_HEIGHT && ii>=0 && ii<FONT_WIDTH);
-            if(inside_box && sym[i] & (0x80>>ii)) {
-                draw_pixel(x+ii ,y+i, cl&0xff);
-            } else {
-                if     (i>0             && (sym[i-1] & (0x80>>ii)))   draw_pixel(x+ii, y+i, COLOR_BLACK);
-                else if(i<FONT_HEIGHT-1 && (sym[i+1] & (0x80>>ii)))   draw_pixel(x+ii, y+i, COLOR_BLACK);
-                else if(ii>0            && (sym[i] & (0x80>>(ii-1)))) draw_pixel(x+ii, y+i, COLOR_BLACK);
-                else if(ii<FONT_WIDTH-1 && (sym[i] & (0x80>>(ii+1)))) draw_pixel(x+ii, y+i, COLOR_BLACK);
-                else if(inside_box && cl>>8!=COLOR_TRANSPARENT)       draw_pixel(x+ii ,y+i, cl>>8);
-            }
+    for (i=0; i<FONT_HEIGHT; i++){
+	for (ii=0; ii<FONT_WIDTH; ii++){
+            draw_pixel(x+ii ,y+i, (sym[i] & (0x80>>ii))? cl&0xff : cl>>8);
 	}
     }
 }

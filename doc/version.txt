@@ -5,6 +5,14 @@ author
 
 log
 
+0.4.3 / PP
+
+* changed Grid readme (thx to anonymous wiki editor)
++ added syscurves.scv to zipfile again (funny i didnt notice that it was missing before!)
+* changed makefile - "copy duplicate" firmware stuff moved to the bottom (is cleaner now, also i hope this "unbreaks" chdk shell by whim)
+* reverted zebra patch from 486 / 0.3.6 for the time being until we figure out another way to use Zebra AND the canon OSD (without flickering) - see http://chdk.setepontos.com/index.php/topic,1849.msg20777.html#msg20777 (there might be a patch that is working, however i cannot test it right now)
+* added comment in russian.lng files (they are NOT compatible to juciphox!)
+
 0.4.2 / PP
 
 * fixed glitch in a720 files - see http://chdk.setepontos.com/index.php/topic,688.msg20696.html#msg20696
