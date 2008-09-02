@@ -217,6 +217,10 @@ case TOKENIZER_GET_VBATT:
     accept(TOKENIZER_GET_TICK_COUNT);
     r = shooting_get_tick_count();     
    break;
+ case TOKENIZER_GET_MODE:
+    accept(TOKENIZER_GET_MODE);
+    r = ((mode_get()&MODE_MASK) == MODE_PLAY)?1:0;    
+   break;
  case TOKENIZER_GET_RAW_NR:
     accept(TOKENIZER_GET_RAW_NR);
     r = ubasic_camera_get_nr();     
@@ -292,6 +296,14 @@ case TOKENIZER_IS_PRESSED:
   case TOKENIZER_GET_EV:
     accept(TOKENIZER_GET_EV);
     r = shooting_get_prop(PROPCASE_EV_CORRECTION_1);
+   break;
+  case TOKENIZER_GET_RESOLUTION:
+    accept(TOKENIZER_GET_RESOLUTION);
+    r = shooting_get_prop(PROPCASE_RESOLUTION);
+   break;
+  case TOKENIZER_GET_QUALITY:
+    accept(TOKENIZER_GET_QUALITY);
+    r = shooting_get_prop(PROPCASE_QUALITY);
    break;
   case TOKENIZER_GET_ORIENTATION_SENSOR:
     accept(TOKENIZER_GET_ORIENTATION_SENSOR);
@@ -444,6 +456,19 @@ case TOKENIZER_IS_PRESSED:
 			r = 0;
   }
     break;
+  case TOKENIZER_GET_TIME:
+    accept(TOKENIZER_GET_TIME);
+	  unsigned long t2 = time(NULL);
+	  int time = expr();
+	  static struct tm *ttm;
+	  ttm = localtime(&t2);
+  if (time==0) r = ttm->tm_sec;
+  else if (time==1) r = ttm->tm_min;
+  else if (time==2) r = ttm->tm_hour;
+  else if (time==3) r = ttm->tm_mday;
+  else if (time==4) r = ttm->tm_mon+1;
+  else if (time==5) r = 1900+ttm->tm_year;
+ break;
  case TOKENIZER_GET_RAW:
     accept(TOKENIZER_GET_RAW);
     r = conf.save_raw;     
@@ -1698,6 +1723,25 @@ if (to==3) {
     accept_cr();
 }
 
+static void set_resolution_statement()
+{
+    int to;
+    accept(TOKENIZER_SET_RESOLUTION);
+    to = expr();
+		shooting_set_prop(PROPCASE_RESOLUTION, to);
+    accept_cr();
+}
+
+static void set_quality_statement()
+{
+    int to;
+    accept(TOKENIZER_SET_QUALITY);
+    to = expr();
+		shooting_set_prop(PROPCASE_QUALITY, to);
+    accept_cr();
+}
+
+
 static void set_focus_statement()
 {
     int to;
@@ -2214,6 +2258,12 @@ statement(void)
    
     case TOKENIZER_SET_MOVIE_STATUS:
         set_movie_status_statement();
+   break;
+   case TOKENIZER_SET_RESOLUTION:
+        set_resolution_statement();
+   break;
+   case TOKENIZER_SET_QUALITY:
+        set_quality_statement();
    break;
 
   case TOKENIZER_WAIT_CLICK:

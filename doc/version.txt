@@ -5,6 +5,18 @@ author
 
 log
 
+0.5.0 / PP
+
++ added dutch language file
++ added ubasic command: get_time. can be fed with 0 (returns seconds), 1 (minute), 2 (hour),3 (day) 4 (month) 5 (year) - command also exists in lua, though must be fed with CHARS
++ added ubasic command: get_mode - returns 0 in record mode, 1 in playback mode, it's that simple. useful for shutting of scripts that are meant to be run in a certain mode (like 99% of all available scripts).  - someone needs to port that to lua, as i javent played around with that yet!
++ added ubasic commands: get_quality, get_resolution (return quality and resolution regardless of OS) & set_quality,set_resolution - for possible values see http://chdk.wikia.com/wiki/PropertyCase (basically for quality you can 0-2, 2 being the worst, resolution can be set between 0 and 8, see the wiki) - needs porting to lua as well.
+* changed 2 default settings in the conf: now "Hide OSD in playback" is enabled at default, also "disable saving raw while recording video" is enabled at default(S-eries)
+* fixed some newline related warnings at compile time
+
+Author's comment: Now everything should be at hand to be able to create true universal scripts. i'm thinking for example of fudgeys motion detection one, should run on digic II and III now, also on cams with and without moviebutton - all the commands are there. who is willing to write such a script? also please add the get_mode check in the beginning.
+
+
 0.4.3 / PP
 
 * changed Grid readme (thx to anonymous wiki editor)
