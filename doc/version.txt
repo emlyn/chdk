@@ -5,6 +5,14 @@ author
 
 log
 
+0.5.1 / PP
+
+* changed grid readme again
++ added slovak lang file
+* fixed warning ( http://chdk.setepontos.com/index.php/topic,265.msg20831.html#msg20831 )
++ changed makefiles: when you compile, the memisosize is written to caminfo.txt, along with the "maximum" size that is defined in makefile.inc for that specific camera. in batch-zip and batch-zip-complete this file file is "catted" into the logfile and then deleted. this will make searching for cameras whose bins are "out of range" much easier. Thanks to whim who basically wrote the whole code!
+	Note: this is a first implementation, and prone to errors, as both whim and i are no makefile pros - if you have comments, dont hesitate to let us know!
+
 0.5.0 / PP
 
 + added dutch language file

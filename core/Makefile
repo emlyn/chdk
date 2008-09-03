@@ -38,7 +38,12 @@ main.elf: $(OBJS) $(topdir)platform/$(PLATFORM)/libplatform.a \
 	@echo \-\> $@
 	$(CC) $(CFLAGS) -o $@ --start-group $^  $(LDLIBS) --end-group $(LDFLAGS) $(LDOPTS)
 	( $(NM) $@ | grep ' U ' > $@.syms ) && exit 1 || exit 0
-	$(SIZE) $@
+
+	$(SIZE) $@ | tee $(topdir)size.txt
+	@printf " %s-%s (%s, #%s): MEMISOSIZE used: 0x%s / %s\n" \
+   $(PLATFORM) $(PLATFORMSUB) $(PLATFORMOS) $(PLATFORMID) \
+   `tail -c16 $(topdir)size.txt | head -c5` $(MEMISOSIZE) >> $(topdir)bin/caminfo.txt
+	rm -f $(topdir)size.txt
 
 clean:
 	rm -f $(OBJS) main.bin main.elf main.dump main.elf.syms

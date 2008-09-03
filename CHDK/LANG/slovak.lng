@@ -1,0 +1,524 @@
+// Ver. 3.02 Based on Build  491 Morebest of English.lng
+// Slovak translation by Jan Tuska 27.8.2008
+// you can modify the content of this file copy as you need
+// obsah kópie tohto súboru si môžete upravit podla svojich potrieb a jazykového cítenia
+  
+  1 "Hlavné menu"
+
+  2 "RAW"
+  3 "OSD"
+  4 "Histogram"
+  5 "Zebra"
+  6 "Skript"
+  7 "Zobrazenie"
+  8 "Rôzne"
+  9 "Ladenie"
+ 10 "Prvotné nastavenie"
+ 11 "Ulož nastavenie"
+ 
+ 12 "Spät"
+
+
+ 13 "RAW"
+
+ 14 "RAW"
+ 16 "Iba 1.snímka série do RAW"
+ 17 "RAW v adresári s JPG"
+ 18 "RAW súbor - predpona"
+ 19 "RAW súbor - prípona"
+
+
+ 20 "OSD"
+
+ 21 "OSD"
+ 22 "Extra"
+ 23 "Prídavné hodnoty"
+ 24 "Typ zoomu"
+ 25 "Hlbka ostrosti"
+ 26 "Hodiny"
+ 27 "Rozmiestni OSD"
+ 28 "Batéria"
+
+
+ 29 "Histogram"
+
+ 30 "Živý histogram"
+ 31 "Zložky"
+ 32 "Typ"
+ 33 "Pre/podexpozícia"
+ 34 "Ignoruj hranicné špicky"
+ 35 "Automatická mierka"
+
+
+ 36 "Zebra"
+
+ 37 "Zebra"
+ 38 "Typ"
+ 39 "Podexpozícia - prah"
+ 40 "Preexpozícia - prah"
+ 41 "Obnov CANON displej"
+ 42 "Obnov OSD"
+ 43 "Prekresli zebru"
+
+
+ 44 "Skript"
+
+ 45 "Vlož skript"
+ 46 "Oneskorenie (.1s)"
+ 47 "Aktuálny skript"
+ 48 "Parametre"
+
+
+ 49 "Zobrazenie"
+
+ 50 "OSD - jazyk"
+ 51 "OSD - kódová stránka"
+ 52 "Menu - font"
+ 53 "Farby"
+ 54 "OSD - text"
+ 55 "OSD - pozadie"
+ 56 "Histogram"
+ 57 "Histogram - pozadie"
+ 58 "Histogram - okraj"
+ 59 "Histogram - znacky exp"
+ 60 "Zebra  - podexpozícia"
+ 61 "Zebra  - preexpozícia"
+ 62 "Ikona batérie"
+ 63 "Menu  - text"
+ 64 "Menu  - pozadie"
+ 65 "Cítacka textu - text"
+ 66 "Cítacka textu - pozadie"
+
+
+ 67 "Rôzne"
+
+ 68 "Prehliadac súborov"
+ 69 "Kalendár"
+ 70 "Cítacka textu"
+ 71 "Hry"
+ 72 "Lampa"
+ 73 "Úvodná obrazovka"
+ 74 "MF páckou zoomu"
+ 75 "Tlacítko <ALT> módu"
+ 76 "Paleta"
+ 77 "Verzia programu"
+ 78 "Volná pamät"
+
+
+ 79 "Ladenie"
+
+ 80 "PropCases"
+ 81 "Stránka PropCase"
+ 82 "Ladiace hodnoty"
+ 83 "Prehliadac pamäte"
+ 84 "Pri stlacení ALT +/-"
+ 85 "Vytvor bootovaciu kartu"
+
+
+ 86 "Batéria"
+
+ 87 "Napätie MAX (mV)"
+ 88 "Napätie MIN (mV)"
+ 89 "Krok (ON=25, OFF=1 mV)"
+ 90 "Batéria - %"
+ 91 "Batéria - mV"
+ 92 "Batéria - ikona"
+
+
+ 93 "Cítacka textov"
+
+ 94 "Nový súbor"
+ 95 "Predošlý súbor"
+ 96 "Font"
+ 97 "Kódová stránka"
+ 98 "Zalamuj slová"
+ 99 "Autoposun"
+100 "Oneskor autoposun o (s)"
+
+
+101 "Hry"
+
+102 "Reversi"
+103 "Sokoban"
+
+
+104 "*** Prvotné nastavenie ***"
+
+105 "Naozaj vrátit nastavenie\nna prvotné hodnoty?"
+
+106 "*** Informácie o programe ***"
+107 "CHDK Ver: %s, #%s\nDátum:    %s\nCas:    %s\nPrístr:  %s\nFW Ver: %s"
+
+108 "*** Informácie o pamäti ***"
+109 "Volná pamät: %d bytov"
+
+110 "*** Informácie ***"
+111 "Prepni prístroj\ndo PLAY módu\na skús to znovu. :)"
+
+// nadpisy prehliadaca súborov
+112 "Prehliadac súborov"
+113 "Súbor skriptu"
+114 "Texto súbor"
+115 "Súbor fontu"
+116 "Súbor jazyka"
+
+// kalendár
+117 "Január"
+118 "Február"
+119 "Marec"
+120 "Apríl"
+121 "Máj"
+122 "Jún"
+123 "Júl"
+124 "August"
+125 "September"
+126 "Október"
+127 "November"
+128 "December"
+
+129 " Po"
+130 " Ut"
+131 " St"
+132 " Št"
+133 " Pi"
+134 " So"
+135 " Ne"
+
+136 "Dnes:"
+
+// tlacítka správ
+137 "OK"
+138 "Áno"
+139 "Nie"
+140 "Zrušit"
+
+// rozmiestnenie OSD
+141 "Histogram"
+142 "Hlbka ostrosti"
+143 "Extra
+144 "Prídavné hodnoty"
+145 "Ikona batérie"
+146 "Stav batérie"
+147 "Hodiny"
+
+// paleta
+148 "Pre vykreslenie farby stlac SET"
+149 "     Pre ukoncenie stlac MENU    "
+150 "Farba"
+151 "%s pre výber farby"
+
+// reversi
+152 "*** Výsledky hry ***"
+153 "Vyhrávaš :))"
+154 "Sorry, možno nabudúce :("
+155 "Remíza! :/"
+
+156 "*** Chybný tah ***"
+157 "Sem nemôžeš tahat!"
+158 "Táto bunka nie je prázdna!"
+
+159 "Na tahu: Ty     "
+160 "Na tahu: Canon"
+161 "   KONIEC HRY   "
+162 " Biela   Cierna "
+
+163 "*** O hre ***"
+
+// sokoban
+164 "Obtiažnost"
+165 "      Tahy"
+166 "*** K O N I E C ***"
+167 "Áno!\n  Si super!  "
+
+// konzola
+168 "*** SPUSTENÉ  ***"
+169 "*** PRERUŠENÉ ***"
+170 "*** UKONCENÉ  ***"
+
+// prehliadac súborov
+171 "*** Odstránit adresár ***"
+172 "Odstránit\nVŠETKY súbory \nz vybraného adresára?"
+173 "*** Odstránit súbor ***"
+174 "Odstránit\nvybraný súbor?"
+
+// test výkonu
+175 "Test výkonu"
+176 "Výpocet..."
+177 "Štart - stlac [set]"
+178 "Obrazovka"
+179 "Zápis        :"
+180 "Cítanie        :"
+181 "Pamät"
+182 "Flash-karta"
+183 "Zápis (RAW) :"
+184 "Zápis (Mem) :"
+185 "Zápis (64k) :"
+186 "Cítanie (64k) :"
+
+187 "Zakáž vypnutie LCD"
+
+188 "Vystrihni"
+189 "Kopíruj"
+190 "Prilep"
+191 "Odstrán"
+192 "Inverzia výberu"
+193 "*** Vystrihnutie súborov ***"
+194 "Vystrihnút\n%d súborov\nz %s/?"
+195 "*** Kopírovanie súborov ***"
+196 "Kopírovat\n%d vybraných súborov\nz %s/?"
+197 "*** Odstránenie súborov ***"
+198 "Odstránit\n%d vybraných súborov?"
+199 "Cakaj..."
+
+200 "Mriežka"
+201 "Vlož mriežku"
+202 "Mriežka"
+203 "Mriežka"
+204 "Súbor mriežky"
+205 "Aktuálna mriežka"
+
+206 "Redukuj šum"
+
+207 "Zmen farby mriežky"
+208 "    Ciary"
+209 "    Výpln"
+
+210 "Hlbka ostrosti"
+211 "Hlbka ostrosti"
+212 "Canon vzdial.-predná rov. HO" 
+213 "Použi EXIF vzdialenost"
+214 "Vzdialenost v príd.hodnotách"
+215 "Predná rovina HO v príd.hod."
+216 "Zadná rovina HO v príd.hod."
+217 "Hyperfokálna vzdialenost..."
+218 "Hlbka ostrosti v príd.hod."
+
+
+219 "Prídavné hodnoty"
+220 "Prídavné hodnoty"
+221 "Zobraz pri náhlade"	
+222 "Zoom"		
+223 "Skutocná' clona"
+224 "Skutocná' ISO"
+225 "Trhová' ISO"
+226 "ISO iba pri AutoISO"
+227 "Nastavené Ev (Tv+Av)"
+228 "Namerané Ev (Bv+Sv)"
+229 "Nastavené Bv (jas)"
+230 "Namerané Bv"
+231 "Preexpozícia (bez blesku)"
+232 "Svetelnost scény"
+
+233 "Video"
+234 "Video"
+235 "Video - mód"
+236 "Video - bit. rýchlost"
+237 "Video - kvalita"
+
+
+238 "Extra fotooperácie"
+239 "Extra fotooperácie"
+240 "Extra cas uzávierky"
+241 "    Násobok"
+242 "Extra clona"
+243 "Extra ISO"
+244 "    Násobok"
+245 "Extra vzdialenost"
+246 "    Násobok (mm)"
+
+247 "Stupnuj expozíciu pri sérii"
+248 "Stupnuj expozíciu pri sérii"
+249 "Stupnuj cas"
+250 "Stupnuj clonu"
+251 "Stupnuj ISO"
+252 "    Násobok"
+253 "Stupnuj vzdialenost (MF)"
+254 "    Násobok (mm)"
+255 "Smer stupnovania"
+
+256 "Autoštart"
+257 "Dialková spúšt"
+
+258 "Riad expozíciu (bez blesku)"
+259 "Riad expozíciu (bez blesku)"
+260 "Prepocítaj expozíciu"
+261 "Prepocítaj Tv expozíciu"
+262 "Prepocítaj Av expozíciu"
+263 "Prepocítaj ISO expozíciu"
+
+264 "Nuluj hodnoty pri štarte"
+
+265 "Canon preexpozícia"
+
+266 "Vyvolanie RAW do JPG"
+267 "Prepni fotoaparát\ndo režimu fotografovania a urob\njednu snímku."
+268 "RAW súbor"
+269 "RAW - suma"
+270 "RAW - priemer"
+271 "Málo miesta na karte:\n%dM vyžadované, %dM dostupné."
+
+272 "OSD pri náhlade"
+273 "Štart zoznamu úloh"
+
+274 "Vzdialenost od šošoviek"
+
+275 "Zruš stupnovanie pri štarte"
+
+276 "Vytvor kartu s dvoma partíciami"
+277 "Zamen partitície"
+278 "Toto ZNICÍ VŠETKY INFORMÁCIE\nna karte. Pokracovat?"
+279 "Táto karta má iba jednu partíciu."
+280 "Chyba"
+281 "Varovanie"
+282 "Informácia"
+283 "RGB zebra (len preexpozícia)"
+
+284 "ND filter - stav"
+
+285 "Mriežka histogramu"
+
+286 "OSD varovanie"
+287 "OSD varovanie - pozadie"
+288 "Ikona volného miesta"
+289 "Volné miesto - ikona"
+290 "Volné miesto na karte"
+291 "Volné miesto - %"
+292 "Volné miesto - MB"
+293 "Volné miesto - velkost"
+294 "RAW snímky - zostatok"
+295 "RAW - zostatok"
+
+296 "RAW - stav"
+
+297 "Video - stav"
+
+298 "    Typ násobku"
+299 "Vlastné menu"
+300 "Vlastné menu"
+301 " "
+
+302 "Násob. konvertora 100=1x"
+303 "Indikátor voln. miesta"
+304 "    Velkost zobrazenia"
+305 "    Šírka/Výška"
+306 "    Prah v %"
+307 "    Prah v MB"
+308 "Jednotka varovania"
+309 "Prah varovania"
+310 "Optický zoom"
+311 "Hodiny"
+312 "Nastavenie hodín"
+313 "Formát hodín"
+314 "Pozadie volného miesta"
+315 "Indikátor 12 h formátu"
+316 "Pri pol. stlac. spúšte"
+
+317 "Zobrazenie RAW"
+318 "RAW"
+
+319 "Volné miesto na karte"
+320 "Volné miesto"
+
+321 "Vlastné Auto ISO"
+322 "Vlastné Auto ISO"
+323 "Vlastné Auto ISO"
+324 "Maximálny cas"
+325 "Vlastný násob. (1/FL/nás.)"
+326 "IS násobok (Tv*násobok)"
+327 "Max ISO HI (x10)"
+328 "Max ISO AUTO (x10)"
+329 "Min ISO (x10)" 
+
+330 "Názov menu - text" 
+331 "Názov menu - pozadie" 
+332 "Kurzor - text" 
+333 "Kurzor - pozadie" 
+334 "Centruj menu" 
+335 "Stlm zvuk pri zoomovaní"
+
+336 "Odstrán vadné pixely"
+337 "Vypnút"
+338 "Priemer"
+339 "RAWkonv"
+
+340 "Extra nastavenia"
+341 "Extra nastavenia - pozadie"
+342 "Zakáž extra nastavenia"
+343 "  Zahrn AutoISO & stupnov."
+344 "  Skry OSD"
+345 "Nie pri videozázname"
+346 "Zvyšný cas videa"
+347 "  Rýchlost obnovovania (~s)"
+348 "Zvyšný cas videa"
+349 "Zruš param. videa pri štarte"
+350 "Rýchle prepnutie EV"
+351 "   Velkost kroku"
+352 "Korekcia EV"
+353 "Odstránit všetky\nRAW súbory bez súvisiacich JPG\nv zložke DCIM?"
+354 "Odstránit všetky\nRAW súbory bez súvisiacich JPG\nvo vybranej zložke?"
+355 "Odstránit všetky\nRAW súbory bez súvisiacich JPG?\n(okrem oznacených)"
+356 "Možnosti RAW\n sa netýkajú tejto položky"
+357 "*** Odstránenie RAW súborov ***"
+358 "Odstránenie RAW"
+ 
+359 "Vlastné menu ako základné"
+
+360 "Symboly - font"
+361 "Súbor symbolov"
+362 "Symboly"
+363 "Symboly - text" 
+364 "Symboly - pozadie"
+
+365 "Vlastné krivky"
+366 "Vlastné krivky"
+367 "Vlož profil krivky"
+368 "Krivka"
+369 "Súbor krivky"
+
+370 "Prekrytie okrajov"
+371 "Prekrytie okrajov"
+
+372 "Prekrytie okrajov"
+373 "Prekrytie - prah"
+374 "Prekrytie - farba"
+
+375 "Dialková spúšt"
+376 "Dialková spúšt"
+377 "Synch. dialková spúšt"
+378 "Synchronizácia"
+379 "Oneskor synchronizáciu"
+380 "Oneskorenie (krok 0.1ms)"
+381 "Oneskorenie (krok 0.1s)"
+
+382 "Tlacítko AF - video"
+383 "Prvotné hodnoty parametrov"
+384 "Nastavenie parametrov"
+
+385 "RAW nie pri športe"
+386 "RAW nie pri burst"
+387 "RAW nie pri EV stupnovaní"
+388 "RAW nie pri casovaci"
+
+389 "Výnimky"
+390 "Menu výnimiek RAW"
+391 "Varovat pri výnimke?"
+392 "Vyber 1. položku menu"
+
+393 "Pauza (0.1s)"
+394 "Dialková spúšt - synchronizácia"
+395 "Video - rýchle ovládanie"
+396 "Teplota"
+397 "Teplota"
+398 "Video - ovládanie kvality"
+399 "Dialkový zoom"
+400 "Zoom pauza 0.1s"
+401 "Zvuk pri štarte"
+402 "Odcít. RAW - predpona"
+403 "Odcít. RAW - prípona"
+404 "Odcítaj vstup. hodn. tmy"
+405 "Odcítaj výst. hodn. tmy"
+406 "od"
+407 "...%d viac súborov"
+408 "Odcítanie"
+409 "Odcítaj od oznaceného"
+410 "Ulož parametre"

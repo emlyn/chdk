@@ -1,4 +1,17 @@
-Format of grid file for CHDK:
+What are Grids?
+
+Grids are an overlay for your EVF/LCD display that can help you with composition, cropping, subject/image alignment, and other novel things. Normally most cameras only offer you one simple option, a "Rule of Thirds" composition grid, but with CHDK the sky is now the limit on what you want displayed on your viewfinder for these handy photographer's tools.
+
+You may Load and run your Grid files from the CHDK <ALT> + Menu path of: "OSD Parameters" > "Grid" > "Load Grid from File..." When not in <ALT> mode you may quickly turn your Grid Overlay (and all other CHDK OSD elements) on or off with a simple Half-Shutter-Press + Right-Navigation button combination. Or put the "Grid" > "Show Grid Lines" menu toggle on your fast-access Custom User-Menu if not wishing to turn off all of CHDK displays.
+
+Grids are drawn as an EVF/LCD overlay by simple graphic commands. You may edit "Grid Files" using any basic text editor. (MAC users should check that they are saved as "plain text encoding", select "Unicode (UTF-8)" when saving your files, the same as when saving uBASIC script files.) For faster loading/searching access save them to your /CHDK/GRIDS/ folder on your SD-card, the default "Load Grid from File..." location.
+
+Grid patterns are drawn on your EVF/LCD display with the coordinates of: X = 0 to 359 (horizontally) and Y = 0 to 239 (vertically), with position 0,0 being in the upper-left corner and 359,239 being in the lower-right corner.
+
+When designing your own Grid patterns you must keep in mind that the 360x240 drawing coordinate area is in a 3:2 aspect ratio, but when displayed on your EVF/LCD display they will appear in a 360x270 or 4:3 aspect ratio. Use whatever method you have to convert your drawing-coordinates between the two. For complex grid designs one prolific grid-designer found it best to draw a new grid using any decent vector-graphic editor on their computer with a 360x270 base canvas and then resizing the final grid-design with "keep proportional" turned off to the required 360x240 ratio. The new, and now-correct, drawing coordinates were then read off from the resulting 3:2 proportional image. All right-angles, complex-angles, curves, and circles were then fully proportional and appeared correctly in the EVF/LCD display. If needing to only do simple circles or squares with the 4:3 / 3:2 offset, take the X radius/dimension and multiply it by 8, then divide that result by 9, to get a proportionally equivalent Y radius/dimension.
+
+
+Format and commands for Grid Files for CHDK:
 
 @title <text to show in menu>
 @line   x0, y0, x1, y1, lineColor
@@ -6,10 +19,20 @@ Format of grid file for CHDK:
 @rectf  x0, y0, x1, y1, borderColor, fillColor
 @elps   x0, y0, rx, ry, borderColor
 @elpsf  x0, y0, rx, ry, fillColor
+# comment <a non-implemented note>
 
-All numbers can be either decimal or hex.
+Where:
 
-Find more grids here: http://chdk.wikia.com/wiki/Grids
+rect = hollow-rectangle
+rectf = filled-rectangle
+elps = ellipse, where x0, y0 = ellipse radius center, and rx, ry = the two radiuses/radii
+elpsf = ellipse-filled
+
+See the included sample Grid Files on their use. Spaces between commands and numbers on each line are optional. If designing a very complex grid you may need to omit all spaces to get your grid-pattern file to fit within the maximum memory of (approx.) 3886 bytes.
+
+All numbers can be either decimal or hex. Hex numbers are prefixed with "0x", as in "0x16". For color-numbers you may use your CHDK <ALT> Menu of "Miscellaneous Stuff" > "Draw Palette" to choose and preview them, or any of the "Visual Settings" color selections menus for font display colors -- which is sometimes easier because you can see all of the colors at once instead of previewing one at a time in the "Draw Palette" feature.
+
+For the most complete and latest collection of user-designed and submitted Grid Files, as well as a handy utility to create "text-grid designs", see: http://chdk.wikia.com/wiki/Grids
 
 
 Included are some sample Grid files, these are:

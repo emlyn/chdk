@@ -186,7 +186,10 @@ batch-zip: version
 	cp $(topdir)bin/$(VER)-ixus850_sd800-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus850_sd800-100d-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/$(VER)-ixus70_sd1000-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus70_sd1000-101a-$(BUILD_NUMBER).zip
 	@echo "**** Done Copying duplicate Firmwares"
-
+	@echo "**** Summary of memisosizes"
+	cat $(topdir)bin/caminfo.txt
+	rm -f $(topdir)bin/caminfo.txt   > $(DEVNULL)
+	
 batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=a610 PLATFORMSUB=100e NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=a610 PLATFORMSUB=100f NO_INC_BUILD=1 firzipsubcomplete
@@ -256,7 +259,9 @@ batch-zip-complete: version
 	cp $(topdir)bin/ixus70_sd1000-101b-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus70_sd1000-101a-$(BUILD_NUMBER)-full.zip
 	cp $(topdir)bin/ixus70_sd1000-101b-$(BUILD_NUMBER).zip $(topdir)bin/ixus70_sd1000-101a-$(BUILD_NUMBER).zip
 	@echo "**** Done Copying duplicate Firmwares"
-
+	@echo "**** Summary of memisosizes"
+	cat $(topdir)bin/caminfo.txt
+	rm -f $(topdir)bin/caminfo.txt   > $(DEVNULL)
 
 
 batch-clean:

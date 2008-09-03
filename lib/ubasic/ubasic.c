@@ -179,7 +179,7 @@ varfactor(void)
 static int
 factor(void)
 {
-  int r;
+  int r = 0;
 
   DEBUG_PRINTF("factor: token %d\n", tokenizer_token());
   switch(tokenizer_token()) {
