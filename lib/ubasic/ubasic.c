@@ -219,7 +219,11 @@ case TOKENIZER_GET_VBATT:
    break;
  case TOKENIZER_GET_MODE:
     accept(TOKENIZER_GET_MODE);
-    r = ((mode_get()&MODE_MASK) == MODE_PLAY)?1:0;    
+    int m=mode_get()&MODE_SHOOTING_MASK;
+		int mode_video=MODE_IS_VIDEO(m);
+		if ((mode_get()&MODE_MASK) != MODE_PLAY) r = 0;
+    if ((mode_get()&MODE_MASK) == MODE_PLAY) r = 1;
+    if (((mode_get()&MODE_MASK) != MODE_PLAY) && mode_video) r = 2;
    break;
  case TOKENIZER_GET_RAW_NR:
     accept(TOKENIZER_GET_RAW_NR);

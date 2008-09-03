@@ -42,7 +42,7 @@ main.elf: $(OBJS) $(topdir)platform/$(PLATFORM)/libplatform.a \
 	$(SIZE) $@ | tee $(topdir)size.txt
 	@printf " %s-%s (%s, #%s): MEMISOSIZE used: 0x%s / %s\n" \
    $(PLATFORM) $(PLATFORMSUB) $(PLATFORMOS) $(PLATFORMID) \
-   `tail -c16 $(topdir)size.txt | head -c5` $(MEMISOSIZE) >> $(topdir)bin/caminfo.txt
+   `tail -c16 $(topdir)size.txt | head -c6` $(MEMISOSIZE) >> $(topdir)bin/caminfo.txt
 	rm -f $(topdir)size.txt
 
 clean:
