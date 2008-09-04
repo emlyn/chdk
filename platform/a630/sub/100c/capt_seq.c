@@ -10,13 +10,14 @@
 
 static long raw_save_stage;
 
-void capt_seq_hook_raw_here()
+int capt_seq_hook_raw_here(int x)
 {
     raw_save_stage = RAWDATA_AVAILABLE;
     core_rawdata_available();
     while (raw_save_stage != RAWDATA_SAVED){
 	_SleepTask(10);
     }
+  return x;
 }
 
 void hook_raw_save_complete()
@@ -42,7 +43,40 @@ void capt_seq_hook_set_nr()
     };
 }
 
-
+void __attribute__((naked,noinline)) sub_FFD53158_my(){
+  asm volatile (
+                "STMFD   SP!, {R4,LR}\n"
+                "BL      sub_FFD52D08\n"
+                "LDR     R3, =0x91AA0\n"
+                "LDR     R2, [R3,#0x24]\n"
+                "CMP     R2, #0\n"
+                "MOV     R4, R0\n"
+                "MOV     R0, #0xC\n"
+                "BEQ     loc_FFD531A0\n"
+                "BL      sub_FFD5CA00\n"
+                "TST     R0, #1\n"
+                "BEQ     loc_FFD531A0\n"
+                "LDR     R3, [R4,#8]\n"
+                "LDR     R2, =0x61EC\n"
+                "ORR     R3, R3, #0x40000000\n"
+                "MOV     R1, #1\n"
+                "STR     R1, [R2]\n"
+                "STR     R3, [R4,#8]\n"
+                "LDMFD   SP!, {R4,PC}\n"
+"loc_FFD531A0:\n"
+                "BL      sub_FFD9385C\n"
+                "BL      sub_FFC14FE0\n"
+                "STR     R0, [R4,#0x14]\n"
+                "MOV     R0, R4\n"
+                "BL      sub_FFD56070_my\n"          //------------>
+                "BL      capt_seq_hook_raw_here\n"   // +
+                "TST     R0, #1\n"
+                "LDRNE   R3, =0x61EC\n"
+                "MOVNE   R2, #1\n"
+                "STRNE   R2, [R3]\n"
+                "LDMFD   SP!, {R4,PC}\n"
+  );
+}
 
 void __attribute__((naked,noinline)) sub_FFD56070_my(long p)
 {
@@ -189,7 +223,7 @@ void __attribute__((naked,noinline)) capt_seq_task()
                 "LDR     R2, [R3,#0x24]\n"
                 "CMP     R2, #0\n"
                 "BEQ     loc_FFD536D4\n"
-                "BL      sub_FFD53158\n"
+                "BL      sub_FFD53158_my\n"
                 "B       loc_FFD536D4\n"
 "loc_FFD535F8:\n"
                 "BL      sub_FFD5307C_my\n"
