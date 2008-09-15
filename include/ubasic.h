@@ -54,6 +54,7 @@ void ubasic_run(void);
 int ubasic_finished(void);
 void ubasic_end();
 int ubasic_linenumber();
+int jump_label(char * label);
 
 int ubasic_get_variable(int varnum);
 void ubasic_set_variable(int varum, int value);

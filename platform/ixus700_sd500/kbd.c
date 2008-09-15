@@ -248,7 +248,6 @@ int usb_power_status_override(int status){
  // for clear USB power flag  - return status &~USB_MASK;
  // for get USB power flag read status & USB_MASK
 	
-	if (conf.remote_enable) {
 		remote_key = (status & USB_MASK)==USB_MASK;
 		if (remote_key) 
 			remote_count += 1;
@@ -256,6 +255,7 @@ int usb_power_status_override(int status){
 			usb_power = remote_count;
 			remote_count = 0;
 		}
+	if (conf.remote_enable) {
 		return status &~USB_MASK;
 	}
  return status;

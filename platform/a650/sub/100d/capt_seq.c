@@ -75,6 +75,7 @@ void __attribute__((naked,noinline)) sub_FFD0EC34_my(){
                 "LDRSH   R2, [R8,#0xC]\n"
                 "LDR     R3, =0xD784\n"
                 "BL      sub_FFD0FC54\n"
+                "BL      wait_until_remote_button_is_released\n"
                 "BL      capt_seq_hook_set_nr\n"  //+
                 "B       sub_FFD0ECA8\n"
  );

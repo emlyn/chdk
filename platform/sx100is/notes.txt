@@ -1,0 +1,9 @@
+****************************************
+
+Camera depending notes: 
+
+- sx100is uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+- sx100is does have a REAL IRIS Diaphragm, it does NOT have an an ND Filter! 
+Mind this.
+- DryOS Camera
+

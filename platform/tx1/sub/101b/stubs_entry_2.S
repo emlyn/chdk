@@ -28,3 +28,11 @@ NHSTUB(WriteSDCard, 0xFFAC1078)
 NHSTUB(ExpCtrlTool_StopContiAE,  0xFF9779CC) 
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFF97799C) 
 NHSTUB(MakeAFScan,  0xFFB2C864) 
+NHSTUB(GetBatteryTemperature, 0xFFA48D80)
+NHSTUB(GetCCDTemperature, 0xFFA48D6C)
+NHSTUB(GetOpticalTemperature, 0xFFA48D58)
+NHSTUB(PT_PlaySound, 0xFFB38380)
+
+
+NHSTUB(EnterToCompensationEVF, 0xffb26938)
+NHSTUB(ExitFromCompensationEVF, 0xffb269bc)

@@ -22,3 +22,11 @@ NHSTUB(TurnOnMic, 0xFFDC5818)
 NHSTUB(ExpCtrlTool_StopContiAE,  0xFFD0DCE0) 
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFFD0DCB0) 
 NHSTUB(MakeAFScan,               0xFFE7003C) 
+NHSTUB(GetBatteryTemperature, 0xFFDC7D94)
+NHSTUB(GetCCDTemperature, 0xFFDC7D80)
+NHSTUB(GetOpticalTemperature, 0xFFDC7D6C)
+NHSTUB(PT_PlaySound, 0xFFE7AA08)
+
+
+NHSTUB(EnterToCompensationEVF, 0xffe8b110) // Stub not found. When found, remove dummy function from lib.c.
+NHSTUB(ExitFromCompensationEVF, 0xffe8b194) // Stub not found. When found, remove dummy function from lib.c.

@@ -26,6 +26,7 @@
 #define KEY_DUMMY	23     //dummy key for pressing to disable energy saving in alt mode
 
 
+
 extern void gui_kbd_process();
 extern void gui_kbd_enter();
 extern void gui_kbd_leave();

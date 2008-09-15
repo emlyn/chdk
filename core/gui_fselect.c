@@ -10,13 +10,30 @@
 #include "gui_mpopup.h"
 #include "gui_fselect.h"
 #include "raw_merge.h"
+#include "raw.h"
+#include "conf.h"
 
 //-------------------------------------------------------------------
-#define NUM_LINES               7
-#define NAME_SIZE               15
-#define SIZE_SIZE               7
-#define TIME_SIZE               14
-#define SPACING                 1
+#define HEAD_LINES              1
+#define BODY_LINES              10
+#define FOOT_LINES              1
+#define HEAD_FONT_LINES         HEAD_LINES * FONT_HEIGHT
+#define BODY_FONT_LINES         BODY_LINES * FONT_HEIGHT
+#define FOOT_FONT_LINES         FOOT_LINES * FONT_HEIGHT
+
+#define NAME_SIZE               15 // "FILENAME123 "
+#define SIZE_SIZE               7 // "1000 b|M|G"
+#define TIME_SIZE               14 // "01.01'70 00:00"
+
+#define NAME_FONT_SIZE          NAME_SIZE * FONT_WIDTH
+#define EXTE_FONT_SIZE          EXTE_SIZE * FONT_WIDTH
+#define SIZE_FONT_SIZE          SIZE_SIZE * FONT_WIDTH
+#define TIME_FONT_SIZE          TIME_SIZE * FONT_WIDTH
+
+#define SPACING                 4
+#define TAB_DIVIDER             1
+#define BORDER                  2
+#define SCROLLBAR               4
 
 #define MARKED_OP_NONE          0
 #define MARKED_OP_CUT           1
@@ -38,11 +55,14 @@ struct fitem {
     struct fitem    *prev, *next;
 };
 static struct fitem *head=NULL, *top, *selected;
-static unsigned int count;
+static unsigned int count, max_dir_len;
 static struct fitem *marked_head=NULL;
 static unsigned int marked_count;
 static char marked_operation;
-static coord x, y, w, h;
+static coord main_x, main_y, main_w, main_h; //main browser window coord (without BORDERs)
+static coord head_x, head_y, head_w, head_h; //header window coord
+static coord body_x, body_y, body_w, body_h; //main body window coord
+static coord foot_x, foot_y, foot_w, foot_h; //footer window coord 
 static int gui_fselect_redraw;
 static char *fselect_title;
 static void (*fselect_on_select)(const char *fn);
@@ -55,12 +75,12 @@ static void gui_fselect_free_data() {
     while (ptr) {
         if (ptr->name)
             free(ptr->name);
-        prev=ptr;
-        ptr=ptr->next;
+        prev = ptr;
+        ptr = ptr->next;
         free(prev);
     }
-    head=top=selected=NULL;
-    count=0;
+    head = top = selected = NULL;
+    count = 0;
 }
 
 //-------------------------------------------------------------------
@@ -165,16 +185,27 @@ static void gui_fselect_read_dir(const char* dir) {
 void gui_fselect_init(int title, const char* dir, void (*on_select)(const char *fn)) {
     int i;
     
-    w = (1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE+1+1)*FONT_WIDTH;
-    h = FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT+4+FONT_HEIGHT;
-    x = (screen_width-w)>>1;
-    y = (screen_height-h)>>1;
-
+    int chars_width = NAME_FONT_SIZE + SIZE_FONT_SIZE + TIME_FONT_SIZE;
+    main_w = SPACING/*N*/+SPACING+TAB_DIVIDER+SPACING/*S*/+SPACING+TAB_DIVIDER+SPACING/*T*/+SPACING+SCROLLBAR+chars_width;
+    main_h = HEAD_FONT_LINES + TAB_DIVIDER + BODY_FONT_LINES + TAB_DIVIDER + FOOT_FONT_LINES;
+    main_x = (screen_width - main_w) >> 1;
+    main_y = (screen_height - main_h) >> 1;
+    
+    head_x = body_x = foot_x = main_x;
+    head_w = body_w = foot_w = main_w;    
+    head_y = main_y;
+    head_h = HEAD_FONT_LINES;    
+    body_y = head_y + head_h + TAB_DIVIDER;
+    body_h = BODY_FONT_LINES;
+    foot_y = body_y + body_h + TAB_DIVIDER;
+    foot_h = FOOT_FONT_LINES;
+    
     fselect_title = lang_str(title);
     strcpy(current_dir, dir);
+    max_dir_len = NAME_SIZE + SIZE_SIZE + SPACING;
     gui_fselect_read_dir(current_dir);
     top = selected = head;
-    selected_file[0]=0;
+    selected_file[0] = 0;
     fselect_on_select = on_select;
     marked_operation = MARKED_OP_NONE;
     gui_fselect_mode_old = gui_get_mode();
@@ -191,122 +222,152 @@ char* gui_fselect_result() {
 }
 
 //-------------------------------------------------------------------
-void gui_fselect_draw_initilal() {
+void gui_fselect_draw_initial() {
+    int title_font_size;
     int i;
 
-    draw_rect(x-3, y-3, x+w+5, y+h+5, COLOR_BLACK); //shadow
-    draw_rect(x-2, y-2, x+w+6, y+h+6, COLOR_BLACK); //shadow
-    draw_rect(x-1, y-1, x+w+7, y+h+7, COLOR_BLACK); //shadow
-    draw_filled_rect(x-4, y-4, x+w+4, y+h+4, MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); // main box
-    draw_filled_rect(x-2, y-2, x+w+2, y+FONT_HEIGHT+2, MAKE_COLOR(COLOR_BLACK, COLOR_WHITE)); //title
-    draw_filled_rect(x-2, y+h-FONT_HEIGHT-2, x+w+2, y+h+2, MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); //footer
-    draw_rect(x-2, y-2, x+w+2, y+h+2, COLOR_WHITE); //border
-    draw_rect(x-3, y-3, x+w+3, y+h+3, COLOR_WHITE); //border
-    i = strlen(fselect_title);
-    draw_string(x+((w-i*FONT_WIDTH)>>1), y, fselect_title, MAKE_COLOR(COLOR_BLACK, COLOR_WHITE)); //title text
+    draw_filled_rect(head_x, head_y, head_x+head_w-1, head_y+head_h-1, MAKE_COLOR(COLOR_BLACK, COLOR_BLACK)); //header box
+    title_font_size = strlen(fselect_title) * FONT_WIDTH;
+    draw_string(head_x+((head_w-title_font_size)>>1), head_y, fselect_title, MAKE_COLOR(COLOR_BLACK, COLOR_WHITE)); //title text
+    
+    for (i = 1; i <= BORDER; i++)
+      draw_rect(main_x-i, main_y-i, main_x+main_w+i-1, main_y+main_h+i-1, MAKE_COLOR(COLOR_WHITE, COLOR_WHITE)); //border frame
+    draw_line(body_x, body_y-1, body_x+body_w-1, body_y-1, MAKE_COLOR(COLOR_WHITE, COLOR_WHITE)); //border head-body
+    draw_line(foot_x, foot_y-1, foot_x+foot_w-1, foot_y-1, MAKE_COLOR(COLOR_WHITE, COLOR_WHITE)); //border body-foot    
 }
 
 //-------------------------------------------------------------------
 void gui_fselect_draw() {
-    int i, j;
+    int i, j, off_name_x, off_size_x, off_time_x, off_body_x, off_body_y;
     struct fitem  *ptr;
-    char buf[48];
+    char buf[100];
     struct tm *time;
+    unsigned long sum_size;
     color cl_markered = ((mode_get()&MODE_MASK) == MODE_REC)?COLOR_YELLOW:0x66;
+    color cl_marked, cl_selected;
 
     if (gui_fselect_redraw) {
-        if (gui_fselect_redraw==2)
-            gui_fselect_draw_initilal();
+        if (gui_fselect_redraw == 2)
+            gui_fselect_draw_initial();
 
-        for (i=0, ptr=top; i<NUM_LINES && ptr; ++i, ptr=ptr->next) {
+        off_body_y = 0;
+        off_name_x = body_x+SPACING;
+        off_size_x = off_name_x+NAME_FONT_SIZE+SPACING+TAB_DIVIDER+SPACING;
+        off_time_x = off_size_x+SIZE_FONT_SIZE+SPACING+TAB_DIVIDER+SPACING;
+        off_body_x = off_time_x+TIME_FONT_SIZE+SPACING;
+
+        sum_size = 0;
+        for (i=0, ptr=top; i<BODY_LINES && ptr; ++i, ptr=ptr->next) {
+        
+            cl_marked = MAKE_COLOR((ptr==selected)?COLOR_RED:COLOR_GREY, (ptr->marked)?cl_markered:COLOR_WHITE);
+            cl_selected = (ptr==selected)?MAKE_COLOR(COLOR_RED, COLOR_RED):MAKE_COLOR(COLOR_GREY, COLOR_GREY);
+        
             // print name
             for (j=0; j<NAME_SIZE && ptr->name[j]; ++j) 
-                buf[j]=ptr->name[j];
-            if (j==NAME_SIZE && ptr->name[j]) buf[NAME_SIZE-1]='>';
-            if (ptr->attr & DOS_ATTR_DIRECTORY && ptr->attr != 0xFF) {
+                buf[j] = ptr->name[j];
+                
+            if (j==NAME_SIZE && ptr->name[j]) buf[NAME_SIZE-1] = '~'; // too long name
+            
+            if (ptr->attr & DOS_ATTR_DIRECTORY && ptr->attr != 0xFF) { //?
                 if (j<NAME_SIZE) {
                     buf[j++]='/';
                 } else {
-                    buf[NAME_SIZE-2]='>';
+                    buf[NAME_SIZE-2]='~';
                     buf[NAME_SIZE-1]='/';
                 }
             }
-            for (; j<NAME_SIZE && (buf[j++]=' '););
-            buf[NAME_SIZE]=0;
-            draw_string(x+FONT_WIDTH, y+FONT_HEIGHT+4+i*FONT_HEIGHT, buf, MAKE_COLOR((ptr==selected)?COLOR_RED:COLOR_GREY, (ptr->marked)?cl_markered:COLOR_WHITE));
-
-            draw_string(x+(1+NAME_SIZE)*FONT_WIDTH, y+FONT_HEIGHT+4+i*FONT_HEIGHT, "\x06", MAKE_COLOR((ptr==selected)?COLOR_RED:COLOR_GREY, COLOR_WHITE));
-
+            for (; j<NAME_SIZE && (buf[j++]=' ');); //fill upto NAME_SIZE
+            buf[NAME_SIZE] = 0; // eos
+            
+            off_body_y = body_y+(i*FONT_HEIGHT);
+            draw_filled_rect(body_x, off_body_y, off_name_x-1, off_body_y+FONT_HEIGHT-1, cl_selected);
+            draw_string(off_name_x, off_body_y, buf, cl_marked);
+            draw_filled_rect(off_name_x+NAME_FONT_SIZE, off_body_y, off_name_x+NAME_FONT_SIZE+SPACING-1, off_body_y+FONT_HEIGHT-1, cl_selected);
+            
             // print size or <Dir>
             if (ptr->attr & DOS_ATTR_DIRECTORY) {
                 if (ptr->attr == 0xFF) {
                     sprintf(buf, "  ???  ");
-                } else if (ptr->name[0]=='.' && ptr->name[1]=='.' && ptr->name[2]==0) {
+                } else if (ptr->name[0] == '.' && ptr->name[1] == '.' && ptr->name[2] == 0) {
                     sprintf(buf, "<UpDir>");
                 } else {
                     sprintf(buf, "< Dir >");
                 }
             } else {
-                if (ptr->size < 10000000)
-                    sprintf(buf, "%7lu", ptr->size);
-                else if (ptr->size < 1024000000)
-                    sprintf(buf, "%6luK", ptr->size>>10);
+                if (ptr->size < 1024)
+                    sprintf(buf, "%5d b", ptr->size); // " 1023 b"
+                else if (ptr->size < 1024*1024)
+                    sprintf(buf, "%3ld,%1d k", ptr->size/1024, (ptr->size%1024*10)/1024); // "999,9 k"
+                else if (ptr->size < 1024*1024*1024)
+                    sprintf(buf, "%3ld,%ld M", ptr->size/(1024*1024), (ptr->size%(1024*1024)*10)/(1024*1024) ); // "999,9 M"
                 else
-                    sprintf(buf, "%6luM", ptr->size>>20);
+                    sprintf(buf, "%31d,%ld G", ptr->size/(1024*1024*1024), (ptr->size%(1024*1024*1024)*10)/(1024*1024*1024)); // "999.9 G"
+                    
+                if (ptr->marked)
+                  sum_size += ptr->size;
             }
-            draw_string(x+(1+NAME_SIZE+SPACING)*FONT_WIDTH, y+FONT_HEIGHT+4+i*FONT_HEIGHT, buf, MAKE_COLOR((ptr==selected)?COLOR_RED:COLOR_GREY, (ptr->marked)?cl_markered:COLOR_WHITE));
-
-            draw_string(x+(1+NAME_SIZE+SPACING+SIZE_SIZE)*FONT_WIDTH, y+FONT_HEIGHT+4+i*FONT_HEIGHT, "\x06", MAKE_COLOR((ptr==selected)?COLOR_RED:COLOR_GREY, COLOR_WHITE));
-
+            buf[SIZE_SIZE] = 0;
+            //tab divider
+            draw_line(off_size_x-TAB_DIVIDER-SPACING, off_body_y, off_size_x-TAB_DIVIDER-SPACING, off_body_y+FONT_HEIGHT-1, COLOR_WHITE);
+            draw_filled_rect(off_size_x-SPACING, off_body_y, off_size_x-1, off_body_y+FONT_HEIGHT-1, cl_selected);            
+            draw_string(off_size_x, off_body_y, buf, cl_marked);
+            draw_filled_rect(off_size_x+SIZE_FONT_SIZE, off_body_y, off_size_x+SIZE_FONT_SIZE+SPACING-1, off_body_y+FONT_HEIGHT-1, cl_selected);            
+            
             // print modification time
             if (ptr->mtime) {
                 time = localtime(&(ptr->mtime));
-                sprintf(buf, "%2u/%02u/%02u %02u:%02u", time->tm_mday, time->tm_mon+1, (time->tm_year<100)?time->tm_year:time->tm_year-100, time->tm_hour, time->tm_min);
+                sprintf(buf, "%02u.%02u'%02u %02u:%02u", time->tm_mday, time->tm_mon+1, (time->tm_year<100)?time->tm_year:time->tm_year-100, time->tm_hour, time->tm_min);
             } else {
                 sprintf(buf, "%14s", "");
             }
-            draw_string(x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING)*FONT_WIDTH, y+FONT_HEIGHT+4+i*FONT_HEIGHT, buf, MAKE_COLOR((ptr==selected)?COLOR_RED:COLOR_GREY, (ptr->marked)?cl_markered:COLOR_WHITE));
+            buf[TIME_SIZE] = 0;
+            //tab divider
+            draw_line(off_time_x-TAB_DIVIDER-SPACING, off_body_y, off_time_x-TAB_DIVIDER-SPACING, off_body_y+FONT_HEIGHT-1, COLOR_WHITE);
+            draw_filled_rect(off_time_x-SPACING, off_body_y, off_time_x-1, off_body_y+FONT_HEIGHT-1, cl_selected);
+            draw_string(off_time_x, off_body_y, buf, cl_marked);            
+            draw_filled_rect(off_time_x+TIME_FONT_SIZE, off_body_y, off_time_x+TIME_FONT_SIZE+SPACING-1, off_body_y+FONT_HEIGHT-1, cl_selected);
         }
 
-        if (i<NUM_LINES) {
-            draw_filled_rect(x+FONT_WIDTH, y+FONT_HEIGHT+4+i*FONT_HEIGHT, x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE)*FONT_WIDTH, 
-                             y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT-1, MAKE_COLOR(COLOR_GREY, COLOR_GREY));
+        //fill the rest of body
+        off_body_y += FONT_HEIGHT;
+        if (i>0 && i<BODY_LINES) {
+            draw_filled_rect(body_x, off_body_y, body_x+body_w-1, body_y+body_h-1, MAKE_COLOR(COLOR_GREY, COLOR_GREY));
         }
-
-        i=strlen(current_dir);
-        if (i>NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE) {
-            i-=NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE -1;
-            draw_char(x+FONT_WIDTH, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT+4, '<', MAKE_COLOR(COLOR_GREY, COLOR_WHITE));
-            draw_string(x+FONT_WIDTH*2, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT+4, current_dir+i, MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); //current dir
-        } else {
-            draw_string(x+FONT_WIDTH, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT+4, current_dir, MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); //current dir
-            draw_filled_rect(x+(1+i)*FONT_WIDTH, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT+4, 
-                             x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE)*FONT_WIDTH, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT+4+FONT_HEIGHT, MAKE_COLOR(COLOR_GREY, COLOR_GREY)); // fill
-            if (strlen(current_dir)<=NAME_SIZE) {
-             unsigned int fr,tot;
-             fr=GetFreeCardSpaceKb()>>10; tot=GetTotalCardSpaceKb()>>10;
-             sprintf(buf,"%dM/%dM (%d%%)",fr, tot, tot? fr*100/tot: 0);
-             draw_string(x+(NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE-strlen(buf)+1)*FONT_WIDTH, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT+4, buf, MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); // free space
-            };
-        }
-
-        // scrollbar
-        if (count>NUM_LINES) {
-            i=NUM_LINES*FONT_HEIGHT-1 -1;
-            j=i*NUM_LINES/count;
+        
+       // scrollbar
+        draw_filled_rect(off_body_x, body_y, off_body_x+SCROLLBAR-1, body_y+body_h-1, MAKE_COLOR(COLOR_BLACK, COLOR_BLACK));
+        if (count>BODY_LINES) {
+            i = BODY_FONT_LINES - 1;
+            j = i*BODY_LINES/count;
             if (j<20) j=20;
-            i=(i-j)*selected->n/(count-1);
-            draw_filled_rect(x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE+1)*FONT_WIDTH+2, y+FONT_HEIGHT+4+1, 
-                             x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE+1)*FONT_WIDTH+6, y+FONT_HEIGHT+4+1+i, MAKE_COLOR(COLOR_BLACK, COLOR_BLACK));
-            draw_filled_rect(x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE+1)*FONT_WIDTH+2, y+FONT_HEIGHT+4+i+j, 
-                             x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE+1)*FONT_WIDTH+6, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT-1-1, MAKE_COLOR(COLOR_BLACK, COLOR_BLACK));
-            draw_filled_rect(x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE+1)*FONT_WIDTH+2, y+FONT_HEIGHT+4+1+i, 
-                             x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE+1)*FONT_WIDTH+6, y+FONT_HEIGHT+4+i+j, MAKE_COLOR(COLOR_WHITE, COLOR_WHITE));
-        } else {
-            draw_filled_rect(x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE+1)*FONT_WIDTH+2, y+FONT_HEIGHT+4+1, 
-                             x+(1+NAME_SIZE+SPACING+SIZE_SIZE+SPACING+TIME_SIZE+1)*FONT_WIDTH+6, y+FONT_HEIGHT+4+NUM_LINES*FONT_HEIGHT-1-1, MAKE_COLOR(COLOR_BLACK, COLOR_BLACK));
+            i = (i-j)*selected->n/(count-1);
+            draw_filled_rect(off_body_x, body_y+i, off_body_x+SCROLLBAR-2, body_y+i+j, MAKE_COLOR(COLOR_WHITE, COLOR_WHITE));
         }
 
+        //footer
+        i = strlen(current_dir);
+        if (i > max_dir_len) {
+          strncpy(buf, current_dir+i-max_dir_len, max_dir_len);
+          buf[0] = '.';
+          buf[1] = '.';          
+        } else {
+          strcpy(buf, current_dir);          
+        }
+        buf[max_dir_len] = 0;
+        draw_filled_rect(foot_x, foot_y, foot_x+foot_w-1, foot_y+foot_h-1, MAKE_COLOR(COLOR_GREY, COLOR_GREY)); //footer box        
+        draw_string(off_name_x, foot_y, buf, MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); //current dir
+        
+        if (sum_size) {
+          sprintf(buf, "%d b", sum_size); //selected size
+        } else {
+          unsigned int fr, tot;
+          fr = GetFreeCardSpaceKb(); tot = GetTotalCardSpaceKb();
+          if (fr < 1024*1024)
+            sprintf(buf, "%dM (%d%%)", fr/1024, tot? fr*100/tot: 0);
+          else
+            sprintf(buf, "%dG (%d%%)", fr/(1024*1024), tot? fr*100/tot: 0);
+        }
+        draw_string(foot_x+foot_w-strlen(buf)*FONT_WIDTH-BORDER, foot_y, buf, MAKE_COLOR(COLOR_GREY, COLOR_WHITE)); // free space
         gui_fselect_redraw = 0;
     }
 }
@@ -323,6 +384,127 @@ static void fselect_delete_file_cb(unsigned int btn) {
     }
     gui_fselect_redraw = 2;
 }
+
+static void fselect_purge_cb(unsigned int btn) {
+
+   DIR             *d,  *d2,  *d3,  *d4;
+   struct dirent   *de, *de2, *de3, *de4;
+   struct fitem    *ptr, *ptr2;
+   char            sub_dir[20], sub_dir_search[20];
+   char            selected_item[256];
+   int             i, found=0;
+
+   if (btn==MBOX_BTN_YES) {
+       //If selected folder is DCIM (this is to purge all RAW files in any Canon folder)
+       if (selected->name[0] == 'D' && selected->name[1] == 'C' && selected->name[2] == 'I' && selected->name[3] == 'M') {
+           sprintf(current_dir+strlen(current_dir), "/%s", selected->name);
+           d=opendir(current_dir);
+           while ((de=readdir(d)) != NULL) {//Loop to find all Canon folders
+               if (de->name[0] != '.' && de->name[1] != '.') {//If item is not UpDir
+                   sprintf(sub_dir, "%s/%s", current_dir, de->name);
+                   d2=opendir(sub_dir);
+                   while ((de2=readdir(d2)) != NULL) {//Loop to find all the RAW files inside a Canon folder
+                       if (de2->name[0] == 'C' || de2->name[9] == 'C') {//If file is RAW (Either CRW/CR2 prefix or file extension)
+                           d3=opendir(current_dir);
+                           while ((de3=readdir(d3)) != NULL) {//Loop to find all Canon folders
+                               if (de3->name[0] != '.' && de3->name[1] != '.') {//If item is not UpDir
+                                   sprintf(sub_dir_search, "%s/%s", current_dir, de3->name);
+                                   d4=opendir(sub_dir_search);
+                                   while ((de4=readdir(d4)) != NULL) {//Loop to find a corresponding JPG file inside a Canon folder
+                                       if (de2->name[4] == de4->name[4] && de2->name[5] == de4->name[5] &&//If the four digits of the Canon number are the same
+                                           de2->name[6] == de4->name[6] && de2->name[7] == de4->name[7] &&
+                                           de4->name[9] == 'J' && !(de4->name[0] == 'C' || de4->name[9] == 'C' || de4->name[0] == 0xE5)) {//If file is JPG, is not CRW/CR2 and is not a deleted item
+                                           started();
+                                           found=1;//A JPG file with the same Canon number was found
+                                       }                                 
+                                   }
+                                   closedir(d4);                 
+                               }  
+                           }
+                           closedir(d3);
+                           //If no JPG found, delete RAW file
+                           if (found == 0) {
+                               sprintf(selected_item, "%s/%s", sub_dir, de2->name);
+                               remove(selected_item);
+                               finished();
+                           }
+                           else {
+                               found=0;
+                               finished();
+                           }                             
+                       }
+                   }
+                   closedir(d2);
+               }
+           }
+           closedir(d);
+           i=strlen(current_dir);
+           while (current_dir[--i] != '/');
+           current_dir[i]=0;
+       }
+       //If item is a Canon folder (this is to purge all RAW files inside a single Canon folder)
+       else if (selected->name[3] == 'C') {
+           sprintf(current_dir+strlen(current_dir), "/%s", selected->name);
+           d=opendir(current_dir);
+           while ((de=readdir(d)) != NULL) {//Loop to find all the RAW files inside the Canon folder 
+               if (de->name[0] == 'C' || de->name[9] == 'C') {//If file is RAW (Either CRW/CR2 prefix or file extension)
+                   d2=opendir(current_dir);
+                   while ((de2=readdir(d2)) != NULL) {//Loop to find a corresponding JPG file inside the Canon folder
+                       if (de->name[4] == de2->name[4] && de->name[5] == de2->name[5] &&//If the four digits of the Canon number are the same
+                           de->name[6] == de2->name[6] && de->name[7] == de2->name[7] &&
+                           de2->name[9] == 'J' && !(de2->name[0] == 'C' || de2->name[9] == 'C' || de2->name[0] == 0xE5)) {//If file is JPG and is not CRW/CR2 and is not a deleted item
+                           started();
+                           found=1;//A JPG file with the same Canon number was found
+                       }                                 
+                   }
+                   closedir(d2); 
+                   //If no JPG found, delete RAW file                
+                   if (found == 0) {
+                       sprintf(selected_item, "%s/%s", current_dir, de->name);
+                       remove(selected_item);
+                       finished();
+                   }
+                   else {
+                       found=0;
+                       finished();
+                   }
+               }
+           }
+           closedir(d);
+           i=strlen(current_dir);
+           while (current_dir[--i] != '/');
+           current_dir[i]=0;
+       }
+       else {
+           //If inside a Canon folder (files list)
+           for (ptr=head; ptr; ptr=ptr->next) {//Loop to find all the RAW files in the list
+               if ((ptr->name[0] == 'C' || ptr->name[9] == 'C') && !(ptr->marked)) {//If file is RAW (Either CRW/CR2 prefix or file extension) and is not marked
+                   for (ptr2=head; ptr2; ptr2=ptr2->next) {//Loop to find a corresponding JPG file in the list
+                       if (ptr->name[4] == ptr2->name[4] && ptr->name[5] == ptr2->name[5] &&//If the four digits of the Canon number are the same
+                           ptr->name[6] == ptr2->name[6] && ptr->name[7] == ptr2->name[7] &&
+                           ptr2->name[9] == 'J' && !(ptr2->name[0] == 'C' || ptr2->name[9] == 'C')) {//If file is JPG and is not CRW/CR2
+                           started();
+                           found=1;
+                       }
+                   }
+                   //If no JPG found, delete RAW file           
+                   if (found == 0) {
+                       sprintf(selected_file, "%s/%s", current_dir, ptr->name);
+                       remove(selected_file);
+                       finished();
+                   }
+                   else {
+                       found=0;
+                       finished();
+                   }
+               }
+           }
+       }
+       gui_fselect_read_dir(current_dir);
+   }
+   gui_fselect_redraw = 2;
+}
+
 
 //-------------------------------------------------------------------
 static void fselect_delete_folder_cb(unsigned int btn) {
@@ -360,13 +542,19 @@ static void fselect_delete_folder_cb(unsigned int btn) {
 
 //-------------------------------------------------------------------
 static void fselect_goto_prev(int step) {
-    register int j;
+    register int j, i;
 
     for (j=0; j<step; ++j) {
         if (selected->prev==top && top->prev) 
             top=top->prev;
         if (selected->prev) 
             selected=selected->prev;
+		else
+		if (step == 1)
+		{
+			for(; selected->next; selected=selected->next);
+			for (i=0, top=selected; i<BODY_LINES-1 && top->prev; ++i, top=top->prev);
+		}
     }
 }
 
@@ -376,11 +564,17 @@ static void fselect_goto_next(int step) {
     struct fitem  *ptr;
 
     for (j=0; j<step; ++j) {
-        for (i=0, ptr=top; i<NUM_LINES-1 && ptr; ++i, ptr=ptr->next);
-        if (i==NUM_LINES-1 && ptr && ptr->prev==selected && ptr->next)
+        for (i=0, ptr=top; i<BODY_LINES-1 && ptr; ++i, ptr=ptr->next);
+        if (i==BODY_LINES-1 && ptr && ptr->prev==selected && ptr->next)
             top=top->next;
         if (selected->next) 
             selected=selected->next;
+		else
+		if (step == 1)
+		{
+			for(; top->prev; top = top->prev);
+			selected = top;
+		}
     }
 }
 
@@ -519,7 +713,7 @@ static void fselect_marked_paste_cb(unsigned int btn) {
 }
 
 //-------------------------------------------------------------------
-static unsigned int fselect_marked_count() {
+static inline unsigned int fselect_real_marked_count() {
     struct fitem  *ptr;
     register unsigned int cnt=0;
 
@@ -527,6 +721,12 @@ static unsigned int fselect_marked_count() {
         if (ptr->attr != 0xFF && !(ptr->attr & DOS_ATTR_DIRECTORY) && ptr->marked) 
             ++cnt;
     }
+    return cnt;
+}
+//-------------------------------------------------------------------
+static unsigned int fselect_marked_count() {
+    struct fitem  *ptr;
+    register unsigned int cnt=fselect_real_marked_count();
 
     if (!cnt) {
         if (selected && selected->attr != 0xFF && !(selected->attr & DOS_ATTR_DIRECTORY)) 
@@ -592,6 +792,63 @@ void process_raw_files(void){
  }
 }
 
+static void fselect_subtract_cb(unsigned int btn) {
+    struct fitem *ptr;
+    char *raw_subtract_from;
+    char *raw_subtract_sub;
+    char *raw_subtract_dest;
+    if (btn != MBOX_BTN_YES) return;
+
+    if(!(raw_subtract_from = malloc(300))) //3x full path
+        return;
+    raw_subtract_sub = raw_subtract_from + 100;
+    raw_subtract_dest = raw_subtract_sub + 100;
+    sprintf(raw_subtract_sub,"%s/%s",current_dir,selected->name);
+    for (ptr=head; ptr; ptr=ptr->next) {
+        if (ptr->marked && ptr->attr != 0xFF && 
+            !(ptr->attr & DOS_ATTR_DIRECTORY) &&
+            ptr->size == hook_raw_size() &&
+            (strcmp(ptr->name,selected->name)) != 0) {
+            sprintf(raw_subtract_from,"%s/%s",current_dir,ptr->name);
+            sprintf(raw_subtract_dest,"%s/%s%s",current_dir,img_prefixes[conf.sub_batch_prefix],ptr->name+4);
+            strcpy(raw_subtract_dest + strlen(raw_subtract_dest) - 4,img_exts[conf.sub_batch_ext]);
+			// don't let users attempt to write one of the files being read
+			if( strcmp(raw_subtract_dest,raw_subtract_from) != 0 && strcmp(raw_subtract_dest,raw_subtract_sub) != 0) {
+                raw_subtract(raw_subtract_from,raw_subtract_sub,raw_subtract_dest);
+			}
+        }
+    }
+    free(raw_subtract_from);
+    gui_fselect_read_dir(current_dir);
+    gui_fselect_redraw = 2;
+}
+
+
+#define MAX_SUB_NAMES 6
+static void setup_batch_subtract(void) {
+    struct fitem *ptr;
+    int i;
+    char *p = buf + sprintf(buf,"%s %s\n",selected->name,lang_str(LANG_FSELECT_SUB_FROM));
+    for (ptr=head, i=0; ptr; ptr=ptr->next) {
+        if (ptr->marked && ptr->attr != 0xFF && !(ptr->attr & DOS_ATTR_DIRECTORY) && ptr->size == hook_raw_size()) {
+            if ( i < MAX_SUB_NAMES ) {
+                sprintf(p, "%s\n",ptr->name);
+                // keep a pointer to the one before the end, so we can stick ...and more on
+                if (i < MAX_SUB_NAMES - 1) {
+                    p += strlen(p);
+                }
+            }
+            i++;
+        }
+    }
+    if (i > MAX_SUB_NAMES) {
+//      "...%d more files"
+        sprintf(p,lang_str(LANG_FSELECT_SUB_AND_MORE),i - (MAX_SUB_NAMES - 1));
+    }
+    gui_mbox_init(LANG_FSELECT_SUBTRACT, (int)buf,
+                  MBOX_TEXT_CENTER|MBOX_BTN_YES_NO|MBOX_DEF_BTN2, fselect_subtract_cb);
+}
+
 //-------------------------------------------------------------------
 static void fselect_mpopup_cb(unsigned int actn) {
     switch (actn) {
@@ -620,6 +877,28 @@ static void fselect_mpopup_cb(unsigned int actn) {
             gui_mbox_init(LANG_FSELECT_DELETE_TITLE, (int)buf,
                           MBOX_TEXT_CENTER|MBOX_BTN_YES_NO|MBOX_DEF_BTN2, fselect_marked_delete_cb);
             break;
+         case MPOPUP_PURGE:
+           if (selected->name[0] == 'D' && selected->name[1] == 'C' && selected->name[2] == 'I' && selected->name[3] == 'M') {//If selected item is DCIM folder
+               sprintf(buf, lang_str(LANG_FSELECT_PURGE_DCIM_TEXT), fselect_marked_count());
+               gui_mbox_init(LANG_FSELECT_PURGE_TITLE, (int)buf,
+                         MBOX_TEXT_CENTER|MBOX_BTN_YES_NO|MBOX_DEF_BTN2, fselect_purge_cb);
+           }
+           else if (selected->name[3] == 'C') {//If selected item is a Canon folder
+               sprintf(buf, lang_str(LANG_FSELECT_PURGE_CANON_FOLDER_TEXT), fselect_marked_count());
+               gui_mbox_init(LANG_FSELECT_PURGE_TITLE, (int)buf,
+                         MBOX_TEXT_CENTER|MBOX_BTN_YES_NO|MBOX_DEF_BTN2, fselect_purge_cb);
+           }
+           else if (selected->name[9] == 'C' || selected->name[9] == 'T' || selected->name[9] == 'W' || selected->name[9] == 'J') {//If seleted item is a file produced by the camera 
+               sprintf(buf, lang_str(LANG_FSELECT_PURGE_LIST_TEXT), fselect_marked_count());
+               gui_mbox_init(LANG_FSELECT_PURGE_TITLE, (int)buf,
+                         MBOX_TEXT_CENTER|MBOX_BTN_YES_NO|MBOX_DEF_BTN2, fselect_purge_cb);
+           }
+           else {
+               sprintf(buf, lang_str(LANG_FSELECT_PURGE_DISABLED_TEXT), fselect_marked_count());
+               gui_mbox_init(LANG_FSELECT_PURGE_TITLE, (int)buf,
+                         MBOX_TEXT_CENTER|MBOX_BTN_OK|MBOX_DEF_BTN1, fselect_purge_cb);
+           }
+           break;
         case MPOPUP_SELINV:
             fselect_marked_inverse_selection();
             break;
@@ -633,6 +912,16 @@ static void fselect_mpopup_cb(unsigned int actn) {
             raw_operation=RAW_OPERATIOM_SUM;
             process_raw_files();
             break;
+		case MPOPUP_RAW_DEVELOP:
+            sprintf(buf, "%s/%s", current_dir, selected->name);
+            gui_mbox_init((int)"", LANG_RAW_DEVELOP_MESSAGE, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
+            raw_prepare_develop(buf);
+		break;
+        case MPOPUP_SUBTRACT:
+        {
+            setup_batch_subtract();
+            break;
+        }
     }
     gui_fselect_redraw = 2;
 }
@@ -644,25 +933,27 @@ void gui_fselect_kbd_process() {
     switch (kbd_get_autoclicked_key()) {
         case KEY_UP:
             if (selected) {
-                fselect_goto_prev(1);
+				if (kbd_is_key_pressed(KEY_SHOOT_HALF)) fselect_goto_prev(4);
+                else fselect_goto_prev(1);
                 gui_fselect_redraw = 1;
             }
             break;
         case KEY_DOWN:
             if (selected) {
-                fselect_goto_next(1);
+                if (kbd_is_key_pressed(KEY_SHOOT_HALF)) fselect_goto_next(4);
+				else fselect_goto_next(1);
                 gui_fselect_redraw = 1;
             }
             break;
         case KEY_ZOOM_OUT:
             if (selected) {
-                fselect_goto_prev(NUM_LINES-1);
+                fselect_goto_prev(BODY_LINES-1);
                 gui_fselect_redraw = 1;
             }
             break;
         case KEY_ZOOM_IN:
             if (selected) {
-                fselect_goto_next(NUM_LINES-1);
+                fselect_goto_next(BODY_LINES-1);
                 gui_fselect_redraw = 1;
             }
             break;
@@ -676,10 +967,20 @@ void gui_fselect_kbd_process() {
         case KEY_LEFT:
             if (selected && selected->attr != 0xFF) {
                 i=MPOPUP_CUT|MPOPUP_COPY|MPOPUP_SELINV|MPOPUP_RAW_ADD|MPOPUP_RAW_AVERAGE;
-                if (fselect_marked_count() > 0)
+                if (fselect_marked_count() > 0) {
                     i |= MPOPUP_DELETE;
+                    // doesn't make sense to subtract from itself!
+                    if( selected->marked == 0 && fselect_real_marked_count() > 0)
+                        i |= MPOPUP_SUBTRACT;
+                }
                 if (marked_operation == MARKED_OP_CUT || marked_operation == MARKED_OP_COPY)
                     i |= MPOPUP_PASTE;
+                if (!(selected->attr & DOS_ATTR_DIRECTORY) || !(selected->name[0] == '.' && selected->name[1] == '.' && selected->name[2] == 0) ||//If item is not a folder or UpDir
+                     (selected->name[0] == 'D' && selected->name[1] == 'C' && selected->name[2] == 'I' && selected->name[3] == 'M') ||//If item is DCIM folder
+                     (selected->name[3] == 'C'))//If item is a DCIM sub folder
+                    i |= MPOPUP_PURGE;//Display PURGE RAW function in popup menu
+                if(selected->size == hook_raw_size())
+                    i |= MPOPUP_RAW_DEVELOP;
                 gui_mpopup_init(i, fselect_mpopup_cb);
             }
             break;

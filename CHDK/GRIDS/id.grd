@@ -1,0 +1,25 @@
+@title Photo ID (ISO/IEC 19794-5:2005)
+#By SuperManu
+
+#largest face
+@elps 176, 119, 144, 76, 0x22
+@elps 176, 119, 143, 75, 0x22
+#smallest face
+@elps 176, 119, 128, 76, 0x55
+@elps 176, 119, 127, 75, 0x55
+
+#eyes area
+@rectf 96, 40, 176, 200, 0x44, 0x44
+#eye logo
+@elps 136, 215, 5, 12, 0xDD
+@elps 136, 215, 4, 4, 0xDD
+@elpsf 136, 215, 3, 3, 0xDD, 0xDD
+
+#axes
+@line 0, 119, 359, 119, 0xFF
+@line 32, 0, 32, 239, 0xFF
+@line 320, 0, 320, 239, 0xFF
+
+#body shape
+@line 272, 68, 359, 0, 0xFF 
+@line 272, 171, 359, 239, 0xFF

@@ -1,0 +1,8 @@
+****************************************
+
+Camera depending notes: 
+
+- A570 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+- A570 does have a real IRIS Diaphragm, it does not have an an ND Filter! 
+Mind this.
+- cam supports multi partitions

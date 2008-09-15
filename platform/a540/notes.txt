@@ -1,0 +1,7 @@
+****************************************
+
+Camera depending notes: 
+
+- A540 uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
+- A540 does have a real IRIS Diaphragm, it does not have an ND Filter! 
+

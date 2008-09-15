@@ -24,7 +24,15 @@ NHSTUB(SetZoomActuatorSpeedPercent, 0xFF9AD778) //null stub
 NHSTUB(GetDrive_ClusterSize, 0xFFA997F4)
 NHSTUB(GetDrive_TotalClusters, 0xFFA99830)
 NHSTUB(GetDrive_FreeClusters, 0xFFA9986C)
-NHSTUB(ExpCtrlTool_StopContiAE,  0xFF96556C) 
-NHSTUB(ExpCtrlTool_StartContiAE, 0xFF96553C) 
-NHSTUB(MakeAFScan,  0xFFB000D0) 
 
+NHSTUB(MakeAFScan, 0xFFB000D0) // _sub_FFB000D0__SsPrepareSeqBase.c__572
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFF96553C) // SetFocusLensDefaultCondition_3
+NHSTUB(ExpCtrlTool_StopContiAE,  0xFF96556C) // SetFocusLensDefaultCondition_5
+NHSTUB(GetBatteryTemperature, 0xFFA344E4)
+NHSTUB(GetCCDTemperature, 0xFFA344D0)
+NHSTUB(GetOpticalTemperature, 0xFFA344BC)
+NHSTUB(PT_PlaySound, 0xFFB0B2EC)
+
+
+NHSTUB(EnterToCompensationEVF, 0xffafab60)
+NHSTUB(ExitFromCompensationEVF, 0xffafabe4)

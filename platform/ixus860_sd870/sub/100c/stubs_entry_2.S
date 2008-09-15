@@ -151,4 +151,11 @@ NSTUB(taskIdListGet,			 0xFF810958)
 NSTUB(taskName,				 0xFF810958)
 NSTUB(taskResume,			 0xFF810958)
 NSTUB(taskSuspend,			 0xFF810958)
+NHSTUB(GetBatteryTemperature, 0xFF846B30)
+NHSTUB(GetCCDTemperature, 0xFF846C54)
+NHSTUB(GetOpticalTemperature, 0xFF846BA0)
+NHSTUB(PT_PlaySound, 0xFF86015C)
 
+
+//NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
+//NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.

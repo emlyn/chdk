@@ -29,6 +29,7 @@
 
 //-------------------------------------------------------------------
 typedef struct {
+    char				symbol;
     int                 text;
     int                 type;
     int                 *value;
@@ -36,6 +37,7 @@ typedef struct {
 } CMenuItem;
 
 typedef struct {
+    char                symbol;
     int                 title;
     void                (*on_change)(unsigned int item);
     const CMenuItem     *menu;

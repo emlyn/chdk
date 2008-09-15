@@ -70,6 +70,7 @@ void __attribute__((naked,noinline)) sub_FFEABF20_my(long p)
                 "BL      sub_FFDEF83C\n"    
                 "MOV     R0, R4\n"          
                 "BL      sub_FFEABD28\n"    
+                "BL      wait_until_remote_button_is_released\n"  
                 "BL      capt_seq_hook_set_nr\n"
                 "LDR     R3, =0xC2E8\n"     
                 "LDR     R0, [R3]\n"

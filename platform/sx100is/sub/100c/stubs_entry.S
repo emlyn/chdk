@@ -102,3 +102,4 @@ NSTUB(strtol, 0xffc20338)
 NSTUB(time, 0xffc57fa0)
 NSTUB(vsprintf, 0xffc0e7b4)
 NSTUB(write, 0xffc0a4a0)
+

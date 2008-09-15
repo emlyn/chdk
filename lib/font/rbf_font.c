@@ -1,6 +1,8 @@
 #include "stdlib.h"
 #include "gui.h"
 #include "font.h"
+#include "../../core/gui_draw.h"
+#include "../../include/conf.h"
 
 //-------------------------------------------------------------------
 #define RBF_HDR_SIZE       0x74
@@ -20,7 +22,7 @@ static const char tbl_dos2win[] = {
     0xA8, 0xB8, 0xAA, 0xBA, 0xAF, 0xBF, 0xA1, 0xA2, 0xB0, 0x95, 0xB7, 0x76, 0xB9, 0xA4, 0xA6, 0xA0
 };
 
-static struct {
+static struct font {
      char name[RBF_MAX_NAME];
      int width, height;
      int points;
@@ -35,7 +37,7 @@ static struct {
      int _wmapAddr;
      int _cmapAddr;
      int _unknown4;
-} rbf_font;
+} rbf_symbol_font, rbf_font;
 static int need_free    = 0;
 static int rbf_codepage = FONT_CP_WIN; 
 
@@ -109,6 +111,64 @@ int rbf_load(char *file) {
         need_free = 1;
 
         close(fd);
+        conf.menu_symbol_enable=(rbf_font.height>=rbf_symbol_font.height);
+        return 1;
+    }
+
+    return 0;
+}
+
+//-------------------------------------------------------------------
+#define maxSymbols 128
+int rbf_load_symbol(char *file) {
+
+    int fd;
+    char buf[8];
+    int i;
+
+    fd = open(file, O_RDONLY, 0777);
+    if (fd>=0 && read(fd, &buf, 8)==8 /* Magic number */ && memcmp(&buf, RBF_HDR_MAGIC, 8)==0) {
+
+        read(fd, &rbf_symbol_font.name, RBF_MAX_NAME);
+        read(fd, &rbf_symbol_font.charSize , 4);
+        read(fd, &rbf_symbol_font.points   , 4);
+        read(fd, &rbf_symbol_font.height   , 4);
+        read(fd, &rbf_symbol_font.maxWidth , 4);
+        read(fd, &rbf_symbol_font.charFirst, 4);
+        read(fd, &rbf_symbol_font.charLast , 4);
+        read(fd, &rbf_symbol_font._unknown4, 4);
+        read(fd, &rbf_symbol_font._wmapAddr, 4);
+        read(fd, &rbf_symbol_font._cmapAddr, 4);
+        read(fd, &rbf_symbol_font.descent  , 4);
+        read(fd, &rbf_symbol_font.intline  , 4);
+
+        rbf_symbol_font.width = 8 * rbf_symbol_font.charSize / rbf_symbol_font.height;
+        rbf_symbol_font.charLast=maxSymbols+32;
+        rbf_symbol_font.charCount = rbf_symbol_font.charLast - rbf_symbol_font.charFirst + 1;
+
+        for (i=0; i<maxSymbols; ++i) {
+            rbf_symbol_font.wTable[i]=0; 
+            if (need_free && rbf_symbol_font.cTable[i]) {
+                free(rbf_symbol_font.cTable[i]);
+            }
+            rbf_symbol_font.cTable[i]=NULL;
+        }
+        need_free = 0;
+
+        lseek(fd, rbf_symbol_font._wmapAddr, SEEK_SET);
+        for (i=rbf_symbol_font.charFirst; i<=rbf_symbol_font.charLast; ++i) {
+            read(fd, &rbf_symbol_font.wTable[i], 1);
+        }
+
+        lseek(fd, rbf_symbol_font._cmapAddr, SEEK_SET);
+        for (i=rbf_symbol_font.charFirst; i<=rbf_symbol_font.charLast; ++i) {
+            rbf_symbol_font.cTable[i]=malloc(rbf_symbol_font.charSize);
+            read(fd, rbf_symbol_font.cTable[i], rbf_symbol_font.charSize);
+        }
+        need_free = 1;
+
+        close(fd);
+        conf.menu_symbol_enable=(rbf_font.height>=rbf_symbol_font.height);
         return 1;
     }
 
@@ -164,6 +224,10 @@ void rbf_set_codepage(int codepage) {
 int rbf_font_height() {
     return rbf_font.height;
 }
+//-------------------------------------------------------------------
+int rbf_symbol_height() {
+    return rbf_symbol_font.height;
+}
 
 //-------------------------------------------------------------------
 int rbf_char_width(int ch) {
@@ -175,6 +239,11 @@ int rbf_char_width(int ch) {
             break;
     }
     return rbf_font.wTable[ch];
+}
+
+//-------------------------------------------------------------------
+int rbf_symbol_width(int ch) {
+    return rbf_symbol_font.wTable[ch];
 }
 
 //-------------------------------------------------------------------
@@ -207,6 +276,27 @@ int rbf_draw_char(int x, int y, int ch, color cl) {
         }
     }
     return rbf_font.wTable[ch];
+}
+
+//-------------------------------------------------------------------
+int rbf_draw_symbol(int x, int y, int ch, color cl) {
+    int xx, yy, space=0;
+
+    if (rbf_font.height<rbf_symbol_font.height || ch==0x0) return 0;
+    if (rbf_symbol_font.cTable[ch]) {
+      if (rbf_font.height>rbf_symbol_font.height) {
+        space=(rbf_font.height-rbf_symbol_font.height)/2;
+        draw_filled_rect(x, y, x+rbf_symbol_width(ch), y+space, MAKE_COLOR(cl>>8, cl>>8));
+        y+=space;
+      }
+      for (yy=0; yy<rbf_symbol_font.height; ++yy) {
+        for (xx=0; xx<rbf_symbol_font.wTable[ch]; ++xx) {
+          draw_pixel(x+xx ,y+yy, (rbf_symbol_font.cTable[ch][yy*rbf_symbol_font.width/8+xx/8] & (1<<(xx%8)))? cl&0xff : cl>>8);
+        }
+      }
+      if (rbf_font.height>rbf_symbol_font.height) draw_filled_rect(x, y+yy, x+rbf_symbol_width(ch), y-space+rbf_font.height-1, MAKE_COLOR(cl>>8, cl>>8));
+    }
+    return rbf_symbol_font.wTable[ch];
 }
 
 //-------------------------------------------------------------------
@@ -268,22 +358,26 @@ int rbf_draw_string_right_len(int x, int y, int len, const char *str, color cl) 
     return l;
 }
 //-------------------------------------------------------------------
-int rbf_draw_string_center_len(int x, int y, int len, const char *str, color cl) { 
+int rbf_draw_string_center_len(int x, int y, int len, char symbol, const char *str, color cl) { 
     int l=0, strLen=0, i, yy, rund=2; 
     const char *s=str; 
 
     while (*s && l+rbf_char_width(*s)<=len) 
-        l+=rbf_char_width(*s++); 
-    strLen=l; 
+        l+=rbf_char_width(*s++);
+    if (symbol!=0x0 && rbf_font_height()>=rbf_symbol_height()) strLen=l+rbf_symbol_width(symbol); else strLen=l;
     l=(len-strLen)/2; 
 
-    for (i=l; i>=0; --i) { 
-        for (yy=y+rund; yy<y+rbf_font.height; ++yy) { 
-            draw_pixel(x+l-i, yy, cl>>8); 
-            draw_pixel(x+i+strLen+l-1, yy, cl>>8); 
-        } 
-        if (rund>0) rund--; 
-    } 
+    for (i=0; i<=l; i++) {
+        for (yy=y+rund; yy<y+rbf_font.height; ++yy) {
+            draw_pixel(x+i, yy, cl>>8);
+            draw_pixel(x+len-i-1, yy, cl>>8);
+        }
+        if (rund>0) rund--;
+    }
+    if (symbol!=0x0 && conf.menu_symbol_enable) {
+      l+=rbf_draw_symbol(x+l,y,symbol,cl);
+      l+=rbf_draw_char(x+l, y, ' ', cl);
+    }
     while (*str && l+rbf_char_width(*str)<=len) 
         l+=rbf_draw_char(x+l, y, *str++, cl); 
 

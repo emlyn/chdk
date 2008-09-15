@@ -6,6 +6,8 @@
 #include "stdlib.h"
 #include "conf.h"
 
+#define USE_FILE_COUNTER_FOR_EXP_COUNTING
+
 #define SS_SIZE (sizeof(shutter_speeds_table)/sizeof(shutter_speeds_table[0]))
 #define SSID_MIN (shutter_speeds_table[0].id)
 #define SSID_MAX (shutter_speeds_table[SS_SIZE-1].id)
@@ -840,6 +842,27 @@ long get_file_counter()
     return v;
 }
 
+long get_exposure_counter()
+{
+#if defined(USE_FILE_COUNTER_FOR_EXP_COUNTING) || !defined(PARAM_EXPOSURE_COUNTER)
+    long v = 0;
+    get_parameter_data(PARAM_FILE_COUNTER, &v, 4);
+    v = ((v>>4)&0x3FFF);
+    return v;
+#else
+    long v = 0;
+    get_parameter_data(PARAM_EXPOSURE_COUNTER, &v, 4);
+    return v;
+#endif
+}
+
+short shooting_get_ev_correction1()
+{
+    short evc1 = 0;
+    _GetPropertyCase(PROPCASE_EV_CORRECTION_1, &evc1, sizeof(evc1));
+    return evc1;
+}
+
 int shooting_get_zoom() {
     return lens_get_zoom_point();
 }
@@ -1118,12 +1141,12 @@ void shooting_bracketing(void){
            bracketing.dsubj_dist=0;
            bracketing.type=0;
        }
-          if (conf.tv_bracket_value)  shooting_tv_bracketing(); 
-   	      else if (conf.av_bracket_value) shooting_av_bracketing(); 
-   	      else if ((conf.iso_bracket_value) && (conf.iso_bracket_koef)) {
+           if (conf.tv_bracket_value && !(conf.override_disable==1 && conf.override_disable_all))  shooting_tv_bracketing(); 
+    	      else if (conf.av_bracket_value && !(conf.override_disable==1 && conf.override_disable_all)) shooting_av_bracketing(); 
+    	      else if ((conf.iso_bracket_value && !(conf.override_disable==1 && conf.override_disable_all)) && (conf.iso_bracket_koef)) {
 			  shooting_iso_bracketing();
    	       }
-   	      else if ((conf.subj_dist_bracket_value) && (conf.subj_dist_bracket_koef)) shooting_subject_distance_bracketing();
+    	      else if ((conf.subj_dist_bracket_value && !(conf.override_disable==1 && conf.override_disable_all)) && (conf.subj_dist_bracket_koef)) shooting_subject_distance_bracketing();   	      else if ((conf.subj_dist_bracket_value) && (conf.subj_dist_bracket_koef)) shooting_subject_distance_bracketing();
       }
    }
 }
@@ -1142,7 +1165,7 @@ void shooting_expo_param_override(void){
   shooting_set_tv96_direct(photo_param_put_off.tv96, SET_NOW);	
   photo_param_put_off.tv96=0;
  }
- else if (((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef))
+   else if (((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef) && !(conf.override_disable==1))
    { 
    if (conf.tv_enum_type) 
      shooting_set_tv96_direct(32*(conf.tv_override_value-18),SET_NOW);
@@ -1153,28 +1176,28 @@ void shooting_expo_param_override(void){
   shooting_set_sv96(photo_param_put_off.sv96, SET_NOW);
   photo_param_put_off.sv96=0; 
   }
- else if ((conf.iso_override_value) && (conf.iso_override_koef)) 
+else if ((conf.iso_override_value) && (conf.iso_override_koef) && !(conf.override_disable==1))
   shooting_set_iso_real(shooting_get_iso_override_value(), SET_NOW);
- else if (conf.autoiso_enable && shooting_get_flash_mode()/*NOT FOR FLASH AUTO MODE*/)
+ else if (conf.autoiso_enable && shooting_get_flash_mode()/*NOT FOR FLASH AUTO MODE*/ && !(conf.override_disable==1 && conf.override_disable_all))
   shooting_set_autoiso(shooting_get_iso_mode());
  if ((state_kbd_script_run) && (photo_param_put_off.av96)) {
   shooting_set_av96_direct(photo_param_put_off.av96, SET_NOW);
   photo_param_put_off.av96=0;
   }
- else if (conf.av_override_value) 
+ else if (conf.av_override_value && !(conf.override_disable==1))
  shooting_set_av96_direct(shooting_get_av96_override_value(), SET_NOW);
  if ((state_kbd_script_run) && (photo_param_put_off.subj_dist)) {
   shooting_set_focus(photo_param_put_off.subj_dist, SET_NOW);
   photo_param_put_off.subj_dist=0;  
   }
- else if ((conf.subj_dist_override_value) && (conf.subj_dist_override_koef))
+  else if ((conf.subj_dist_override_value) && (conf.subj_dist_override_koef) && !(conf.override_disable==1))
    shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
 #if CAM_HAS_ND_FILTER
  if ((state_kbd_script_run) && (photo_param_put_off.nd_filter)) {
    shooting_set_nd_filter_state(photo_param_put_off.nd_filter, SET_NOW);
    photo_param_put_off.nd_filter=0;  
   }
- else if (conf.nd_filter_state) 
+ else if (conf.nd_filter_state && !(conf.override_disable==1)) 
    shooting_set_nd_filter_state(conf.nd_filter_state, SET_NOW);
 #endif  
  return;
@@ -1185,4 +1208,9 @@ void unlock_optical_zoom(void){
  if (conf.unlock_optical_zoom_for_video) _UnsetZoomForMovie();
 }
 #endif
+
+
+
+
+
 

@@ -1,0 +1,544 @@
+// CHDK kielitiedosto
+// Rivin formaatti:
+// <id> "<text>"
+//   <id>   - pitäisi olla positiivinen numero
+//   <text> - teksti suljettuna lainausmerkkeihin
+//  12.8.2008 based on English rev 479
+1 "Päävalikko"
+
+
+2 "RAW-kuvat"
+3 "Kuvaruutunäyttö"
+4 "Histogrammi"
+5 "Seepra"
+6 "Skriptit"
+7 "Näyttö"
+8 "Sekalaiset toiminnot"
+9 "Debug"
+10 "Palauta oletusasetukset..."
+11 "Tallenna asetukset nyt..."
+
+
+12 "Takaisin"
+
+
+13 "RAW-asetukset"
+
+14 "Tallenna RAW-muodossa"
+16 "Vain sarjan 1. RAWina"
+17 "RAW ja JPEG samaan kansioon"
+18 "RAW-tiedoston etuliite"
+19 "RAW-tiedoston pääte"
+
+
+20 "Kuvaruutunäytön asetukset"
+
+21 "Näytä kuvaruutunäyttö"
+22 "Näytä tilailmaisimet"
+23 "Näytä sekalaiset arvot"
+24 " Zoomin arvo"
+25 "Näytä terävyysalue"
+26 "Näytä kello"
+27 "Kuvaruutunäytön muokkaus"
+28 "Akun tietojen näyttö"
+
+
+
+29 "Histogrammin asetukset"
+
+30 "Elävä histogrammi"
+31 "Histogrammin asettelu"
+32 "Histogrammin muoto"
+33 "Näytä ali/ylivalotus"
+34 "Ohita rajojen ylitykset"
+35 "Automaattinen suurennus"
+
+
+36 "Seepran asetukset"
+
+37 "Näytä seepra"
+38 "Seepran tyyli"
+39 "Alivalotuksen raja"
+40 "Ylivalotuksen raja"
+41 "Palauta alkuperäinen näyttö"
+42 "Palauta kuvaruutunäyttö"
+43 "Näytä seepran päällä"
+
+
+44 "Skripti asetukset"
+
+45 "Avaa skripti tiedosto..."
+46 "Skriptin jatkoviive (.1s)"
+47 "Nykyinen skripti"
+48 "Skriptin asetukset"
+
+
+49 "Näyttöasetukset"
+
+50 "Kieli..."
+51 "Koodisivu"
+52 "Valikon fontti..."
+53 "Värit"
+54 "Kuvaruutunäytön teksti"
+55 "Kuvaruutunäytön tausta"
+56 "Histogrammi"
+57 "Histogrammin tausta"
+58 "Histogrammin reuna"
+59 "Histogrammin valotusmerkit"
+60 "Seepran alivalotus"
+61 "Seepran ylivalotus"
+62 "Akun kuvake"
+63 "Valikon teksti"
+64 "Valikon tausta"
+65 "Tekstilukijan teksti"
+66 "Tekstilukijan tausta"
+
+
+67 "Sekalaiset toiminnot"
+
+68 "Tiedostohallinta"
+69 "Kalenteri"
+
+
+70 "Tekstilukija"
+71 "Pelit"
+72 "Valaisin"
+73 "Näytä aloitusruutu"
+74 "Man.tarkennus zoom-napeilla"
+75 "<ALT>-tilan nappi"
+76 "Piirrä paletti"
+77 "Näytä buildin tiedot"
+78 "Näytä muistin tiedot"
+
+
+79 "Debug-asetukset"
+
+
+80 "Debug datan näyttö"
+81 "PropCase-sivu"
+82 "Näytä sekalaiset arvot"
+83 "Muistiselaaja"
+
+84 "ALT +/- debuggaus toiminto"
+85 "Tee kortista boottaava..."
+
+
+86 "Akun tietojen asetukset"
+
+87 "Jännite MAX"
+88 "Jännite MIN"
+89 "25+ askel"
+90 "Näytä prosentit"
+91 "Näytä voltit"
+92 "Näytä akun kuvake"
+
+
+93 "Tekstilukija"
+
+94 "Avaa tiedosto..."
+95 "Avaa viimeksi avattu"
+96 "Valitse RBF-fontti"
+97 "Koodisivu"
+98 "Tekstin rivitys"
+99 "Automaattinen vieritys"
+100 " Vierityksen viive (sek)"
+
+
+101 "Pelit"
+
+102 "Reversi"
+103 "Sokoban"
+
+
+104 "*** Palauta asetukset ***"
+105 "Haluatko varmasti\npalauttaa asetukset?"
+
+106 "*** Buildin tiedot ***"
+107 "CHDK Ver: %s %s\nPvm:     %s\nAika:    %s\nKamera:  %s\nFW Ver:  %s"
+
+108 "*** Muistin tiedot ***"
+109 "Vapaa muisti: %d tavua"
+
+110 "*** Info ***"
+111 "Mene PLAY-tilaan\nja yritä uudelleen. :)"
+
+// file browser titles
+112 "Tiedostohallinta"
+113 "Valitse skriptitiedosto"
+114 "Valitse tekstitiedosto"
+115 "Valitse RBF-fonttitiedosto"
+116 "Valitse kielitiedosto"
+
+// for calendar
+117 "Tammikuu"
+118 "Helmikuu"
+119 "Maaliskuu"
+120 "Huhtikuu"
+121 "Toukokuu"
+122 "Kesäkuu"
+123 "Heinäkuu"
+124 "Elokuu"
+125 "Syyskuu"
+126 "Lokakuu"
+127 "Marraskuu"
+128 "Joulukuu"
+
+129 "Ma"
+130 "Ti"
+131 "Ke"
+132 "To"
+133 "Pe"
+134 "La"
+135 "Su"
+
+136 "Tänään:"
+
+// messagebox buttons
+137 "OK"
+138 "Kyllä"
+139 "Ei"
+140 "Peruuta"
+
+// OSD layout editor
+141 "Histogrammi"
+142 "DOF-arvot"
+143 "Tilailmaisimet"
+144 "Sekal. arvot"
+145 "Akun kuvake"
+146 "Akun teksti"
+147 "Kello"
+
+// palette
+148 "Paina SET piirtääksesi halutun värin"
+149 "   Paina MENU lopettaaksesi   "
+150 "Väri"
+151 "Käytä %s värin valintaan"
+
+// reversi
+152 "*** Pelin tulos ***"
+153 "Voitit pelin! :)"
+154 "Hävisit pelin! :("
+155 "Tasapeli! :/"
+
+156 "*** Väärä siirto ***"
+157 "Et voi siirtää tähän!"
+158 "Tämä solu ei ole tyhjä!"
+
+159 "Siirto: Sinä  "
+160 "Siirto: Kamera"
+161 " PELI LOPPUI  "
+162 " Valk.  Musta "
+
+163 "*** Tietoja ***"
+
+// sokoban
+164 " Taso"
+165 " Siirrot"
+166 "*** Valmis ***"
+167 "HYVÄ!\n  Teit sen!  "
+
+// console
+168 "*** ALOITETTU ***"
+169 "*** KESKEYTETTY ***"
+170 "*** VALMIS ***"
+
+// file browser
+171 "*** Poista kansio ***"
+172 "Haluatko varmasti poistaa\nkaikki tiedostot\nvalitusta kansiosta?"
+173 "*** Poista tiedosto ***"
+174 "Haluatko varmasti poistaa\nvalitun tiedoston?"
+
+// benchmark
+175 "Nopeustesti"
+176 "Lasketaan..."
+177 "Kameran nopeustesti   Paina [set] aloittaaksesi"
+178 "Näyttö"
+179 "Kirjoitus      :"
+180 "Luku           :"
+181 "Muisti"
+182 "Flash-kortti"
+183 "Kirjoitus (RAW):"
+184 "Kirjoitus (Mem):"
+185 "Kirjoitus (64k):"
+186 "Luku  (64k)    :"
+
+187 "Estä näytön sammutus"
+
+188 "Leikkaa"
+189 "Kopioi"
+190 "Liitä"
+191 "Poista"
+192 "Käänteinen valinta"
+193 "*** Leikkaa tiedostoja ***"
+194 "Haluatko varmasti leikata\n%d valittua tiedostoa\nkohteesta %s/?"
+195 "*** Kopioi tiedostoja ***"
+196 "Haluatko varmasti kopioida\n%d valittua tiedostoa\nkohteesta %s/?"
+197 "*** Poista tiedostoja ***"
+198 "Haluatko varmasti poistaa\n%d valittua tiedostoa?"
+199 "Odota hetki..."
+
+200 "Näytä ruudukko"
+201 "Avaa ruudukko tiedosto..."
+202 "Ruudukon asetukset"
+
+203 "Ruudukon näyttö"
+204 "Valitse ruudukko"
+205 "Nykyinen ruudukko"
+
+206 "Kohinanpoisto"
+
+207 "Korvaa ruudukon värit"
+208 "Viivan väri"
+209 "Täyttöväri"
+
+210 "Terävyysalue (DOF)"
+
+211 "Terävyysalueen näyttö"
+212 "Canon koht. etäis. lähellä rajoja"
+213 "Käytä EXIF-koht.etäis.arvoa"
+214 "Näytä koht.etäis.sekal.arvoissa"
+215 "Näytä lähel.rajaa sekal.arvoissa"
+216 "Näytä kaukana rajasta sekal.arvoissa"
+217 "Näytä hyperfokaal.etäis.sekal.arvoissa"
+218 "Näytä terävyysal.sekal.arvoissa"
+
+
+219 "Sekalaisia näytettäviä arvoja"
+
+220 "Sekalaisia arvoja"
+221 "Näytä esikatselussa"      
+222 "Zoomaus"        
+223 "Todellinen aukko"
+224 "Todellinen ISO"
+225 "Ilmoitettu ISO"
+226 " Näytä vain AutoISO-tilassa"
+227 "Asetettu valotus (Tv+Av)"
+228 "Mitattu valotus (Bv+Sv)"
+229 "Asetettu kirkkaus (BV)"
+230 "Mitattu kirkkaus"
+231 "Ylivalotusarvo (Ei salamaa!)"
+232 "Alueen valotiheys"
+ 
+233 "Videoasetukset"
+
+234 "Videokuvaus"
+235 "Videomuoto"
+236 "Videon bittinopeus"
+237 "Videolaatu"
+ 
+ 
+238 "Kuvausasetukset"
+
+239 "Kuvausasetukset"
+240 "Sulkijannopeus arvo"
+241 " Arvon kerroin"
+242 "Aukon-arvo"
+243 "ISO-arvo"
+244 " Arvon kerroin"
+245 "Etäisyys-arvo"
+246 " Arvon muutos(mm)"
+
+247 "Haarukointi jatkuvassa kuvauksessa"
+
+248 "Haarukointi jatkuvassa kuvauksessa"
+249 "TV Haarukointi"
+250 "AV Haarukointi"
+251 "ISO Haarukointi"
+252 " Arvon kerroin"
+253 "Etäisyyden haarukointi (MF)"
+254 " Arvon muutos(mm)"
+255 "Haarukointi muoto"
+
+256 "Automaatti käynnistys"
+257 "Kaukokäyttö-tila (USB)"
+
+258 "Valotustila (Ei salamaa)"
+
+259 "Valotustila (Ei salamaa)"
+260 "Valotuksen laskeminen"
+261 "TV-valotuksen laskujärjestys"
+262 "AV-valotuksen laskujärjestys"
+263 "ISO-valotuksen laskujärjestys"
+
+264 "Tyhjennä arvot käynnistyksessä"
+
+265 "Canon ylivalotus arvo"
+ 
+266 "RAW:n kehittely"
+267 "Vaihda kamera\nnauhoitus tilaan ja\n ota yksi kuva."
+268 "Valitse RAW-tiedosto"
+269 "RAW summa"
+270 "RAW keskim."
+271 "Muistikortilla ei ole tilaa:\n%dM tarvitaan, %dM käytettävissä."
+ 
+272 "Kuvaruutunäyttö esikatselussa"
+
+273 "Tehtävälistan aloitus"
+ 
+274 "Kohteen etäisyys"
+ 
+275 "Tyhjennä arvot käynnistyksessä"
+ 
+276 "Luo kahden osion kortti"
+277 "Vaihda osiot"
+278 "Tämä TUHOAA KAIKKI TIEDOT\nkortilta. Jatketaanko?"
+279 "Kortilla on vain yksi osio."
+280 "Virhe"
+281 "Varoitus"
+282 "Tietoja"
+283 "RGB-seepra (ylivaloitus)"
+
+284 "ND suodatuksen tila"
+ 
+285 "Näytä Hist. Valot. taulukko"
+
+286 "Varoituksen teksti"
+287 "Varoituksen tausta"
+288 "Tilakuvake"
+289 "Näytä tiedostotilan ikoni"
+290 "Jäjellä oleva tila"
+291 "Näytä muistintila %"
+292 "Näytä muistintila MB"
+293 "Tiedostotilan teksti"
+294 " Näytä RAW-kuvia jäljellä"
+295 "Jäljellä RAW:t"
+
+296 "Näytä RAW-tiedot"
+
+297 "Näytä arvot videossa"
+
+298 " Sulkijan asetusmuoto"
+299 "Oma valikko käytössä"
+300 "Oma valikko"
+301 " "
+
+302 " Linssin skaalaus,100=1x"
+303 "Näytä tilapalkki"
+304 " Koko ruudulla"
+305 " Leveys/korkeus"
+306 " Prosentti pykälä"
+307 " MB pykälä"
+308 "Varoitukset"
+309 " Varoituksen raja"
+310 "Optinen zoomaus käytössä"
+
+311 "Kello"
+312 "Kellon asetukset"
+313 "Kellon muoto"
+314 "Tilakuvakkeen tausta"
+315 "12h kellon tunniste"
+316 "@puolilaukaisu painettu"
+
+317 "Raw-tietojen asetukset"
+
+318 "Raw-tietojen näyttö"
+
+319 "Tiedostotilan asetukset"
+
+320 "Tiedostotila"
+
+321 "Oma Auto-ISO"
+
+322 "Oma Auto-ISO"
+323 "Oma Auto-ISO käytössä"
+324 "Minimi sulkijan nopeus"
+325 "Oma kerroin(1/FL/kerroin)"
+326 "IS kerroin (Tv*kerroin)"
+327 "Maks. ISO HI (x10)"
+328 "Maks. ISO AUTO (x10)"
+329 "Min ISO (x10)"
+
+330 "Valikon osakkeen teksti"
+331 "Valikon osakkeen tausta"
+332 "Valinnan teksti"
+333 "Valinnan tausta"
+334 "Keskitä valikko"
+335 "Vaimenna zoomauksen aikana"
+
+336 "Poista huonot pikselit"
+337 "Pois"
+338 "Keskim."
+339 "RAWmuunto"
+
+340 "Korvaus teksti"
+341 "Korvaus tekstin tausta"
+342 "Korvaaminen ei käytössä"
+343 " AutoIso:lla & Haarukoinni:lla"
+344 " Piilota toistettaessa"
+345 "Estä @ Videon nauhoitus"
+346 "Näytä aikaa jäljellä"
+347 " Päivitysnopeus(~sek)"
+348 "Aikaa jäljellä"
+349 "Tyhjennä arvot käynnistyksessä"
+350 "Nopea Ev vaihto käytössä"
+351 "  Askel (1 EV)"
+352 "EV korjaus"
+353 "Haluatko varmasti poistaa kaikki\nRAW tiedostot ilman JPG:tä\nDCIM-kansiossa?"
+354 "Haluatko varmasti poistaa kaikki\nRAW tiedostot ilman JPG:tä\nvalitusta kansiosta?"
+355 "Haluatko varmasti poistaa RAW tiedostot\nilman liittyviä JPG:tä?\n(poislukien valitut)"
+356 "Raw poiston valinta\nei toteuta toimintaa"
+357 "*** Poista RAW-tiedostot ***"
+358 "Poista RAW-tiedostot"
+ 
+359 "Oma valikko ensimmäisenä"
+
+360 "Kuvakkeet..."
+361 "Valitse kuvaketiedosto"
+362 "Kuvakkeet käytössä"
+363 "Kuvake" 
+364 "Kuvakkeen tausta"
+
+365 "Omat käyrät"
+
+366 "Omat käyrät"
+367 "Avaa käyräprofiili tiedosto..."
+368 "Käyräprofiili"
+369 "Valitse tiedosto"
+
+370 "Reunan näytön asetukset"
+371 "Reunan näyttö"
+
+372 "Näytä reunat"
+373 "Reunan kynnystaso"
+374 "Reunan väri"
+
+375 "Kaukokäyttö asetukset"
+376 "Kaukokäyttö"
+377 "Tahdist. kaukokäyttö käytössä"
+378 "Tahdistus käytössä"
+379 "Tahdistuksen viive käytössä"
+380 "Tahdistuksen viive 0.1ms"
+381 "Tahdistuksen viive 0.1s"
+
+382 "AF nappi"
+383 "Lataa oletusasetukset"
+384 "Asetusten valinta"
+
+385 "Raw @ Sports ei käytössä"
+386 "Raw @ purske ei käytössä"
+387 "Raw @ EV haarukointi ei käytössä"
+388 "Raw @ ajastin ei käytössä"
+
+389 "Poikkeukset"
+390 "RAW poikkeukset"
+391 "Varoita poikkeuksista"
+392 "Valitse valikon ensimmäinen"
+
+393 "Odotusviive 0.1s"
+394 "tahdistettava kaukokäyttö"
+395 "Nopea videon säätö"
+396 "Lämpötila"
+397 "Näytä lämpötila"
+398 "Videolaadun valvonta"
+399 "Kauko-ohjattu zoomaus"
+400 "Zoomin odotusviive 0.1s"
+401 "Käynnistysääni"
+402 "Raw vähennyksen etuliite"
+403 "Raw vähennyksen lopputunniste"
+404 "Tumman taustan pidettävä arvo"
+405 "Pienin vähennettävä tumman arvo"
+406 "->"
+407 "...lisää %d tiedostoa"
+408 "Vähennä"
+409 "Vähennä merkityt"
+410 "Tallenna arvot"

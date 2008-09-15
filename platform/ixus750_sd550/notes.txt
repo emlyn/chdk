@@ -1,0 +1,12 @@
+****************************************
+
+Camera depending notes: 
+
+
+- ixus750_sd550 uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
+- ixus750_sd550 does NOT have a real IRIS Diaphragm, it only has an ND Filter! 
+Mind this.
+- cam supports multipartitions
+
+
+

@@ -1,0 +1,9 @@
+****************************************
+
+Camera depending notes: 
+
+- A720 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+- dryos camera
+- A720 does have a real IRIS Diaphragm, it does not have an ND Filter! 
+Mind this.
+

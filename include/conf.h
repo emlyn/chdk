@@ -4,19 +4,32 @@
 #include "gui.h"
 #include "script.h"
 
+#define USER_MENU_ITEMS 14
+
 typedef struct {
     unsigned short  x, y;
 } OSD_pos;
 
 typedef struct {
     int save_raw;
+    int save_raw_in_video;
+    int save_raw_in_sports;
+    int save_raw_in_burst;
+    int save_raw_in_ev_bracketing;
+    int save_raw_in_timer;
+    int raw_exceptions_warn;
     int raw_in_dir;
     int raw_prefix;
     int raw_ext;
     int raw_save_first_only; //for series shooting
     int raw_nr;
+    int sub_batch_prefix; // output of batch subtracts
+    int sub_batch_ext;
+    int sub_in_dark_value; // values <= to this are not subtracted, i.e. the dark value of your darkframe
+    int sub_out_dark_value; // minimum value to output from subtract, i.e. dark value of your final image
 
     int show_osd;
+    int hide_osd;
     int show_osd_in_review;
     int script_shoot_delay;
     int show_histo;
@@ -35,6 +48,7 @@ typedef struct {
     int space_bar_width;
     int space_icon_show;
     int show_clock;
+    int show_temp;
     int clock_format;
     int clock_indicator;
     int clock_halfpress;
@@ -43,6 +57,9 @@ typedef struct {
     int space_perc_warn;
     int space_mb_warn;
     int space_warn_type;
+    int show_movie_time;
+    int show_movie_refresh;
+
 
     int zoom_value;
 
@@ -81,6 +98,9 @@ typedef struct {
     OSD_pos mode_raw_pos;
     OSD_pos values_pos;
     OSD_pos clock_pos;
+    OSD_pos mode_video_pos;
+    OSD_pos mode_ev_pos;
+    OSD_pos temp_pos;
 
     color histo_color;
     color histo_color2; // markers/border
@@ -91,13 +111,18 @@ typedef struct {
     color menu_color;
     color menu_title_color;
     color menu_cursor_color;
+    color menu_symbol_color;
     int menu_center;
+    int menu_select_first_entry;
+    int menu_symbol_enable;
     color reader_color;
     color zebra_color; // under/over
     color grid_color;
+    color osd_color_override;
 
     int font_cp;
     char menu_rbf_file[100];
+    char menu_symbol_rbf_file[100];
 
     char lang_file[100];
 
@@ -112,7 +137,12 @@ typedef struct {
     int sokoban_level;
 
     int flashlight;
+    int fast_ev;
+    int fast_ev_step;
+    int fast_movie_control;
+    int fast_movie_quality_control;
     int splash_show;
+    int start_sound;
 
     int use_zoom_mf;
     long alt_mode_button; //for S-series
@@ -134,6 +164,9 @@ typedef struct {
     int subj_dist_bracket_koef;
     int bracket_type;
     int clear_bracket;
+    int clear_video;
+    int override_disable;
+    int override_disable_all;
 
 
     int tv_override_value;
@@ -186,16 +219,39 @@ typedef struct {
     int values_show_canon_overexposure;
     int values_show_luminance;
 
-    int ns_enable_memdump;
+    int debug_shortcut_action;  // 0=none, 1=dump, 2=page display
+    int debug_display;          // 0=none, 1=props, 2=flash param, 3=tasks
+
     int script_startup;			// remote autostart
     int remote_enable;			// remote enable
     int user_menu_enable;
-    int user_menu_vars[10];
+    int user_menu_vars[USER_MENU_ITEMS];
+    int user_menu_as_root;
     int zoom_scale;
     int unlock_optical_zoom_for_video;
     int mute_on_zoom;
     int bad_pixel_removal;
     int video_af_key;
+    
+    char curve_file[100];
+    int curve_enable;
+    
+    int edge_overlay_enable;
+    int edge_overlay_thresh;
+    color edge_overlay_color;
+
+    int synch_enable;
+    int ricoh_ca1_mode;
+    int synch_delay_enable;
+    int synch_delay_value;
+    int synch_delay_coarse_value;
+    int remote_zoom_enable;
+    int zoom_timeout;
+
+    int script_param_set;
+    int script_param_save;
+    
+    long mem_view_addr_init;
 } Conf;
 
 extern Conf conf;
@@ -208,6 +264,11 @@ extern Conf conf;
 #define SHOOTING_PROGRESS_STARTED       1
 #define SHOOTING_PROGRESS_PROCESSING    2
 #define SHOOTING_PROGRESS_DONE          3
+
+// video quality defaults. Ideally, these should match the camera default settings
+#define VIDEO_DEFAULT_QUALITY   84  // ? where does 84 come from
+#define VIDEO_MAX_QUALITY       99
+#define VIDEO_DEFAULT_BITRATE   3 // should be 1 for all cams
 
 extern int state_kbd_script_run;
 extern int state_shooting_progress;
@@ -225,5 +286,15 @@ extern void script_autostart();				// remote autostart
 extern void conf_save();
 extern void conf_restore();
 extern void conf_load_defaults();
+extern int shutter_int;
 
+// reyalp: putting these in conf, since the conf values are lookups for them
+// prefixes and extentions available for raw images (index with conf.raw_prefix etc)
+#define NUM_IMG_PREFIXES 3 // IMG_ CRW_ SND_ (could add ETC_ SDR_ AUT_ MVI_ MRK_)
+#define NUM_IMG_EXTS 5 // .JPG .CRW .CR2 .THM .WAV (could add .AVI .MRK)
+extern const char* img_prefixes[NUM_IMG_PREFIXES];
+extern const char* img_exts[NUM_IMG_EXTS];
+// ugh, but various things need it
+#define VIDEO_BITRATE_STEPS 10
+extern const char *video_bitrate_strings[VIDEO_BITRATE_STEPS];
 #endif

@@ -1,19 +1,31 @@
-VER=allbest
+VER=CHDK
 
-#PLATFORM=ixus50_sd400
-#PLATFORMSUB=101a
-
-#PLATFORM=ixus40_sd300
-#PLATFORMSUB=100k
-
-PLATFORM=a610
-PLATFORMSUB=100e
+PLATFORM=s3is
+PLATFORMSUB=100a
 
 #PLATFORM=a620
 #PLATFORMSUB=100f
 
-#PLATFORM=a630
+#PLATFORM=ixus40_sd300
+#PLATFORMSUB=100k
+
+#PLATFORM=sx100is
 #PLATFORMSUB=100c
+
+#PLATFORM=sx100is
+#PLATFORMSUB=100b
+
+#PLATFORM=ixus50_sd400
+#PLATFORMSUB=101a
+
+#PLATFORM=ixus50_sd400
+#PLATFORMSUB=101b
+
+#PLATFORM=ixus750_sd550
+#PLATFORMSUB=100f
+
+#PLATFORM=ixus750_sd550
+#PLATFORMSUB=100g
 
 #PLATFORM=a640
 #PLATFORMSUB=100b
@@ -25,13 +37,25 @@ PLATFORMSUB=100e
 #PLATFORMSUB=100a
 
 #PLATFORM=s2is
+#PLATFORMSUB=100e
+
+#PLATFORM=s2is
 #PLATFORMSUB=100f
 
-#PLATFORM=s3is
-#PLATFORMSUB=100a
+#PLATFORM=s2is
+#PLATFORMSUB=100g
+
+#PLATFORM=g7
+#PLATFORMSUB=100e
+
+#PLATFORM=g7
+#PLATFORMSUB=100g
 
 #PLATFORM=g7
 #PLATFORMSUB=100i
+
+#PLATFORM=g7
+#PLATFORMSUB=100j
 
 #PLATFORM=a530
 #PLATFORMSUB=100a
@@ -43,10 +67,25 @@ PLATFORMSUB=100e
 #PLATFORMSUB=100a
 
 #PLATFORM=a570
+#PLATFORMSUB=100a
+
+#PLATFORM=a570
 #PLATFORMSUB=100e
+
+#PLATFORM=a610
+#PLATFORMSUB=100e
+
+#PLATFORM=a610
+#PLATFORMSUB=100f
 
 #PLATFORM=ixus700_sd500
 #PLATFORMSUB=101a
+
+#PLATFORM=ixus700_sd500
+#PLATFORMSUB=101b
+
+#PLATFORM=ixus800_sd700
+#PLATFORMSUB=100b
 
 #PLATFORM=ixus800_sd700
 #PLATFORMSUB=101b
@@ -66,6 +105,24 @@ PLATFORMSUB=100e
 #PLATFORM=ixus55_sd450
 #PLATFORMSUB=100b
 
+#PLATFORM=ixus55_sd450
+#PLATFORMSUB=100c
+
+#PLATFORM=ixus55_sd450
+#PLATFORMSUB=100d
+
+#PLATFORM=ixus60_sd600
+#PLATFORMSUB=100a
+
+#PLATFORM=ixus60_sd600
+#PLATFORMSUB=100d
+
+#PLATFORM=ixus70_sd1000
+#PLATFORMSUB=100c
+
+#PLATFORM=ixus70_sd1000
+#PLATFORMSUB=101b
+
 #PLATFORM=ixus70_sd1000
 #PLATFORMSUB=102a
 
@@ -81,11 +138,26 @@ PLATFORMSUB=100e
 #PLATFORM=a550
 #PLATFORMSUB=100c
 
+#PLATFORM=a630
+#PLATFORMSUB=100c
+
 #PLATFORM=s5is
 #PLATFORMSUB=101a
 
 #PLATFORM=s5is
 #PLATFORMSUB=101b
+
+#PLATFORM=ixus65_sd630
+#PLATFORMSUB=100a
+
+#PLATFORM=tx1
+#PLATFORMSUB=100g
+
+#PLATFORM=tx1
+#PLATFORMSUB=101b
+
+#PLATFORM=ixus960_sd950
+#PLATFORM=100d
 
 include $(topdir)version.inc
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
@@ -98,8 +170,10 @@ NOZERO100K=TRUE
 ##########################################################################
 ##########################################################################
 
+ESED = sed -r
+
 ifndef OSTYPE
-  HOSTPLATFORM:=$(shell uname -s | head -c 5)
+  HOSTPLATFORM:=$(patsubst MINGW%,MINGW,$(shell uname -s))
   ifeq ($(HOSTPLATFORM),MINGW)
     OSTYPE = Windows
     EXE = .exe
@@ -114,11 +188,20 @@ ifndef OSTYPE
       DEVNULL = /dev/null
       SORT = sort
     else
-      OSTYPE = Other
-      EXE =
-      SH =
-      DEVNULL = /dev/null
-      SORT = sort
+      ifeq ($(HOSTPLATFORM),Darwin)
+        OSTYPE = Darwin
+        EXE =
+        SH =
+        DEVNULL = /dev/null
+        SORT = sort
+        ESED = sed -E
+      else
+        OSTYPE = Other
+        EXE =
+        SH =
+        DEVNULL = /dev/null
+        SORT = sort
+      endif
     endif
   endif
 else

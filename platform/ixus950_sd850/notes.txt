@@ -1,0 +1,10 @@
+****************************************
+
+Camera depending notes: 
+
+- ixus950_sd850 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+- ixus950_sd850 does NOT have a real IRIS Diaphragm, it only has an ND Filter! 
+Mind this.
+- cam supports multipartitions
+
+

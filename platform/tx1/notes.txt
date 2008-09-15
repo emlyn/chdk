@@ -1,0 +1,10 @@
+****************************************
+
+Camera depending notes: 
+
+- tx1 uses Propset 2 (see http://tinyurl.com/6zbv9b)
+- tx1 has adjustable alt-button
+- tx1 supports Multipartition
+- tx1 has an ND Filter AND real iris diaphragm (which can be set via photo overrides)
+
+

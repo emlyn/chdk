@@ -91,3 +91,5 @@ void JogDial_CCW(void){
   *(int*)(0x2590+0x18)=0x32;
   _GiveSemaphore(*(int*)(0x2590+0x10));
 }
+void _EnterToCompensationEVF() {} // Dummy function. To be removed after stub is found. See stubs_entry_2.S.
+void _ExitFromCompensationEVF() {} // Dummy function. To be removed after stub is found. See stubs_entry_2.S.

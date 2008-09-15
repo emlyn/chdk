@@ -1,0 +1,34 @@
+********************************
+
+04 - URLs, Links
+
+
+For more information visit the following links:
+
+CHDK Wiki: http://chdk.wikia.com/wiki/Main_Page
+
+Main CHDK Manual: http://chdk.wikia.com/wiki/CHDK_firmware_usage
+
+Allbest CHDK Manual: http://chdk.wikia.com/wiki/CHDK_firmware_usage/AllBest
+
+JuciPhoX CHDK Manual: http://chdk.wikia.com/wiki/CHDK/MoreBest
+
+CHDK Forum: http://chdk.setepontos.com/index.php
+
+In-Depth Guide explaining a lot of things: http://chdk.setepontos.com/index.php/topic,1167.0.html
+
+Timeline (changelog) of chdk: http://tools.assembla.com/chdk/timeline
+
+For more information about this build visit: http://chdk.setepontos.com/index.php/topic,688.0.html
+
+Download the sources of this build here: http://tools.assembla.com/chdk/changeset/head/branches/juciphox?old_path=%2F&format=zip
+
+You can get a nice app that will help you making your card bootable on windows: http://chdk.setepontos.com/index.php/topic,964.0.html
+
+<insert text with small description of chdk here>
+
+<insert text with installation tips for vxworks here>
+
+<insert more links and especially tricks for OS other than Windows> 
+
+

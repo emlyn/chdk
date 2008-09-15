@@ -126,7 +126,7 @@ extern long Fflush_Fut(long file);
 extern int creat (const char *name, int flags);
 extern int open (const char *name, int flags, int mode );
 extern int close (int fd);
-extern int write (int fd, void *buffer, long nbytes);
+extern int write (int fd, const void *buffer, long nbytes);
 extern int read (int fd, void *buffer, long nbytes);
 extern int lseek (int fd, long offset, int whence);
 extern long mkdir(const char *dirname);
@@ -152,6 +152,8 @@ extern int printf(char *buf, ...);
 extern void msleep(long msec);
 extern long task_lock();
 extern long task_unlock();
+extern const char *task_name(int id);
+int task_id_list_get(int *idlist,int size);
 
 #define DOS_ATTR_RDONLY         0x01            /* read-only file */
 #define DOS_ATTR_HIDDEN         0x02            /* hidden file */
@@ -217,5 +219,9 @@ struct utimbuf {
 
 extern int utime(char *file, struct utimbuf *newTimes);
 extern unsigned long time(unsigned long *timer);
+
+static inline int abs( int v ) {
+  return v<0 ? -v : v;
+}
 
 #endif

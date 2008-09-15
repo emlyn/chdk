@@ -22,7 +22,16 @@ long hook_raw_size()
 
 void *vid_get_viewport_live_fb()
 {
-    return (void*)0;
+//    return (void*)0;
+    void **fb=(void **)0x5230;
+    unsigned char buff = *((unsigned char*)0x5240);
+    if (buff == 0) {
+        buff = 2;
+    }
+    else {
+        buff--;
+    }
+    return fb[buff];
 }
 
 void *vid_get_bitmap_fb()
@@ -62,3 +71,4 @@ char *camera_jpeg_count_str()
 long vid_get_bitmap_buffer_width() { return 360; }
 
 long vid_get_bitmap_buffer_height() { return 240; }
+

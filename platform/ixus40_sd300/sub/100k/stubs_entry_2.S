@@ -1,4 +1,8 @@
 #include "stubs_asm.h"
+NHSTUB(GetBatteryTemperature, 0xFFA48900)  //ok
+NHSTUB(GetCCDTemperature, 0xFFA488EC) //ok
+NHSTUB(GetOpticalTemperature, 0xFFA488D8) //ok but returns -10deg all the time
+
 NHSTUB(GetDrive_ClusterSize, 0xFF8707EC) //OK
 NHSTUB(GetDrive_TotalClusters, 0xFF87082C) //OK
 NHSTUB(GetDrive_FreeClusters, 0xFF87086C) //OK
@@ -90,28 +94,6 @@ NHSTUB(kbd_p1_f_cont, 0xFF830AB4)
 NHSTUB(PhySw_testgpio, 0xFF82FA8C)
 
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-
-
-
-
-
-
 
 //null stub
 
@@ -124,7 +106,9 @@ NHSTUB(kbd_read_keys_r2, 0xFFAAAED0)
 //sd300 doesnt seem to have this feature !
 NHSTUB(UnsetZoomForMovie, 0xFFAAAED0) //00xFF9A4D1C) 
 
+NHSTUB(PT_PlaySound, 0xFF94EB3C)
 
-//NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
-//NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
+
+NHSTUB(EnterToCompensationEVF, 0xff93e1e0) 
+NHSTUB(ExitFromCompensationEVF, 0xff93e220) 
 

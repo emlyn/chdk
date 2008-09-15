@@ -57,6 +57,7 @@ void __attribute__((naked,noinline)) sub_FF950538_my(long p)
                 "LDR     R0, [R0,#0x7C]\n"
                 "BL      sub_FF89DBA4\n" // IsEmptyWriteCache_44
                 "BL      sub_FF9504AC\n"
+                "BL      wait_until_remote_button_is_released\n"
                 "BL      capt_seq_hook_set_nr\n"
                 "LDR     R3, =0x6D70\n"
                 "LDR     R0, [R3]\n"

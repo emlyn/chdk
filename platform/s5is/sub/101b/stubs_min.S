@@ -87,4 +87,9 @@ DEF(canon_shoot_menu_active,0xC05D) // 0xC05C + 1
 // ROM:FF9754B4 008                 LDR     R12, =0x3007
 // ROM:FF9754B8 008                 LDR     R2, [R1,#0xCC]
 DEF(recreview_hold, 0xBE2C) // 0xBD60 + 0xCC
+DEF(movie_status,0x5868 + 0x38)
+
+
+
+
 

@@ -77,3 +77,4 @@ char *camera_jpeg_count_str() /* XXXA530XXX */
 long vid_get_bitmap_buffer_width() { return 360; }
 
 long vid_get_bitmap_buffer_height() { return 240; }
+

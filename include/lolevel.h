@@ -29,6 +29,10 @@ extern long _GetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _SetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _IsStrobeChargeCompleted();
 extern long _VbattGet();
+extern int _GetBatteryTemperature();
+extern int _GetCCDTemperature();
+extern int _GetOpticalTemperature();
+extern void _PT_PlaySound(short , void*);  
 extern void _RefreshPhysicalScreen(long f);
 extern void _Unmount_FileSystem();
 extern void _Mount_FileSystem();
@@ -37,9 +41,11 @@ extern int _CreateTask (const char *name, int prio, int stack_size /*?*/,
     void *entry, long parm /*?*/);
 extern void _SleepTask(long msec);
 extern void __attribute__((noreturn)) _ExitTask();
-extern int _taskNameToId(char* taskName); // VxWorks only, task's name first letter must be 't', maximum 10 chars total
-extern void _taskSuspend(int taskId);
-extern void _taskResume(int taskId);
+extern int _taskNameToId(char* taskName); // VxWorks only, task's name first letter must be 't', maximum 10 chars total 
+extern const char *_taskName(int taskID); // VxWorks only for now
+extern int _taskIdListGet(int *idlist,int max); // VxWorks only for now
+extern void _taskSuspend(int taskId); 
+extern void _taskResume(int taskId); extern long _GetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _GetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _SetPropertyCase(long opt_id, void *buf, long bufsize);
 extern long _IsStrobeChargeCompleted();
@@ -179,12 +185,15 @@ extern void _UnsetZoomForMovie(void);
 void _TurnOffMic(void);
 void _TurnOnMic(void);
 
+extern void _MakeAFScan(int*, int); 
+extern void _ExpCtrlTool_StartContiAE(int, int); 
+extern void _ExpCtrlTool_StopContiAE(int, int); 
 
-extern void _MakeAFScan(int*, int);
-extern void _ExpCtrlTool_StartContiAE(int, int);
-extern void _ExpCtrlTool_StopContiAE(int, int);
+extern int some_flag_for_af_scan; 
+extern int parameter_for_af_scan; 
 
-extern int some_flag_for_af_scan;
-extern int parameter_for_af_scan;
+extern void _EnterToCompensationEVF(void);
+extern void _ExitFromCompensationEVF(void);
+
 
 #endif

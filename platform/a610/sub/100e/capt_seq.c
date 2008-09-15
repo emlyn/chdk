@@ -56,6 +56,7 @@ void __attribute__((naked,noinline)) sub_FFD39620_my(long p)
 	    	"LDR     R0, [R3]\n"
 	    	"BL      sub_FFC0FA60\n"
 	    	"BL      sub_FFD3F438\n"
+            "BL      wait_until_remote_button_is_released\n"
 	    	"LDR     R0, [R0,#0x7C]\n"
 	    	"BL      sub_FFD39594\n" // nr
 

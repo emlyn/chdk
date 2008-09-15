@@ -1,0 +1,8 @@
+****************************************
+
+Camera depending notes: 
+
+- A630 uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
+- A630 does have a real IRIS Diaphragm, it does not have an ND Filter! 
+Mind this.
+- cam supports multipartitions

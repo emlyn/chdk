@@ -71,6 +71,7 @@ void __attribute__((naked,noinline)) sub_FFE71CDC_my(long p)
                 "BL      sub_FFDCBF04\n"
                 "MOV     R0, R4\n"
                 "BL      sub_FFE71AE4\n"
+                "BL      wait_until_remote_button_is_released\n"
                 "BL      capt_seq_hook_set_nr\n"
                 "LDR     R3, =0xCF78\n"
                 "LDR     R0, [R3]\n"

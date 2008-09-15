@@ -1,0 +1,8 @@
+****************************************
+
+Camera depending notes: 
+
+- A450 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+- A450 does NOT have a real IRIS Diaphragm, it only has an ND Filter! 
+Mind this.
+

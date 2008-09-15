@@ -2,17 +2,17 @@
 #include "conf.h"
 #include "stdlib.h"
 #include "raw.h"
+#include "curves.h"
+#include "shot_histogram.h"
 
 //-------------------------------------------------------------------
 #define RAW_TARGET_DIRECTORY    "A/DCIM/%03dCANON"
 //#define RAW_TMP_FILENAME        "HDK_RAW.TMP"
-#define RAW_TARGET_FILENAME     "%s_%04d.%s"
+#define RAW_TARGET_FILENAME     "%s%04d%s"
 
 //-------------------------------------------------------------------
 static char fn[64];
 static char dir[32];
-static char prefixes[][4] = { "IMG", "CRW", "SND" };
-static char exts[][4] = { "JPG", "CRW", "CR2", "THM", "WAV" };
 static int develop_raw=0;
 //-------------------------------------------------------------------
 void raw_prepare_develop(char* filename){
@@ -24,8 +24,10 @@ void raw_prepare_develop(char* filename){
 void patch_bad_pixels(void);
 //-------------------------------------------------------------------
 int raw_savefile() {
-    int fd;
+		int fd, m=(mode_get()&MODE_SHOOTING_MASK);
     static struct utimbuf t;
+
+    if (state_kbd_script_run && shot_histogram_enabled) build_shot_histogram();
 
     if (develop_raw) {
      started();
@@ -34,6 +36,7 @@ int raw_savefile() {
       read(fd, hook_raw_image_addr(), hook_raw_size());
       close(fd);
       }
+     if (conf.curve_enable) curve_apply();
      finished();
      develop_raw=0;
      return 0;
@@ -50,7 +53,7 @@ int raw_savefile() {
     
     state_shooting_progress = SHOOTING_PROGRESS_PROCESSING;
 
-    if (conf.save_raw) {
+     if (conf.save_raw && (!((movie_status > 1) && conf.save_raw_in_video   )) && (!((m==MODE_SPORTS) && conf.save_raw_in_sports)) && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)==1) && conf.save_raw_in_burst && !(m==MODE_SPORTS))) && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)>=2) && conf.save_raw_in_timer)) && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) ) {
         long v;
         
         started();
@@ -62,7 +65,7 @@ int raw_savefile() {
         mkdir(dir);
 
         sprintf(fn, "%s/", dir);
-        sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, prefixes[conf.raw_prefix], get_target_file_num(), exts[conf.raw_ext]);
+        sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), img_exts[conf.raw_ext]);
 
         fd = open(fn, O_WRONLY|O_CREAT, 0777);
         if (fd>=0) {
@@ -75,6 +78,8 @@ int raw_savefile() {
 
         return (fd >= 0);
     }
+
+    if (conf.curve_enable) curve_apply();
 
     return 0;
 }
@@ -142,11 +147,11 @@ unsigned short get_raw_pixel(unsigned int x,unsigned  int y){
 
 //-------------------------------------------------------------------
 void patch_bad_pixel(unsigned int x,unsigned  int y){
- if ((x>=2) && (x<CAM_RAW_ROWPIX-2) && (y>=2) && (y<CAM_RAW_ROWS-2)) {
-  if (conf.bad_pixel_removal==1)   // interpolation
-   set_raw_pixel(x,y,(get_raw_pixel(x-2,y)+get_raw_pixel(x+2,y)+get_raw_pixel(x,y-2)+get_raw_pixel(x,y+2))/4);
-  else if (conf.bad_pixel_removal==2)  // or this makes RAW converter (internal/external)
-   set_raw_pixel(x,y,0);  
+ if ((x>=2) && (x<CAM_RAW_ROWPIX-2) && (y>=2) && (y<CAM_RAW_ROWS-2)) { 
+  if (conf.bad_pixel_removal==1)   // interpolation 
+   set_raw_pixel(x,y,(get_raw_pixel(x-2,y)+get_raw_pixel(x+2,y)+get_raw_pixel(x,y-2)+get_raw_pixel(x,y+2))/4); 
+  else if (conf.bad_pixel_removal==2)  // or this makes RAW converter (internal/external) 
+   set_raw_pixel(x,y,0);   
  }
 }
 

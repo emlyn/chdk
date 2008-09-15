@@ -68,7 +68,8 @@ char *camera_jpeg_count_str()
 {
     return (char*)0x9B58;
 }
-
+ 
 long vid_get_bitmap_buffer_width() { return 360; }
 
 long vid_get_bitmap_buffer_height() { return 240; }
+

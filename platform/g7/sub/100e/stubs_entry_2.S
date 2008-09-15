@@ -16,3 +16,10 @@ NHSTUB(GetDrive_FreeClusters, 0xff87c3b0)
 NHSTUB(ExpCtrlTool_StopContiAE,  0xFF925F18) 
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFF925EE8) 
 NHSTUB(MakeAFScan,               0xFF9A04E0) 
+NHSTUB(GetBatteryTemperature, 0xFF82EB20)
+NHSTUB(GetCCDTemperature, 0xFF82EB0C)
+NHSTUB(GetOpticalTemperature, 0xFF82EAF8)
+NHSTUB(PT_PlaySound, 0xFF9AC9D0)
+
+//NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
+//NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.

@@ -45,7 +45,9 @@ extern void gui_osd_draw_state();
 extern void gui_osd_draw_raw_info();
 extern void gui_osd_draw_values();
 extern void gui_osd_draw_clock();
+extern void gui_osd_draw_temp();
 extern void gui_osd_draw_seconds();
+extern void gui_osd_draw_ev();
 
 //ARM Begin
 extern void gui_osd_calc_dof();
@@ -53,6 +55,6 @@ extern void gui_osd_calc_expo_param();
 //ARM End
 
 extern int  gui_osd_draw_zebra();
-
+extern void gui_osd_draw_movie_time_left();
 //-------------------------------------------------------------------
 #endif

@@ -1,0 +1,10 @@
+****************************************
+
+Camera depending notes: 
+
+- ixus50_sd400 uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
+- ixus50_sd400 does NOT have a real IRIS Diaphragm, it only has an ND Filter! 
+Mind this.
+
+
+

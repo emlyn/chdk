@@ -79,7 +79,16 @@ ROM:FFB1975C                                         ; "VRAM Size     : 0x%x\r"
 
 void *vid_get_viewport_live_fb()
 {
-    return (void*)0; // 0x106571F0 + 0x7E900
+//    return (void*)0; // 0x106571F0 + 0x7E900
+    void **fb=(void **)0x5564;
+    unsigned char buff = *((unsigned char*)0x5574);
+    if (buff == 0) {
+        buff = 2;
+    }
+    else {
+        buff--;
+    }
+    return fb[buff];
 }
 
 /***********
@@ -164,3 +173,6 @@ char *camera_jpeg_count_str()
 long vid_get_bitmap_buffer_width() { return 360; }
 
 long vid_get_bitmap_buffer_height() { return 240; }
+
+void _EnterToCompensationEVF() {} // Dummy function. To be removed after stub is found. See stubs_entry_2.S.
+void _ExitFromCompensationEVF() {} // Dummy function. To be removed after stub is found. See stubs_entry_2.S.

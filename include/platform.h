@@ -26,6 +26,7 @@ MODE_VIDEO_SPEED        ,
 MODE_VIDEO_COMPACT      ,
 MODE_VIDEO_MY_COLORS    ,
 MODE_VIDEO_COLOR_ACCENT ,
+MODE_VIDEO_COLOR_SWAP   ,
 MODE_STITCH             ,
 MODE_MY_COLORS          ,
 MODE_SCN_WATER          ,
@@ -37,6 +38,7 @@ MODE_SCN_SNOW           ,
 MODE_SCN_BEACH          ,
 MODE_SCN_FIREWORK       ,
 MODE_SCN_COLOR_ACCENT   ,
+MODE_SCN_COLOR_SWAP     ,
 MODE_VIDEO_HIRES        ,
 MODE_SCN_AQUARIUM       ,
 MODE_COLOR_ACCENT       ,
@@ -63,8 +65,27 @@ MODE_VIDEO_AQUARIUM     ,
 MODE_VIDEO_SUPER_MACRO  ,
 MODE_VIDEO_STITCH       ,
 MODE_VIDEO_MANUAL       ,
+MODE_SPORTS			    ,
 };
 
+// this is nasty, but not as nasty as checking each of the flags all over the place
+#define MODE_IS_VIDEO(m)   (((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_STD || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_SPEED ||  \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_COMPACT || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_MY_COLORS || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_ACCENT || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_SWAP || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_TIME_LAPSE || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_PORTRAIT || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_NIGHT || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_INDOOR || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_FOLIAGE || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_SNOW  || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_BEACH || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_AQUARIUM || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_SUPER_MACRO || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_STITCH || \
+                            ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_MANUAL)
 #if CAM_PROPSET == 2     // most digic3 cameras
  #define PROPCASE_DRIVE_MODE					102
  #define PROPCASE_FOCUS_MODE					133
@@ -86,12 +107,24 @@ MODE_VIDEO_MANUAL       ,
  #define PROPCASE_OVEREXPOSURE 					103
  #define PROPCASE_SHOOTING_MODE					49
  #define PROPCASE_IS_MODE					    145
+ #define PROPCASE_QUALITY				        57
+ #define PROPCASE_RESOLUTION				        218
+ #define PROPCASE_EV_CORRECTION_1				107
+ #define PROPCASE_EV_CORRECTION_2				207
+ #define PROPCASE_ORIENTATION_SENSOR			219
  #define PROPCASE_DIGITAL_ZOOM_STATE                            94
  #define PROPCASE_DIGITAL_ZOOM_POSITION                         95
+ #define PROPCASE_DISPLAY_MODE                         105
+ #define PROPCASE_BRACKET_MODE                         278 //fictional value! need to find out!
 #elif CAM_PROPSET == 1   // most digic2 cameras
  #define PROPCASE_DRIVE_MODE    				6
  #define PROPCASE_FOCUS_MODE    				12
  #define PROPCASE_FLASH_MODE       				16
+// need corresponding values for propset2!!!
+// #define PROPCASE_FLASH_ADJUST_MODE       	15
+// #define PROPCASE_FLASH_CORRECTION               28      
+// #define PROPCASE_FLASH_MANUAL_OUTPUT    29
+//  #define PROPCASE_FOCUS_OK           67
  #define PROPCASE_USER_TV       				40
  #define PROPCASE_TV	        				69
  #define PROPCASE_USER_AV       				39
@@ -109,8 +142,15 @@ MODE_VIDEO_MANUAL       ,
  #define PROPCASE_OVEREXPOSURE 					76
  #define PROPCASE_SHOOTING_MODE					0
  #define PROPCASE_IS_MODE				        229
+ #define PROPCASE_QUALITY				        23
+ #define PROPCASE_RESOLUTION				        24
+ #define PROPCASE_EV_CORRECTION_1				25
+ #define PROPCASE_EV_CORRECTION_2				26
+ #define PROPCASE_ORIENTATION_SENSOR			37
  #define PROPCASE_DIGITAL_ZOOM_STATE                            58
  #define PROPCASE_DIGITAL_ZOOM_POSITION                         57
+ #define PROPCASE_DISPLAY_MODE                         181
+ #define PROPCASE_BRACKET_MODE                         36 //missing for dryos!
 #else
  #error unknown camera processor
 #endif
@@ -125,7 +165,6 @@ MODE_VIDEO_MANUAL       ,
 #define MODE_SCREEN_MASK        0x0C00
 #define MODE_SCREEN_OPENED      0x0400
 #define MODE_SCREEN_ROTATED     0x0800
-
 #define AS_SIZE (sizeof(aperture_sizes_table)/sizeof(aperture_sizes_table[0]))
 #define ASID_MIN (aperture_sizes_table[0].id)
 #define ASID_MAX (aperture_sizes_table[AS_SIZE-1].id)
@@ -135,8 +174,8 @@ MODE_VIDEO_MANUAL       ,
 #define KBD_INITIAL_DELAY 300
 
 // Video recording current status constants, see movie_status variable 
-#define VIDEO_RECORD_NEVER_STARTED 0 
-#define VIDEO_RECORD_STOPPED 1 
+#define VIDEO_RECORD_NEVER_STARTED 0  
+#define VIDEO_RECORD_STOPPED 1  
 #define VIDEO_RECORD_IN_PROGRESS 4
 
 //Optical & digital zoom status constants, see zoom_status variable 
@@ -261,6 +300,7 @@ long get_property_case(long id, void *buf, long bufsize);
 long set_property_case(long id, void *buf, long bufsize);
 
 long get_file_counter();
+long get_exposure_counter();
 long get_file_next_counter();
 long get_target_dir_num();
 long get_target_file_num();
@@ -277,6 +317,7 @@ long kbd_get_clicked_key();
 long kbd_get_autoclicked_key();
 void kbd_reset_autoclicked_key();
 long kbd_use_zoom_as_mf();
+long kbd_use_up_down_left_right_as_fast_switch();
 void kbd_set_alt_mode_key_mask(long key);
 int get_usb_power(int edge);
 /******************************************************************/
@@ -430,8 +471,12 @@ int mode_get();
 /******************************************************************/
 
 long stat_get_vbatt();
+int get_ccd_temp();
+int get_optical_temp();
+int get_battery_temp();
 long get_vbatt_min();
 long get_vbatt_max();
+void play_sound(unsigned sound);
 void ubasic_camera_set_raw(int mode);
 void ubasic_camera_set_nr(int mode);
 int ubasic_camera_get_nr();
@@ -439,6 +484,8 @@ int ubasic_camera_script_autostart();
 void ubasic_camera_set_script_autostart();
 void exit_alt();
 void camera_shutdown_in_a_second(void); 
+
+extern int shot_histogram_enabled;
 
 void disable_shutdown();
 void enable_shutdown();
@@ -457,8 +504,12 @@ extern int canon_menu_active;
 extern char canon_shoot_menu_active;  
 extern int recreview_hold;
 
+extern int movie_status;
+unsigned int movie_reset;
 unsigned int GetFreeCardSpaceKb(void);
 unsigned int GetTotalCardSpaceKb(void);
+
+
 
 void swap_partitions(void);
 int get_part_count(void);
@@ -467,9 +518,15 @@ extern char * camera_jpeg_count_str();
 
 unsigned int GetJpgCount(void);
 unsigned int GetRawCount(void);
-void MakeAFScan(void);
-extern int movie_status;
+
+void MakeAFScan(void); 
+extern int movie_status; 
 extern int zoom_status;
+void EnterToCompensationEVF(void);
+void ExitFromCompensationEVF(void);
+
+void wait_until_remote_button_is_released(void);
+short shooting_get_ev_correction1();
 
 #define started() debug_led(1)
 #define finished() debug_led(0)

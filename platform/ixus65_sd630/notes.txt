@@ -1,0 +1,11 @@
+****************************************
+
+Camera depending notes: 
+
+- ixus65_sd630 uses Propset 1 of Properties (see http://tinyurl.com/6zbv9b)
+- ixus65_sd630 does NOT have a real IRIS Diaphragm, it only has an ND Filter! 
+Mind this.
+- you can NOT use video overrides (as of this version)
+
+
+
