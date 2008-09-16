@@ -69,6 +69,7 @@ void __attribute__((naked,noinline)) movie_record_task(){
 "loc_FF9471F0:\n"                           
                                         
                 "BL      sub_FF947ADC\n"    
+                "BL      sub_FF94EFF4\n"         // + (UnlockAF)
                 "B       loc_FF94721C\n"    
 "loc_FF9471F8:\n"                           
                                         

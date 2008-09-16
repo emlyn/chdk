@@ -62,7 +62,7 @@ const char *video_bitrate_strings[VIDEO_BITRATE_STEPS]={ "0.25x", "0.5x","0.75x"
 static int def_ubasic_vars[SCRIPT_NUM_PARAMS] = {0};
 static int def_batt_volts_max, def_batt_volts_min;
 static OSD_pos def_histo_pos, def_dof_pos, def_batt_icon_pos, def_space_icon_pos, def_space_hor_pos, def_space_ver_pos, def_batt_txt_pos, def_space_txt_pos, 
-               def_mode_state_pos, def_mode_raw_pos, def_mode_video_pos, def_mode_ev_pos, def_values_pos, def_clock_pos, def_temp_pos;
+               def_mode_state_pos, def_mode_raw_pos, def_mode_video_pos, def_mode_ev_pos, def_values_pos, def_clock_pos, def_ev_video_pos, def_temp_pos;
 static int def_user_menu_vars[USER_MENU_ITEMS] = {0};
 
 static void conf_change_script_file();
@@ -361,6 +361,7 @@ static const ConfInfo conf_info[] = {
    	CONF_INFO(214, conf.script_param_save,     CONF_DEF_VALUE, i:0, NULL),
 			
 			
+    CONF_INFO(215, conf.ev_video_pos,           CONF_DEF_PTR,   ptr:&def_ev_video_pos, NULL),
 };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 
@@ -447,6 +448,9 @@ static void conf_init_defaults() {
     def_clock_pos.y=0;
     def_temp_pos.x=vid_get_bitmap_screen_width()-9*FONT_WIDTH-2;
     def_temp_pos.y=1*FONT_HEIGHT;
+    def_ev_video_pos.x=18;
+    def_ev_video_pos.y=80;
+
 }
 
 //-------------------------------------------------------------------

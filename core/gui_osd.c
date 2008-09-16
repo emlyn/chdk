@@ -39,6 +39,9 @@ static OSD_elem osd[]={
     {LANG_OSD_LAYOUT_EDITOR_TEMP,      &conf.temp_pos,        {9*FONT_WIDTH, FONT_HEIGHT}     },
     {LANG_OSD_LAYOUT_EDITOR_VIDEO,     &conf.mode_video_pos,   {9*FONT_WIDTH, 4*FONT_HEIGHT}   },
     {LANG_OSD_LAYOUT_EDITOR_EV,     &conf.mode_ev_pos,   {12*FONT_WIDTH, FONT_HEIGHT}   },
+#if CAM_EV_IN_VIDEO
+    {LANG_OSD_LAYOUT_EDITOR_EV_VIDEO,         &conf.ev_video_pos,     {70,24}},
+#endif
     {0}
 };
 static int osd_to_draw;
@@ -84,6 +87,9 @@ void gui_osd_draw() {
         gui_osd_draw_values();
         gui_osd_draw_clock();
         gui_osd_draw_temp();
+      #if CAM_EV_IN_VIDEO
+        gui_osd_draw_ev_video(1);
+      #endif
         for (i=1; i<=2; ++i) {
             draw_rect((osd[curr_item].pos->x>=i)?osd[curr_item].pos->x-i:0, (osd[curr_item].pos->y>=i)?osd[curr_item].pos->y-i:0, 
                       osd[curr_item].pos->x+osd[curr_item].size.x+i-1, osd[curr_item].pos->y+osd[curr_item].size.y+i-1,
@@ -1077,3 +1083,29 @@ void gui_osd_draw_temp() {
 
 
 //-------------------------------------------------------------------
+#if CAM_EV_IN_VIDEO
+void gui_osd_draw_ev_video(int visible){
+ int x0=conf.ev_video_pos.x, y0=conf.ev_video_pos.y;
+ int i, deltax;
+
+ draw_filled_rect(x0,y0,x0+70,y0+24, visible? ((conf.osd_color&0xFF00))|(conf.osd_color>>8): COLOR_TRANSPARENT);
+
+ if (!visible) { return; }
+
+ for (i=0;i<9;i++) draw_line(x0+2+i*8,   y0+12, x0+2+i*8,   y0+12-(i&1 ? 5 : 10), conf.osd_color);
+ for (i=0;i<9;i++) draw_line(x0+2+i*8+1, y0+12, x0+2+i*8+1, y0+12-(i&1 ? 5 : 10), conf.osd_color);
+
+ deltax=8*get_ev_video();
+
+ x0+=deltax;
+
+ draw_line(x0+34,y0+16,x0+34,y0+22,conf.osd_color);
+ draw_line(x0+35,y0+16,x0+35,y0+22,conf.osd_color);
+
+ draw_line(x0+32,y0+19,x0+32,y0+22,conf.osd_color);
+ draw_line(x0+33,y0+18,x0+33,y0+22,conf.osd_color);
+ draw_line(x0+36,y0+18,x0+36,y0+22,conf.osd_color);
+ draw_line(x0+37,y0+19,x0+37,y0+22,conf.osd_color);
+
+}
+#endif

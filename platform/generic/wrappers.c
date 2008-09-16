@@ -595,18 +595,27 @@ void create_partitions(void){
 
 #endif
 
-#if CAM_CAN_MUTE_MICROPHONE
 int mute_on_zoom(int x){
  static int old_busy=0;
  int busy=zoom_busy||focus_busy;
- if (conf.mute_on_zoom && (old_busy!=busy)) {
-  if (busy) _TurnOffMic(); else _TurnOnMic();
+ if (old_busy!=busy) {
+  if (busy) {
+#if CAM_CAN_MUTE_MICROPHONE
+   if (conf.mute_on_zoom) _TurnOffMic();
+#endif
+   }
+   else {
+#if CAM_CAN_MUTE_MICROPHONE
+  if (conf.mute_on_zoom) _TurnOnMic();
+#endif
+#if CAM_EV_IN_VIDEO
+  if (get_ev_video_avail()) set_ev_video_avail(0);
+#endif
+  }
   old_busy=busy;
  }
  return x; // preserve R0 if called from assembler
 }
-#endif
-
 
 
 #if CAM_AF_SCAN_DURING_VIDEO_RECORD

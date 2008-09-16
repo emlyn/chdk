@@ -96,6 +96,7 @@ NHSTUB(TurnOffMic, 0xFFC382B4)
 NHSTUB(ExpCtrlTool_StopContiAE,  0xFFC24410) 
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFFC24250) 
 NHSTUB(MakeAFScan,  0xFFDE3A8C) 
+NHSTUB(SetAE_ShutterSpeed, 0xFFDB7018) 
 
 
 // null stubs

@@ -2177,7 +2177,26 @@ void other_kbd_process(){
     }
 #endif
 
-} 
+#if CAM_EV_IN_VIDEO
+ if ((movie_status==VIDEO_RECORD_IN_PROGRESS) && !kbd_is_key_pressed(KEY_SHOOT_HALF)){
+  #if CAM_HAS_ERASE_BUTTON
+  if (kbd_is_key_clicked(KEY_ERASE)){ 
+  #else
+  if (kbd_is_key_clicked(KEY_DISPLAY)){ 
+  #endif
+   set_ev_video_avail(!get_ev_video_avail()); 
+  }
+  if (get_ev_video_avail()) {
+   if (kbd_is_key_clicked(KEY_LEFT)) {
+    set_ev_video(get_ev_video()-1);
+   }
+   if (kbd_is_key_clicked(KEY_RIGHT)){
+    set_ev_video(get_ev_video()+1);
+   }
+  }
+ }
+#endif
+}
 
 //-------------------------------------------------------------------
 extern long physw_status[3];
@@ -2356,6 +2375,10 @@ void gui_draw_osd() {
      strcat(osd_buf,shooting_get_av_str());
      draw_txt_string(22-strlen(osd_buf)/2, 14, osd_buf, conf.osd_color);
     }
+#endif
+
+#if CAM_EV_IN_VIDEO
+    if (movie_status==VIDEO_RECORD_IN_PROGRESS) gui_osd_draw_ev_video(get_ev_video_avail());
 #endif
 
     if (debug_vals_show) {

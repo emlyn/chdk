@@ -56,5 +56,8 @@ extern void gui_osd_calc_expo_param();
 
 extern int  gui_osd_draw_zebra();
 extern void gui_osd_draw_movie_time_left();
+
+extern void gui_osd_draw_ev_video(int visible);
+
 //-------------------------------------------------------------------
 #endif

@@ -518,9 +518,10 @@
 #define LANG_FSELECT_SUBTRACT    408
 #define LANG_POPUP_SUB_FROM_MARKED 409
 #define LANG_MENU_SCRIPT_PARAM_SAVE 410
+#define LANG_OSD_LAYOUT_EDITOR_EV_VIDEO 411
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  410
+#define GUI_LANG_ITEMS                  411
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

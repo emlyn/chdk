@@ -101,6 +101,7 @@ typedef struct {
     OSD_pos mode_video_pos;
     OSD_pos mode_ev_pos;
     OSD_pos temp_pos;
+    OSD_pos ev_video_pos;
 
     color histo_color;
     color histo_color2; // markers/border

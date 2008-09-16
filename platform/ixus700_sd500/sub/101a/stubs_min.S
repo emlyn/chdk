@@ -12,3 +12,4 @@ DEF(canon_shoot_menu_active,0x65B5)
 DEF(recreview_hold, 0x739F8)
 DEF(zoom_status, 0x64C0)
 DEF(movie_status, 0x6F684)
+DEF(some_flag_for_af_scan, 0xFFFF0000) // dummy

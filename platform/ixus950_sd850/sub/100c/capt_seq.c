@@ -10,13 +10,14 @@
 
 static long raw_save_stage;
 
-void capt_seq_hook_raw_here()
+int capt_seq_hook_raw_here(int R0)
 {
     raw_save_stage = RAWDATA_AVAILABLE;
     core_rawdata_available();
     while (raw_save_stage != RAWDATA_SAVED){
 	_SleepTask(10);
     }
+    return R0;
 }
 
 void hook_raw_save_complete()
@@ -42,6 +43,42 @@ void capt_seq_hook_set_nr()
     };
 }
 
+
+void __attribute__((naked,noinline)) sub_FFB0D8E4_my(long p)
+{
+    asm volatile (
+"		STMFD   SP!, {R4,LR}\n"
+"		BL      sub_FFB0D420\n"
+"		LDR     R3, =0xAAB80\n"
+"		LDR     R2, [R3,#0x24]\n"
+"		CMP     R2, #0\n"
+"		MOV     R4, R0\n"
+"		MOV     R0, #0xC\n"
+"		BEQ     loc_FFB0D92C\n"
+"		BL      sub_FFB17EE8\n"
+"		TST     R0, #1\n"
+"		BEQ     loc_FFB0D92C\n"
+"		LDR     R3, [R4,#8]\n"
+"		LDR     R2, =0xED30\n"
+"		ORR     R3, R3, #0x40000000\n"
+"		MOV     R1, #1\n"
+"		STR     R1, [R2]\n"
+"		STR     R3, [R4,#8]\n"
+"		LDMFD   SP!, {R4,PC}\n"
+"loc_FFB0D92C:\n"
+"		BL      sub_FF826284\n"
+"		BL      sub_FF81BE94\n"
+"		STR     R0, [R4,#0x14]\n"
+"		MOV     R0, R4\n"
+	"BL  sub_FFB10B64_my\n"	//---> escape to My!
+	"BL  capt_seq_hook_raw_here\n"  // + <----- RAW hook
+"		TST     R0, #1\n"
+"		LDRNE   R3, =0xED30\n"
+"		MOVNE   R2, #1\n"
+"		STRNE   R2, [R3]\n"
+"		LDMFD   SP!, {R4,PC}\n"
+    );
+}
 
 void __attribute__((naked,noinline)) sub_FFB10B64_my(long p)
 {
@@ -202,7 +239,7 @@ void __attribute__((naked,noinline)) capt_seq_task()
 "                LDR     R2, [R3,#0x24]\n"
 "                CMP     R2, #0\n"
 "                BEQ     loc_FFB0DE98\n"
-"                BL      sub_FFB0D8E4\n"
+"                BL      sub_FFB0D8E4_my\n"   //<---- extra RAW hook inside
 "                B       loc_FFB0DE98\n"
 "loc_FFB0DDB8:\n"
 //"                BL      sub_FFB0D80C\n"

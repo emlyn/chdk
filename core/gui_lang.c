@@ -529,6 +529,7 @@ static char* gui_lang_default = \
 "408 \"Subtract\"\n"
 "409 \"Sub from marked\"\n"
 "410 \"Save params\"\n"
+"411 \"Video Ev display\"\n"
 ;
 
 //-------------------------------------------------------------------

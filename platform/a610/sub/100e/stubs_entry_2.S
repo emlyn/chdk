@@ -31,3 +31,4 @@ NHSTUB(PT_PlaySound, 0xFFD4074C)
 
 //NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
 //NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
+NHSTUB(SetAE_ShutterSpeed, 0xFFE76A00)

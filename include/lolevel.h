@@ -191,6 +191,7 @@ extern void _ExpCtrlTool_StopContiAE(int, int);
 
 extern int some_flag_for_af_scan; 
 extern int parameter_for_af_scan; 
+extern void _SetAE_ShutterSpeed(short* tv);
 
 extern void _EnterToCompensationEVF(void);
 extern void _ExitFromCompensationEVF(void);

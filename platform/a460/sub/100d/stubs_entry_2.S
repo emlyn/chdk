@@ -30,3 +30,4 @@ NHSTUB(PT_PlaySound, 0xFFE7A9F0)
 
 NHSTUB(EnterToCompensationEVF, 0xffe6b0f8)
 NHSTUB(ExitFromCompensationEVF, 0xffe6b17c)
+NHSTUB(SetAE_ShutterSpeed, 0xFFDE17AC)

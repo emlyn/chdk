@@ -1203,14 +1203,56 @@ else if ((conf.iso_override_value) && (conf.iso_override_koef) && !(conf.overrid
  return;
 }
 
-#if CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
 void unlock_optical_zoom(void){
+
+#if CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
  if (conf.unlock_optical_zoom_for_video) _UnsetZoomForMovie();
-}
 #endif
 
+#if CAM_EV_IN_VIDEO
+ set_ev_video_avail(0);
+#endif
+
+}
 
 
+#if CAM_EV_IN_VIDEO
 
+int ev_video_avail;
+int ev_video;
+int save_tv_video;
+int tv_min_video;
 
+int get_ev_video_avail(void){
+ return ev_video_avail;
+}
 
+void set_ev_video_avail(int x){
+ if (ev_video_avail==x) return;
+ ev_video_avail=x;
+ if (x) {
+  ev_video=0;
+  _ExpCtrlTool_StopContiAE(0,0);
+  _GetPropertyCase(PROPCASE_TV,&save_tv_video,2);
+  if ((mode_get()&MODE_SHOOTING_MASK)==MODE_VIDEO_SPEED) tv_min_video=577;  // 1/60
+   else tv_min_video=480; //1/30
+ }
+ else _ExpCtrlTool_StartContiAE(0,0);
+}
+
+int get_ev_video(void){
+ return ev_video;
+}
+
+void set_ev_video(int x){
+ short ev, tv;
+ if ((x<-4)||(x>4)) return;
+ ev=48*x;
+ tv=save_tv_video-ev;
+ if (tv>=tv_min_video) {
+  ev_video=x;
+  _SetAE_ShutterSpeed(&tv);
+ }
+}
+
+#endif

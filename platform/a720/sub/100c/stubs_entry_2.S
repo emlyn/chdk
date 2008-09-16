@@ -114,6 +114,7 @@ NHSTUB(TurnOffMic, 0xFFC376F8)
 NHSTUB(ExpCtrlTool_StopContiAE,  0xFFC23A2C) 
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFFC23930) 
 NHSTUB(MakeAFScan,  0xFFDD4AA4) 
+NHSTUB(SetAE_ShutterSpeed, 0xFFDA87C0) 
 
 
 // dryos Test
