@@ -27,7 +27,7 @@ void __attribute__((noreturn)) my_restart()
 
 static void __attribute__((noreturn)) shutdown()
 {
-    //volatile long *p = (void*)0xc02200a0;       // what does this LED? Power?
+    //volatile long *p = (void*)0xc02200a0;       // what does this LED? Powe
     volatile long *p = (void*)LED_PR;       // turned off later, so assumed to be power
         
     asm(
