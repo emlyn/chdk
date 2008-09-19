@@ -87,3 +87,11 @@ closedir 0xFFDC1C68
 NewTaskShell 0xFFC596B0
 UIFS_WriteFirmInfoToFile 0xFFD4A934
 SetAutoShutdownTime  0xFFC5BFE0
+Fgets_Fut 0xFFC14B64 19
+Feof_Fut 0xFFC14BFC 14
+Fflush_Fut 0xFFC14C38 17
+strftime 0xFFC71E68
+mktime_ext 0xFFC72460 16
+DeleteFile_Fut 0xFFC148A4 13
+RenameFile_Fut 0xFFC14840 17
+MakeDirectory_Fut 0xFFC14908 28

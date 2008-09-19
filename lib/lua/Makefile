@@ -2,7 +2,24 @@ topdir=../../
 
 include $(topdir)makefile.inc
 
-CFLAGS+=$(CTHUMB)
+CFLAGS+=$(CTHUMB) -DSTDIO_COMPAT_FILE -DFS_USE_FUT
+
+LUA_OPTLIB_OBJS=
+
+ifdef CHDK_LUA_IOLIB
+CFLAGS+=-DCHDK_LUA_IOLIB
+LUA_OPTLIB_OBJS+=liolib.o
+endif
+
+ifdef CHDK_LUA_OSLIB
+CFLAGS+=-DCHDK_LUA_OSLIB
+LUA_OPTLIB_OBJS+=loslib.o
+endif
+
+ifdef CHDK_LUA_STRLIB
+CFLAGS+=-DCHDK_LUA_STRLIB
+LUA_OPTLIB_OBJS+=lstrlib.o
+endif
 
 OBJS = setjmp.o \
        \
@@ -10,7 +27,8 @@ OBJS = setjmp.o \
        lobject.o lopcodes.o lparser.o lstate.o lstring.o ltable.o ltm.o \
        lundump.o lvm.o lzio.o \
        \
-       lauxlib.o lbaselib.o ldblib.o ltablib.o lmathlib.o loadlib.o linit.o
+       lauxlib.o lbaselib.o ldblib.o ltablib.o lmathlib.o \
+	   $(LUA_OPTLIB_OBJS) loadlib.o linit.o
 
 all: liblua.a
 

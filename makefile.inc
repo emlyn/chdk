@@ -159,6 +159,11 @@ PLATFORMSUB=100a
 #PLATFORM=ixus960_sd950
 #PLATFORM=100d
 
+# build time optional components
+CHDK_LUA_IOLIB=1
+CHDK_LUA_OSLIB=1
+#CHDK_LUA_STRLIB=1
+
 include $(topdir)version.inc
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
 

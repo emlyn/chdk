@@ -10,12 +10,16 @@ NSTUB(Close, 0xffe1d7d0)
 NSTUB(CreatePhysicalVram, 0xffdbb00c)
 NSTUB(CreateTask, 0xffe83538)
 NSTUB(CreateTaskStrict, 0xffe845d8)
+NSTUB(DeleteFile_Fut, 0xffe18da8)
 NSTUB(DisableDispatch, 0xffe8335c)
 // ERROR: DisplayImagePhysicalScreen is not found!
 NSTUB(EnableDispatch, 0xffe833e8)
 NSTUB(ExecuteEventProcedure, 0xffc04670)
 NSTUB(ExitTask, 0xffe838f8)
 NSTUB(Fclose_Fut, 0xffe18f1c)
+NSTUB(Feof_Fut, 0xffe19118)
+NSTUB(Fflush_Fut, 0xffe19154)
+NSTUB(Fgets_Fut, 0xffe19080)
 NSTUB(Fopen_Fut, 0xffe18edc)
 NSTUB(Fread_Fut, 0xffe18fd8)
 // Best match: 95%
@@ -50,6 +54,7 @@ NSTUB(IsStrobeChargeCompleted, 0xffd45b54)
 NSTUB(LockMainPower, 0xffea65dc)
 // Best match: 58%
 NSTUB(MakeDirectory, 0xffe1dae4)
+NSTUB(MakeDirectory_Fut, 0xffe18e5c)
 // ERROR: Mount_FileSystem is not found!
 // Best match: 73%
 NSTUB(MoveFocusLensToDistance, 0xffdde778)
@@ -69,6 +74,7 @@ NSTUB(Read, 0xffe1d864)
 // Best match: 58%
 NSTUB(RefreshPhysicalScreen, 0xffcb9180)
 NSTUB(Remove, 0xffe1d7f0)
+NSTUB(RenameFile_Fut, 0xffe18d00)
 NSTUB(SetAutoShutdownTime, 0xffea64e0)
 // Best match: 86%
 NSTUB(SetParameterData, 0xffea9660)
@@ -97,11 +103,13 @@ NSTUB(chdir, 0xffcc9dd4)
 // ALT: NSTUB(chdir, 0xffcc9dd4) // 27/0
 NSTUB(close, 0xffcc9714)
 NSTUB(closedir, 0xffebfad0)
+NSTUB(errnoOfTaskGet, 0xffcc7368)
 // ERROR: free is not found!
 NSTUB(ints_disable, 0xffe815e8)
 NSTUB(ints_enable, 0xffe815f4)
 NSTUB(ioctl, 0xffcc9854)
 NSTUB(iosDevAdd, 0xffcca934)
+NSTUB(iosDevFind, 0xffcca8c0)
 NSTUB(iosDrvInstall, 0xffccabf8)
 NSTUB(isalpha, 0xffcc0cec)
 // ALT: NSTUB(isalpha, 0xffcc0cec) // 4/0
@@ -137,6 +145,7 @@ NSTUB(memset, 0xffcc4a00)
 // Best match: 54%
 NSTUB(mkdir, 0xffe1da28)
 // ALT: NSTUB(mkdir, 0xffe1daf0) // 17/14
+NSTUB(mktime, 0xffcc5734)
 NSTUB(open, 0xffcc9d58)
 NSTUB(opendir, 0xffebfb04)
 NSTUB(qsort, 0xffcc41ac)
@@ -154,6 +163,7 @@ NSTUB(strcat, 0xffcc4a20)
 NSTUB(strchr, 0xffcc4a4c)
 NSTUB(strcmp, 0xffcc4a70)
 NSTUB(strcpy, 0xffcc4c04)
+NSTUB(strftime, 0xffcc628c)
 NSTUB(strlen, 0xffcc4d68)
 NSTUB(strncmp, 0xffcc4dcc)
 NSTUB(strncpy, 0xffcc4e10)

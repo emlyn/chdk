@@ -109,19 +109,21 @@ extern int memcmp(const void *s1, const void *s2, long n);
 
 
 extern void SleepTask(long msec);
-extern long mkdir(const char *dirname);
 extern long taskLock();
 extern long taskUnlock();
 
 extern long Fopen_Fut(const char *filename, const char *mode);
-extern void Fclose_Fut(long file);
+extern long Fclose_Fut(long file);
 extern long Fread_Fut(void *buf, long elsize, long count, long f);
 extern long Fwrite_Fut(const void *buf, long elsize, long count, long f);
 extern long Fseek_Fut(long file, long offset, long whence);
+// TODO can we just use these all the time ?
 extern long RenameFile_Fut(const char *oldname, const char *newname);
-extern long Feof_Fut(long file);
+extern long MakeDirectory_Fut(const char *name);
 extern long DeleteFile_Fut(const char *name);
+extern long Feof_Fut(long file);
 extern long Fflush_Fut(long file);
+extern char *Fgets_Fut(char *buf, int n, long f);
 
 extern int creat (const char *name, int flags);
 extern int open (const char *name, int flags, int mode );
@@ -131,6 +133,49 @@ extern int read (int fd, void *buffer, long nbytes);
 extern int lseek (int fd, long offset, int whence);
 extern long mkdir(const char *dirname);
 
+#ifdef STDIO_COMPAT_FILE
+// don't use this directly unless you absolutely need to
+// don't EVER try to create one yourself, as this isn't the full structure.
+typedef struct FILE_S {
+    int fd;         // used by Read/Write
+    unsigned len;   // +4 verfied in Fseek_FileStream
+    int unk0;       // +8
+    unsigned pos;   // +0xC verified in Fseek_FileStream
+    // unk1;        // +0x10 
+    // unk2;        // +0x14
+    // io_buf;      // +0x18 32k uncached allocated in Fopen_FileStream
+    // unk3;        // +0x20 related to StartFileAccess_Sem
+    // ...name
+} FILE;
+static inline FILE *fopen(const char *filename, const char *mode) {
+    return (FILE *)Fopen_Fut(filename,mode);
+}
+static inline long fclose(FILE *f) {
+    return Fclose_Fut((long)f);
+}
+static inline long fread(void *buf, long elsize, long count, FILE *f) {
+    return Fread_Fut(buf,elsize,count,(long)f);
+}
+static inline long fwrite(const void *buf, long elsize, long count, FILE *f) {
+    return Fwrite_Fut(buf,elsize,count,(long)f);
+}
+static inline long fseek(FILE *file, long offset, long whence) {
+    return Fseek_Fut((long)file,offset,whence);
+}
+static inline long fflush(FILE *file) {
+    return Fflush_Fut((long)file);
+}
+static inline long feof(FILE *file) {
+    return Feof_Fut((long)file);
+}
+static inline long ftell(FILE *file) {
+    if(!file) return -1;
+    return file->pos;
+}
+static inline char *fgets(char *buf, int n, FILE *f) {
+    return Fgets_Fut(buf,n,(int)f);
+}
+#else
 #define fopen(a,b) Fopen_Fut(a,b)
 #define fclose(a) Fclose_Fut(a)
 #define fread(a,b,c,d) Fread_Fut(a,b,c,d)
@@ -138,10 +183,9 @@ extern long mkdir(const char *dirname);
 #define fseek(a,b,c) Fseek_Fut(a,b,c)
 #define fflush(a) Fflush_Fut(a)
 #define feof(a) Feof_Fut(a)
-#define fdelete(a) DeleteFile_Fut(a)
-
 typedef long FILE;
-
+#endif //STDIO_COMPAT
+#define fdelete(a) DeleteFile_Fut(a)
 /**
  * No STUBS!
  * You can't use these two directly from THUMB code (core), only from platform.
@@ -154,6 +198,11 @@ extern long task_lock();
 extern long task_unlock();
 extern const char *task_name(int id);
 int task_id_list_get(int *idlist,int size);
+extern const char *strerror(int num);
+// on vxworks we could find the actual errno, but this is easier to automate sig
+// doesn't exist on dryos, but we stub it
+extern int errnoOfTaskGet(int tid);
+#define errno (errnoOfTaskGet(0))
 
 #define DOS_ATTR_RDONLY         0x01            /* read-only file */
 #define DOS_ATTR_HIDDEN         0x02            /* hidden file */
@@ -206,12 +255,18 @@ struct tm
 	int tm_isdst;	/* Daylight Saving Time flag */
 	};
 
+typedef unsigned long time_t;
+
 extern struct tm * localtime(const unsigned long *_tod);
 
 extern int rename(const char *oldname, const char *newname);
 extern int chdir(char *pathname);
 extern int remove(const char *name);
-
+#ifdef FS_USE_FUT
+#define mkdir(x) MakeDirectory_Fut(x)
+#define rename(x,y) RenameFile_Fut(x,y)
+#define remove(x) DeleteFile_Fut(x)
+#endif
 struct utimbuf {
     unsigned long actime;       /* set the access time */
     unsigned long modtime;      /* set the modification time */
@@ -219,6 +274,8 @@ struct utimbuf {
 
 extern int utime(char *file, struct utimbuf *newTimes);
 extern unsigned long time(unsigned long *timer);
+extern long strftime(char *s, unsigned long maxsize, const char *format, const struct tm *timp);
+extern time_t mktime(struct tm *timp);
 
 static inline int abs( int v ) {
   return v<0 ? -v : v;

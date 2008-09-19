@@ -12,12 +12,16 @@ NSTUB(CreateTaskStrict, 0xff8eaf8c)
 // ALT: NSTUB(CreateTaskStrict, 0xff8eafcc) // 7/6
 // ALT: NSTUB(CreateTaskStrict, 0xff8eb00c) // 7/6
 // ALT: NSTUB(CreateTaskStrict, 0xff8eb04c) // 7/6
+NSTUB(DeleteFile_Fut, 0xff8699b4)
 NSTUB(DisableDispatch, 0xff8234f4)
 // ERROR: DisplayImagePhysicalScreen is not found!
 NSTUB(EnableDispatch, 0xff823580)
 // ERROR: ExecuteEventProcedure is not found!
 NSTUB(ExitTask, 0xff823b44)
 NSTUB(Fclose_Fut, 0xff869af4)
+NSTUB(Feof_Fut, 0xff869d08)
+NSTUB(Fflush_Fut, 0xff869d40)
+NSTUB(Fgets_Fut, 0xff869c78)
 NSTUB(Fopen_Fut, 0xff869ab8)
 NSTUB(Fread_Fut, 0xff869bd8)
 // ERROR: FreeMemory is not found!
@@ -44,6 +48,7 @@ NSTUB(GetZoomLensCurrentPosition, 0xffa57ce0)
 NSTUB(LockMainPower, 0xff9561a0)
 // Best match: 70%
 NSTUB(MakeDirectory, 0xff8718c4)
+NSTUB(MakeDirectory_Fut, 0xff869a40)
 // ERROR: Mount_FileSystem is not found!
 // Best match: 96%
 NSTUB(MoveFocusLensToDistance, 0xffa6b0ec)
@@ -66,7 +71,9 @@ NSTUB(PutOutNdFilter, 0xffa69428)
 // ERROR: Read is not found!
 // Best match: 74%
 NSTUB(RefreshPhysicalScreen, 0xff96c550)
-// ERROR: Remove is not found!
+// Best match: 52%
+NSTUB(Remove, 0xff8c0700)
+NSTUB(RenameFile_Fut, 0xff869934)
 // ERROR: SetAutoShutdownTime is not found!
 // ERROR: SetParameterData is not found!
 // ERROR: SetPropertyCase is not found!
@@ -93,11 +100,13 @@ NSTUB(chdir, 0xffac2f74)
 // ALT: NSTUB(chdir, 0xffac2f74) // 27/0
 NSTUB(close, 0xffac28b4)
 NSTUB(closedir, 0xffabe6e8)
+NSTUB(errnoOfTaskGet, 0xffabeeb4)
 // ERROR: free is not found!
 NSTUB(ints_disable, 0xff81f438)
 NSTUB(ints_enable, 0xff81f444)
 NSTUB(ioctl, 0xffac29f4)
 NSTUB(iosDevAdd, 0xffac3ad4)
+NSTUB(iosDevFind, 0xffac3a60)
 NSTUB(iosDrvInstall, 0xffac3d98)
 NSTUB(isalpha, 0xffab859c)
 // ALT: NSTUB(isalpha, 0xffab859c) // 4/0
@@ -132,6 +141,7 @@ NSTUB(memset, 0xffabc370)
 // Best match: 61%
 NSTUB(mkdir, 0xff871810)
 // ALT: NSTUB(mkdir, 0xff8718d0) // 19/12
+NSTUB(mktime, 0xffabd0a4)
 NSTUB(open, 0xffac2ef8)
 NSTUB(opendir, 0xffabe71c)
 NSTUB(qsort, 0xffabbb1c)
@@ -149,6 +159,7 @@ NSTUB(strcat, 0xffabc390)
 NSTUB(strchr, 0xffabc3bc)
 NSTUB(strcmp, 0xffabc3e0)
 NSTUB(strcpy, 0xffabc574)
+NSTUB(strftime, 0xffabdbfc)
 NSTUB(strlen, 0xffabc6d8)
 NSTUB(strncmp, 0xffabc73c)
 NSTUB(strncpy, 0xffabc780)

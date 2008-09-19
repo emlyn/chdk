@@ -4,12 +4,15 @@
 ** See Copyright Notice in lua.h
 */
 
-
+#if 0
 #include <errno.h>
 #include <locale.h>
+#endif
 #include <stdlib.h>
 #include <string.h>
+#if 0
 #include <time.h>
+#endif
 
 #define loslib_c
 #define LUA_LIB
@@ -35,10 +38,12 @@ static int os_pushresult (lua_State *L, int i, const char *filename) {
 }
 
 
+#if 0
 static int os_execute (lua_State *L) {
   lua_pushinteger(L, system(luaL_optstring(L, 1, NULL)));
   return 1;
 }
+#endif
 
 
 static int os_remove (lua_State *L) {
@@ -53,7 +58,14 @@ static int os_rename (lua_State *L) {
   return os_pushresult(L, rename(fromname, toname) == 0, fromname);
 }
 
+// reyalp added
+static int os_mkdir (lua_State *L) {
+  const char *dirname = luaL_checkstring(L, 1);
+  return os_pushresult(L, mkdir(dirname) == 0, dirname);
+}
 
+// TODO
+#if 0
 static int os_tmpname (lua_State *L) {
   char buff[LUA_TMPNAMBUFSIZE];
   int err;
@@ -63,18 +75,21 @@ static int os_tmpname (lua_State *L) {
   lua_pushstring(L, buff);
   return 1;
 }
+#endif
 
-
+#if 0
 static int os_getenv (lua_State *L) {
   lua_pushstring(L, getenv(luaL_checkstring(L, 1)));  /* if NULL push nil */
   return 1;
 }
+#endif
 
-
+#if 0
 static int os_clock (lua_State *L) {
   lua_pushnumber(L, ((lua_Number)clock())/(lua_Number)CLOCKS_PER_SEC);
   return 1;
 }
+#endif
 
 
 /*
@@ -126,7 +141,13 @@ static int os_date (lua_State *L) {
   time_t t = luaL_opt(L, (time_t)luaL_checknumber, 2, time(NULL));
   struct tm *stm;
   if (*s == '!') {  /* UTC? */
+  #if 0
+  // reyalp - we have no idea about timezones, so just eat the !
+  // and use local time
+  // TODO some cams may be timezone/dst aware ?
     stm = gmtime(&t);
+  #endif
+    stm = localtime(&t);
     s++;  /* skip `!' */
   }
   else
@@ -192,15 +213,22 @@ static int os_time (lua_State *L) {
 }
 
 
+#if 0
 static int os_difftime (lua_State *L) {
   lua_pushnumber(L, difftime((time_t)(luaL_checknumber(L, 1)),
                              (time_t)(luaL_optnumber(L, 2, 0))));
+  return 1;
+}
+#endif
+static int os_difftime (lua_State *L) {
+  lua_pushnumber(L, (time_t)(luaL_checknumber(L, 1) - (time_t)(luaL_optnumber(L, 2, 0))));
   return 1;
 }
 
 /* }====================================================== */
 
 
+#if 0
 static int os_setlocale (lua_State *L) {
   static const int cat[] = {LC_ALL, LC_COLLATE, LC_CTYPE, LC_MONETARY,
                       LC_NUMERIC, LC_TIME};
@@ -211,24 +239,36 @@ static int os_setlocale (lua_State *L) {
   lua_pushstring(L, setlocale(cat[op], l));
   return 1;
 }
+#endif
 
-
+#if 0
 static int os_exit (lua_State *L) {
   exit(luaL_optint(L, 1, EXIT_SUCCESS));
 }
+#endif
 
 static const luaL_Reg syslib[] = {
+#if 0
   {"clock",     os_clock},
+#endif
   {"date",      os_date},
   {"difftime",  os_difftime},
+#if 0
   {"execute",   os_execute},
   {"exit",      os_exit},
   {"getenv",    os_getenv},
+#endif
+  {"mkdir",     os_mkdir}, // reyalp - NOT STANDARD
+  // TODO add stat and directory listing functions
   {"remove",    os_remove},
   {"rename",    os_rename},
+#if 0
   {"setlocale", os_setlocale},
+#endif
   {"time",      os_time},
+#if 0
   {"tmpname",   os_tmpname},
+#endif
   {NULL, NULL}
 };
 

@@ -112,3 +112,13 @@ SetAutoShutdownTime 0xffd48dd8
 PutInNdFilter 0xFFE71734
 PutOutNdFilter 0xFFE7177C 
 UnsetZoomForMovie 0xFFD81B80 
+Fgets_Fut 0xFFC55CF0 18
+Feof_Fut 0xFFC55D80 14
+Fflush_Fut 0xFFC55DB8
+strftime 0xFFEB7310 8
+mktime 0xFFEB67B8
+RenameFile_Fut 0xFFC559AC
+DeleteFile_Fut 0xFFC55A2C 12
+MakeDirectory_Fut 0xFFC55AB8
+errnoOfTaskGet 0xFFEB85C8
+iosDevFind 0xFFEBD008

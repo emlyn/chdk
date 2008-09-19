@@ -8,12 +8,16 @@ NSTUB(AllocateUncacheableMemory, 0xff814810)
 NSTUB(CreatePhysicalVram, 0xff93e4f4)
 NSTUB(CreateTask, 0xff82239c)
 NSTUB(CreateTaskStrict, 0xff823964)
+NSTUB(DeleteFile_Fut, 0xff86fbf4)
 NSTUB(DisableDispatch, 0xff82210c)
 // ERROR: DisplayImagePhysicalScreen is not found!
 NSTUB(EnableDispatch, 0xff822198)
 NSTUB(ExecuteEventProcedure, 0xff816ab4)
 NSTUB(ExitTask, 0xff82275c)
 NSTUB(Fclose_Fut, 0xff86fd34)
+NSTUB(Feof_Fut, 0xff86ff48)
+NSTUB(Fflush_Fut, 0xff86ff80)
+NSTUB(Fgets_Fut, 0xff86feb8)
 NSTUB(Fopen_Fut, 0xff86fcf8)
 NSTUB(Fread_Fut, 0xff86fe18)
 // Best match: 66%
@@ -47,6 +51,7 @@ NSTUB(IsStrobeChargeCompleted, 0xff912f08)
 NSTUB(LockMainPower, 0xff9834f0)
 // Best match: 70%
 NSTUB(MakeDirectory, 0xff8775b0)
+NSTUB(MakeDirectory_Fut, 0xff86fc80)
 // ERROR: Mount_FileSystem is not found!
 // Best match: 96%
 NSTUB(MoveFocusLensToDistance, 0xffaa8eb0)
@@ -61,7 +66,9 @@ NSTUB(PutOutNdFilter, 0xffaa7130)
 // ALT: NSTUB(PutOutNdFilter, 0xffaa7130) // 16/1
 // ERROR: Read is not found!
 NSTUB(RefreshPhysicalScreen, 0xff9988dc)
-// ERROR: Remove is not found!
+// Best match: 52%
+NSTUB(Remove, 0xff8d2934)
+NSTUB(RenameFile_Fut, 0xff86fb74)
 // Best match: 96%
 NSTUB(SetAutoShutdownTime, 0xff9833e8)
 // Best match: 66%
@@ -90,11 +97,13 @@ NSTUB(chdir, 0xffaf4b80)
 // ALT: NSTUB(chdir, 0xffaf4b80) // 27/0
 NSTUB(close, 0xffaf44c0)
 NSTUB(closedir, 0xffaf0460)
+NSTUB(errnoOfTaskGet, 0xffaf0c2c)
 // ERROR: free is not found!
 NSTUB(ints_disable, 0xff81e254)
 NSTUB(ints_enable, 0xff81e260)
 NSTUB(ioctl, 0xffaf4600)
 NSTUB(iosDevAdd, 0xffaf56e0)
+NSTUB(iosDevFind, 0xffaf566c)
 NSTUB(iosDrvInstall, 0xffaf59a4)
 NSTUB(isalpha, 0xffaea3d4)
 // ALT: NSTUB(isalpha, 0xffaea3d4) // 4/0
@@ -129,6 +138,7 @@ NSTUB(memset, 0xffaee0e8)
 // Best match: 61%
 NSTUB(mkdir, 0xff8774fc)
 // ALT: NSTUB(mkdir, 0xff8775bc) // 19/12
+NSTUB(mktime, 0xffaeee1c)
 NSTUB(open, 0xffaf4b04)
 NSTUB(opendir, 0xffaf0494)
 NSTUB(qsort, 0xffaed894)
@@ -146,6 +156,7 @@ NSTUB(strcat, 0xffaee108)
 NSTUB(strchr, 0xffaee134)
 NSTUB(strcmp, 0xffaee158)
 NSTUB(strcpy, 0xffaee2ec)
+NSTUB(strftime, 0xffaef974)
 NSTUB(strlen, 0xffaee450)
 NSTUB(strncmp, 0xffaee4b4)
 NSTUB(strncpy, 0xffaee4f8)

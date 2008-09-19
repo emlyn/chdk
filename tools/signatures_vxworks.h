@@ -3140,6 +3140,246 @@ static FuncSig func_sig_UnsetZoomForMovie_1[] = {
 	/* 19/32 */
 };
 
+static FuncSig func_sig_Fgets_Fut_1[] = {
+	{   1, 0xe0524000, 0xfdffffff }, // sub:6:0xE2524000
+	{   2, 0xe1a06000, 0xfdffffff }, // mov:6:0xE1A06000
+	{   3, 0xe1a05001, 0xfdffffff }, // mov:6:0xE1A05001
+	{   4, 0xe0840020, 0xfdffffff }, // add:6:0xE2840020
+	{   5, 0x01a00004, 0xfdffffff }, // mov:6:0x01A00004
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC74
+	{   8, 0xe1a01005, 0xfdffffff }, // mov:6:0xE1A01005
+	{   9, 0xe1a02004, 0xfdffffff }, // mov:6:0xE1A02004
+	{  10, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{  11, 0xe1a00006, 0xfdffffff }, // mov:6:0xE1A00006
+	{  12, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB001291
+	{  13, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  14, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  15, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC77
+	{  16, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{ -1, -1, -1 },
+	/* 15/18 */
+};
+
+static FuncSig func_sig_Feof_Fut_1[] = {
+	{   1, 0xe0504000, 0xfdffffff }, // sub:6:0xE2504000
+	{   2, 0xe0840020, 0xfdffffff }, // add:6:0xE2840020
+	{   5, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC52
+	{   6, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   7, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{   8, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB0012CE
+	{   9, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  10, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  11, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC57
+	{  12, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{ -1, -1, -1 },
+	/* 10/14 */
+};
+
+static FuncSig func_sig_Fflush_Fut_1[] = {
+	{   1, 0xe0505000, 0xfdffffff }, // sub:6:0xE2505000
+	{   2, 0xe04dd018, 0xfdffffff }, // sub:6:0xE24DD018
+	{   3, 0xe0854020, 0xfdffffff }, // add:6:0xE2854020
+	{   4, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{   6, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000014
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC42
+	{   8, 0xe1a06000, 0xfdffffff }, // mov:6:0xE1A06000
+	{   9, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB0012C4
+	{  11, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{  12, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  13, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000E62
+	{  14, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  15, 0xe1a0100d, 0xfdffffff }, // mov:6:0xE1A0100D
+	{  16, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000CA7
+	{  17, 0xe59d3004, 0xfdffffff }, // ldr:4:0xE59D3004
+	{  18, 0xe1130010, 0xfdffffff }, // tst:7:0xE3130010
+	{  20, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  21, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000002
+	{  22, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000D9A
+	{  23, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  24, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000E26
+	{  25, 0xe1a00006, 0xfdffffff }, // mov:6:0xE1A00006
+	{  26, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC3A
+	{  27, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  28, 0xe08dd018, 0xfdffffff }, // add:6:0xE28DD018
+	{  30, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 27/32 */
+};
+
+static FuncSig func_sig_strftime_1[] = {
+	{   1, 0xe04dd004, 0xfdffffff }, // sub:6:0xE24DD004
+	{   2, 0xe59fc018, 0xfdffffff }, // ldr:4:0xE59FC018
+	{   3, 0xe59cc000, 0xfdffffff }, // ldr:4:0xE59CC000
+	{   4, 0xe58dc000, 0xfdffffff }, // str:4:0xE58DC000
+	{   5, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFFAA
+	{   6, 0xe08dd004, 0xfdffffff }, // add:6:0xE28DD004
+	{ -1, -1, -1 },
+	/* 6/8 */
+};
+
+static FuncSig func_sig_mktime_1[] = {
+	{   1, 0xe04dd01c, 0xfdffffff }, // sub:6:0xE24DD01C
+	{   2, 0xe1a0b000, 0xfdffffff }, // mov:6:0xE1A0B000
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFFB0
+	{   4, 0xe59b9000, 0xfdffffff }, // ldr:4:0xE59B9000
+	{   5, 0xe59bc004, 0xfdffffff }, // ldr:4:0xE59BC004
+	{   6, 0xe1a0303c, 0xfdffffff }, // mov:6:0xE3A0303C
+	{   7, 0xe59b0014, 0xfdffffff }, // ldr:4:0xE59B0014
+	{   8, 0xe59b1010, 0xfdffffff }, // ldr:4:0xE59B1010
+	{   9, 0xe59b200c, 0xfdffffff }, // ldr:4:0xE59B200C
+	{  11, 0xe59bc008, 0xfdffffff }, // ldr:4:0xE59BC008
+	{  12, 0xe1a03ee1, 0xfdffffff }, // mov:6:0xE3A03EE1
+	{  14, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEDA
+	{  15, 0xe0401001, 0xfdffffff }, // sub:6:0xE2401001
+	{  16, 0xe59ba014, 0xfdffffff }, // ldr:4:0xE59BA014
+	{  17, 0xe58b101c, 0xfdffffff }, // str:4:0xE58B101C
+	{  18, 0xe59fc094, 0xfdffffff }, // ldr:4:0xE59FC094
+	{  19, 0xe59f3094, 0xfdffffff }, // ldr:4:0xE59F3094
+	{  20, 0xe08ac00c, 0xfdffffff }, // add:6:0xE08AC00C
+	{  21, 0xe15c0003, 0xfdffffff }, // cmp:7:0xE15C0003
+	{  23, 0xba000000, 0xff000000 }, // b, bl:3:0xBA00001D
+	{  24, 0xe04a0046, 0xfdffffff }, // sub:6:0xE24A0046
+	{  25, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEC2
+	{  26, 0xe1a0a000, 0xfdffffff }, // mov:6:0xE1A0A000
+	{  27, 0xe0800004, 0xfdffffff }, // add:6:0xE2800004
+	{  28, 0xe1a01007, 0xfdffffff }, // mov:6:0xE3A01007
+	{  29, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB006FD7
+	{  30, 0xe58b0018, 0xfdffffff }, // str:4:0xE58B0018
+	{  31, 0xe59f3068, 0xfdffffff }, // ldr:4:0xE59F3068
+	{ -1, -1, -1 },
+	/* 28/32 */
+};
+
+static FuncSig func_sig_RenameFile_Fut_1[] = {
+	{   1, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{   2, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFD49
+	{   4, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   5, 0xe1a06000, 0xfdffffff }, // mov:6:0xE1A06000
+	{   6, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFD4D
+	{   7, 0xe1a01004, 0xfdffffff }, // mov:6:0xE1A01004
+	{   8, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{   9, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEE2
+	{  10, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  11, 0xe1a00006, 0xfdffffff }, // mov:6:0xE1A00006
+	{  12, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFD4B
+	{  13, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  16, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{  17, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{  18, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFD3A
+	{  19, 0xe1a01004, 0xfdffffff }, // mov:6:0xE1A01004
+	{  20, 0xe1a06000, 0xfdffffff }, // mov:6:0xE1A06000
+	{  21, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  22, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000DA4
+	{  23, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  24, 0xe1a00006, 0xfdffffff }, // mov:6:0xE1A00006
+	{  25, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFD3E
+	{  26, 0xe0144001, 0xfdffffff }, // and:6:0xE2144001
+	{  27, 0xe1a00342, 0xfdffffff }, // mov:6:0xE3A00342
+	{  28, 0xe0800505, 0xfdffffff }, // add:6:0xE2800505
+	{  30, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{ -1, -1, -1 },
+	/* 27/32 */
+};
+
+static FuncSig func_sig_DeleteFile_Fut_1[] = {
+	{   1, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   2, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFD2A
+	{   3, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   4, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   5, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{   6, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEEE
+	{   7, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   8, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{   9, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFD2E
+	{  10, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{ -1, -1, -1 },
+	/* 10/12 */
+};
+
+static FuncSig func_sig_MakeDirectory_Fut_1[] = {
+	{   1, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{   2, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFD06
+	{   4, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   5, 0xe1a06000, 0xfdffffff }, // mov:6:0xE1A06000
+	{   6, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFD0A
+	{   7, 0xe1a01004, 0xfdffffff }, // mov:6:0xE1A01004
+	{   8, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{   9, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEE6
+	{  10, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  11, 0xe1a00006, 0xfdffffff }, // mov:6:0xE1A00006
+	{  12, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFD08
+	{  13, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  16, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  17, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCF8
+	{  18, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{  19, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  20, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEFF
+	{  21, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  22, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  23, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCFD
+	{  24, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  26, 0xe59f3004, 0xfdffffff }, // ldr:4:0xE59F3004
+	{  27, 0xe5930100, 0xfdffffff }, // ldr:4:0xE7930100
+	{  28, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 25/32 */
+};
+
+static FuncSig func_sig_errnoOfTaskGet_1[] = {
+	{   1, 0xe1b0b000, 0xfdffffff }, // mov:6:0xE1B0B000
+	{   2, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000001
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB0056EB
+	{   4, 0xe150000b, 0xfdffffff }, // cmp:7:0xE150000B
+	{   5, 0x059f0070, 0xfdffffff }, // ldr:4:0x059F0070
+	{   6, 0x05900000, 0xfdffffff }, // ldr:4:0x05900000
+	{   7, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000004
+	{   8, 0xe1a0000b, 0xfdffffff }, // mov:6:0xE1A0000B
+	{   9, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB005702
+	{  10, 0xe1b0b000, 0xfdffffff }, // mov:6:0xE1B0B000
+	{  12, 0x159b0084, 0xfdffffff }, // ldr:4:0x159B0084
+	{  14, 0xe59fc04c, 0xfdffffff }, // ldr:4:0xE59FC04C
+	{  15, 0xe58c0000, 0xfdffffff }, // str:4:0xE58C0000
+	{  16, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{  17, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 15/32 */
+};
+
+static FuncSig func_sig_iosDevFind_1[] = {
+	{   1, 0xe1a0a000, 0xfdffffff }, // mov:6:0xE1A0A000
+	{   2, 0xe1a09001, 0xfdffffff }, // mov:6:0xE1A09001
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFFE2
+	{   4, 0xe1b0b000, 0xfdffffff }, // mov:6:0xE1B0B000
+	{   5, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000003
+	{   6, 0xe590000c, 0xfdffffff }, // ldr:4:0xE590000C
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFE370
+	{   8, 0xe08aa000, 0xfdffffff }, // add:6:0xE08AA000
+	{   9, 0xea000000, 0xff000000 }, // b, bl:3:0xEA000002
+	{  10, 0xe59f03e4, 0xfdffffff }, // ldr:4:0xE59F03E4
+	{  11, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFFDA
+	{  12, 0xe1a0b000, 0xfdffffff }, // mov:6:0xE1A0B000
+	{  13, 0xe15b0000, 0xfdffffff }, // cmp:7:0xE35B0000
+	{  14, 0xe589a000, 0xfdffffff }, // str:4:0xE589A000
+	{  15, 0x059f03d4, 0xfdffffff }, // ldr:4:0x059F03D4
+	{  16, 0x0b000000, 0xff000000 }, // b, bl:3:0x0BFFED6C
+	{  17, 0xe1a0000b, 0xfdffffff }, // mov:6:0xE1A0000B
+	{  20, 0xe1a0b000, 0xfdffffff }, // mov:6:0xE1A0B000
+	{  21, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFF90
+	{  22, 0xe59f038c, 0xfdffffff }, // ldr:4:0xE59F038C
+	{  23, 0xe1a0100b, 0xfdffffff }, // mov:6:0xE1A0100B
+	{  24, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB005358
+	{  25, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFF8F
+	{  26, 0xe59b000c, 0xfdffffff }, // ldr:4:0xE59B000C
+	{  28, 0xea000000, 0xff000000 }, // b, bl:3:0xEA00078A
+	{  30, 0xe1a0a000, 0xfdffffff }, // mov:6:0xE1A0A000
+	{  31, 0xe1a0b001, 0xfdffffff }, // mov:6:0xE1A0B001
+	{ -1, -1, -1 },
+	/* 27/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   1, 0xe59f6030, 0xfdffffff }, // ldr:4:0xE59F6030
 	{   2, 0xe5965000, 0xfdffffff }, // ldr:4:0xE5965000
@@ -4593,6 +4833,183 @@ static FuncSig func_sig_GetFocusLensSubjectDistanceFromLens_3[] = {
 	/* 25/32 */
 };
 
+static FuncSig func_sig_Fgets_Fut_3[] = {
+	{   1, 0xe0524000, 0xfdffffff }, // sub:6:0xE2524000
+	{   2, 0xe1a06000, 0xfdffffff }, // mov:6:0xE1A06000
+	{   3, 0xe1a05001, 0xfdffffff }, // mov:6:0xE1A05001
+	{   4, 0xe0840020, 0xfdffffff }, // add:6:0xE2840020
+	{   5, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   6, 0x01a00004, 0xfdffffff }, // mov:6:0x01A00004
+	{   8, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFBFF
+	{   9, 0xe1a01005, 0xfdffffff }, // mov:6:0xE1A01005
+	{  10, 0xe1a02004, 0xfdffffff }, // mov:6:0xE1A02004
+	{  11, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{  12, 0xe1a00006, 0xfdffffff }, // mov:6:0xE1A00006
+	{  13, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB001DBE
+	{  14, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  15, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  16, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC06
+	{  17, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  20, 0xe0507000, 0xfdffffff }, // sub:6:0xE2507000
+	{  21, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{  22, 0xe0870020, 0xfdffffff }, // add:6:0xE2870020
+	{  23, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  24, 0xe1a06002, 0xfdffffff }, // mov:6:0xE1A06002
+	{  27, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFBEC
+	{  28, 0xe1a01004, 0xfdffffff }, // mov:6:0xE1A01004
+	{  29, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{  30, 0xe1a02006, 0xfdffffff }, // mov:6:0xE1A02006
+	{  31, 0xe1a00007, 0xfdffffff }, // mov:6:0xE1A00007
+	{ -1, -1, -1 },
+	/* 26/32 */
+};
+
+static FuncSig func_sig_Feof_Fut_3[] = {
+	{   1, 0xe0504000, 0xfdffffff }, // sub:6:0xE2504000
+	{   2, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   3, 0xe0840020, 0xfdffffff }, // add:6:0xE2840020
+	{   6, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFBDB
+	{   7, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   8, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{   9, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB001DF9
+	{  10, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  11, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  12, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFBE4
+	{  13, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  16, 0xe0504000, 0xfdffffff }, // sub:6:0xE2504000
+	{  17, 0xe0846020, 0xfdffffff }, // add:6:0xE2846020
+	{  18, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  19, 0xe1a00006, 0xfdffffff }, // mov:6:0xE1A00006
+	{  22, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFBCB
+	{  23, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{  24, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  25, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB001DEF
+	{  26, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  27, 0xe1a00006, 0xfdffffff }, // mov:6:0xE1A00006
+	{  28, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFBFD
+	{  29, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  30, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFBD2
+	{  31, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{ -1, -1, -1 },
+	/* 25/32 */
+};
+
+static FuncSig func_sig_Fflush_Fut_3[] = {
+	{   1, 0xe0504000, 0xfdffffff }, // sub:6:0xE2504000
+	{   2, 0xe0846020, 0xfdffffff }, // add:6:0xE2846020
+	{   3, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   4, 0xe1a00006, 0xfdffffff }, // mov:6:0xE1A00006
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFBCB
+	{   8, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   9, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB001DEF
+	{  11, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  12, 0xe1a00006, 0xfdffffff }, // mov:6:0xE1A00006
+	{  13, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFBFD
+	{  14, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  15, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFBD2
+	{  16, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  19, 0xe4905004, 0xfdffffff }, // ldr:4:0xE4905004
+	{  20, 0xe4906004, 0xfdffffff }, // ldr:4:0xE4906004
+	{  21, 0xe5904000, 0xfdffffff }, // ldr:4:0xE5904000
+	{  22, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB001E71
+	{  23, 0xe1a02005, 0xfdffffff }, // mov:6:0xE1A02005
+	{  24, 0xe1a01000, 0xfdffffff }, // mov:6:0xE1A01000
+	{  25, 0xe1a03006, 0xfdffffff }, // mov:6:0xE1A03006
+	{  26, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  28, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFFEBD
+	{  31, 0x00000000, 0xfdffffff }, // and:6:0x00000000
+	{ -1, -1, -1 },
+	/* 24/32 */
+};
+
+static FuncSig func_sig_MakeDirectory_Fut_3[] = {
+	{   1, 0xe1a06001, 0xfdffffff }, // mov:6:0xE1A06001
+	{   2, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   3, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   4, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC8C
+	{   5, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   6, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC94
+	{   8, 0xe1a01006, 0xfdffffff }, // mov:6:0xE1A01006
+	{   9, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEB0
+	{  11, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  12, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  13, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC92
+	{  14, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  16, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{  18, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  19, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC7D
+	{  20, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{  21, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  22, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEBA
+	{  23, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  24, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  25, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFC86
+	{  26, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  28, 0xe59f3004, 0xfdffffff }, // ldr:4:0xE59F3004
+	{  29, 0xe5930100, 0xfdffffff }, // ldr:4:0xE7930100
+	{  30, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 27/32 */
+};
+
+static FuncSig func_sig_RenameFile_Fut_3[] = {
+	{   1, 0xe1a06001, 0xfdffffff }, // mov:6:0xE1A06001
+	{   2, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   3, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   4, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCE3
+	{   5, 0xe1a01001, 0xfdffffff }, // mov:6:0xE3A01001
+	{   6, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCEB
+	{   8, 0xe1a01006, 0xfdffffff }, // mov:6:0xE1A01006
+	{   9, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEC1
+	{  11, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  12, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  13, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCE9
+	{  14, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  17, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{  18, 0xe1a01002, 0xfdffffff }, // mov:6:0xE1A01002
+	{  19, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{  20, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCD3
+	{  21, 0xe1a01004, 0xfdffffff }, // mov:6:0xE1A01004
+	{  22, 0xe1a06000, 0xfdffffff }, // mov:6:0xE1A06000
+	{  23, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  24, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCEE
+	{  25, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  26, 0xe1a00006, 0xfdffffff }, // mov:6:0xE1A00006
+	{  27, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCDB
+	{  28, 0xe0144001, 0xfdffffff }, // and:6:0xE2144001
+	{  29, 0xe1a00342, 0xfdffffff }, // mov:6:0xE3A00342
+	{  30, 0xe0800505, 0xfdffffff }, // add:6:0xE2800505
+	{ -1, -1, -1 },
+	/* 28/32 */
+};
+
+static FuncSig func_sig_Remove_3[] = {
+	{   1, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   2, 0xe04dd004, 0xfdffffff }, // sub:6:0xE24DD004
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFA40E6
+	{   4, 0xe0505000, 0xfdffffff }, // sub:6:0xE2505000
+	{   5, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{   6, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000008
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB0002AA
+	{   8, 0xe1a01004, 0xfdffffff }, // mov:6:0xE1A01004
+	{   9, 0xe1a0400d, 0xfdffffff }, // mov:6:0xE1A0400D
+	{  10, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  11, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFFB9
+	{  12, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  13, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFFD0
+	{  14, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{  16, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  17, 0xe08dd004, 0xfdffffff }, // add:6:0xE28DD004
+	{  19, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 17/32 */
+};
+
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory_1 },
 	{ "AllocateMemory", func_sig_AllocateMemory_2 },
@@ -4602,6 +5019,7 @@ FuncsList func_list[] = {
 	{ "CreatePhysicalVram", func_sig_CreatePhysicalVram_2 },
 	{ "CreateTask", func_sig_CreateTask_1 },
 	{ "CreateTaskStrict", func_sig_CreateTaskStrict_1 },
+	{ "DeleteFile_Fut", func_sig_DeleteFile_Fut_1 },
 	{ "DisableDispatch", func_sig_DisableDispatch_1 },
 	{ "DisplayImagePhysicalScreen", func_sig_DisplayImagePhysicalScreen_1 },
 	{ "DisplayImagePhysicalScreen", func_sig_DisplayImagePhysicalScreen_2 },
@@ -4610,6 +5028,12 @@ FuncsList func_list[] = {
 	{ "ExitTask", func_sig_ExitTask_1 },
 	{ "Fclose_Fut", func_sig_Fclose_Fut_1 },
 	{ "Fclose_Fut", func_sig_Fclose_Fut_3 },
+	{ "Feof_Fut", func_sig_Feof_Fut_1 },
+	{ "Feof_Fut", func_sig_Feof_Fut_3 },
+	{ "Fflush_Fut", func_sig_Fflush_Fut_1 },
+	{ "Fflush_Fut", func_sig_Fflush_Fut_3 },
+	{ "Fgets_Fut", func_sig_Fgets_Fut_1 },
+	{ "Fgets_Fut", func_sig_Fgets_Fut_3 },
 	{ "Fopen_Fut", func_sig_Fopen_Fut_1 },
 	{ "Fopen_Fut", func_sig_Fopen_Fut_3 },
 	{ "Fread_Fut", func_sig_Fread_Fut_1 },
@@ -4643,6 +5067,8 @@ FuncsList func_list[] = {
 	{ "LockMainPower", func_sig_LockMainPower_1 },
 	{ "LockMainPower", func_sig_LockMainPower_2 },
 	{ "MakeDirectory", func_sig_MakeDirectory_1 },
+	{ "MakeDirectory_Fut", func_sig_MakeDirectory_Fut_1 },
+	{ "MakeDirectory_Fut", func_sig_MakeDirectory_Fut_3 },
 	{ "Mount_FileSystem", func_sig_Mount_FileSystem_1 },
 	{ "Mount_FileSystem", func_sig_Mount_FileSystem_2 },
 	{ "MoveFocusLensToDistance", func_sig_MoveFocusLensToDistance_1 },
@@ -4661,6 +5087,9 @@ FuncsList func_list[] = {
 	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_1 },
 	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_2 },
 	{ "Remove", func_sig_Remove_1 },
+	{ "Remove", func_sig_Remove_3 },
+	{ "RenameFile_Fut", func_sig_RenameFile_Fut_1 },
+	{ "RenameFile_Fut", func_sig_RenameFile_Fut_3 },
 	{ "SetAutoShutdownTime", func_sig_SetAutoShutdownTime_1 },
 	{ "SetAutoShutdownTime", func_sig_SetAutoShutdownTime_2 },
 	{ "SetParameterData", func_sig_SetParameterData_1 },
@@ -4689,12 +5118,14 @@ FuncsList func_list[] = {
 	{ "chdir", func_sig_chdir_2 },
 	{ "close", func_sig_close_1 },
 	{ "closedir", func_sig_closedir_1 },
+	{ "errnoOfTaskGet", func_sig_errnoOfTaskGet_1 },
 	{ "free", func_sig_free_1 },
 	{ "free", func_sig_free_2 },
 	{ "ints_disable", func_sig_ints_disable_1 },
 	{ "ints_enable", func_sig_ints_enable_1 },
 	{ "ioctl", func_sig_ioctl_1 },
 	{ "iosDevAdd", func_sig_iosDevAdd_1 },
+	{ "iosDevFind", func_sig_iosDevFind_1 },
 	{ "iosDrvInstall", func_sig_iosDrvInstall_1 },
 	{ "isalpha", func_sig_isalpha_1 },
 	{ "isalpha", func_sig_isalpha_2 },
@@ -4720,6 +5151,7 @@ FuncsList func_list[] = {
 	{ "memcpy", func_sig_memcpy_1 },
 	{ "memset", func_sig_memset_1 },
 	{ "mkdir", func_sig_mkdir_1 },
+	{ "mktime", func_sig_mktime_1 },
 	{ "open", func_sig_open_1 },
 	{ "opendir", func_sig_opendir_1 },
 	{ "qsort", func_sig_qsort_1 },
@@ -4737,6 +5169,7 @@ FuncsList func_list[] = {
 	{ "strchr", func_sig_strchr_1 },
 	{ "strcmp", func_sig_strcmp_1 },
 	{ "strcpy", func_sig_strcpy_1 },
+	{ "strftime", func_sig_strftime_1 },
 	{ "strlen", func_sig_strlen_1 },
 	{ "strncmp", func_sig_strncmp_1 },
 	{ "strncpy", func_sig_strncpy_1 },

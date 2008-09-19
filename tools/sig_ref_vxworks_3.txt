@@ -4,3 +4,9 @@ Fread_Fut 0xFFE4235C
 Fseek_Fut 0xFFE42450
 Fwrite_Fut 0xFFE423B0
 GetFocusLensSubjectDistanceFromLens 0xFFE72080
+Fgets_Fut 0xFFE42404
+Feof_Fut 0xFFE4249C
+Fflush_Fut 0xFFE424D8
+MakeDirectory_Fut 0xFFE421E0
+RenameFile_Fut 0xFFE42084
+Remove 0xFFE46B78

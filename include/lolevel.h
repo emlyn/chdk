@@ -45,9 +45,8 @@ extern int _taskNameToId(char* taskName); // VxWorks only, task's name first let
 extern const char *_taskName(int taskID); // VxWorks only for now
 extern int _taskIdListGet(int *idlist,int max); // VxWorks only for now
 extern void _taskSuspend(int taskId); 
-extern void _taskResume(int taskId); extern long _GetPropertyCase(long opt_id, void *buf, long bufsize);
-extern long _GetPropertyCase(long opt_id, void *buf, long bufsize);
-extern long _SetPropertyCase(long opt_id, void *buf, long bufsize);
+extern void _taskResume(int taskId);
+extern int _errnoOfTaskGet(int tid);
 extern long _IsStrobeChargeCompleted();
 
 long _SetEventFlag(void *flag, long what);
@@ -78,11 +77,18 @@ extern int _Lseek (int fd, long offset, int whence);
 extern int _Remove(const char *name);
 
 extern long _Fopen_Fut(const char *filename, const char *mode);
-extern void _Fclose_Fut(long file);
+extern long _Fclose_Fut(long file);
 extern long _Fread_Fut(void *buf, long elsize, long count, long f);
 extern long _Fwrite_Fut(const void *buf, long elsize, long count, long f);
 extern long _Fseek_Fut(long file, long offset, long whence);
 extern long _Fflush_Fut(long file);
+extern long _Feof_Fut(long file);
+extern long _Fflush_Fut(long file);
+extern char *_Fgets_Fut(char *buf, int n, long f);
+extern long _RenameFile_Fut(const char *oldname, const char *newname);
+extern long _DeleteFile_Fut(const char *name);
+extern long _MakeDirectory_Fut(const char *name,int unk);
+
 extern int _rename(const char *oldname, const char *newname);
 
 extern int _isdigit(int c);
@@ -169,7 +175,9 @@ extern int _utime(char *file, void *newTimes);
 extern unsigned long _time(unsigned long *timer);
 extern void *_localtime(const unsigned long *_tod);
 extern void *_LocalTime(const unsigned long *_tod, void * t_m); // DRYOS
-
+extern long _strftime(char *s, unsigned long maxsize, const char *format, const /*struct tm*/ void *timp);
+extern /*time_t*/ long _mktime(/*struct tm*/ void *timp); // VXWORKS
+extern /*time_t*/ long _mktime_ext(void *tim_extp); // DRYOS, doesn't take a struct tm *
 /* file */
 extern void *_opendir(const char* name);
 extern void *_readdir(void *d);

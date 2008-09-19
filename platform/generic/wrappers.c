@@ -230,6 +230,14 @@ int remove(const char *name) {
     return _Remove(name);
 }
 
+int errnoOfTaskGet(int tid) {
+#if !CAM_DRYOS
+    return _errnoOfTaskGet(tid);
+#else
+    return 0;
+#endif
+}
+
 int isdigit(int c) {
 #if !CAM_DRYOS
     return _isdigit(c);
@@ -325,6 +333,18 @@ long sprintf(char *s, const char *st, ...)
     return res;
 }
 
+// strerror exists on vxworks cams, 
+// but it does about the same thing as this
+const char *strerror(int en) {
+#if !CAM_DRYOS
+    static char msg[20];
+    sprintf(msg,"errno 0x%X",en);
+    return msg;
+#else
+    return "error";
+#endif
+}
+
 unsigned long time(unsigned long *timer) {
     return _time(timer);
 }
@@ -340,6 +360,23 @@ void *localtime(const unsigned long *_tod) {
 // for DRYOS cameras do something with this!  - sizeof(x[]) must be >= sizeof(struct tm) :  'static int x[9];'
   static int x[9];
   return _LocalTime(_tod, &x);   
+#endif
+}
+
+long strftime(char *s, unsigned long maxsize, const char *format, /*const struct tm*/ void *timp) {
+	return _strftime(s,maxsize,format,timp);
+}
+
+/*time_t*/ long mktime(/*struct tm*/ void *timp) {
+#if !CAM_DRYOS
+	return _mktime(timp);
+#else
+	int timp_ext[10]; // struct tm + a ptr
+	_memcpy(timp_ext,timp,9*sizeof(int));
+	timp_ext[9]=0;
+	long retval = _mktime_ext(&timp_ext);
+	_memcpy(timp,timp_ext,9*sizeof(int));
+	return retval;
 #endif
 }
 
@@ -448,12 +485,16 @@ _SetAutoShutdownTime(1); // 1 sec
 for (i=0;i<200;i++) _UnlockMainPower(); // set power unlock counter to 200 or more, because every keyboard function call try to lock power again ( if "Disable LCD off" menu is "alt" or "script"). 
 //#endif
 }
+long MakeDirectory_Fut(const char *dirname) {
+ return _MakeDirectory_Fut(dirname,-1); // meaning of second arg is not clear, firmware seems to use -1
+}
+
 long Fopen_Fut(const char *filename, const char *mode){
  return _Fopen_Fut(filename,mode);
 }
 
-void Fclose_Fut(long file){
- _Fclose_Fut(file);
+long Fclose_Fut(long file){
+ return _Fclose_Fut(file);
 }
 
 long Fread_Fut(void *buf, long elsize, long count, long f){
@@ -468,8 +509,29 @@ long Fseek_Fut(long file, long offset, long whence){
  return  _Fseek_Fut(file, offset, whence);
 }
 
+long Feof_Fut(long file) {
+ return _Feof_Fut(file);
+}
+
+long Fflush_Fut(long file) {
+ return _Fflush_Fut(file);
+}
+
+char *Fgets_Fut(char *buf, int n, long f) {
+ return _Fgets_Fut(buf,n,f);
+}
+
+long RenameFile_Fut(const char *oldname, const char *newname) {
+ return _RenameFile_Fut(oldname, newname);
+}
+
 int rename(const char *oldname, const char *newname){
+ // doesn't appear to work on a540
  return _rename(oldname, newname);
+}
+
+long DeleteFile_Fut(const char *name) {
+ return _DeleteFile_Fut(name);
 }
 
 unsigned int GetFreeCardSpaceKb(void){

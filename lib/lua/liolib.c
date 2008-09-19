@@ -5,7 +5,10 @@
 */
 
 
+// in stdlib
+#if 0
 #include <errno.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -102,6 +105,8 @@ static int io_noclose (lua_State *L) {
 }
 
 
+// reyalp - no popen
+#if 0
 /*
 ** function to close 'popen' files
 */
@@ -111,6 +116,7 @@ static int io_pclose (lua_State *L) {
   *p = NULL;
   return pushresult(L, ok, NULL);
 }
+#endif
 
 
 /*
@@ -171,6 +177,7 @@ static int io_open (lua_State *L) {
 ** this function has a separated environment, which defines the
 ** correct __close for 'popen' files
 */
+#if 0
 static int io_popen (lua_State *L) {
   const char *filename = luaL_checkstring(L, 1);
   const char *mode = luaL_optstring(L, 2, "r");
@@ -178,13 +185,17 @@ static int io_popen (lua_State *L) {
   *pf = lua_popen(L, filename, mode);
   return (*pf == NULL) ? pushresult(L, 0, filename) : 1;
 }
+#endif
 
 
+// TODO tmpfile
+#if 0
 static int io_tmpfile (lua_State *L) {
   FILE **pf = newfile(L);
   *pf = tmpfile();
   return (*pf == NULL) ? pushresult(L, 0, NULL) : 1;
 }
+#endif
 
 
 static FILE *getiofile (lua_State *L, int findex) {
@@ -269,10 +280,51 @@ static int io_lines (lua_State *L) {
 ** =======================================================
 */
 
+#define SCAN_NUM_MAX_CHARS 11
+// reyalp - no fscanf, read a number
+// this doesn't exactly replicate fscanf(f,"%d",&r)
+// in particular, scanf will eat an indefinite number of digits
+static int scan_num(FILE *f,int *r) {
+  char c;
+  int count=0;
+  int neg=0;
+  char s[SCAN_NUM_MAX_CHARS];
+  do {
+    if(fread(&c,1,1,f) != 1) return 0;
+  } while( isspace(c) );
+  if(c == '-') {
+    neg=1;
+    if(fread(&c,1,1,f) != 1) return 0;
+  }
+  while( count < SCAN_NUM_MAX_CHARS ) {
+    if(isdigit(c)) {
+      s[count++] = c;
+    }
+    else {
+      fseek(f,-1,SEEK_CUR);
+      if(count < 1 )
+        return 0;
+      else
+        break;
+    }
+    if( fread(&c,1,1,f) != 1 ) break;
+  }
+  s[count] = 0;
+  if(count) {
+    *r = (neg) ? -atoi(s) : atoi(s);
+    return 1;
+  }
+  return 0;
+}
 
 static int read_number (lua_State *L, FILE *f) {
   lua_Number d;
+// no fscanf
+#if 0
   if (fscanf(f, LUA_NUMBER_SCAN, &d) == 1) {
+#else
+  if (scan_num(f,&d) == 1) {
+#endif
     lua_pushnumber(L, d);
     return 1;
   }
@@ -280,13 +332,21 @@ static int read_number (lua_State *L, FILE *f) {
 }
 
 
+#if 0
 static int test_eof (lua_State *L, FILE *f) {
   int c = getc(f);
   ungetc(c, f);
   lua_pushlstring(L, NULL, 0);
   return (c != EOF);
 }
+#else
+static int test_eof (lua_State *L, FILE *f) {
+  lua_pushlstring(L, NULL, 0);
+  // TODO not sure why getc/ungetc was used
+  return !feof(f);
+}
 
+#endif
 
 static int read_line (lua_State *L, FILE *f) {
   luaL_Buffer b;
@@ -332,7 +392,10 @@ static int g_read (lua_State *L, FILE *f, int first) {
   int nargs = lua_gettop(L) - 1;
   int success;
   int n;
+// no error state to clear
+#if 0
   clearerr(f);
+#endif
   if (nargs == 0) {  /* no arguments? */
     success = read_line(L, f);
     n = first+1;  /* to return 1 result */
@@ -365,8 +428,11 @@ static int g_read (lua_State *L, FILE *f, int first) {
       }
     }
   }
+// we have no ferror
+#if 0
   if (ferror(f))
     return pushresult(L, 0, NULL);
+#endif
   if (!success) {
     lua_pop(L, 1);  /* remove last result */
     lua_pushnil(L);  /* push nil instead */
@@ -391,8 +457,11 @@ static int io_readline (lua_State *L) {
   if (f == NULL)  /* file is already closed? */
     luaL_error(L, "file is already closed");
   sucess = read_line(L, f);
+// we have no ferror
+#if 0
   if (ferror(f))
     return luaL_error(L, "%s", strerror(errno));
+#endif
   if (sucess) return 1;
   else {  /* EOF */
     if (lua_toboolean(L, lua_upvalueindex(2))) {  /* generator created file? */
@@ -412,9 +481,15 @@ static int g_write (lua_State *L, FILE *f, int arg) {
   int status = 1;
   for (; nargs--; arg++) {
     if (lua_type(L, arg) == LUA_TNUMBER) {
+      char s[12];
+      sprintf(s,LUA_NUMBER_FMT,lua_tonumber(L,arg));
       /* optimization: could be done exactly as for strings */
       status = status &&
+#if 0
           fprintf(f, LUA_NUMBER_FMT, lua_tonumber(L, arg)) > 0;
+#else
+          fwrite(s, sizeof(char), strlen(s), f);
+#endif
     }
     else {
       size_t l;
@@ -452,6 +527,7 @@ static int f_seek (lua_State *L) {
 }
 
 
+#if 0
 static int f_setvbuf (lua_State *L) {
   static const int mode[] = {_IONBF, _IOFBF, _IOLBF};
   static const char *const modenames[] = {"no", "full", "line", NULL};
@@ -461,6 +537,7 @@ static int f_setvbuf (lua_State *L) {
   int res = setvbuf(f, NULL, mode[op], sz);
   return pushresult(L, res == 0, NULL);
 }
+#endif
 
 
 
@@ -473,6 +550,11 @@ static int f_flush (lua_State *L) {
   return pushresult(L, fflush(tofile(L)) == 0, NULL);
 }
 
+static int f_getfptr(lua_State *L) {
+  FILE *f = tofile(L);
+  lua_pushinteger(L, (int)f);
+  return 1;
+}
 
 static const luaL_Reg iolib[] = {
   {"close", io_close},
@@ -481,9 +563,14 @@ static const luaL_Reg iolib[] = {
   {"lines", io_lines},
   {"open", io_open},
   {"output", io_output},
+#if 0
   {"popen", io_popen},
+#endif
   {"read", io_read},
+  // TODO
+#if 0
   {"tmpfile", io_tmpfile},
+#endif
   {"type", io_type},
   {"write", io_write},
   {NULL, NULL}
@@ -496,8 +583,11 @@ static const luaL_Reg flib[] = {
   {"lines", f_lines},
   {"read", f_read},
   {"seek", f_seek},
+#if 0
   {"setvbuf", f_setvbuf},
+#endif
   {"write", f_write},
+  {"_getfptr",f_getfptr}, // debug
   {"__gc", io_gc},
   {"__tostring", io_tostring},
   {NULL, NULL}
@@ -540,14 +630,25 @@ LUALIB_API int luaopen_io (lua_State *L) {
   luaL_register(L, LUA_IOLIBNAME, iolib);
   /* create (and set) default files */
   newfenv(L, io_noclose);  /* close function for default files */
+#if 0
   createstdfile(L, stdin, IO_INPUT, "stdin");
   createstdfile(L, stdout, IO_OUTPUT, "stdout");
   createstdfile(L, stderr, 0, "stderr");
+#else
+// initialize them in the closed state
+// stderr/stdout could go to regular files or script console
+  createstdfile(L, NULL, IO_INPUT, "stdin");
+  createstdfile(L, NULL, IO_OUTPUT, "stdout");
+  createstdfile(L, NULL, 0, "stderr");
+#endif
   lua_pop(L, 1);  /* pop environment for default files */
+  // reyalp - no popen
+#if 0
   lua_getfield(L, -1, "popen");
   newfenv(L, io_pclose);  /* create environment for 'popen' */
   lua_setfenv(L, -2);  /* set fenv for 'popen' */
   lua_pop(L, 1);  /* pop 'popen' */
+#endif
   return 1;
 }
 
