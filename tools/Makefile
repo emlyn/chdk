@@ -4,7 +4,7 @@ SKIPBUILDRULES=1
 
 include $(topdir)makefile.inc
 
-OBJS=pakwif.o finsig.o gensig.o
+OBJS=pakwif.o finsig.o gensig.o dumpchk.o
 
 all: pakwif$(EXE) finsig$(EXE)
 
@@ -29,6 +29,9 @@ gensig$(EXE): gensig.o
 	@echo $< \-\> $@
 	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
 
+dumpchk$(EXE): dumpchk.o
+	@echo $< \-\> $@
+	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
 
 clean:
 	rm -f pakwif$(EXE) finsig$(EXE) $(OBJS)
