@@ -4,6 +4,15 @@ revision / version
 author
 
 log
+0.5.3 / reyalp
++ added lua function get_buildinfo.  Returns a table:
+  { platform,platsub,version,build_number,build_date,build_time }
+* enabled lua poke. sets word at address to value.
+  result=poke(address,value) 
+  returns nil if the address is not aligned, otherwise true
+* changed peek and poke to return nil if given a non-aligned address
+* changed llibtst.lua to record build info
+
 0.5.2 / reyalp
 + added CHDK/LUALIB, update version
 518 tools/dumpchk see http://chdk.setepontos.com/index.php/topic,2283.0.html

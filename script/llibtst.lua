@@ -418,7 +418,10 @@ if not testlog then
 end
 
 io.output(testlog)
+bi=get_buildinfo()
 log("test log opened\n");
+log("platform: ",bi.platform," ",bi.platsub,"\n")
+log("version: ",bi.version," ",bi.build_number," built on ",bi.build_date," ",bi.build_time,"\n")
 if do_io then
 	io_test()
 end

@@ -659,19 +659,29 @@ static int luaCB_get_time( lua_State* L )
 static int luaCB_peek( lua_State* L )
 {
   int addr = (luaL_checknumber(L,1));
-  lua_pushnumber( L, *(unsigned *)(addr) );
+  // must be alligned
+  if (addr & 0x3) {
+  	lua_pushnil(L);
+  }
+  else {
+    lua_pushnumber( L, *(unsigned *)(addr) );
+  }
   return 1;
 }
 
-#if 0
 static int luaCB_poke( lua_State* L )
 {
   int addr = (luaL_checknumber(L,1));
   int val = (luaL_checknumber(L,2));
-  *(unsigned *)(addr) = val;
-  return 0;
+  if (addr & 0x3) {
+  	lua_pushnil(L);
+  }
+  else {
+    *(unsigned *)(addr) = val;
+    lua_pushboolean(L,1);
+  }
+  return 1;
 }
-#endif
 
 static int luaCB_bitand( lua_State* L )
 {
@@ -725,6 +735,24 @@ static int luaCB_bitnot( lua_State* L )
 {
   unsigned val = (luaL_checknumber(L,1));
   lua_pushnumber( L, ~val );
+  return 1;
+}
+
+static void set_string_field(lua_State* L, const char *key, const char *val)
+{
+  lua_pushstring(L, val);
+  lua_setfield(L, -2, key);
+}
+
+static int luaCB_get_buildinfo( lua_State* L )
+{
+  lua_createtable(L, 0, 6);  /* 9 = number of fields */
+  set_string_field( L,"platform", PLATFORM );
+  set_string_field( L,"platsub", PLATFORMSUB );
+  set_string_field( L,"version", HDK_VERSION );
+  set_string_field( L,"build_number", BUILD_NUMBER );
+  set_string_field( L,"build_date", __DATE__ );
+  set_string_field( L,"build_time", __TIME__ );
   return 1;
 }
 
@@ -840,9 +868,7 @@ void register_lua_funcs( lua_State* L )
   FUNC(play_sound);
   FUNC(get_temperature);
   FUNC(peek);
-#if 0
   FUNC(poke);
-#endif
   FUNC(bitand);
   FUNC(bitor);
   FUNC(bitxor);
@@ -852,4 +878,6 @@ void register_lua_funcs( lua_State* L )
   FUNC(bitnot);
 
   FUNC(get_time);
+
+  FUNC(get_buildinfo);
 }
