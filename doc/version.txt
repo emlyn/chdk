@@ -4,6 +4,13 @@ revision / version
 author
 
 log
+0.5.2 / reyalp
++ added CHDK/LUALIB, update version
+518 tools/dumpchk see http://chdk.setepontos.com/index.php/topic,2283.0.html
+517 lua iolib and oslib See http://chdk.setepontos.com/index.php/topic,2267.msg21479.html#msg21479
+516 housekeeping
+515 fix line endings, svn:eol-style. See http://chdk.setepontos.com/index.php/topic,2145.15.html
+514 merge old trunk
 
 0.5.1 / PP
 
