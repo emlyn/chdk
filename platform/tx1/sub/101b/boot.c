@@ -2,7 +2,7 @@
 #include "platform.h"
 #include "core.h"
 
-const long new_sa = MEMISOSTART + MEMISOSIZE;
+const char * const new_sa = &_end;
 
 /* Ours stuff */
 extern long wrs_kernel_bss_start;

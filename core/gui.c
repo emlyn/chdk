@@ -213,6 +213,9 @@ static void cb_battery_menu_change(unsigned int item);
 static void cb_zebra_restore_screen();
 static void cb_zebra_restore_osd();
 
+// for memory info, duplicated from lowlevel
+extern const char _start,_end;
+
 static int debug_tasklist_start;
 static int debug_display_direction=1;
 // Menu definition
@@ -2530,7 +2533,7 @@ void gui_show_memory_info(int arg) {
         
     }
     
-    sprintf(buf, lang_str(LANG_MSG_MEMORY_INFO_TEXT), size-1);
+    sprintf(buf, lang_str(LANG_MSG_MEMORY_INFO_TEXT), size-1,MEMISOSIZE,&_start,&_end);
     gui_mbox_init(LANG_MSG_MEMORY_INFO_TITLE, (int)buf, MBOX_FUNC_RESTORE|MBOX_TEXT_CENTER, NULL);
 }
 

@@ -164,6 +164,7 @@ CHDK_LUA_IOLIB=1
 CHDK_LUA_OSLIB=1
 #CHDK_LUA_STRLIB=1
 
+MEMISOSIZE="(&_end-&_start)"
 include $(topdir)version.inc
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
 

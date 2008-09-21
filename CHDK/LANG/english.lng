@@ -164,7 +164,7 @@
 107 "CHDK Ver: %s %s\nDate:    %s\nTime:    %s\nCamera:  %s\nFW Vers: %s"
 
 108 "*** Memory Info ***"
-109 "Free Memory: %d bytes"
+109 "Free Memory: %d bytes\nCHDK size: %d bytes\nloaded at: 0x%X"
 
 110 "*** Information ***"
 111 "Please switch your camera\nto PLAY mode\nand try again. :)"
