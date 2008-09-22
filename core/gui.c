@@ -265,8 +265,12 @@ static CMenu script_submenu = {0x27,LANG_MENU_SCRIPT_TITLE, NULL, script_submenu
 
 
 static CMenuItem games_submenu_items[] = {
+#ifdef OPT_GAME_REVERSI
     {0x38,LANG_MENU_GAMES_REVERSI,           MENUITEM_PROC,  (int*)gui_draw_reversi },
+#endif
+#ifdef OPT_GAME_SOKOBAN
     {0x38,LANG_MENU_GAMES_SOKOBAN,           MENUITEM_PROC,  (int*)gui_draw_sokoban },
+#endif
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
@@ -1855,12 +1859,16 @@ void gui_redraw()
         case GUI_MODE_MBOX:
             gui_mbox_draw();
             break;
+#ifdef OPT_GAME_REVERSI
         case GUI_MODE_REVERSI:
             gui_reversi_draw();
             break;
+#endif
+#ifdef OPT_GAME_SOKOBAN
         case GUI_MODE_SOKOBAN:
             gui_sokoban_draw();
             break;
+#endif
         case GUI_MODE_DEBUG:
             gui_debug_draw();
             break;
@@ -2081,12 +2089,16 @@ void gui_kbd_process()
     	case GUI_MODE_MBOX:
             gui_mbox_kbd_process();
             break;
+#ifdef OPT_GAME_REVERSI
     	case GUI_MODE_REVERSI:
             gui_reversi_kbd_process();
             break;
+#endif
+#ifdef OPT_GAME_SOKOBAN
     	case GUI_MODE_SOKOBAN:
             gui_sokoban_kbd_process();
             break;
+#endif
     	case GUI_MODE_DEBUG:
             gui_debug_kbd_process();
             break;
@@ -2538,6 +2550,7 @@ void gui_show_memory_info(int arg) {
 }
 
 //-------------------------------------------------------------------
+#ifdef OPT_GAME_REVERSI
 void gui_draw_reversi(int arg) {
     if ((mode_get()&MODE_MASK) != MODE_PLAY) {
         gui_mbox_init(LANG_MSG_INFO_TITLE, LANG_MSG_SWITCH_TO_PLAY_MODE,
@@ -2547,18 +2560,20 @@ void gui_draw_reversi(int arg) {
     gui_mode = GUI_MODE_REVERSI;
     gui_reversi_init();
 }
+#endif
 
 //-------------------------------------------------------------------
+#ifdef OPT_GAME_SOKOBAN
 void gui_draw_sokoban(int arg) {
     if ((mode_get()&MODE_MASK) != MODE_PLAY) {
         gui_mbox_init(LANG_MSG_INFO_TITLE, LANG_MSG_SWITCH_TO_PLAY_MODE,
                       MBOX_FUNC_RESTORE|MBOX_TEXT_CENTER, NULL);
         return;
     }
-    gui_mode = GUI_MODE_SOKOBAN;
-    gui_sokoban_init();
+    if ( gui_sokoban_init() )
+        gui_mode = GUI_MODE_SOKOBAN;
 }
-
+#endif
 //-------------------------------------------------------------------
 void gui_draw_debug(int arg) {
 //    gui_debug_init(0x2510);

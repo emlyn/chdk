@@ -573,13 +573,7 @@ static int luaCB_get_nd_present( lua_State* L )
 
 static int luaCB_get_propset( lua_State* L )
 {
-  int to;
-  #if CAM_PROPSET == 1
-  to = 1;
-  #elif CAM_PROPSET == 2
-  to = 2;
-  #endif
-  lua_pushnumber( L, to );
+  lua_pushnumber( L, CAM_PROPSET );
   return 1;
 }
 
@@ -746,7 +740,7 @@ static void set_string_field(lua_State* L, const char *key, const char *val)
 
 static int luaCB_get_buildinfo( lua_State* L )
 {
-  lua_createtable(L, 0, 6);  /* 9 = number of fields */
+  lua_createtable(L, 0, 6);  /* 6 = number of fields */
   set_string_field( L,"platform", PLATFORM );
   set_string_field( L,"platsub", PLATFORMSUB );
   set_string_field( L,"version", HDK_VERSION );

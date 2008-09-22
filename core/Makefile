@@ -11,11 +11,21 @@ LDOPTS+=-Wl,-N,-Ttext,$(MEMISOSTART)
 
 all: main.bin
 
+OPT_OBJS=
+ifdef OPT_GAME_REVERSI
+CFLAGS+=-DOPT_GAME_REVERSI
+OPT_OBJS+=gui_reversi.o
+endif
+ifdef OPT_GAME_SOKOBAN
+CFLAGS+=-DOPT_GAME_SOKOBAN
+OPT_OBJS+=gui_sokoban.o
+endif
+
 OBJS=entry.o nothumb.o main.o gui_draw.o gui_menu.o gui_palette.o gui_mbox.o \
-     gui_reversi.o gui_debug.o gui_fselect.o gui_read.o gui.o kbd.o conf.o \
-     histogram.o gui_batt.o gui_space.o gui_osd.o script.o curves.o raw.o gui_sokoban.o gui_calendar.o \
+     gui_debug.o gui_fselect.o gui_read.o gui.o kbd.o conf.o \
+     histogram.o gui_batt.o gui_space.o gui_osd.o script.o curves.o raw.o gui_calendar.o \
      gui_lang.o gui_bench.o gui_mpopup.o gui_grid.o motion_detector.o raw_merge.o \
-     luascript.o edgeoverlay.o shot_histogram.o
+     luascript.o edgeoverlay.o shot_histogram.o $(OPT_OBJS)
 
 gui.o: FORCE
 

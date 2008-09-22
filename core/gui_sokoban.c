@@ -32,13 +32,20 @@
 #define MARKER_BOX_PLACE        '*'
 #define MARKER_PLAYER           '@'
 #define MARKER_PLAYER_PLACE     '+'
-#define MARKER_EMPTY            ' '
+#define MARKER_EMPTY            '_' // was space
+#define MARKER_LINE_END        '\n' // was |
+#define MARKER_LEVEL_END        '!'
+
+#define LEVEL_CHARS "#$.*@+_"
 
 #define UNDO_SIZE               1000
 
 //-------------------------------------------------------------------
-#include "gui_sokoban_levels.h"
-#define NUM_LEVELS (sizeof(fields)/sizeof(fields[0]))
+static const char *level_file_name="A/CHDK/GAMES/SOKOBAN.LEV";
+#define MAX_LEVELS 200
+static unsigned short level_start_list[MAX_LEVELS];
+static unsigned char level_length_list[MAX_LEVELS];
+static unsigned num_levels;
 
 static int need_redraw;
 static int  moves;
@@ -127,11 +134,39 @@ static void sokoban_undo_reset() {
 //-------------------------------------------------------------------
 static void sokoban_set_level(int lvl) {
     int x=0, y, w=0, h=0;
-    const char *p=fields[lvl];
+    const char *p;
+    char *buf;
+    int fd;    
+    int start,len;
+
+    len=level_length_list[lvl];
+    start=level_start_list[lvl];
+    fd=fopen(level_file_name,"rb");
+    if(!fd) {
+        num_levels=0;
+        return;
+    }
+
+    buf=malloc(len+1);
+    if(!buf) {
+        fclose(fd);
+        return;
+    }
+
+    if(fseek(fd,start,SEEK_SET) != 0) {
+        fclose(fd);
+        free(buf);
+        return;
+    }
+    fread(buf,1,len,fd);
+    buf[len]=0;
+    fclose(fd);
+
+    p=buf;
 
     // determine dimensions
     while (*p) {
-      if (*p=='|') {
+      if (*p==MARKER_LINE_END) {
           ++h;
           if (x>w) w=x;
           x=0;
@@ -141,6 +176,7 @@ static void sokoban_set_level(int lvl) {
       ++p;
     }
     if (x>w) w=x;
+    h-=1; //the last line didn't previously have an end marker
 
     // clear field
     for (y=0; y<FIELD_HEIGHT; ++y)
@@ -148,17 +184,18 @@ static void sokoban_set_level(int lvl) {
             field[y][x]=MARKER_EMPTY;
     
     // place maze at the center
-    p=fields[lvl];
+    p=buf;
     for (y=(FIELD_HEIGHT-h)/2; y<FIELD_HEIGHT; ++y, ++p) {
-        for (x=(FIELD_WIDTH-w)/2; x<FIELD_WIDTH && *p && *p!='|'; ++x, ++p) {
+        for (x=(FIELD_WIDTH-w)/2; x<FIELD_WIDTH && *p && *p!=MARKER_LINE_END; ++x, ++p) {
             field[y][x]=*p;
             if (field[y][x] == MARKER_PLAYER || field[y][x] == MARKER_PLAYER_PLACE) {
               xPl = x; yPl = y;
             }
         }
-        if (!*p) break;
+        if (!*p || (*p == MARKER_LINE_END && !*(p+1))) break;
     }
-
+    
+    free(buf);
     conf.sokoban_level = lvl;
     moves = 0;
     sokoban_undo_reset();
@@ -177,7 +214,7 @@ static int sokoban_finished() {
 
 //-------------------------------------------------------------------
 static void sokoban_next_level() {
-    if (++conf.sokoban_level >= NUM_LEVELS) conf.sokoban_level = 0;
+    if (++conf.sokoban_level >= num_levels) conf.sokoban_level = 0;
     sokoban_set_level(conf.sokoban_level);
     need_redraw = 1;
 }
@@ -220,10 +257,73 @@ static void sokoban_draw_box(int x, int y, color cl) {
 }
 
 //-------------------------------------------------------------------
-void gui_sokoban_init() {
+int gui_sokoban_init() {
+    /* first time through, load the file and make an index
+     if would could tell when the user left sokoban, 
+     we could avoid this and malloc all the data structures
+     unfortunately, gui_mode gets set all over the place */
+    if(!num_levels) {
+        char *buf,*p,*p_start;
+        int fd;    
+        struct stat st;
+        int prev_index = 0;
+
+        if (stat((char *)level_file_name,&st) != 0 || st.st_size==0) 
+            return 0;
+
+        fd=fopen(level_file_name,"rb");
+        if(!fd) 
+            return 0;
+
+        buf=malloc(st.st_size+1);
+        if(!buf) {
+            fclose(fd);
+            return 0;
+        }
+
+        fread(buf,1,st.st_size,fd);
+        buf[st.st_size]=0;
+        fclose(fd);
+        p = buf;
+        do {
+            // skip to the first level char
+            p = strpbrk(p,LEVEL_CHARS);
+            // found a level char, store the start
+            if (p) {
+                unsigned pos = p - buf;
+                if ( pos > 65535 ) {
+                    break;
+                }
+                level_start_list[num_levels] = (unsigned short)pos;
+                p=strchr(p,MARKER_LEVEL_END);
+                // found the end char, store the end
+                if(p) {
+                    unsigned len = p - (buf + level_start_list[num_levels]);
+                    // bail on invalid level
+                    if ( len > 255 ) {
+                        break;
+                    }
+                    level_length_list[num_levels] = (unsigned char)len;
+                    ++num_levels;
+                }
+            }
+        } while(p && num_levels < MAX_LEVELS);
+        free(buf);
+    }
+    if(!num_levels) {
+        return 0;
+    }
+    else if(conf.sokoban_level >= num_levels) {
+        conf.sokoban_level = 0;
+    }
     cell_size = screen_height/FIELD_HEIGHT;
     sokoban_set_level(conf.sokoban_level);
+	// if the file is no longer readable, set_level will set this
+    if(!num_levels) {
+        return 0;
+    }
     need_redraw = 1;
+    return 1;
 }
 
 //-------------------------------------------------------------------
