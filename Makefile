@@ -90,6 +90,7 @@ firzipsubcomplete: infoline clean firsub
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/BOOKS/*  > $(DEVNULL)
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/CURVES/*  > $(DEVNULL)
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/FONTS/*  > $(DEVNULL)
+	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/GAMES/*   > $(DEVNULL)
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/GRIDS/* > $(DEVNULL)
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/LANG/*   > $(DEVNULL)
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/SCRIPTS/*  > $(DEVNULL)

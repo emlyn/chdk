@@ -4,6 +4,13 @@ revision / version
 author
 
 log
+0.5.4 / reyalp
+* Made games compile time optional. Set or unset OPT_GAME_* in root makefile.inc
+* Moved sokoban levels from static data (gui_sokoban_levels.h) to file CHDK/GAMES/SOKOBAN.LEV
+See http://chdk.setepontos.com/index.php/topic,688.msg21578.html#msg21578 for details
+* Renamed lua compile option variables CHDK_->OPT_
+* Minor tweaks in luascript
+
 0.5.3 / reyalp
 + added lua function get_buildinfo.  Returns a table:
   { platform,platsub,version,build_number,build_date,build_time }
