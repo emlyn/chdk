@@ -239,7 +239,7 @@ extern DIR*           opendir (const char* name);
 extern struct dirent* readdir (DIR*);
 extern int            closedir (DIR*);
 extern void           rewinddir (DIR*);
-extern int            stat (char *name, struct stat *pStat);
+extern int            stat (const char *name, struct stat *pStat);
 
 
 struct tm

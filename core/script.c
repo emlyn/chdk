@@ -9,8 +9,6 @@
 
 //-------------------------------------------------------------------
 
-#define SCRIPT_BUF_SIZE             8192
-#define SCRIPT_PARAM_BUF_SIZE       2048
 #define SCRIPT_CONSOLE_NUM_LINES    5
 #define SCRIPT_CONSOLE_LINE_LENGTH  25
 #define SCRIPT_CONSOLE_X            0
@@ -21,8 +19,6 @@ const char *state_ubasic_script;
 char cfg_name[100] = "\0";
 char cfg_set_name[100] = "\0";
 
-static char ubasic_script_buf[SCRIPT_BUF_SIZE];
-static char ubasic_scriptparam_buf[SCRIPT_PARAM_BUF_SIZE];
 static const char *ubasic_script_default =
 #if 0
     "@title Default script\n"
@@ -206,6 +202,8 @@ int load_params_values(const char *fn, int update_vars, int read_param_set)
 {
 	int i, fd=-1, rcnt;
 	register const char *ptr;	
+	struct stat st;
+	char *buf;
 	
 	if (fn == NULL || fn[0] == 0) return 0;
 	if (read_param_set)
@@ -215,24 +213,33 @@ int load_params_values(const char *fn, int update_vars, int read_param_set)
 		fd = open(cfg_name, O_RDONLY, 0777);
 		if (fd >= 0)
 		{
-			rcnt = read(fd, ubasic_scriptparam_buf, SCRIPT_PARAM_BUF_SIZE);
-			ubasic_scriptparam_buf[rcnt] = 0;
+			char s[16]; // plenty for one number
+			rcnt = read(fd, s, sizeof(s)-1);
+			s[rcnt] = 0;
 			close(fd);
-			conf.script_param_set = strtol(ubasic_scriptparam_buf, NULL, 0);
+			conf.script_param_set = strtol(s, NULL, 0);
 		} else conf.script_param_set = 0;
 	}
 	set_params_values_name(fn, conf.script_param_set);
 	if (!update_vars) return 0;
 	
 	// open and read file
+	if (stat(cfg_set_name,&st) != 0)
+		return 0;
+	buf=malloc(st.st_size+1);
+	if(!buf)
+		return 0;
 	fd = open(cfg_set_name, O_RDONLY, 0777);
-	if (fd < 0) return 0;
-	rcnt = read(fd, ubasic_scriptparam_buf, SCRIPT_PARAM_BUF_SIZE);
-	ubasic_scriptparam_buf[rcnt] = 0;
+	if (fd < 0) {
+		free(buf);
+		return 0;
+	}
+	rcnt = read(fd, buf, st.st_size);
+	buf[rcnt] = 0;
 	close(fd);
 
 	for(i = 0; i < SCRIPT_NUM_PARAMS; ++i) script_params_update[i]=0;
-    ptr = ubasic_scriptparam_buf;
+    ptr = buf;
 
     while (ptr[0]) 
 	{
@@ -251,6 +258,7 @@ int load_params_values(const char *fn, int update_vars, int read_param_set)
         while (ptr[0] && ptr[0]!='\n') ++ptr; // unless end of line
         if (ptr[0]) ++ptr;
     }
+	free(buf);
 	return 1;
 }
 
@@ -258,7 +266,7 @@ int load_params_values(const char *fn, int update_vars, int read_param_set)
 void save_params_values(int unconditional)
 {
 	int i, n, fd, changed=0;
-
+	char *buf,*p;
 	for(i = 0; i < SCRIPT_NUM_PARAMS; i++)
 	{
 		if (script_loaded_params[i] != conf.ubasic_vars[i]) changed++;
@@ -270,33 +278,36 @@ void save_params_values(int unconditional)
 	fd = open(cfg_name, O_WRONLY|O_CREAT, 0777);
 	if (fd >= 0)
 	{
-		sprintf(ubasic_scriptparam_buf, " %d\n\0", conf.script_param_set);
-		write(fd, ubasic_scriptparam_buf, strlen(ubasic_scriptparam_buf));
+		char s[20];
+		sprintf(s, " %d\n", conf.script_param_set);
+		write(fd, s, strlen(s));
 		close(fd);
 	}
 	
 	// open and read file
 	set_params_values_name(conf.script_file, conf.script_param_set);
+
+	buf=malloc(SCRIPT_NUM_PARAMS*(28 + 20)); // max possible params * (param description + some extra for @default etc)
+	if(!buf)
+		return;
+
 	fd = open(cfg_set_name, O_WRONLY|O_CREAT, 0777);
-	if (fd < 0) return;
-	ubasic_scriptparam_buf[0] = 0;
+	if (fd < 0) {
+		free(buf);
+		return;
+	}
+	buf[0] = 0;
+	p=buf;
 	for(n = 0; n < SCRIPT_NUM_PARAMS; ++n)
 	{
 		if (script_params[n][0] != 0)
 		{
-			strcat(ubasic_scriptparam_buf, "@param ");
-			i = strlen(ubasic_scriptparam_buf);
-			ubasic_scriptparam_buf[i] = 'a'+n;
-			strcpy(ubasic_scriptparam_buf+i+1, " \0");
-			strcat(ubasic_scriptparam_buf, script_params[n]);
-			strcat(ubasic_scriptparam_buf, "\n@default ");
-			i = strlen(ubasic_scriptparam_buf);
-			ubasic_scriptparam_buf[i] = 'a'+n;
-			sprintf(ubasic_scriptparam_buf+i+1, " %d\n\0", conf.ubasic_vars[n]);
+			p+=sprintf(p,"@param %c %s\n@default %c %d\n",'a'+n,script_params[n],'a'+n,conf.ubasic_vars[n]);
 		}
 	}
-	write(fd, ubasic_scriptparam_buf, strlen(ubasic_scriptparam_buf));
+	write(fd, buf, strlen(buf));
 	close(fd);
+	free(buf);
 }
 
 
@@ -304,8 +315,12 @@ void save_params_values(int unconditional)
 //-------------------------------------------------------------------
 void script_load(const char *fn, int saved_params) {
     int fd=-1, i, update_vars;
+	struct stat st;
     
 //    save_params_values(0);
+
+    if(state_ubasic_script && state_ubasic_script != ubasic_script_default)
+        free((void *)state_ubasic_script);
 
     state_ubasic_script = ubasic_script_default;
     update_vars = (strcmp(fn, conf.script_file) != 0) || !saved_params || (saved_params == 2);  // update if new file
@@ -325,18 +340,37 @@ void script_load(const char *fn, int saved_params) {
             update_vars = 1; 
         }
     }
-
+    // zero size = default script
+    if(stat(fn,&st) != 0 || st.st_size == 0) {
+        conf.script_file[0]=0;
+        update_vars = 1; 
+        if(fd > 0) {
+            close(fd);
+            fd=-1;
+        }
+    }
     if (fd>=0){
-	int rcnt = read(fd, ubasic_script_buf, SCRIPT_BUF_SIZE);
-	if (rcnt > 0){
-	    if (rcnt == SCRIPT_BUF_SIZE) { /* FIXME TODO script is too big? */
-		ubasic_script_buf[SCRIPT_BUF_SIZE-1] = 0;
-	    } else
-		ubasic_script_buf[rcnt] = 0;
-	    state_ubasic_script = ubasic_script_buf;
-	}
-	close(fd);
-        strcpy(conf.script_file, fn);
+        int rcnt;
+        char *buf;
+
+        buf = malloc(st.st_size+1);
+        if(!buf) {
+            close(fd);
+            return;
+        }
+
+        // TODO we could process the script here to reduce size
+        // or compile for lua
+        rcnt = read(fd, buf, st.st_size);
+        if (rcnt > 0){
+            buf[rcnt] = 0;
+            state_ubasic_script = buf;
+            strcpy(conf.script_file, fn);
+        }
+        else {
+            free(buf);
+        }
+        close(fd);
     }
 
     if (update_vars) {
@@ -345,8 +379,9 @@ void script_load(const char *fn, int saved_params) {
             script_loaded_params[i] = 0;
         }
     }
-    script_scan(fn, update_vars);
-	if (saved_params) load_params_values(fn, update_vars, (saved_params!=2));	
+    script_scan(conf.script_file, update_vars);
+    if (saved_params)
+        load_params_values(conf.script_file, update_vars, (saved_params!=2));	
     gui_update_script_submenu();
 }
 

@@ -2386,6 +2386,7 @@ line_statement(void)
   /* line numbers have been removed */
   DEBUG_PRINTF("----------- Line number %d ---------\n", tokenizer_line_number());
   /*    current_linenum = tokenizer_num();*/
+#if 0
   if (tokenizer_token() == TOKENIZER_LABEL) {
 #ifdef DEBUG
       tokenizer_label(string, sizeof(string));
@@ -2395,6 +2396,26 @@ line_statement(void)
       accept(TOKENIZER_CR);
       return;
   }
+#endif 
+  /* reyalp - eat up to 100 labels or rems at a time so they don't cost 10ms each */
+  int count = 100;
+  do {
+    int r=tokenizer_token();
+    if ( r == TOKENIZER_LABEL ) {
+      /* hit limit and we are on a label, return */
+      if( count == 1 )
+        return;
+#ifdef DEBUG
+      tokenizer_label(string, sizeof(string));
+      DEBUG_PRINTF("line_statement: label: %s\n", string );
+#endif
+      accept(TOKENIZER_LABEL);
+      accept(TOKENIZER_CR);
+    }
+    else if ( r == TOKENIZER_REM ) {
+      rem_statement();
+    }
+  } while(--count);
   statement();
   return;
 }

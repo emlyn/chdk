@@ -4,6 +4,12 @@ revision / version
 author
 
 log
+0.5.5 / reyalp
+* made ubasic eat up to 100 labels or REMs in one call to ubasic_run, rather than taking 10ms each
+* made script buffer dynamic, allocated when script is loaded
+* made some other script related memory dynamic
+see http://chdk.setepontos.com/index.php/topic,688.msg21646.html#msg21646 for details
+
 0.5.4 / reyalp
 * Made games compile time optional. Set or unset OPT_GAME_* in root makefile.inc
 * Moved sokoban levels from static data (gui_sokoban_levels.h) to file CHDK/GAMES/SOKOBAN.LEV
