@@ -33,21 +33,45 @@ static int luaB_print (lua_State *L) {
   int i;
   lua_getglobal(L, "tostring");
   char buf[128];
+  const int max_buf_chars=sizeof(buf)-1;
+  char numbuf[16];
   buf[0] = 0;
+  int buf_chars = 0;
   for (i=1; i<=n; i++) {
     const char *s;
-    lua_pushvalue(L, -1);  /* function to be called */
-    lua_pushvalue(L, i);   /* value to print */
-    lua_call(L, 1, 1);
-    s = lua_tostring(L, -1);  /* get result */
-    if (s == NULL)
-      return luaL_error(L, LUA_QL("tostring") " must return a string to "
-                           LUA_QL("print"));
-    if (i>1) strcat( buf, "\t" );
-    strcat( buf, s );
-    lua_pop(L, 1);  /* pop result */
+    /* avoid calling tostring on numbers, so we don't
+     generate new string for each unique number */
+    if(lua_type(L,i) == LUA_TNUMBER) {
+      sprintf(numbuf,LUA_NUMBER_FMT,lua_tonumber(L,i));
+      s=numbuf;
+    }
+    else {
+      lua_pushvalue(L, -1);  /* function to be called */
+      lua_pushvalue(L, i);   /* value to print */
+      lua_call(L, 1, 1);
+      s = lua_tostring(L, -1);  /* get result */
+      if (s == NULL)
+        return luaL_error(L, LUA_QL("tostring") " must return a string to "
+                          LUA_QL("print"));
+      lua_pop(L, 1);  /* pop result */
+    }
+    if(i>1) {
+      strcpy(buf+buf_chars," ");
+      ++buf_chars;
+    }
+    if(buf_chars+strlen(s) >= max_buf_chars) {
+      strncpy(buf+buf_chars,s,max_buf_chars-buf_chars);
+      buf[max_buf_chars]=0;
+      break;
+    }
+    strcpy(buf+buf_chars,s);
+    buf_chars = strlen(buf);
+    if(buf_chars >= max_buf_chars-1) // -1 allow for space
+       break;
+
   }
   script_console_add_line(buf);
+
   return 0;
 }
 

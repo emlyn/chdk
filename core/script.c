@@ -73,10 +73,12 @@ static const char *ubasic_script_default =
 char script_title[36];
 char script_params[SCRIPT_NUM_PARAMS][28];
 int script_param_order[SCRIPT_NUM_PARAMS];
-char script_params_update[SCRIPT_NUM_PARAMS];
-int script_loaded_params[SCRIPT_NUM_PARAMS];
-char script_console_buf[SCRIPT_CONSOLE_NUM_LINES][SCRIPT_CONSOLE_LINE_LENGTH+1];
-static int script_console_lines=0;
+static char script_params_update[SCRIPT_NUM_PARAMS];
+static int script_loaded_params[SCRIPT_NUM_PARAMS];
+static char script_console_buf[SCRIPT_CONSOLE_NUM_LINES][SCRIPT_CONSOLE_LINE_LENGTH+1];
+static int script_con_start_line=0; // oldest valid line in console
+static int script_con_num_lines=0; // number of valid lines
+
 //-------------------------------------------------------------------
 static void process_title(const char *title) {
     register const char *ptr = title;
@@ -392,22 +394,24 @@ void script_console_clear() {
     for (i=0; i<SCRIPT_CONSOLE_NUM_LINES; ++i) {
         script_console_buf[i][0]=0;
     }
-    script_console_lines=0;
+    script_con_num_lines=script_con_start_line=0;
     draw_restore();
 }
 
 //-------------------------------------------------------------------
+static inline int script_con_line_index(int i) {
+    return i%SCRIPT_CONSOLE_NUM_LINES;
+}
+
 void script_console_draw() {
-    register int i, l;
-    static char buf[8];
-
-    for (i=0; i<script_console_lines; ++i) {
+    int i,c,l;
+    for(c = 0; c < script_con_num_lines; ++c) {
+        i=script_con_line_index(script_con_start_line+c);
         l=strlen(script_console_buf[i]);
-        draw_txt_string(SCRIPT_CONSOLE_X, SCRIPT_CONSOLE_Y+SCRIPT_CONSOLE_NUM_LINES-script_console_lines+i, script_console_buf[i], MAKE_COLOR(COLOR_BG, COLOR_FG));
+        draw_txt_string(SCRIPT_CONSOLE_X, SCRIPT_CONSOLE_Y+SCRIPT_CONSOLE_NUM_LINES-script_con_num_lines+c, script_console_buf[i], MAKE_COLOR(COLOR_BG, COLOR_FG));
         for (; l<SCRIPT_CONSOLE_LINE_LENGTH; ++l)
-            draw_txt_char(SCRIPT_CONSOLE_X+l, SCRIPT_CONSOLE_Y+SCRIPT_CONSOLE_NUM_LINES-script_console_lines+i, ' ', MAKE_COLOR(COLOR_BG, COLOR_FG));
+            draw_txt_char(SCRIPT_CONSOLE_X+l, SCRIPT_CONSOLE_Y+SCRIPT_CONSOLE_NUM_LINES-script_con_num_lines+c, ' ', MAKE_COLOR(COLOR_BG, COLOR_FG));
     }
-
 }
 
 static int  print_screen_p;             // print_screen predicate: 0-off 1-on.
@@ -456,43 +460,48 @@ void script_print_screen_statement(int val)
 }
 
 //-------------------------------------------------------------------
+void script_console_start_line() {
+    if (SCRIPT_CONSOLE_NUM_LINES==script_con_num_lines) {
+        script_con_start_line=script_con_line_index(script_con_start_line+1);
+    }
+    else {
+        ++script_con_num_lines;
+    }
+     script_console_buf[script_con_line_index(script_con_start_line+script_con_num_lines-1)][0]=0;
+}
 
-static void script_console_add_impl(const char *str) {
-    register int i;
+void script_console_add_text(const char *str) {
+    char *cur;
+    int curlen;
+    int left;
 
-    if (script_console_lines == SCRIPT_CONSOLE_NUM_LINES ) {
-        for (i=1; i<SCRIPT_CONSOLE_NUM_LINES; ++i) {
-            strcpy(script_console_buf[i-1], script_console_buf[i]);
+    do {
+        cur = script_console_buf[script_con_line_index(script_con_start_line+script_con_num_lines-1)];
+        curlen = strlen(cur);
+        left = SCRIPT_CONSOLE_LINE_LENGTH-curlen;
+        if(strlen(str) > left) {
+            strncpy(cur+curlen,str,left);
+            cur[SCRIPT_CONSOLE_LINE_LENGTH]=0;
+            script_console_start_line();
+            str+=left;
         }
-        --script_console_lines;
-    }
-
-    if (strlen(str) > SCRIPT_CONSOLE_LINE_LENGTH) {
-      // let overlong lines wrap to the next line
-      memcpy(script_console_buf[script_console_lines], str, SCRIPT_CONSOLE_LINE_LENGTH);
-      script_console_buf[script_console_lines][SCRIPT_CONSOLE_LINE_LENGTH]=0;
-      ++script_console_lines;
-      script_console_add_impl(str+SCRIPT_CONSOLE_LINE_LENGTH);
-      return;
-    }
-    else
-      strcpy(script_console_buf[script_console_lines], str);
-    
-    ++script_console_lines;
+        else {
+            strcat(cur,str);
+            break;
+        }
+    } while(1);
 }
 
 void script_console_add_line(const char *str) {
-    script_console_add_impl(str);
-
+    script_console_start_line();
+    script_console_add_text(str);
     if (print_screen_p && print_screen_d>=0) {
-      char nl = '\n';
-      write(print_screen_d, str, strlen(str) );
-      write(print_screen_d, &nl, 1);
+        char nl = '\n';
+        write(print_screen_d, str, strlen(str) );
+        write(print_screen_d, &nl, 1);
     }
-
     script_console_draw();
 }
-
 //-------------------------------------------------------------------
 //-------------------------------------------------------------------
 //-------------------------------------------------------------------
