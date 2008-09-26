@@ -10,12 +10,16 @@ NSTUB(Close, 0xffe1d7e4)
 NSTUB(CreatePhysicalVram, 0xffdbb01c)
 NSTUB(CreateTask, 0xffe83550)
 NSTUB(CreateTaskStrict, 0xffe845f0)
+NSTUB(DeleteFile_Fut, 0xffe18dbc)
 NSTUB(DisableDispatch, 0xffe83374)
 // ERROR: DisplayImagePhysicalScreen is not found!
 NSTUB(EnableDispatch, 0xffe83400)
 NSTUB(ExecuteEventProcedure, 0xffc04670)
 NSTUB(ExitTask, 0xffe83910)
 NSTUB(Fclose_Fut, 0xffe18f30)
+NSTUB(Feof_Fut, 0xffe1912c)
+NSTUB(Fflush_Fut, 0xffe19168)
+NSTUB(Fgets_Fut, 0xffe19094)
 NSTUB(Fopen_Fut, 0xffe18ef0)
 NSTUB(Fread_Fut, 0xffe18fec)
 // Best match: 95%
@@ -50,6 +54,7 @@ NSTUB(IsStrobeChargeCompleted, 0xffd45b60)
 NSTUB(LockMainPower, 0xffea65f4)
 // Best match: 58%
 NSTUB(MakeDirectory, 0xffe1daf8)
+NSTUB(MakeDirectory_Fut, 0xffe18e70)
 // ERROR: Mount_FileSystem is not found!
 // Best match: 73%
 NSTUB(MoveFocusLensToDistance, 0xffdde788)
@@ -69,6 +74,7 @@ NSTUB(Read, 0xffe1d878)
 // Best match: 58%
 NSTUB(RefreshPhysicalScreen, 0xffcb9188)
 NSTUB(Remove, 0xffe1d804)
+NSTUB(RenameFile_Fut, 0xffe18d14)
 NSTUB(SetAutoShutdownTime, 0xffea64f8)
 // Best match: 86%
 NSTUB(SetParameterData, 0xffea9678)
@@ -97,13 +103,14 @@ NSTUB(chdir, 0xffcc9ddc)
 // ALT: NSTUB(chdir, 0xffcc9ddc) // 27/0
 NSTUB(close, 0xffcc971c)
 NSTUB(closedir, 0xffebfad4)
+NSTUB(errnoOfTaskGet, 0xffcc7370)
 // ERROR: free is not found!
 NSTUB(ints_disable, 0xffe81600)
 NSTUB(ints_enable, 0xffe8160c)
 NSTUB(ioctl, 0xffcc985c)
 NSTUB(iosDevAdd, 0xffcca93c)
-NSTUB(iosDrvInstall, 0xffccac00)
 NSTUB(iosDevFind, 0xffcca8c8)
+NSTUB(iosDrvInstall, 0xffccac00)
 NSTUB(isalpha, 0xffcc0cf4)
 // ALT: NSTUB(isalpha, 0xffcc0cf4) // 4/0
 NSTUB(isdigit, 0xffcc0d24)
@@ -138,6 +145,7 @@ NSTUB(memset, 0xffcc4a08)
 // Best match: 54%
 NSTUB(mkdir, 0xffe1da3c)
 // ALT: NSTUB(mkdir, 0xffe1db04) // 17/14
+NSTUB(mktime, 0xffcc573c)
 NSTUB(open, 0xffcc9d60)
 NSTUB(opendir, 0xffebfb08)
 NSTUB(qsort, 0xffcc41b4)
@@ -155,6 +163,7 @@ NSTUB(strcat, 0xffcc4a28)
 NSTUB(strchr, 0xffcc4a54)
 NSTUB(strcmp, 0xffcc4a78)
 NSTUB(strcpy, 0xffcc4c0c)
+NSTUB(strftime, 0xffcc6294)
 NSTUB(strlen, 0xffcc4d70)
 NSTUB(strncmp, 0xffcc4dd4)
 NSTUB(strncpy, 0xffcc4e18)
@@ -179,7 +188,3 @@ NSTUB(utime, 0xffebfc30)
 // ALT: NSTUB(utime, 0xffebfc30) // 15/11
 NSTUB(vsprintf, 0xffcc84c4)
 NSTUB(write, 0xffcc97ec)
-NSTUB(fprintf, 0xffcc1654)
-// ALT: NSTUB(fprintf, 0xffcc2e18) // 15/0
-NSTUB(fputs, 0xffcc1774)
-NSTUB(puts, 0xffcc8880)

@@ -31,13 +31,3 @@ NHSTUB(PT_PlaySound, 0xFFE7AA08)
 NHSTUB(EnterToCompensationEVF, 0xffe8b110) // Stub not found. When found, remove dummy function from lib.c.
 NHSTUB(ExitFromCompensationEVF, 0xffe8b194) // Stub not found. When found, remove dummy function from lib.c.
 NHSTUB(SetAE_ShutterSpeed, 0xFFDE17BC)
-NHSTUB(DeleteFile_Fut,      0xFFDC4AD4) // null stub
-NHSTUB(Feof_Fut,            0xFFDC4AD4) // null stub
-NHSTUB(Fflush_Fut,          0xFFDC4AD4) // null stub
-NHSTUB(Fgets_Fut,           0xFFDC4AD4) // null stub
-NHSTUB(MakeDirectory_Fut,   0xFFDC4AD4) // null stub
-NHSTUB(RenameFile_Fut,      0xFFDC4AD4) // null stub
-NHSTUB(errnoOfTaskGet,      0xFFDC4AD4) // null stub
-NHSTUB(mktime,              0xFFDC4AD4) // null stub
-NHSTUB(strftime,            0xFFDC4AD4) // null stub
-

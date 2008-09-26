@@ -39,13 +39,3 @@ NHSTUB(PT_PlaySound, 0xFFB38300)
 
 NHSTUB(EnterToCompensationEVF, 0xffb268b8) 
 NHSTUB(ExitFromCompensationEVF, 0xffb2693c)
-NHSTUB(DeleteFile_Fut,      0xFF841CC0) // null stub
-NHSTUB(Feof_Fut,            0xFF841CC0) // null stub
-NHSTUB(Fflush_Fut,          0xFF841CC0) // null stub
-NHSTUB(Fgets_Fut,           0xFF841CC0) // null stub
-NHSTUB(MakeDirectory_Fut,   0xFF841CC0) // null stub
-NHSTUB(RenameFile_Fut,      0xFF841CC0) // null stub
-NHSTUB(errnoOfTaskGet,      0xFF841CC0) // null stub
-NHSTUB(mktime,              0xFF841CC0) // null stub
-NHSTUB(strftime,            0xFF841CC0) // null stub
-
