@@ -1358,6 +1358,11 @@ long kbd_use_up_down_left_right_as_fast_switch() {
     static long key_pressed = 0; // ??? static masking a global
     int m=mode_get(); 
     int mode_video = MODE_IS_VIDEO(m) || (movie_status > 1);
+    int ev_video=0;
+
+#if CAM_EV_IN_VIDEO
+    ev_video=get_ev_video_avail(); 
+#endif
 
     if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_pressed = 0;
 
@@ -1426,7 +1431,7 @@ long kbd_use_up_down_left_right_as_fast_switch() {
         }
     } 
     
-    if (kbd_is_key_pressed(KEY_LEFT) && mode_video && movie_status == 4) {
+    if (kbd_is_key_pressed(KEY_LEFT) && mode_video && (movie_status == 4) && !ev_video) {
         if (conf.fast_movie_control && key_pressed == 0) {
             movie_status = VIDEO_RECORD_STOPPED;
             key_pressed = KEY_LEFT;
@@ -1439,7 +1444,7 @@ long kbd_use_up_down_left_right_as_fast_switch() {
 #ifndef CAM_HAS_VIDEO_BUTTON 
             mode_video &&
 #endif
-	        movie_status == 1) {
+	        (movie_status == 1) && !ev_video) {
         // BUG this doesn't know whether recording was stopped or paused.
         if (conf.fast_movie_control && key_pressed == 0) {
             movie_status = VIDEO_RECORD_IN_PROGRESS;
