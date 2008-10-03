@@ -178,6 +178,8 @@ extern void *_LocalTime(const unsigned long *_tod, void * t_m); // DRYOS
 extern long _strftime(char *s, unsigned long maxsize, const char *format, const /*struct tm*/ void *timp);
 extern /*time_t*/ long _mktime(/*struct tm*/ void *timp); // VXWORKS
 extern /*time_t*/ long _mktime_ext(void *tim_extp); // DRYOS, doesn't take a struct tm *
+extern int _SetFileTimeStamp(int fd, int time1, int time2);
+
 /* file */
 extern void *_opendir(const char* name);
 extern void *_readdir(void *d);

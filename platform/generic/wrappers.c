@@ -350,7 +350,18 @@ unsigned long time(unsigned long *timer) {
 }
 
 int utime(char *file, void *newTimes) {
-    return _utime(file, newTimes);
+#if !CAM_DRYOS
+  return _utime(file, newTimes);
+#else
+ int fd;
+ int res=0;
+ fd = _open(file, 0, 0);
+ if (fd>=0) {
+  res=_SetFileTimeStamp(fd, ((int*)newTimes)[0] , ((int*)newTimes)[1]);
+  _close(fd);
+ }
+ return res;
+#endif
 }
 
 void *localtime(const unsigned long *_tod) {

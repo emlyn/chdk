@@ -143,3 +143,4 @@ NHSTUB(PT_PlaySound, 0xFFC521E0)
 
 NHSTUB(EnterToCompensationEVF, 0xffc17108) 
 NHSTUB(ExitFromCompensationEVF, 0xffc17158)
+NHSTUB(SetFileTimeStamp, 0xFFC151FC)
