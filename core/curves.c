@@ -70,27 +70,6 @@ void curve_load(const char *fn) {
 	curve_loaded = 1;
 }
 
-//-------------------------------------------------------------------
-// Curve to be loaded upon power up
-void drcurve_load(const char *fn) {
-	int fd;
-
-    if (!fn[0]) { // no curve defined
-		drcurve_loaded = 0;
-		return;
-    } else {
-        fd = fopen(fn, "r+b");
-        if (!fd) {
-			drcurve_loaded = 0;
-			return;
-       }
-    }
-	
-	fread(drcurve0, 1, 4*CURVE_SIZE*sizeof(unsigned short), fd); // load a set of 4 curves - only 2 are used
-	fclose(fd);
-	drcurve_loaded = 1;
-}
-
 
 void curveRGB_apply() {
 	short i,j;
@@ -316,6 +295,28 @@ unsigned short drcurve0[DRCURVE_CNT][CURVE_SIZE]; // Dynamic range curves are on
 //unsigned short drcurve1[DRCURVE_CNT][CURVE_SIZE];
 //unsigned short drcurve2[DRCURVE_CNT][CURVE_SIZE];
 //unsigned short drcurve3[DRCURVE_CNT][CURVE_SIZE];
+
+//-------------------------------------------------------------------
+// Curve to be loaded upon power up
+void drcurve_load(const char *fn) {
+	int fd;
+
+    if (!fn[0]) { // no curve defined
+		drcurve_loaded = 0;
+		return;
+    } else {
+        fd = fopen(fn, "r+b");
+        if (!fd) {
+			drcurve_loaded = 0;
+			return;
+       }
+    }
+	
+	fread(drcurve0, 1, 4*CURVE_SIZE*sizeof(unsigned short), fd); // load a set of 4 curves - only 2 are used
+	fclose(fd);
+	drcurve_loaded = 1;
+}
+
 
 void drcurve_apply(const int ci) {
 	short i,j;
