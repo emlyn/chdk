@@ -179,9 +179,12 @@ typedef struct {
     
     int iso_override_value;
     int iso_override_koef;
+    int zoom_override_value;
+    int zoom_override;
     int subj_dist_override_value;
     int subj_dist_override_koef;
     int clear_override;
+    int clear_zoom_override;
     
     int autoiso_enable;
     int autoiso_shutter;

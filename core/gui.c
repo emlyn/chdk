@@ -167,6 +167,7 @@ static const char* gui_iso_bracket_koef_enum(int change, int arg);
 static const char* gui_subj_dist_bracket_koef_enum(int change, int arg);
 static const char* gui_bracket_type_enum(int change, int arg);
 static const char* gui_av_override_enum(int change, int arg);
+static const char* gui_zoom_override_enum(int change, int arg);
 static const char* gui_iso_override_koef_enum(int change, int arg);
 static const char* gui_tv_override_koef_enum(int change, int arg);
 static const char* gui_tv_override_value_enum(int change, int arg);
@@ -501,10 +502,16 @@ static CMenuItem operation_submenu_items[] = {
 #endif	  
 	  {0x74,LANG_MENU_OVERRIDE_ISO_VALUE,	   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.iso_override_value, MENU_MINMAX(0, 800)}, 
 	  {0x5f,LANG_MENU_OVERRIDE_ISO_KOEF,        MENUITEM_ENUM,    (int*)gui_iso_override_koef_enum},
+    {0x5c,LANG_MENU_OVERRIDE_ZOOM,         MENUITEM_BOOL,    &conf.zoom_override},
+    {0x5f,LANG_MENU_OVERRIDE_ZOOM_VALUE,	  MENUITEM_ENUM,    (int*)gui_zoom_override_enum },   
+	  
+	  {0x5c,LANG_MENU_CLEAR_ZOOM_OVERRIDE_VALUES,    MENUITEM_BOOL,    (int*)&conf.clear_zoom_override},
+
 	  {0x2c,LANG_MENU_BRACKET_IN_CONTINUOUS,	   MENUITEM_SUBMENU, (int*)&bracketing_in_continuous_submenu }, 
 	  {0x2d,LANG_MENU_AUTOISO,                  MENUITEM_SUBMENU, (int*)&autoiso_submenu },
       //{LANG_MENU_EXPOSURE,               MENUITEM_SUBMENU, (int*)&exposure_submenu },
 	  {0x5b,LANG_MENU_CLEAR_OVERRIDE_VALUES,    MENUITEM_BOOL,    (int*)&conf.clear_override},
+ 
       {0x5c,LANG_MENU_MISC_FAST_EV,         MENUITEM_BOOL,    &conf.fast_ev },
       {0x5f,LANG_MENU_MISC_FAST_EV_STEP,    MENUITEM_ENUM,    (int*)gui_fast_ev_step },
 	  {0x51,LANG_MENU_BACK,                     MENUITEM_UP },
@@ -1548,6 +1555,15 @@ const char* gui_av_override_enum(int change, int arg) {
 	}
 }
 
+const char* gui_zoom_override_enum(int change, int arg) {
+    static char buf[3];
+    conf.zoom_override_value+=change;
+    if (conf.zoom_override_value<0) conf.zoom_override_value=zoom_points-1;
+    else if (conf.zoom_override_value>zoom_points-1) conf.zoom_override_value=0;
+		sprintf(buf,"%i",conf.zoom_override_value);
+		return buf; 
+}
+
 const char* gui_user_menu_show_enum(int change, int arg) {
     static const char* modes[]={ "Off", "On","On Direct", "Edit" };
 
@@ -1775,6 +1791,7 @@ void gui_init()
     load_bad_pixels_list("A/CHDK/badpixel.txt");
     curve_load(conf.curve_file); // load curve upon init 
     drcurve_load("A/CHDK/SYSCURVES.CVF"); // load system L curves
+		shooting_set_zoom(conf.zoom_override_value);
 }
 
 //-------------------------------------------------------------------
@@ -1822,10 +1839,10 @@ void gui_redraw()
     if (gui_splash) {
         if (gui_splash>(SPLASH_TIME-4)) {
             gui_draw_splash();
-           	conf.show_osd = 0;
+           //	conf.show_osd = 0;
         } else if (gui_splash==1 && (mode_get()&MODE_MASK) == gui_splash_mode && (gui_mode==GUI_MODE_NONE || gui_mode==GUI_MODE_ALT)) {
             draw_restore();
-            conf.show_osd = 1;
+           // conf.show_osd = 1; //had to uncomment in order to fix a bug with disappearing osd...
         }
         --gui_splash;
     }

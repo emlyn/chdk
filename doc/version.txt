@@ -4,6 +4,44 @@ revision / version
 author
 
 log
+
+0.6.0 / #531 / PhyrePhoX
+
+* increased version number to reflect for latest changes from previous revisions
++ added zoom override. first installment allows you to set a specific zoom value (on s3is for example between 0 and 128, on a620 between 0 and 8) that will be set upon starting the cam in record mode. Extra Photo Operations -> Zoom Override. You can disable and enable it there (default: off), also you can set the startup behaviour (there isnt much working right now :D). In the future: Not only set the zoom steps (in accurate int) but maybe set it using mm & factor (much like the shutter override menu stuff to allow for easing setting using "mnemonics"). Also will implement ZOOM BRACKETING. could be done via script, but then again everything could be done via script ;) Also i am wondering if i should focus after zooming. Also the zoom override should work like this, that no matter what value of zoom you set using the zoom lever, before each pic is taken the zoom will be set to the value you specified in the menu (much like shutter & aperture override). Also maybe implement the feature so that it remembers the actual zoom value you set (via lever/button) before shutting off the cam - and restore it when you power it on again!?
+This feature works a) as somehow a "C" (custom mode in which you can save a few settings that will be remembered even when you shut off the cam) mode for cameras that dont have it and b) for studio photogs or other situations where you need the zoom in a fixed value over a long period of time. Noticed a bug: when you use this feature to zet zoom upon startup, you cant zoom out using the zoomlever, unless you zoom out before - i guess it is because the camera thinks you are still in wide (zoom 0). i guess one can fix that, dunno how though (yet).
+* added security - now most "dangerous" functions (can also be called via ubasic or lua) are executed in record mode only (see http://chdk.setepontos.com/index.php/topic,2335.0.html & http://chdk.kernreaktor.org/mantis/view.php?id=30)
+* added srpenneys documentation from http://chdk.kernreaktor.org/mantis/view.php?id=24
+* fixed eol style in readme & version files so that the autobuilds will have readmes that can be read on windoze without problems
+* fixed bug that was responsible for disabled OSD (see http://chdk.kernreaktor.org/mantis/view.php?id=31) - workaround up to now was to disable splashscreen. i fixed it by uncommenting my own code that disabled the OSD while the splashscreen is shown. this means that from this revision the CHDK osd icons/items will be shown on startup at the same time as the bootlogo - this is ugly, but not a critical bug, plus i guess it will be fixed sooner or later!
++ added czech language file
+* fixed russian lang file - pethead updated it in the wiki (there are a lot of outdated lang files in the wiki, come on people!)
+
+0.5.5 / #530 / reyalp
+
+- gcc 4 compile issue -> http://chdk.setepontos.com/index.php/topic,688.msg22356.html#msg22356 
+
+0.5.5 / #529 / ewavr
+
+* resolved conflict between fast video control and Ev correction 
+
+0.5.5 / #528 / ewavr
+
+* DRYOS cameras: fixed 00:00 first RAW time. 
+
+0.5.5 / #527 / ewavr
+
+* ixus700(sd500) 1.01b: fixed bug in movie recording 
+
+0.5.5 / #526 / reyalp
+
+entry points for lua lib support for a450/100d and tx1/100g 
+
+0.5.5 / #525 / reyalp
+
+* lua print: truncate messages longer than 127, don't use tostring for numbers, use spaces instead of tabs between values
+* make script console a circular buffer. 
+
 0.5.5 / reyalp
 * made ubasic eat up to 100 labels or REMs in one call to ubasic_run, rather than taking 10ms each
 * made script buffer dynamic, allocated when script is loaded

@@ -519,9 +519,13 @@
 #define LANG_POPUP_SUB_FROM_MARKED 409
 #define LANG_MENU_SCRIPT_PARAM_SAVE 410
 #define LANG_OSD_LAYOUT_EDITOR_EV_VIDEO 411
+
+#define	LANG_MENU_OVERRIDE_ZOOM_VALUE          412
+#define	LANG_MENU_OVERRIDE_ZOOM           413
+#define LANG_MENU_CLEAR_ZOOM_OVERRIDE_VALUES 414
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  411
+#define GUI_LANG_ITEMS                  414
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

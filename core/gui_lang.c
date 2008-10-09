@@ -530,6 +530,9 @@ static char* gui_lang_default = \
 "409 \"Sub from marked\"\n"
 "410 \"Save params\"\n"
 "411 \"Video Ev display\"\n"
+"412 \"   Zoom Value\"\n"
+"413 \"Zoom Override\"\n"
+"414 \"   Clear on start\"\n"
 ;
 
 //-------------------------------------------------------------------

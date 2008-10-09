@@ -6,17 +6,31 @@ extern long *blob_copy_and_reset;
 extern long blob_chdk_core_size;
 extern long blob_copy_and_reset_size;
 
-
-
+/* @brief Makes a copy of CHDK core in instruction memory and restarts FW.
+ *
+ * Starts by copying existing copy_and_restart procedure to 0x50000 and then using 
+ * copied start_and_restart procedure to copy CHDK core to 0x9C890.  Absolute HEX 
+ * addresses come from makefile.inc definitions.
+ *
+ * @note This is required because camera starts in standard FW (i.e. canon).  To switch between
+ * canon and CHDK FW a reset is required.  If start of CHDK FW was a reset then new FW would 
+ * continually restart.  As a result CHDK FW on first pass must copy CHDK core (i.e. removing reset
+ * code) to instruction memory and then restarting FW so CHDK core executes.
+ *
+ * @return Does not return.
+ */
 void __attribute__((noreturn)) my_restart() 
 {
     void __attribute__((noreturn)) (*copy_and_restart)(char *dst, char *src, long length);
     int i;
 
-    for (i=0;i<(blob_copy_and_reset_size/sizeof(long));i++){
-	((long*)(RESTARTSTART))[i] = blob_copy_and_reset[i];
+    // Make a copy of the procedure copy_and_reset in another memory space.
+	for (i = 0 ; i < (blob_copy_and_reset_size / sizeof(long)) ; i++ ) 
+	{
+		((long*)(RESTARTSTART))[i] = blob_copy_and_reset[i];
     }
 
+	// Execute duplicated code in non-instruction memory space.
     copy_and_restart = (void*)RESTARTSTART;
     copy_and_restart((void*)MEMISOSTART, (char*)blob_chdk_core, blob_chdk_core_size);
 }

@@ -1,0 +1,527 @@
+// CHDK language file
+// Format of language line:
+// <id> "<text>"
+//   <id>   - should be positive number
+//   <text> - any text enclosed into quotes
+  
+  1 "Hlavní menu"
+
+  2 "Nastavení pro formát RAW"
+  3 "Nastavení parametru OSD"
+  4 "Nastavení histogramu"
+  5 "Nastavení zebry"
+  6 "Nastavení skriptu"
+  7 "Nastavení zobrazení"
+  8 "Ruzné"
+  9 "Debugger (ladení programu)"
+ 10 "Obnovit výchozí nastavení..."
+ 11 "Uložit nastavení..."
+
+ 12 "Zpet"
+
+
+ 13 "RAW"
+
+ 14 "Ukládat ve formátu RAW"
+ 15 "Sloucit dlouhodob. expozici"
+ 16 "Pouze první RAW v sérii snímku"
+ 17 "RAW soubor v adresári s JPEG"
+ 18 "Prefix RAW souboru "
+ 19 "Prípona RAW souboru"
+
+
+ 20 "OSD"
+
+ 21 "Zobrazit OSD"
+ 22 "Zobrazit stav"
+ 23 "Zobrazit nastavení objektivu"
+ 24 "Zoom"
+ 25 "Zobrazit DOF kalkulátor"
+ 26 "Zobrazit hodiny"
+ 27 "Nastavit rozmístení prvku na OSD"
+ 28 "Baterie"
+
+
+ 29 "Histogram"
+
+ 30 "Zobr. živý histogram"
+ 31 "Struktura histogramu"
+ 32 "Režim histogramu"
+ 33 "Zobr. v histogr. pre/pod EXP"
+ 34 "Ignorov. hranic. špicky"
+ 35 "Automatická velikost"
+
+
+ 36 "Zebra"
+
+ 37 "Vykreslovat zebru"
+ 38 "Mód zebry"
+ 39 "Práh podexponování"
+ 40 "Práh preexponování"
+ 41 "Obnovit výchozí zobrazení"
+ 42 "Obnovit OSD"
+ 43 "Kreslit pres zebru"
+
+
+ 44 "Skripty"
+
+ 45 "Otevrít skript ze souboru..."
+ 46 "Spoždení zahájení skriptu (.1s)"
+ 47 "Aktuální skript"
+ 48 "Parametry skriptu"
+
+
+ 49 "Nastavení zobrazení"
+
+ 50 "Jazyk..."
+ 51 "Kód. stránka"
+ 52 "RBF font menu..."
+ 53 "Barvy"
+ 54 "OSD - text"
+ 55 "OSD - pozadí"
+ 56 "Histogram"
+ 57 "Histogram - pozadí"
+ 58 "Histogram - okraj"
+ 59 "Histogram - EXP znacky"
+ 60 "Zebra - podexponování"
+ 61 "Zebra - preexponování"
+ 62 "Ikona baterie"
+ 63 "Menu - text"
+ 64 "Menu - pozadí"
+ 65 "Prohlížec textu - text"
+ 66 "Prohlížec textu - pozadí"
+
+
+ 67 "Ruzné"
+
+ 68 "Prohlížec souboru"
+ 69 "Kalendár"
+ 70 "Prohlížec textu"
+ 71 "Hry"
+ 72 "Baterka"
+ 73 "Ukázat splash po zavedení"
+ 74 "Použít zoom-pácku pro MF"
+ 75 "Tlacítko <ALT> módu"
+ 76 "Vykreslení palety"
+ 77 "Informace o programu"
+ 78 "Informace o pameti"
+
+
+ 79 "Debug"
+
+ 80 "Ukázat PropCases"
+ 81 "Stránka PropCase"
+ 82 "Ukázat ladící hodnoty"
+ 83 "Prohlížení pameti"
+ 84 "Výpis RAM pri ALT +/- stisku"
+ 85 "Vytvorit bootovací kartu..."
+
+
+ 86 "Baterie a místo na karte"
+
+ 87 "Napetí MAX (mV)"
+ 88 "Napetí MIN (mV)"
+ 89 "Krokovat po 25"
+ 90 "Zobrazovat procenta"
+ 91 "Zobrazovat napetí"
+ 92 "Zobrazovat ikonu"
+
+
+ 93 "Prohlížec textu"
+
+ 94 "Otevrít nový soubor..."
+ 95 "Otevrít naposledy otevrený"
+ 96 "Vybrat RBF font"
+ 97 "Kódová stránka"
+ 98 "Zalamovat slova"
+ 99 "Povolit aut. posouvání"
+100 "Prodleva aut. posouvání (s)"
+
+
+101 "Hry"
+
+102 "Reversi"
+103 "Sokoban"
+
+
+104 "*** Výchozí nastavení ***"
+
+105 "Opravdu vrátit nastavení na výchozí hodnoty?"
+
+106 "*** Informace o programu ***"
+107 "CHDK Ver: %s, #%s\nDatum:    %s\nCas:    %s\nPrístr:  %s\nFW Ver: %s"
+
+108 "*** Informace o pameti ***"
+109 "Volná pamet: %d bytu"
+
+110 "*** Informace ***"
+111 "Prosím prepnete prístroj\ndo PLAY módu\na zkuste to znovu. :)"
+
+// file browser titles
+112 "Prohlížec souboru"
+113 "Výber souboru skriptu"
+114 "Výber textového souboru"
+115 "Výber RBF-font souboru"
+116 "Výber souboru jazyka"
+
+// for calendar
+117 "Leden"
+118 "Únor"
+119 "Brezen"
+120 "Duben"
+121 "Kveten"
+122 "Cerven"
+123 "Cervenec"
+124 "Srpen"
+125 "Zárí"
+126 "Ríjen"
+127 "Listopad"
+128 "Prosinec"
+
+129 " Po"
+130 " Ut"
+131 " St"
+132 " Ct"
+133 " Pá"
+134 " So"
+135 " Ne"
+
+136 "Dnes:"
+
+// messagebox buttons
+137 "Ok"
+138 "Ano"
+139 "Ne"
+140 "Zrušit"
+
+// OSD layout editor
+141 "Histogram"
+142 "DOF kalk."
+143 "RAW/SCR/EXP"
+144 "Soubor hodnot"
+145 "Ikona baterie"
+146 "Text baterie"
+147 "Hodiny"
+
+// palette
+148 " Stiskni SET pro vykreslení barvy "
+149 "     Stiskni MENU pro ukoncení    "
+150 "Barva"
+151 "%s pro výber barvy"
+
+// reversi
+152 "*** Výsledek hry ***"
+153 "Vyhrál jsi! :)"
+154 "Prohrál jsi! :("
+155 "Remíza! :/"
+
+156 "*** Chybný tah ***"
+157 "Sem nelze táhnout!"
+158 "Toto pole není prázdné!"
+
+159 "Na tahu: Ty     "
+160 "Na tahu: Pocítac"
+161 "  KONEC  "
+162 " Bílá  Cerná "
+
+163 "*** O hre ***"
+
+// sokoban
+164 "Obtížnost"
+165 "     Tahy"
+166 "*** K O N E C ***"
+167 "Skvele!\n  zvládl jsi to!  "
+
+// console
+168 "*** SPUŠTEN  ***"
+169 "*** PRERUŠEN ***"
+170 "*** UKONCEN  ***"
+
+// file browser
+171 "*** Vymazat adresár ***"
+172 "Opravdu smazat\nVŠECHNY soubory \nz vybraného adresáre?"
+173 "*** Vymazat soubor ***"
+174 "OPRAVDU vymazat\nvybraný soubor?"
+
+// benchmark
+175 "Výkonostní testy"
+176 "Výpocet..."
+177 "Testování  stisknete [set] pro zahájení"
+178 "Obrazovka"
+179 "Zápis        :"
+180 "Ctení        :"
+181 "Pamet"
+182 "Flash-karta"
+183 "Zápis (RAW) :"
+184 "Zápis (Mem) :"
+185 "Zápis (64k) :"
+186 "Ctení (64k) :"
+
+187 "Zakázat vypnutí LCD"
+
+188 "Vyjmout"
+189 "Kopírovat"
+190 "Vložit"
+191 "Smazat"
+192 "Inverze výberu"
+193 "*** Vyjmutí souboru ***"
+194 "Opravdu vyjmout\n%d vybraných souboru\nz %s/?"
+195 "*** Kopírování souboru ***"
+196 "Opravdu kopírovat\n%d vybraných souboru\nz %s/?"
+197 "*** Mazání souboru ***"
+198 "Opravdu vymazat\n%d vybraných souboru?"
+199 "Moment prosím..."
+
+200 "Zobrazovat mrížku"
+201 "Otevrít mrížku ze souburu..."
+202 "Mrížka"
+203 "Nastavení mrížky"
+204 "Výber souboru s mrížkou"
+205 "Aktuální mrížka"
+
+206 "Redukce šumu"
+
+207 "Potlacit barvy mrížky"
+208 "Barva car"
+209 "Barva výplne"
+
+210 "DOF kalkulátor"
+211 "DOF kalkulátor"
+212 "Canon subj.vzd. jak pred.rov.ostr." 
+213 "Použít EXIF subj. vzdál. (PC65)"
+214 "Zobr. subj. vzdál. ve smíš."
+215 "Zob. prední rov.ostr. ve smíš."
+216 "Zob. zadní rov.ostr. ve smíš."
+217 "Zob. hyperf.vzdál. ve smíš."
+218 "Zob. hloub. ostr. ve smíš."
+
+
+219 "Smíšené hodnoty"
+220 "Smíšené hodnoty"
+221 "Zobr. v módu náhledu"	
+222 "Zobrazit zoom"		
+223 "Zobrazit 'skutecná' clona"
+224 "Zobrazit 'skutecné' ISO"
+225 "Zobrazit 'Market' ISO"
+226 " Zobr. ISO jen pri nast. autom. ISO"
+227 "Zobr. nast. expozice Ev (Tv+Av)"
+228 "Zobr. namerené Ev (Bv+Sv)"
+229 "Zobr. nastav. Bv (hod. jasu)"
+230 "Zobrazit namerené Bv"
+231 "Zobr. hodn. preexp. (ne blesk!)"
+232 "Zobr. jas scény"
+
+233 "Nastavení videa"
+234 "Nastavení videa"
+235 "Video mód"
+236 "Datový tok videa"
+237 "Kvalita videa"
+
+
+238 "Rozšírené možnosti"
+239 "Rozšírené možnosti"
+240 "Prekrytí rychlosti záverky"
+241 "         koeficient"
+242 "Prekrytí hodnoty clony"
+243 "Prekrytí hodnoty ISO"
+244 "         koeficient"
+245 "Prekrytí subj. vzdál."
+246 "      koeficient (mm)"
+
+247 "Brack. v souvis. režimu"
+248 "Bracketing v souvisl. režimu"
+249 "Hodnota TV Bracketingu"
+250 "Hodnota AV Bracketingu"
+251 "Hodnota ISO Bracketingu"
+252 "         koeficient"
+253 "Subj. rozestup Bracketu(MF)"
+254 "         koeficient (mm)"
+255 "Typ Bracketingu"
+
+256 "Autostart"
+257 "Povolit dálk. ovládání (USB)"
+
+258 "Rízení expozice (bez blesku)"
+259 "Rízení expozice (bez blesku)"
+260 "Prepocítat expozici"
+261 "TV expozice - prepoc. por."
+262 "AV expozice - prepoc. por."
+263 "ISO expozice - prepoc. por."
+
+264 "Vymazat hodn. prekr. pri spušt."
+
+265 "Zobr, hodn. 'Canon' preexp."
+
+266 "Prepracování RAW"
+267 "Prosím prepnete fotoaparát\ndo režimu focení a zhotovte\njednu fotografii."
+268 "Výber RAW souboru"
+269 "RAW suma"
+270 "RAW prumer"
+271 "Nedostatek místa na karte:\n%dM požadováno, %dM k dispozici."
+
+272 "Zobrazit OSD v módu náhledu"
+273 "Zobrazovat Parameter Data
+
+274 "Subj. vzdál od cocek"
+
+275 "Vymaz. hodn. bracketu & spušt."
+
+276 "Vytvorit kartu se dvema oddíly"
+277 "Prepnout oddíly"
+278 "Tímto se ZNICÍ VŠECHNA DATA\nna karte. Pokracovat?"
+279 "Tato karta má pouze jeden oddíl"
+280 "Chyba"
+281 "Varování"
+282 "Informace"
+283 "RGB zebra (pouze preexp.)"
+
+284 "Stav ND filtru"
+
+285 "Zobr. mrížku v histogramu"
+
+286 "OSD varování"
+287 "OSD pozadí varování"
+288 "Barva ikony zbýv. místa"
+289 "Zobr. ikonu místa na karte"
+290 "Zbývající místo"
+291 "Zobr. místo na karte v proc."
+292 "Zobr. místo na karte v MB"
+293 "Filespace Text"
+294 "  Zobrazit pocet zbýv. RAW"
+295 "Zbývající pro RAW"
+
+296 "Zobrazit stav RAW"
+
+297 "Zobraz. hodnoty pri videu"
+
+298 "    Druh koef. záverky"
+299 "Uživatel. menu aktivní"
+300 "Uživatelské menu"
+301 " "
+
+302 " Zvetš. cocky adapt., 100=1x"
+303 "Zobr. indikát. místa"
+304 "  Velikost na display"
+305 "  Šírka/Výška"
+306 "  Prah. limit v %"
+307 "  Prah. limit v MB"
+308 "Jednotka varování"
+309 "  Prahov. limit varování"
+310 "Povolit optický ZOOM"
+311 "Hodiny"
+312 "Nastavení hodin"
+313 "Formát hodin"
+314 "Barva pozadí zbývajícího místa"
+315 "Indikace 12h casu "
+316 "Zobr. pri polovic. namáck."
+
+317 "Nastavení zobrazení RAW"
+318 "RAW"
+
+319 "Nastavení zobr. místa na karte"
+320 "Místo na karte"
+
+321 "Uživatelské Auto ISO"
+322 "Uživatelské Auto ISO"
+323 "Povolit uživ. Auto ISO"
+324 "Min. rychlost záverky"
+325 "Uživ. koefic. (1/FL/koef.)"
+326 "IS koeficient (Tv*koef.)"
+327 "Max ISO HI (x10)"
+328 "Max ISO AUTO (x10)"
+329 "Min ISO (x10)"
+
+330 "Barva textu titulku menu"
+331 "Barva pozadí titulku menu"
+332 "Barva textu cursoru"
+333 "Barva pozadí cursoru"
+334 "Centrovat Menu"
+335 "Ztlumit zvuk pri zoomování"
+
+336 "Odstr. vadných pixelu"
+337 "Vyp."
+338 "Prum."
+339 "RAWconv"
+
+340 "Prekrytí"
+341 "Prekrytí pozadí"
+342 "Zakázat prekrytí"
+343 "  Vcet. AutoIso & Bracketing"
+344 "  Skrýt v "
+345 "Zakázat @ Video Rec?"
+346 "Zobr. zbýv. cas videa"
+347 "  Frekv. obnovení (sec)"
+348 "Zbývající cas videa"
+349 "Mazat param. videa pri startu"
+350 "Povolit rychlé nastavení Ev"
+351 "   Krokovat po (1 EV)"
+352 "EV korekce"
+353 "Opravdu vymazat VŠECHNY\nRAW soubory bez odpovídajících JPG\nv DCIM adresári?"
+354 "Opravdu vymazat VŠECHNY\nRAW soubory bez odpovídajících JPG\nve vybraném adresári?"
+355 ""Opravdu vymazat VŠECHNY\nRAW soubory bez odpovídajících JPG\n(Vyjma oznacenýc)"
+356 "Funkce cištení RAW\nse nedá aplikovat na tuto položku"
+357 "*** Cištení RAW souboru ***"
+358 "Cištení RAW"
+ 
+359 "Uživatel. menu jako základní"
+
+360 "Font symbolu"
+361 "Výber souboru se Symboly"
+362 "Povolit symboly"
+363 "Barva textu symbolu" 
+364 "Barva pozadí symbolu"
+
+365 "Uživatelské tonální krivky"
+//"366 "Uživat. tonální krivky"
+366 "Uživatelské tonální krivky"
+367 "Otevrít profil krivky..."
+368 "Povolit krivky"
+369 "Výber souboru s krivkami"
+
+370 "Prekrytí okraju"
+371 "Prekrytí okraju"
+
+372 "Povolit prekrytí okraju"
+373 "Práh prekrytí okraju"
+374 "Barva prekrytí okraju"
+
+375 "Parametry dálk. spoušte"
+376 "Parametry dálk. spoušte"
+377 "Povolit dálk. spoušt"
+378 "Povolit synchronizaci"
+379 "Povolit synchr. prodlevu"
+380 "Synchr. prodleva 0.1ms"
+381 "Synchr. prodleva 0.1s"
+
+382 "AF key"
+383 "Nahrát vých. hodnoty param."
+384 "Nastavení parametru"
+
+385 "Zakázat Raw @ Sport"
+386 "Zakázat Raw @ Burst"
+387 "Zakázat Raw @ EV Bracketing"
+388 "Zakázat Raw @ Timer"
+
+389 "Vyjímky"
+390 "Menu vyjímek RAW"
+391 "Varovat pri vyjímkách"
+392 "Vždy vybrat první v menu"
+
+393 "Prodleva (0.1s)"
+394 "Synchroniz. dálk. spoušt"
+395 "Rychlé ovlád. videa"
+396 "Teplota"
+397 "Zobrazit teplotu"
+398 "Rídit kvalitu videa"
+399 "Povolit dálkový Zoom"
+400 "Prodleva Zoomu 0.1s"
+401 "Zvuky pri startu"
+402 "Prefix odecteného RAW"
+403 "prípona odecteného RAW"
+404 "Odec. vstup. tmavé hodn."
+405 "Odec. výstup. tmavé hodn."
+406 "od"
+407 "...%d více souboru"
+408 "Odecítání"
+409 "Odecíst od oznaceného"
+410 "Ukládat parametry"
