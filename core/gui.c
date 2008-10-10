@@ -1791,7 +1791,8 @@ void gui_init()
     load_bad_pixels_list("A/CHDK/badpixel.txt");
     curve_load(conf.curve_file); // load curve upon init 
     drcurve_load("A/CHDK/SYSCURVES.CVF"); // load system L curves
-		shooting_set_zoom(conf.zoom_override_value);
+		
+		if (conf.zoom_override) shooting_set_zoom(conf.zoom_override_value);
 }
 
 //-------------------------------------------------------------------

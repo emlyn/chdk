@@ -5,6 +5,10 @@ author
 
 log
 
+0.6.1 / #532 / PhP
+
+* fixed bug regarding zoom override feature (added check, see http://chdk.setepontos.com/index.php/topic,2426.0.html)
+
 0.6.0 / #531 / PhyrePhoX
 
 * increased version number to reflect for latest changes from previous revisions
