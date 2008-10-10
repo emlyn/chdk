@@ -101,9 +101,7 @@ void core_spytask()
     mkdir("A/CHDK/DATA");
     mkdir("A/CHDK/LOGS");
     auto_started = 0;
-    
-    clear_values();
-    
+
     if (conf.script_startup==1) script_autostart();				// remote autostart
 	if (conf.script_startup==2) {
 		conf.script_startup=0;

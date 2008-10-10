@@ -550,6 +550,8 @@ void conf_restore() {
         }
 	close(fd);
     }
+    // clear any "clear on restart" values
+    clear_values();
 }
 
 //-------------------------------------------------------------------

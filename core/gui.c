@@ -1792,7 +1792,8 @@ void gui_init()
     curve_load(conf.curve_file); // load curve upon init 
     drcurve_load("A/CHDK/SYSCURVES.CVF"); // load system L curves
 		
-		if (conf.zoom_override) shooting_set_zoom(conf.zoom_override_value);
+// reyalp - need to do this in capt_seq
+//		if (conf.zoom_override) shooting_set_zoom(conf.zoom_override_value);
 }
 
 //-------------------------------------------------------------------
