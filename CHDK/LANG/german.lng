@@ -1,7 +1,7 @@
 // CHDK language file
 // 
 //
-// juciphox-prerelease
+// aktuelle Version ab rev. 524
 //
 // -----------------------------------------------
 // Optimale Schriftart: Libsans16b (mit Umlauten)
@@ -157,7 +157,7 @@
 107 "CHDK Ver: %s %s\nDatum:    %s\nZeit:    %s\nKamera:  %s\nFW Vers: %s"
 
 108 "***Speicher Info***"
-109 "Freier Speicher: %d Byte"
+109 "Freier Speicher: %d Byte\nCHDK Größe: %d bytes\ngeladen bei: 0x%X"
 
 110 "*** Information ***"
 111 "Bitte in Wiedergabe-Modus\numschalten und\nerneut versuchen!"
@@ -575,7 +575,11 @@
 
 // Skript
 410 "Parameterspeicher an/aus"
-411 "Video Ev display"
-412 "   Zoom Override Value"
-413 "Zoom Override"
-414 "   Clear on start"
+
+// Layout-Editor
+411 "Video-Ev-Anzeige"
+
+// Extra Foto
+412 "    Zoom-Wert"
+413 "Ersetze Zoom-Wert"
+414 "    Bei Neustart löschen"

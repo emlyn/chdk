@@ -3,9 +3,8 @@
 // <id> "<text>"
 //   <id>   - pitäisi olla positiivinen numero
 //   <text> - teksti suljettuna lainausmerkkeihin
-//  12.8.2008 based on English rev 479
+//  11.10.2008 based on English rev 531
 1 "Päävalikko"
-
 
 2 "RAW-kuvat"
 3 "Kuvaruutunäyttö"
@@ -17,7 +16,6 @@
 9 "Debug"
 10 "Palauta oletusasetukset..."
 11 "Tallenna asetukset nyt..."
-
 
 12 "Takaisin"
 
@@ -119,7 +117,7 @@
 82 "Näytä sekalaiset arvot"
 83 "Muistiselaaja"
 
-84 "ALT +/- debuggaus toiminto"
+84 "ALT +/- debuggaus"
 85 "Tee kortista boottaava..."
 
 
@@ -462,8 +460,8 @@
 
 340 "Korvaus teksti"
 341 "Korvaus tekstin tausta"
-342 "Korvaaminen ei käytössä"
-343 " AutoIso:lla & Haarukoinni:lla"
+342 "Korvaukset pois käytöstä"
+343 " AutoIso:lla & Haarukoinnilla"
 344 " Piilota toistettaessa"
 345 "Estä @ Videon nauhoitus"
 346 "Näytä aikaa jäljellä"
@@ -542,3 +540,7 @@
 408 "Vähennä"
 409 "Vähennä merkityt"
 410 "Tallenna arvot"
+411 "Videon Ev-näyttö"
+412 " Zoomin korvausarvo"
+413 "Zoomin korvaus"
+414 " Tyhjennä arvot käynnistyksessä"

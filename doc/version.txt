@@ -5,6 +5,16 @@ author
 
 log
 
+0.6.2 / #534 / PhP
+
+- removed russian bigfonts lang file (too old)
+* updated finnish & german langfile
++ added hungarian lang file (thx titan_g9)
+
+0.6.1 / #533 / reyalp
+
+zoom override is temporarily disabled 
+
 0.6.1 / #532 / PhP
 
 * fixed bug regarding zoom override feature (added check, see http://chdk.setepontos.com/index.php/topic,2426.0.html)
