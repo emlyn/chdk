@@ -5,6 +5,20 @@ author
 
 log
 
+0.6.3 / #537 / PhP
+
++ added support for Ixus40 1.00j ( http://chdk.setepontos.com/index.php/topic,2042.msg23028.html#msg23028 )
++ added spanish language file ( http://chdk.setepontos.com/index.php/topic,2361.msg22974.html#msg22974 )
+* changed dutch language file
+
+0.6.2 / #536 / PhP
+
+* fixed eol style of platform/notes.txt
+
+0.6.2 / #535 / ewavr
+
+* fixed russian lng file
+
 0.6.2 / #534 / PhP
 
 - removed russian bigfonts lang file (too old)

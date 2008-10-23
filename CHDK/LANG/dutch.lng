@@ -6,27 +6,27 @@
   
   1 "Hoofdmenu"
 
-  2 "RAW ->"
-  3 "OSD ->"
-  4 "Histogram ->"
-  5 "Zebra ->"
-  6 "Script ->"
-  7 "Beeld ->"
-  8 "Overige ->"
-  9 "Debug ->"
+  2 "RAW-parameters"
+  3 "OSD-parameters"
+  4 "Histogram-parameters"
+  5 "Zebra-parameters"
+  6 "Script-parameters"
+  7 "Beeld-parameters"
+  8 "Overige parameters"
+  9 "Debug-parameters"
  10 "Fabrieksinstellingen"
  11 "Instellingen opslaan"
 
- 12 "<- Terug"
+ 12 "Terug"
 
 
  13 "RAW"
 
- 14 "Bewaar als RAW"
+ 14 "Sla RAW op"
  16 "Enkel eerste RAW in reeks"
  17 "RAW-bestand in map met JPEG"
- 18 "RAW-bestand prefix"
- 19 "RAW-bestand extensie"
+ 18 "RAW-bestandsprefix"
+ 19 "RAW-bestandsextensie"
 
 
  20 "OSD"
@@ -35,10 +35,10 @@
  22 "Toon statusdisplay"
  23 "Toon diverse waarden"
  24 "Zoomwaarde"
- 25 "Toon DOF calculator"
+ 25 "Toon DOF-calculator"
  26 "Toon klok"
- 27 "OSD layout editor"
- 28 "Batterij ->"
+ 27 "OSD layouteditor"
+ 28 "Batterij"
 
 
  29 "Histogram"
@@ -84,9 +84,9 @@
  59 "Histogram EXP merkers"
  60 "Zebra Onderbelichting"
  61 "Zebra Overbelichting"
- 62 "Batterij pictogram"
- 63 "Menu tekst"
- 64 "Menu achtergrond"
+ 62 "Batterijpictogram"
+ 63 "Menutekst"
+ 64 "Menuachtergrond"
  65 "Kladblok lettertype"
  66 "Kladblok achtergrond"
 
@@ -95,24 +95,24 @@
 
  68 "Bestandsbeheer"
  69 "Kalender"
- 70 "Kladblok->"
- 71 "Spelletjes ->"
+ 70 "Kladblok"
+ 71 "Spelletjes"
  72 "Zaklamp"
- 73 "Toon splashscherm bij opstart"
+ 73 "Toon splashscherm bij opstarten"
  74 "Gebruik zoomknoppen voor focus"
  75 "<ALT> mode knop"
  76 "Teken palet"
  77 "Toon versieinfo"
- 78 "Toon geheurgenstatus"
+ 78 "Toon geheugenstatus"
 
 
  79 "Debug"
 
- 80 "Toon PropCases"
+ 80 "Toon debugdata"
  81 "PropCase pagina"
  82 "Toon diverse waarden"
  83 "Geheugenbeheer"
- 84 "Dump RAM bij druk op ALT +/-"
+ 84 "Alt +/- debug-actie"
  85 "Maak geheugenkaart opstartbaar..."
 
 
@@ -134,7 +134,7 @@
  97 "Codepagina"
  98 "Splits tussen woorden"
  99 "Autoscroll activeren"
-100 "Autoscroll vertraging (sec)"
+100 "Autoscrollvertraging (sec)"
 
 
 101 "Spelletjes"
@@ -147,10 +147,10 @@
 105 "Ben je ZEKER om te herstellen?"
 
 106 "*** Versie-info ***"
-107 "CHDK Ver: %s, #%s\nDatum:    %s\nTijd:    %s\nCamera:  %s\nFW Vers: %s"
+107 "CHDK-ver: %s, #%s\nDatum:    %s\nTijd:    %s\nCamera:  %s\nFW Vers: %s"
 
 108 "*** Geheugen-info ***"
-109 "Vrij geheugen: %d bytes"
+109 "Vrij geheugen: %d bytes\nCHDK-grootte: %d bytes\ngeladen op: 0x%X"
 
 110 "*** Informatie ***"
 111 "Schakel je camera naar\nPLAY-mode\nen probeer opnieuw. :)"
@@ -186,8 +186,8 @@
 
 136 "Vandaag:"
 
-// Boodschappenbus knoppen
-137 "Ok"
+// Berichtenbus knoppen
+137 "Oke"
 138 "Ja"
 139 "Nee"
 140 "Annuleer"
@@ -225,7 +225,7 @@
 163 "*** Over ***"
 
 // sokoban
-164 " Niveaus"
+164 "  Niveau"
 165 "  Zetten"
 166 "*** Einde ***"
 167 "Ja!\n  Je hebt het gehaald!  "
@@ -237,9 +237,9 @@
 
 // file browser
 171 "*** Wis map ***"
-172 "Ben je ZEKER om alle bestanden\nte wissen van\nde gekozen map?"
+172 "Wil je ECHT alle bestanden\nwissen uit de\ngekozen map?"
 173 "*** Wis bestand ***"
-174 "Ben je ZEKER om het geselecteerde\nbestand te wissen?"
+174 "Wil je ECHT het geselecteerde\nbestand wissen?"
 
 // benchmark
 175 "Benchmark"
@@ -249,7 +249,7 @@
 179 "Schrijf     :"
 180 "Lees        :"
 181 "Geheugen"
-182 "Flash-kaart"
+182 "Flashkaart"
 183 "Schrijf (RAW):"
 184 "Schrijf (Mem):"
 185 "Schrijf (64k):"
@@ -264,29 +264,31 @@
 191 "Wissen"
 192 "Selectie omkeren"
 193 "*** Knip bestanden ***"
-194 "Ben je ZEKER om\n%d gekozen bestand(en)\nte wissen van %s/?"
+194 "Wil je ECHT de\n%d gekozen bestand(en)\nwissen van %s/?"
 195 "*** Kopieer bestanden ***"
-196 "Ben je ZEKER om\n%d gekozen bestand(en)\nte kopieren van %s/?"
+196 "Wil je ECHT de\n%d gekozen bestand(en)\nkopieren van %s/?"
 197 "*** Wis bestanden ***"
-198 "Ben je ZEKER om\n%d gekozen bestand(en)\nte wissen?"
+198 "Wil je ECHT de\n%d gekozen bestand(en)\nwissen?"
 199 "Even geduld..."
 
 // raster
 200 "Toon raster"
 201 "Laad raster uit bestand..."
 202 "Rasterlijnen"
-203 "Rasterinstellingen ->"
+203 "Rasterinstellingen"
 204 "Kies rasterbestand"
 205 "Huidig raster"
+
 206 "Ruisonderdrukking"
+
 207 "Overschrijf rasterkleuren"
 208 "Lijnkleur"
 209 "Opvulkleur"
 
 
-210 "DOF Calculator"
+210 "DOF-Calculator"
 
-211 "DOF Calculator ->"
+211 "DOF-Calculator"
 212 "Onderwerpafst. als dichtb.lim." 
 213 "Gebr. EXIF-ond.afst. (PC65)"
 214 "Toon ond.afst. in Diversen"
@@ -298,7 +300,7 @@
 
 219 "Diverse Waarden"
 
-220 "Diverse Waarden ->"
+220 "Diverse Waarden"
 221 "Toon in bekijkmode"
 222 "Toon zoom"
 223 "Toon 'echt' diafragma"
@@ -307,7 +309,7 @@
 226 " Toon ISO alleen in AutoISO"
 227 "Toon Kies belichting Ev (Tv+Av)"
 228 "Toon gemeten Ev (Bv+Sv)"
-229 "Toon Kies Set Bv (helderheidswaarde)"
+229 "Toon Kies Bv (helderheidswaarde)"
 230 "Toon gemeten Bv"
 231 "Toon overbel.waarde (Geen flits!)"
 232 "Toon luminantie"
@@ -315,7 +317,7 @@
 
 233 "Video-instellingen"
 
-234 "Video-instellingen ->"
+234 "Video-instellingen"
 235 "Videomode"
 236 "Video-bitrate"
 237 "Videokwaliteit"
@@ -323,7 +325,7 @@
 
 238 "Extra Foto-instellingen"
 
-239 "Extra Foto-instellingen ->"
+239 "Extra Foto-instellingen"
 240 "Overschrijf sluitersnelheid"
 241 "    Waardefactor"
 242 "Overscrijf Diafragmawaarde"
@@ -335,7 +337,7 @@
 
 247 "Bracketing in Continu-mode"
 
-248 "Bracketing in Continu-mode ->"
+248 "Bracketing in Continu-mode"
 249 "TV-bracketing-waarde"
 250 "AV-bracketing-waarde"
 251 "ISO-bracketing-waarde"
@@ -345,12 +347,12 @@
 255 "Bracketing-type"
 
 256 "Autostart"
-257 "Afstandsbediening (USB)"
+257 "Afstandsbediening aan"
 
 
 258 "Belichting (Geen flits)"
 
-259 "Belichting (Geen flits) ->"
+259 "Belichting (Geen flits)"
 260 "Herbereken belichting"
 261 "TV-belichting herbereken volgorde"
 262 "AV-belichting herbereken volgorde"
@@ -368,7 +370,7 @@
 271 "Niet genoeg ruimte:\n%dM vereist, %dM beschikbaar."
 
 272 "Toon OSD in Bekijk-mode"
-273 "Toon parameterdata"
+273 "Taaklijst start"
 
 274 "Afstand onderwerp tot lens"
 
@@ -376,7 +378,7 @@
 
 276 "Maak kaart met twee partities"
 277 "Wissel partities"
-278 "Dit VERNIETIGD ALLE INFORMATIE\nop kaart. Doorgaan?"
+278 "Dit VERNIETIGT ALLE INFORMATIE\nop kaart. Doorgaan?"
 279 "Deze kaart heeft maar een partitie."
 280 "Fout"
 281 "Waarschuwing"
@@ -418,7 +420,7 @@
 310 "Schakel optische zoom in"
 
 
-311 "Klok ->"
+311 "Klok"
 312 "Klok-instellingen"
 313 "Klok-soort"
 314 "Ruimte-over achtergrondkleur"
@@ -426,15 +428,15 @@
 316 "Toon bij sluiter indrukken"
 
 317 "Raw-bekijkinstellingen"
-318 "Raw ->"
+318 "Raw"
 
 319 "Ruimte-bekijkinstellingen"
-320 "Ruimte ->"
+320 "Ruimte"
 
 
 321 "Aangepaste Auto ISO"
 
-322 "Aangepaste Auto ISO ->"
+322 "Aangepaste Auto ISO"
 323 "Aangepaste Auto ISO ingeschakeld"
 324 "Minimum sluitersnelheid"
 325 "Gebruikersfactor (1/FL/factor)"
@@ -464,7 +466,7 @@
 346 "Toon resterende videotijd?"
 347 "  Vernieuwing (~sec)"
 348 "Resterende videotijd"
-349 "Leeg videoparams bij opstarten?"
+349 "Wis videoinst. bij opstarten?"
 350 "Shakel snelle Ev-wissel in?"
 351 "   Stapgrootte (1 EV)?"
 352 "EV-correctie"
@@ -484,7 +486,7 @@
 364 "Symbool achtergrondkleur"
 
 365 "Aangep. curves"
-366 "Aangep. curves ->"
+366 "Aangep. curves"
 367 "Laad curveprofiel..."
 368 "Schakel curve in"
 369 "Kies curvebestand"
@@ -501,8 +503,8 @@
 377 "Schakel afst.bed. in"
 378 "Schakel synch in"
 379 "Schakel synchwachttijd in"
-380 "Synchwachttijd 0.1ms"
-381 "Synchwachttijd 0.1s"
+380 "Synchwachttijd 0,1ms"
+381 "Synchwachttijd 0,1s"
 
 382 "AF-toets"
 383 "Laad standaard param-waarden"
@@ -527,7 +529,6 @@
 399 "Schakel a.b.-zoom in"
 400 "Zoom-timeout 0,1s"
 401 "Opstartgeluid"
-
 402 "Raw-aftrek prefix"
 403 "Raw-aftrek extensie"
 404 "Trek input donkerwaarde af"
@@ -536,5 +537,8 @@
 407 "...%d bestanden"
 408 "Trek af"
 409 "Trek af van gemarkeerde"
-410 "Sla params op"
-
+410 "Sla inst. op"
+411 "Video Ev-display"
+412 "   Zoom Overschrijfwaarde"
+413 "Zoom Overschrijving"
+414 "   Leeg bij opstarten"
