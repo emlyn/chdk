@@ -87,70 +87,9 @@ MODE_SPORTS			    ,
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_STITCH || \
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_MANUAL)
 #if CAM_PROPSET == 2     // most digic3 cameras
- #define PROPCASE_DRIVE_MODE					102
- #define PROPCASE_FOCUS_MODE					133
- #define PROPCASE_FLASH_MODE    		        143
- #define PROPCASE_USER_TV       				264
- #define PROPCASE_TV	        				262
- #define PROPCASE_USER_AV      					26
- #define PROPCASE_AV            				23
- #define PROPCASE_MIN_AV       					25
- #define PROPCASE_SV            				247
- #define PROPCASE_DELTA_SV      				79
- #define PROPCASE_SV_MARKET     				246
- #define PROPCASE_BV            				34
- #define PROPCASE_SUBJECT_DIST1 				245
- #define PROPCASE_SUBJECT_DIST2 				65
- #define PROPCASE_ISO_MODE		    			149
- #define PROPCASE_SHOOTING      				206
- #define PROPCASE_IS_FLASH_READY      			208
- #define PROPCASE_OVEREXPOSURE 					103
- #define PROPCASE_SHOOTING_MODE					49
- #define PROPCASE_IS_MODE					    145
- #define PROPCASE_QUALITY				        57
- #define PROPCASE_RESOLUTION				        218
- #define PROPCASE_EV_CORRECTION_1				107
- #define PROPCASE_EV_CORRECTION_2				207
- #define PROPCASE_ORIENTATION_SENSOR			219
- #define PROPCASE_DIGITAL_ZOOM_STATE                            94
- #define PROPCASE_DIGITAL_ZOOM_POSITION                         95
- #define PROPCASE_DISPLAY_MODE                         105
- #define PROPCASE_BRACKET_MODE                         278 //fictional value! need to find out!
+ #include "propset2.h"
 #elif CAM_PROPSET == 1   // most digic2 cameras
- #define PROPCASE_DRIVE_MODE    				6
- #define PROPCASE_FOCUS_MODE    				12
- #define PROPCASE_FLASH_MODE       				16
-// need corresponding values for propset2!!!
-// #define PROPCASE_FLASH_ADJUST_MODE       	15
-// #define PROPCASE_FLASH_CORRECTION               28      
-// #define PROPCASE_FLASH_MANUAL_OUTPUT    29
-//  #define PROPCASE_FOCUS_OK           67
- #define PROPCASE_USER_TV       				40
- #define PROPCASE_TV	        				69
- #define PROPCASE_USER_AV       				39
- #define PROPCASE_AV            				68
- #define PROPCASE_MIN_AV        				77
- #define PROPCASE_SV            				73
- #define PROPCASE_DELTA_SV      				70
- #define PROPCASE_SV_MARKET     				72
- #define PROPCASE_BV            				71
- #define PROPCASE_ISO_MODE      				21
- #define PROPCASE_SUBJECT_DIST1 				65
- #define PROPCASE_SUBJECT_DIST2 				66
- #define PROPCASE_SHOOTING     					205
- #define PROPCASE_IS_FLASH_READY   				221
- #define PROPCASE_OVEREXPOSURE 					76
- #define PROPCASE_SHOOTING_MODE					0
- #define PROPCASE_IS_MODE				        229
- #define PROPCASE_QUALITY				        23
- #define PROPCASE_RESOLUTION				        24
- #define PROPCASE_EV_CORRECTION_1				25
- #define PROPCASE_EV_CORRECTION_2				26
- #define PROPCASE_ORIENTATION_SENSOR			37
- #define PROPCASE_DIGITAL_ZOOM_STATE                            58
- #define PROPCASE_DIGITAL_ZOOM_POSITION                         57
- #define PROPCASE_DISPLAY_MODE                         181
- #define PROPCASE_BRACKET_MODE                         36 //missing for dryos!
+ #include "propset1.h"
 #else
  #error unknown camera processor
 #endif

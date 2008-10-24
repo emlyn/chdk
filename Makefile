@@ -7,7 +7,7 @@ include makefile.inc
 #BUILD_NUMBER := $(shell expr $(BUILD_NUMBER) + 1)
 #endif
 
-SUBDIRS=tools lib platform core loader
+SUBDIRS=tools lib platform core loader CHDK
 
 all: all-recursive
 
@@ -94,6 +94,7 @@ firzipsubcomplete: infoline clean firsub
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/GRIDS/* > $(DEVNULL)
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/LANG/*   > $(DEVNULL)
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/LUALIB/*   > $(DEVNULL)
+	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/LUALIB/GEN/*   > $(DEVNULL)
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/SCRIPTS/*  > $(DEVNULL)
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/SCRIPTS/examples/* 	 > $(DEVNULL)
 	zip -9 $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)CHDK/SCRIPTS/TEST/* 	 > $(DEVNULL)
