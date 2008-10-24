@@ -4,6 +4,11 @@ revision / version
 author
 
 log
+0.6.4 / #538-539 / reyalp
++ added os.stat and os.utime (see http://chdk.setepontos.com/index.php/topic,2267.msg23046.html#msg23046 )
+* make utime return values on dryos follow standard
+* add SetFileTimestamp to sig_ref_dryos
+* added CHDK/LUALIB and CHDK/SCRIPTS/TEST to zip
 
 0.6.3 / #537 / PhP
 

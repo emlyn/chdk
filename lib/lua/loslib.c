@@ -58,11 +58,6 @@ static int os_rename (lua_State *L) {
   return os_pushresult(L, rename(fromname, toname) == 0, fromname);
 }
 
-// reyalp added
-static int os_mkdir (lua_State *L) {
-  const char *dirname = luaL_checkstring(L, 1);
-  return os_pushresult(L, mkdir(dirname) == 0, dirname);
-}
 
 // TODO
 #if 0
@@ -247,6 +242,73 @@ static int os_exit (lua_State *L) {
 }
 #endif
 
+// reyalp added
+static int os_mkdir (lua_State *L) {
+  const char *dirname = luaL_checkstring(L, 1);
+  return os_pushresult(L, mkdir(dirname) == 0, dirname);
+}
+
+// t = stat("name")
+// nil,strerror,errno on fail
+static int os_stat (lua_State *L) {
+  struct stat st;
+  const char *name = luaL_checkstring(L, 1);
+  int result = stat(name,&st);
+  if (result==0) {
+    lua_createtable(L, 0, 11);  /* = number of fields */
+    // don't expose the fields that aren't useful
+	// but leave them commented out for reference
+    setfield(L,"dev",st.st_dev);		/* device ID number */
+//    setfield(L,"ino",st.st_ino);		/* no inodes in fat, always -1 */
+    setfield(L,"mode",st.st_mode);	/* file mode (see below) */
+//    setfield(L,"nlink",st.st_nlink);	/* dryos 0, vxworks 1 */
+//    setfield(L,"uid",st.st_uid);		/* no users or groups on fat */
+//    setfield(L,"gid",st.st_gid);		/* " */
+#if !CAM_DRYOS
+// doesn't appear useful, I wasn't able to stat any special files
+//    setfield(L,"rdev",st.st_rdev);	/* device ID, only if special file */
+#endif
+    setfield(L,"size",st.st_size);	/* size of file, in bytes */
+    setfield(L,"atime",st.st_atime);	/* time of last access */
+    setfield(L,"mtime",st.st_mtime);	/* time of last modification */
+    setfield(L,"ctime",st.st_ctime);	/* time of last change of file status */
+    setfield(L,"blksize",st.st_blksize); /* This is NOT the dos sector size. Appears to be 512 on all I've tested! */
+    setfield(L,"blocks",st.st_blocks);   /* number of blocks required to store file. May not be the same as size on disk, per above*/
+    setfield(L,"attrib",st.st_attrib);	/* file attribute byte (dosFs only) */
+	// for convenience
+	// note volume labels are neither file nor directory
+	setboolfield(L,"is_dir",st.st_attrib & DOS_ATTR_DIRECTORY);
+	setboolfield(L,"is_file",!(st.st_attrib & (DOS_ATTR_DIRECTORY | DOS_ATTR_VOL_LABEL)));
+#if 0
+    setfield(L,"reserved1",st.reserved1);
+    setfield(L,"reserved2",st.reserved2);
+    setfield(L,"reserved3",st.reserved3);
+    setfield(L,"reserved4",st.reserved4);
+    setfield(L,"reserved5",st.reserved5);
+    setfield(L,"reserved6",st.reserved6);
+#endif
+    return 1;
+  }
+  else {
+    int en = errno;
+    lua_pushnil(L);
+    lua_pushfstring(L, "%s: %s", name, strerror(en));
+    lua_pushinteger(L, en);
+    return 3;
+  }
+}
+
+// utime(name,[modtime,[actime]])
+// true | nil,strerror, errno
+// current time used for missing or nil args
+static int os_utime (lua_State *L) {
+  const char *name = luaL_checkstring(L, 1);
+  struct utimbuf t;
+  t.modtime = luaL_optnumber(L, 2, time(NULL));
+  t.actime = luaL_optnumber(L, 3, time(NULL));
+  return os_pushresult(L, utime(name,&t) == 0, name);
+}
+
 static const luaL_Reg syslib[] = {
 #if 0
   {"clock",     os_clock},
@@ -259,7 +321,9 @@ static const luaL_Reg syslib[] = {
   {"getenv",    os_getenv},
 #endif
   {"mkdir",     os_mkdir}, // reyalp - NOT STANDARD
-  // TODO add stat and directory listing functions
+  {"stat",      os_stat}, // reyalp - NOT STANDARD
+  {"utime",     os_utime}, // reyalp - NOT STANDARD
+  // TODO add directory listing functions
   {"remove",    os_remove},
   {"rename",    os_rename},
 #if 0

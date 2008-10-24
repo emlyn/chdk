@@ -58,6 +58,7 @@ NSTUB(Remove, 0xff825d0c)
 NSTUB(RenameFile_Fut, 0xff8254d8)
 // Best match: 61%
 NSTUB(SetAutoShutdownTime, 0xff877e88)
+NSTUB(SetFileTimeStamp, 0xff825fa0)
 // ERROR: SetParameterData is not found!
 NSTUB(SetPropertyCase, 0xff86b264)
 // Best match: 92%

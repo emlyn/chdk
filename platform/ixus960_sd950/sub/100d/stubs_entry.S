@@ -49,6 +49,7 @@ NSTUB(RefreshPhysicalScreen, 0xff9a0f54)
 NSTUB(Remove, 0xff825010)
 NSTUB(RenameFile_Fut, 0xff8247dc)
 NSTUB(SetAutoShutdownTime, 0xff86d444)
+NSTUB(SetFileTimeStamp, 0xff8252a4)
 NSTUB(SetParameterData, 0xff945dd4)
 NSTUB(SetPropertyCase, 0xff860268)
 // Best match: 92%

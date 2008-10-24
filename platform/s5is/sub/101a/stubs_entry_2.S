@@ -182,4 +182,3 @@ NSTUB(kbd_pwr_on,				 0xFF81096C) // Does not even exist, I think
 NHSTUB(PT_PlaySound, 0xFF86B5A4)
 NHSTUB(EnterToCompensationEVF, 0xff828070) 
 NHSTUB(ExitFromCompensationEVF, 0xff828164) 
-NHSTUB(SetFileTimeStamp, 0xFF826068)

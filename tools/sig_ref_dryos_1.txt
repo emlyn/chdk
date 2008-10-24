@@ -95,3 +95,4 @@ mktime_ext 0xFFC72460 16
 DeleteFile_Fut 0xFFC148A4 13
 RenameFile_Fut 0xFFC14840 17
 MakeDirectory_Fut 0xFFC14908 28
+SetFileTimeStamp 0xFFC15308 20

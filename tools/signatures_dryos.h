@@ -2930,6 +2930,29 @@ static FuncSig func_sig_MakeDirectory_Fut_1[] = {
 	/* 25/28 */
 };
 
+static FuncSig func_sig_SetFileTimeStamp_1[] = {
+	{   1, 0xe58d1004, 0xfdffffff }, // str:4:0xE58D1004
+	{   2, 0xe58d2000, 0xfdffffff }, // str:4:0xE58D2000
+	{   3, 0xe1a0200d, 0xfdffffff }, // mov:6:0xE1A0200D
+	{   4, 0xe1a01002, 0xfdffffff }, // mov:6:0xE3A01002
+	{   5, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   6, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFD4AC
+	{   7, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{   8, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000008
+	{   9, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB00A9F8
+	{  11, 0xe1a02000, 0xfdffffff }, // mov:6:0xE3A02000
+	{  12, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{  13, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  14, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFD4A4
+	{  15, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{  16, 0x01a00001, 0xfdffffff }, // mov:6:0x03A00001
+	{  17, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000000
+	{  18, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{ -1, -1, -1 },
+	/* 18/20 */
+};
+
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory_1 },
 	{ "AllocateUncacheableMemory", func_sig_AllocateUncacheableMemory_1 },
@@ -2974,6 +2997,7 @@ FuncsList func_list[] = {
 	{ "Remove", func_sig_Remove_1 },
 	{ "RenameFile_Fut", func_sig_RenameFile_Fut_1 },
 	{ "SetAutoShutdownTime", func_sig_SetAutoShutdownTime_1 },
+	{ "SetFileTimeStamp", func_sig_SetFileTimeStamp_1 },
 	{ "SetParameterData", func_sig_SetParameterData_1 },
 	{ "SetPropertyCase", func_sig_SetPropertyCase_1 },
 	{ "SleepTask", func_sig_SleepTask_1 },

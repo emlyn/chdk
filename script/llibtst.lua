@@ -362,6 +362,34 @@ function tmd(name)
 	end
 end
 
+function tstat(name)
+	log('os.stat("',tostring(name),'"): ')
+	local r,msg = os.stat(name)
+	if r then
+--		local keys={ "dev", "ino", "mode", "nlink", "uid", "gid", "rdev", "size", "atime", "mtime", "ctime", "blksize", "blocks", "attrib", "reserved1", "reserved2", "reserved3", "reserved4", "reserved5", "reserved6",}
+		local keys={ "dev", "mode", "size", "atime", "mtime", "ctime", "blksize", "blocks", "attrib","is_dir","is_file",}
+		logok()
+		log("{\n")
+		for _,v in ipairs(keys) do
+			log(" ",tostring(v),"=",tostring(r[v]),"\n")
+		end
+		log("}\n")
+	else
+		logfail(tostring(msg))
+	end
+	return r
+end
+
+function tutime(name,mtime,atime)
+	log('os.utime("',tostring(name),'",',tostring(mtime),',',tostring(atime),'): ')
+	local r,msg = os.utime(name,mtime,atime)
+	if r then
+		logok()
+	else
+		logfail(tostring(msg))
+	end
+end
+
 function os_test()
 	tstart("os")
 	if type(os) ~= "table" then
@@ -394,12 +422,21 @@ function os_test()
 		local tf=tfproto:new(tdir0..tdat0,"wb")
 		tf:write("data")
 		tf:close()
+		local fn=tdir0..tdat0
+		tstat(fn)
+		tutime(fn) -- utime, current
+		tstat(fn)
+		tutime(fn,os.time({year=1984,month=1,day=1}),os.time({year=1984,month=12,day=25}))
+		tstat(fn)
+		tstat(tdir0)
 		tren(tdir0..tdat0,tdir0..tdat1)
 -- NOTE invalid operations frequently leave the filesystem in a corrupt state
 --		trename(tdir0,tdir1)
 		want_ok=false
 		trem(tdir0) --fail, not empty
-		trem("A/bogus") --fail, missing
+		trem("A/bogus") --fail missing
+		tstat("A/bogus") -- fail missing
+		tutime("A/bogus") -- fail missing
 		tren("A/bogus","A/blah")--fail missing
 		tmd("A/CHDK")--fail, exists
 		want_ok=true

@@ -272,7 +272,7 @@ struct utimbuf {
     unsigned long modtime;      /* set the modification time */
 };
 
-extern int utime(char *file, struct utimbuf *newTimes);
+extern int utime(const char *file, struct utimbuf *newTimes);
 extern unsigned long time(unsigned long *timer);
 extern long strftime(char *s, unsigned long maxsize, const char *format, const struct tm *timp);
 extern time_t mktime(struct tm *timp);

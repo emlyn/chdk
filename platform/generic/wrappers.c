@@ -360,7 +360,8 @@ int utime(char *file, void *newTimes) {
   res=_SetFileTimeStamp(fd, ((int*)newTimes)[0] , ((int*)newTimes)[1]);
   _close(fd);
  }
- return res;
+ // return value compatibe with utime: ok=0 fail=-1
+ return (res)?0:-1;
 #endif
 }
 
