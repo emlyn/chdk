@@ -228,12 +228,12 @@ int load_params_values(const char *fn, int update_vars, int read_param_set)
 	// open and read file
 	if (stat(cfg_set_name,&st) != 0)
 		return 0;
-	buf=malloc(st.st_size+1);
+	buf=umalloc(st.st_size+1);
 	if(!buf)
 		return 0;
 	fd = open(cfg_set_name, O_RDONLY, 0777);
 	if (fd < 0) {
-		free(buf);
+		ufree(buf);
 		return 0;
 	}
 	rcnt = read(fd, buf, st.st_size);
@@ -260,7 +260,7 @@ int load_params_values(const char *fn, int update_vars, int read_param_set)
         while (ptr[0] && ptr[0]!='\n') ++ptr; // unless end of line
         if (ptr[0]) ++ptr;
     }
-	free(buf);
+	ufree(buf);
 	return 1;
 }
 
@@ -289,13 +289,13 @@ void save_params_values(int unconditional)
 	// open and read file
 	set_params_values_name(conf.script_file, conf.script_param_set);
 
-	buf=malloc(SCRIPT_NUM_PARAMS*(28 + 20)); // max possible params * (param description + some extra for @default etc)
+	buf=umalloc(SCRIPT_NUM_PARAMS*(28 + 20)); // max possible params * (param description + some extra for @default etc)
 	if(!buf)
 		return;
 
 	fd = open(cfg_set_name, O_WRONLY|O_CREAT, 0777);
 	if (fd < 0) {
-		free(buf);
+		ufree(buf);
 		return;
 	}
 	buf[0] = 0;
@@ -309,14 +309,15 @@ void save_params_values(int unconditional)
 	}
 	write(fd, buf, strlen(buf));
 	close(fd);
-	free(buf);
+	ufree(buf);
 }
 
 
 
 //-------------------------------------------------------------------
 void script_load(const char *fn, int saved_params) {
-    int fd=-1, i, update_vars;
+//   int fd=-1, i, update_vars;
+    int fd=0, i, update_vars;
 	struct stat st;
     
 //    save_params_values(0);
@@ -329,15 +330,15 @@ void script_load(const char *fn, int saved_params) {
 
     if (!fn[0]) { // load internal script
         if (!conf.script_file[0]) { // internal script was used last time
-            fd = open(SCRIPT_DEFAULT_FILENAME, O_RDONLY, 0777);
-            if (fd>=0) {
+            fd = fopen(SCRIPT_DEFAULT_FILENAME, "rb");
+            if (fd) {
                 fn = SCRIPT_DEFAULT_FILENAME;
                 update_vars = 1; 
             }
         }
     } else {
-        fd = open(fn, O_RDONLY, 0777);
-        if (fd<0) {
+        fd = fopen(fn, "rb");
+        if (!fd) {
             conf.script_file[0]=0;
             update_vars = 1; 
         }
@@ -346,12 +347,12 @@ void script_load(const char *fn, int saved_params) {
     if(stat(fn,&st) != 0 || st.st_size == 0) {
         conf.script_file[0]=0;
         update_vars = 1; 
-        if(fd > 0) {
-            close(fd);
-            fd=-1;
+        if(fd) {
+            fclose(fd);
+            fd=0;
         }
     }
-    if (fd>=0){
+    if (fd){
         int rcnt;
         char *buf;
 
@@ -363,7 +364,7 @@ void script_load(const char *fn, int saved_params) {
 
         // TODO we could process the script here to reduce size
         // or compile for lua
-        rcnt = read(fd, buf, st.st_size);
+        rcnt = fread(buf, 1, st.st_size,fd);
         if (rcnt > 0){
             buf[rcnt] = 0;
             state_ubasic_script = buf;
@@ -372,7 +373,7 @@ void script_load(const char *fn, int saved_params) {
         else {
             free(buf);
         }
-        close(fd);
+        fclose(fd);
     }
 
     if (update_vars) {

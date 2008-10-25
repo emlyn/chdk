@@ -483,7 +483,7 @@ void conf_save() {
     static const long t=CONF_MAGICK_VALUE;
     register int i;
     int fd;
-    static char buf[sizeof(t)+CONF_NUM*(sizeof(conf_info[0].id)+sizeof(conf_info[0].size))+sizeof(conf)];
+    char *buf=umalloc(sizeof(t)+CONF_NUM*(sizeof(conf_info[0].id)+sizeof(conf_info[0].size))+sizeof(conf));
     char *p=buf;
 
     fd = open(CONF_FILE, O_WRONLY|O_CREAT|O_TRUNC, 0777); 
@@ -502,6 +502,7 @@ void conf_save() {
         write(fd, buf, p-buf);
         close(fd);
     }
+	ufree(buf);
 }
 
 //-------------------------------------------------------------------
