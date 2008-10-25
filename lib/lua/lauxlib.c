@@ -540,18 +540,16 @@ static const char *getF (lua_State *L, void *ud, size_t *size) {
 }
 #else
 typedef struct LoadF {
-  int f;
+  FILE *f;
   char buff[LUAL_BUFFERSIZE];
 } LoadF;
 
 static const char *getF (lua_State *L, void *ud, size_t *size) {
   LoadF *lf = (LoadF *)ud;
   (void)L;
-  ssize_t rr = read(lf->f, lf->buff, sizeof(lf->buff));
-  if (rr <= 0)
-    return NULL;
-  *size = rr;
-  return lf->buff;
+  if (feof(lf->f)) return NULL;
+  *size = fread(lf->buff, 1, sizeof(lf->buff), lf->f);
+  return (*size > 0) ? lf->buff : NULL;
 }
 #endif
 
@@ -611,16 +609,18 @@ LUALIB_API int luaL_loadfile (lua_State *L, const char *filename) {
 #else
 LUALIB_API int luaL_loadfile (lua_State *L, const char *filename) {
   LoadF lf;
-  int status, readstatus;
+  int status, readerror;
   char c;
   int fnameindex = lua_gettop(L) + 1;  /* index of filename on the stack */
   lua_pushfstring(L, "@%s", filename);
-  lf.f = open(filename, O_RDONLY, 0777);
-  if (lf.f == -1) return errfile(L, "open", fnameindex);
+  lf.f = fopen(filename, "rb"); // cams don't translate crlf anyway
+  if (lf.f == NULL) return errfile(L, "fopen", fnameindex);
   status = lua_load(L, getF, &lf, lua_tostring(L, -1));
-  readstatus = read(lf.f, &c, 1 );
-  close(lf.f);  /* close file (even in case of errors) */
-  if (readstatus<0) {
+
+  readerror = ((fread(&c, 1, 1, lf.f) < 1) && !feof(lf.f));
+
+  fclose(lf.f);  /* close file (even in case of errors) */
+  if (readerror) {
     lua_settop(L, fnameindex);  /* ignore results from `lua_load' */
     return errfile(L, "read", fnameindex);
   }
