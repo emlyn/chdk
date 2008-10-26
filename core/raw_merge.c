@@ -38,7 +38,7 @@ static int raw_subtract_values(int from, int sub) {
 int raw_subtract(const char *from, const char *sub, const char *dest) {
      unsigned req=(hook_raw_size()>>10) + 1;
     unsigned avail=GetFreeCardSpaceKb();
-    int ffrom = 0, fsub = 0, fdest = 0;
+    FILE *ffrom = NULL, *fsub = NULL, *fdest = NULL;
     char *baccum = 0,*bsub = 0;
     int status = 0;
     unsigned short s,d;
@@ -157,7 +157,8 @@ int raw_merge_start(int action){
 }
 
 void raw_merge_add_file(char * filename){
-    int  fbrawin,fbrawout,t,fcraw,src,i,j,nrow;
+    int  t,src,i,j,nrow;
+    FILE *fbrawin=NULL,*fbrawout,*fcraw;
     struct stat st;
 
     if (!filename) return;
@@ -165,7 +166,6 @@ void raw_merge_add_file(char * filename){
     if (st.st_size!=hook_raw_size()) return;
 
     started();
-    fbrawin=0;
 
     fcraw=fopen(filename,"rb");
     if (fcraw) {
@@ -209,7 +209,8 @@ void raw_merge_add_file(char * filename){
 }
 
 void raw_merge_end(void){
-    int  fbraw,fcraw,src,i,j,nrow;
+    int src,i,j,nrow;
+    FILE *fbraw, *fcraw;
     static struct utimbuf t;
     #define BLACK_LEVEL 32 
     if (!raw_count) return;

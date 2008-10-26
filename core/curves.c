@@ -46,7 +46,7 @@ unsigned char drcurve_loaded;
 //-------------------------------------------------------------------
 // Curve to be loaded upon power up if active
 void curve_load(const char *fn) {
-	int fd;
+	FILE *fd;
 	
     if (!fn[0]) { // no curve defined
 		curve_loaded = 0;
@@ -299,7 +299,7 @@ unsigned short drcurve0[DRCURVE_CNT][CURVE_SIZE]; // Dynamic range curves are on
 //-------------------------------------------------------------------
 // Curve to be loaded upon power up
 void drcurve_load(const char *fn) {
-	int fd;
+	FILE *fd;
 
     if (!fn[0]) { // no curve defined
 		drcurve_loaded = 0;

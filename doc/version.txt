@@ -5,6 +5,18 @@ author
 
 log
 
+0.6.6 / #542-544 / reyalp
+544
+* fix some more unsafe read()s in conf.c
+* use stdio compatible Fut interface everywhere
+* add islower (will need for lua strlib)
+* fix memory info lang item
+543
+* possible fixes for http://chdk.kernreaktor.org/mantis/view.php?id=25
+  and http://chdk.setepontos.com/index.php/topic,265.msg21396.html#msg21396
+542
+* fix http://chdk.kernreaktor.org/mantis/view.php?id=74
+
 0.6.5 / #541 / reyalp
 * generated propset modules for lua ( http://chdk.setepontos.com/index.php/topic,688.msg23049.html#msg23049 )
 

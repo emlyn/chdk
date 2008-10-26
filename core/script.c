@@ -215,11 +215,12 @@ int load_params_values(const char *fn, int update_vars, int read_param_set)
 		fd = open(cfg_name, O_RDONLY, 0777);
 		if (fd >= 0)
 		{
-			char s[16]; // plenty for one number
-			rcnt = read(fd, s, sizeof(s)-1);
-			s[rcnt] = 0;
+			buf=umalloc(16);
+			rcnt = read(fd, buf, 15);
+			buf[rcnt] = 0;
 			close(fd);
-			conf.script_param_set = strtol(s, NULL, 0);
+			conf.script_param_set = strtol(buf, NULL, 0);
+			ufree(buf);
 		} else conf.script_param_set = 0;
 	}
 	set_params_values_name(fn, conf.script_param_set);
@@ -316,9 +317,9 @@ void save_params_values(int unconditional)
 
 //-------------------------------------------------------------------
 void script_load(const char *fn, int saved_params) {
-//   int fd=-1, i, update_vars;
-    int fd=0, i, update_vars;
-	struct stat st;
+    int i, update_vars;
+    FILE *fd = NULL;
+    struct stat st;
     
 //    save_params_values(0);
 
@@ -358,7 +359,7 @@ void script_load(const char *fn, int saved_params) {
 
         buf = malloc(st.st_size+1);
         if(!buf) {
-            close(fd);
+            fclose(fd);
             return;
         }
 
@@ -498,6 +499,7 @@ void script_console_add_line(const char *str) {
     script_console_add_text(str);
     if (print_screen_p && print_screen_d>=0) {
         char nl = '\n';
+		// TODO this should be uncached memory
         write(print_screen_d, str, strlen(str) );
         write(print_screen_d, &nl, 1);
     }

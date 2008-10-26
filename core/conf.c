@@ -508,49 +508,63 @@ void conf_save() {
 //-------------------------------------------------------------------
 void conf_restore() {
     int fd, rcnt, i;
-    long t;
     unsigned short id, size;
-    void *ptr;
+    char *buf;
+    int offs;
+    struct stat st;
 
     conf_init_defaults();
 
     conf_load_defaults();
 
+    if( stat(CONF_FILE,&st) != 0 && st.st_size < sizeof(int))
+        return;
+
+    if(!(buf=umalloc(st.st_size)))
+        return;
+
     fd = open(CONF_FILE, O_RDONLY, 0777); 
-    if (fd>=0){
-        // read magick value
-        rcnt = read(fd, &t, sizeof(t));
-        if (rcnt==sizeof(t) && t==CONF_MAGICK_VALUE) {
-            while (1) {
-                rcnt = read(fd, &id, sizeof(id));
-                if (rcnt!=sizeof(id)) break;
+    if( fd < 0 ) {
+        ufree(buf);
+        return;
+    }
+    
+    rcnt = read(fd,buf,st.st_size);
+    close(fd);
+    // read magick value
+    if (*(int *)buf!=CONF_MAGICK_VALUE || rcnt != st.st_size) {
+        ufree(buf);
+        return;
+    }
+    offs=sizeof(int);
+    while (1) {
+        if (offs + sizeof(short) > rcnt)
+            break;
+        id=*((short *)(buf + offs));
+        offs += sizeof(short);
 
-                rcnt = read(fd, &size, sizeof(size));
-                if (rcnt!=sizeof(size)) break;
+        if (offs + sizeof(short) > rcnt)
+            break;
+        size=*((short *)(buf + offs));
+        offs += sizeof(short);
 
-                for (i=0; i<CONF_NUM; ++i) {
-                    if (conf_info[i].id==id && conf_info[i].size==size) {
-                        ptr=umalloc(size);
-                        if (ptr) {
-                            rcnt = read(fd, ptr, size);
-                            if (rcnt == size) {
-                               memcpy(conf_info[i].var, ptr, size);
-                               if (conf_info[i].func) {
-                                   conf_info[i].func();
-                               }
-                            }
-                            ufree(ptr);
-                        }
-                        break;
-                    }
+        for (i=0; i<CONF_NUM; ++i) {
+            if (conf_info[i].id==id && conf_info[i].size==size) {
+                if (offs + size <= rcnt) {
+                   memcpy(conf_info[i].var, buf+offs, size);
+                   if (conf_info[i].func) {
+                       conf_info[i].func();
+                   }
                 }
-                if (i == CONF_NUM) { // unknown id, just skip data
-                    lseek(fd, size, SEEK_CUR);
-                }
+                offs += size;
+                break;
             }
         }
-	close(fd);
+        if (i == CONF_NUM) { // unknown id, just skip data
+            offs += size;
+        }
     }
+    ufree(buf);
     // clear any "clear on restart" values
     clear_values();
 }

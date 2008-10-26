@@ -82,6 +82,7 @@ extern int isdigit(int c);
 extern int isspace(int c);
 extern int isalpha(int c);
 extern int isupper(int c);
+extern int islower(int c);
 
 extern long sprintf(char *s, const char *st, ...);
 
@@ -133,7 +134,7 @@ extern int read (int fd, void *buffer, long nbytes);
 extern int lseek (int fd, long offset, int whence);
 extern long mkdir(const char *dirname);
 
-#ifdef STDIO_COMPAT_FILE
+// reverse engineered file struct. Appears to be valid for both vxworks and dryos
 // don't use this directly unless you absolutely need to
 // don't EVER try to create one yourself, as this isn't the full structure.
 typedef struct FILE_S {
@@ -147,6 +148,7 @@ typedef struct FILE_S {
     // unk3;        // +0x20 related to StartFileAccess_Sem
     // ...name
 } FILE;
+// these tiny inlines provide type safety, and should optimize away
 static inline FILE *fopen(const char *filename, const char *mode) {
     return (FILE *)Fopen_Fut(filename,mode);
 }
@@ -175,16 +177,6 @@ static inline long ftell(FILE *file) {
 static inline char *fgets(char *buf, int n, FILE *f) {
     return Fgets_Fut(buf,n,(int)f);
 }
-#else
-#define fopen(a,b) Fopen_Fut(a,b)
-#define fclose(a) Fclose_Fut(a)
-#define fread(a,b,c,d) Fread_Fut(a,b,c,d)
-#define fwrite(a,b,c,d) Fwrite_Fut(a,b,c,d)
-#define fseek(a,b,c) Fseek_Fut(a,b,c)
-#define fflush(a) Fflush_Fut(a)
-#define feof(a) Feof_Fut(a)
-typedef long FILE;
-#endif //STDIO_COMPAT
 #define fdelete(a) DeleteFile_Fut(a)
 /**
  * No STUBS!

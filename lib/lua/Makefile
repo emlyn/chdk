@@ -2,7 +2,7 @@ topdir=../../
 
 include $(topdir)makefile.inc
 
-CFLAGS+=$(CTHUMB) -DSTDIO_COMPAT_FILE -DFS_USE_FUT
+CFLAGS+=$(CTHUMB) -DFS_USE_FUT
 
 LUA_OPTLIB_OBJS=
 

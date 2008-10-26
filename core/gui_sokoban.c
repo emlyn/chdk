@@ -136,7 +136,7 @@ static void sokoban_set_level(int lvl) {
     int x=0, y, w=0, h=0;
     const char *p;
     char *buf;
-    int fd;    
+    FILE *fd;    
     int start,len;
 
     len=level_length_list[lvl];
@@ -264,7 +264,7 @@ int gui_sokoban_init() {
      unfortunately, gui_mode gets set all over the place */
     if(!num_levels) {
         char *buf,*p,*p_start;
-        int fd;    
+        FILE *fd;    
         struct stat st;
         int prev_index = 0;
 

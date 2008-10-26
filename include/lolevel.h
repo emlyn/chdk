@@ -95,6 +95,7 @@ extern int _isdigit(int c);
 extern int _isspace(int c);
 extern int _isalpha(int c);
 extern int _isupper(int c);
+extern int _islower(int c);
 
 extern long _strlen(const char *s);
 extern int _strcmp(const char *s1, const char *s2);

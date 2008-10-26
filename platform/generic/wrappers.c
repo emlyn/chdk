@@ -272,6 +272,15 @@ int isupper(int c) {
 
 }
 
+int islower(int c) {
+#if !CAM_DRYOS
+    return _islower(c);
+#else
+    return _ctype[c]&_L;
+#endif
+
+}
+
 long strlen(const char *s) {
     return _strlen(s);
 }
