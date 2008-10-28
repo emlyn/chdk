@@ -10,13 +10,17 @@
 
 static long raw_save_stage;
 
-void capt_seq_hook_raw_here()
+void __attribute__((naked,noinline)) capt_seq_hook_raw_here()
 {
+ asm volatile("STMFD   SP!, {R0-R12,LR}\n");
+
     raw_save_stage = RAWDATA_AVAILABLE;
     core_rawdata_available();
     while (raw_save_stage != RAWDATA_SAVED){
 	_SleepTask(10);
     }
+
+ asm volatile("LDMFD   SP!, {R0-R12,PC}\n");
 }
 
 void hook_raw_save_complete()
@@ -236,6 +240,45 @@ void __attribute__((naked,noinline)) sub_FF99ED38_my(long p)
     );
 }
 
+void __attribute__((naked,noinline)) sub_FF99EF7C_my(){
+ asm volatile (
+                "STMFD   SP!, {R4,LR}\n"
+                "BL      sub_FF99E724\n"
+                "LDR     R3, =0xA4840\n"
+                "LDR     R2, [R3,#0x28]\n"
+                "CMP     R2, #0\n"
+                "MOV     R4, R0\n"
+                "MOV     R0, #0xC\n"
+                "BEQ     loc_FF99EFC4\n"
+                "BL      sub_FF9AA0F8\n"
+                "TST     R0, #1\n"
+                "BEQ     loc_FF99EFC4\n"
+                "LDR     R3, [R4,#8]\n"
+                "LDR     R2, =0x6E20\n"
+                "ORR     R3, R3, #0x40000000\n"
+                "MOV     R1, #1\n"
+                "STR     R1, [R2]\n"
+                "STR     R3, [R4,#8]\n"
+                "LDMFD   SP!, {R4,PC}\n"
+"loc_FF99EFC4:\n"
+                "MOV     R0, R4\n"
+                "BL      sub_FF9A2578\n"
+                "BL      sub_FF9E6FCC\n"
+                "BL      sub_FF825AD0\n"
+                "STR     R0, [R4,#0x14]\n"
+                "MOV     R0, R4\n"
+                "BL      sub_FF9A2B40_my\n"    //------------->
+                "BL      capt_seq_hook_raw_here\n"  // +
+                "TST     R0, #1\n"
+                "LDRNE   R3, =0x6E20\n"
+                "MOVNE   R2, #1\n"
+                "STRNE   R2, [R3]\n"
+                "LDMFD   SP!, {R4,PC}\n"
+ );
+}
+
+
+
 void __attribute__((naked,noinline)) capt_seq_task()
 {
 	asm volatile (
@@ -284,10 +327,10 @@ void __attribute__((naked,noinline)) capt_seq_task()
                 "LDR     R2, [R3,#0x28]\n"
                 "CMP     R2, #0\n"
                 "BEQ     loc_FF99F58C\n"
-                "BL      sub_FF99EF7C\n"
+                "BL      sub_FF99EF7C_my\n" //-------------->
                 "B       loc_FF99F58C\n"
 "loc_FF99F460:\n"
-                "BL      sub_FF99ED38_my\n"
+                "BL      sub_FF99ED38_my\n" //-------------->
 "loc_FF99F464:\n"
                 "LDR     R2, =0xA4840\n"
                 "MOV     R3, #0\n"

@@ -191,7 +191,8 @@ void gui_read_draw() {
 
 //-------------------------------------------------------------------
 void gui_read_kbd_process() {
-    switch (kbd_get_autoclicked_key()) {
+    switch (kbd_get_autoclicked_key() | get_jogdial_direction()) {
+        case JOGDIAL_LEFT:
         case KEY_ZOOM_OUT:
         case KEY_UP:
         case KEY_LEFT:
@@ -201,6 +202,7 @@ void gui_read_kbd_process() {
                 read_to_draw = 1;
             }
             break;
+        case JOGDIAL_RIGHT:
         case KEY_ZOOM_IN:
         case KEY_DOWN:
         case KEY_RIGHT:

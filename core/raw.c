@@ -205,7 +205,7 @@ void make_pixel_list(char * ptr){
  }
 }
 
-#define PIXELS_BUF_SIZE 4096
+#define PIXELS_BUF_SIZE 8192
 void load_bad_pixels_list(char* filename){
     char *buf;
     int fd;

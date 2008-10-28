@@ -83,8 +83,8 @@ NSTUB(taskName,				 0xFF810958)
 NSTUB(taskResume,			       0xFF810958)
 NSTUB(taskSuspend,			 0xFF810958)
 
-NSTUB(PutInNdFilter,    		 0xFF810958)
-NSTUB(PutOutNdFilter,   		 0xFF810958)
+NSTUB(PutInNdFilter,    		 0xFF9E8AC4)
+NSTUB(PutOutNdFilter,   		 0xFF9E8AFC)
 NSTUB(UnsetZoomForMovie,       	 0xFF810958)
 
 NHSTUB(GetBatteryTemperature, 0xFF846CE4)

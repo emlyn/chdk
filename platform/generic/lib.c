@@ -40,4 +40,3 @@ void __attribute__((weak)) ubasic_set_led(int led, int state, int bright)
     else
 	p[0]=0x44;
 }
-

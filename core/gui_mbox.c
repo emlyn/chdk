@@ -150,12 +150,14 @@ void gui_mbox_draw() {
 
 //-------------------------------------------------------------------
 void gui_mbox_kbd_process() {
-    switch (kbd_get_clicked_key()) {
+    switch (kbd_get_clicked_key() | get_jogdial_direction()) {
+    case JOGDIAL_LEFT:
     case KEY_LEFT:
         if (mbox_button_active > 0) --mbox_button_active;
         else mbox_button_active = mbox_buttons_num-1;
         gui_mbox_draw_buttons();
         break;
+    case JOGDIAL_RIGHT:
     case KEY_RIGHT:
         if (mbox_button_active < mbox_buttons_num-1) ++mbox_button_active;
         else mbox_button_active = 0;

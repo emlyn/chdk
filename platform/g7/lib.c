@@ -44,7 +44,3 @@ void ubasic_set_led(int led, int state, int bright)
 int get_flash_params_count(void){
  return 110;
 }
-
-int Get_JogDial(void){
- return (*(int*)0xC0220304)>>16;
-}

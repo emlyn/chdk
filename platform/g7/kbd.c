@@ -20,6 +20,7 @@ static long alt_mode_key_mask = 0x1000;
 static int usb_power=0;
 static int remote_key, remote_count;
 static int shoot_counter=0;
+static int new_jogdial=0, old_jogdial=0;
 #define DELAY_TIMEOUT 10000
 #define KEYS_MASK0 (0xC0000000)
 #define KEYS_MASK1 (0x3F1F1418)
@@ -222,11 +223,15 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f()
 
 void my_kbd_read_keys()
 {
+    static int handle_taskTouchW = 0, isRunning_taskTouchW = 1;
+
     kbd_prev_state[0] = kbd_new_state[0];
     kbd_prev_state[1] = kbd_new_state[1];
     kbd_prev_state[2] = kbd_new_state[2];
 
     _platformsub_kbd_fetch_data(kbd_new_state);
+
+    if (handle_taskTouchW == 0) { handle_taskTouchW = _taskNameToId("tJogDial"); }
 
     if (kbd_process() == 0){
 	// leave it alone...
@@ -234,6 +239,7 @@ void my_kbd_read_keys()
 	physw_status[1] = kbd_new_state[1];
 	physw_status[2] = kbd_new_state[2];
         physw_status[1] |= alt_mode_key_mask;
+        if (!isRunning_taskTouchW) { _taskResume(handle_taskTouchW); isRunning_taskTouchW = 1; }
     } else {
 	// override keys
 	physw_status[0] = (kbd_new_state[0] & (~KEYS_MASK0)) |
@@ -244,6 +250,12 @@ void my_kbd_read_keys()
 
 	physw_status[2] = (kbd_new_state[2] & (~KEYS_MASK2)) |
 			  (kbd_mod_state[2] & KEYS_MASK2);
+
+	if (isRunning_taskTouchW && !state_kbd_script_run)
+		{ _taskSuspend(handle_taskTouchW); isRunning_taskTouchW = 0; get_jogdial_direction(); }
+	else if (!isRunning_taskTouchW && state_kbd_script_run)
+		{ _taskResume(handle_taskTouchW); isRunning_taskTouchW = 1; }
+
     }
 
     _kbd_read_keys_r2(physw_status);
@@ -264,7 +276,6 @@ void my_kbd_read_keys()
 
     _kbd_pwr_off();
     
-
 }
 
 int get_usb_power(int edge)
@@ -394,6 +405,20 @@ long kbd_get_autoclicked_key() {
         }
     }
 }
+
+
+int Get_JogDial(void){
+ return (*(int*)0xC0240304)>>16;
+}
+
+long get_jogdial_direction(void) { 
+ old_jogdial=new_jogdial;
+ new_jogdial=Get_JogDial();
+ if (old_jogdial<new_jogdial) return JOGDIAL_LEFT; 
+ else if (old_jogdial>new_jogdial) return JOGDIAL_RIGHT;
+ else return 0;
+}
+
 
 long kbd_use_zoom_as_mf() {/*  Незачем, в G7 есть колесо для этого
     static long v;

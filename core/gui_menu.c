@@ -93,7 +93,7 @@ static void gui_menu_back() {
 //-------------------------------------------------------------------
 void gui_menu_kbd_process() {
 static char sbuf[7];
-    switch (kbd_get_autoclicked_key()) {
+    switch (kbd_get_autoclicked_key() | get_jogdial_direction()) {
 #if CAM_HAS_ERASE_BUTTON
         case KEY_ERASE:
 #else    
@@ -107,6 +107,7 @@ static char sbuf[7];
 	            gui_menu_redraw=1;
 		}
 		break;
+        case JOGDIAL_LEFT:
         case KEY_UP:
 			if (kbd_is_key_pressed(KEY_SHOOT_HALF) || kbd_is_key_pressed(KEY_ZOOM_IN) || kbd_is_key_pressed(KEY_ZOOM_OUT)) c=4; else c=1;
             for (j=0;j<c;++j){
@@ -129,7 +130,8 @@ static char sbuf[7];
             if (curr_menu->title == LANG_MENU_USER_MENU) gui_menu_add_item = gui_menu_curr_item;
 			}
             break;
-        case KEY_DOWN:
+        case JOGDIAL_RIGHT:
+        case KEY_DOWN: 
 			if (kbd_is_key_pressed(KEY_SHOOT_HALF) || kbd_is_key_pressed(KEY_ZOOM_IN) || kbd_is_key_pressed(KEY_ZOOM_OUT)) c=4; else c=1;
             for (j=0;j<c;++j){
             do {

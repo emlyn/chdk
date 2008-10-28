@@ -716,3 +716,6 @@ void MakeAFScan(void){
 }
 #endif
 
+long __attribute__((weak)) get_jogdial_direction(void){
+ return 0;
+}

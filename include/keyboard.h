@@ -25,7 +25,8 @@
 #define KEY_FACE        22  //SX100IS
 #define KEY_DUMMY	23     //dummy key for pressing to disable energy saving in alt mode
 
-
+#define JOGDIAL_LEFT   100
+#define JOGDIAL_RIGHT  101
 
 extern void gui_kbd_process();
 extern void gui_kbd_enter();

@@ -111,12 +111,14 @@ void gui_mpopup_draw() {
 
 //-------------------------------------------------------------------
 void gui_mpopup_kbd_process() {
-    switch (kbd_get_clicked_key()) {
+    switch (kbd_get_clicked_key() | get_jogdial_direction()) {
+    case JOGDIAL_LEFT:
     case KEY_UP:
         if (mpopup_actions_active > 0) --mpopup_actions_active;
         else mpopup_actions_active = mpopup_actions_num-1;
         gui_mpopup_draw_actions();
         break;
+    case JOGDIAL_RIGHT:
     case KEY_DOWN:
         if (mpopup_actions_active < mpopup_actions_num-1) ++mpopup_actions_active;
         else mpopup_actions_active = 0;

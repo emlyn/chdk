@@ -930,7 +930,8 @@ static void fselect_mpopup_cb(unsigned int actn) {
 void gui_fselect_kbd_process() {
     int i;
     
-    switch (kbd_get_autoclicked_key()) {
+    switch (kbd_get_autoclicked_key() | get_jogdial_direction()) {
+        case JOGDIAL_LEFT:
         case KEY_UP:
             if (selected) {
 				if (kbd_is_key_pressed(KEY_SHOOT_HALF)) fselect_goto_prev(4);
@@ -939,6 +940,7 @@ void gui_fselect_kbd_process() {
             }
             break;
         case KEY_DOWN:
+        case JOGDIAL_RIGHT:
             if (selected) {
                 if (kbd_is_key_pressed(KEY_SHOOT_HALF)) fselect_goto_next(4);
 				else fselect_goto_next(1);

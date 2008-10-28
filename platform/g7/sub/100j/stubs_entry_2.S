@@ -23,3 +23,4 @@ NHSTUB(PT_PlaySound, 0xFF9ACA78)
 
 NHSTUB(EnterToCompensationEVF, 0xff99b204) 
 NHSTUB(ExitFromCompensationEVF, 0xff99b244) 
+NHSTUB(taskNameToId, 0xFFBAB804)

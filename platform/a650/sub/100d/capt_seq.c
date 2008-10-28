@@ -10,13 +10,17 @@
 
 static long raw_save_stage;
 
-void capt_seq_hook_raw_here()
+void __attribute__((naked,noinline)) capt_seq_hook_raw_here()
 {
+ asm volatile("STMFD   SP!, {R0-R12,LR}\n");
+
     raw_save_stage = RAWDATA_AVAILABLE;
     core_rawdata_available();
     while (raw_save_stage != RAWDATA_SAVED){
 	_SleepTask(10);
     }
+
+ asm volatile("LDMFD   SP!, {R0-R12,PC}\n");
 }
 
 void hook_raw_save_complete()
@@ -239,7 +243,8 @@ void __attribute__((naked,noinline)) task_CaptSeqTask_my()
                 "BL      sub_FFC5B05C\n"
                 "STR     R0, [R4,#0x14]\n"
                 "MOV     R0, R4\n"
-                "BL      sub_FFD0EC34\n"
+                "BL      sub_FFD0EC34_my\n"         //------------>
+                "BL      capt_seq_hook_raw_here\n"  //+
                 "TST     R0, #1\n"
                 "STRNE   R9, [R5,#4]\n"
                 "B       loc_FFC4DDD0\n"
