@@ -750,6 +750,15 @@ static int luaCB_get_buildinfo( lua_State* L )
   return 1;
 }
 
+static int luaCB_get_mode( lua_State* L )
+{
+  int m = mode_get();
+  lua_pushboolean( L, (m&MODE_MASK) != MODE_PLAY );
+  lua_pushboolean( L, MODE_IS_VIDEO(m) );
+  lua_pushnumber( L, m );
+  return 3;
+}
+
 void register_lua_funcs( lua_State* L )
 {
 #define FUNC( X )			\
@@ -874,4 +883,5 @@ void register_lua_funcs( lua_State* L )
   FUNC(get_time);
 
   FUNC(get_buildinfo);
+  FUNC(get_mode);
 }
