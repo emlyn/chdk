@@ -380,6 +380,7 @@ int md_detect_motion(void){
 		if(img==NULL){
 			img = vid_get_viewport_fb();
         }
+/* the following is commented because of a bugreport: http://chdk.kernreaktor.org/mantis/view.php?id=70
 #if defined (CAMERA_s5is)
 long bufoff = *((long *) 0x218C);
 if(bufoff == 0) {
@@ -389,6 +390,7 @@ if(bufoff == 0) {
 }
 img += bufoff * 0x7E900;
 #endif
+*/
 
 
 	if(motion_detector.comp_calls_cnt==50 && (motion_detector.parameters & MD_MAKE_RAM_DUMP_FILE) != 0 ){

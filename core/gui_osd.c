@@ -764,12 +764,14 @@ void gui_osd_draw_state() {
       else if  ((conf.subj_dist_bracket_value  && !(conf.override_disable==1 && conf.override_disable_all)) && (conf.subj_dist_bracket_koef) && (shooting_can_focus()))
         gui_print_osd_state_string_int("SD:",shooting_get_subject_distance_bracket_value());
      }
+#if CURVES
 	if (conf.curve_enable || gui_mode==GUI_MODE_OSD) {
         if (conf.curve_enable==1) gui_print_osd_state_string_chr("CURVES:", "CSTM");
         else if (conf.curve_enable==4) gui_print_osd_state_string_chr("CURVES:", "AUTO");
         else if (conf.curve_enable==3) gui_print_osd_state_string_chr("CURVES:", "+2EV");
         else if (conf.curve_enable==2) gui_print_osd_state_string_chr("CURVES:", "+1EV");
     }
+#endif
     if (conf.override_disable == 1) gui_print_osd_state_string_chr("NO ", "OVERRIDES");
 /*
  draw_string(conf.mode_state_pos.x, conf.mode_state_pos.y+n, get_debug(), conf.osd_color);

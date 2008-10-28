@@ -157,7 +157,7 @@
 107 "CHDK Ver: %s %s\nDatum:    %s\nZeit:    %s\nKamera:  %s\nFW Vers: %s"
 
 108 "***Speicher Info***"
-109 "Freier Speicher: %d Byte\nCHDK Größe: %d bytes\ngeladen bei: 0x%X"
+109 "Freier Speicher: %d Bytes\nCHDK Größe:      %d Bytes\ngeladen bei: 0x%X"
 
 110 "*** Information ***"
 111 "Bitte in Wiedergabe-Modus\numschalten und\nerneut versuchen!"

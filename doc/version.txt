@@ -5,17 +5,37 @@ author
 
 log
 
-0.6.6 / #542-544 / reyalp
-544
+0.7.0 / #546 / PhP
+
+* enabled default param save in scripts again, as it *might* have been fixed by reyalp by his previous checkins
+* changed spanish lang file
+* aligned memory info better in german & english lang file
+* moved "make bootable" from debug menu to misc menu, as imo it makes more sense there
+* also moved "swap partition" from debug menu to misc (left CREATE partiton in debug though)
+* also moved "reset options" from main menu to misc menu
+* fixed motion detection bug in the s5is : http://chdk.kernreaktor.org/mantis/view.php?id=70 however i dont know if it was a firmware version dependent issue. now motiondetection has lost the "super fast" behaviour if i'm not mistaken. workaround?
++ added 2 example scripts by msl: http://chdk.setepontos.com/index.php/topic,2497.0.html & http://chdk.setepontos.com/index.php/topic,2496.0.html - great job!
+* added #defs for a few things in camera.h. probably not the right place, can be moved somewhere else i guess
+    #define ZOOM_OVERRIDE               0   // Shall zoom-override be used? default 0 becoz not implemented right now
+    #define UBASIC                      1   // Shall ubasic be compiled into build?
+    #define LUA                         1   // Shall lua support be compiled into build?
+    #define BOOTLOGO                    2   // 0 = no bootdelay at all,1 = version info, 2 = image + version info, if set to 1 or 2, one can still disable it in the menu
+hint: these #defs maybe can be used by the chdk shell?
+talk: i guess undeffing some stuff is not enough, as for example curves.c still gets compiled. is this an issue?
+
+
+talk: originally i wanted to add a new submenu to misc "advanced menus", in this submenu you could enable/disable the curves menu, debug menu & remote parameters menu (simplifies the menu, most people dont use these, so it should be defaulted to OFF) - BUT i failed in dynamically changing the menu, maybe someone else has an idea how to implement http://chdk.kernreaktor.org/mantis/view.php?id=41
+
+0.6.5 / #542-545 / reyalp
+
+* add get_mode to lua. Returns 3 values: bool record, bool video, number mode
+* also fixed some formatting in ubasic.c 
 * fix some more unsafe read()s in conf.c
 * use stdio compatible Fut interface everywhere
 * add islower (will need for lua strlib)
-* fix memory info lang item
-543
-* possible fixes for http://chdk.kernreaktor.org/mantis/view.php?id=25
-  and http://chdk.setepontos.com/index.php/topic,265.msg21396.html#msg21396
-542
-* fix http://chdk.kernreaktor.org/mantis/view.php?id=74
+* fix memory info lang item 
+* fix http://chdk.kernreaktor.org/mantis/view.php?id=74 by using Fut API for require 
+* possible fixes for http://chdk.kernreaktor.org/mantis/view.php?id=25 and http://chdk.setepontos.com/index.php/topic,265.msg21396.html#msg21396 
 
 0.6.5 / #541 / reyalp
 * generated propset modules for lua ( http://chdk.setepontos.com/index.php/topic,688.msg23049.html#msg23049 )

@@ -362,12 +362,11 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(211, conf.sub_in_dark_value,  CONF_DEF_VALUE, i:30, NULL), 
     CONF_INFO(212, conf.sub_out_dark_value,  CONF_DEF_VALUE, i:0, NULL), 
    	CONF_INFO(213, conf.debug_display,     CONF_DEF_VALUE, i:0, NULL),
-   	CONF_INFO(214, conf.script_param_save,     CONF_DEF_VALUE, i:0, NULL),
+   	CONF_INFO(214, conf.script_param_save,     CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(215, conf.ev_video_pos,           CONF_DEF_PTR,   ptr:&def_ev_video_pos, NULL),
     CONF_INFO(216, conf.zoom_override_value,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(217, conf.zoom_override,      CONF_DEF_VALUE, i:0, NULL),
-		CONF_INFO(218, conf.clear_zoom_override,         CONF_DEF_VALUE, i:1, NULL),			
-			
+    CONF_INFO(218, conf.clear_zoom_override,         CONF_DEF_VALUE, i:1, NULL),			
     };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

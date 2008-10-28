@@ -160,7 +160,7 @@ static char* gui_lang_default = \
 "107 \"CHDK Ver: %s %s\\nDate:    %s\\nTime:    %s\\nCamera:  %s\\nFW Vers: %s\"\n"
 
 "108 \"*** Memory Info ***\"\n"
-"109 \"Free memory: %d bytes\\nCHDK size: %d bytes\\nloaded at: 0x%X\"\n"
+"109 \"Free Memory: %d bytes\\nCHDK size:   %d bytes\\nloaded at: 0x%X\"\n"
 
 "110 \"*** Information ***\"\n"
 "111 \"Please switch your camera\\nto PLAY mode\\nand try again. :)\"\n"
