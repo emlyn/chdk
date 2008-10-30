@@ -192,6 +192,7 @@ void __attribute__((naked,noinline)) uHwSetup_my() { //#fs
 		 "LDMFD	SP!, {R4,LR}\n"
 //		 "B	sub_FFC0DCD4\n"						// taskcreate_Startup
 		"B	taskcreate_Startup_my\n"			// <-----------------
+		".ltorg\n"
 	);
 }; //#fe
 
@@ -274,7 +275,6 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
 		 "LDMFD	SP!, {R4,PC}\n"					// to PC instead of LR to return to caller
 //		"LDMFD	SP!, {R4,LR}\n"
 //		"B	sub_FFC05088\n"
-		".ltorg\n"
 	);
 }; //#fe
 
