@@ -2,46 +2,12 @@
 #include "platform.h"
 #include "core.h"
 
-#define RAWDATA_AVAILABLE (1)
-#define RAWDATA_SAVED (2)
-
 #define NR_ON (1)
 #define NR_OFF (0)
 
-static long raw_save_stage;
+static long *nrflag = (long*)0x5760; // value above aMaincapt_c
 
-void capt_seq_hook_raw_here()
-{
-    raw_save_stage = RAWDATA_AVAILABLE;
-    core_rawdata_available();
-    while (raw_save_stage != RAWDATA_SAVED){
-	_SleepTask(10);
-    }
-}
-
-void hook_raw_save_complete()
-{
-    raw_save_stage = RAWDATA_SAVED;
-}
-
-
-void capt_seq_hook_set_nr()
-{
-    long *nrflag = (long*)0x5760; // value above aMaincapt_c
-
-    switch (core_get_noise_reduction_value()){
-    case NOISE_REDUCTION_AUTO_CANON:
-	// leave it alone
-	break;
-    case NOISE_REDUCTION_OFF:
-	*nrflag = 0;
-	break;
-    case NOISE_REDUCTION_ON:
-	*nrflag = 1;
-	break;
-    };
-}
-
+#include "../../../generic/capt_seq.c"
 
 void __attribute__((naked,noinline)) sub_FF95F4A4_my(long p)
 {

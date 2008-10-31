@@ -2,6 +2,8 @@
 #include "platform.h"
 #include "core.h"
 
+//#include "../../../generic/capt_seq.c"
+
 #define RAWDATA_AVAILABLE (1)
 #define RAWDATA_SAVED (2)
 
@@ -12,6 +14,7 @@ static long raw_save_stage;
 
 void capt_seq_hook_raw_here()
 {
+ asm volatile("STMFD   SP!, {R0-R12,LR}\n");
 	long save_count=0; 
 	volatile long *p; p=(void*) 0xc02200E4; 
 	 *p=0x46;
@@ -32,6 +35,7 @@ void capt_seq_hook_raw_here()
 		
 	 *p=0;
 	 
+ asm volatile("LDMFD   SP!, {R0-R12,PC}\n");
 }
 
 void hook_raw_save_complete()
@@ -43,6 +47,7 @@ void hook_raw_save_complete()
 void capt_seq_hook_set_nr()
 {
 	return;
+#if 0
     long *nrflag = (long*)0x53EC;
 
     switch (core_get_noise_reduction_value()){
@@ -56,6 +61,7 @@ void capt_seq_hook_set_nr()
 	*nrflag = 1;
 	break;
     };
+#endif
 }
 
 void __attribute__((naked,noinline)) sub_FF955474_my(long p)

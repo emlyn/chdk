@@ -12,6 +12,8 @@
 #include "platform.h"
 #include "core.h"
 
+//#include "../../../generic/capt_seq.c"
+
 #define RAWDATA_AVAILABLE (1)
 #define RAWDATA_SAVED (2)
 
@@ -20,8 +22,9 @@
 
 static long raw_save_stage;
 
-void capt_seq_hook_raw_here()
+void __attribute__((naked,noinline)) capt_seq_hook_raw_here()
 {
+ asm volatile("STMFD   SP!, {R0-R12,LR}\n");
 	long save_count=0; 
 	volatile long *p; p=(void*) 0xc02200E4; 
 	 *p=0x46;
@@ -41,7 +44,7 @@ void capt_seq_hook_raw_here()
 	}
 		
 	 *p=0;
-	 
+ asm volatile("LDMFD   SP!, {R0-R12,PC}\n");
 }
 
 void hook_raw_save_complete()
@@ -53,6 +56,7 @@ void hook_raw_save_complete()
 void capt_seq_hook_set_nr()
 {
 	return;
+#if 0
     long *nrflag = (long*)0x53EC;
 
     switch (core_get_noise_reduction_value()){
@@ -66,6 +70,7 @@ void capt_seq_hook_set_nr()
 	*nrflag = 1;
 	break;
     };
+#endif
 }
 
 // dk: ok
@@ -564,7 +569,7 @@ void __attribute__((naked,noinline)) capt_seq_task()
 //ff944bb0: 	ebfb7be3 	bl	ff823b44 <_binary_dump_bin_start+0x13b44>
 //ff944bb4: 	e28dd004 	add	sp, sp, #4	; 0x4
 //ff944bb8: 	e8bd8030 	ldmia	sp!, {r4, r5, pc} // == LDMFD
-		//if test successfule jump to loc_FF944B58 -> endless loop
+		//if test successfule jump to loc_FF944B58 -> endless loop
 		"BEQ     loc_FF944B58\n"
 		//exit
 		"BL      sub_FF823B44\n" //ExitTask?
