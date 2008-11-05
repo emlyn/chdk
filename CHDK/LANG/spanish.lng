@@ -167,18 +167,18 @@
 116 "Escoja Archivo de Idioma"
 
 / / Para el calendario
-117 "enero"
-118 "febrero"
-119 "marzo"
-120 "abril"
-121 "mayo"
-122 "junio"
-123 "julio"
-124 "agosto"
-125 "septiembre"
-126 "octubre"
-127 "noviembre"
-128 "diciembre"
+117 "ene"
+118 "feb"
+119 "mar"
+120 "abr"
+121 "may"
+122 "jun"
+123 "jul"
+124 "ago"
+125 "sep"
+126 "oct"
+127 "nov"
+128 "dic"
 
 129 "Lunes"
 130 "Martes"
@@ -532,9 +532,18 @@
 400 "Time-out de Zoom 0.1s "
 401 "Sonido de Inicio"
 402 "Prefijo Resta de RAW"
+
+
 403 "Extensión Resta de RAW"
-404 "Subtract input dark value"
-405 "Subtract output dark value"
+
+/ / 404->sets what value in the file being subtracted is considered zero.
+/ / 404 "Subtract input dark value"
+404 "Valor Cero en Archivo Restado"
+
+/ / 405->sets the minimum value that will produced by subtracting.
+/ / 405 "Subtract output dark value"
+405 "Valor Mínimo al restar"
+
 406 "desde"
 407 "...%d archivos mas"
 408 "Restar"

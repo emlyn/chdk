@@ -5,6 +5,35 @@ author
 
 log
 
+
+0.7.2 / #551 / PhyrePhoX
+
+* updated spanish lang file - http://chdk.kernreaktor.org/mantis/view.php?id=84
+* added & updated fonts - http://chdk.kernreaktor.org/mantis/view.php?id=85 (note: there are a lot of fonts now, maybe we need to discuss and vote if need them all, also licenses need to be checked)
+* small bugfix, "Show Screne luminance" Does not get computed when enabled alone, see http://chdk.kernreaktor.org/mantis/view.php?id=82
+* changed menu structure (moved debug menu to misc menu, switched some entries in the main menu - now imo most used features are on the top, comments welcome!)
++ added feature: in bracketing mode you now have the option to add a suffix to the raw filename, so that later you can easily identifiy the raws that were created during bracketing. it is disabled at default, and can be enabled in the bracketing submenu (or should it be moved to the raw submenu?). idea & patch by rr807 in the german forum, see http://www.wirklemms.de/chdk/forum/viewtopic.php?p=4482#4482 & http://chdk.kernreaktor.org/mantis/view.php?id=86. btw if you enable this, it is likely that your raw files cant be seen by the PC anymore when you connect your cam via usb cable to it, so use your cardreader (also note that dng4-ps will not find the corresponding jpgs!)
++ added compiler info to buildinfo (changed all lang files accordingly). shows the compiler version - found in PlasmaHHs diff @ http://plasmahh.projectiwear.org/chdk.html (rest will follow soon, need PlasmaHHs help though)
++ added option to show temperature in fahrenheit (up to now it was coupled with time format) http://chdk.kernreaktor.org/mantis/view.php?id=34
+
+0.7.1 / #549-550 / reyalp
+
+* made raw hook stuff generic http://chdk.kernreaktor.org/mantis/view.php?id=80
+Also protect preserve regs for raw hook calls on all cams.
+fix some EOLs and eol-style props. 
+* moved .ltorg up a bit for gcc4 (works fine with gcc3 too) See http://chdk.setepontos.com/index.php/topic,2500.0.html 
+
+0.7.1 / #548 / php
+
++ added ukrainian.lng - http://chdk.setepontos.com/index.php/topic,2514.msg23414.html#msg23414 
+
+0.7.1 / #547 / EWAVR
+
++ G7: added jogdial support in menu, file browser and text reader
+* G7, A650: fixed "sporadic RAW images" bug
+* increased maximum 'badpixel' file size
+* fixed ND filter control for IXUS960 (maybe) 
+
 0.7.0 / #546 / PhP
 
 * enabled default param save in scripts again, as it *might* have been fixed by reyalp by his previous checkins

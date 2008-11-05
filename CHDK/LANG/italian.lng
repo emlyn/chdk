@@ -153,7 +153,7 @@
 105 "Sei SICURO di resettare\n alle opzioni predefinite?"
  
 106 "*** Info Versione ***"
-107 "CHDK Ver: %s %s\nData:    %s\nOra:    %s\nCamera:  %s\nFW Vers: %s"
+107 "CHDK Ver: %s %s\nData:    %s\nOra:    %s\nCamera:  %s\nFW Vers: %s\nCompiler: %s"
  
 108 "*** Info Memoria ***"
 109 "Memoria Libera: %d bytes"

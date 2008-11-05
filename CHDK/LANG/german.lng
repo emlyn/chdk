@@ -154,7 +154,7 @@
 105 "Sicher, daß Sie die\nOptionen zurücksetzen möchten?"
 
 106 "***Versions-Info***"
-107 "CHDK Ver: %s %s\nDatum:    %s\nZeit:    %s\nKamera:  %s\nFW Vers: %s"
+107 "CHDK Ver: %s %s\nDatum:    %s\nZeit:    %s\nKamera:  %s\nFW Vers: %s\nCompiler: %s"
 
 108 "***Speicher Info***"
 109 "Freier Speicher: %d Bytes\nCHDK Größe:      %d Bytes\ngeladen bei: 0x%X"
@@ -583,3 +583,5 @@
 412 "    Zoom-Wert"
 413 "Ersetze Zoom-Wert"
 414 "    Bei Neustart löschen"
+415 "Raw Suffix"
+416 "  in Fahrenheit"

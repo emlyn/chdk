@@ -367,6 +367,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(216, conf.zoom_override_value,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(217, conf.zoom_override,      CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(218, conf.clear_zoom_override,         CONF_DEF_VALUE, i:1, NULL),			
+    CONF_INFO(219, conf.bracketing_add_raw_suffix,         CONF_DEF_VALUE, i:0, NULL),			
+    CONF_INFO(220, conf.temperature_unit,              CONF_DEF_VALUE, i:0, NULL),
     };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

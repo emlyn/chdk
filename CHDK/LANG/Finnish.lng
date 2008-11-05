@@ -152,7 +152,7 @@
 105 "Haluatko varmasti\npalauttaa asetukset?"
 
 106 "*** Buildin tiedot ***"
-107 "CHDK Ver: %s %s\nPvm:     %s\nAika:    %s\nKamera:  %s\nFW Ver:  %s"
+107 "CHDK Ver: %s %s\nPvm:     %s\nAika:    %s\nKamera:  %s\nFW Ver:  %s\nCompiler: %s"
 
 108 "*** Muistin tiedot ***"
 109 "Vapaa muisti: %d tavua"

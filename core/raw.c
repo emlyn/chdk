@@ -11,6 +11,7 @@
 #define RAW_TARGET_DIRECTORY    "A/DCIM/%03dCANON"
 //#define RAW_TMP_FILENAME        "HDK_RAW.TMP"
 #define RAW_TARGET_FILENAME     "%s%04d%s"
+#define RAW_BRACKETING_FILENAME "%s%04d_%02d%s" 
 
 //-------------------------------------------------------------------
 static char fn[64];
@@ -28,7 +29,8 @@ void patch_bad_pixels(void);
 int raw_savefile() {
 		int fd, m=(mode_get()&MODE_SHOOTING_MASK);
     static struct utimbuf t;
-
+    static int br_counter; 
+    
     if (state_kbd_script_run && shot_histogram_enabled) build_shot_histogram();
 
     if (develop_raw) {
@@ -50,6 +52,16 @@ int raw_savefile() {
 
     shooting_bracketing();
 
+    if(conf.tv_bracket_value || conf.av_bracket_value || conf.iso_bracket_value || conf.subj_dist_bracket_value) {
+        if(state_shooting_progress != SHOOTING_PROGRESS_PROCESSING)
+            br_counter = 1;
+        else
+            br_counter++;
+    }
+    else
+        br_counter=0;
+
+
     // got here second time in a row. Skip second RAW saving.
     if (conf.raw_save_first_only && state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) {
         return 0;
@@ -69,8 +81,10 @@ int raw_savefile() {
         mkdir(dir);
 
         sprintf(fn, "%s/", dir);
-        sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), img_exts[conf.raw_ext]);
-
+        if(br_counter && conf.bracketing_add_raw_suffix)
+            sprintf(fn+strlen(fn), RAW_BRACKETING_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), br_counter, img_exts[conf.raw_ext]);
+        else
+            sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), img_exts[conf.raw_ext]); 
         fd = open(fn, O_WRONLY|O_CREAT, 0777);
         if (fd>=0) {
             write(fd, hook_raw_image_addr(), hook_raw_size());

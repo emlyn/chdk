@@ -1025,7 +1025,7 @@ void gui_osd_draw_ev() {
 void gui_osd_draw_temp() {
  		if (conf.show_temp == 1)
  			{
- 				if (conf.clock_format == 0)
+ 				if (conf.temperature_unit == 0)
  						{
  							sprintf(osd_buf," opt: %i°",get_optical_temp());
  						}
@@ -1037,7 +1037,7 @@ void gui_osd_draw_temp() {
  			}
  		if (conf.show_temp==2)
  			{
- 				if (conf.clock_format == 0)
+ 				if (conf.temperature_unit == 0)
  						{
  							sprintf(osd_buf," ccd: %i°",get_ccd_temp());
  						}
@@ -1049,7 +1049,7 @@ void gui_osd_draw_temp() {
  			}
  		if (conf.show_temp==3)
  			{
- 				if (conf.clock_format == 0)
+ 				if (conf.temperature_unit == 0)
  						{
  							sprintf(osd_buf," batt:%i°",get_battery_temp());
  						}
@@ -1061,7 +1061,7 @@ void gui_osd_draw_temp() {
  			}
  		if (conf.show_temp==4)
  			{
-				if (conf.clock_format == 0)
+				if (conf.temperature_unit == 0)
  					{ 				
  						sprintf(osd_buf," opt: %i°",get_optical_temp());
  						draw_string(conf.temp_pos.x, conf.temp_pos.y, osd_buf, conf.osd_color);

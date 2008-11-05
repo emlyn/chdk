@@ -157,7 +157,7 @@ static char* gui_lang_default = \
 "105 \"Are you SURE to reset\\noptions to default?\"\n"
 
 "106 \"*** Build Info ***\"\n"
-"107 \"CHDK Ver: %s %s\\nDate:    %s\\nTime:    %s\\nCamera:  %s\\nFW Vers: %s\"\n"
+"107 \"CHDK Ver: %s %s\\nDate:    %s\\nTime:    %s\\nCamera:  %s\\nFW Vers: %s\\nCompiler: %s\"\n"
 
 "108 \"*** Memory Info ***\"\n"
 "109 \"Free Memory: %d bytes\\nCHDK size:   %d bytes\\nloaded at: 0x%X\"\n"
@@ -533,6 +533,9 @@ static char* gui_lang_default = \
 "412 \"   Zoom Value\"\n"
 "413 \"Zoom Override\"\n"
 "414 \"   Clear on start\"\n"
+"415 \"Add raw-suffix\"\n"
+"416 \"  in Fahrenheit\"\n"
+
 ;
 
 //-------------------------------------------------------------------

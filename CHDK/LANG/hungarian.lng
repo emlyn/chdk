@@ -159,7 +159,7 @@
 105 "Biztos visszaállítod\nalaphelyzetbe?"
 
 106 "*** Build Info ***"
-107 "CHDK Ver: %s, #%s\nDate:    %s\nTime:    %s\nCamera:  %s\nFW Vers: %s"
+107 "CHDK Ver: %s, #%s\nDate:    %s\nTime:    %s\nCamera:  %s\nFW Vers: %s\nCompiler: %s"
 
 108 "*** Memory Info ***"
 109 "Free memory: %d bytes"

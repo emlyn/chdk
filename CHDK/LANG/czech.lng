@@ -149,7 +149,7 @@
 105 "Opravdu vrátit nastavení na výchozí hodnoty?"
 
 106 "*** Informace o programu ***"
-107 "CHDK Ver: %s, #%s\nDatum:    %s\nCas:    %s\nPrístr:  %s\nFW Ver: %s"
+107 "CHDK Ver: %s, #%s\nDatum:    %s\nCas:    %s\nPrístr:  %s\nFW Ver: %s\nCompiler: %s"
 
 108 "*** Informace o pameti ***"
 109 "Volná pamet: %d bytu"

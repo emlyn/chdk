@@ -147,7 +147,7 @@
 105 "Naozaj vrátit nastavenie\nna prvotné hodnoty?"
 
 106 "*** Informácie o programe ***"
-107 "CHDK Ver: %s, #%s\nDátum:    %s\nCas:    %s\nPrístr:  %s\nFW Ver: %s"
+107 "CHDK Ver: %s, #%s\nDátum:    %s\nCas:    %s\nPrístr:  %s\nFW Ver: %s\nCompiler: %s"
 
 108 "*** Informácie o pamäti ***"
 109 "Volná pamät: %d bytov"

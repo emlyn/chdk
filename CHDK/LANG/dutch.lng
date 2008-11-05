@@ -147,7 +147,7 @@
 105 "Ben je ZEKER om te herstellen?"
 
 106 "*** Versie-info ***"
-107 "CHDK-ver: %s, #%s\nDatum:    %s\nTijd:    %s\nCamera:  %s\nFW Vers: %s"
+107 "CHDK-ver: %s, #%s\nDatum:    %s\nTijd:    %s\nCamera:  %s\nFW Vers: %s\nCompiler: %s"
 
 108 "*** Geheugen-info ***"
 109 "Vrij geheugen: %d bytes\nCHDK-grootte: %d bytes\ngeladen op: 0x%X"

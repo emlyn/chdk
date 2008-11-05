@@ -161,7 +161,7 @@
 105 "Are you SURE to reset\noptions to default?"
 
 106 "*** Build Info ***"
-107 "CHDK Ver: %s %s\nDate:    %s\nTime:    %s\nCamera:  %s\nFW Vers: %s"
+107 "CHDK Ver: %s %s\nDate:    %s\nTime:    %s\nCamera:  %s\nFW Vers: %s\nCompiler: %s"
 
 108 "*** Memory Info ***"
 109 "Free Memory: %d bytes\nCHDK size:   %d bytes\nloaded at: 0x%X"
@@ -553,4 +553,6 @@
 412 "   Zoom Override Value"
 413 "Zoom Override"
 414 "   Clear on start"
+415 "add raw suffix"
+416 "  in Fahrenheit"
 

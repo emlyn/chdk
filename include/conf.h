@@ -49,6 +49,7 @@ typedef struct {
     int space_icon_show;
     int show_clock;
     int show_temp;
+    int temperature_unit;
     int clock_format;
     int clock_indicator;
     int clock_halfpress;
@@ -164,6 +165,7 @@ typedef struct {
     int subj_dist_bracket_value;
     int subj_dist_bracket_koef;
     int bracket_type;
+    int bracketing_add_raw_suffix;
     int clear_bracket;
     int clear_video;
     int override_disable;

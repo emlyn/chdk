@@ -523,9 +523,11 @@
 #define	LANG_MENU_OVERRIDE_ZOOM_VALUE          412
 #define	LANG_MENU_OVERRIDE_ZOOM           413
 #define LANG_MENU_CLEAR_ZOOM_OVERRIDE_VALUES 414
+#define LANG_MENU_BRACKETING_ADD_RAW_SUFFIX 415
+#define LANG_MENU_OSD_TEMP_FAHRENHEIT 416
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  414
+#define GUI_LANG_ITEMS                  416
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();
