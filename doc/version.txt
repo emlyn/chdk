@@ -6,6 +6,11 @@ author
 log
 
 
+0.7.2 / #552 / PhyrePhoX
+
+maintenance: moved the optional stuff to the new buildconf.inc, for easier parsing and/or modifying (whim - maybe in your CHDK shell?) - see http://chdk.setepontos.com/index.php/topic,2509.msg23423.html#msg23423
+now when you "undef" the stuff, the files will not be compiled/linked anymore (as they did with my previous committ, thus you didnt "save" as much binary space as projected)
+
 0.7.2 / #551 / PhyrePhoX
 
 * updated spanish lang file - http://chdk.kernreaktor.org/mantis/view.php?id=84

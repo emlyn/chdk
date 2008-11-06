@@ -162,14 +162,11 @@ PLATFORMSUB=100a
 #PLATFORM=ixus960_sd950
 #PLATFORM=100d
 
-# build time optional components
-OPT_LUA_IOLIB=1
-OPT_LUA_OSLIB=1
-#OPT_LUA_STRLIB=1
-OPT_GAME_REVERSI=1
-OPT_GAME_SOKOBAN=1
+
+
 
 MEMISOSIZE="(&_end-&_start)"
+include $(topdir)buildconf.inc
 include $(topdir)version.inc
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
 

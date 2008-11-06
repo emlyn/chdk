@@ -16,37 +16,38 @@
 #include "gui_mpopup.h"
 #include "gui_reversi.h"
 #include "gui_sokoban.h"
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
 #include "gui_debug.h"
 #endif
 #include "gui_fselect.h"
 #include "gui_batt.h"
 #include "gui_space.h"
 #include "gui_osd.h"
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
 	#include "gui_read.h"
 #endif
-#if CALENDAR
+#ifdef OPT_CALENDAR
 	#include "gui_calendar.h"
 #endif
+#ifdef OPT_DEBUGGING
 #include "gui_bench.h"
+#endif
 #include "gui_grid.h"
 #include "histogram.h"
 #include "script.h"
 #include "motion_detector.h"
 #include "raw.h"
-#if CURVES
+#ifdef CURVES
 	#include "curves.h"
 #endif
-#if (BOOTLOGO==2)
+#ifdef OPT_BOOTLOGO
 	#include "gui_logo.h"
 #endif
 //-------------------------------------------------------------------
 
 #define OPTIONS_AUTOSAVE
-#if (BOOTLOGO>0)
-	#define SPLASH_TIME               20
-#endif
+#define SPLASH_TIME               20
+
 int script_params_has_changed=0;
 //shortcuts
 //------------------------------------------------------------------
@@ -115,9 +116,9 @@ extern void dump_memory();
 
 static void gui_draw_osd();
 
-#if (BOOTLOGO>0)
+
 static void gui_draw_splash();
-#endif
+
 
 void user_menu_save();
 void user_menu_restore();
@@ -128,7 +129,7 @@ static void gui_show_memory_info(int arg);
 static void gui_draw_palette(int arg);
 static void gui_draw_reversi(int arg);
 static void gui_draw_sokoban(int arg);
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
 	static void gui_draw_debug(int arg);
 	static void gui_draw_bench(int arg);
 #endif
@@ -136,16 +137,16 @@ static void gui_draw_fselect(int arg);
 static void gui_draw_osd_le(int arg);
 static void gui_load_script(int arg);
 static void gui_load_script_default(int arg);
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
 static void gui_draw_read(int arg);
 static void gui_draw_read_last(int arg);
 #endif
 static void gui_draw_load_menu_rbf(int arg);
 static void gui_draw_load_symbol_rbf(int arg);			//AKA
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
 	static void gui_draw_load_rbf(int arg);
 #endif
-#if CALENDAR
+#ifdef OPT_CALENDAR
 static void gui_draw_calendar(int arg);
 #endif
 static void gui_draw_load_lang(int arg);
@@ -156,11 +157,11 @@ static void gui_menuproc_save(int arg);
 static void gui_menuproc_reset(int arg);
 static void gui_grid_lines_load(int arg);
 static void gui_raw_develop(int arg);
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
 static void gui_menuproc_break_card(int arg);
 #endif
 static void gui_menuproc_swap_patitons(int arg);
-#if CURVES
+#ifdef CURVES
 	static void gui_load_curve_selected(const char *fn);
 	static void gui_load_curve(int arg);
 #endif
@@ -178,7 +179,7 @@ static const char* gui_sub_batch_ext_enum(int change, int arg);
 
 static const char* gui_raw_nr_enum(int change, int arg);
 static const char* gui_autoiso_shutter_enum(int change, int arg);
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
 	static const char* gui_reader_codepage_enum(int change, int arg);
 #endif
 static const char* gui_zoom_value_enum(int change, int arg);
@@ -227,10 +228,10 @@ static const char* gui_show_movie_time(int change, int arg);
 static const char* gui_script_autostart_enum(int change, int arg);
 static const char* gui_script_param_set_enum(int change, int arg);
 static const char* gui_override_disable_enum(int change, int arg);
-#if CURVES
+#ifdef CURVES
 	static const char* gui_conf_curve_enum(int change, int arg);
 #endif
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
 	static const char* gui_debug_shortcut_enum(int change, int arg);
 	static const char* gui_debug_display_enum(int change, int arg);
 	static void gui_debug_shortcut(void);
@@ -252,7 +253,7 @@ static void cb_zebra_restore_osd();
 // for memory info, duplicated from lowlevel
 extern const char _start,_end;
 
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
 static int debug_tasklist_start;
 static int debug_display_direction=1;
 #endif
@@ -330,7 +331,7 @@ static CMenuItem autoiso_submenu_items[] = {
 static CMenu autoiso_submenu = {0x2d,LANG_MENU_AUTOISO_TITLE, NULL, autoiso_submenu_items };
 
 
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
 static CMenuItem reader_submenu_items[] = {
     {0x35,LANG_MENU_READ_OPEN_NEW,           MENUITEM_PROC,    (int*)gui_draw_read },
     {0x35,LANG_MENU_READ_OPEN_LAST,          MENUITEM_PROC,    (int*)gui_draw_read_last },
@@ -345,7 +346,7 @@ static CMenuItem reader_submenu_items[] = {
 static CMenu reader_submenu = {0x37,LANG_MENU_READ_TITLE, NULL, reader_submenu_items };
 #endif
 
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
 static CMenuItem debug_submenu_items[] = {
     {0x5c,LANG_MENU_DEBUG_DISPLAY,           MENUITEM_ENUM,          (int*)gui_debug_display_enum },
     {0x2a,LANG_MENU_DEBUG_PROPCASE_PAGE,     MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,   &debug_propcase_page, MENU_MINMAX(0, 128) },
@@ -366,21 +367,17 @@ static CMenu debug_submenu = {0x2a,LANG_MENU_DEBUG_TITLE, NULL, debug_submenu_it
 
 static CMenuItem misc_submenu_items[] = {
     {0x35,LANG_MENU_MISC_FILE_BROWSER,       MENUITEM_PROC,    (int*)gui_draw_fselect },
-#if CALENDAR
+#ifdef OPT_CALENDAR
     {0x36,LANG_MENU_MISC_CALENDAR,           MENUITEM_PROC,    (int*)gui_draw_calendar },
 #endif
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
     {0x37,LANG_MENU_MISC_TEXT_READER,        MENUITEM_SUBMENU, (int*)&reader_submenu },
 #endif
-#if GAMES
     {0x38,LANG_MENU_MISC_GAMES,              MENUITEM_SUBMENU, (int*)&games_submenu },
-#endif
 #if CAM_SWIVEL_SCREEN
     {0x28,LANG_MENU_MISC_FLASHLIGHT,         MENUITEM_BOOL,    &conf.flashlight },
 #endif
-#if (BOOTLOGO>0)
     {0x5c,LANG_MENU_MISC_SHOW_SPLASH,        MENUITEM_BOOL,    &conf.splash_show },
-#endif
 		{0x5c,LANG_MENU_MISC_START_SOUND,        MENUITEM_BOOL,    &conf.start_sound },
 #if CAM_USE_ZOOM_FOR_MF
     {0x59,LANG_MENU_MISC_ZOOM_FOR_MF,        MENUITEM_BOOL,    &conf.use_zoom_mf },
@@ -396,7 +393,7 @@ static CMenuItem misc_submenu_items[] = {
 #if CAM_MULTIPART
     {0x33,LANG_MENU_DEBUG_SWAP_PART,         MENUITEM_PROC, 	    	(int*)gui_menuproc_swap_patitons },
 #endif
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
     {0x2a,LANG_MENU_MAIN_DEBUG,              MENUITEM_SUBMENU,   (int*)&debug_submenu },
 #endif
     {0x2b,LANG_MENU_MAIN_RESET_OPTIONS,      MENUITEM_PROC,      (int*)gui_menuproc_reset },
@@ -574,6 +571,7 @@ static CMenuItem operation_submenu_items[] = {
 };
 static CMenu operation_submenu = {0x21,LANG_MENU_OPERATION_PARAM_TITLE, NULL, operation_submenu_items };
 
+#ifdef OPT_EDGEOVERLAY
 static CMenuItem edge_overlay_submenu_items[] = {
     {0x7f,LANG_MENU_EDGE_OVERLAY_ENABLE,     MENUITEM_BOOL,          &conf.edge_overlay_enable },
     {0x7f,LANG_MENU_EDGE_OVERLAY_TRESH,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.edge_overlay_thresh, MENU_MINMAX(0, 255)},
@@ -583,6 +581,7 @@ static CMenuItem edge_overlay_submenu_items[] = {
     {0}
 };
 static CMenu edge_overlay_submenu = {0x7f,LANG_MENU_EDGE_OVERLAY_TITLE, NULL, edge_overlay_submenu_items };
+#endif
 
 static CMenuItem grid_submenu_items[] = {
     {0x2f,LANG_MENU_SHOW_GRID,               MENUITEM_BOOL,		&conf.show_grid_lines },
@@ -681,7 +680,9 @@ static CMenuItem osd_submenu_items[] = {
     {0x5f,LANG_MENU_OSD_SHOW_TEMP,         MENUITEM_ENUM,      (int*)gui_temp_mode_enum },
     {0x59,LANG_MENU_OSD_TEMP_FAHRENHEIT,      MENUITEM_BOOL,      &conf.temperature_unit},
     {0x72,LANG_MENU_OSD_LAYOUT_EDITOR,       MENUITEM_PROC,      (int*)gui_draw_osd_le },
+#ifdef OPT_EDGEOVERLAY
     {0x7f,LANG_MENU_EDGE_OVERLAY,         MENUITEM_SUBMENU,   (int*)&edge_overlay_submenu },
+#endif
     {0x2f,LANG_MENU_OSD_GRID_PARAMS,         MENUITEM_SUBMENU,   (int*)&grid_submenu },
     {0x22,LANG_MENU_OSD_VALUES,  	    	MENUITEM_SUBMENU,   (int*)&values_submenu },
     {0x31,LANG_MENU_OSD_DOF_CALC,            MENUITEM_SUBMENU,   (int*)&dof_submenu },
@@ -766,7 +767,7 @@ static CMenuItem zebra_submenu_items[] = {
 };
 static CMenu zebra_submenu = {0x26,LANG_MENU_ZEBRA_TITLE, NULL, zebra_submenu_items };
 
-#if CURVES
+#ifdef CURVES
 static CMenuItem curve_submenu_items[] = {
     {0x5f,LANG_MENU_CURVE_ENABLE,        MENUITEM_ENUM,      (int*)gui_conf_curve_enum },    
     {0x35,LANG_MENU_CURVE_LOAD,          MENUITEM_PROC,      (int*)gui_load_curve },    
@@ -787,7 +788,7 @@ static CMenuItem root_menu_items[] = {
     {0x25,LANG_MENU_MAIN_HISTO_PARAM,        MENUITEM_SUBMENU,   (int*)&histo_submenu },
     {0x26,LANG_MENU_MAIN_ZEBRA_PARAM,        MENUITEM_SUBMENU,   (int*)&zebra_submenu },
     {0x27,LANG_MENU_MAIN_SCRIPT_PARAM,       MENUITEM_SUBMENU,   (int*)&script_submenu },
-#if CURVES
+#ifdef CURVES
     {0x85,LANG_MENU_CURVE_PARAM,             MENUITEM_SUBMENU,   (int*)&curve_submenu },
 #endif
     {0x86,LANG_MENU_REMOTE_PARAM,            MENUITEM_SUBMENU,   (int*)&remote_submenu },
@@ -870,7 +871,7 @@ void cb_zebra_restore_osd() {
 }
 
 //-------------------------------------------------------------------
-#if CURVES
+#ifdef CURVES
 const char* gui_conf_curve_enum(int change, int arg) {
     static const char* modes[]={ "None", "Custom", "+1EV", "+2EV", "Auto DR" };
 
@@ -1058,7 +1059,7 @@ const char* gui_raw_nr_enum(int change, int arg) {
 }
 
 //-------------------------------------------------------------------
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
 const char* gui_reader_codepage_enum(int change, int arg) {
     static const char* cps[]={ "Win1251", "DOS"};
 
@@ -1711,7 +1712,7 @@ void gui_raw_develop(int arg){
 }
 
 //-------------------------------------------------------------------
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
 #define TASKLIST_MAX_LINES 12 // probably as much as will fit on screen
 #define TASKLIST_NUM_TASKS 64 // should be enough ?
 static void gui_debug_draw_tasklist(void) {
@@ -1812,7 +1813,7 @@ void card_break_proc(unsigned int btn){
 }
 
 
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
 static void gui_menuproc_break_card(int arg){
  gui_mbox_init(LANG_WARNING, LANG_PARTITIONS_CREATE_WARNING, MBOX_BTN_YES_NO|MBOX_DEF_BTN2|MBOX_TEXT_CENTER, card_break_proc);
 }
@@ -1845,9 +1846,7 @@ void gui_init()
     {
     	play_sound(4);
     }
-#if (BOOTLOGO>0)
     gui_splash = (conf.splash_show)?SPLASH_TIME:0;
-#endif
     user_menu_restore();
     gui_lang_init();
     draw_init();
@@ -1856,7 +1855,7 @@ void gui_init()
     voltage_step = (conf.batt_step_25)?25:1;
     load_bad_pixels_list("A/CHDK/badpixel");
     load_bad_pixels_list("A/CHDK/badpixel.txt");
-#if CURVES
+#ifdef CURVES
     curve_load(conf.curve_file); // load curve upon init 
     drcurve_load("A/CHDK/SYSCURVES.CVF"); // load system L curves
 #endif		
@@ -1867,7 +1866,7 @@ void gui_init()
 }
 
 //-------------------------------------------------------------------
-#if CURVES
+#ifdef CURVES
 static void gui_load_curve_selected(const char *fn) {
     if (fn)
         curve_load(fn);
@@ -1911,7 +1910,7 @@ void gui_redraw()
     enum Gui_Mode gui_mode_old;
     static int show_script_console=0;
 
-#if (BOOTLOGO>0)
+
     if (gui_splash) {
         if (gui_splash>(SPLASH_TIME-4)) {
             gui_draw_splash();
@@ -1922,7 +1921,7 @@ void gui_redraw()
         }
         --gui_splash;
     }
-#endif
+
 
     gui_in_redraw = 1;
     gui_mode_old = gui_mode;
@@ -1964,7 +1963,7 @@ void gui_redraw()
             gui_sokoban_draw();
             break;
 #endif
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
         case GUI_MODE_DEBUG:
             gui_debug_draw();
             break;
@@ -1972,7 +1971,7 @@ void gui_redraw()
         case GUI_MODE_FSELECT:
             gui_fselect_draw();
             break;
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
         case GUI_MODE_READ:
             gui_read_draw();
             break;
@@ -1981,14 +1980,16 @@ void gui_redraw()
             gui_osd_draw();
 //            draw_txt_string(20, 14, "<OSD>", MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
             break;
-#if CALENDAR
+#ifdef OPT_CALENDAR
         case GUI_MODE_CALENDAR:
             gui_calendar_draw();
             break;
 #endif
+#ifdef OPT_DEBUGGING
         case GUI_MODE_BENCH:
             gui_bench_draw();
             break;
+#endif
         case GUI_MODE_MPOPUP:
             gui_mpopup_draw();
             break;
@@ -2062,11 +2063,11 @@ void gui_kbd_process()
             case GUI_MODE_PALETTE:
             case GUI_MODE_REVERSI:
             case GUI_MODE_SOKOBAN:
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
             case GUI_MODE_DEBUG:
 #endif
             case GUI_MODE_OSD:
-#if CALENDAR
+#ifdef OPT_CALENDAR
             case GUI_MODE_CALENDAR:
 #endif
             case GUI_MODE_BENCH:
@@ -2076,7 +2077,7 @@ void gui_kbd_process()
             case GUI_MODE_FSELECT:
                 gui_fselect_kbd_process();
                 break;
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
             case GUI_MODE_READ:
                 gui_read_kbd_process();
                 draw_restore();
@@ -2093,7 +2094,7 @@ void gui_kbd_process()
         case GUI_MODE_ALT:
             if (kbd_is_key_clicked(SHORTCUT_TOGGLE_RAW)) {
                 if (conf.debug_shortcut_action > 0) {
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
  gui_debug_shortcut(); 
 #endif
 }
@@ -2210,7 +2211,7 @@ void gui_kbd_process()
             gui_sokoban_kbd_process();
             break;
 #endif
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
     	case GUI_MODE_DEBUG:
             gui_debug_kbd_process();
             break;
@@ -2218,7 +2219,7 @@ void gui_kbd_process()
     	case GUI_MODE_FSELECT:
             gui_fselect_kbd_process();
             break;
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
     	case GUI_MODE_READ:
             gui_read_kbd_process();
             break;
@@ -2226,14 +2227,16 @@ void gui_kbd_process()
     	case GUI_MODE_OSD:
             gui_osd_kbd_process();
             break;
-#if CALENDAR
+#ifdef OPT_CALENDAR
     	case GUI_MODE_CALENDAR:
             gui_calendar_kbd_process();
             break;
 #endif
+#ifdef OPT_DEBUGGING
     	case GUI_MODE_BENCH:
             gui_bench_kbd_process();
             break;
+#endif
         case GUI_MODE_MPOPUP:
             gui_mpopup_kbd_process();
              break;
@@ -2513,7 +2516,7 @@ void gui_draw_osd() {
     if (movie_status==VIDEO_RECORD_IN_PROGRESS) gui_osd_draw_ev_video(get_ev_video_avail());
 #endif
 
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
     if (debug_vals_show) {
 //        long v=get_file_counter();
 //	sprintf(osd_buf, "1:%03d-%04d  ", (v>>18)&0x3FF, (v>>4)&0x3FFF);
@@ -2703,7 +2706,7 @@ void gui_draw_sokoban(int arg) {
 }
 #endif
 //-------------------------------------------------------------------
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
 void gui_draw_debug(int arg) {
 //    gui_debug_init(0x2510);
 //    gui_debug_init(0x127E0);
@@ -2713,14 +2716,14 @@ void gui_draw_debug(int arg) {
 }
 #endif
 //-------------------------------------------------------------------
-#if DEBUGGING
+#ifdef OPT_DEBUGGING
 void gui_draw_bench(int arg) {
     gui_mode = GUI_MODE_BENCH;
     gui_bench_init();
 }
 #endif
 //-------------------------------------------------------------------
-#if (BOOTLOGO>0)
+
 void gui_draw_splash() {
     coord w, h, x, y;
     static const char *text[] = {
@@ -2747,7 +2750,7 @@ void gui_draw_splash() {
     for (i=0; i<sizeof(text)/sizeof(text[0]); ++i) {
         draw_string(x+((w-strlen(text[i])*FONT_WIDTH)>>1), y+i*FONT_HEIGHT+4, text[i], cl);
     }
-#if (BOOTLOGO==2)
+#ifdef OPT_BOOTLOGO
     int pos;
     int mx=0;
     int my=0;
@@ -2773,7 +2776,7 @@ void gui_draw_splash() {
     }
 #endif
 }
-#endif
+
 //-------------------------------------------------------------------
 void gui_draw_fselect(int arg) {
     gui_fselect_init(LANG_STR_FILE_BROWSER, "A", NULL);
@@ -2834,7 +2837,7 @@ void gui_draw_osd_le(int arg) {
 }
 
 //-------------------------------------------------------------------
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
 static void gui_draw_read_selected(const char *fn) {
     if (fn) {
         if (!rbf_load(conf.reader_rbf_file))
@@ -2878,7 +2881,7 @@ void gui_menuproc_mkbootdisk(int arg) {
 }
 
 //-------------------------------------------------------------------
-#if CALENDAR
+#ifdef OPT_CALENDAR
 void gui_draw_calendar(int arg) {
     gui_mode = GUI_MODE_CALENDAR;
     gui_calendar_init();
@@ -2890,7 +2893,7 @@ static void gui_draw_rbf_selected(const char *fn) {
         strcpy(conf.reader_rbf_file, fn);
     }
 }
-#if TEXTREADER
+#ifdef OPT_TEXTREADER
 void gui_draw_load_rbf(int arg) {
     DIR   *d;
     char  *path="A/CHDK/FONTS";

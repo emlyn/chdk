@@ -44,18 +44,8 @@
     #undef  CAM_AF_SCAN_DURING_VIDEO_RECORD // CHDK can make single AF scan during video record 
     #undef  CAM_HAS_VIDEO_BUTTON            // Camera can take stills in video mode, and vice versa
     #undef  CAM_EV_IN_VIDEO                 // CHDK can change exposure in video mode
-// found no better place to def/undef non-camera-specific features, didnt look too hard though
+// better: OPT_ stuff in makefile.inc
     #define ZOOM_OVERRIDE               0   // Shall zoom-override be used? default 0 becoz not implemented right now
-    #define BOOTLOGO                    2   // 0 = no bootdelay at all,1 = version info, 2 = image + version info if set to 1 or 2, one can still disable it in the menu
-    #define CURVES                      1   // the curves feature
-    #define TEXTREADER                  1   // the text reader
-    #define CALENDAR                    1
-    #define DEBUGGING                   1   // well: the debugging stuff, should not be disabled in the autobuild imho (maybe just hidden via a menu option)
-    #define GAMES                       1   // not done yet
-    #define UBASIC                      1   // Shall ubasic be compiled into build? not done yet
-    #define LUA                         1   // Shall lua support be compiled into build? not done yet
-    #define SYMBOLS                     1   // the symbols / not done yet
-    #define LANGUAGEINTERFACE           1   // for people who won't use lang files at all / not done yer
 
 //----------------------------------------------------------
 // Overridden values for each camera

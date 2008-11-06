@@ -2,7 +2,7 @@
 #include "conf.h"
 #include "stdlib.h"
 #include "raw.h"
-#if CURVES
+#ifdef CURVES
 	#include "curves.h"
 #endif
 #include "shot_histogram.h"
@@ -40,7 +40,7 @@ int raw_savefile() {
       read(fd, hook_raw_image_addr(), hook_raw_size());
       close(fd);
       }
-#if CURVES
+#ifdef CURVES
      if (conf.curve_enable) curve_apply();
 #endif
      finished();
@@ -97,7 +97,7 @@ int raw_savefile() {
         return (fd >= 0);
     }
 
-#if CURVES
+#ifdef CURVES
     if (conf.curve_enable) curve_apply();
 #endif
     return 0;

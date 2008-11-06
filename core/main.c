@@ -7,8 +7,9 @@
 #include "histogram.h"
 #include "raw.h"
 #include "motion_detector.h"
-#include "edgeoverlay.h"
-
+#ifdef OPT_EDGEOVERLAY
+	#include "edgeoverlay.h"
+#endif
 static int raw_need_postprocess;
 static volatile int spytask_can_start;
 
@@ -97,7 +98,7 @@ void core_spytask()
     mkdir("A/CHDK/LANG");
     mkdir("A/CHDK/BOOKS");
     mkdir("A/CHDK/GRIDS");
-#if CURVES
+#ifdef CURVES
     mkdir("A/CHDK/CURVES");
 #endif
     mkdir("A/CHDK/DATA");
@@ -124,7 +125,9 @@ void core_spytask()
 	        gui_redraw();
 
 	    histogram_process();
+#ifdef OPT_EDGEOVERLAY
         if(conf.edge_overlay_thresh && conf.edge_overlay_enable) edge_overlay();
+#endif
 	}
 
 	if ((state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) && (!shooting_in_progress())) {
