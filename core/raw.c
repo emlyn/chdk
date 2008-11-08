@@ -81,7 +81,7 @@ int raw_savefile() {
         mkdir(dir);
 
         sprintf(fn, "%s/", dir);
-        if(br_counter && conf.bracketing_add_raw_suffix)
+        if(br_counter && conf.bracketing_add_raw_suffix && (shooting_get_prop(PROPCASE_DRIVE_MODE)!=0))
             sprintf(fn+strlen(fn), RAW_BRACKETING_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), br_counter, img_exts[conf.raw_ext]);
         else
             sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), img_exts[conf.raw_ext]); 

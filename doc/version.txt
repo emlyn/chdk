@@ -1,10 +1,13 @@
-first version of a history file. will be automated and cleaned hopefully soon.
+CHDK Trunk / Autobuild History
 
-revision / version
-author
+version / revision / author
 
-log
+0.7.3 / #553 / PhyrePhoX
 
+maintenance, bugfixing
+* spanish.lng
+* buildconf (for whim)
+* fixed a bug in the new "raw suffix feature" (see http://www.wirklemms.de/chdk/forum/viewtopic.php?p=5411#5411 )
 
 0.7.2 / #552 / PhyrePhoX
 
