@@ -2,6 +2,18 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
+0.7.3 / #554 / PhyrePhoX
+
++ added a few LUA example scripts for people to learn from, plus they might be quite useful to some
+
+countdown.lua = simple countdown script which plays a sound when finished (written by kettmeister)
+lotto.lua = random number generator, generates a set (you can decide how many) of numbers (you can decide the range), including the options to sort the output and to have "exclusive" numbers, meaning a given number is generated only once per execution (written by PhyrePhoX and Msl)
+metronome.lua = a script for the musicians among us - plays sound and uses the print_led (written by Kettmeister)
+stopwatch.lua = a stopwatch, can be used to stop laptime or split time (you will figure it out :D) (written by kettmeister)
+
+all scripts working and commented. Thanks to the participants. Lua really isnt as easy as ubasic, with these examples however you can get a nice overview.
+next task is to include not only example scripts, but actual working scripts that even are photography related, i.e. timelapse & the like.
+
 0.7.3 / #553 / PhyrePhoX
 
 maintenance, bugfixing
