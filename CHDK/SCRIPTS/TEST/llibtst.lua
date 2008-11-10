@@ -380,6 +380,22 @@ function tstat(name)
 	return r
 end
 
+function tlistdir(name,showall)
+	log('os.listdir("',tostring(name),'",',tostring(showall),'): ')
+	local r,msg = os.listdir(name,showall)
+	if r then
+		logok()
+		log("{\n")
+		for k,v in ipairs(r) do
+			log(' ',k,'="',tostring(v),'"\n')
+		end
+		log("}\n")
+	else
+		logfail(tostring(msg))
+	end
+	return r
+end
+
 function tutime(name,mtime,atime)
 	log('os.utime("',tostring(name),'",',tostring(mtime),',',tostring(atime),'): ')
 	local r,msg = os.utime(name,mtime,atime)
@@ -430,11 +446,15 @@ function os_test()
 		tstat(fn)
 		tstat(tdir0)
 		tren(tdir0..tdat0,tdir0..tdat1)
+		tlistdir(tdir0)
+		tlistdir(tdir0,true)
 -- NOTE invalid operations frequently leave the filesystem in a corrupt state
 --		trename(tdir0,tdir1)
 		want_ok=false
 		trem(tdir0) --fail, not empty
 		trem("A/bogus") --fail missing
+		tlistdir("A/bogus") -- missing
+		tlistdir("A/llibtst.log") -- not a directory
 		tstat("A/bogus") -- fail missing
 		tutime("A/bogus") -- fail missing
 		tren("A/bogus","A/blah")--fail missing

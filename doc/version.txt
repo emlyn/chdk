@@ -1,6 +1,12 @@
 CHDK Trunk / Autobuild History
 
 version / revision / author
+0.7.4 / #555 / reyalp
++ add os.listdir to lua oslib, updated llibtst.lua
+  syntax t=os.listdir("name",[showall])
+  returns array of filenames, or nil, strerror, errno
+  if showall is true, t includes ".", ".." and deleted entries
+  NOTE except for the root directory, names ending in / will not work
 
 0.7.3 / #554 / PhyrePhoX
 

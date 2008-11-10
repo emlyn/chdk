@@ -248,6 +248,35 @@ static int os_mkdir (lua_State *L) {
   return os_pushresult(L, mkdir(dirname) == 0, dirname);
 }
 
+/*
+  syntax
+    t=os.listdir("name",[showall])
+  returns array of filenames, or nil, strerror, errno
+  if showall is true, t includes ".", ".." and deleted entries
+  NOTE except for the root directory, names ending in / will not work
+*/
+static int os_listdir (lua_State *L) {
+  DIR *dir;
+  struct dirent *de;
+  const char *dirname = luaL_checkstring(L, 1);
+  int all=lua_toboolean(L, 2);
+  int i=1;
+  dir = opendir(dirname);
+  if(!dir) 
+    return os_pushresult(L, 0 , dirname);
+  lua_newtable(L); 
+  while((de = readdir(dir))) {
+	if(!all && (de->name[0] == 0xE5 || (strcmp(de->name,".")==0) || (strcmp(de->name,"..")==0)))
+      continue;
+  	lua_pushinteger(L, i);
+  	lua_pushstring(L, de->name);
+	lua_settable(L,-3);
+	++i;
+  }
+  closedir(dir);
+  return 1;
+}
+
 // t = stat("name")
 // nil,strerror,errno on fail
 static int os_stat (lua_State *L) {
@@ -321,6 +350,7 @@ static const luaL_Reg syslib[] = {
   {"getenv",    os_getenv},
 #endif
   {"mkdir",     os_mkdir}, // reyalp - NOT STANDARD
+  {"listdir",   os_listdir}, // reyalp - NOT STANDARD
   {"stat",      os_stat}, // reyalp - NOT STANDARD
   {"utime",     os_utime}, // reyalp - NOT STANDARD
   // TODO add directory listing functions
