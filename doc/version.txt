@@ -1,6 +1,17 @@
 CHDK Trunk / Autobuild History
 
 version / revision / author
+
+0.7.6 / #557 / PhyrePhoX
+
++ added preliminary support for ixus75_sd750 for 100b 101a and 102a (101a also works for 101b, cp in makefile) - port done by TPC (see http://chdk.setepontos.com/index.php/topic,898.15.html) 
+this does NOT compile yet (thus it is disabled in batch-zip & batch-zip-complete to avoid autobuild fuckup)
+needs a few things: see http://chdk.setepontos.com/index.php/topic,898.msg23979.html#msg23979 for details
+
+0.7.5 / #556 / PhyrePhoX
+
+*fixed a bug that prevented curves from showing up in latest builds regardless of OPT_CURVES state... i wonder why only one person noticed it so far :D
+
 0.7.4 / #555 / reyalp
 + add os.listdir to lua oslib, updated llibtst.lua
   syntax t=os.listdir("name",[showall])

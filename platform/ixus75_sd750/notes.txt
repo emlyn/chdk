@@ -1,0 +1,12 @@
+****************************************
+
+Camera depending notes: 
+
+- ixus75_sd750 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+- ixus75_sd750 does NOT have a real IRIS Diaphragm, it only has an ND Filter! 
+Mind this.
+- CHDK for firmware 1.01a is the SAME for 1.01b
+
+
+
+
