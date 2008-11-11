@@ -764,7 +764,7 @@ void gui_osd_draw_state() {
       else if  ((conf.subj_dist_bracket_value  && !(conf.override_disable==1 && conf.override_disable_all)) && (conf.subj_dist_bracket_koef) && (shooting_can_focus()))
         gui_print_osd_state_string_int("SD:",shooting_get_subject_distance_bracket_value());
      }
-#ifdef CURVES
+#ifdef OPT_CURVES
 	if (conf.curve_enable || gui_mode==GUI_MODE_OSD) {
         if (conf.curve_enable==1) gui_print_osd_state_string_chr("CURVES:", "CSTM");
         else if (conf.curve_enable==4) gui_print_osd_state_string_chr("CURVES:", "AUTO");

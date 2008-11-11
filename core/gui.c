@@ -37,7 +37,7 @@
 #include "script.h"
 #include "motion_detector.h"
 #include "raw.h"
-#ifdef CURVES
+#ifdef OPT_CURVES
 	#include "curves.h"
 #endif
 #ifdef OPT_BOOTLOGO
@@ -161,7 +161,7 @@ static void gui_raw_develop(int arg);
 static void gui_menuproc_break_card(int arg);
 #endif
 static void gui_menuproc_swap_patitons(int arg);
-#ifdef CURVES
+#ifdef OPT_CURVES
 	static void gui_load_curve_selected(const char *fn);
 	static void gui_load_curve(int arg);
 #endif
@@ -228,7 +228,7 @@ static const char* gui_show_movie_time(int change, int arg);
 static const char* gui_script_autostart_enum(int change, int arg);
 static const char* gui_script_param_set_enum(int change, int arg);
 static const char* gui_override_disable_enum(int change, int arg);
-#ifdef CURVES
+#ifdef OPT_CURVES
 	static const char* gui_conf_curve_enum(int change, int arg);
 #endif
 #ifdef OPT_DEBUGGING
@@ -767,7 +767,7 @@ static CMenuItem zebra_submenu_items[] = {
 };
 static CMenu zebra_submenu = {0x26,LANG_MENU_ZEBRA_TITLE, NULL, zebra_submenu_items };
 
-#ifdef CURVES
+#ifdef OPT_CURVES
 static CMenuItem curve_submenu_items[] = {
     {0x5f,LANG_MENU_CURVE_ENABLE,        MENUITEM_ENUM,      (int*)gui_conf_curve_enum },    
     {0x35,LANG_MENU_CURVE_LOAD,          MENUITEM_PROC,      (int*)gui_load_curve },    
@@ -788,7 +788,7 @@ static CMenuItem root_menu_items[] = {
     {0x25,LANG_MENU_MAIN_HISTO_PARAM,        MENUITEM_SUBMENU,   (int*)&histo_submenu },
     {0x26,LANG_MENU_MAIN_ZEBRA_PARAM,        MENUITEM_SUBMENU,   (int*)&zebra_submenu },
     {0x27,LANG_MENU_MAIN_SCRIPT_PARAM,       MENUITEM_SUBMENU,   (int*)&script_submenu },
-#ifdef CURVES
+#ifdef OPT_CURVES
     {0x85,LANG_MENU_CURVE_PARAM,             MENUITEM_SUBMENU,   (int*)&curve_submenu },
 #endif
     {0x86,LANG_MENU_REMOTE_PARAM,            MENUITEM_SUBMENU,   (int*)&remote_submenu },
@@ -871,7 +871,7 @@ void cb_zebra_restore_osd() {
 }
 
 //-------------------------------------------------------------------
-#ifdef CURVES
+#ifdef OPT_CURVES
 const char* gui_conf_curve_enum(int change, int arg) {
     static const char* modes[]={ "None", "Custom", "+1EV", "+2EV", "Auto DR" };
 
@@ -1855,7 +1855,7 @@ void gui_init()
     voltage_step = (conf.batt_step_25)?25:1;
     load_bad_pixels_list("A/CHDK/badpixel");
     load_bad_pixels_list("A/CHDK/badpixel.txt");
-#ifdef CURVES
+#ifdef OPT_CURVES
     curve_load(conf.curve_file); // load curve upon init 
     drcurve_load("A/CHDK/SYSCURVES.CVF"); // load system L curves
 #endif		
@@ -1866,7 +1866,7 @@ void gui_init()
 }
 
 //-------------------------------------------------------------------
-#ifdef CURVES
+#ifdef OPT_CURVES
 static void gui_load_curve_selected(const char *fn) {
     if (fn)
         curve_load(fn);

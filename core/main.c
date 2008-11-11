@@ -98,7 +98,7 @@ void core_spytask()
     mkdir("A/CHDK/LANG");
     mkdir("A/CHDK/BOOKS");
     mkdir("A/CHDK/GRIDS");
-#ifdef CURVES
+#ifdef OPT_CURVES
     mkdir("A/CHDK/CURVES");
 #endif
     mkdir("A/CHDK/DATA");
