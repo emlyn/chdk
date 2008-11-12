@@ -447,8 +447,8 @@
     #undef CAM_HAS_MANUAL_FOCUS           // Camera has manual focus mode
     #define CAM_HAS_USER_TV_MODES       1   // Camera has tv-priority or manual modes with ability to set tv value
     #define  CAM_SHOW_OSD_IN_SHOOT_MENU   1   // On some cameras Canon shoot menu has additional functionality and useful in this case to see CHDK OSD in this mode  
-    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO // adress for zoom_status missing, probably more
-    // #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1 // Camera can unlock optical zoom in video (if it is locked)
+//    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO // adress for zoom_status missing, probably more
+    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1 // Camera can unlock optical zoom in video (if it is locked)
     #define  CAM_FEATURE_FEATHER        1     // Cameras with "feather" or touch wheel.
     #undef CAM_HAS_IS                     // Camera has image stabilizer
 

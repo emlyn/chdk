@@ -54,16 +54,16 @@ sound     = z
 if (min >= max) then
 	print("Wrong params, dummy!;-)")
 	wait_click(0)
-	else
+else
 	if ((exclusive == 1) and ((max - min + 1)<count)) then
 		print("Wrong params, dummy!;-)")
 		wait_click(0)
-		else
+	else
 
 --If parameters ok start the main loop to throw the dice
 
 		repeat
-		  result= {}                                -- create a table for result
+			result= {}                                -- create a table for result
 			if exclusive == 1 then                    -- if exclusive is set
 				array = {}                              -- create a table for mix
 				for i = min, max do                     -- loop for fill the table
@@ -88,13 +88,13 @@ if (min >= max) then
 
 			if order == 1 then table.sort(result) end -- order result if set
 			output = table.concat(result,", ")        -- create a string of the table
-   		print("dice [SET]     end [MENU]")        -- output in console
+   			print("dice [SET]     end [MENU]")        -- output in console
 			print()
 			print(output)                             -- print a string variable
 			button()                                  -- call the function
 			cls()                                     -- clear the console
 		until key == "MENU"                         -- end of loop if pressed "MENU"
-end                                             -- "SET" repeat the loop
+	end                                             -- "SET" repeat the loop
 end
 
 --All functions, conditions and loops (except repeat) will closing with end

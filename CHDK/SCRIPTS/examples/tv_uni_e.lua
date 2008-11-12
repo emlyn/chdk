@@ -27,39 +27,39 @@ end
 function button()
 	local x = 0
 	repeat
-	wait_click(key_delay)
-	if is_pressed "remote" then
-	  key = "SET"
-	  x = 1
-	end
-	if is_pressed "set" then
-		key = "SET"
-		x = 1
-	end
-	if is_pressed "menu" then
-		key = "MENU"
-		x = 1
-	end
-	if is_pressed "display" then
-   key = "DISP"
-   x = 1
-  end
-	if is_pressed "left" then
-		key = "LEFT"
-		x = 1
-	end
-	if is_pressed "right" then
-		key = "RIGHT"
-		x = 1
-	end
-	if is_pressed "up" then
-   key = "UP"
-   x = 1
-  end
-  if is_pressed "down" then
-   key = "DOWN"
-   x = 1
-  end
+		wait_click(key_delay)
+		if is_pressed "remote" then
+		  key = "SET"
+		  x = 1
+		end
+		if is_pressed "set" then
+			key = "SET"
+			x = 1
+		end
+		if is_pressed "menu" then
+			key = "MENU"
+			x = 1
+		end
+		if is_pressed "display" then
+			key = "DISP"
+			x = 1
+		end
+		if is_pressed "left" then
+			key = "LEFT"
+			x = 1
+		end
+		if is_pressed "right" then
+			key = "RIGHT"
+			x = 1
+		end
+		if is_pressed "up" then
+			key = "UP"
+			x = 1
+		end
+		if is_pressed "down" then
+			key = "DOWN"
+			x = 1
+		end
 	until  x == 1
 	set_led (8,1)
 	sleep (10)
