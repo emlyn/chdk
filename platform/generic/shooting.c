@@ -1187,7 +1187,9 @@ void shooting_bracketing(void){
 }
 
 
-void shooting_expo_param_override(void){
+void __attribute__((naked,noinline)) shooting_expo_param_override(void){
+ asm volatile("STMFD   SP!, {R0-R12,LR}\n");
+
  //if (conf.tv_override) shooting_set_tv96_direct(-384-32*conf.tv_override);
  //short drive_mode=shooting_get_drive_mode();
 /*if(drive_mode!=last_drive_mode)
@@ -1235,7 +1237,7 @@ else if ((conf.iso_override_value) && (conf.iso_override_koef) && !(conf.overrid
  else if (conf.nd_filter_state && !(conf.override_disable==1)) 
    shooting_set_nd_filter_state(conf.nd_filter_state, SET_NOW);
 #endif  
- return;
+ asm volatile("LDMFD   SP!, {R0-R12,PC}\n");
 }
 
 void unlock_optical_zoom(void){

@@ -81,17 +81,17 @@ function input()
 		print("[<-][->][SET] [+/-][MENU]")
 		print("[ZOOM in/out]  [UP][DOWN]")
 		button()
-    cls()
-    if key == "RIGHT" then a=a+1 end
-    if key == "LEFT" then a=a-1 end
-    if key == "UP" then b=b+1 end
-    if key == "DOWN" then a=1 end
-    if key == "ZOOM_IN" then a=a+5 end
-    if key == "ZOOM_OUT" then a=a-5 end
-    if a >= 27 then a=1 end
-    if a <= 0  then a=26 end
-    if b>=3 then b=0 end
-    if b==0 then
+		cls()
+		if key == "RIGHT" then a=a+1 end
+		if key == "LEFT" then a=a-1 end
+		if key == "UP" then b=b+1 end
+		if key == "DOWN" then a=1 end
+		if key == "ZOOM_IN" then a=a+5 end
+		if key == "ZOOM_OUT" then a=a-5 end
+		if a >= 27 then a=1 end
+		if a <= 0  then a=26 end
+		if b>=3 then b=0 end
+		if b==0 then
 			actChar=abc_lower[a]
 			char_info="lower case"
 		end
@@ -104,12 +104,12 @@ function input()
 			char_info="special char"
 		end
 		print(char_info..": "..actChar)
-    if key == "SET" then table.insert(word,actChar) end
-    if key == "ERASE" then table.remove(word) end
-    tabToStr()
-    print("input: "..output)
-    print (" ")
-  until key == "MENU"
+		if key == "SET" then table.insert(word,actChar) end
+		if key == "ERASE" then table.remove(word) end
+		tabToStr()
+		print("input: "..output)
+		print (" ")
+	until key == "MENU"
 end
 
 function make_dir(dirname)

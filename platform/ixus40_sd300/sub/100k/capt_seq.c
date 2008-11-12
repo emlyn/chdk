@@ -156,15 +156,15 @@ asm volatile (
 	"MOV     R1, R4\n"
 	"LDR     R0, [R3]\n"
 	"BL      sub_FFAC03C4\n" //ClearEventFlag ?!
+	//before take
+	"BL      capt_seq_hook_set_nr\n" // + do noise reduction set
+	"BL      shooting_expo_param_override\n"  // + seems to be working :)
 	
 	"LDR     R3, =0x5B80\n"
 	"LDR     R3, [R3]\n"
 	"CMP     R3, #1\n"
 	"CMPNE   R3, #3\n"
 		
-	//before take
-  "BL      capt_seq_hook_set_nr\n" // + do noise reduction set
-  "BL      shooting_expo_param_override\n"  // + seems to be working :)
         
 	"BEQ     loc_FF9433C0\n"
 		

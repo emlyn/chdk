@@ -452,7 +452,7 @@
     #define  CAM_FEATURE_FEATHER        1     // Cameras with "feather" or touch wheel.
     #undef CAM_HAS_IS                     // Camera has image stabilizer
 
-    #define  CAM_CONSOLE_LOG_ENABLED   1      // Development: internal camera stdout -> A/stdout.txt        
+//    #define  CAM_CONSOLE_LOG_ENABLED   1      // Development: internal camera stdout -> A/stdout.txt        
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus70_sd1000)
