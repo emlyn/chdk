@@ -440,14 +440,15 @@
     #define CAM_HAS_ZOOM_LEVER          1   // Camera has dedicated zoom buttons
     #undef  CAM_DRAW_EXPOSITION             // Output expo-pair on screen (for cameras which (sometimes) don't do that)
     #undef CAM_HAS_ERASE_BUTTON           // Camera has dedicated erase button
-    #define CAM_HAS_IRIS_DIAPHRAGM      1   // Camera has real diaphragm mechanism
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define  CAM_HAS_ND_FILTER         1      // Camera has build-in ND filter
     #undef CAM_CAN_SD_OVER_NOT_IN_MF      // Camera allows subject distance (focus) override when not in manual focus mode
     #undef CAM_CAN_SD_OVERRIDE            // Camera allows to do subject distance override
     #undef CAM_HAS_MANUAL_FOCUS           // Camera has manual focus mode
     #define CAM_HAS_USER_TV_MODES       1   // Camera has tv-priority or manual modes with ability to set tv value
     #define  CAM_SHOW_OSD_IN_SHOOT_MENU   1   // On some cameras Canon shoot menu has additional functionality and useful in this case to see CHDK OSD in this mode  
-    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1 // Camera can unlock optical zoom in video (if it is locked)
+    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO // adress for zoom_status missing, probably more
+    // #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1 // Camera can unlock optical zoom in video (if it is locked)
     #define  CAM_FEATURE_FEATHER        1     // Cameras with "feather" or touch wheel.
     #undef CAM_HAS_IS                     // Camera has image stabilizer
 
