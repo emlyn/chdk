@@ -8,7 +8,8 @@ DEF(physw_run, 0x88C4) // find in "PhySw"
 
 DEF(zoom_busy, 0x96EE4) // find in "ZoomLens"
 DEF(focus_busy, 0x96630) // find in "FocusLens"
-DEF(playrec_mode,0xCFD8) // BL      unknown_libname_797 found in "taskcreate_SsStartupTask"
+//DEF(playrec_mode,0xCFD8) // BL      unknown_libname_797 found in "taskcreate_SsStartupTask"
+DEF(playrec_mode,0xD2A0) // reyalp - first call in SsStartupTask
 DEF(FlashParamsTable,0xFFB4A07C) 
 DEF(canon_menu_active,0x3850) // found in "StartRecModeMenu"
 DEF(canon_shoot_menu_active,0x27FD) // (0x2800 - 0x4 + 0x1) found in "taskcreate_DSITask"
