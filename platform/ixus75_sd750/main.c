@@ -52,6 +52,8 @@ static struct {
     { MODE_SCN_FIREWORK,       16405 },
     { MODE_SCN_AQUARIUM,       16407 },
     { MODE_SCN_WATER,          16406 },
+    { MODE_SCN_PORTRAIT,       16397 },
+    { MODE_SCN_NIGHT,          16395 }, // "night snapshot"
     { MODE_VIDEO_STD,          2597  },
     { MODE_VIDEO_SPEED,        2598  },
     { MODE_VIDEO_COMPACT,      2599  },
