@@ -2,13 +2,44 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
-0.7.6 / #557 / PhyrePhoX
+
+0.7.5 / #564 / php
+
+*ixus75 - added adresses for ev compensation (thx fudgey) and corrected raw size in camera.h (thx hacki)
+also changed version number to reflect latest changes...
+
+0.7.4 / #562-563 / reyalp && phyrephox
+
+* fixed bug in ixus75 builds... actually it was rather easy - the automatic memisostuff was missing before... thx hacki 
+ixus75: get play/record state from playrec_mode like s3is
+use makefile_sub.inc 
+
+0.7.4 / #560-561 / reyalp
+
+ixus75_sd750: find zoom_status, enable CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO, use generic/capt_seq.c, set svn:eol-style
+lua examples: clean up indentation 
+add fix from http://chdk.setepontos.com/index.php/topic,2042.msg21063.html#msg21063 for ixus40 100k
+make shooting_expo_param_override safe to call from asm
+turn off CAM_CONSOLE_LOG_ENABLED for ixus75
+lua example formatting 
+
+0.7.4 / #558-559 / PhyrePhoX
+
+* now the ixus75 build should be properly created, however there are a few things missing:
+* entertocompensationevf & exitfromcompensationevf adresses
+* zoom_status (and probably more you need for CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO - ewavr?)
+the whole defines block in camera.h looks a bit fishy to me, i barely touched it though
+* fixed error in makefile (my bad). 
+
+let's see if this compiles on the autobuild and people complain... 
+
+0.7.4 / #557 / PhyrePhoX
 
 + added preliminary support for ixus75_sd750 for 100b 101a and 102a (101a also works for 101b, cp in makefile) - port done by TPC (see http://chdk.setepontos.com/index.php/topic,898.15.html) 
 this does NOT compile yet (thus it is disabled in batch-zip & batch-zip-complete to avoid autobuild fuckup)
 needs a few things: see http://chdk.setepontos.com/index.php/topic,898.msg23979.html#msg23979 for details
 
-0.7.5 / #556 / PhyrePhoX
+0.7.4 / #556 / PhyrePhoX
 
 *fixed a bug that prevented curves from showing up in latest builds regardless of OPT_CURVES state... i wonder why only one person noticed it so far :D
 

@@ -418,8 +418,8 @@
 #elif defined (CAMERA_ixus75_sd750)
     #define CAM_PROPSET                 2
 
-    #define CAM_RAW_ROWPIX              3072   // for 7 MP
-    #define CAM_RAW_ROWS                2304   // for 7 MP
+    #define CAM_RAW_ROWPIX              3152   // for 7 MP
+    #define CAM_RAW_ROWS                2340   // for 7 MP
 
 /*
     #undef  CAM_USE_ZOOM_FOR_MF
