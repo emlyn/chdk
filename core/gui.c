@@ -2546,8 +2546,11 @@ extern volatile long zoom_busy;
 	sprintf(osd_buf, "z:%8x  ", zoom_busy);
 	draw_txt_string(28, 12, osd_buf, conf.osd_color);
 
+// some cameras missing zoom_status
+#if 0
 	sprintf(osd_buf, "t:%8x  ", zoom_status);
 	draw_txt_string(28, 13, osd_buf, conf.osd_color);
+#endif
 
     }
 
