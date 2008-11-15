@@ -7,7 +7,11 @@ NSTUB(AllocateUncacheableMemory, 0xff829908)
 NSTUB(Close, 0xff82502c)
 NSTUB(CreateTask, 0xff81bbb8)
 NSTUB(DeleteFile_Fut, 0xff8248a4)
+// Best match: 79%
+NSTUB(EnterToCompensationEVF, 0xff826f2c)
 NSTUB(ExecuteEventProcedure, 0xff81c270)
+// Best match: 79%
+NSTUB(ExitFromCompensationEVF, 0xff826f7c)
 NSTUB(ExitTask, 0xff81be48)
 NSTUB(Fclose_Fut, 0xff824a10)
 NSTUB(Feof_Fut, 0xff824bfc)
@@ -20,7 +24,10 @@ NSTUB(FreeMemory, 0xffa1d774)
 NSTUB(FreeUncacheableMemory, 0xff82993c)
 NSTUB(Fseek_Fut, 0xff824bb0)
 NSTUB(Fwrite_Fut, 0xff824b10)
-// ERROR: GetCurrentAvValue is not found!
+NSTUB(GetBatteryTemperature, 0xff846b30)
+NSTUB(GetCCDTemperature, 0xff846ac0)
+// Best match: 93%
+NSTUB(GetCurrentAvValue, 0xff924f7c)
 // Best match: 72%
 NSTUB(GetCurrentTargetDistance, 0xff923634)
 NSTUB(GetDrive_ClusterSize, 0xff84d8a0)
@@ -28,6 +35,8 @@ NSTUB(GetDrive_FreeClusters, 0xff84d940)
 NSTUB(GetDrive_TotalClusters, 0xff84d8d4)
 // Best match: 93%
 NSTUB(GetFocusLensSubjectDistance, 0xff924a98)
+// Best match: 96%
+NSTUB(GetOpticalTemperature, 0xff846ba0)
 NSTUB(GetParameterData, 0xff9436ec)
 NSTUB(GetPropertyCase, 0xff869470)
 NSTUB(GetSystemTime, 0xffa1d890)
@@ -71,8 +80,10 @@ NSTUB(free, 0xff813ab0)
 NSTUB(kbd_p1_f, 0xff8231d0)
 NSTUB(kbd_p1_f_cont, 0xff8231dc)
 NSTUB(kbd_p2_f, 0xff822a1c)
-// ERROR: kbd_pwr_off is not found!
-// ERROR: kbd_pwr_on is not found!
+// Best match: 59%
+NSTUB(kbd_pwr_off, 0xff84447c)
+// Best match: 62%
+NSTUB(kbd_pwr_on, 0xff84443c)
 NSTUB(kbd_read_keys, 0xff8230cc)
 // Best match: 78%
 NSTUB(kbd_read_keys_r2, 0xff843fc4)
@@ -104,7 +115,6 @@ NSTUB(strncmp, 0xff88fa68)
 NSTUB(strncpy, 0xff81e850)
 NSTUB(strrchr, 0xff88fad8)
 NSTUB(strtol, 0xff82ff78)
-// Best match: 64%
-NSTUB(time, 0xff8650f4)
+NSTUB(time, 0xff865744)
 NSTUB(vsprintf, 0xff81e7b8)
 NSTUB(write, 0xff81a4a0)

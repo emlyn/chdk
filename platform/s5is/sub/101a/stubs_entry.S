@@ -8,8 +8,13 @@ NSTUB(AllocateUncacheableMemory, 0xff82ad9c)
 NSTUB(Close, 0xff825d8c)
 NSTUB(CreateTask, 0xff81b9c4)
 NSTUB(DeleteFile_Fut, 0xff825604)
+// Best match: 79%
+NSTUB(EnterToCompensationEVF, 0xff828194)
 // Best match: 75%
 NSTUB(ExecuteEventProcedure, 0xff81bf64)
+// Best match: 79%
+NSTUB(ExitFromCompensationEVF, 0xff828040)
+// ALT: NSTUB(ExitFromCompensationEVF, 0xff828164) // 19/5
 // Best match: 92%
 NSTUB(ExitTask, 0xff81bc54)
 NSTUB(Fclose_Fut, 0xff825770)
@@ -24,6 +29,8 @@ NSTUB(FreeMemory, 0xffa4115c)
 NSTUB(FreeUncacheableMemory, 0xff82add0)
 NSTUB(Fseek_Fut, 0xff825910)
 NSTUB(Fwrite_Fut, 0xff825870)
+NSTUB(GetBatteryTemperature, 0xff85062c)
+NSTUB(GetCCDTemperature, 0xff8505bc)
 // Best match: 62%
 NSTUB(GetCurrentAvValue, 0xff952e5c)
 // Best match: 64%
@@ -33,10 +40,12 @@ NSTUB(GetDrive_FreeClusters, 0xff856e70)
 NSTUB(GetDrive_TotalClusters, 0xff856e04)
 // Best match: 62%
 NSTUB(GetFocusLensSubjectDistance, 0xff952528)
+// Best match: 96%
+NSTUB(GetOpticalTemperature, 0xff85069c)
 // ERROR: GetParameterData is not found!
 // ERROR: GetPropertyCase is not found!
-// Best match: 87%
-NSTUB(GetSystemTime, 0xffa4126c)
+// Best match: 85%
+NSTUB(GetSystemTime, 0xffa412e4)
 // ERROR: GetZoomLensCurrentPoint is not found!
 // ERROR: GetZoomLensCurrentPosition is not found!
 // ERROR: IsStrobeChargeCompleted is not found!
@@ -120,7 +129,6 @@ NSTUB(strncmp, 0xff8b3230)
 NSTUB(strncpy, 0xff81e688)
 NSTUB(strrchr, 0xff8b32a0)
 NSTUB(strtol, 0xff831dac)
-// Best match: 64%
-NSTUB(time, 0xff870580)
+NSTUB(time, 0xff870bd0)
 NSTUB(vsprintf, 0xff81e5f0)
 NSTUB(write, 0xff81a328)

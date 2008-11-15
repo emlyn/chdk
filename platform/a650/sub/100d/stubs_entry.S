@@ -7,7 +7,11 @@ NSTUB(AllocateUncacheableMemory, 0xffc19a08)
 NSTUB(Close, 0xffc14f20)
 NSTUB(CreateTask, 0xffc0baf0)
 NSTUB(DeleteFile_Fut, 0xffc14798)
+// Best match: 79%
+NSTUB(EnterToCompensationEVF, 0xffc17108)
 NSTUB(ExecuteEventProcedure, 0xffc0c1a8)
+// Best match: 79%
+NSTUB(ExitFromCompensationEVF, 0xffc17158)
 NSTUB(ExitTask, 0xffc0bd80)
 NSTUB(Fclose_Fut, 0xffc14904)
 NSTUB(Feof_Fut, 0xffc14af0)
@@ -20,6 +24,10 @@ NSTUB(FreeMemory, 0xffde6e98)
 NSTUB(FreeUncacheableMemory, 0xffc19a3c)
 NSTUB(Fseek_Fut, 0xffc14aa4)
 NSTUB(Fwrite_Fut, 0xffc14a04)
+// Best match: 96%
+NSTUB(GetBatteryTemperature, 0xffc39d34)
+// Best match: 96%
+NSTUB(GetCCDTemperature, 0xffc39cc4)
 NSTUB(GetCurrentAvValue, 0xffd03f7c)
 NSTUB(GetCurrentTargetDistance, 0xffd01e10)
 NSTUB(GetDrive_ClusterSize, 0xffc40084)
@@ -27,6 +35,8 @@ NSTUB(GetDrive_FreeClusters, 0xffc40124)
 NSTUB(GetDrive_TotalClusters, 0xffc400b8)
 // Best match: 87%
 NSTUB(GetFocusLensSubjectDistance, 0xffd03270)
+// Best match: 92%
+NSTUB(GetOpticalTemperature, 0xffc39da4)
 // Best match: 70%
 NSTUB(GetParameterData, 0xffd21934)
 NSTUB(GetPropertyCase, 0xffc5aecc)
