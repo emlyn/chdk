@@ -16,7 +16,7 @@ GetZoomLensCurrentPosition 0xffa1d084
 SetPropertyCase 0xff86cc80
 kbd_pwr_off 0xff842a88
 kbd_pwr_on 0xff842a38
-strchr 0xff8920a8
+strrchr 0xff8920cc
 strcpy 0xff81d88c
 strncpy 0xff82e194
 time 0xff866d48
