@@ -2,7 +2,14 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
-
+0.7.6 / #565-569 / reyalp
++ merge ixus80_sd1100 from chr
+  see http://chdk.setepontos.com/index.php/topic,650.msg24281.html#msg24281
++ Added encoded diskboot support to makefiles
+* Set -march=armv5te for GCC3
+* ixus80_sd1100 1.00c is now sig_ref_dryos_2
+* sig_ref_*.txt now must have start address on first line
+ 
 0.7.5 / #564 / php
 
 *ixus75 - added adresses for ev compensation (thx fudgey) and corrected raw size in camera.h (thx hacki)

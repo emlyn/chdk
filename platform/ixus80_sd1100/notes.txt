@@ -1,0 +1,10 @@
+****************************************
+
+Camera depending notes:
+
+- sd1100 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+- no fi2 "Firmware upgrade" boot
+- sd1100 does NOT have a real IRIS Diaphragm, it only has an ND Filter!
+Mind this.
+
+- the resulting DISKBOOT.BIN must be decoded with tools/dancingbits

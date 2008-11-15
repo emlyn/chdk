@@ -38,7 +38,13 @@ ifdef PLATFORMOS
 	#@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FI2
   endif
 endif
+ifdef NEED_ENCODED_DISKBOOT
+	@echo dance \-\> DISKBOOT.BIN
+	$(ENCODE_DISKBOOT) $(topdir)/bin/main.bin $(topdir)/bin/DISKBOOT.BIN
+	rm $(topdir)/bin/main.bin
+else
 	mv $(topdir)/bin/main.bin $(topdir)/bin/DISKBOOT.BIN
+endif
 	@echo "**** Firmware creation completed successfully"
 
 upload: fir
@@ -186,6 +192,8 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus60_sd600  PLATFORMSUB=100a NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus60_sd600  PLATFORMSUB=100d NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus960_sd950  PLATFORMSUB=100d NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus80_sd1100  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus80_sd1100  PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
 	@echo "**** All firmwares created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/$(VER)-a610-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a610-100d-$(BUILD_NUMBER).zip
@@ -194,6 +202,7 @@ batch-zip: version
 	cp $(topdir)bin/$(VER)-ixus850_sd800-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus850_sd800-100d-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/$(VER)-ixus70_sd1000-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus70_sd1000-101a-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/$(VER)-ixus75_sd750-101a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus75_sd750-101b-$(BUILD_NUMBER).zip
+	cp $(topdir)bin/$(VER)-ixus80_sd1100-101a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus80_sd1100-101b-$(BUILD_NUMBER).zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
@@ -259,6 +268,8 @@ batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus60_sd600  PLATFORMSUB=100a NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus60_sd600  PLATFORMSUB=100d NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus960_sd950  PLATFORMSUB=100d NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=ixus80_sd1100  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=ixus80_sd1100  PLATFORMSUB=101a NO_INC_BUILD=1 firzipsubcomplete
 	@echo "**** All zipfiles including firmwares and extra stuff created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/a610-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/a610-100d-$(BUILD_NUMBER)-full.zip
@@ -273,6 +284,7 @@ batch-zip-complete: version
 	cp $(topdir)bin/ixus70_sd1000-101b-$(BUILD_NUMBER).zip $(topdir)bin/ixus70_sd1000-101a-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/ixus75_sd750-101a-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus75_sd750-101b-$(BUILD_NUMBER)-full.zip
 	cp $(topdir)bin/ixus75_sd750-101a-$(BUILD_NUMBER).zip $(topdir)bin/ixus75_sd750-101b-$(BUILD_NUMBER).zip
+	cp $(topdir)bin/ixus80_sd1100-101a-$(BUILD_NUMBER).zip $(topdir)bin/ixus80_sd1100-101b-$(BUILD_NUMBER).zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
@@ -340,6 +352,8 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=ixus60_sd600  PLATFORMSUB=100a NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus60_sd600  PLATFORMSUB=100d NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus960_sd950  PLATFORMSUB=100d NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus80_sd1100  PLATFORMSUB=100c NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus80_sd1100  PLATFORMSUB=101a NO_INC_BUILD=1 clean
 	
 
 .PHONY: fir upload

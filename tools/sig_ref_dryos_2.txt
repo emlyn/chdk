@@ -1,0 +1,22 @@
+0xff810000
+AllocateMemory 0xffa26fec
+ExecuteEventProcedure 0xff8691f8
+EnterToCompensationEVF 0xff825f48
+ExitFromCompensationEVF 0xff825f98
+FreeMemory 0xffa26fe4
+GetBatteryTemperature 0xff845214
+GetCCDTemperature 0xff8451a4
+GetCurrentAvValue 0xff92c420
+GetDrive_ClusterSize 0xff84f0d4
+GetDrive_FreeClusters 0xff84f13c
+GetDrive_TotalClusters 0xff84f108
+GetOpticalTemperature 0xff845284
+GetSystemTime 0xffa27044
+GetZoomLensCurrentPosition 0xffa1d084
+SetPropertyCase 0xff86cc80
+kbd_pwr_off 0xff842a88
+kbd_pwr_on 0xff842a38
+strchr 0xff8920a8
+strcpy 0xff81d88c
+strncpy 0xff82e194
+time 0xff866d48

@@ -3,6 +3,9 @@ VER=CHDK
 PLATFORM=s3is
 PLATFORMSUB=100a
 
+#PLATFORM=a610
+#PLATFORMSUB=100e
+
 #PLATFORM=a620
 #PLATFORMSUB=100f
 
@@ -101,6 +104,10 @@ PLATFORMSUB=100a
 
 #PLATFORM=ixus860_sd870
 #PLATFORMSUB=100c
+
+#PLATFORM=ixus80_sd1100
+#PLATFORMSUB=100c
+#PLATFORMSUB=101a
 
 #PLATFORM=ixus950_sd850
 #PLATFORMSUB=100c
@@ -235,6 +242,7 @@ HOSTCC=gcc
 HOSTCFLAGS=-g -O2 -Wall
 
 PAKWIF=$(topdir)tools/pakwif$(EXE)
+ENCODE_DISKBOOT=$(topdir)tools/dancingbits$(EXE)
 
 ##########################################################################
 
@@ -250,7 +258,10 @@ SIZE=arm-elf-size
 # -msoft-float is used per default but object files are marked as hard-float
 CFLAGS=-fno-inline -Os -fno-strict-aliasing
 # flags for gcc v4
-# CFLAGS+=-mtune=arm946e-s
+# CFLAGS+=-mcpu=arm946e-s
+# for gcc v3, we use to allow use of strd etc
+CFLAGS+=-march=armv5te
+
 CTHUMB=-mthumb
 CFLAGS+=-mthumb-interwork
 CFLAGS+=-I$(topdir)include $(PLFLAGS) $(CPPFLAGS)
