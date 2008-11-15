@@ -28,12 +28,12 @@ int main(int whim, char **reyalp) {
 		exit(1);
 	}
 
-	jeff666  = fopen(reyalp[1], "r");
+	jeff666  = fopen(reyalp[1], "rb");
 	if (jeff666 == NULL) {
 		printf("Error open %s: %s\n", reyalp[1], strerror(errno));
 		exit(1);
 	}
-	jucifer = fopen(reyalp[2], "w+");
+	jucifer = fopen(reyalp[2], "w+b");
 	if (jucifer == NULL) {
 		printf("Error open %s: %s\n", reyalp[2], strerror(errno));
 		exit(1);
