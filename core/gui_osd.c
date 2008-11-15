@@ -115,7 +115,8 @@ void gui_osd_kbd_process() {
         if (osd[curr_item].pos->x < screen_width-osd[curr_item].size.x) {
             osd[curr_item].pos->x+=(screen_width-osd[curr_item].size.x-osd[curr_item].pos->x>step)?step:screen_width-osd[curr_item].size.x-osd[curr_item].pos->x;
             osd_to_draw = 1;
-        }
+        } else
+            osd[curr_item].pos->x = screen_width-osd[curr_item].size.x;
         break;
     case KEY_UP:
         if (osd[curr_item].pos->y > 0) {
@@ -127,7 +128,8 @@ void gui_osd_kbd_process() {
         if (osd[curr_item].pos->y < screen_height-osd[curr_item].size.y) {
             osd[curr_item].pos->y+=(screen_height-osd[curr_item].size.y-osd[curr_item].pos->y>step)?step:screen_height-osd[curr_item].size.y-osd[curr_item].pos->y;
             osd_to_draw = 1;
-        }
+        } else
+            osd[curr_item].pos->y = screen_height-osd[curr_item].size.y;
         break;
     case KEY_SET:
         ++curr_item;

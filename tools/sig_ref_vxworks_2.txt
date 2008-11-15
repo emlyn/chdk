@@ -1,3 +1,4 @@
+0xFFC00000
 GetSystemTime 0xFFC04D38
 GetPropertyCase 0xFFC14DEC
 SetPropertyCase 0xFFC14C9C

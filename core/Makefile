@@ -36,7 +36,8 @@ CFLAGS+=-DOPT_CALENDAR
 OPT_OBJS+=gui_calendar.o 
 endif
 ifdef OPT_DEBUGGING
-CFLAGS+=-DOPT_DEBUGGING
+# global in root makefile.inc
+#CFLAGS+=-DOPT_DEBUGGING
 OPT_OBJS+=gui_debug.o gui_bench.o 
 endif
 ifdef OPT_EDGEOVERLAY

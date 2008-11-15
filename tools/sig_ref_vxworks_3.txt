@@ -1,3 +1,4 @@
+0xFFC00000
 Fclose_Fut 0xFFE422A0
 Fopen_Fut 0xFFE42260
 Fread_Fut 0xFFE4235C

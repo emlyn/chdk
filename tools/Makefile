@@ -4,9 +4,9 @@ SKIPBUILDRULES=1
 
 include $(topdir)makefile.inc
 
-OBJS=pakwif.o finsig.o gensig.o dumpchk.o
+OBJS=pakwif.o finsig.o gensig.o dumpchk.o dancingbits.o
 
-all: pakwif$(EXE) finsig$(EXE)
+all: pakwif$(EXE) finsig$(EXE) dancingbits$(EXE)
 
 %.o: %.c
 	@echo $< \-\> $@
@@ -30,6 +30,10 @@ gensig$(EXE): gensig.o
 	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
 
 dumpchk$(EXE): dumpchk.o
+	@echo $< \-\> $@
+	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
+
+dancingbits$(EXE): dancingbits.o
 	@echo $< \-\> $@
 	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
 

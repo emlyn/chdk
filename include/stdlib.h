@@ -45,6 +45,7 @@ struct	stat
 
 #else
 
+#define O_APPEND        0x8 // ok for dryos, vx?
 #define O_TRUNC         0x200
 #define O_CREAT         0x100
 

@@ -1,3 +1,4 @@
+0xFFC00000
 AllocateMemory 0xFFC01B1C 32
 close 0xFFEBBE5C
 CreateTaskStrict 0xFFC123B8
