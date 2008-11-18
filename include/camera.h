@@ -66,6 +66,28 @@
     #define CAM_HAS_ND_FILTER           1
     #undef  CAM_HAS_IS
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+
+ //----------------------------------------------------------
+#elif defined (CAMERA_g9)
+    #define CAM_PROPSET                 2
+    #define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              4104   // for 12 MP
+    #define CAM_RAW_ROWS                3048   // for 12 MP
+
+
+//   #define CAM_MULTIPART               1
+    #define CAM_HAS_ND_FILTER           1
+
+    #define CAM_ADJUSTABLE_ALT_BUTTON   1
+    #define CAM_SWIVEL_SCREEN           1
+    #define CAM_CAN_MUTE_MICROPHONE     1
+
+    #undef  CAM_EMUL_KEYPRESS_DURATION
+    #define CAM_EMUL_KEYPRESS_DURATION  10
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+    #define CAM_EV_IN_VIDEO             1
+//	#define CAM_CONSOLE_LOG_ENABLED     1
     
 //==========================================================
 // A-series

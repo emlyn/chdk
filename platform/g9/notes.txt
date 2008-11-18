@@ -1,0 +1,11 @@
+****************************************
+
+Camera depending notes: 
+
+- G9 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+- dryos camera
+- G9 has adjustable alt-button
+- G9 supports Multipartition
+- G9 has an ND Filter AND real iris diaphragm (which can be set via photo overrides)
+- 100g and 100f are the same, development is done in the 100g tree
+
