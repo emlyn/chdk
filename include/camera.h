@@ -44,6 +44,8 @@
     #undef  CAM_AF_SCAN_DURING_VIDEO_RECORD // CHDK can make single AF scan during video record 
     #undef  CAM_HAS_VIDEO_BUTTON            // Camera can take stills in video mode, and vice versa
     #undef  CAM_EV_IN_VIDEO                 // CHDK can change exposure in video mode
+    #define CAM_VIDEO_CONTROL      1   // pause / unpause video recordings
+
 // better: OPT_ stuff in makefile.inc
     #define ZOOM_OVERRIDE               0   // Shall zoom-override be used? default 0 becoz not implemented right now
 
@@ -334,6 +336,7 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_EV_IN_VIDEO             1
+    #undef  CAM_VIDEO_CONTROL
 
 //==========================================================
 // SD-Series (IXUS-Series)
@@ -372,6 +375,7 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
 	//#define CAM_CONSOLE_LOG_ENABLED     1
+    #undef  CAM_VIDEO_CONTROL
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus55_sd450)
@@ -605,7 +609,7 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
   	#define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
     #undef  CAM_CAN_MUTE_MICROPHONE
-    
+    #undef  CAM_VIDEO_CONTROL
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus950_sd850)
     #define CAM_PROPSET                 2
@@ -652,8 +656,8 @@
     #define CAM_SWIVEL_SCREEN           1
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
-    #define  CAM_HAS_VIDEO_BUTTON       1
-
+    #define CAM_HAS_VIDEO_BUTTON       1
+    #undef  CAM_VIDEO_CONTROL
 
 //----------------------------------------------------------
 #elif defined (CAMERA_s3is)
@@ -718,7 +722,7 @@
 #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1 
    #define CAM_ADJUSTABLE_ALT_BUTTON   1
    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
-
+   #undef  CAM_VIDEO_CONTROL
 //----------------------------------------------------------
 
 #else

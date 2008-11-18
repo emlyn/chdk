@@ -2,6 +2,14 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
+0.7.7 / #577 / php
+
+* enabled sd1100/ixus80 build again
+about the video_control: perhaps it is worth digging out this old thread to check for ewavrs "2nd" way: http://chdk.setepontos.com/index.php/topic,952.msg18413.html#msg18413 
+i just uncommented this function from cameras that are KNOWN to crash using it. we need more reports.
+also: this is a dirty workaround, it just wont show the fast movie control item in the menu of the reported cams. actually it should also be uncommented from the ubasic and lua function.
+(added this quickfix because of this bugreport: http://chdk.kernreaktor.org/mantis/view.php?id=90)
+
 0.7.7 / #576 / PhyrePhoX
 
 + added preliminary support for the g9 100g (and 100f) - see http://chdk.setepontos.com/index.php/topic,2342.msg24443.html#msg24443
