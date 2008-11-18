@@ -380,7 +380,7 @@ static int luaCB_is_key( lua_State* L )
   return 1;
 }
 
-#if defined (CAMERA_g7) || defined (CAMERA_sx100is)
+#if defined (CAMERA_g7) || defined (CAMERA_sx100is) || defined (CAMERA_g9)
 static int luaCB_wheel_right( lua_State* L )
 {
   JogDial_CW();
