@@ -261,7 +261,7 @@ CFLAGS=-fno-inline -Os -fno-strict-aliasing
 # flags for gcc v4
 # CFLAGS+=-mcpu=arm946e-s
 # for gcc v3, we use to allow use of strd etc
-#CFLAGS+=-march=armv5te
+CFLAGS+=-march=armv5te
 
 CTHUMB=-mthumb
 CFLAGS+=-mthumb-interwork
