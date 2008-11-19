@@ -103,7 +103,7 @@ void core_spytask()
 #endif
     mkdir("A/CHDK/DATA");
     mkdir("A/CHDK/LOGS");
-#ifdef EDGEOVERLAY
+#ifdef OPT_EDGEOVERLAY
     mkdir("A/CHDK/EDGE");
 #endif
     auto_started = 0;
