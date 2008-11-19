@@ -535,6 +535,12 @@ static char* gui_lang_default = \
 "414 \"   Clear on start\"\n"
 "415 \"Add raw-suffix\"\n"
 "416 \"  in Fahrenheit\"\n"
+"417 \"Load Edge Overlay\"\n"
+"418 \"Save Edge Overlay\"\n"
+"419 \"Enable in Play\"\n"
+"420 \"Free internal Memory\"\n"
+"421 \"Load+Set Zoom\"\n"
+"422 \"Lock Edge Overlay\"\n"
 
 ;
 

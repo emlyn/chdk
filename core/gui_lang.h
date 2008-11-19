@@ -519,15 +519,20 @@
 #define LANG_POPUP_SUB_FROM_MARKED 409
 #define LANG_MENU_SCRIPT_PARAM_SAVE 410
 #define LANG_OSD_LAYOUT_EDITOR_EV_VIDEO 411
-
 #define	LANG_MENU_OVERRIDE_ZOOM_VALUE          412
 #define	LANG_MENU_OVERRIDE_ZOOM           413
 #define LANG_MENU_CLEAR_ZOOM_OVERRIDE_VALUES 414
 #define LANG_MENU_BRACKETING_ADD_RAW_SUFFIX 415
 #define LANG_MENU_OSD_TEMP_FAHRENHEIT 416
+#define LANG_MENU_EDGE_LOAD		417
+#define LANG_MENU_EDGE_SAVE		418
+#define LANG_MENU_EDGE_PLAY		419
+#define LANG_MENU_EDGE_FREE		420
+#define LANG_MENU_EDGE_ZOOM		421
+#define LANG_MENU_EDGE_LOCK		422
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  416
+#define GUI_LANG_ITEMS                  422
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

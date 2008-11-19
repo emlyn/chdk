@@ -103,6 +103,9 @@ void core_spytask()
 #endif
     mkdir("A/CHDK/DATA");
     mkdir("A/CHDK/LOGS");
+#ifdef EDGEOVERLAY
+    mkdir("A/CHDK/EDGE");
+#endif
     auto_started = 0;
 
     if (conf.script_startup==1) script_autostart();				// remote autostart

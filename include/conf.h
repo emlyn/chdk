@@ -244,6 +244,9 @@ typedef struct {
     
     int edge_overlay_enable;
     int edge_overlay_thresh;
+    int edge_overlay_zoom; // shall zoom be set when *edg file is loaded?
+    int edge_overlay_lock; // whether edge overlay should be overwritten on each half-press or not
+    int edge_overlay_play; // whether edge overlay is switched on also for play mode
     color edge_overlay_color;
 
     int synch_enable;
@@ -258,6 +261,7 @@ typedef struct {
     int script_param_save;
     
     long mem_view_addr_init;
+
 } Conf;
 
 extern Conf conf;

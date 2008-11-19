@@ -1,3 +1,4 @@
+#include "camera.h"
 #include "stdlib.h"
 #include "keyboard.h"
 #include "platform.h"
@@ -281,7 +282,17 @@ int gui_osd_draw_zebra() {
 
     if (buf) {
         ++timer;
-        img_buf=((mode_get()&MODE_MASK) == MODE_PLAY)?vid_get_viewport_fb_d():vid_get_viewport_fb();
+	// Try to get the best viewport buffer. In playmode its the _d one, in
+	// record mode we try to get the fast live one first
+	if( (mode_get() & MODE_MASK) == MODE_PLAY ) {
+	    img_buf = vid_get_viewport_fb_d();
+	}
+	else {
+	    img_buf = vid_get_viewport_live_fb();
+	    if( !img_buf ) {
+		img_buf = vid_get_viewport_fb();
+	    }
+	}
         viewport_height = vid_get_viewport_height();
         switch (conf.zebra_mode) {
             case ZEBRA_MODE_ZEBRA_1:

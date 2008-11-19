@@ -2,6 +2,29 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
+0.8.0 / #780 / PhyrePhoX
+
+tadaa! major pimping of an already cool feature!
+you can now SAVE and LOAD edge overlays! this was written by PlasmaHH (shy guy, only in irc :D)
+Yes, you read it right:
+- save an edge overlay: create an overlay (enable overlay and press half-press) -> go to overlay menu and press save
+- load an overlay (go to menu and choose an *.edg file)
+- create overlays from jpgs in playmode! (only works on cameras that have a "hardware" switch of play/recmode for now, because on for example s3is halfpressing the shutter activates rec mode!
+- free memory by using the item in the edge menu (also you should disable edge-overlay)
+changes / enhancements to the mod by me: 
+- together with the edge overlay the zoom setting is saved, so when you load the file after one year it zooms to the position your camera had when you shot it!
+- added the option so that an edge overlay is "locked", meaning the edgeoverlay you loaded or just created is not overwritten in the osd at half-press (this checkbox is overwritten on each camera startup... no big deal, but i dont like it like that right now)
+This is a really great feature (for example for LONG-TERM TIMELAPSES, or stop-motion movies, or vertigo-effect, or stereography... the list is endless :D)
+
+* restructured the root menu (put imo the most often used items to the top, moved edge overlay from OSD menu to the root menu, moved remote params menu to the misc menu)
+
+because of this new feature and all the new cams i upped the version to 0.8.0 already...
+P.S: had to rewrite some of PlasmaHHs stuff (e.g. write -> fwrite), i hope i did everything correctly (it's working flawlessly on s3is and a620)
+
+0.7.7 / #578-579 / php
+
+* small fixes
+
 0.7.7 / #577 / php
 
 * enabled sd1100/ixus80 build again

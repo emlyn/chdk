@@ -43,6 +43,7 @@
 #ifdef OPT_BOOTLOGO
 	#include "gui_logo.h"
 #endif
+#include "edgeoverlay.h"
 //-------------------------------------------------------------------
 
 #define OPTIONS_AUTOSAVE
@@ -151,6 +152,10 @@ static void gui_draw_calendar(int arg);
 #endif
 static void gui_draw_load_lang(int arg);
 static void gui_menuproc_mkbootdisk(int arg);
+static void gui_menuproc_edge_save(int arg);
+static void gui_menuproc_edge_load(int arg);
+static void gui_menuproc_edge_free(int arg);
+
 #ifndef OPTIONS_AUTOSAVE
 static void gui_menuproc_save(int arg);
 #endif
@@ -393,10 +398,11 @@ static CMenuItem misc_submenu_items[] = {
 #if CAM_MULTIPART
     {0x33,LANG_MENU_DEBUG_SWAP_PART,         MENUITEM_PROC, 	    	(int*)gui_menuproc_swap_patitons },
 #endif
+    {0x2b,LANG_MENU_MAIN_RESET_OPTIONS,      MENUITEM_PROC,      (int*)gui_menuproc_reset },
 #ifdef OPT_DEBUGGING
     {0x2a,LANG_MENU_MAIN_DEBUG,              MENUITEM_SUBMENU,   (int*)&debug_submenu },
 #endif
-    {0x2b,LANG_MENU_MAIN_RESET_OPTIONS,      MENUITEM_PROC,      (int*)gui_menuproc_reset },
+    {0x86,LANG_MENU_REMOTE_PARAM,            MENUITEM_SUBMENU,   (int*)&remote_submenu },
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
     {0},
 };
@@ -575,10 +581,15 @@ static CMenu operation_submenu = {0x21,LANG_MENU_OPERATION_PARAM_TITLE, NULL, op
 
 #ifdef OPT_EDGEOVERLAY
 static CMenuItem edge_overlay_submenu_items[] = {
-    {0x7f,LANG_MENU_EDGE_OVERLAY_ENABLE,     MENUITEM_BOOL,          &conf.edge_overlay_enable },
+    {0x5c,LANG_MENU_EDGE_OVERLAY_ENABLE,     MENUITEM_BOOL,          &conf.edge_overlay_enable },
+    {0x33,LANG_MENU_EDGE_SAVE,			MENUITEM_PROC,		(int*)gui_menuproc_edge_save },
+    {0x5c,LANG_MENU_EDGE_ZOOM,     MENUITEM_BOOL,          &conf.edge_overlay_zoom },
+    {0x5c,LANG_MENU_EDGE_LOCK,     MENUITEM_BOOL,          &conf.edge_overlay_lock },
     {0x7f,LANG_MENU_EDGE_OVERLAY_TRESH,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.edge_overlay_thresh, MENU_MINMAX(0, 255)},
     {0x65,LANG_MENU_EDGE_OVERLAY_COLOR,      MENUITEM_COLOR_FG,      (int*)&conf.edge_overlay_color },
-
+    {0x5c,LANG_MENU_EDGE_PLAY,			MENUITEM_BOOL,		&conf.edge_overlay_play }, //does not work on cams like s-series, which dont have a real "hardware" play/rec switch, need a workaround, probably another button
+    {0x33,LANG_MENU_EDGE_FREE,			MENUITEM_PROC,		(int*)gui_menuproc_edge_free },
+    {0x33,LANG_MENU_EDGE_LOAD,			MENUITEM_PROC,		(int*)gui_menuproc_edge_load },
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
@@ -682,9 +693,6 @@ static CMenuItem osd_submenu_items[] = {
     {0x5f,LANG_MENU_OSD_SHOW_TEMP,         MENUITEM_ENUM,      (int*)gui_temp_mode_enum },
     {0x59,LANG_MENU_OSD_TEMP_FAHRENHEIT,      MENUITEM_BOOL,      &conf.temperature_unit},
     {0x72,LANG_MENU_OSD_LAYOUT_EDITOR,       MENUITEM_PROC,      (int*)gui_draw_osd_le },
-#ifdef OPT_EDGEOVERLAY
-    {0x7f,LANG_MENU_EDGE_OVERLAY,         MENUITEM_SUBMENU,   (int*)&edge_overlay_submenu },
-#endif
     {0x2f,LANG_MENU_OSD_GRID_PARAMS,         MENUITEM_SUBMENU,   (int*)&grid_submenu },
     {0x22,LANG_MENU_OSD_VALUES,  	    	MENUITEM_SUBMENU,   (int*)&values_submenu },
     {0x31,LANG_MENU_OSD_DOF_CALC,            MENUITEM_SUBMENU,   (int*)&dof_submenu },
@@ -785,15 +793,17 @@ static CMenuItem root_menu_items[] = {
     {0x23,LANG_MENU_VIDEO_PARAM,             MENUITEM_SUBMENU,   (int*)&video_submenu },
 #endif
     {0x24,LANG_MENU_MAIN_RAW_PARAM,          MENUITEM_SUBMENU,   (int*)&raw_submenu },
-    {0x22,LANG_MENU_MAIN_OSD_PARAM,          MENUITEM_SUBMENU,   (int*)&osd_submenu },
-    {0x28,LANG_MENU_MAIN_VISUAL_PARAM,       MENUITEM_SUBMENU,   (int*)&visual_submenu },
-    {0x25,LANG_MENU_MAIN_HISTO_PARAM,        MENUITEM_SUBMENU,   (int*)&histo_submenu },
-    {0x26,LANG_MENU_MAIN_ZEBRA_PARAM,        MENUITEM_SUBMENU,   (int*)&zebra_submenu },
-    {0x27,LANG_MENU_MAIN_SCRIPT_PARAM,       MENUITEM_SUBMENU,   (int*)&script_submenu },
+#ifdef OPT_EDGEOVERLAY
+    {0x7f,LANG_MENU_EDGE_OVERLAY,         MENUITEM_SUBMENU,   (int*)&edge_overlay_submenu },
+#endif
 #ifdef OPT_CURVES
     {0x85,LANG_MENU_CURVE_PARAM,             MENUITEM_SUBMENU,   (int*)&curve_submenu },
 #endif
-    {0x86,LANG_MENU_REMOTE_PARAM,            MENUITEM_SUBMENU,   (int*)&remote_submenu },
+    {0x25,LANG_MENU_MAIN_HISTO_PARAM,        MENUITEM_SUBMENU,   (int*)&histo_submenu },
+    {0x26,LANG_MENU_MAIN_ZEBRA_PARAM,        MENUITEM_SUBMENU,   (int*)&zebra_submenu },
+    {0x22,LANG_MENU_MAIN_OSD_PARAM,          MENUITEM_SUBMENU,   (int*)&osd_submenu },
+    {0x28,LANG_MENU_MAIN_VISUAL_PARAM,       MENUITEM_SUBMENU,   (int*)&visual_submenu },
+    {0x27,LANG_MENU_MAIN_SCRIPT_PARAM,       MENUITEM_SUBMENU,   (int*)&script_submenu },
     {0x29,LANG_MENU_MAIN_MISC,               MENUITEM_SUBMENU,   (int*)&misc_submenu },
 #ifndef OPTIONS_AUTOSAVE
     {0x33,LANG_MENU_MAIN_SAVE_OPTIONS,       MENUITEM_PROC,      (int*)gui_menuproc_save },
@@ -1870,6 +1880,11 @@ void gui_init()
 #endif
 }
 
+static void gui_load_edge_selected( const char* fn ) {
+    if( fn )
+	load_edge_overlay(fn);
+}
+
 //-------------------------------------------------------------------
 #ifdef OPT_CURVES
 static void gui_load_curve_selected(const char *fn) {
@@ -2902,6 +2917,30 @@ void gui_menuproc_mkbootdisk(int arg) {
     mark_filesystem_bootable();
 }
 
+void gui_menuproc_edge_free(int arg) {
+    free_memory_edge_overlay();
+}
+
+void gui_menuproc_edge_save(int arg) {
+    save_edge_overlay();
+}
+
+void gui_menuproc_edge_load(int arg) {
+    DIR   *d;
+    char  *path = EDGE_SAVE_DIR;
+    const char* fn;
+
+    // if exists, go into
+    d=opendir(path);
+    if (d) {
+        closedir(d);
+    } else {
+        path="A";
+    }
+
+    gui_fselect_init(LANG_MENU_EDGE_LOAD, path, gui_load_edge_selected);
+}
+
 //-------------------------------------------------------------------
 #ifdef OPT_CALENDAR
 void gui_draw_calendar(int arg) {
@@ -3036,3 +3075,5 @@ void user_menu_restore() {
 		find_mnu(&root_menu, conf.user_menu_vars[x], x);
 	}
 }
+
+

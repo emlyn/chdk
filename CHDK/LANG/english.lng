@@ -555,4 +555,9 @@
 414 "   Clear on start"
 415 "add raw suffix"
 416 "  in Fahrenheit"
-
+417 "Load Edge Overlay"
+418 "Save Edge Overlay"
+419 "Enable in Play"
+420 "Free internal Memory"
+421 "Load+Set Zoom"
+422 "Lock Edge Overlay"

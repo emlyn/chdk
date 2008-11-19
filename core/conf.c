@@ -132,6 +132,7 @@ void clear_values()
 	 conf.video_bitrate = VIDEO_DEFAULT_BITRATE;
 	 shooting_video_bitrate_change(conf.video_bitrate);
  	}
+ 	conf.edge_overlay_lock = 0; // reset it because otherwise this feature cant be used at startup (when buffer is empty) - needs workaround other than this!
 }
 
 static const ConfInfo conf_info[] = {
@@ -369,6 +370,10 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(218, conf.clear_zoom_override,         CONF_DEF_VALUE, i:1, NULL),			
     CONF_INFO(219, conf.bracketing_add_raw_suffix,         CONF_DEF_VALUE, i:0, NULL),			
     CONF_INFO(220, conf.temperature_unit,              CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(221, conf.clear_zoom_override,         CONF_DEF_VALUE, i:1, NULL),			
+    CONF_INFO(222, conf.edge_overlay_play,    CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(223, conf.edge_overlay_lock,              CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(224, conf.edge_overlay_zoom,                CONF_DEF_VALUE, i:1, NULL),
     };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 
