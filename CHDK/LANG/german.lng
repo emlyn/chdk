@@ -583,11 +583,14 @@
 412 "    Zoom-Wert"
 413 "Ersetze Zoom-Wert"
 414 "    Bei Neustart löschen"
+
 415 "Raw Suffix"
 416 "  in Fahrenheit"
-417 "Lade Edge Overlay"
-418 "Speicher Edge Overlay"
+
+// Konturenüberlagerung
+417 "Lade Konturen ..."
+418 "Speichere Konturen ..."
 419 "Auch im Playmode"
-420 "Gib Speicher frei"
-421 "Lade+Setze Zoom"
-422 "Sperre Odge Overlay"
+420 "Gib Speicher frei ..."
+421 "Lade und setze Zoom"
+422 "Sperre Konturenüberlagerung"
