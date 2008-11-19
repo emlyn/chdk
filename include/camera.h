@@ -226,6 +226,17 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_EV_IN_VIDEO             1
+	
+//----------------------------------------------------------
+#elif defined (CAMERA_a590)
+    #define CAM_PROPSET                 2
+    #define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              3264 //3336   // for new 8 MP
+    #define CAM_RAW_ROWS                2448 //2490    // for new 8 MP
+
+	// TODO / test
+    #define  CAM_CAN_MUTE_MICROPHONE 1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a610)

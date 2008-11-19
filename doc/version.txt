@@ -2,6 +2,15 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
+0.8.1 / #784 / PhyrePhoX
+
++ initial import of a590 port - thanks to ma_jk (see http://chdk.setepontos.com/index.php/topic,2361.msg24541.html#msg24541 and the whole thread)
+
+
+0.8.0 / #781-783 / php
+
+* small fixes, updates
+
 0.8.0 / #780 / PhyrePhoX
 
 tadaa! major pimping of an already cool feature!
