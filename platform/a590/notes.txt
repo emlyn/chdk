@@ -2,8 +2,8 @@
 
 Camera depending notes: 
 
-- A720 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+- A590 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
 - dryos camera
-- A720 does have a real IRIS Diaphragm, it does not have an ND Filter! 
+- A590 does have a real IRIS Diaphragm, it does not have an ND Filter! 
 Mind this.
-
+- not all features (such as video compression) are yet "unlocked" for this camera
