@@ -265,12 +265,23 @@ AR=arm-elf-ar
 RANLIB=arm-elf-ranlib
 SIZE=arm-elf-size
 
+GCC_VERSION=$(shell $(CC) -dumpversion)
+GCC_VERSION_MAJOR=$(firstword $(subst ., ,$(GCC_VERSION)))
+
 # -msoft-float is used per default but object files are marked as hard-float
 CFLAGS=-fno-inline -Os -fno-strict-aliasing
 # flags for gcc v4
 # CFLAGS+=-mcpu=arm946e-s
 # for gcc v3, we use to allow use of strd etc
-CFLAGS+=-march=armv5te
+ifeq ($(GCC_VERSION_MAJOR),3)
+    CFLAGS+=-march=armv5te
+else
+    ifeq ($(GCC_VERSION_MAJOR),4)
+        # TODO should be -mcpu, but breaks things ATM
+        CFLAGS+=-mtune=arm946e-s
+    endif
+endif
+
 
 CTHUMB=-mthumb
 CFLAGS+=-mthumb-interwork
