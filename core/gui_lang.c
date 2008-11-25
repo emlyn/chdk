@@ -541,11 +541,10 @@ static char* gui_lang_default = \
 "420 \"Free internal Memory\"\n"
 "421 \"Load+Set Zoom\"\n"
 "422 \"Lock Edge Overlay\"\n"
-"423 \"RAW develop\"\n"
-"424 \"Rear curtain flash sync\"\n"
-"425 \"DNG format\"\n"
-"426 \"RAW buffer cached\"\n"
-"427 \"Cannot load CHDK/badpixel.bin\"\n"
+"423 \"Rear curtain flash sync\"\n"
+"424 \"DNG format\"\n"
+"425 \"RAW buffer cached\"\n"
+"426 \"Cannot load CHDK/badpixel.bin\"\n"
 ;
 
 //-------------------------------------------------------------------

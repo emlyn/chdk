@@ -46,10 +46,10 @@
     #undef  CAM_EV_IN_VIDEO                 // CHDK can change exposure in video mode
     #define CAM_VIDEO_CONTROL      1   // pause / unpause video recordings
 
-// better: OPT_ stuff in makefile.inc
     #define ZOOM_OVERRIDE               0   // Shall zoom-override be used? default 0 becoz not implemented right now
     #undef  DNG_SUPPORT                 
     #undef  CAM_REAR_CURTAIN                // Camera do not have front/rear curtain flash sync in menu
+    #undef  CAM_BRACKETING                // Cameras that have bracketing (focus & ev) in original firmware already, most likely s- & g-series (propcase for digic III not found yet!)
 
 //----------------------------------------------------------
 // Overridden values for each camera
@@ -89,7 +89,7 @@
     #define CAM_ACTIVE_AREA_Y2 2332
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
-    
+    #define CAM_BRACKETING              1    
  //----------------------------------------------------------
 #elif defined (CAMERA_g9)
     #define CAM_PROPSET                 2
@@ -111,7 +111,7 @@
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_EV_IN_VIDEO             1
 //	#define CAM_CONSOLE_LOG_ENABLED     1
-    
+//  #define CAM_BRACKETING              1  //propcase still missing for dryos    
 //==========================================================
 // A-series
 //==========================================================
@@ -1257,7 +1257,7 @@
     #define CAM_ACTIVE_AREA_Y2 1966
     // camera name
     #define PARAM_CAMERA_NAME 2 // parameter number for GetParameterData
-
+    #define CAM_BRACKETING              1
 //----------------------------------------------------------
 #elif defined (CAMERA_s3is)
     #define CAM_PROPSET                 1
@@ -1291,6 +1291,7 @@
     #define CAM_ACTIVE_AREA_Y2 2136
     // camera name
     #define PARAM_CAMERA_NAME 3 // parameter number for GetParameterData
+    #define CAM_BRACKETING              1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_s5is)
@@ -1325,7 +1326,7 @@
     #define CAM_ACTIVE_AREA_Y2 2474
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
-
+//  #define CAM_BRACKETING              1 //propcase for dryos not found yet
 
 //==========================================================
 // TX-Series

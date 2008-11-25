@@ -683,8 +683,6 @@ void gui_osd_draw_raw_info()
     {
     int x, m=(mode_get()&MODE_SHOOTING_MASK);
     static int b;
-    
-
     if ((!((movie_status > 1) && conf.save_raw_in_video   )) && (!((m==MODE_SPORTS) && conf.save_raw_in_sports)) && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)==1) && conf.save_raw_in_burst && !(m==MODE_SPORTS)))  && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)>=2) && conf.save_raw_in_timer)) && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) )
     { 
     if (conf.show_remaining_raw) 
@@ -692,13 +690,13 @@ void gui_osd_draw_raw_info()
         int raw_count=GetRawCount();  
             if (raw_count>conf.remaining_raw_treshold)
                 {
-                sprintf(osd_buf, "RAW:%3d", raw_count);
+                if (conf.dng_raw) sprintf(osd_buf, "DNG:%3d", raw_count); else sprintf(osd_buf, "RAW:%3d", raw_count);
                 draw_string(conf.mode_raw_pos.x, conf.mode_raw_pos.y, osd_buf, conf.osd_color);
                 }
             else
                 {
 
-                sprintf(osd_buf, "RAW:%3d", raw_count);
+                if (conf.dng_raw) sprintf(osd_buf, "DNG:%3d", raw_count); else sprintf(osd_buf, "RAW:%3d", raw_count);
                 
                 if (b > 6)
                     {
@@ -712,11 +710,11 @@ void gui_osd_draw_raw_info()
                     } 
                 }
         }
-    else draw_string(conf.mode_raw_pos.x, conf.mode_raw_pos.y, "RAW", conf.osd_color);
+    else if (conf.dng_raw) draw_string(conf.mode_raw_pos.x, conf.mode_raw_pos.y, "DNG", conf.osd_color); else draw_string(conf.mode_raw_pos.x, conf.mode_raw_pos.y, "RAW", conf.osd_color);
 	}   
 	else if (conf.raw_exceptions_warn)
 		{
-			gui_print_osd_state_string_chr("RAW Disabled","");
+			if (conf.dng_raw) gui_print_osd_state_string_chr("DNG Disabled",""); else gui_print_osd_state_string_chr("RAW Disabled","");
 		}
 		
 		         

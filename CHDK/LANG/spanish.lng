@@ -486,7 +486,7 @@
 363 "Texto del Símbolo"
 364 "Fondo del Símbolo"
 
-365 "Curva Propias"
+365 "Curvas Propias"
 / / "366" Custom curvas -> "
 366 "Curvas Propias"
 367 "Cargar Perfil de Curva ..."
@@ -561,3 +561,7 @@
 420 "Limpiar Mem. Interna"
 421 "Cargar+Fijar Zoom"
 422 "Bloq. Linea de Borde"
+423 "Sinc. flash 2da Cortina"
+424 "Formato DNG"
+425 "Buffer Cache de RAW"
+426 "No encuentra CHDK/badpixel.bin"

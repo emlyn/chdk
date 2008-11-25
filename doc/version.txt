@@ -2,16 +2,43 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
-0.8.1 / #784 / PhyrePhoX
+0.8.2 / #592 / PhyrePhoX
+
+* fixed a590 zoom table (see http://chdk.setepontos.com/index.php/topic,2659.msg24733.html#msg24733)
+* language updates
+* fixed very small bug in gui_lang.c which caused a bug in the dng menu
++ added turkish language
++ added define CAM_BRACKETING for cameras that have bracketing in original firmware (g7,g9,s2is,s3is,s5is - need propcase for the dryos ones!) for gui.c
+* RAW osd elements now change to DNG when dng saving is enabled
+ 
+0.8.2 / #590-591 / ewavr
+
++ added initial DNG support (yay!)
++ added rear curtain flash sync for a570 & sx100is 
+* small language fix: "raw develop" the same in main and popup menu 
+
+0.8.1 / #587-587 / reyalp
+
+some ignore props 
+Set CFLAGS differently for gcc3 and gcc4. See http://chdk.setepontos.com/index.php/topic,2500.30.html 
+check in correct stubs_entry.S  (sd1100)
+
+0.8.1 / #585-586 / PhyrePhoX
+
++ added g9 chdk for 1.00d (see http://chdk.setepontos.com/index.php/topic,2342.msg24602.html#msg24602)
+* updated spanish.lng 
+* small edit in notes.txt of a590 
+
+0.8.1 / #584 / PhyrePhoX
 
 + initial import of a590 port - thanks to ma_jk (see http://chdk.setepontos.com/index.php/topic,2361.msg24541.html#msg24541 and the whole thread)
 
 
-0.8.0 / #781-783 / php
+0.8.0 / #581-583 / php
 
 * small fixes, updates
 
-0.8.0 / #780 / PhyrePhoX
+0.8.0 / #580 / PhyrePhoX
 
 tadaa! major pimping of an already cool feature!
 you can now SAVE and LOAD edge overlays! this was written by PlasmaHH (shy guy, only in irc :D)

@@ -584,7 +584,8 @@
 413 "Ersetze Zoom-Wert"
 414 "    Bei Neustart löschen"
 
-415 "Raw Suffix"
+415 "RAW-Endung für Reihe"
+
 416 "  in Fahrenheit"
 
 // Konturenüberlagerung
@@ -594,3 +595,10 @@
 420 "Gib Speicher frei ..."
 421 "Lade und setze Zoom"
 422 "Sperre Konturenüberlagerung"
+
+423 "2. Vorhang Blitzsychro"
+
+// DNG
+424 "DNG-Format"
+425 "RAW-Puffer nutzen"
+426 "Datei badpixel.bin fehlt!"

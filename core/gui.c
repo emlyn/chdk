@@ -739,7 +739,7 @@ static CMenuItem raw_exceptions_submenu_items[] = {
     {0x5c,LANG_MENU_RAW_SAVE_IN_BURST,                MENUITEM_BOOL,      &conf.save_raw_in_burst },
     {0x5c,LANG_MENU_RAW_SAVE_IN_TIMER,                MENUITEM_BOOL,      &conf.save_raw_in_timer },
 
-		#if CAM_PROPSET == 1
+		#if CAM_BRACKETING
     	{0x5c,LANG_MENU_RAW_SAVE_IN_EV_BRACKETING,                MENUITEM_BOOL,      &conf.save_raw_in_ev_bracketing },
 		#endif
     {0x5c,LANG_MENU_RAW_WARN,                MENUITEM_BOOL,      &conf.raw_exceptions_warn },
