@@ -38,4 +38,7 @@ WARNING: this file is used gen_propset_lua.sh to generate propset.lua
 #define PROPCASE_DIGITAL_ZOOM_POSITION                         57
 #define PROPCASE_DISPLAY_MODE                         181
 #define PROPCASE_BRACKET_MODE                         36 //missing for dryos!
+#define PROPCASE_FLASH_SYNC_CURTAIN			20
+#define PROPCASE_FLASH_FIRED				78
+#define PROPCASE_METERING_MODE				9
 #endif

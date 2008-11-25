@@ -23,9 +23,7 @@ DEF(zoom_busy, 0x79C18)         // ZoomLens, 0xFFAA591C
 DEF(focus_busy, 0x79F34)        // FocusLensController, 0xFFAB58C8
 DEF(movie_compression, 0x6140)  // 0xFF956614
 
-
-// TODO: !!!!!!!!!!!!! THESE ARE INVALID !!!!!!!!
-DEF(FlashParamsTable,0xFFD4B62C)              // no idea??
+DEF(FlashParamsTable,0xFF9754E8)
 
 //DEF(canon_menu_active, 0x6CBC)
 //DEF(canon_shoot_menu_active, 0x6CBC)

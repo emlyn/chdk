@@ -254,6 +254,9 @@ static void cb_space_mb();
 static void cb_battery_menu_change(unsigned int item);
 static void cb_zebra_restore_screen();
 static void cb_zebra_restore_osd();
+#if DNG_SUPPORT
+static void cb_change_dng(); 
+#endif
 
 // for memory info, duplicated from lowlevel
 extern const char _start,_end;
@@ -574,6 +577,9 @@ static CMenuItem operation_submenu_items[] = {
  
       {0x5c,LANG_MENU_MISC_FAST_EV,         MENUITEM_BOOL,    &conf.fast_ev },
       {0x5f,LANG_MENU_MISC_FAST_EV_STEP,    MENUITEM_ENUM,    (int*)gui_fast_ev_step },
+#if CAM_REAR_CURTAIN
+      {0x5c, LANG_MENU_REAR_CURTAIN, MENUITEM_BOOL, &conf.flash_sync_curtain },
+#endif
 	  {0x51,LANG_MENU_BACK,                     MENUITEM_UP },
      {0}
 };
@@ -757,6 +763,10 @@ static CMenuItem raw_submenu_items[] = {
     {0x60,LANG_MENU_SUB_OUT_DARK_VALUE,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.sub_out_dark_value, MENU_MINMAX(0, 1023)},
     {0x2a,LANG_MENU_RAW_DEVELOP,             MENUITEM_PROC,      (int*)gui_raw_develop },
     {0x5c,LANG_MENU_BAD_PIXEL_REMOVAL,       MENUITEM_ENUM,      (int*)gui_bad_pixel_enum },
+#if DNG_SUPPORT
+    {0x5c, LANG_MENU_DNG_FORMAT,                MENUITEM_BOOL | MENUITEM_ARG_CALLBACK, &conf.dng_raw , (int)cb_change_dng },
+#endif
+    {0x5c,LANG_MENU_RAW_CACHED,          MENUITEM_BOOL,      &conf.raw_cache },
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
@@ -881,6 +891,14 @@ void cb_zebra_restore_osd() {
     if (conf.zebra_restore_osd)
         conf.zebra_restore_screen = 1;
 }
+
+#if DNG_SUPPORT
+void cb_change_dng(){
+ int old=conf.dng_raw;
+ conf_change_dng();
+ if ((old==1) && (conf.dng_raw==0)) gui_mbox_init(LANG_ERROR, LANG_CANNOT_OPEN_BADPIXEL_FILE, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
+}
+#endif
 
 //-------------------------------------------------------------------
 #ifdef OPT_CURVES

@@ -2,6 +2,10 @@
 #include "conf.h"
 #include "stdlib.h"
 #include "raw.h"
+#if DNG_SUPPORT
+	#include "dng.h"
+	#include "math.h"
+#endif
 #ifdef OPT_CURVES
 	#include "curves.h"
 #endif
@@ -26,18 +30,65 @@ void raw_prepare_develop(char* filename){
 //-------------------------------------------------------------------
 void patch_bad_pixels(void);
 //-------------------------------------------------------------------
+
+char* get_raw_image_addr(void){
+ if (!conf.raw_cache) return hook_raw_image_addr();
+ else return (char*) ((int)hook_raw_image_addr()&~0x10000000);
+}
+
+//-------------------------------------------------------------------
+#if DNG_SUPPORT
+unsigned short get_raw_pixel(unsigned int x,unsigned  int y);
+
+static unsigned char gamma[256];
+
+void fill_gamma_buf(void){
+ int i;
+ if (gamma[255]) return;
+ for (i=0; i<=255; i++) gamma[i]=255*pow(i/255.0, 0.5);
+}
+
+
+void create_thumbnail(char* buf){
+ unsigned int i, j, x, y;
+ unsigned char r, g, b;
+ for (i=0; i<DNG_TH_HEIGHT; i++)
+   for (j=0; j<DNG_TH_WIDTH; j++) {
+    x=CAM_ACTIVE_AREA_X1+((CAM_ACTIVE_AREA_X2-CAM_ACTIVE_AREA_X1)*j)/DNG_TH_WIDTH;
+    y=CAM_ACTIVE_AREA_Y1+((CAM_ACTIVE_AREA_Y2-CAM_ACTIVE_AREA_Y1)*i)/DNG_TH_HEIGHT;
+#if cam_CFAPattern==0x02010100    // Red  Green  Green  Blue
+    r=gamma[get_raw_pixel((x/2)*2,(y/2)*2)>>2]; // red pixel
+    g=gamma[6*(get_raw_pixel((x/2)*2+1,(y/2)*2)>>2)/10]; // green pixel
+    b=gamma[get_raw_pixel((x/2)*2+1,(y/2)*2+1)>>2]; //blue pixel
+#elif cam_CFAPattern==0x01000201 // Green  Blue  Red  Green
+    r=gamma[get_raw_pixel((x/2)*2,(y/2)*2+1)]; // red pixel
+    g=gamma[7*(get_raw_pixel((x/2)*2,(y/2)*2)>>2)/10]; // green pixel
+    b=gamma[get_raw_pixel((x/2)*2+1,(y/2)*2)>>2]; //blue pixel
+#else 
+ #error please define new pattern here
+#endif
+    *buf++=r; *buf++=g; *buf++=b; 
+   }
+}
+#endif
+//-------------------------------------------------------------------
+
 int raw_savefile() {
 		int fd, m=(mode_get()&MODE_SHOOTING_MASK);
     static struct utimbuf t;
     static int br_counter; 
-    
+#if DNG_SUPPORT
+     struct t_data_for_exif* exif_data = NULL;  
+     char *thumbnail_buf = NULL;
+     if (conf.dng_raw) exif_data=capture_data_for_exif();
+#endif    
     if (state_kbd_script_run && shot_histogram_enabled) build_shot_histogram();
 
     if (develop_raw) {
      started();
      fd = open(fn, O_RDONLY, 0777);
      if (fd>=0) {
-      read(fd, hook_raw_image_addr(), hook_raw_size());
+      read(fd, get_raw_image_addr(), hook_raw_size());
       close(fd);
       }
 #ifdef OPT_CURVES
@@ -71,7 +122,8 @@ int raw_savefile() {
 
      if (conf.save_raw && (!((movie_status > 1) && conf.save_raw_in_video   )) && (!((m==MODE_SPORTS) && conf.save_raw_in_sports)) && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)==1) && conf.save_raw_in_burst && !(m==MODE_SPORTS))) && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)>=2) && conf.save_raw_in_timer)) && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) ) {
         long v;
-        
+int timer; char txt[30];
+
         started();
 
         t.actime = t.modtime = time(NULL);
@@ -87,9 +139,38 @@ int raw_savefile() {
             sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), img_exts[conf.raw_ext]); 
         fd = open(fn, O_WRONLY|O_CREAT, 0777);
         if (fd>=0) {
-            write(fd, hook_raw_image_addr(), hook_raw_size());
+timer=get_tick_count();
+#if DNG_SUPPORT
+            if (conf.dng_raw) {
+             fill_gamma_buf();
+             create_dng_header(exif_data);
+             thumbnail_buf = malloc(DNG_TH_WIDTH*DNG_TH_HEIGHT*3);
+              if (get_dng_header() && thumbnail_buf) {
+               patch_bad_pixels_b();
+               create_thumbnail(thumbnail_buf);
+               write(fd, get_dng_header(), get_dng_header_size());
+               write(fd, thumbnail_buf, DNG_TH_WIDTH*DNG_TH_HEIGHT*3);
+               reverse_bytes_order(get_raw_image_addr(), hook_raw_size());
+             }
+            }
+#endif
+            write(fd, get_raw_image_addr(), hook_raw_size());
             close(fd);
             utime(fn, &t);
+#if DNG_SUPPORT
+            if (conf.dng_raw) {
+             if (get_dng_header() && thumbnail_buf) {
+              reverse_bytes_order(get_raw_image_addr(), hook_raw_size());
+          //   unpatch_bad_pixels_b();
+              }
+             if (get_dng_header()) free_dng_header();
+             if (thumbnail_buf) free(thumbnail_buf);
+            }
+#endif
+timer=get_tick_count()-timer;
+sprintf(txt, "saving time=%d", timer);
+script_console_add_line(txt);
+
         }
 
         finished();
@@ -105,37 +186,12 @@ int raw_savefile() {
 
 //-------------------------------------------------------------------
 void raw_postprocess() {
-/*
-//    int fd;
-    long v=get_file_counter();
-    static struct utimbuf t;
-
-    started();
-
-//    sprintf(fn, RAW_TARGET_FILENAME, (v>>18)&0x3FF, (v>>4)&0x3FFF);
-    sprintf(fn, RAW_TARGET_FILENAME, prefixes[conf.raw_prefix], (v>>4)&0x3FFF, exts[conf.raw_ext]);
-    chdir(dir);
-    rename(RAW_TMP_FILENAME, fn);
-
-    t.actime = t.modtime = time(NULL);
-    utime(fn, &t);
-
-//        chdir("A/DCIM");
-//    fd = open( "A/1", O_RDONLY, 0 );
-//    eeee = fd;
-//    xxxx = ((int (*)(int fd, int function, int arg))(0xFFEBBF9C))(fd, 47, (int)"A/DCIM/1"); //move
-//    close(fd);
-//    xxxx=rename("1", "DCIM/1");
-//    eeee=*((int*)0xA021C); //errno
-
-    finished();
- */
 }
 
 //-------------------------------------------------------------------
 
 void set_raw_pixel(unsigned int x, unsigned int y, unsigned short value){
- unsigned char* addr=hook_raw_image_addr()+y*RAW_ROWLEN+(x/8)*10;
+ unsigned char* addr=get_raw_image_addr()+y*RAW_ROWLEN+(x/8)*10;
  switch (x%8) {
   case 0: addr[0]=(addr[0]&0x3F)|(value<<6); addr[1]=value>>2;                  break;
   case 1: addr[0]=(addr[0]&0xC0)|(value>>4); addr[3]=(addr[3]&0x0F)|(value<<4); break;
@@ -150,7 +206,7 @@ void set_raw_pixel(unsigned int x, unsigned int y, unsigned short value){
 
 //-------------------------------------------------------------------
 unsigned short get_raw_pixel(unsigned int x,unsigned  int y){
- unsigned char* addr=hook_raw_image_addr()+y*RAW_ROWLEN+(x/8)*10;
+ unsigned char* addr=get_raw_image_addr()+y*RAW_ROWLEN+(x/8)*10;
  switch (x%8) {
   case 0: return ((0x3fc&(((unsigned short)addr[1])<<2)) | (addr[0] >> 6));
   case 1: return ((0x3f0&(((unsigned short)addr[0])<<4)) | (addr[3] >> 4));
@@ -166,9 +222,20 @@ unsigned short get_raw_pixel(unsigned int x,unsigned  int y){
 
 //-------------------------------------------------------------------
 void patch_bad_pixel(unsigned int x,unsigned  int y){
- if ((x>=2) && (x<CAM_RAW_ROWPIX-2) && (y>=2) && (y<CAM_RAW_ROWS-2)) { 
-  if (conf.bad_pixel_removal==1)   // interpolation 
-   set_raw_pixel(x,y,(get_raw_pixel(x-2,y)+get_raw_pixel(x+2,y)+get_raw_pixel(x,y-2)+get_raw_pixel(x,y+2))/4); 
+ int sum=0;
+ int nzero=0;
+ int i,j;
+ int val;
+ if ((x>=2) && (x<CAM_RAW_ROWPIX-2) && (y>=2) && (y<CAM_RAW_ROWS-2)) {
+  if ((conf.bad_pixel_removal==1) || conf.dng_raw) {  // interpolation or DNG saving 
+   for (i=-2; i<=2; i+=2)
+    for (j=-2; j<=2; j+=2) 
+     if ((i!=0) && (j!=0)) {
+      val=get_raw_pixel(x+i, y+j);
+      if (val) {sum+=val; nzero++;}
+     }
+   if (nzero) set_raw_pixel(x,y,sum/nzero);
+  }
   else if (conf.bad_pixel_removal==2)  // or this makes RAW converter (internal/external) 
    set_raw_pixel(x,y,0);   
  }
@@ -244,3 +311,51 @@ void load_bad_pixels_list(char* filename){
     }
 
 }
+
+#if DNG_SUPPORT
+short* binary_list=NULL;
+int binary_count=0;
+
+void load_bad_pixels_list_b(char* filename){
+ struct stat st;
+ long filesize;
+ void* ptr;
+ int fd;
+ binary_count=0;
+ if (stat(filename,&st)!=0) return;
+ filesize=st.st_size;
+ if ((filesize==0) || (filesize%(2*sizeof(short))!=0)) return;
+ ptr=umalloc(filesize);
+ if (!ptr) return;
+ fd=open(filename, O_RDONLY, 0777);
+ if (fd) {
+  read(fd, ptr, filesize);
+  close(fd);
+  binary_list=ptr;
+  binary_count=filesize/(2*sizeof(short));
+ }
+ else   ufree(ptr);
+}
+
+void unload_bad_pixels_list_b(void){
+ if (binary_list) ufree(binary_list);
+ binary_list=NULL;
+ binary_count=0;
+}
+
+void patch_bad_pixels_b(void){
+ int i;
+ short* ptr=binary_list;
+ for (i=0; i<binary_count; i++, ptr+=2) if (get_raw_pixel(ptr[0], ptr[1])==0) patch_bad_pixel(ptr[0], ptr[1]);
+}
+/*
+void unpatch_bad_pixels_b(void){
+ int i;
+ short* ptr=binary_list;
+ for (i=0; i<binary_count; i++, ptr+=2) set_raw_pixel(ptr[0], ptr[1], 0);
+}
+*/
+int badpixel_list_loaded_b(void){
+ return binary_count;
+}
+#endif

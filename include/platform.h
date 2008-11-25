@@ -474,6 +474,8 @@ void set_ev_video_avail(int);
 int get_ev_video(void);
 void set_ev_video(int); 
 
+void reverse_bytes_order(char* start, int count); 
+
 #define started() debug_led(1)
 #define finished() debug_led(0)
 

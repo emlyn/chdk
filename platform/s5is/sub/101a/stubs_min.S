@@ -10,7 +10,7 @@ DEF(physw_run, 0x1CD8)
 
 DEF(led_table, 0x2710) // 0x270C + 4
 
-DEF(FlashParamsTable,0xFFAF0088) // ++ Only difference between 1.01a and 1.01b?
+DEF(FlashParamsTable,0xFFAF0088) 
 
 DEF(zoom_busy, 0xB3B0)  //0xB37C + 0x34
 

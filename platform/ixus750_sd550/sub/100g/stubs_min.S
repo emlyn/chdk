@@ -6,7 +6,7 @@ DEF(led_table, 0x11458)
 
 DEF(zoom_busy, 0x800e8)
 DEF(focus_busy, 0x80404)
-DEF(FlashParamsTable,0xFF962648)
+DEF(FlashParamsTable,0xFF962698)
 DEF(canon_menu_active,0x8DD4)
 DEF(canon_shoot_menu_active,0x810d)
 DEF(recreview_hold, 0x7D2E8)

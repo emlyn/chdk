@@ -1186,6 +1186,12 @@ void shooting_bracketing(void){
    }
 }
 
+#if CAM_REAR_CURTAIN
+  void shooting_set_flash_sync_curtain(int curtain){
+   _SetPropertyCase(PROPCASE_FLASH_SYNC_CURTAIN, &curtain, sizeof(curtain));
+  }
+#endif
+
 
 void __attribute__((naked,noinline)) shooting_expo_param_override(void){
  asm volatile("STMFD   SP!, {R0-R12,LR}\n");
@@ -1237,6 +1243,10 @@ else if ((conf.iso_override_value) && (conf.iso_override_koef) && !(conf.overrid
  else if (conf.nd_filter_state && !(conf.override_disable==1)) 
    shooting_set_nd_filter_state(conf.nd_filter_state, SET_NOW);
 #endif  
+
+#if CAM_REAR_CURTAIN
+  shooting_set_flash_sync_curtain(conf.flash_sync_curtain);
+#endif
  asm volatile("LDMFD   SP!, {R0-R12,PC}\n");
 }
 

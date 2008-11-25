@@ -374,6 +374,9 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(222, conf.edge_overlay_play,    CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(223, conf.edge_overlay_lock,              CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(224, conf.edge_overlay_zoom,                CONF_DEF_VALUE, i:1, NULL),
+    CONF_INFO(225, conf.raw_cache,              CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(226, conf.dng_raw,                CONF_DEF_VALUE, i:0, conf_change_dng),
+    CONF_INFO(227, conf.flash_sync_curtain,     CONF_DEF_VALUE, i:0, NULL),
     };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 
@@ -424,6 +427,16 @@ static void conf_change_grid_file() {
 static void conf_change_video_bitrate() {
     shooting_video_bitrate_change(conf.video_bitrate);
  }
+
+void conf_change_dng(void){
+#if DNG_SUPPORT
+ if (conf.dng_raw) {
+  if (!badpixel_list_loaded_b()) load_bad_pixels_list_b("A/CHDK/badpixel.bin");
+  if (!badpixel_list_loaded_b()) conf.dng_raw=0;
+ }
+ else unload_bad_pixels_list_b();
+#endif
+}
 
 //-------------------------------------------------------------------
 static void conf_init_defaults() {

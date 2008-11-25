@@ -27,6 +27,8 @@ typedef struct {
     int sub_batch_ext;
     int sub_in_dark_value; // values <= to this are not subtracted, i.e. the dark value of your darkframe
     int sub_out_dark_value; // minimum value to output from subtract, i.e. dark value of your final image
+    int raw_cache;
+    int dng_raw;
 
     int show_osd;
     int hide_osd;
@@ -261,7 +263,7 @@ typedef struct {
     int script_param_save;
     
     long mem_view_addr_init;
-
+    int flash_sync_curtain;
 } Conf;
 
 extern Conf conf;
@@ -297,6 +299,7 @@ extern void conf_save();
 extern void conf_restore();
 extern void conf_load_defaults();
 extern int shutter_int;
+extern void conf_change_dng(void);
 
 // reyalp: putting these in conf, since the conf values are lookups for them
 // prefixes and extentions available for raw images (index with conf.raw_prefix etc)

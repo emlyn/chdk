@@ -2,7 +2,7 @@
 
 DEF(physw_status, 0x14CFC)
 DEF(physw_run, 0x1ca4) 
-DEF(FlashParamsTable, 0xFFAD00B4) // it seems
+DEF(FlashParamsTable, 0xFFAD6F9C) // it seems
 
 // Key values for 'Feather' on joystic
 // Could be retrieved from 'PhySW' Task function
