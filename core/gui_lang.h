@@ -530,14 +530,13 @@
 #define LANG_MENU_EDGE_FREE		420
 #define LANG_MENU_EDGE_ZOOM		421
 #define LANG_MENU_EDGE_LOCK		422
-#define LANG_POPUP_RAW_DEVELOP          423
-#define LANG_MENU_REAR_CURTAIN          424 
-#define LANG_MENU_DNG_FORMAT            425
-#define LANG_MENU_RAW_CACHED            426
-#define LANG_CANNOT_OPEN_BADPIXEL_FILE  427
+#define LANG_MENU_REAR_CURTAIN          423 
+#define LANG_MENU_DNG_FORMAT            424
+#define LANG_MENU_RAW_CACHED            425
+#define LANG_CANNOT_OPEN_BADPIXEL_FILE  426
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  427
+#define GUI_LANG_ITEMS                  426
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();
