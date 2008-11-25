@@ -534,9 +534,10 @@
 #define LANG_MENU_DNG_FORMAT            424
 #define LANG_MENU_RAW_CACHED            425
 #define LANG_CANNOT_OPEN_BADPIXEL_FILE  426
+#define LANG_MENU_RAW_TIMER             427
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  426
+#define GUI_LANG_ITEMS                  427
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

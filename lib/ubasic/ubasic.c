@@ -269,6 +269,10 @@ case TOKENIZER_IS_PRESSED:
     accept(TOKENIZER_GET_MOVIE_STATUS);
     r = movie_status;
    break;
+  case TOKENIZER_GET_PLATFORM_ID:
+    accept(TOKENIZER_GET_PLATFORM_ID);
+    r = (int)PLATFORMID;
+   break;
   case TOKENIZER_GET_DRIVE_MODE:
     accept(TOKENIZER_GET_DRIVE_MODE);
     r = shooting_get_prop(PROPCASE_DRIVE_MODE);

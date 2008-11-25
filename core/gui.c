@@ -652,27 +652,17 @@ static CMenuItem visual_submenu_items[] = {
 };
 static CMenu visual_submenu = {0x28,LANG_MENU_VIS_TITLE, NULL, visual_submenu_items };
 
-void blank_menu()
-{};
-
-static CMenuItem user_submenu_items[] = {
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x0,LANG_MENU_ITEM_BLANK,      MENUITEM_PROC,  (int*)blank_menu,0},
-	{0x20,LANG_MENU_MAIN_TITLE,      MENUITEM_PROC,  (int*)rinit},
-    {0}
+/*
+ * 1 extra entry for the "Main menu" and 1 for null when the menu is full with user selections
+ * Compiler will zero init remaining portion of array so no there is no hidden relationship between
+ * this structure and the value of USER_MENU_ITEMS. The value of USER_MENU_ITEMS can be anything you
+ * wish and everything automagically works.
+*/
+ 
+static CMenuItem user_submenu_items[USER_MENU_ITEMS + 2] = {
+	{0x20,LANG_MENU_MAIN_TITLE,     MENUITEM_PROC,  (int*)rinit}
 };
+ 
 static CMenu user_submenu = {0x2e,LANG_MENU_USER_MENU, NULL, user_submenu_items };
 
 static CMenuItem raw_state_submenu_items[] = {
@@ -767,6 +757,7 @@ static CMenuItem raw_submenu_items[] = {
     {0x5c, LANG_MENU_DNG_FORMAT,                MENUITEM_BOOL | MENUITEM_ARG_CALLBACK, &conf.dng_raw , (int)cb_change_dng },
 #endif
     {0x5c,LANG_MENU_RAW_CACHED,          MENUITEM_BOOL,      &conf.raw_cache },
+    {0x5c,LANG_MENU_RAW_TIMER,           MENUITEM_BOOL,      &conf.raw_timer },
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
@@ -827,21 +818,75 @@ static int gui_user_menu_flag;
 
 void rinit(){
 	gui_menu_init(&root_menu);
-    draw_restore();
-    gui_force_restore();
 }
 
-static CMenuItem blank_menu_item = {0x0,LANG_MENU_ITEM_BLANK, MENUITEM_PROC, (int*)blank_menu,0};
+//-------------------------------------------------------------------
+void
+mod_user_menu(CMenuItem curr_menu_item, int* cur_memnu_item_indx, int mod) {
+int i;
+CMenuItem tmp_menu_item;
+	switch(mod) {
 
-void add_user_menu(CMenuItem curr_menu_item, int* gui_menu_add_item, int del) {
-	if (*gui_menu_add_item<USER_MENU_ITEMS){
-		if (del) {
-			user_submenu_items[*gui_menu_add_item] = blank_menu_item;
-		} else {
-			user_submenu_items[*gui_menu_add_item] = curr_menu_item;
-			*gui_menu_add_item += 1;
-		}	
-	}
+		case 0:
+			/*
+			 * Delete user menu entry by sliding all the lower valid/existing entries up.
+			 */
+
+			if (*cur_memnu_item_indx == 0) /* don't allow deleting "user menu" */
+				break;
+ 			for(i = *cur_memnu_item_indx; user_submenu_items[i].text; i++) {
+ 				user_submenu_items[i] = user_submenu_items[i+1];
+ 			}
+ 
+ 			/*
+ 			 * there were no valid entries below this one, so
+ 			 * the index pointer must be decremented.
+ 			 */
+ 			if(!user_submenu_items[*cur_memnu_item_indx].text)
+ 				*cur_memnu_item_indx -= 1;
+ 
+ 			break;
+ 
+ 		case 1:
+ 			/*
+ 			 * Insert new Item at end of existing entries
+ 			 */
+ 			for(i = 1; i < USER_MENU_ITEMS + 1; i++) {
+ 				if(!user_submenu_items[i].text) {
+ 					user_submenu_items[i] = curr_menu_item;
+ 					break;
+				}
+ 			}
+ 			break;
+ 
+ 		case 2:
+ 			/*
+ 			 * Move entry up
+ 			 */
+ 
+ 			if((*cur_memnu_item_indx > 1)) {
+ 				tmp_menu_item = user_submenu_items[*cur_memnu_item_indx -1];
+ 				user_submenu_items[*cur_memnu_item_indx -1] = user_submenu_items[*cur_memnu_item_indx];
+ 				user_submenu_items[*cur_memnu_item_indx] = tmp_menu_item;
+ 				*cur_memnu_item_indx -=1;
+ 			}
+ 			break;
+
+ 		case 3:
+ 			/*
+ 			 * Move entry down below next entry if next entry is not empty
+ 			 */
+ 			if (*cur_memnu_item_indx == 0) /* don't allow moving "user menu" */
+ 				break;
+ 			if((*cur_memnu_item_indx < (USER_MENU_ITEMS)) && (user_submenu_items[*cur_memnu_item_indx +1].text)) {
+ 				tmp_menu_item = user_submenu_items[*cur_memnu_item_indx +1];
+ 				user_submenu_items[*cur_memnu_item_indx + 1] = user_submenu_items[*cur_memnu_item_indx];
+ 				user_submenu_items[*cur_memnu_item_indx] = tmp_menu_item;
+ 				*cur_memnu_item_indx +=1;
+ 			}
+ 			break;
+ 
+ 	}	
 }
 
 //-------------------------------------------------------------------
@@ -3083,15 +3128,22 @@ int find_mnu(CMenu *curr_menu, int mnu, int count)
 void user_menu_save() {
     int x;
 	for (x=0; x<USER_MENU_ITEMS; x++) {
-		conf.user_menu_vars[x] = user_submenu_items[x].text;
+		/*
+		 * First entry in user_submenu_items is reserved for the "Main Menu"
+ 		 * conf.user_menu_vars only traks/saves the real user entries.
+ 		 */
+ 		conf.user_menu_vars[x] = user_submenu_items[x+1].text;
 	}
 }
-
+ 
 void user_menu_restore() {
-    int x;
-	for (x=0; x<USER_MENU_ITEMS; x++) {
-		find_mnu(&root_menu, conf.user_menu_vars[x], x);
-	}
+     int x;
+ 	for (x=0; x<USER_MENU_ITEMS; x++) {
+ 		/*
+ 		 * First entry in user_submenu_items is reserved for the "Main Menu"
+ 		 * conf.user_menu_vars only traks/saves the real user entries.
+ 		 */
+ 		find_mnu(&root_menu, conf.user_menu_vars[x], x+1);
+ 	}
 }
-
 

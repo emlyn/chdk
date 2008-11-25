@@ -30,7 +30,6 @@ static unsigned int gui_menu_stack_ptr;
 static int          gui_menu_curr_item;
 static int          gui_menu_top_item;
 static int          gui_menu_redraw;
-static int          gui_menu_add_item = 0;
 
 static int          count;
 static coord        x, y, w, num_lines;
@@ -100,11 +99,51 @@ static char sbuf[7];
         case KEY_SHOOT_HALF:
 #endif
 		if (conf.user_menu_enable == 3) {
-			if (curr_menu->title != LANG_MENU_USER_MENU)
-				add_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_add_item, 0);
-			else
-				add_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_add_item, 1);
-	            gui_menu_redraw=1;
+			if (curr_menu->title != LANG_MENU_USER_MENU) {
+				/*
+				 * Add new entry
+				 * user menu is currently not visible so no redraw necessary
+				 */
+				mod_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_curr_item, 1);
+			}
+			else {
+				int x;
+				/*
+				 * Remove entry from menu
+				 */
+				mod_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_curr_item, 0);
+
+
+				/*
+				 * Check to see if the last visible entry was deleted and we need need
+				 * to move up our top menu item.
+				 */
+				if(gui_menu_top_item)
+					if(!curr_menu->menu[gui_menu_top_item + num_lines-1].text)
+						gui_menu_top_item--;
+
+				/*
+				 * menu list is smaller so have to redraw everything to get
+				 * things like scroll bar correct.
+				 */
+	            		gui_menu_redraw=2;
+
+				/*
+				 * Count the numer of menu entries
+				 */
+				for(x = 0; curr_menu->menu[x].text; x++)
+						;
+
+				/*
+				 * if the new menu is smaller than visible menu lines on screen
+				 * you have to restore full screen before menu redraw.
+				 * If you don't do this, then a new smaller menu will be drawn
+				 * on top of the older larger menu
+				 *
+				 */
+				if(x < num_lines)
+					draw_restore();
+			}
 		}
 		break;
         case JOGDIAL_LEFT:
@@ -127,7 +166,6 @@ static char sbuf[7];
                      (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK)==MENUITEM_SEPARATOR);
             int_incr = 1;
             gui_menu_redraw=1;
-            if (curr_menu->title == LANG_MENU_USER_MENU) gui_menu_add_item = gui_menu_curr_item;
 			}
             break;
         case JOGDIAL_RIGHT:
@@ -149,7 +187,6 @@ static char sbuf[7];
                      (curr_menu->menu[gui_menu_curr_item].type & MENUITEM_MASK)==MENUITEM_SEPARATOR);
             int_incr = 1;
             gui_menu_redraw=1;
-            if (curr_menu->title == LANG_MENU_USER_MENU) gui_menu_add_item = gui_menu_curr_item;
 			}
             break;
         case KEY_LEFT:
@@ -398,21 +435,50 @@ static char sbuf[7];
 
 #if CAM_HAS_ZOOM_LEVER
         case KEY_ZOOM_IN:
-            if (int_incr >= 10){
-                int_incr /= 10;
-            }
-            sprintf(sbuf, "±%d",int_incr);
-            draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
-            draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
-            break;
+		/*
+		 * Move current entry up in menu
+		 * if in user menu edit mode and viewing user menu
+		 */
+		if( (conf.user_menu_enable == 3)  && (curr_menu->title == LANG_MENU_USER_MENU)) {
+			mod_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_curr_item, 2);
+			if(gui_menu_curr_item < gui_menu_top_item+1) {
+				if(gui_menu_curr_item)
+					gui_menu_top_item = gui_menu_curr_item-1;
+			}
+			
+			gui_menu_redraw=1;
+		}
+		else {
+		    if (int_incr >= 10){
+			int_incr /= 10;
+		    }
+		    sprintf(sbuf, "±%d",int_incr);
+		    draw_string(FONT_WIDTH*2,0,"    ", MAKE_COLOR(COLOR_TRANSPARENT, COLOR_TRANSPARENT));
+		    draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
+		}
+		break;
 
         case KEY_ZOOM_OUT:
-            if (int_incr <= 1000){
-                int_incr *= 10;
-            }
-            sprintf(sbuf, "±%d",int_incr);
-            draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
-            break;
+		/*
+		 * Move current entry down in menu
+		 * if in user menu edit mode and viewing user menu
+		 */
+		if( (conf.user_menu_enable == 3)  && (curr_menu->title == LANG_MENU_USER_MENU)) {
+			mod_user_menu(curr_menu->menu[gui_menu_curr_item],&gui_menu_curr_item, 3);
+			gui_menu_redraw=1;
+			if(gui_menu_curr_item > gui_menu_top_item + num_lines -2) {
+				if((gui_menu_curr_item < USER_MENU_ITEMS) && curr_menu->menu[gui_menu_curr_item +1].text)
+					gui_menu_top_item++;
+			}
+		}
+		else {
+		    if (int_incr <= 1000){
+			int_incr *= 10;
+		    }
+		    sprintf(sbuf, "±%d",int_incr);
+		    draw_string(0,0,sbuf,MAKE_COLOR(COLOR_SELECTED_BG, COLOR_SELECTED_FG));
+		}
+		break;
 
         case KEY_DISPLAY:
             if (gui_menu_stack_ptr > 0){
@@ -492,7 +558,18 @@ void gui_menu_draw() {
 
         for (imenu=gui_menu_top_item, i=0, yy=y; curr_menu->menu[imenu].text && i<num_lines; ++imenu, ++i, yy+=rbf_font_height()){
             cl = (gui_menu_curr_item==imenu)?conf.menu_cursor_color:conf.menu_color;
-            cl_symbol=(gui_menu_curr_item==imenu)?MAKE_COLOR((cl>>8)&0xFF,(conf.menu_symbol_color>>8)&0xFF):conf.menu_symbol_color; //color 8Bit=Hintergrund 8Bit=Vordergrund
+            /*
+             * When cursor is over a symbol, force symbol background color to be the menu cursor color but
+             * keep the symbol color user defined.
+             * old method was to set the symbol color to the symbol background color when the cursor highlighted it.
+             * This method allows the user to have any symbol color and background color they want with the restriction
+             * that the symbol background color will match the rest of the line when the cursor highlights it.
+             * It creates a nice consistent look expecially when the symbol color matches the menu text color.
+             * without this mod, there is no way to ever make the symbol color match the color of the rest of text menu line
+             * when the cursor highlights a line.
+             */
+            cl_symbol=(gui_menu_curr_item==imenu)?MAKE_COLOR((cl>>8)&0xFF,(conf.menu_symbol_color)&0xFF):conf.menu_symbol_color; //color 8Bit=Hintergrund 8Bit=Vordergrund
+
             xx = x;
 
             switch (curr_menu->menu[imenu].type & MENUITEM_MASK) {

@@ -167,10 +167,12 @@ timer=get_tick_count();
              if (thumbnail_buf) free(thumbnail_buf);
             }
 #endif
-timer=get_tick_count()-timer;
-sprintf(txt, "saving time=%d", timer);
-script_console_add_line(txt);
-
+if (conf.raw_timer)
+	{
+    timer=get_tick_count()-timer;
+    sprintf(txt, "saving time=%d", timer);
+    script_console_add_line(txt);
+  }
         }
 
         finished();

@@ -120,6 +120,7 @@ static const struct keyword_token keywords[] = {
   {"get_movie_status",        TOKENIZER_GET_MOVIE_STATUS},
   {"get_mode",				        TOKENIZER_GET_MODE},  // Returns 0 in recordmode, 1 in playmode
   {"get_near_limit",          TOKENIZER_GET_NEAR_LIMIT},
+  {"get_platform_id",          TOKENIZER_GET_PLATFORM_ID},
   {"get_propset",             TOKENIZER_GET_PROPSET},
   {"get_prop",                TOKENIZER_GET_PROP},
   {"get_quality",             TOKENIZER_GET_QUALITY},

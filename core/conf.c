@@ -106,6 +106,17 @@ int ubasic_camera_get_nr()
 
 void clear_values()
 {	
+	if (conf.platformid != (int)PLATFORMID) // the following config entries will be resetted if you switch the camera using the same cfg
+	{
+    conf.raw_cache = 0;
+    conf.zoom_override_value = 0;
+    conf.fast_ev = 0;
+    conf.fast_movie_control = 0;
+    conf.fast_movie_quality_control = 0;
+    conf.zoom_scale = 100;
+    conf.platformid = (int)PLATFORMID;
+	}
+
 	if (conf.clear_override)
 	{
 	 conf.av_override_value=0;
@@ -377,6 +388,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(225, conf.raw_cache,              CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(226, conf.dng_raw,                CONF_DEF_VALUE, i:0, conf_change_dng),
     CONF_INFO(227, conf.flash_sync_curtain,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(228, conf.raw_timer,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(229, conf.platformid,     CONF_DEF_VALUE, i:(int)PLATFORMID, NULL),
     };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

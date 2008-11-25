@@ -545,6 +545,7 @@ static char* gui_lang_default = \
 "424 \"DNG format\"\n"
 "425 \"RAW buffer cached\"\n"
 "426 \"Cannot load CHDK/badpixel.bin\"\n"
+"427 \"Show saving time\"\n"
 ;
 
 //-------------------------------------------------------------------

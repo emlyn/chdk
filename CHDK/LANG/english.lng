@@ -565,3 +565,4 @@
 424 "DNG format"
 425 "RAW buffer cached"
 426 "Cannot load CHDK/badpixel.bin"
+427 "Show raw saving time"

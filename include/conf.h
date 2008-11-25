@@ -29,6 +29,7 @@ typedef struct {
     int sub_out_dark_value; // minimum value to output from subtract, i.e. dark value of your final image
     int raw_cache;
     int dng_raw;
+    int raw_timer;
 
     int show_osd;
     int hide_osd;
@@ -147,6 +148,7 @@ typedef struct {
     int fast_movie_quality_control;
     int splash_show;
     int start_sound;
+    int platformid;
 
     int use_zoom_mf;
     long alt_mode_button; //for S-series

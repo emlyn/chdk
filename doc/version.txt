@@ -2,6 +2,13 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
+0.8.3 / #593 / PhyrePhoX
+
+* updated french.lng
++ added "saving time switch" in raw menu (better in debug menu?) - it is disabled at default (when enabled, shows time it takes to save raw/dng)
++ added a feature that allows using cfgs from a different camera by resetting "critical" settings on startup of the platform id doesnt match (more settings? less settings? need input)
++ added "get_platform_id" to ubasic, which returns platformid (integer), with the help of this you can code platform depending scripts (in lua we dont need this, as we can get strings there)
+
 0.8.2 / #592 / PhyrePhoX
 
 * fixed a590 zoom table (see http://chdk.setepontos.com/index.php/topic,2659.msg24733.html#msg24733)
