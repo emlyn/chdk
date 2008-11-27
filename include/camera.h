@@ -881,7 +881,25 @@
     #undef CAM_HAS_IS                     // Camera has image stabilizer
 
 //    #define  CAM_CONSOLE_LOG_ENABLED   1      // Development: internal camera stdout -> A/stdout.txt        
-
+    #define DNG_SUPPORT                 1
+    // pattern
+    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
+    // color
+    #define CAM_COLORMATRIX1                                \
+      689833,  1000000, -198299, 1000000, -101299, 1000000, \
+      -164267, 1000000, 667466,  1000000,  74132,  1000000, \
+       -36515,  1000000, 123872,   1000000,  248498, 1000000
+    
+    #define cam_CalibrationIlluminant1 1 // Daylight
+    // cropping
+    #define CAM_JPEG_WIDTH  3072
+    #define CAM_JPEG_HEIGHT 2304
+    #define CAM_ACTIVE_AREA_X1 38
+    #define CAM_ACTIVE_AREA_Y1 14
+    #define CAM_ACTIVE_AREA_X2 3146
+    #define CAM_ACTIVE_AREA_Y2 2338
+    // camera name
+    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus70_sd1000)
     #define CAM_PROPSET                 2
