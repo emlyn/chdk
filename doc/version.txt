@@ -2,6 +2,13 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
+0.8.4 / #594 / reyalp
++ raw operations for lua scripts, see http://chdk.setepontos.com/index.php/topic,2646.0.html
+ set_raw_develop("filename") -- develop raw on next shot. If filename is nil (or omitted), any pending raw develop is canceled.
+ raw_merge_start(operation) -- operation is a number: 0=sum 1=average. Other=error.
+ raw_merge_add("filename") -- merge a file.
+ raw_merge_end() -- complete merge operation.
+
 0.8.3 / #593 / PhyrePhoX
 
 * updated french.lng

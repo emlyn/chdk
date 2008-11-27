@@ -905,11 +905,11 @@ static void fselect_mpopup_cb(unsigned int actn) {
         case MPOPUP_CANCEL:
             break;
 	case MPOPUP_RAW_AVERAGE:
-	    raw_operation=RAW_OPERATIOM_AVERAGE;
+	    raw_operation=RAW_OPERATION_AVERAGE;
             process_raw_files();
             break;
         case MPOPUP_RAW_ADD:
-            raw_operation=RAW_OPERATIOM_SUM;
+            raw_operation=RAW_OPERATION_SUM;
             process_raw_files();
             break;
 		case MPOPUP_RAW_DEVELOP:

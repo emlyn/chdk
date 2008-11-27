@@ -140,7 +140,7 @@ void gui_mpopup_kbd_process() {
 }
 
 //-------------------------------------------------------------------
-void gui_browser_progress_show(char* msg, const unsigned int perc) {
+void gui_browser_progress_show(const char* msg, const unsigned int perc) {
     coord x=60, y=100;
     unsigned int w=240, h=40, len;
 

@@ -21,8 +21,8 @@
 //-------------------------------------------------------------------
 extern int raw_savefile();
 extern void raw_postprocess();
-extern void raw_prepare_develop(char* filename);
-extern void load_bad_pixels_list(char* filename);
+extern void raw_prepare_develop(const char* filename);
+extern void load_bad_pixels_list(const char* filename);
 unsigned short get_raw_pixel(unsigned int x,unsigned  int y);
 void load_bad_pixels_list_b(char* filename);
 void unload_bad_pixels_list_b(void);

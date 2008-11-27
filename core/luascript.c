@@ -10,6 +10,8 @@
 #include "shot_histogram.h"
 #include "ubasic.h"
 #include "stdlib.h"
+#include "raw.h"
+#include "raw_merge.h"
 
 static int luaCB_shoot( lua_State* L )
 {
@@ -476,8 +478,10 @@ static int luaCB_shut_down( lua_State* L )
 static int luaCB_print_screen( lua_State* L )
 {
   
-  if lua_isboolean( L, 1 ) script_print_screen_statement( lua_toboolean( L, 1 ) );
-  else script_print_screen_statement( luaL_checknumber( L, 1 )+10000 );
+  if (lua_isboolean( L, 1 ))
+    script_print_screen_statement( lua_toboolean( L, 1 ) );
+  else
+    script_print_screen_statement( luaL_checknumber( L, 1 )+10000 );
   return 0;
 }
 
@@ -490,20 +494,23 @@ static int luaCB_get_movie_status( lua_State* L )
 static int luaCB_set_movie_status( lua_State* L )
 {
   int to;
-  to = luaL_checknumber( L, 1 );
-if (to==1) {
-	if (movie_status == 4) {
-	movie_status = 1;
-}}
-if (to==2) {
-	if (movie_status == 1) {
-	movie_status = 4;
-}
-}
-if (to==3) {
-	if (movie_status == 1 || 4) {
-	movie_status = 5;
-}}
+  switch(luaL_checknumber( L, 1 )) {
+    case 1:
+      if (movie_status == 4) {
+        movie_status = 1;
+      }
+    break;
+    case 2:
+      if (movie_status == 1) {
+        movie_status = 4;
+      }
+    break;
+    case 3:
+      if (movie_status == 1 || movie_status == 4) {
+        movie_status = 5;
+      }
+    break;
+  }
   return 0;
 }
 
@@ -759,6 +766,38 @@ static int luaCB_get_mode( lua_State* L )
   return 3;
 }
 
+// TODO sanity check file ?
+static int luaCB_set_raw_develop( lua_State* L )
+{
+  raw_prepare_develop(luaL_optstring( L, 1, NULL ));
+  return 0;
+}
+
+static int luaCB_raw_merge_start( lua_State* L )
+{
+  int op = luaL_checknumber(L,1);
+  if (op == RAW_OPERATION_SUM || op == RAW_OPERATION_AVERAGE) {
+    raw_merge_start(op);
+  }
+  else {
+    return luaL_argerror(L,1,"invalid raw merge op");
+  }
+  return 0;
+}
+
+// TODO sanity check file ?
+static int luaCB_raw_merge_add_file( lua_State* L )
+{
+  raw_merge_add_file(luaL_checkstring( L, 1 ));
+  return 0;
+}
+
+static int luaCB_raw_merge_end( lua_State* L )
+{
+  raw_merge_end();
+  return 0;
+}
+
 void register_lua_funcs( lua_State* L )
 {
 #define FUNC( X )			\
@@ -884,4 +923,11 @@ void register_lua_funcs( lua_State* L )
 
   FUNC(get_buildinfo);
   FUNC(get_mode);
+  
+  FUNC(set_raw_develop);
+  // NOTE these functions normally run in the spytask.
+  // called from lua they will run from kbd task instead
+  FUNC(raw_merge_start);
+  FUNC(raw_merge_add_file);
+  FUNC(raw_merge_end);
 }

@@ -20,7 +20,7 @@ extern void gui_mpopup_init(const unsigned int flags, void (*on_select)(unsigned
 extern void gui_mpopup_kbd_process();
 extern void gui_mpopup_draw();
 
-extern void gui_browser_progress_show(char* msg, const unsigned int perc);
+extern void gui_browser_progress_show(const char* msg, const unsigned int perc);
 
 //-------------------------------------------------------------------
 #endif

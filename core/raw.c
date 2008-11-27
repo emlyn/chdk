@@ -22,9 +22,14 @@ static char fn[64];
 static char dir[32];
 static int develop_raw=0;
 //-------------------------------------------------------------------
-void raw_prepare_develop(char* filename){
- develop_raw=1; 
- strcpy(fn,filename);
+void raw_prepare_develop(const char* filename){
+ if (filename) {
+  develop_raw=1; 
+  strcpy(fn,filename);
+ }
+ else {
+  develop_raw=0;
+ }
 }
 
 //-------------------------------------------------------------------
@@ -289,7 +294,7 @@ void make_pixel_list(char * ptr){
 }
 
 #define PIXELS_BUF_SIZE 8192
-void load_bad_pixels_list(char* filename){
+void load_bad_pixels_list(const char* filename){
     char *buf;
     int fd;
 
