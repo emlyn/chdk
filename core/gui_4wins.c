@@ -238,7 +238,7 @@ void change_mode()
 	if (mode_rival==1)
 		draw_txt_string(30, 12, lang_str(LANG_CONNECT4_HUMAN), MAKE_COLOR(BG_COLOR, COLOR_WHITE));
 	else
-		draw_txt_string(30, 12, lang_str(PLATFORM), MAKE_COLOR(BG_COLOR, COLOR_WHITE));
+		draw_txt_string(30, 12, PLATFORM, MAKE_COLOR(BG_COLOR, COLOR_WHITE));
 }
 //-------------------------------------------------------------------
 void set()
@@ -324,7 +324,7 @@ int gui_4wins_init()
 	if (mode_rival==1)
 		draw_txt_string(30, 12, lang_str(LANG_CONNECT4_HUMAN), MAKE_COLOR(BG_COLOR, COLOR_WHITE));
 	else
-		draw_txt_string(30, 12, lang_str(PLATFORM), MAKE_COLOR(BG_COLOR, COLOR_WHITE));
+		draw_txt_string(30, 12, PLATFORM, MAKE_COLOR(BG_COLOR, COLOR_WHITE));
 
 	if(cur_player==2&&!mode_rival) set();
 	return 1;

@@ -15,6 +15,8 @@ typedef struct {
     int save_raw_in_video;
     int save_raw_in_sports;
     int save_raw_in_burst;
+    int save_raw_in_edgeoverlay;
+    int save_raw_in_auto;
     int save_raw_in_ev_bracketing;
     int save_raw_in_timer;
     int raw_exceptions_warn;

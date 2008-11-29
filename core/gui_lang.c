@@ -554,6 +554,8 @@ static char* gui_lang_default = \
 "432 \"Player 2 won the game\"\n"
 "433 \"I beat you\"\n"
 "434 \"The game ended a draw\"\n"
+"435 \"Disable Raw @ Edgeoverlay\"\n"
+"436 \"Disable RAW @ Auto\"\n"
 ;
 
 //-------------------------------------------------------------------
