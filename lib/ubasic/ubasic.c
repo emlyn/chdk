@@ -271,7 +271,7 @@ case TOKENIZER_IS_PRESSED:
    break;
   case TOKENIZER_GET_PLATFORM_ID:
     accept(TOKENIZER_GET_PLATFORM_ID);
-    r = (int)PLATFORMID;
+    r = atoi(PLATFORMID);
    break;
   case TOKENIZER_GET_DRIVE_MODE:
     accept(TOKENIZER_GET_DRIVE_MODE);
