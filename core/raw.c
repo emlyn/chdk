@@ -66,8 +66,8 @@ void create_thumbnail(char* buf){
     g=gamma[6*(get_raw_pixel((x/2)*2+1,(y/2)*2)>>2)/10]; // green pixel
     b=gamma[get_raw_pixel((x/2)*2+1,(y/2)*2+1)>>2]; //blue pixel
 #elif cam_CFAPattern==0x01000201 // Green  Blue  Red  Green
-    r=gamma[get_raw_pixel((x/2)*2,(y/2)*2+1)]; // red pixel
-    g=gamma[7*(get_raw_pixel((x/2)*2,(y/2)*2)>>2)/10]; // green pixel
+    r=gamma[get_raw_pixel((x/2)*2,(y/2)*2+1)>>2]; // red pixel
+    g=gamma[6*(get_raw_pixel((x/2)*2,(y/2)*2)>>2)/10]; // green pixel
     b=gamma[get_raw_pixel((x/2)*2+1,(y/2)*2)>>2]; //blue pixel
 #else 
  #error please define new pattern here
