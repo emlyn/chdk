@@ -3,7 +3,9 @@ CHDK Trunk / Autobuild History
 version / revision / author
 
 
-0.8.6 / #597-603 / PhyrePhoX
+0.8.6 / #597-604 / PhyrePhoX
+
+* fixed platform_id again :D
 
 + new function (one of my favourites to date, and i just wrote it :D), only for s-series & TX-1 
 you now can use the flash during videos... see http://www.zshare.net/video/52034396605a6fd7/ for example
