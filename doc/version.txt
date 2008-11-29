@@ -2,6 +2,10 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
+0.8.4 / #596 / ewavr
+* sx100is - improver power-on procedure
++ sx100is - added jogdial support in menu, file browser and text reader
+
 0.8.4 / #594 / reyalp
 + raw operations for lua scripts, see http://chdk.setepontos.com/index.php/topic,2646.0.html
  set_raw_develop("filename") -- develop raw on next shot. If filename is nil (or omitted), any pending raw develop is canceled.

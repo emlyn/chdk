@@ -24,7 +24,7 @@ void startup()
     while (bss<&link_bss_end)
 	*bss++ = 0;
 
-	debug_led(1);
+//	debug_led(1);
     boot();
 }
 

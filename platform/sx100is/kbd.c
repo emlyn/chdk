@@ -123,8 +123,10 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f()
 }
 
 
+volatile int jogdial_stopped=0;
+
 void my_kbd_read_keys()
-{
+{       
 	kbd_prev_state[0] = kbd_new_state[0];
 	kbd_prev_state[1] = kbd_new_state[1];
 	kbd_prev_state[2] = kbd_new_state[2];
@@ -141,11 +143,16 @@ void my_kbd_read_keys()
 
 		// But do override the alt mode key
 		physw_status[1] |= alt_mode_key_mask;
+                jogdial_stopped=0;
 	} else {
 		// override keys
 		physw_status[0] = (kbd_new_state[0] | KEYS_MASK0) & (~KEYS_MASK0 | kbd_mod_state[0]); // Only overrides shoot-button... off, batt and modeswitch are still enabled.
 		physw_status[1] = (kbd_new_state[1] | KEYS_MASK1) & (~KEYS_MASK1 | kbd_mod_state[1]); // Overrides everything except mode-dial (0xF)
 		physw_status[2] = (kbd_new_state[2] | KEYS_MASK2) & (~KEYS_MASK2 | kbd_mod_state[2]); // Currently overrides nothing
+
+	if ((jogdial_stopped==0) && !state_kbd_script_run){ jogdial_stopped=1; get_jogdial_direction(); }
+	else if (jogdial_stopped && state_kbd_script_run) jogdial_stopped=0; 
+
 	}
 
 	remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
@@ -351,4 +358,18 @@ int get_usb_power(int edge)
 	x = usb_power;
 	usb_power = 0;
 	return x;
+}
+
+static int new_jogdial=0, old_jogdial=0;
+
+int Get_JogDial(void){
+ return (*(int*)0xC0240304)>>16;
+}
+
+long get_jogdial_direction(void) { 
+ old_jogdial=new_jogdial;
+ new_jogdial=Get_JogDial();
+ if (old_jogdial>new_jogdial) return JOGDIAL_LEFT; 
+ else if (old_jogdial<new_jogdial) return JOGDIAL_RIGHT;
+ else return 0;
 }

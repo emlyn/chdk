@@ -55,6 +55,8 @@ void boot() { //#fs
     for(i=0;i<canon_bss_len/4;i++)
 	canon_bss_start[i]=0;
 
+    *(int*)0x2578= (*(int*)0xC02200B8)&1 ? 0x100000: 0x200000; // replacement of sub_FFC12E38
+
 //	debug_my_blink();
 
     // jump to init-sequence that follows the data-copy-routine
@@ -213,7 +215,7 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() { //#fs
 	"loc_FFC0DD04:\n"
 		 "B	loc_FFC0DD04\n"
 	"loc_FFC0DD08:\n"
-		 "BL	sub_FFC12E38\n"
+//		 "BL	sub_FFC12E38\n"        //------------> removed here to fast camera switching on
 //		 "BL	sub_FFC12E34\n"					// nullsub_4
 		 "BL	sub_FFC19B30\n"
 		 "MOV	R1, #0x300000\n"
@@ -286,7 +288,7 @@ void CreateTask_spytask() { //#fs
 void CreateTask_PhySw() { //#fs
         _CreateTask("PhySw", 0x18, 0x800, mykbd_task, 0);
         asm volatile (
-			"BL		sub_FFC38128\n"
+			"BL		sub_FFC38128_my\n"  //----------> create 'JogDial' task
         );
 }; //#fe
 
@@ -1460,6 +1462,113 @@ void __attribute__((naked,noinline)) sub_FFC3FF7C_my() { //#fs
 		 "MOV	R0, #1\n"
 		 "STR	R5, [R7,#4]\n"
 		 "LDMFD	SP!, {R4-R8,PC}\n"
+		 ".LTORG\n"
 	);
 }; //#fe
 
+void __attribute__((naked,noinline)) sub_FFC38128_my() { 
+ asm volatile(
+                "STMFD   SP!, {R3-R5,LR}\n"
+                "LDR     R4, =0x2590\n"
+                "LDR     R0, [R4,#8]\n"
+                "CMP     R0, #0\n"
+                "BNE     loc_FFC3815C\n"
+                "MOV     R3, #0\n"
+                "STR     R3, [SP]\n"
+                "LDR     R3, =JogDial_task_my\n"
+                "MOV     R2, #0x800\n"
+                "MOV     R1, #0x18\n"
+                "LDR     R0, =0xFFC38288\n"
+                "BL      sub_FFC0BE90\n"
+                "STR     R0, [R4,#8]\n"
+"loc_FFC3815C:\n"
+                "LDMFD   SP!, {R3-R5,PC}\n"
+ );
+}
+
+void __attribute__((naked,noinline)) JogDial_task_my() { 
+ asm volatile(
+                "STMFD   SP!, {R3-R11,LR}\n"
+                "BL      sub_FFC382A8\n"
+                "LDR     R11, =0x80000B01\n"
+                "LDR     R8, =0xFFE5FAA4\n"
+                "LDR     R7, =0xC0240000\n"
+                "LDR     R6, =0x2590\n"
+                "MOV     R9, #1\n"
+                "MOV     R10, #0\n"
+"loc_FFC3804C:\n"
+                "LDR     R3, =0x191\n"
+                "LDR     R0, [R6,#0x10]\n"
+                "LDR     R2, =0xFFC38278\n"
+                "MOV     R1, #0\n"
+                "BL      sub_FFC0BF78\n"
+                "MOV     R0, #40\n"
+                "BL      _SleepTask\n"
+
+//------------------  added code ---------------------
+"labelA:\n"
+                "LDR     R0, =jogdial_stopped\n"
+                "LDR     R0, [R0]\n"
+                "CMP     R0, #1\n"
+                "BNE     labelB\n"
+                "MOV     R0, #40\n"
+                "BL      _SleepTask\n"
+                "B       labelA\n"
+"labelB:\n"
+//------------------  original code ------------------
+
+                "LDR     R0, [R7,#0x304]\n"
+                "MOV     R0, R0,ASR#16\n"
+                "STRH    R0, [R6]\n"
+                "LDRSH   R2, [R6,#2]\n"
+                "SUB     R1, R0, R2\n"
+                "CMP     R1, #0\n"
+                "BEQ     loc_FFC38110\n"
+                "MOV     R5, R1\n"
+                "RSBLT   R5, R5, #0\n"
+                "MOVLE   R4, #0\n"
+                "MOVGT   R4, #1\n"
+                "CMP     R5, #0xFF\n"
+                "BLS     loc_FFC380C4\n"
+                "CMP     R1, #0\n"
+                "RSBLE   R1, R2, #0xFF\n"
+                "ADDLE   R1, R1, #0x7F00\n"
+                "ADDLE   R0, R1, R0\n"
+                "RSBGT   R0, R0, #0xFF\n"
+                "ADDGT   R0, R0, #0x7F00\n"
+                "ADDGT   R0, R0, R2\n"
+                "ADD     R5, R0, #0x8000\n"
+                "ADD     R5, R5, #1\n"
+                "EOR     R4, R4, #1\n"
+"loc_FFC380C4:\n"
+                "LDR     R0, [R6,#0x18]\n"
+                "CMP     R0, #0\n"
+                "BEQ     loc_FFC38108\n"
+                "LDR     R0, [R6,#0x20]\n"
+                "CMP     R0, #0\n"
+                "BEQ     loc_FFC380F0\n"
+                "LDR     R1, [R8,R4,LSL#2]\n"
+                "CMP     R1, R0\n"
+                "BEQ     loc_FFC380F8\n"
+                "LDR     R0, =0xB01\n"
+                "BL      sub_FFC5F408\n"
+ "loc_FFC380F0:\n"
+                 "MOV     R0, R11\n"
+                 "BL      sub_FFC5F408\n"
+ "loc_FFC380F8:\n"
+                 "LDR     R0, [R8,R4,LSL#2]\n"
+                 "MOV     R1, R5\n"
+                 "STR     R0, [R6,#0x20]\n"
+                 "BL      sub_FFC5F364\n"
+ "loc_FFC38108:\n"
+                 "LDRH    R0, [R6]\n"
+                 "STRH    R0, [R6,#2]\n"
+ "loc_FFC38110:\n"
+                 "STR     R10, [R7,#0x300]\n"
+                 "STR     R9, [R7,#0x308]\n"
+                 "LDR     R0, [R6,#0x14]\n"
+                 "CMP     R0, #0\n"
+                 "BLNE    _SleepTask\n"
+                 "B       loc_FFC3804C\n"
+ );
+}
