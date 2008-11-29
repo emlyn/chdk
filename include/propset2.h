@@ -7,7 +7,7 @@ WARNING: this file is used gen_propset_lua.sh to generate propset.lua
 #define PROPCASE_DRIVE_MODE					102
 #define PROPCASE_FOCUS_MODE					133
 #define PROPCASE_FLASH_MODE    		        143
-#define PROPCASE_FLASH_OVERRIDE				122 //unverified!
+#define PROPCASE_FLASH_FIRE				122
 #define PROPCASE_FLASH_MANUAL_OUTPUT    141
 #define PROPCASE_FLASH_ADJUST_MODE       	121
 #define PROPCASE_USER_TV       				264
@@ -37,6 +37,5 @@ WARNING: this file is used gen_propset_lua.sh to generate propset.lua
 #define PROPCASE_DISPLAY_MODE                         105
 #define PROPCASE_BRACKET_MODE                         278 //fictional value! need to find out!
 #define PROPCASE_FLASH_SYNC_CURTAIN			64
-#define PROPCASE_FLASH_FIRED				122
 #define PROPCASE_METERING_MODE				155
 #endif

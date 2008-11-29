@@ -367,7 +367,7 @@ struct t_data_for_exif* capture_data_for_exif(void){
  get_property_case(PROPCASE_ORIENTATION_SENSOR, &data.orientation, sizeof(data.orientation));
  get_parameter_data(PARAM_CAMERA_NAME, &cam_name, sizeof(cam_name));
  get_property_case(PROPCASE_FLASH_MODE, &data.flash_mode, sizeof(data.flash_mode));
- get_property_case(PROPCASE_FLASH_FIRED, &data.flash_fired, sizeof(data.flash_fired));
+ get_property_case(PROPCASE_FLASH_FIRE, &data.flash_fired, sizeof(data.flash_fired));
  get_property_case(PROPCASE_METERING_MODE, &data.metering_mode, sizeof(data.metering_mode));
  return &data;
 }

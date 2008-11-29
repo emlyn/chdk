@@ -1197,7 +1197,7 @@ void shooting_bracketing(void){
 		int mode = 1;
 		if (movie_status > 1) {
 				_SetPropertyCase(PROPCASE_FLASH_ADJUST_MODE, &mode, sizeof(mode));
-				_SetPropertyCase(PROPCASE_FLASH_OVERRIDE, &flash, sizeof(flash));
+				_SetPropertyCase(PROPCASE_FLASH_FIRE, &flash, sizeof(flash));
 				_SetPropertyCase(PROPCASE_FLASH_MANUAL_OUTPUT, &power, sizeof(power));
 		}
   }
