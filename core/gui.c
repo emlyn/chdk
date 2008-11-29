@@ -588,6 +588,10 @@ static CMenuItem operation_submenu_items[] = {
 #if CAM_REAR_CURTAIN
       {0x5c, LANG_MENU_REAR_CURTAIN, MENUITEM_BOOL, &conf.flash_sync_curtain },
 #endif
+#if CAM_HAS_VIDEO_BUTTON
+	 	    {0x5c, LANG_MENU_FLASH_VIDEO_OVERRIDE, MENUITEM_BOOL,   &conf.flash_video_override},
+ 	  		{0x5f, LANG_MENU_FLASH_VIDEO_OVERRIDE_POWER,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.flash_video_override_power, MENU_MINMAX(0, 2)},
+#endif
 	  {0x51,LANG_MENU_BACK,                     MENUITEM_UP },
      {0}
 };

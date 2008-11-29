@@ -546,9 +546,11 @@
 
 #define LANG_MENU_RAW_SAVE_IN_EDGEOVERLAY  435
 #define LANG_MENU_RAW_SAVE_IN_AUTO         436
+#define LANG_MENU_FLASH_VIDEO_OVERRIDE     437
+#define LANG_MENU_FLASH_VIDEO_OVERRIDE_POWER     438
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  436
+#define GUI_LANG_ITEMS                  438
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

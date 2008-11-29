@@ -556,6 +556,8 @@ static char* gui_lang_default = \
 "434 \"The game ended a draw\"\n"
 "435 \"Disable Raw @ Edgeoverlay\"\n"
 "436 \"Disable RAW @ Auto\"\n"
+"437 \"Enable flash in video?\"\n"
+"438 \"   Power of flash\"\n"
 ;
 
 //-------------------------------------------------------------------

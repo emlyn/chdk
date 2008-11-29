@@ -1192,6 +1192,16 @@ void shooting_bracketing(void){
   }
 #endif
 
+#if CAM_HAS_VIDEO_BUTTON // enables Flash during video recording on cameras that support it (sorry, only manual flash!)
+	void shooting_set_flash_video_override(int flash, int power){
+		int mode = 1;
+		if (movie_status > 1) {
+				_SetPropertyCase(PROPCASE_FLASH_ADJUST_MODE, &mode, sizeof(mode));
+				_SetPropertyCase(PROPCASE_FLASH_OVERRIDE, &flash, sizeof(flash));
+				_SetPropertyCase(PROPCASE_FLASH_MANUAL_OUTPUT, &power, sizeof(power));
+		}
+  }
+#endif
 
 void __attribute__((naked,noinline)) shooting_expo_param_override(void){
  asm volatile("STMFD   SP!, {R0-R12,LR}\n");
@@ -1247,6 +1257,11 @@ else if ((conf.iso_override_value) && (conf.iso_override_koef) && !(conf.overrid
 #if CAM_REAR_CURTAIN
   shooting_set_flash_sync_curtain(conf.flash_sync_curtain);
 #endif
+
+#if CAM_HAS_VIDEO_BUTTON
+  shooting_set_flash_video_override(conf.flash_video_override,conf.flash_video_override_power);
+#endif
+
  asm volatile("LDMFD   SP!, {R0-R12,PC}\n");
 }
 

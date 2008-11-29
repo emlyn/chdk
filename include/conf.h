@@ -268,6 +268,8 @@ typedef struct {
     
     long mem_view_addr_init;
     int flash_sync_curtain;
+    int flash_video_override;
+    int flash_video_override_power;
 } Conf;
 
 extern Conf conf;

@@ -2,6 +2,54 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
+
+0.8.6 / #597-603 / PhyrePhoX
+
++ new function (one of my favourites to date, and i just wrote it :D), only for s-series & TX-1 
+you now can use the flash during videos... see http://www.zshare.net/video/52034396605a6fd7/ for example
+it is in the override menu at the bottom. you can enable/disable the flash and set the power of the flash (0 - low,1 - middle, 2 - power! this should work in all modes! sorry, no automatic flash power!) 
+DryOS (s5is) is experimental, as the propcase values arent verified by "authority"
+big thanks to ewavr, Savior of the CHDK-Universe!
+
+* fixed get_platform_id in ubasic and also in the "safety feature"
+now returns the right decimal platform id. perhaps someone can figure out why atoi(PLATFORMID) can't be assigned to conf.platformid on cfg creation ( error: initializer element is not constant)?
+
+due to this fix, some cfg items get resetted on cfgs by people who used latest revisions (no biggie i hope):
+
+    conf.raw_cache = 0;
+    conf.zoom_override_value = 0;
+    conf.fast_ev = 0;
+    conf.fast_movie_control = 0;
+    conf.fast_movie_quality_control = 0;
+    conf.zoom_scale = 100;
+    conf.platformid = atoi(PLATFORMID);
+
+this one gave me a headache, and in the end it turned out i was the idiot :D
+note: perhaps someone should update the wiki with the decimal platform ids http://chdk.wikia.com/wiki/P-ID_(Table) 
+
++ added two new "raw exception" options: you can now disable the writing of raw/dng automatically when you enable edgeoverlay or set the modedial of the camera to auto (options are OFF at default)
+* small fix in connect4
+
+note: somehow all these checks in raw.c and gui_osd.c make me dizzy (self-inflicted, i know), probably should be done in another way (in the future, of course) 
+
++ added a nice little game - Connect Four (see http://en.wikipedia.org/wiki/Connect_Four )
+game was written by CHDKLover & Kettmeister in the german forum, see http://chdk.kernreaktor.org/mantis/view.php?id=106 for more links
+
+note: if we hear of reports that the binary is being to big for some cameras since the introduction of Connect 4, we are likely to disable it in the buildconf.inc (so people can compile it using the chdk shell or maybe another build server) 
+
+several fixes in edgeoverlay.c:
+- changed file prefix from edge_ to EDG_ which fixes both filelength & saving issues on dryos
+- the timestamp of the edge files now is always correct (thx ewavr on hints for both of these)
+- the edge overalay now can be moved in alt-mode only. reason: some cameras have functions for up/down/left/right in original firmware, also the overlay was moved when in a menu (before)
+- some smaller fixes (i/o & layout) thx to plasmahh 
+
+* update of a few lang files
+* moved "show raw saving time" from raw submenu to debug submenu (it isnt really a feature)
+trying to split my modifications into smaller svn commits now 
+
+0.8.5 / #596 / ewavr
+* fixed colors in DNG thumbnail for some cameras 
+
 0.8.4 / #596 / ewavr
 * sx100is - improver power-on procedure
 + sx100is - added jogdial support in menu, file browser and text reader

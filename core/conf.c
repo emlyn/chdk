@@ -392,6 +392,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(229, conf.platformid,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(230, conf.save_raw_in_edgeoverlay,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(231, conf.save_raw_in_auto,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(232, conf.flash_video_override,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(233, conf.flash_video_override_power,     CONF_DEF_VALUE, i:0, NULL),
     };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 
