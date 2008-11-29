@@ -20,7 +20,7 @@
 // And then of course, this can load the viewport to a seperate file 
 
 // the way we save edge overlays on their own...
-#define EDGE_FILE_PREFIX "edge_"
+#define EDGE_FILE_PREFIX "EDG_"
 #define EDGE_FILE_FORMAT EDGE_FILE_PREFIX "%04d.edg"
 
 static char * imgbuf = 0;
@@ -105,12 +105,13 @@ void save_edge_overlay(void){
 	DIR* d;
 	int fnum = 0;
 	int fr = 0;
-	int zoom = shooting_get_zoom();
+	int zoom = 0;
 	struct dirent* de;
-
+	static struct utimbuf t;
 	// nothing to save? then dont save
 	if( !imgbuf ) return;
-
+	zoom = shooting_get_zoom();
+	
 	// first figure out the most appropriate filename to use
 	d = opendir(EDGE_SAVE_DIR);
 	if( ! d )
@@ -135,9 +136,11 @@ void save_edge_overlay(void){
 	{
 		// write the data
 		fwrite(imgbuf,viewport_size,1,fd);
-		fwrite(&zoom,4,1,fd);
+		fwrite(&zoom,sizeof(zoom),1,fd);
 		is_saved = 1;
 		fclose(fd);
+		t.actime = t.modtime = time(NULL);
+		utime(fn, &t);
 		sprintf(msg, "Saved as %s",fn);
 		draw_string(30, 10, msg, conf.osd_color);
 	}
@@ -148,7 +151,7 @@ void save_edge_overlay(void){
 // displaying) from a file
 void load_edge_overlay( const char* fn ) {
 	FILE *fd;
-	int ret,ret2=0;
+	int ret,ret2;
 	int zoom;
 
 	is_saved = 1; // won't want to save it again, its already there
@@ -158,12 +161,14 @@ void load_edge_overlay( const char* fn ) {
 	if( fd != NULL )
 	{
 		ret = fread(imgbuf,viewport_size,1,fd);
-		ret2 = fread (&zoom,4,1,fd);
+		ret2 = fread (&zoom,sizeof(zoom),1,fd);
 		fclose(fd);
 		if( (ret == 1) && (ret2 == 1) )
 		{
 			inmem = 1; // fake having loaded stuff
-			if (conf.edge_overlay_zoom)	shooting_set_zoom(zoom);
+			if (conf.edge_overlay_zoom)	{
+				shooting_set_zoom(zoom);
+			}
 		}
 	}
 }
@@ -203,27 +208,28 @@ void edge_overlay(){
 	ensure_allocate_imagebuffer( );
 	if(imgbuf == 0) return; // ensure failed, make the best we can out of it
 
-	if(conf.edge_overlay_play || ((mode_get()&MODE_MASK) != MODE_PLAY) ) {
+	if(conf.edge_overlay_play || ((mode_get()&MODE_MASK) != MODE_PLAY))  {
 		// setup offsets for moving the edge overlay around. Always set
 		// need_redraw so that we actually do a complete redraw, overwriting
 		// also old pixels
-		if (kbd_is_key_pressed(KEY_RIGHT)) {
-			xoffset -=XINC;
-			++need_redraw;
+		if (gui_get_mode()==GUI_MODE_ALT) {
+				if (kbd_is_key_pressed(KEY_RIGHT)) {
+					xoffset -=XINC;
+					++need_redraw;
+				}
+				if (kbd_is_key_pressed(KEY_LEFT)) {
+					xoffset +=XINC;
+					++need_redraw;
+				}
+				if (kbd_is_key_pressed(KEY_DOWN)) {
+					yoffset -=YINC;
+					++need_redraw;
+				}
+				if (kbd_is_key_pressed(KEY_UP)) {
+					yoffset +=YINC;
+					++need_redraw;
+				}
 		}
-		if (kbd_is_key_pressed(KEY_LEFT)) {
-			xoffset +=XINC;
-			++need_redraw;
-		}
-		if (kbd_is_key_pressed(KEY_DOWN)) {
-			yoffset -=YINC;
-			++need_redraw;
-		}
-		if (kbd_is_key_pressed(KEY_UP)) {
-			yoffset +=YINC;
-			++need_redraw;
-		}
-
 		if ((kbd_is_key_pressed(KEY_SHOOT_HALF)||kbd_is_key_pressed(KEY_SHOOT_FULL)) && (conf.edge_overlay_lock!=1)) {
 			if (kbd_is_key_pressed(KEY_SHOOT_FULL) && !full_press) {
 				shotTaken = 1 - shotTaken;
