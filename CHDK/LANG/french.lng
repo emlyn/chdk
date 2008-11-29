@@ -1,4 +1,4 @@
-// CHDK language file french for autobuild 0.7.5, revision #565 (Win1252)
+// CHDK language file french for autobuild 0.8.4, revision #594 (Win1252)
 // Format of language line:
 // <id> "<text>"
 //   <id>   - should be positive number
@@ -526,3 +526,4 @@
 424 "DNG format"
 425 "RAW buffer cached"
 426 "Cannot load CHDK/badpixel.bin"
+427 "Afficher temps de sauv. RAW" 

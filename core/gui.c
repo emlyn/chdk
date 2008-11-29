@@ -363,6 +363,7 @@ static CMenuItem debug_submenu_items[] = {
     {0x2a,LANG_MENU_DEBUG_MEMORY_BROWSER,    MENUITEM_PROC,          (int*)gui_draw_debug },
     {0x2a,LANG_MENU_DEBUG_BENCHMARK,         MENUITEM_PROC,          (int*)gui_draw_bench },
     {0x5c,LANG_MENU_DEBUG_SHORTCUT_ACTION,   MENUITEM_ENUM,          (int*)gui_debug_shortcut_enum },
+    {0x5c,LANG_MENU_RAW_TIMER,               MENUITEM_BOOL,          &conf.raw_timer },
 #if CAM_MULTIPART
     {0x33,LANG_MENU_DEBUG_CREATE_MULTIPART , MENUITEM_PROC, 	    	(int*)gui_menuproc_break_card },
 #endif
@@ -757,7 +758,6 @@ static CMenuItem raw_submenu_items[] = {
     {0x5c, LANG_MENU_DNG_FORMAT,                MENUITEM_BOOL | MENUITEM_ARG_CALLBACK, &conf.dng_raw , (int)cb_change_dng },
 #endif
     {0x5c,LANG_MENU_RAW_CACHED,          MENUITEM_BOOL,      &conf.raw_cache },
-    {0x5c,LANG_MENU_RAW_TIMER,           MENUITEM_BOOL,      &conf.raw_timer },
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };

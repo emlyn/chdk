@@ -1,16 +1,28 @@
-// The English original had been translated into Turkish by Mete.
+// Translated by Mete Ertugrul  -  ertugrul_m@hotmail.com
 //
-//   cREATED bY mETE
-//
-// ___________________________________________________________________
+// ________________________________________________________________
 //
 //
-// Dil          :  Türkçe
-// Kod Sayfasi  :  Win1254
-// Sürüm        :  Autobuild - mimari 0.8.2, gözden geçirme 591
-// Tarih        :  25 Kasim 2008
+// The English original had been translated into Turkish for CHDK.
 //
-// ___________________________________________________________________
+// ________________________________________________________________
+//
+//
+// Best Viewed With :  Codepage Win1254
+//
+// ________________________________________________________________
+//
+//
+// Language :  Turkish (Win1254)
+//
+// Build    :  CHDK Autobuild
+//
+// Version  :  build 0.8.4, revision 595
+//
+// Date     :  Nov 28th, 2008
+//
+// ________________________________________________________________
+//
 //
 // CHDK language file
 // Format of language line:
@@ -26,10 +38,10 @@
   5 "Zebra Parametreleri"
   6 "Script Parametreleri"
   7 "Görsel Ayarlar"
-  8 "Çesitli Araçlar"
+  8 "Çeþitli Araçlar"
   9 "Hata Düzeltme (Debug) Param."
- 10 "Varsayilan Tercihlere Dön..."
- 11 "Tercihleri Simdi Kaydet..."
+ 10 "Varsayýlan Tercihlere Dön..."
+ 11 "Tercihleri Þimdi Kaydet..."
 
  12 "<- Geri"
 
@@ -37,39 +49,40 @@
  13 "RAW"
 
  14 "RAW Kaydet"
- 16 "Seri Çekimde Sadece Ilki RAW"
- 17 "RAW Dosyasi JPEG Klasöründe"
- 18 "RAW Dosya Ön Adi"
- 19 "RAW Dosya Uzantisi"
+ 16 "Seri Çekimde Sadece Ýlki RAW"
+ 17 "RAW Dosyasý JPEG Klasöründe"
+ 18 "RAW Dosya Ön Adý"
+ 19 "RAW Dosya Uzantýsý"
 
 
- 20 "OSD"    
+ 20 "OSD"
+
  21 "OSD'yi Göster"
- 22 "Durumu Göster"
+ 22 "Durum Göstergeleri'ni Göster"
  23 "Tabloyu Göster ( Foto)"
  24 "  Zoom Birimi"
  25 "DOF Hesaply. Göster"
  26 "Saati Göster"
- 27 "OSD Yerlesimini Düzenle"
+ 27 "OSD Öðelerinin Yerleþimi"
  28 "Pil"
 
 
  29 "Histogram"
 
- 30 "Canli Histogram Göster"
+ 30 "Canlý Histogram Göster"
  31 "Histogram Düzenlemesi"
  32 "Histogram Modu"
- 33 "Histog. Az/Asiri POZL Göster"
- 34 "Sinirdaki Uçlari Önmseme"
- 35 "Otomatik Boyutlandir"
+ 33 "Histog. Az/Aþýrý POZL Göster"
+ 34 "Sýnýrdaki Uçlarý Önmseme"
+ 35 "Otomatik Boyutlandýr"
 
 
  36 "Zebra"
 
  37 "Zebra Çiz"
  38 "Zebra Modu"
- 39 "Az    Pozlama Esigi"
- 40 "Asiri Pozlama Esigi"
+ 39 "Az    Pozlama Eþiði"
+ 40 "Aþýrý Pozlama Eþiði"
  41 "Orijinal Ekrana Dön"
  42 "OSD'ye Dön"
  43 "Üzerine Zebra Çiz"
@@ -86,34 +99,34 @@
  49 "Görsel Ayarlar"
 
  50 "Dil..."
- 51 "OSD Kod Sayfasi"
- 52 "Menü RBF Yazi Tipi..."
+ 51 "OSD Kod Sayfasý"
+ 52 "Menü RBF Yazý Tipi..."
  53 "Renkler"
  54 "OSD Metin"
  55 "OSD Arkaplan"
  56 "Histogram Çizelge & Metin"
  57 "Histogram Arkaplan"
- 58 "Histogram Kenarlik"
- 59 "Histog. POZL Isaretleyicileri"
+ 58 "Histogram Kenarlýk"
+ 59 "Histog. POZL Ýþaretleyicileri"
  60 "Zebra Az    Pozlama"
- 61 "Zebra Asiri Pozlama"
+ 61 "Zebra Aþýrý Pozlama"
  62 "Pil Doluluk Simgesi"
  63 "Menü Metin"
  64 "Menü Arkaplan"
- 65 "Metin Dosyasi Okuyucu Metin"
- 66 "Metin Dosyasi Okuyucu Arkapln"
+ 65 "Metin Dosyasý Okuyucu Metin"
+ 66 "Metin Dosyasý Okuyucu Arkapln"
 
 
- 67 "Çesitli Araçlar"
+ 67 "Çeþitli Araçlar"
 
  68 "Dosya Yöneticisi"
  69 "Takvim"
- 70 "Metin Dosyasi Okuyucu"
+ 70 "Metin Dosyasý Okuyucu"
  71 "Oyunlar"
  72 "El Feneri"
- 73 "Açilis Ekrani Göster"
- 74 "MF Için Zoom Tusunu Kullan"
- 75 "<ALT> Mod Tusu"
+ 73 "Açýlýþ Ekraný Göster"
+ 74 "MF Ýçin Zoom Tuþunu Kullan"
+ 75 "<ALT> Mod Tuþu"
  76 "Renk Paleti"
  77 "Mimari Bilgisi Göster"
  78 "Bellek Bilgisi Göster"
@@ -122,31 +135,31 @@
  79 "Hata Düzeltme"
 
  80 "Düzeltme Verisi Göster"
- 81 "PropCase Sayfasi"
- 82 "Çesitli Degerleri Göster"
+ 81 "PropCase Sayfasý"
+ 82 "Çeþitli Deðerleri Göster"
  83 "Bellek Yönetimi"
  84 "ALT +/- Basn. RAMi Sil"
- 85 "Karti Çalistirilabilir Yap..."
+ 85 "Kartý Çalýþtýrýlabilir Yap..."
 
 
-86 "Pil Gösterim Ayarlari"
+ 86 "Pil Gösterim Ayarlarý"
 
  87 "Pil MAX Voltaj (mV)"
  88 "Pil MIN Voltaj (mV)"
- 89 "Adim Boyutu (AÇ=25, KA=1 mV)"
- 90 "Dolulugu, Yüzdeyle Göster"
- 91 "Dolulugu, mV  ile  Göster"
+ 89 "Adým Boyutu (AÇ=25, KA=1 mV)"
+ 90 "Doluluðu, Yüzdeyle Göster"
+ 91 "Doluluðu, mV  ile  Göster"
  92 "Doluluk Simgesi'ni Göster"
 
 
- 93 "Metin Dosyasi Okuyucu"
+ 93 "Metin Dosyasý Okuyucu"
 
  94 "Yeni Dosya Aç..."
- 95 "Son Açilan Dosyayi Aç!"
- 96 "RBF Yazi Tipi Seç"
- 97 "Kod Sayfasi"
- 98 "Satir Sonu, Sözcügü Bölmesin"
- 99 "Otomatik Kaydirma Etkin"
+ 95 "Son Açýlan Dosyayý Aç!"
+ 96 "RBF Yazý Tipi Seç"
+ 97 "Kod Sayfasý"
+ 98 "Satýr Sonu, Sözcüðü Bölmesin"
+ 99 "Otomatik Kaydýrma Etkin"
 100 "Oto.Kayd Gecikmesi (san)"
 
 
@@ -156,38 +169,38 @@
 103 "Sokoban"
 
 
-104 "*** Tercihleri Sifirla ***"
-105 "Tercihleri varsayilan\ndegerlerine getirmek\nistediginizden emin misiniz?"
+104 "*** Tercihleri Sýfýrla ***"
+105 "Tercihleri varsayýlan\ndeðerlerine getirmek\nistediðinizden emin misiniz?"
 
 106 "*** Mimari Bilgisi ***"
-107 "CHDK Sür : %s %s\nTarih    : %s\nZaman    : %s\nKamera   : %s\nFW Sürüm : %s\nDerleyici: %s"
+107 "CHDK Sür : %s %s\nTarih    : %s\nSaat     : %s\nKamera   : %s\nFW Sürüm : %s\nDerleyici: %s"
 
 108 "*** Bellek Bilgisi ***"
-109 "Bos Bellek: %d byte"
+109 "Boþ Bellek: %d byte"
 
 110 "***   Bilgi   ***"
-111 "Lütfen, kameranizi\n'Gösterim Modu' na alip\ntekrar deneyin."
+111 "Lütfen, kameranýzý\n'Gösterim Modu' na alýp\ntekrar deneyin. :)"
 
 // file browser titles
 112 "Dosya Yöneticisi"
-113 "Script Dosyasi Seç"
-114 "Metin Dosyasi Seç"
-115 "RBF Yazi Tipi Dosyasi Seç"
-116 "Dil Dosyasi Seç"
+113 "Script Dosyasý Seç"
+114 "Metin Dosyasý Seç"
+115 "RBF Yazý Tipi Dosyasý Seç"
+116 "Dil Dosyasý Seç"
 
 // for calendar
 117 "Ocak"
-118 "Subat"
+118 "Þubat"
 119 "Mart"
 120 "Nisan"
-121 "Mayis"
+121 "Mayýs"
 122 "Haziran"
 123 "Temmuz"
-124 "Agustos"
+124 "Aðustos"
 125 "Eylül"
 126 "Ekim"
-127 "Kasim"
-128 "Aralik"
+127 "Kasým"
+128 "Aralýk"
 
 129 "Pzt"
 130 "Sal"
@@ -202,23 +215,23 @@
 // messagebox buttons
 137 "Tamam"
 138 "Evet"
-139 "Hayir"
-140 "Iptal"
+139 "Hayýr"
+140 "Ýptal"
 
 // OSD layout editor
 141 "Histogram"
-142 "DOF Hesap."
-143 "RAW/POZL"
-144 "Çesitli Deg."
-145 "Pil Simg."
-146 "Pil Metni"
+142 "DOF Hesaplayýcýsý"
+143 "Durum Göstergeleri"
+144 "Çeþitli Deðerler Tablosu"
+145 "Kalan Pil Simgesi"
+146 "Kalan Pil Yüzdesi"
 147 "Saat"
 
 // palette
-148 "Özgün Rengi Belirlemek Için SET'e Basin"
-149 "       Çikmak Için MENU'ye Basin       "
+148 "Özgün Rengi Belirlemek Ýçin SET'e Basýn"
+149 "       Çýkmak Ýçin MENU'ye Basýn       "
 150 "Renk"
-151 "  Rengi Seçmek Için %s Tuslarini Kullanin"
+151 "  Rengi Seçmek Ýçin %s Tuþlarýný Kullanýn"
 
 // reversi
 152 "***  Oyun  Sonucu  ***"
@@ -226,424 +239,366 @@
 154 "\nKaybettiniz! :(\n"
 155 "\nBerabere! :/\n"
 
-156 "*** Hatali Hamle ***"
-157 "Buraya Koyamazsiniz!"
-158 "Bu Kutu Bos Degil!"
+156 "*** Hatalý Hamle ***"
+157 "Buraya Koyamazsýnýz!"
+158 "Bu Kutu Boþ Deðil!"
 
 159 "Hamle: Siz     "
 160 "Hamle: Kamera  "
-161 "  OYUN  BITTI  "
+161 "  OYUN  BÝTTÝ  "
 162 " Beyaz  Siyah  "
 
-163 "*** Hakkinda ***"
+163 "*** Hakkýnda ***"
 
 // sokoban
 164 " Seviye"
 165 "  Hamle"
 166 "*****  TAMAMLANDI  *****"
-167 "\n  ~ T E B R I K L E R         \n\n       B A S A R D I N I Z ~  \n"
+167 "\n  ~ T E B R Ý K L E R         \n\n       B A Þ A R D I N I Z ~  \n"
 
 // console
-168 "*** BASLATILDI ***"
-169 "*** YARIDA KESILDI ***"
+168 "*** BAÞLATILDI ***"
+169 "*** YARIDA KESÝLDÝ ***"
 170 "*** TAMAMLANDI ***"
 
 // file browser
 171 "***   Klasörü  Sil   ***"
-172 "Bu klasörü silmek\nistediginizden emin misiniz?"
-173 "***   Dosyayi  Sil   ***"
-174 "Bu dosyayi silmek\nistediginizden emin misiniz?"
+172 "Bu klasörü silmek\nistediðinizden emin misiniz?"
+173 "***   Dosyayý  Sil   ***"
+174 "Bu dosyayý silmek\nistediðinizden emin misiniz?"
 
 // benchmark
 175 "Yazma ve Okuma Testi"
-176 "Hesaplaniyor..."
-177 ". : : Testi Baslatmak Için SET'e Basin : : ."
+176 "Hesaplanýyor..."
+177 ". : : Testi Baþlatmak Ýçin SET'e Basýn : : ."
 178 "Ekran"
 179 "Yazma       :"
 180 "Okuma       :"
 181 "Bellek"
-182 "Hafiza Karti"
+182 "Hafýza Kartý"
 183 "Yazma (RAW) :"
 184 "Yazma (Bel) :"
 185 "Yazma (64k) :"
 186 "Okuma (64k) :"
 
-187 "LCD Kapanmasin"
+187 "LCD Kapanmasýn"
 
 188 "Kes"
 189 "Kopyala"
-190 "Yapistir"
+190 "Yapýþtýr"
 191 "Sil"
 192 "Ters Seçim"
-193 "***  Dosyalari Tasi  ***"
-
-194 "Bu %d dosyayi tasimak\nistediginizden emin misiniz?"
-195 "*** Dosyalari Kopyala ***"
-
-196 "Bu %d dosyayi kopyalamak\nistediginizden emin misiniz?"
-197 "***  Dosyalari  Sil  ***"
-198 "Bu %d dosyayi silmek\nistediginizden emin misiniz?"
+193 "***  Dosyalarý Taþý  ***"
+194 "Bu %d dosyayý taþýmak\nistediðinizden emin misiniz?"
+195 "*** Dosyalarý Kopyala ***"
+196 "Bu %d dosyayý kopyalamak\nistediðinizden emin misiniz?"
+197 "***  Dosyalarý  Sil  ***"
+198 "Bu %d dosyayý silmek\nistediðinizden emin misiniz?"
 199 "Lütfen bekleyin..."
 
 200 "Izgara Çizgilerini Göster"
 201 "Dosyadan Izgara Yükle..."
 202 "Izgara Çizgileri"
 203 "Izgara"
-204 "Izgara Dosyasi Seç"
+204 "Izgara Dosyasý Seç"
 205 "Geçerli Izgara"
 
 206 "Gürültü Azaltma"
 
-207 "Baskin Izgara Renkleri"
+207 "Baskýn Izgara Renkleri"
 208 "Çizgi Rengi"
 209 "Dolgu Rengi"
 
-210 "Alan Derinligi Hesaplayicisi"
-211 "Alan Derinligi (DOF) Hesaply."
-212 "Nesne Uzk / Uzak&Yakin Limit" 
+210 "Alan Derinliði Hesaplayýcýsý"
+
+211 "Alan Derinliði (DOF) Hesaply."
+212 "Nesne Uzk / Uzak&Yakýn Limit" 
 213 "EXIF Nesne Uzk. Kullan(PC65)"
-214 "Nesne Uzk. Çesitli'de Göster"
-215 "Yakin Lim. Çesitli'de Göster"
-216 "Uzak  Lim. Çesitli'de Göster"
-217 "Hiperodak Uz. Çestli'de Gstr"
-218 "DOF Bilgisini Çestli'de Gstr"
+214 "Nesne Uzk. Çeþitli'de Göster"
+215 "Yakýn Lim. Çeþitli'de Göster"
+216 "Uzak  Lim. Çeþitli'de Göster"
+217 "Hiperodak Uz. Çeþtli'de Gstr"
+218 "DOF Bilgisini Çeþtli'de Gstr"
 
 
-219 "Çesitli Degerler Tablosu"
-220 "Çesitli Degerler Tablosu"
-221 "Gösterim Modunda Göster"	
-222 "Zoom Orani             ' Z '"		
-223 "Gerçek Diyafram Araligi' Av'"
-224 "Gerçek ASA Hizi        'I-R'"
-225 "Market ASA Hizi        'I-M'"
-226 "  ISO, AutoISO Modunda Açik"
+219 "Çeþitli Deðerler Tablosu"
+
+220 "Çeþitli Deðerler Tablosu"
+221 "Gösterim Modu'nda Göster"	
+222 "Zoom Oraný             ' Z '"		
+223 "Gerçek Diyafram Aralýðý' Av'"
+224 "Gerçek ASA Hýzý        'I-R'"
+225 "Market ASA Hýzý        'I-M'"
+226 "  ISO, AutoISO Modunda Açýk"
 227 "Ayarlanan EV   (TV+AV) 'Evs'"
 228 "Ölçülen   EV   (BV+SV) 'Evm'"
-229 "Ayarla. Parlaklik (BV) 'Bvs'"
-230 "Ölçülen Parlaklik (BV) 'Bvm'"
-231 "AsiriPOZL Deg.(Flassiz)' dE'"
-232 "Isik Ölçümü'nü Göster  ' B '"
+229 "Ayarla. Parlaklýk (BV) 'Bvs'"
+230 "Ölçülen Parlaklýk (BV) 'Bvm'"
+231 "AþýrýPOZL Deð.(Flaþsýz)' dE'"
+232 "Iþýk Ölçümü'nü Göster  ' B '"
+
 
 233 "Video Parametreleri"
+
 234 "Video Parametreleri"
 235 "Video Modu"
 236 "Video Bitrate"
 237 "Video Kalitesi"
 
 
-238 "Ek Fotograf Islemleri"
-239 "Ek Fotograf Islemleri"
-240 "Baskin Perde Hizi"
-241 "    Deger Çarpani"
-242 "Baskin Diyaf. Açikligi"
-243 "Baskin ASA Hizi  (ISO)"
-244 "    Deger Çarpani"
-245 "Baskin Nesne  Uzakligi"
-246 "    Deger Çarpani (mm)"
+238 "Ek Fotoðraf Ýþlemleri"
+
+239 "Ek Fotoðraf Ýþlemleri"
+240 "Baskýn Perde Hýzý"
+241 "    Deðer Çarpaný"
+242 "Baskýn Diyaf. Açýklýðý"
+243 "Baskýn ASA Hýzý  (ISO)"
+244 "    Deðer Çarpaný"
+245 "Baskýn Nesne  Uzaklýðý"
+246 "    Deðer Çarpaný (mm)"
+
 
 247 "Sürekli Modda Bracket Çekimi"
+
 248 "Sürekli Modda Bracket Çekimi"
-249 "TV Bracket Degeri"
-250 "AV Bracket Degeri"
-251 "ISO Bracket Degeri"
-252 "    Deger Çarpani"
-253 "Nes.Uzk Bracket Deg.(MF)"
-254 "    Deger Çarpani (mm)"
+249 "TV Bracket Deðeri"
+250 "AV Bracket Deðeri"
+251 "ISO Bracket Deðeri"
+252 "    Deðer Çarpaný"
+253 "Nes.Uzk Bracket Deð.(MF)"
+254 "    Deðer Çarpaný (mm)"
 255 "Bracket Çekimi Tipi"
 
-256 "Otomatik Baslat"
+
+256 "Otomatik Baþlat"
 257 "Kumanda Etkin"
 
-258 "Pozlama Kontrolü (Flassiz)"
-259 "Pozlama Kontrolü (Flassiz)"
-260 "Pozlamayi Tekrar Hesapla"
+258 "Pozlama Kontrolü (Flaþsýz)"
+259 "Pozlama Kontrolü (Flaþsýz)"
+260 "Pozlamayý Tekrar Hesapla"
 261 "TV POZL Tekrar Hsplm. Emri"
 262 "AV POZL Tekrar Hsplm. Emri"
 263 "ISOPOZL Tekrar Hsplm. Emri"
 
-264 "Degisen Deg. Baslangiçta Sil"
+264 "Deðiþen Deð. Baþlangýçta Sil"
 
-265 "Canon AsiriPOZL Degeri 'dEc'"
+265 "Canon AþýrýPOZL Deðeri 'dEc'"
 
-266 "RAW Gelistirimi"
-267 "Kamerayi 'Kayit Modu' na\nalip bir fotograf çekin."
-268 "RAW Dosyasi Seç"
+
+266 "RAW Geliþtirimi"
+
+267 "Kamerayý 'Çekim Modu' na\nalýp bir fotoðraf çekin."
+268 "RAW Dosyasý Seç"
 269 "RAW Toplam"
 270 "RAW Ortalama"
-271 "Kartinizda Yeterli Alan Yok!\nGereken: %dM / Bos Alan: %dM"
+271 "Kartýnýzda Yeterli Alan Yok!\nGereken: %dM / Boþ Alan: %dM"
 
-272 "OSD'yi Önizleme Modunda Gös."
+
+272 "OSD'yi Ýnceleme Modunda Gös."
+
 273 "Parametre Verisi Göster"
 
-274 "Nesnenin Lense Uzakligi"
+274 "Nesnenin Lense Uzaklýðý"
 
-275 "Bracket Deg. Baslangiçta Sil"
+275 "Bracket Deð. Baþlangýçta Sil"
 
-276 "Karti 2 Bölüm Yap"
-277 "Bölümleri Degistir"
+
+276 "Kartý 2 Bölüm Yap"
+
+277 "Bölümleri Deðiþtir"
 278 "UYARI !!\nKarttaki tüm veri silinecek.\nDevam edilsin mi?"
 279 "Bu Kartta Sadece 1 Bölüm Var!"
-280 "Hata"
-281 "Uyari"
+280 "Hata!"
+281 "Uyarý"
 282 "Bilgi"
-283 "RGB Zebra (Sadece AsiriPOZL)"
+283 "RGB Zebra (Sadece AþýrýPOZL)"
+
 
 284 "ND Filtre Durumu"
 
-285 "Hist. 'EV' Izgarasini Göster"
+285 "Hist. 'EV' Izgarasýný Göster"
 
-286 "Düsük Hafiza Uyarisi Metin"
-287 "Düsük Hafiza Uyarisi Arkaplan"
-288 "Bos Alan Belirteçleri"
-289 "Bos Alan Simgesi'ni Göster"
-290 "Bos Alan"
-291 "Bos Alani, Yüzdeyle Göster"
-292 "Bos Alani, MB  ile  Göster"
-293 "Bos Alan Metin"
+286 "Düþük Hafýza Uyarýsý Metin"
+287 "Düþük Hafýza Uyarýsý Arkaplan"
+288 "Boþ Alan Belirteçleri"
+289 "Boþ Alan Simgesi'ni Göster"
+290 "Boþ Alan Simgesi & Çubuðu"
+291 "Boþ Alaný, Yüzdeyle Göster"
+292 "Boþ Alaný, MB  ile  Göster"
+293 "Boþ Alan (MB) Göstergesi"
+
 294 "  Kalan RAW Çekimini Göster"
-295 "Kalan RAW"
-
-296 "RAW Durumunu Göster"
+295 "Kalan RAW Çekimi"
+296 "RAW Durumu'nu Göster"
 
 297 "Tabloyu Göster (Video)"
 
-298 "  Perde Hizi Belirteçi"
-299 "Kullanici Menüsü Etkin"
-300 "Kullanici Menüsü"
+298 "  Perde Hýzý Belirteçi"
+299 "Kullanýcý Menüsü Etkin"
+300 "Kullanýcý Menüsü"
+
 301 " "
 
-302 "  Adp.Lens Ölçegi,100=1x"
-303 "Bos Alan Çubugu'nu Gö."
-304 "  Ekranda Boyutlandir"
+302 "  Adp.Lens Ölçeði,100=1x"
+303 "Boþ Alan Çubuðu'nu Gö."
+304 "  Ekranda Boyutlandýr"
 305 "  En/Boy"
-306 "  Yüzde Esigi"
-307 "  MB    Esigi"
-308 "Uyari Birimi"
-309 "  Uyari Esigi"
+306 "  Yüzde Eþiði"
+307 "  MB    Eþiði"
+308 "Uyarý Birimi"
+309 "  Uyarý Eþiði"
 310 "Optik Zoom Etkin"
 311 "Saat"
-312 "Saat Ayarlari"
+312 "Saat Ayarlarý"
 313 "Saat Biçimi"
-314 "Bos Alan MB & Yüzde Arkaplan"
+314 "Boþ Alan MB & Yüzde Arkaplan"
 315 "12h Saat Belirteçi"
-316 "Odaklandiginda Göster"
+316 "Odaklandýðýnda Göster"
 
-317 "RAW Gösterim Ayarlari"
+317 "RAW Gösterim Ayarlarý"
 318 "RAW"
 
-319 "Hafiza Karti Ayarlari"
-320 "Hafiza Karti"
+319 "Hafýza Kartý Ayarlarý"
+320 "Hafýza Kartý"
+
 
 321 "Özgün AutoISO"
+
 322 "Özgün AutoISO"
 323 "Özgün AutoISO Etkin"
-324 "Asgari Perde Hizi"
-325 "Kul.Çarpani(1/FL/Çarpan)"
-326 "IS Çarpani (Tv*Çarpan)"
+324 "Asgari Perde Hýzý"
+325 "Kul.Çarpaný(1/FL/Çarpan)"
+326 "IS Çarpaný (Tv*Çarpan)"
 327 "Max ISO HI     (x10)"
 328 "Max ISO AUTO   (x10)"
 329 "Min ISO        (x10)"
 
-330 "Menü Basligi Metin"
-331 "Menü Basligi Arkaplan"
-332 "Imleç Metin"
-333 "Imleç Arkaplan"
+
+330 "Menü Baþlýðý Metin"
+331 "Menü Baþlýðý Arkaplan"
+332 "Ýmleç Metin"
+333 "Ýmleç Arkaplan"
 334 "Menüyü Ortala"
-335 "Zoom Süresince Ses Kaydi Yok"
+335 "Zoom Süresince Ses Kaydý Yok"
+
 
 336 "Kötü Piksel Giderme"
-337 "Kapali"
+
+337 "Kapalý"
 338 "Ortlama"
-339 "RAWdöns"
+339 "RAWdönþ"
 
-340 "Baskin Degerler Metin"
 
-341 "Baskin Degerler Arkaplan"
-
-342 "Baskinliklar DevreDisi"
-
+340 "Baskýn Deðerler Metin"
+341 "Baskýn Deðerler Arkaplan"
+342 "Baskýnlýklar DevreDýþý"
 343 "  AutoISO & Bracket Dahil ?"
+344 "  Ýçine Gizle ?"
 
-344 "  Içine Gizle ?"
-
-
-345 "Video Kaydi'nda DevreDisi?"
-
-346 "Kalan Kayit Sü. Göster"
-
+345 "Video Kaydý'nda DevreDýþý?"
+346 "Kalan Kayýt Sü. Göster"
 347 "  Yenileme (~san)"
+348 "Kalan Kayýt Süresi"
+349 "Baþlangýçta Vid.Param Temzle?"
 
-348 "Kalan Kayit Süresi"
+350 "'EV' Hýzlý Ayar Düðm. Açýk?"
+351 "   Adým Boyutu (1 EV)?"
+352 "'EV' Doðruluðu"
 
-349 "Baslangiçta Vid.Param Temzle?"
+353 "DCIM klasöründeki tüm\nRAW dosyalarýný silmek\nistediðinizden emin misiniz?\n*  *  *  *\nNOT:  JPEG eþi ayný klasörde\nolan RAW'lar silinmeyecek."
+354 "Bu klasördeki tüm\nRAW dosyalarýný silmek\nistediðinizden emin misiniz?\n*  *  *  *\nNOT:  JPEG eþi ayný klasörde\nolan RAW'lar silinmeyecek."
+355 "Seçilenler (varsa) dýþýnda\ntüm RAW dosyalarýný silmek\nistediðinizden emin misiniz?\n*  *  *  *\nNOT:  JPEG eþi ayný klasörde\nolan RAW'lar silinmeyecek."
 
-
-350 "'EV' Hizli Ayar Dügm. Açik?"
-
-351 "   Adim Boyutu (1 EV)?"
-
-352 "'EV' Dogrulugu"
-
-
-353 "DCIM klasöründeki tüm\nRAW dosyalarini silmek\nistediginizden emin misiniz?\n*  *  *  *\nNOT:  JPEG esi ayni klasörde\nolan RAW'lar silinmeyecek."
-
-354 "Bu klasördeki tüm\nRAW dosyalarini silmek\nistediginizden emin misiniz?\n*  *  *  *\nNOT:  JPEG esi ayni klasörde\nolan RAW'lar silinmeyecek."
-
-355 "Seçilenler (varsa) disinda\ntüm RAW dosyalarini silmek\nistediginizden emin misiniz?\n*  *  *  *\nNOT:  JPEG esi ayni klasörde\nolan RAW'lar silinmeyecek."
-
-356 "'RAW Sil' komutu, bu madde\niçin geçerli degildir."
-
+356 "'RAW Sil' komutu, bu madde\niçin geçerli deðildir."
 357 "***   RAW  Sil   ***"
-
 358 "RAW Sil"
 
+359 "Kök Kullanýcý Menüsü"
 
-
-359 "Kök Kullanici Menüsü"
-
-
-
-360 "Sembol Yazi Tipi"
-
-361 "Sembol Dosyasi Seç"
-
+360 "Sembol Yazý Tipi"
+361 "Sembol Dosyasý Seç"
 362 "Semboller Etkin"
-
 363 "Sembol Metin"
-
 364 "Sembol Arkaplan"
 
 
+365 "Özgün Eðriler"
 
-365 "Özgün Egriler"
-
-
-366 "Özgün Egriler (Custom Curves)"
-
-367 "Egri Profili Yükle..."
-
-368 "Egri Etkin"
-
-369 "Egri Dosyasi Seç"
-
+366 "Özgün Eðriler (Custom Curves)"
+367 "Eðri Profili Yükle..."
+368 "Eðri Etkin"
+369 "Eðri Dosyasý Seç"
 
 
 370 "Keskin Yüzey"
 
 371 "Keskin Yüzey  (Edge Overlay)"
-
-
 372 "Keskin Yüzey Etkin"
-
-373 "Keskin Yüzey Esigi"
-
+373 "Keskin Yüzey Eþiði"
 374 "Keskin Yüzey Rengi"
-
 
 
 375 "Kumanda Parametreleri"
 
 376 "Kumanda Parametreleri"
-
 377 "Kumanda Etkin"
-
 378 "Senkron Etkin"
-
 379 "Senkron Gecikmesi Etkin"
-
 380 "Senkron Gecikmesi 0.1ms"
-
 381 "Senkron Gecikmesi 0.1s"
 
 
+382 "AF Anahtarý"
 
-382 "AF Anahtari"
-
-
-383 "Varsayilan Param.Deger Yükle"
-
+383 "Varsayýlan Param.Deðer Yükle"
 384 "Parametreler Seti"
 
+// raw istisnalarý
+385 "Spor'da        RAW DevreDýþý"
+386 "Seri Çekim'de  RAW DevreDýþý"
+387 "EV Bracket'ta  RAW DevreDýþý"
+388 "Zamanlayýcý'da RAW DevreDýþý"
+389 "Ýstisnalar"
+390 "RAW Ýstisnalarý Menüsü"
+391 "Ýstisnada Uyar ?"
 
+392 "Menüyü Ýlk Giriþ Seçili Aç"
 
-385 "Spor'da        RAW DevreDisi"
+393 "Zaman Aþýmý (0.1s)"
+394 "Senkrona Hazýr Kumanda"
 
-386 "Seri Çekim'de  RAW DevreDisi"
+395 "Hýzlý Video    Kontrolü ?"
 
-387 "EV Bracket'ta  RAW DevreDisi"
-
-388 "Zamanlayici'da RAW DevreDisi"
-
-
-389 "Istisnalar"
-
-390 "RAW Istisnalari Menüsü"
-
-391 "Istisnada Uyar ?"
-
-
-392 "Menüyü Ilk Giris Seçili Aç"
-
-
-
-393 "Zaman Asimi (0.1s)"
-
-394 "Senkrona Hazir Kumanda"
-
-
-395 "Hizli Video    Kontrolü ?"
-
-
-396 "Sicaklik"
-
-397 "Sicaklik Göster ?"
-
+396 "Sýcaklýk"
+397 "Sýcaklýk Göster ?"
 
 398 "Video Kalitesi Kontrolü ?"
 
-
 399 "Kumandadan Zoom Etkin"
+400 "Zoom Zaman Aþýmý 0.1s"
 
-400 "Zoom Zaman Asimi 0.1s"
+401 "Baþlangýç Sesi"
 
+402 "RAW Çýkarma Ön Adý"
+403 "RAW Çýkarma Uzantýsý"
+404 "Giriþ Karanlýk Deð.Çýkar"
+405 "Çýkýþ Karanlýk Deð.Çýkar"
 
-401 "Baslangiç Sesi"
-
-
-402 "RAW Çikarma Ön Adi"
-
-403 "RAW Çikarma Uzantisi"
-
-404 "Giris Karanlik Deg.Çikar"
-
-405 "Çikis Karanlik Deg.Çikar"
-
-406 "dosyasi\nseçilenden çikarilsin mi?"
-
+406 "dosyasý\nseçilenden çýkarýlsýn mý?"
 407 "...%d dosya daha"
-
-
-408 "*** Seçilenden Çikar ***"
-
-409 "Seçilenden Çikar"
-
+408 "*** Seçilenden Çýkar ***"
+409 "Seçilenden Çýkar"
 
 410 "Parametreleri Kaydet"
 
+411 "Video 'EV' Göstergesi"
 
-411 "Video 'EV' Gösterimi"
+412 "   Zoom Baskýn Deðeri"
+413 "Zoom Baskýnlýðý"
 
-
-412 "   Zoom Baskin Degeri"
-
-413 "Zoom Baskinligi"
-
-
-414 "   Baslangiçta Temizle"
-
+414 "   Baþlangýçta Temizle"
 
 415 "RAW Son Ekini Ekle"
-
 
 416 "  Fahrenhayt"
 
@@ -651,20 +606,15 @@
 417 "Keskin Yüzey Yükle"
 
 418 "Keskin Yüzey Kaydet"
-
-419 "Gösterim'de Etkin"
-
-420 "Bos Dahili Bellek"
-
+419 "Gösterim Modu'nda Etkin"
+420 "Boþ Dahili Bellek"
 421 "Zoom   Yükle+Ayarla"
-
 422 "Keskin Yüzey Kilitle"
 
 
-423 "2.Perde Flas Senkronu"
+423 "2. Perde Flaþ Senkronu"
 
 424 "DNG Biçimi"
-
-425 "RAW Tampon Bellegi"
-
+425 "RAW Tampon Önbelleði"
 426 "CHDK/badpixel.bin Yüklenemedi"
+427 "RAW Kaydetme Zamaný Göster"

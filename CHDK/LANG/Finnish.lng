@@ -3,7 +3,7 @@
 // <id> "<text>"
 //   <id>   - pitäisi olla positiivinen numero
 //   <text> - teksti suljettuna lainausmerkkeihin
-//  11.10.2008 based on English rev 531
+//  28.11.2008 based on English rev 595
 1 "Päävalikko"
 
 2 "RAW-kuvat"
@@ -533,8 +533,8 @@
 401 "Käynnistysääni"
 402 "Raw vähennyksen etuliite"
 403 "Raw vähennyksen lopputunniste"
-404 "Tumman taustan pidettävä arvo"
-405 "Pienin vähennettävä tumman arvo"
+404 "Laskettava tumman arvo"
+405 "Tallennettava tumman arvo"
 406 "->"
 407 "...lisää %d tiedostoa"
 408 "Vähennä"
@@ -544,3 +544,16 @@
 412 " Zoomin korvausarvo"
 413 "Zoomin korvaus"
 414 " Tyhjennä arvot käynnistyksessä"
+415 "lisää raw-etuliite"
+416 " Fahrenheit°"
+417 "Lataa reunan näyttö"
+418 "Tallenna reunan näyttö"
+419 "Käytä toistettaessa"
+420 "Vapaa sisäinen muisti"
+421 "Lataa ja aseta zoomaus"
+422 "Lukitse reunan näyttö"
+423 "Takaverho-salaman tahdistus"
+424 "DNG-muoto"
+425 "RAW-puskuri tarkistettu"
+426 "CHDK/badpixel.bin lataus epäonnistui"
+427 "Näytä raw-tallennusaika"
