@@ -546,6 +546,14 @@ static char* gui_lang_default = \
 "425 \"RAW buffer cached\"\n"
 "426 \"Cannot load CHDK/badpixel.bin\"\n"
 "427 \"Show saving time\"\n"
+
+"428 \"Connect 4\"\n"
+"429 \"Opponent:\"\n"
+"430 \"Human\"\n"
+"431 \"Player 1 won the game\"\n"
+"432 \"Player 2 won the game\"\n"
+"433 \"I beat you\"\n"
+"434 \"The game ended a draw\"\n"
 ;
 
 //-------------------------------------------------------------------

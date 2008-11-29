@@ -535,9 +535,17 @@
 #define LANG_MENU_RAW_CACHED            425
 #define LANG_CANNOT_OPEN_BADPIXEL_FILE  426
 #define LANG_MENU_RAW_TIMER             427
+
+#define LANG_MENU_GAMES_CONNECT4           428
+#define LANG_CONNECT4_RIVAL	            429
+#define LANG_CONNECT4_HUMAN                430
+#define LANG_CONNECT4_P1_WIN               431
+#define LANG_CONNECT4_P2_WIN               432
+#define LANG_CONNECT4_CAM_WIN              433
+#define LANG_CONNECT4_DRAW                 434
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  427
+#define GUI_LANG_ITEMS                  434
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

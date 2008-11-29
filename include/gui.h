@@ -19,7 +19,8 @@ enum Gui_Mode { GUI_MODE_NONE = 0,
                 GUI_MODE_OSD,
                 GUI_MODE_CALENDAR,
                 GUI_MODE_BENCH,
-                GUI_MODE_MPOPUP };
+                GUI_MODE_MPOPUP,
+                GUI_MODE_4WINS };
 
 extern void gui_redraw();
 extern void gui_force_restore();

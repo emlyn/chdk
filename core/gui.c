@@ -16,6 +16,7 @@
 #include "gui_mpopup.h"
 #include "gui_reversi.h"
 #include "gui_sokoban.h"
+#include "gui_4wins.h"
 #ifdef OPT_DEBUGGING
 #include "gui_debug.h"
 #endif
@@ -130,6 +131,7 @@ static void gui_show_memory_info(int arg);
 static void gui_draw_palette(int arg);
 static void gui_draw_reversi(int arg);
 static void gui_draw_sokoban(int arg);
+static void gui_draw_4wins(int arg);
 #ifdef OPT_DEBUGGING
 	static void gui_draw_debug(int arg);
 	static void gui_draw_bench(int arg);
@@ -318,6 +320,9 @@ static CMenuItem games_submenu_items[] = {
 #ifdef OPT_GAME_SOKOBAN
     {0x38,LANG_MENU_GAMES_SOKOBAN,           MENUITEM_PROC,  (int*)gui_draw_sokoban },
 #endif
+#ifdef OPT_GAME_CONNECT4
+    {0x38,LANG_MENU_GAMES_CONNECT4,             MENUITEM_PROC,  (int*)gui_draw_4wins },
+#endif
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };
@@ -382,7 +387,9 @@ static CMenuItem misc_submenu_items[] = {
 #ifdef OPT_TEXTREADER
     {0x37,LANG_MENU_MISC_TEXT_READER,        MENUITEM_SUBMENU, (int*)&reader_submenu },
 #endif
+#if defined (OPT_GAME_REVERSI) || (OPT_GAME_SOKOBAN || (OPT_GAME_CONNECT4))
     {0x38,LANG_MENU_MISC_GAMES,              MENUITEM_SUBMENU, (int*)&games_submenu },
+#endif
 #if CAM_SWIVEL_SCREEN
     {0x28,LANG_MENU_MISC_FLASHLIGHT,         MENUITEM_BOOL,    &conf.flashlight },
 #endif
@@ -2046,6 +2053,11 @@ void gui_redraw()
             gui_sokoban_draw();
             break;
 #endif
+#ifdef OPT_GAME_CONNECT4
+        case GUI_MODE_4WINS:
+            gui_4wins_draw();
+            break;
+#endif
 #ifdef OPT_DEBUGGING
         case GUI_MODE_DEBUG:
             gui_debug_draw();
@@ -2083,7 +2095,7 @@ void gui_redraw()
     gui_in_redraw = 0;
     if ((gui_mode_old != gui_mode && (gui_mode_old != GUI_MODE_NONE && gui_mode_old != GUI_MODE_ALT) && (gui_mode != GUI_MODE_MBOX && gui_mode != GUI_MODE_MPOPUP)) || gui_restore) {
         gui_restore = 0;
-        if (gui_mode != GUI_MODE_REVERSI && gui_mode != GUI_MODE_SOKOBAN)
+        if (gui_mode != GUI_MODE_REVERSI && gui_mode != GUI_MODE_SOKOBAN && gui_mode != GUI_MODE_4WINS)
             draw_restore();
     }
 }
@@ -2146,6 +2158,7 @@ void gui_kbd_process()
             case GUI_MODE_PALETTE:
             case GUI_MODE_REVERSI:
             case GUI_MODE_SOKOBAN:
+            case GUI_MODE_4WINS:
 #ifdef OPT_DEBUGGING
             case GUI_MODE_DEBUG:
 #endif
@@ -2292,6 +2305,11 @@ void gui_kbd_process()
 #ifdef OPT_GAME_SOKOBAN
     	case GUI_MODE_SOKOBAN:
             gui_sokoban_kbd_process();
+            break;
+#endif
+#ifdef OPT_GAME_CONNECT4
+    	case GUI_MODE_4WINS:
+            gui_4wins_kbd_process();
             break;
 #endif
 #ifdef OPT_DEBUGGING
@@ -2803,6 +2821,18 @@ void gui_draw_sokoban(int arg) {
     }
     if ( gui_sokoban_init() )
         gui_mode = GUI_MODE_SOKOBAN;
+}
+#endif
+//-------------------------------------------------------------------
+#ifdef OPT_GAME_CONNECT4
+void gui_draw_4wins(int arg) {
+    if ((mode_get()&MODE_MASK) != MODE_PLAY) {
+        gui_mbox_init(LANG_MSG_INFO_TITLE, LANG_MSG_SWITCH_TO_PLAY_MODE,
+                      MBOX_FUNC_RESTORE|MBOX_TEXT_CENTER, NULL);
+        return;
+    }
+    if ( gui_4wins_init() )
+        gui_mode = GUI_MODE_4WINS;
 }
 #endif
 //-------------------------------------------------------------------
