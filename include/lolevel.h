@@ -96,6 +96,8 @@ extern int _isspace(int c);
 extern int _isalpha(int c);
 extern int _isupper(int c);
 extern int _islower(int c);
+extern int _ispunct(int c);
+extern int _isxdigit(int c);
 
 extern long _strlen(const char *s);
 extern int _strcmp(const char *s1, const char *s2);
@@ -109,6 +111,9 @@ extern char *_strpbrk(const char *s, const char *accept);
 
 extern long _strtol(const char *nptr, char **endptr, int base);
 
+extern int _tolower(int c);
+extern int _toupper(int c);
+
 extern int _vsprintf(char *buf, const char *fmt, __builtin_va_list va_list);
 
 extern void *_malloc(long size);
@@ -116,6 +121,7 @@ extern void _free(void *p);
 extern void *_AllocateUncacheableMemory(long size);
 extern void _FreeUncacheableMemory(void *p);
 
+extern void *_memchr(const void *s, int c, int n);
 extern void *_memcpy(void *dest, const void *src, long n);
 extern void *_memset(void *s, int c, int n);
 extern int _memcmp(const void *s1, const void *s2, long n);

@@ -747,13 +747,20 @@ static void set_string_field(lua_State* L, const char *key, const char *val)
 
 static int luaCB_get_buildinfo( lua_State* L )
 {
-  lua_createtable(L, 0, 6);  /* 6 = number of fields */
+  lua_createtable(L, 0, 8);
   set_string_field( L,"platform", PLATFORM );
   set_string_field( L,"platsub", PLATFORMSUB );
   set_string_field( L,"version", HDK_VERSION );
   set_string_field( L,"build_number", BUILD_NUMBER );
   set_string_field( L,"build_date", __DATE__ );
   set_string_field( L,"build_time", __TIME__ );
+#ifndef CAM_DRYOS
+  set_string_field( L,"os", "vxworks" );
+#else
+  set_string_field( L,"os", "dryos" );
+#endif
+  lua_pushnumber( L, PLATFORMID );
+  lua_setfield(L, -2, "platformid");
   return 1;
 }
 

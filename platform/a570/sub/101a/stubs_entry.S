@@ -113,15 +113,12 @@ NSTUB(iosDevAdd, 0xffcd7d58)
 NSTUB(iosDevFind, 0xffcd7ce4)
 NSTUB(iosDrvInstall, 0xffcd801c)
 NSTUB(isalpha, 0xffcce110)
-// ALT: NSTUB(isalpha, 0xffcce110) // 4/0
 NSTUB(isdigit, 0xffcce140)
-// ALT: NSTUB(isdigit, 0xffcce140) // 4/0
 NSTUB(islower, 0xffcce170)
-// ALT: NSTUB(islower, 0xffcce170) // 4/0
+NSTUB(ispunct, 0xffcce1a0)
 NSTUB(isspace, 0xffcce1b8)
-// ALT: NSTUB(isspace, 0xffcce1b8) // 4/0
 NSTUB(isupper, 0xffcce1d0)
-// ALT: NSTUB(isupper, 0xffcce1d0) // 4/0
+NSTUB(isxdigit, 0xffcce1e8)
 NSTUB(kbd_p1_f, 0xffde5edc)
 NSTUB(kbd_p1_f_cont, 0xffde5ee8)
 // Best match: 56%
@@ -141,6 +138,7 @@ NSTUB(lseek, 0xffcd6c7c)
 // Best match: 53%
 NSTUB(malloc, 0xffcd9b78)
 // ALT: NSTUB(malloc, 0xffcd9b78) // 15/13
+NSTUB(memchr, 0xffcd1d3c)
 NSTUB(memcmp, 0xffcd1d70)
 // ALT: NSTUB(memcmp, 0xffcddd38) // 9/0
 NSTUB(memcpy, 0xffcd1dac)
@@ -186,6 +184,8 @@ NSTUB(taskSuspend, 0xffce3dc8)
 NSTUB(taskUnlock, 0xffce4424)
 NSTUB(time, 0xffcd36dc)
 // ALT: NSTUB(time, 0xffcd36dc) // 25/0
+NSTUB(tolower, 0xffcce200)
+NSTUB(toupper, 0xffcce210)
 // Best match: 57%
 NSTUB(utime, 0xffefa0b4)
 // ALT: NSTUB(utime, 0xffefa0b4) // 15/11

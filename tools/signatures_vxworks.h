@@ -524,6 +524,30 @@ static FuncSig func_sig_MakeDirectory_1[] = {
 	/* 31/32 */
 };
 
+static FuncSig func_sig_memchr_1[] = {
+	{   1, 0xe1a0b000, 0xfdffffff }, // mov:6:0xE1A0B000
+	{   2, 0xe00110ff, 0xfdffffff }, // and:6:0xE20110FF
+	{   3, 0xea000000, 0xff000000 }, // b, bl:3:0xEA000004
+	{   5, 0xe15c0001, 0xfdffffff }, // cmp:7:0xE15C0001
+	{   6, 0x004b0001, 0xfdffffff }, // sub:6:0x024B0001
+	{   7, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000003
+	{   8, 0xe0422001, 0xfdffffff }, // sub:6:0xE2422001
+	{   9, 0xe1520000, 0xfdffffff }, // cmp:7:0xE3520000
+	{  10, 0x1a000000, 0xff000000 }, // b, bl:3:0x1AFFFFF8
+	{  11, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{  13, 0xe1520000, 0xfdffffff }, // cmp:7:0xE3520000
+	{  14, 0x01a00000, 0xfdffffff }, // mov:6:0x03A00000
+	{  15, 0x01a0f00e, 0xfdffffff }, // mov:6:0x01A0F00E
+	{  18, 0xe15c0003, 0xfdffffff }, // cmp:7:0xE15C0003
+	{  19, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000003
+	{  20, 0xe0522001, 0xfdffffff }, // sub:6:0xE2522001
+	{  21, 0x1a000000, 0xff000000 }, // b, bl:3:0x1AFFFFF9
+	{  22, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{  23, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 19/32 */
+};
+
 static FuncSig func_sig_memcmp_1[] = {
 	{   0, 0xe1520000, 0xfdffffff }, // cmp:7:0xE3520000
 	{   1, 0x01a00000, 0xfdffffff }, // mov:6:0x03A00000
@@ -1790,6 +1814,24 @@ static FuncSig func_sig_islower_1[] = {
 	/* 4/32 */
 };
 
+static FuncSig func_sig_ispunct_1[] = {
+	{   0, 0xe59fc00c, 0xfdffffff }, // ldr:4:0xE59FC00C
+	{   1, 0xe59cc000, 0xfdffffff }, // ldr:4:0xE59CC000
+	{   3, 0xe00c0010, 0xfdffffff }, // and:6:0xE20C0010
+	{   4, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 4/32 */
+};
+
+static FuncSig func_sig_isxdigit_1[] = {
+	{   0, 0xe59fc00c, 0xfdffffff }, // ldr:4:0xE59FC00C
+	{   1, 0xe59cc000, 0xfdffffff }, // ldr:4:0xE59CC000
+	{   3, 0xe00c0040, 0xfdffffff }, // and:6:0xE20C0040
+	{   4, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 4/32 */
+};
+
 static FuncSig func_sig_strncmp_1[] = {
 	{   0, 0xe1520000, 0xfdffffff }, // cmp:7:0xE3520000
 	{   1, 0x01a00000, 0xfdffffff }, // mov:6:0x03A00000
@@ -2121,6 +2163,24 @@ static FuncSig func_sig_strrchr_1[] = {
 	{   9, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
 	{ -1, -1, -1 },
 	/* 8/32 */
+};
+
+static FuncSig func_sig_tolower_1[] = {
+	{   0, 0xe040c041, 0xfdffffff }, // sub:6:0xE240C041
+	{   1, 0xe15c0019, 0xfdffffff }, // cmp:7:0xE35C0019
+	{   2, 0x90800020, 0xfdffffff }, // add:6:0x92800020
+	{   3, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 4/32 */
+};
+
+static FuncSig func_sig_toupper_1[] = {
+	{   0, 0xe040c061, 0xfdffffff }, // sub:6:0xE240C061
+	{   1, 0xe15c0019, 0xfdffffff }, // cmp:7:0xE35C0019
+	{   2, 0x90400020, 0xfdffffff }, // sub:6:0x92400020
+	{   3, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
+	{ -1, -1, -1 },
+	/* 4/32 */
 };
 
 static FuncSig func_sig_SetParameterData_1[] = {
@@ -3882,51 +3942,6 @@ static FuncSig func_sig_PhySw_testgpio_2[] = {
 	/* 29/32 */
 };
 
-static FuncSig func_sig_isalpha_2[] = {
-	{   0, 0xe59fc00c, 0xfdffffff }, // ldr:4:0xE59FC00C
-	{   1, 0xe59cc000, 0xfdffffff }, // ldr:4:0xE59CC000
-	{   3, 0xe00c0003, 0xfdffffff }, // and:6:0xE20C0003
-	{   4, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
-	{ -1, -1, -1 },
-	/* 4/32 */
-};
-
-static FuncSig func_sig_isdigit_2[] = {
-	{   0, 0xe59fc00c, 0xfdffffff }, // ldr:4:0xE59FC00C
-	{   1, 0xe59cc000, 0xfdffffff }, // ldr:4:0xE59CC000
-	{   3, 0xe00c0004, 0xfdffffff }, // and:6:0xE20C0004
-	{   4, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
-	{ -1, -1, -1 },
-	/* 4/32 */
-};
-
-static FuncSig func_sig_islower_2[] = {
-	{   0, 0xe59fc00c, 0xfdffffff }, // ldr:4:0xE59FC00C
-	{   1, 0xe59cc000, 0xfdffffff }, // ldr:4:0xE59CC000
-	{   3, 0xe00c0002, 0xfdffffff }, // and:6:0xE20C0002
-	{   4, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
-	{ -1, -1, -1 },
-	/* 4/32 */
-};
-
-static FuncSig func_sig_isspace_2[] = {
-	{   0, 0xe59fc00c, 0xfdffffff }, // ldr:4:0xE59FC00C
-	{   1, 0xe59cc000, 0xfdffffff }, // ldr:4:0xE59CC000
-	{   3, 0xe00c0028, 0xfdffffff }, // and:6:0xE20C0028
-	{   4, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
-	{ -1, -1, -1 },
-	/* 4/32 */
-};
-
-static FuncSig func_sig_isupper_2[] = {
-	{   0, 0xe59fc00c, 0xfdffffff }, // ldr:4:0xE59FC00C
-	{   1, 0xe59cc000, 0xfdffffff }, // ldr:4:0xE59CC000
-	{   3, 0xe00c0001, 0xfdffffff }, // and:6:0xE20C0001
-	{   4, 0xe1a0f00e, 0xfdffffff }, // mov:6:0xE1A0F00E	/* RET found, stopping... */
-	{ -1, -1, -1 },
-	/* 4/32 */
-};
-
 static FuncSig func_sig_rand_2[] = {
 	{   0, 0xe59f002c, 0xfdffffff }, // ldr:4:0xE59F002C
 	{   1, 0xe59f102c, 0xfdffffff }, // ldr:4:0xE59F102C
@@ -5128,15 +5143,12 @@ FuncsList func_list[] = {
 	{ "iosDevFind", func_sig_iosDevFind_1 },
 	{ "iosDrvInstall", func_sig_iosDrvInstall_1 },
 	{ "isalpha", func_sig_isalpha_1 },
-	{ "isalpha", func_sig_isalpha_2 },
 	{ "isdigit", func_sig_isdigit_1 },
-	{ "isdigit", func_sig_isdigit_2 },
 	{ "islower", func_sig_islower_1 },
-	{ "islower", func_sig_islower_2 },
+	{ "ispunct", func_sig_ispunct_1 },
 	{ "isspace", func_sig_isspace_1 },
-	{ "isspace", func_sig_isspace_2 },
 	{ "isupper", func_sig_isupper_1 },
-	{ "isupper", func_sig_isupper_2 },
+	{ "isxdigit", func_sig_isxdigit_1 },
 	{ "kbd_p1_f", func_sig_kbd_p1_f_1 },
 	{ "kbd_p1_f_cont", func_sig_kbd_p1_f_cont_1 },
 	{ "kbd_p2_f", func_sig_kbd_p2_f_1 },
@@ -5147,6 +5159,7 @@ FuncsList func_list[] = {
 	{ "lseek", func_sig_lseek_1 },
 	{ "malloc", func_sig_malloc_1 },
 	{ "malloc", func_sig_malloc_2 },
+	{ "memchr", func_sig_memchr_1 },
 	{ "memcmp", func_sig_memcmp_1 },
 	{ "memcpy", func_sig_memcpy_1 },
 	{ "memset", func_sig_memset_1 },
@@ -5188,6 +5201,8 @@ FuncsList func_list[] = {
 	{ "taskUnlock", func_sig_taskUnlock_1 },
 	{ "time", func_sig_time_1 },
 	{ "time", func_sig_time_2 },
+	{ "tolower", func_sig_tolower_1 },
+	{ "toupper", func_sig_toupper_1 },
 	{ "utime", func_sig_utime_1 },
 	{ "utime", func_sig_utime_2 },
 	{ "vsprintf", func_sig_vsprintf_1 },

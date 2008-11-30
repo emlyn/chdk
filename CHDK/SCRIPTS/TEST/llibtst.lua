@@ -10,6 +10,8 @@
 @default d 0
 @param e skip os filesystem
 @default e 0
+@param f skip string
+@default f 0
 ]]
 
 do_io=a==0
@@ -17,6 +19,7 @@ do_os=b==0
 do_time=c==0
 do_fmtdump=d==0
 do_dir=e==0
+do_string=f==0
 
 nfail=0
 want_ok=true
@@ -65,11 +68,11 @@ end
 function logfail(...)
 	logrec("ERR",false,...)
 end
-function logres(r)
+function logres(r,...)
 	if r then
-		logok()
+		logok(...)
 	else
-		logfail()
+		logfail(...)
 	end
 	return r
 end
@@ -454,7 +457,12 @@ function os_test()
 		trem(tdir0) --fail, not empty
 		trem("A/bogus") --fail missing
 		tlistdir("A/bogus") -- missing
+		-- dryos returns success for listdir on a file
+		if get_buildinfo().os == "dryos" then
+			no_rec = true
+		end
 		tlistdir("A/llibtst.log") -- not a directory
+		no_rec = false
 		tstat("A/bogus") -- fail missing
 		tutime("A/bogus") -- fail missing
 		tren("A/bogus","A/blah")--fail missing
@@ -469,6 +477,55 @@ function os_test()
 	log("\n")
 end
 
+function string_test()
+	tstart("string")
+	if type(string) ~= "table" then
+		log("missing string aborting!\n")
+		return
+	end
+	log('string.byte("test",2): ')
+	local v=string.byte("test",2)
+	logres(v==101,tostring(v))
+	log('string.char(116,101,115,116): ')
+	v=string.char(116,101,115,116)
+	logres(v=="test",tostring(v))
+	log('dump/load: ')
+	v=string.dump(function(a) return 'test' .. tostring(a) end)
+	v=loadstring(v)(123)
+	logres(v=="test123",tostring(v))
+	log('string.find("test 1 2 3F!?","t%s(%d) 2 (%x%x%p%p)$"): ')
+	local mstart,mend,cap1,cap2=string.find("test 1 2 3F!?","t%s(%d) 2 (%x%x%p%p)$")
+	logres((mstart == 4 and mend == 13 and cap1 == '1' and cap2 == '3F!?'), 
+		    tostring(mstart) .. " " .. 
+			tostring(mend) .. " " .. 
+			tostring(cap1) .. " " .. tostring(cap2) )
+	log('string.format("%c %d %x %s",100,100,100,"test"): ')
+	v=string.format("%c %d %x %s",100,100,100,"test")
+	logres(v=="d 100 64 test",v)
+	-- not testing gmatch or gsub for now, pattern matching exercised above
+	log('string.len("\\000test"): ')
+	v=string.len("\000test")
+	logres(v==5,v)
+	log('string.lower("TESTtest"): ')
+	v=string.lower("TESTtest")
+	logres(v=="testtest",v)
+	log('string.upper("TESTtest"): ')
+	v=string.upper("TESTtest")
+	logres(v=="TESTTEST",v)
+	-- not testing string.match
+	log('string.rep("test",2): ')
+	v=string.rep("test",2)
+	logres(v=="testtest",v)
+	log('string.reverse("123"): ')
+	v=string.reverse("123")
+	logres(v=="321",v)
+	log('string.sub("test",-3): ')
+	v=string.sub("test",-3)
+	logres(v=="est",v)
+	tend("string")
+	log("\n")
+end
+
 testlog,msg=io.open("A/llibtst.log","wb")
 if not testlog then
 	error("open test log fail:"..tostring(msg))
@@ -479,12 +536,17 @@ bi=get_buildinfo()
 log("test log opened\n");
 log("platform: ",bi.platform," ",bi.platsub,"\n")
 log("version: ",bi.version," ",bi.build_number," built on ",bi.build_date," ",bi.build_time,"\n")
+log("os: ",bi.os," platformid: ",bi.platformid,"\n")
 if do_io then
 	io_test()
 end
 
 if do_os then
 	os_test()
+end
+
+if do_string then
+	string_test()
 end
 log("close test log\n");
 io.close(testlog)

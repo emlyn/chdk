@@ -18,6 +18,7 @@ kbd_pwr_on 0xFFC17564 10
 kbd_read_keys_r2 0xFFC16FD8
 lseek 0xFFEBBFA0
 MakeDirectory 0xFFC5C9B0
+memchr 0xFFEB599C
 memcmp 0xFFEB59D0
 memcpy 0xFFEB5A0C
 memset 0xFFEB5A84
@@ -65,6 +66,8 @@ isdigit 0xFFEB1DA0
 isspace 0xFFEB1E18
 isupper 0xFFEB1E30
 islower 0xFFEB1DD0
+ispunct 0xFFEB1E00 
+isxdigit 0xFFEB1E48
 strncmp 0xFFEB5E50
 strtol 0xFFEB566C
 rand 0xFFEB5254
@@ -79,6 +82,8 @@ _log10 0xFFEA8A84
 _sqrt 0xFFEAD2C0
 strncpy 0xFFEB5E94
 strrchr 0xFFEB5F18
+tolower 0xFFEB1E60
+toupper 0xFFEB1E70
 SetParameterData 0xFFD4E21C
 GetParameterData 0xFFD4E2FC
 rename 0xFFEBC4A8

@@ -14,11 +14,6 @@ AllocateMemory 0xFFC01AB0
 FreeMemory 0xFFC01ABC
 CreatePhysicalVram 0xFFD37D50
 PhySw_testgpio 0xFFC1889C
-isalpha 0xFFEF4E7C
-isdigit 0xFFEF4EAC
-islower 0xFFEF4EDC
-isspace 0xFFEF4F24
-isupper 0xFFEF4F3C
 rand 0xFFEF8360
 srand 0xFFEF8384
 IsStrobeChargeCompleted 0xFFD11B24

@@ -84,6 +84,8 @@ extern int isspace(int c);
 extern int isalpha(int c);
 extern int isupper(int c);
 extern int islower(int c);
+extern int ispunct(int c);
+extern int isxdigit(int c);
 
 extern long sprintf(char *s, const char *st, ...);
 
@@ -100,6 +102,9 @@ extern char *strpbrk(const char *s, const char *accept);
 extern long strtol(const char *nptr, char **endptr, int base);
 #define atoi(n) strtol((n),NULL,0)
 
+extern int tolower(int c);
+extern int toupper(int c);
+
 extern void *malloc(long size);
 extern void free(void *p);
 extern void *umalloc(long size);
@@ -108,6 +113,7 @@ extern void ufree(void *p);
 extern void *memcpy(void *dest, const void *src, long n);
 extern void *memset(void *s, int c, int n);
 extern int memcmp(const void *s1, const void *s2, long n);
+extern void *memchr(const void *s, int c, int n);
 
 
 extern void SleepTask(long msec);

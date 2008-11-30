@@ -148,25 +148,19 @@ NSTUB(iosDevFind, 0xffac3a38)
 NSTUB(iosDrvInstall, 0xffac3d70)
 // ALT: NSTUB(iosDrvInstall, 0xfff57e20) // 30/0
 NSTUB(isalpha, 0xffab8574)
-// ALT: NSTUB(isalpha, 0xffab8574) // 4/0
-// ALT: NSTUB(isalpha, 0xfff4c624) // 4/0
 // ALT: NSTUB(isalpha, 0xfff4c624) // 4/0
 NSTUB(isdigit, 0xffab85a4)
-// ALT: NSTUB(isdigit, 0xffab85a4) // 4/0
-// ALT: NSTUB(isdigit, 0xfff4c654) // 4/0
 // ALT: NSTUB(isdigit, 0xfff4c654) // 4/0
 NSTUB(islower, 0xffab85d4)
-// ALT: NSTUB(islower, 0xffab85d4) // 4/0
 // ALT: NSTUB(islower, 0xfff4c684) // 4/0
-// ALT: NSTUB(islower, 0xfff4c684) // 4/0
+NSTUB(ispunct, 0xffab8604)
+// ALT: NSTUB(ispunct, 0xfff4c6b4) // 4/0
 NSTUB(isspace, 0xffab861c)
-// ALT: NSTUB(isspace, 0xffab861c) // 4/0
-// ALT: NSTUB(isspace, 0xfff4c6cc) // 4/0
 // ALT: NSTUB(isspace, 0xfff4c6cc) // 4/0
 NSTUB(isupper, 0xffab8634)
-// ALT: NSTUB(isupper, 0xffab8634) // 4/0
 // ALT: NSTUB(isupper, 0xfff4c6e4) // 4/0
-// ALT: NSTUB(isupper, 0xfff4c6e4) // 4/0
+NSTUB(isxdigit, 0xffab864c)
+// ALT: NSTUB(isxdigit, 0xfff4c6fc) // 4/0
 // ERROR: kbd_p1_f is not found!
 // ERROR: kbd_p1_f_cont is not found!
 // ERROR: kbd_p2_f is not found!
@@ -191,6 +185,8 @@ NSTUB(malloc, 0xffac58cc)
 // ALT: NSTUB(malloc, 0xffac58cc) // 15/13
 // ALT: NSTUB(malloc, 0xfff5997c) // 15/13
 // ALT: NSTUB(malloc, 0xfff5997c) // 15/13
+NSTUB(memchr, 0xffabc260)
+// ALT: NSTUB(memchr, 0xfff50310) // 19/0
 NSTUB(memcmp, 0xffabc294)
 // ALT: NSTUB(memcmp, 0xffaca83c) // 9/0
 // ALT: NSTUB(memcmp, 0xfff50344) // 9/0
@@ -279,6 +275,10 @@ NSTUB(time, 0xffabdc00)
 // ALT: NSTUB(time, 0xffabdc00) // 25/0
 // ALT: NSTUB(time, 0xfff51cb0) // 25/0
 // ALT: NSTUB(time, 0xfff51cb0) // 25/0
+NSTUB(tolower, 0xffab8664)
+// ALT: NSTUB(tolower, 0xfff4c714) // 4/0
+NSTUB(toupper, 0xffab8674)
+// ALT: NSTUB(toupper, 0xfff4c724) // 4/0
 NSTUB(utime, 0xffabe81c)
 // ALT: NSTUB(utime, 0xffabe81c) // 26/0
 // ALT: NSTUB(utime, 0xfff528cc) // 26/0

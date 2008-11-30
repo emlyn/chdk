@@ -281,6 +281,22 @@ int islower(int c) {
 
 }
 
+int ispunct(int c) {
+#if !CAM_DRYOS
+    return _ispunct(c);
+#else
+    return _ctype[c]&_P;
+#endif
+}
+
+int isxdigit(int c) {
+#if !CAM_DRYOS
+    return _isxdigit(c);
+#else
+    return _ctype[c]&_X;
+#endif
+}
+
 long strlen(const char *s) {
     return _strlen(s);
 }
@@ -351,6 +367,22 @@ const char *strerror(int en) {
     return msg;
 #else
     return "error";
+#endif
+}
+
+int tolower(int c) {
+#if !CAM_DRYOS
+	return _tolower(c);
+#else
+	return isupper(c) ? c - 'A' + 'a' : c;
+#endif
+}
+
+int toupper(int c) {
+#if !CAM_DRYOS
+	return _toupper(c);
+#else
+	return islower(c) ? c - 'a' + 'A' : c;
 #endif
 }
 
@@ -435,6 +467,19 @@ void *memset(void *s, int c, int n) {
 
 int memcmp(const void *s1, const void *s2, long n) {
     return _memcmp(s1, s2, n);
+}
+
+void *memchr(const void *s, int c, int n) {
+#if !CAM_DRYOS
+	return _memchr(s,c,n);
+#else
+	while (n-- > 0) {
+		if (*(char *)s == c)
+			return (void *)s;
+		s++;
+	}
+	return (void *)0;
+#endif
 }
 
 int rand(void) {
