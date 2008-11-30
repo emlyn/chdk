@@ -1907,7 +1907,7 @@ static void is_key_statement(void)
 
 static void wheel_left_statement(void){
   accept(TOKENIZER_WHEEL_LEFT);
-#if defined (CAMERA_g7) || defined (CAMERA_sx100is) || defined (CAMERA_g9)
+#ifdef CAM_HAS_JOGDIAL
   JogDial_CCW();
 #endif
   accept_cr();
@@ -1916,7 +1916,7 @@ static void wheel_left_statement(void){
 
 static void wheel_right_statement(void){
   accept(TOKENIZER_WHEEL_RIGHT);
-#if defined (CAMERA_g7) || defined (CAMERA_sx100is)
+#ifdef CAM_HAS_JOGIDAL
   JogDial_CW();
 #endif
   accept_cr();

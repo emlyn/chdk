@@ -33,6 +33,7 @@
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1 // Camera can unlock optical zoom in video (if it is locked)
     #undef  CAM_FEATURE_FEATHER             // Cameras with "feather" or touch wheel.
     #define CAM_HAS_IS                  1   // Camera has image stabilizer
+	#undef  CAM_HAS_JOGDIAL                 // Camera has a "jog dial"
 
     #undef  CAM_CONSOLE_LOG_ENABLED         // Development: internal camera stdout -> A/stdout.txt
     #define CAM_CHDK_HAS_EXT_VIDEO_MENU 1   // In CHDK for this camera realized adjustable video compression
@@ -70,6 +71,7 @@
     #define CAM_HAS_ND_FILTER           1
     #undef  CAM_HAS_IS
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+	#define CAM_HAS_JOGDIAL             1
     #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
@@ -109,6 +111,7 @@
     #undef  CAM_EMUL_KEYPRESS_DURATION
     #define CAM_EMUL_KEYPRESS_DURATION  10
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+	#define CAM_HAS_JOGDIAL             1
     #define CAM_EV_IN_VIDEO             1
 //	#define CAM_CONSOLE_LOG_ENABLED     1
 //  #define CAM_BRACKETING              1  //propcase still missing for dryos    
@@ -1392,13 +1395,14 @@
     #define CAM_RAW_ROWPIX              3336   // for new 8 MP
     #define CAM_RAW_ROWS                2480   // for new 8 MP
     #undef CAM_SYNCH 
-#define CAM_CAN_MUTE_MICROPHONE     1 
-#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1 
-   #define CAM_ADJUSTABLE_ALT_BUTTON   1
-   #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
-   #undef  CAM_VIDEO_CONTROL
-   #define DNG_SUPPORT                 1
-   #define CAM_REAR_CURTAIN            1
+    #define CAM_CAN_MUTE_MICROPHONE     1 
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1 
+    #define CAM_ADJUSTABLE_ALT_BUTTON   1
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #undef  CAM_VIDEO_CONTROL
+    #define DNG_SUPPORT                 1
+    #define CAM_REAR_CURTAIN            1
+    #define CAM_HAS_JOGDIAL             1
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
     // color

@@ -2,6 +2,22 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
+0.8.7 / #606-607 / reyalp
++ add lua functions for flash parameters (onboard flash memory, not light)
+  num=get_flash_params_count() -- num is the number of parameters
+  str,num=get_parameter_data(id) -- str is the parameter value as a lua string,
+    which may contain embedded NULLs or other non-printable characters. If the size of the flash
+    parameter is 4 bytes or less, a second value is returned, containing the parameter value as a number
+    if the parameter id is invalid, or the parameter size is 0, then nil is returned.
+  scripts/examples/paramdmp.lua contains an example
+* added CAMERA_HAS_JOGDAIL for g7/g9/sx100is, and used it instead of checking individual camera defines
++ Lua string lib. see http://www.lua.org/manual/5.1/manual.html#5.4
+* Updated get_buildinfo to return two additional fields:
+  os: string, either "dryos" or "vxworks"
+  platformid: number
+* llibtst.lua is updated to test string lib, and no longer reports a listdir failure under dryos.
+* removed some redundant entries from sig_ref_vxworks_2.txt
+
 
 0.8.6 / #597-604 / PhyrePhoX
 

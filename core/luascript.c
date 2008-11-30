@@ -200,6 +200,50 @@ static int luaCB_get_zoom( lua_State* L )
   return 1;
 }
 
+static int luaCB_get_parameter_data( lua_State* L )
+{
+  extern long* FlashParamsTable[]; 
+
+  unsigned size;
+  unsigned id = luaL_checknumber( L, 1 );
+  unsigned val;
+
+  if (id >= get_flash_params_count()) {
+    // return nil
+    return 0;
+  }
+
+  size = FlashParamsTable[id][1]>>16;
+  if (size == 0) {
+    // return nil
+    return 0;
+  }
+  if (size >= 1 && size <= 4) {
+    val = 0;
+    get_parameter_data( id, &val, size );
+    lua_pushlstring( L, (char *)&val, size );
+    // for convenience, params that fit in a number are returned in one as a second result
+    lua_pushnumber( L, val );
+    return 2;
+  }
+  else {
+    char *buf = malloc(size);
+    if(!buf) {
+      luaL_error( L, "malloc failed in luaCB_get_parameter_data" );
+    }
+    get_parameter_data( id, buf, size );
+    lua_pushlstring( L, buf, size );
+    free(buf);
+    return 1;
+  }
+}
+
+static int luaCB_get_flash_params_count( lua_State* L )
+{
+  lua_pushnumber( L, get_flash_params_count() );
+  return 1;
+}
+
 static int luaCB_set_av96_direct( lua_State* L )
 {
   shooting_set_av96_direct( luaL_checknumber( L, 1 ), SET_LATER );
@@ -382,7 +426,7 @@ static int luaCB_is_key( lua_State* L )
   return 1;
 }
 
-#if defined (CAMERA_g7) || defined (CAMERA_sx100is) || defined (CAMERA_g9)
+#if CAM_HAS_JOGDIAL
 static int luaCB_wheel_right( lua_State* L )
 {
   JogDial_CW();
@@ -856,6 +900,8 @@ void register_lua_funcs( lua_State* L )
   FUNC(get_vbatt);
   FUNC(get_zoom);
   FUNC(get_exp_count);
+  FUNC(get_flash_params_count);
+  FUNC(get_parameter_data);
 
   FUNC(set_av96_direct);
   FUNC(set_av96);
@@ -883,7 +929,7 @@ void register_lua_funcs( lua_State* L )
   FUNC(wait_click);
   FUNC(is_pressed);
   FUNC(is_key);
-#if defined (CAMERA_g7) || defined (CAMERA_sx100is)
+#ifdef CAM_HAS_JOGDIAL
   FUNC(wheel_right);
   FUNC(wheel_left);
 #endif
