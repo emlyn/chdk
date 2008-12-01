@@ -1365,6 +1365,7 @@
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
     #define CAM_MULTIPART               1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+    #define  CAM_HAS_VIDEO_BUTTON       1
     #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
