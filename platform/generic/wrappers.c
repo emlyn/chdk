@@ -293,7 +293,7 @@ int isxdigit(int c) {
 #if !CAM_DRYOS
     return _isxdigit(c);
 #else
-    return _ctype[c]&_X;
+    return _ctype[c]&(_X|_D);
 #endif
 }
 
