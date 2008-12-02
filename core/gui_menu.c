@@ -246,6 +246,16 @@ static char sbuf[7];
 						}
                         gui_menu_redraw=1;
                         break;
+                    case MENUITEM_BOOL:
+                        *(curr_menu->menu[gui_menu_curr_item].value) = !(*(curr_menu->menu[gui_menu_curr_item].value));
+                        if ((curr_menu->menu[gui_menu_curr_item].type & MENUITEM_ARG_MASK) == MENUITEM_ARG_CALLBACK && curr_menu->menu[gui_menu_curr_item].arg) {
+                            ((void (*)())(curr_menu->menu[gui_menu_curr_item].arg))();
+                        }
+                        if (curr_menu->on_change) {
+                            curr_menu->on_change(gui_menu_curr_item);
+                        }
+                        gui_menu_redraw=1;
+                        break;
                     case MENUITEM_ENUM:
                         if (curr_menu->menu[gui_menu_curr_item].value) {
 							int c;
@@ -320,6 +330,16 @@ static char sbuf[7];
 						}
                         gui_menu_redraw=1;
                         break;
+                    case MENUITEM_BOOL:
+                        *(curr_menu->menu[gui_menu_curr_item].value) = !(*(curr_menu->menu[gui_menu_curr_item].value));
+                        if ((curr_menu->menu[gui_menu_curr_item].type & MENUITEM_ARG_MASK) == MENUITEM_ARG_CALLBACK && curr_menu->menu[gui_menu_curr_item].arg) {
+                            ((void (*)())(curr_menu->menu[gui_menu_curr_item].arg))();
+                        }
+                        if (curr_menu->on_change) {
+                            curr_menu->on_change(gui_menu_curr_item);
+                        }
+                        gui_menu_redraw=1;
+                        break;
                     case MENUITEM_ENUM:
                         if (curr_menu->menu[gui_menu_curr_item].value) {
 							int c;
@@ -369,8 +389,7 @@ static char sbuf[7];
 						gui_menu_redraw=1;
 						break;
                     case MENUITEM_BOOL:
-                        *(curr_menu->menu[gui_menu_curr_item].value) =
-                                !(*(curr_menu->menu[gui_menu_curr_item].value));
+                        *(curr_menu->menu[gui_menu_curr_item].value) = !(*(curr_menu->menu[gui_menu_curr_item].value));
                         if ((curr_menu->menu[gui_menu_curr_item].type & MENUITEM_ARG_MASK) == MENUITEM_ARG_CALLBACK && curr_menu->menu[gui_menu_curr_item].arg) {
                             ((void (*)())(curr_menu->menu[gui_menu_curr_item].arg))();
                         }
