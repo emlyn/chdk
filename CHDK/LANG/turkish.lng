@@ -17,9 +17,9 @@
 //
 // Build    :  CHDK Autobuild
 //
-// Version  :  build 0.8.4, revision 595
+// Version  :  build 0.8.7, revision 609
 //
-// Date     :  Nov 28th, 2008
+// Date     :  Dec 1st, 2008
 //
 // ________________________________________________________________
 //
@@ -30,7 +30,7 @@
 //   <id>   - should be positive number
 //   <text> - any text enclosed into quotes
   
-  1 " * * *  A n A  M e N ü  * * *     "
+  1 "Ana Menü"
 
   2 "RAW Parametreleri"
   3 "OSD Parametreleri"
@@ -43,7 +43,7 @@
  10 "Varsayýlan Tercihlere Dön..."
  11 "Tercihleri Þimdi Kaydet..."
 
- 12 "<- Geri"
+ 12 "Geri"
 
 
  13 "RAW"
@@ -234,17 +234,17 @@
 151 "  Rengi Seçmek Ýçin %s Tuþlarýný Kullanýn"
 
 // reversi
-152 "***  Oyun  Sonucu  ***"
-153 "\n~ ~ KAZANDINIZ ~ ~\n"
-154 "\nKaybettiniz! :(\n"
-155 "\nBerabere! :/\n"
+152 "*** Oyun Sonucu ***"
+153 "KAZANDINIZ! :)"
+154 "Kaybettiniz! :("
+155 "Berabere! :/"
 
 156 "*** Hatalý Hamle ***"
 157 "Buraya Koyamazsýnýz!"
 158 "Bu Kutu Boþ Deðil!"
 
-159 "Hamle: Siz     "
-160 "Hamle: Kamera  "
+159 " Hamle: Siz    "
+160 " Hamle: Kamera "
 161 "  OYUN  BÝTTÝ  "
 162 " Beyaz  Siyah  "
 
@@ -252,13 +252,13 @@
 
 // sokoban
 164 " Seviye"
-165 "  Hamle"
-166 "*****  TAMAMLANDI  *****"
-167 "\n  ~ T E B R Ý K L E R         \n\n       B A Þ A R D I N I Z ~  \n"
+165 " Hamle "
+166 "*** Tamamlandý ***"
+167 "\n T E B R Ý K L E R !! \n\nOyunu Bitirdiniz !\n"
 
 // console
 168 "*** BAÞLATILDI ***"
-169 "*** YARIDA KESÝLDÝ ***"
+169 "*** DURDURULDU ***"
 170 "*** TAMAMLANDI ***"
 
 // file browser
@@ -303,7 +303,7 @@
 204 "Izgara Dosyasý Seç"
 205 "Geçerli Izgara"
 
-206 "Gürültü Azaltma"
+206 "Karanlýk Kare Çýkarýmý"
 
 207 "Baskýn Izgara Renkleri"
 208 "Çizgi Rengi"
@@ -505,13 +505,13 @@
 351 "   Adým Boyutu (1 EV)?"
 352 "'EV' Doðruluðu"
 
-353 "DCIM klasöründeki tüm\nRAW dosyalarýný silmek\nistediðinizden emin misiniz?\n*  *  *  *\nNOT:  JPEG eþi ayný klasörde\nolan RAW'lar silinmeyecek."
-354 "Bu klasördeki tüm\nRAW dosyalarýný silmek\nistediðinizden emin misiniz?\n*  *  *  *\nNOT:  JPEG eþi ayný klasörde\nolan RAW'lar silinmeyecek."
-355 "Seçilenler (varsa) dýþýnda\ntüm RAW dosyalarýný silmek\nistediðinizden emin misiniz?\n*  *  *  *\nNOT:  JPEG eþi ayný klasörde\nolan RAW'lar silinmeyecek."
+353 "DCIM alt klasörlerindeki ;\nJPEG eþi silinmiþ olan tüm\nRAW dosyalarýný temizlemek\nistediðinizden emin misiniz?"
+354 "Bu klasördeki tüm RAW\ndosyalarýný temizlemek\nistediðinizden emin misiniz?\n*  *  *  *\nNOT:  JPEG eþi ayný klasörde\nolan RAW'lar silinmeyecek."
+355 "Seçilenler (varsa) dýþýndaki\ntüm RAW dosyalarýný temizlemek\nistediðinizden emin misiniz?\n*  *  *  *\nNOT:  JPEG eþi ayný klasörde\nolan RAW'lar silinmeyecek."
 
-356 "'RAW Sil' komutu, bu madde\niçin geçerli deðildir."
-357 "***   RAW  Sil   ***"
-358 "RAW Sil"
+356 "'RAW Temizle' komutu, bu\nmadde için geçerli deðildir."
+357 "***   RAW  Temizle   ***"
+358 "RAW Temizle"
 
 359 "Kök Kullanýcý Menüsü"
 
@@ -548,18 +548,18 @@
 381 "Senkron Gecikmesi 0.1s"
 
 
-382 "AF Anahtarý"
+382 "Basýnca AF Iþýðý'ný Aç"
 
 383 "Varsayýlan Param.Deðer Yükle"
 384 "Parametreler Seti"
 
 // raw istisnalarý
-385 "Spor'da        RAW DevreDýþý"
-386 "Seri Çekim'de  RAW DevreDýþý"
-387 "EV Bracket'ta  RAW DevreDýþý"
-388 "Zamanlayýcý'da RAW DevreDýþý"
-389 "Ýstisnalar"
-390 "RAW Ýstisnalarý Menüsü"
+385 "Spor                       >"
+386 "Seri Çekim                 >"
+387 "EV Bracket                 >"
+388 "Zamanlayýcý                >"
+389 "RAW Ýstisnalarý"
+390 "' ... Etkinse RAW Devre Dýþý '"
 391 "Ýstisnada Uyar ?"
 
 392 "Menüyü Ýlk Giriþ Seçili Aç"
@@ -618,3 +618,21 @@
 425 "RAW Tampon Önbelleði"
 426 "CHDK/badpixel.bin Yüklenemedi"
 427 "RAW Kaydetme Zamaný Göster"
+
+
+428 "4'e Tamamla"
+
+429 "Rakip:"
+430 "Ýnsan"
+431 " * KIRMIZI Kazandý * "
+432 " * SARI Kazandý * "
+433 " * SARI Kazandý * "
+434 " * Berabere Bitti * "
+
+
+// raw istisnalarý (devam)
+435 "Keskin Yüzey               >"
+436 "Oto Modu (AUTO)            >"
+
+437 "Video'da Flaþ Etkin ?"
+438 "   Flaþ Çýkýþ Gücü"

@@ -3,7 +3,7 @@
 // <id> "<text>"
 //   <id>   - pitäisi olla positiivinen numero
 //   <text> - teksti suljettuna lainausmerkkeihin
-//  28.11.2008 based on English rev 595
+//  29.11.2008 based on English rev 601
 1 "Päävalikko"
 
 2 "RAW-kuvat"
@@ -555,5 +555,15 @@
 423 "Takaverho-salaman tahdistus"
 424 "DNG-muoto"
 425 "RAW-puskuri tarkistettu"
-426 "CHDK/badpixel.bin lataus epäonnistui"
+426 "badpixel.bin lataus epäonnistui"
 427 "Näytä raw-tallennusaika"
+428 "4 suora"
+429 "Vastustaja:"
+430 "Ihminen"
+431 "Pelaaja 1 voitti pelin"
+432 "Pelaaja 2 voitti pelin"
+433 "Voitin sinut"
+434 "Peli päättyi taspeliin"
+435 "Raw @ reunan näyttö ei käytössä"
+436 "Raw @ Auto tila ei käytössä"
+

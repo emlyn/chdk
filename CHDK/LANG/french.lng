@@ -1,4 +1,4 @@
-// CHDK language file french for autobuild 0.8.4, revision #594 (Win1252)
+// CHDK language file french for autobuild 0.8.7, revision #607 (Win1252)
 // Format of language line:
 // <id> "<text>"
 //   <id>   - should be positive number
@@ -478,7 +478,7 @@
 380 "Délai de synchro 0.1ms"
 381 "Délai de synchro 0.1s"
 
-382 "AF key"
+382 "Touche AF"
 383 "Charger paramètres par défaut"
 384 "Parameters set"
 
@@ -488,8 +488,8 @@
 388 "Disable Raw @ Timer"
 
 389 "Exceptions"
-390 "RAW Exceptions Menu"
-391 "Warn when Exception?"
+390 "Menu des exceptions RAW"
+391 "Alerter en cas d'exception?"
 392 "Always select 1st entry in menu"
 
 393 "Time-out (0.1s)"
@@ -497,7 +497,7 @@
 395 "Fast Video Control?"
 396 "Température"
 397 "Afficher la température?"
-398 "Video Quality Control?"
+398 "Contrôle de qualité vidéo?"
 399 "Activer télécommande du Zoom"
 400 "Zoom Time-out 0.1s"
 401 "Son de démarrage"
@@ -519,11 +519,22 @@
 417 "Load Edge Overlay"
 418 "Save Edge Overlay"
 419 "Enable in Play"
-420 "Free internal Memory"
+420 "Mémoire interne libre"
 421 "Load+Set Zoom"
 422 "Lock Edge Overlay"
 423 "Rear curtain flash sync"
 424 "DNG format"
 425 "RAW buffer cached"
 426 "Cannot load CHDK/badpixel.bin"
-427 "Afficher temps de sauv. RAW" 
+427 "Afficher temps de sauv. RAW"
+428 "Connect 4"
+429 "Opposent:"
+430 "Humain"
+431 "Le joueur 1 a gagné"
+432 "Le joueur 2 a gagné"
+433 "Je vous ai battu"
+434 "The game ended a draw"
+435 "Disable Raw @ EdgerOverlay"
+436 "Disable Raw @ Auto Mode"
+437 "Activer le flash en video?"
+438 "   Puissance flash"
