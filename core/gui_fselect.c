@@ -655,7 +655,7 @@ static void fselect_marked_copy_list() {
 //-------------------------------------------------------------------
 static void fselect_marked_paste_cb(unsigned int btn) {
     struct fitem  *ptr;
-    int ss, sd, fsrc, fdst, i=0;
+    int ss, sd = 0, fsrc, fdst, i=0;
     register int *buf;
     unsigned char fend;
     static struct utimbuf t;

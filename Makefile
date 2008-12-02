@@ -57,7 +57,7 @@ infoline:
 
 version: FORCE
 	echo "**** Build: $(BUILD_NUMBER)"
-	echo "BUILD_NUMBER := $(BUILD_NUMBER)" > version.inc
+#	echo "BUILD_NUMBER := $(BUILD_NUMBER)" > version.inc
 
 FORCE:
 

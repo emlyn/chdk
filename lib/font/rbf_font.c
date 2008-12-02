@@ -210,7 +210,7 @@ void rbf_load_from_8x16(unsigned char font[256][16]) {
     need_free = 0;
     
     for (i=0; i<256; ++i) {
-        rbf_assign_char_8x16(&rbf_font.cTable[i], font[i], rbf_font.height);
+        rbf_assign_char_8x16(&rbf_font.cTable[i], (char*)font[i], rbf_font.height);
     }
     need_free = 1;
 }

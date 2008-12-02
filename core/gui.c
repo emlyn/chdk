@@ -145,7 +145,7 @@ static void gui_draw_read(int arg);
 static void gui_draw_read_last(int arg);
 #endif
 static void gui_draw_load_menu_rbf(int arg);
-static void gui_draw_load_symbol_rbf(int arg);			//AKA
+static void gui_draw_load_symbol_rbf(int arg);		//AKA
 #ifdef OPT_TEXTREADER
 	static void gui_draw_load_rbf(int arg);
 #endif
@@ -157,7 +157,9 @@ static void gui_menuproc_mkbootdisk(int arg);
 static void gui_menuproc_edge_save(int arg);
 static void gui_menuproc_edge_load(int arg);
 static void gui_menuproc_edge_free(int arg);
-
+#ifdef OPT_DEBUGGING
+void gui_compare_props(int arg);
+#endif
 #ifndef OPTIONS_AUTOSAVE
 static void gui_menuproc_save(int arg);
 #endif
@@ -1844,7 +1846,7 @@ static void gui_debug_draw_tasklist(void) {
 #define DEBUG_DISPLAY_PARAMS 2
 #define DEBUG_DISPLAY_TASKS 3
 static const char * gui_debug_shortcut_enum(int change, int arg) {
-    static const char* modes[]={ "None", "Dmp RAM", "Page"};
+    static const char* modes[]={ "None", "DmpRAM", "Page", "CmpProps"};
 
     conf.debug_shortcut_action += change;
     if (conf.debug_shortcut_action < 0) 
@@ -1890,6 +1892,9 @@ static void gui_debug_shortcut(void) {
                 if(debug_propcase_page > 128 || debug_propcase_page < 0) 
                     debug_propcase_page = 0;
             }
+        break;
+        case 3:
+            gui_compare_props(1);
         break;
     }
 }
@@ -3182,3 +3187,54 @@ void user_menu_restore() {
  	}
 }
 
+#ifdef OPT_DEBUGGING
+
+void gui_compare_props(int arg)
+{
+	#define NUM_PROPS 512
+	static int initialized = 0;
+	static int props[NUM_PROPS] = { };
+	char buf[64];
+	int i;
+	int p;
+	int c;
+
+
+	if( initialized )
+	{ // we have previous data set! do a comparison
+		c = 0;
+		for( i = 0; i < NUM_PROPS; ++i )
+		{
+			p = shooting_get_prop(i);
+			if( props[i] != p )
+			{
+				++c;
+				sprintf(buf,"%4d is %8d was %8d",i,p,props[i]);
+				draw_string(16,16*c,buf,MAKE_COLOR(COLOR_BLACK,COLOR_YELLOW));
+			}
+			props[i] = p;
+			if( c == 12 )
+			{
+				++c;
+				sprintf(buf,"%s","Waiting 15 Seconds");
+				draw_string(16,16*c,buf,MAKE_COLOR(COLOR_BLACK,COLOR_YELLOW));
+				msleep(15000);
+				c = 0;
+			}
+		}
+		++c;
+		sprintf(buf,"%s","Press <ALT> to leave");
+		draw_string(16,16*c,buf,MAKE_COLOR(COLOR_BLACK,COLOR_YELLOW));
+	}
+	else
+	{
+	// no previous data was set so we save the data initially
+		for( i = 0; i < NUM_PROPS; ++i )
+		{
+			props[i] = shooting_get_prop(i);
+		}
+	}
+	initialized = 1;
+}
+
+#endif
