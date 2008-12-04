@@ -388,8 +388,8 @@
     #define CAM_PROPSET                 2
     #define CAM_DRYOS                   1
 
-    #define CAM_RAW_ROWPIX              3264 //3336   // for new 8 MP
-    #define CAM_RAW_ROWS                2448 //2490    // for new 8 MP
+    #define CAM_RAW_ROWPIX              3336   // for new 8 MP
+    #define CAM_RAW_ROWS                2480    // for new 8 MP
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
 	// TODO / test
     #define  CAM_CAN_MUTE_MICROPHONE 1
