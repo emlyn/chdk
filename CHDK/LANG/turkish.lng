@@ -17,9 +17,9 @@
 //
 // Build    :  CHDK Autobuild
 //
-// Version  :  build 0.8.7, revision 609
+// Version  :  build 0.8.7, revision 614
 //
-// Date     :  Dec 1st, 2008
+// Date     :  Dec 4th, 2008
 //
 // ________________________________________________________________
 //
@@ -172,14 +172,14 @@
 104 "*** Tercihleri Sýfýrla ***"
 105 "Tercihleri varsayýlan\ndeðerlerine getirmek\nistediðinizden emin misiniz?"
 
-106 "*** Mimari Bilgisi ***"
-107 "CHDK Sür : %s %s\nTarih    : %s\nSaat     : %s\nKamera   : %s\nFW Sürüm : %s\nDerleyici: %s"
+106 "***  Mimari  Bilgisi  ***"
+107 "CHDK Sür : %s %s\nTarih    : %s\nSaat     : %s\nKamera   : %s\nFW Sürüm : %s\nDerleyici: %s\nTR Çeviri: Mete Ertuðrul"
 
-108 "*** Bellek Bilgisi ***"
+108 "***  Bellek  Bilgisi  ***"
 109 "Boþ Bellek: %d byte"
 
 110 "***   Bilgi   ***"
-111 "Lütfen, kameranýzý\n'Gösterim Modu' na alýp\ntekrar deneyin. :)"
+111 "Lütfen, kameranýzý\nGösterim Modu'na alýp\ntekrar deneyin. :)"
 
 // file browser titles
 112 "Dosya Yöneticisi"
@@ -387,7 +387,7 @@
 
 266 "RAW Geliþtirimi"
 
-267 "Kamerayý 'Çekim Modu' na\nalýp bir fotoðraf çekin."
+267 "Kamerayý Çekim Modu'na\nalýp bir fotoðraf çekin."
 268 "RAW Dosyasý Seç"
 269 "RAW Toplam"
 270 "RAW Ortalama"
