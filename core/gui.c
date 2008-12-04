@@ -216,9 +216,11 @@ static const char* gui_tv_override_value_enum(int change, int arg);
 static const char* gui_tv_enum_type_enum(int change, int arg);
 static const char* gui_subj_dist_override_value_enum(int change, int arg);
 static const char* gui_subj_dist_override_koef_enum(int change, int arg);
+/*
 static const char* gui_tv_exposure_order_enum(int change, int arg);
 static const char* gui_av_exposure_order_enum(int change, int arg);
 static const char* gui_iso_exposure_order_enum(int change, int arg);
+*/
 static const char* gui_nd_filter_state_enum(int change, int arg);
 //static const char* gui_tv_enum(int change, int arg);
 const char* gui_user_menu_show_enum(int change, int arg);
@@ -546,6 +548,7 @@ static CMenuItem bracketing_in_continuous_submenu_items[] = {
 static CMenu bracketing_in_continuous_submenu = {0x2c,LANG_MENU_BRACKET_IN_CONTINUOUS_TITLE, NULL, bracketing_in_continuous_submenu_items };
 
 
+/*
 static CMenuItem exposure_submenu_items[] = {
 	  {0x59,LANG_MENU_RECALC_EXPOSURE,         MENUITEM_BOOL,    &conf.recalc_exposure},
 	  {0x63,LANG_MENU_TV_EXPOSURE_ORDER,       MENUITEM_ENUM,    (int*)gui_tv_exposure_order_enum},
@@ -555,6 +558,7 @@ static CMenuItem exposure_submenu_items[] = {
       {0}
 };
 static CMenu exposure_submenu = {0x2a,LANG_MENU_EXPOSURE_TITLE, NULL, exposure_submenu_items };
+*/
 
 static CMenuItem operation_submenu_items[] = {
       {0x5c,LANG_MENU_OVERRIDE_DISABLE,         MENUITEM_ENUM,    (int*)gui_override_disable_enum},//&conf.override_disable },	
