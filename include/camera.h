@@ -402,7 +402,7 @@
 #define CAM_HAS_MANUAL_FOCUS        1      // Camera has manual focus mode
 
 #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1   // Camera adapts focus in video recording
-#define CAM_EV_IN_VIDEO             1      // cam can change exposure in video mode
+//#define CAM_EV_IN_VIDEO             1      // not working on 101b!!!
 #define DNG_SUPPORT                 1
 // pattern
 // It has indeed Green Blue Red Green, so that makes 01 00 02 01
