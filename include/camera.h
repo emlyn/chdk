@@ -76,19 +76,19 @@
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
-    #define CAM_COLORMATRIX1                                \
-      510370,  1000000, -68998,  1000000, -86859,  1000000, \
-      -279980, 1000000, 766686,  1000000,  67944,  1000000, \
-      -14382,  1000000, 113688,  1000000, 239853,  1000000
-    
+    #define CAM_COLORMATRIX1                              \
+      575419, 1000000,-185557, 1000000, -77898,  1000000, \
+     -213702, 1000000, 733569, 1000000,   81514, 1000000, \
+      -24604, 1000000, 131906, 1000000,  280378, 1000000
+   
     #define cam_CalibrationIlluminant1 1 // Daylight
     // cropping
-    #define CAM_JPEG_WIDTH  3072
-    #define CAM_JPEG_HEIGHT 2304
-    #define CAM_ACTIVE_AREA_X1 12
+    #define CAM_JPEG_WIDTH  3648
+    #define CAM_JPEG_HEIGHT 2736
+    #define CAM_ACTIVE_AREA_X1 14
     #define CAM_ACTIVE_AREA_Y1 8
-    #define CAM_ACTIVE_AREA_X2 3108
-    #define CAM_ACTIVE_AREA_Y2 2332
+    #define CAM_ACTIVE_AREA_X2 3682
+    #define CAM_ACTIVE_AREA_Y2 2764
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
     #define CAM_BRACKETING              1    
