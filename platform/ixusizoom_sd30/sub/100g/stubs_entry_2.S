@@ -1,0 +1,27 @@
+#include "stubs_asm.h"
+NHSTUB(DisplayImagePhysicalScreen, 0xFF921F58)  //ok
+NHSTUB(FreeMemory, 0xff811bac)
+NHSTUB(free, 0xFFAD366C)
+NHSTUB(kbd_pwr_off, 0xFF828F4C)
+NHSTUB(kbd_pwr_on, 0xFF828F30)
+NHSTUB(kbd_read_keys, 0xFF827CB8)
+NHSTUB(kbd_read_keys_r2, 0xFF828950)
+NHSTUB(VbattGet, 0xFF82CF1C)
+NSTUB(taskNameToId, 0xFFAE11C0)
+NSTUB(printf, 0xFFACE29C)
+
+NHSTUB(GetDrive_ClusterSize, 0xFF86FE04)
+NHSTUB(GetDrive_TotalClusters, 0xFF86FE40)
+NHSTUB(GetDrive_FreeClusters, 0xFF86FE7C)
+NHSTUB(GetBatteryTemperature, 0xFF82DEC8)
+NHSTUB(GetCCDTemperature, 0xFF82DEB4)
+NHSTUB(GetOpticalTemperature, 0xFF82DEA0)
+NHSTUB(PT_PlaySound, 0xFF955AB4)
+
+NHSTUB(EnterToCompensationEVF, 0xFF948C84)
+NHSTUB(ExitFromCompensationEVF, 0xFF948C94)
+NHSTUB(SetZoomActuatorSpeedPercent, 0xFFA712B8)
+NHSTUB(SetTimerWhen, 0xFF815284)
+NHSTUB(semBCreate, 0xFFADF884)
+NHSTUB(GetCurrentMachineTime, 0xFF81F2D4)
+NHSTUB(GiveSemaphore, 0xFF8222B0)

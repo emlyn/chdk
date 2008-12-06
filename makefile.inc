@@ -190,6 +190,9 @@ PLATFORMSUB=100a
 #PLATFORM=ixus75_sd750
 #PLATFORMSUB=102a
 
+#PLATFORM=ixusizoom_sd30
+#PLATFORMSUB=100g
+
 MEMISOSIZE="(&_end-&_start)"
 include $(topdir)buildconf.inc
 include $(topdir)version.inc

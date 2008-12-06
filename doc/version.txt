@@ -2,6 +2,24 @@ CHDK Trunk / Autobuild History
 
 version / revision / author
 
+0.8.8 / 608-621 / PhyrePhoX
+
++ added fastest port ever: ixus izoom / sd30 - see http://chdk.setepontos.com/index.php/topic,2724.msg25512.html#msg25512
++ several a590 & g7 fixes...
++ added polish lang file 
++ added new feature (By PlasmaHH) - compare Propcases
+Usage: go to debug menu, go to "ALT +/- debug action", set to "CmpProps?" (Compare propcases)
+then in alt-mode, press the +/- button to initialize it (all current propcases are then saved)
+then after you made changes in the camera (canon menu) you enter alt-mode, press +/- button - you will see all the props that have changed, until you exit alt-mode
+if there are more than 12 changed propcases, after 15 seconds it will show the next entries. this is not convenient, but i couldnt come up with a better way for now.
+on the other hand: it's not clever changing so many things at once (in-camera) to find out propcases. one at a time is the better solution.
+* gui_fselect.c & rbf_font/rbf_font.c - squashed some compiler warnings (PlasmaHH)
+* makefile - version.inc was updated even when no new data was inserted, i disabled it (dont think there will be any sideeffects) 
+* fixes in chdk menu: now left & right toggle checkboxes (not only the set button) - patch sent in by MartinBudden? - http://chdk.kernreaktor.org/mantis/view.php?id=115 
+* language updates 
+modified some defines for a590 & g9. needs more work though. disabled the stuff that definitly isnt working yet. camera.h should some day be cleaned up somehow
+* fix for tx1 - now with #define CAM_HAS_VIDEO_BUTTON 1 -> unlocks a bunch of stuff 
+
 0.8.7 / #606-607 / reyalp
 + add lua functions for flash parameters (onboard flash memory, not light)
   num=get_flash_params_count() -- num is the number of parameters
