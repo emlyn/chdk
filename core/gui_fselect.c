@@ -987,7 +987,7 @@ void gui_fselect_kbd_process() {
             }
             break;
         case KEY_SET:
-            if (selected && selected->attr != 0xFF) {
+            if (selected && selected->attr != 0xFF && gui_fselect_redraw==0) {
                 if (selected->attr & DOS_ATTR_DIRECTORY) {
                     i=strlen(current_dir);
                     if (selected->name[0]=='.' && selected->name[1]=='.' && selected->name[2]==0) {

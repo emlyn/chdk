@@ -31,6 +31,7 @@ struct dir_entry IFD0[]={
  {0x102,  T_SHORT,     3,  (int)cam_PreviewBitsPerSample},   // BitsPerSample: 8,8,8
  {0x103,  T_SHORT,     1,  1},   // Compression: Uncompressed
  {0x106,  T_SHORT,     1,  2}, //PhotometricInterpretation: RGB
+ {0x10E,  T_ASCII,     0,  0}, // ImageDescription
  {0x10F,  T_ASCII,     6,  (int)"Canon"}, // Make
  {0x110,  T_ASCII,     32, (int)cam_name}, //Model: Filled at header generation.
  {0x111,  T_LONG,      1,  0}, //StripOffsets: Offset
@@ -40,7 +41,7 @@ struct dir_entry IFD0[]={
  {0x117,  T_LONG,      1,  DNG_TH_WIDTH*DNG_TH_HEIGHT*3}, // StripByteCounts = preview size
  {0x11C,  T_SHORT,     1,  1}, // PlanarConfiguration: 1
  {0x131,  T_ASCII,     (sizeof(cam_chdk_ver)/2)*2,  (int)cam_chdk_ver}, //Software
- {0x132,  T_ASCII,     20, 0}, // DataTime
+ {0x132,  T_ASCII,     20, 0}, // DateTime
  {0x14A,  T_LONG,      1,  0}, //SubIFDs offset
  {0x8298, T_ASCII,     0,  0}, // Copyright
  {0x8769, T_LONG,      1,  0}, //EXIF_IFD offset

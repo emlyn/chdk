@@ -773,9 +773,10 @@ static CMenuItem raw_submenu_items[] = {
     {0x2a,LANG_MENU_RAW_DEVELOP,             MENUITEM_PROC,      (int*)gui_raw_develop },
     {0x5c,LANG_MENU_BAD_PIXEL_REMOVAL,       MENUITEM_ENUM,      (int*)gui_bad_pixel_enum },
 #if DNG_SUPPORT
-    {0x5c, LANG_MENU_DNG_FORMAT,                MENUITEM_BOOL | MENUITEM_ARG_CALLBACK, &conf.dng_raw , (int)cb_change_dng },
+    {0x5c,LANG_MENU_DNG_FORMAT,              MENUITEM_BOOL | MENUITEM_ARG_CALLBACK, &conf.dng_raw , (int)cb_change_dng },
+    {0x5c,LANG_MENU_RAW_DNG_EXT,             MENUITEM_BOOL,      &conf.raw_dng_ext},
 #endif
-    {0x5c,LANG_MENU_RAW_CACHED,          MENUITEM_BOOL,      &conf.raw_cache },
+    {0x5c,LANG_MENU_RAW_CACHED,              MENUITEM_BOOL,      &conf.raw_cache },
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
 };

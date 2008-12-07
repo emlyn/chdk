@@ -558,6 +558,7 @@ static char* gui_lang_default = \
 "436 \"Disable RAW @ Auto\"\n"
 "437 \"Enable flash in video?\"\n"
 "438 \"   Power of flash\"\n"
+"439 \"'DNG' file extension\"\n"
 ;
 
 //-------------------------------------------------------------------

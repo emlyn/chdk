@@ -391,27 +391,26 @@
 #define CAM_RAW_ROWPIX              3336   // for new 8 MP
 #define CAM_RAW_ROWS                2480   // for new 8 MP
 
-#define CAM_USE_ZOOM_FOR_MF         1      // Zoom lever can be used for manual focus adjustments
+#define CAM_USE_ZOOM_FOR_MF         1
 
 // cannot mute during video-zoom through CHDK, it can mute in general firmware settings (non CHDK)
 #undef  CAM_CAN_MUTE_MICROPHONE            // Camera has no function to mute microphone
 
-#define CAM_HAS_IRIS_DIAPHRAGM      1      // it has a 6 blade iris diaphragm
+#define CAM_HAS_IRIS_DIAPHRAGM      1
 #undef  CAM_HAS_ND_FILTER
 
-#define CAM_HAS_MANUAL_FOCUS        1      // Camera has manual focus mode
+#define CAM_HAS_MANUAL_FOCUS        1
 
-#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1   // Camera adapts focus in video recording
+#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
 //#define CAM_EV_IN_VIDEO             1      // not working on 101b!!!
 #define DNG_SUPPORT                 1
 // pattern
-// It has indeed Green Blue Red Green, so that makes 01 00 02 01
-#define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
-// color 
-#define CAM_COLORMATRIX1                               \
-0.647380, 1000000, -0.169846, 1000000, -0.115337, 1000000, \
--0.011566, 1000000, 0.451223, 1000000, 0.013279, 1000000, \
-0.062541, 1000000, 0.054140, 1000000, 0.161148, 1000000
+#define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green 
+// color                                                        // Source?
+#define CAM_COLORMATRIX1                              \
+ 647380, 1000000, -169846, 1000000, -115337, 1000000, \
+ -11566, 1000000,  451223, 1000000,   13279, 1000000, \
+  62541, 1000000,   54140, 1000000,  161148, 1000000
 
 #define cam_CalibrationIlluminant1 1 // Daylight
 // cropping

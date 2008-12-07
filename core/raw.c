@@ -42,6 +42,21 @@ char* get_raw_image_addr(void){
 }
 
 //-------------------------------------------------------------------
+
+unsigned int get_bad_count_and_write_file(char *fn){
+ int count=0;
+ unsigned short c[2];
+ FILE*f;
+ f=fopen(fn,"w+b");
+ for (c[1]=0; c[1]<CAM_RAW_ROWS; c[1]++)
+   for (c[0]=0; c[0]<CAM_RAW_ROWPIX; c[0]++)
+    if (get_raw_pixel(c[0],c[1])==0) { fwrite(c, 1, 4, f); count++;}
+ fclose(f);
+ return count;
+}
+
+
+//-------------------------------------------------------------------
 #if DNG_SUPPORT
 unsigned short get_raw_pixel(unsigned int x,unsigned  int y);
 
@@ -88,6 +103,10 @@ int raw_savefile() {
      if (conf.dng_raw) exif_data=capture_data_for_exif();
 #endif    
     if (state_kbd_script_run && shot_histogram_enabled) build_shot_histogram();
+
+    // ! ! ! exclusively for special script which creates badpixel.bin ! ! !
+    if (conf.save_raw==255) conf.save_raw=get_bad_count_and_write_file("A/CHDK/bad_tmp.bin");
+    //
 
     if (develop_raw) {
      started();
@@ -141,7 +160,8 @@ int timer; char txt[30];
         if(br_counter && conf.bracketing_add_raw_suffix && (shooting_get_prop(PROPCASE_DRIVE_MODE)!=0))
             sprintf(fn+strlen(fn), RAW_BRACKETING_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), br_counter, img_exts[conf.raw_ext]);
         else
-            sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), img_exts[conf.raw_ext]); 
+            sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(),
+              conf.dng_raw&&conf.raw_dng_ext ? ".DNG" : img_exts[conf.raw_ext]); 
         fd = open(fn, O_WRONLY|O_CREAT, 0777);
         if (fd>=0) {
 timer=get_tick_count();
