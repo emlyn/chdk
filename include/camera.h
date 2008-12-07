@@ -1165,6 +1165,7 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+    #define CAM_MULTIPART               1 
     #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
