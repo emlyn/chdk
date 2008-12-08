@@ -44,6 +44,7 @@ void msleep(long msec)
     _SleepTask(msec);
 }
 
+#ifndef CAM_DRYOS
 void task_lock()
 {
     _taskLock();
@@ -54,7 +55,6 @@ void task_unlock()
     _taskUnlock();
 }
 
-#ifndef CAM_DRYOS
 const char *task_name(int id)
 {
     return _taskName(id);
