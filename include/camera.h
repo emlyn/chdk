@@ -657,6 +657,9 @@
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
+    #define DNG_EXT_FROM ".DPS"
+    #define DNG_EXT_TO   ".DNG"
+
 //----------------------------------------------------------
 #elif defined (CAMERA_a720)
     #define CAM_PROPSET                 2
@@ -1473,6 +1476,10 @@
     #define CAM_ACTIVE_AREA_Y2 2474
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+
+    #define DNG_EXT_FROM ".CR2"
+    #define DNG_EXT_TO   ".DNG"
+
 
 //----------------------------------------------------------
 

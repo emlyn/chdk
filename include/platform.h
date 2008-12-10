@@ -473,8 +473,12 @@ int get_ev_video_avail(void);
 void set_ev_video_avail(int); 
 int get_ev_video(void);
 void set_ev_video(int); 
-
+//dng related
 void reverse_bytes_order(char* start, int count); 
+void save_ext_for_dng(void);
+void change_ext_to_dng(void);
+void change_ext_to_default(void);
+
 
 #define started() debug_led(1)
 #define finished() debug_led(0)

@@ -263,6 +263,9 @@ static void cb_zebra_restore_osd();
 #if DNG_SUPPORT
 static void cb_change_dng(); 
 #endif
+#if defined (DNG_EXT_FROM) && defined(DNG_EXT_TO)
+static void cb_change_dng_usb_ext(); 
+#endif
 
 // for memory info, duplicated from lowlevel
 extern const char _start,_end;
@@ -418,6 +421,9 @@ static CMenuItem misc_submenu_items[] = {
     {0x2a,LANG_MENU_MAIN_DEBUG,              MENUITEM_SUBMENU,   (int*)&debug_submenu },
 #endif
     {0x86,LANG_MENU_REMOTE_PARAM,            MENUITEM_SUBMENU,   (int*)&remote_submenu },
+#if defined (DNG_EXT_FROM) && defined(DNG_EXT_TO)
+    {0x5c,(int)"DNG visible via USB",        MENUITEM_BOOL | MENUITEM_ARG_CALLBACK, &conf.dng_usb_ext , (int)cb_change_dng_usb_ext},
+#endif
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
     {0},
 };
@@ -963,6 +969,13 @@ void cb_change_dng(){
  if ((old==1) && (conf.dng_raw==0)) gui_mbox_init(LANG_ERROR, LANG_CANNOT_OPEN_BADPIXEL_FILE, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
 }
 #endif
+
+#if defined (DNG_EXT_FROM) && defined(DNG_EXT_TO)
+void cb_change_dng_usb_ext(){
+ if (conf.dng_usb_ext) change_ext_to_dng(); else change_ext_to_default();
+}
+#endif
+
 
 //-------------------------------------------------------------------
 #ifdef OPT_CURVES

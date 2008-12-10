@@ -822,3 +822,50 @@ asm volatile(
  );
 }
 
+#if defined (DNG_EXT_FROM) && defined(DNG_EXT_TO)
+
+typedef int(*p_some_f)(char*, int);
+
+extern p_some_f some_f_for_dng;  // camera variable!
+extern char* second_ext_for_dng; // camera variable!
+
+p_some_f default_some_f;         
+char *   default_second_ext;     
+
+char *_strstr (const char *s1, const char *s2)
+{
+  const char *p = s1;
+  const int len = _strlen (s2);
+
+  for (; (p = _strchr (p, *s2)) != 0; p++)
+    {
+      if (_strncmp (p, s2, len) == 0)
+	return (char *)p;
+    }
+  return (0);
+}
+
+
+int my_some_f(char *s, int x){
+  char *f;
+  f=_strstr(s, DNG_EXT_FROM);
+  if (f) _memcpy(f, DNG_EXT_TO, sizeof(DNG_EXT_TO)-1);
+  return default_some_f(s, x);
+}
+
+void save_ext_for_dng(void){
+ default_some_f=some_f_for_dng;
+ default_second_ext=second_ext_for_dng;
+}
+
+void change_ext_to_dng(void){
+ some_f_for_dng=my_some_f;
+ second_ext_for_dng=DNG_EXT_TO; 
+}
+
+void change_ext_to_default(void){
+ some_f_for_dng=default_some_f;
+ second_ext_for_dng=default_second_ext;
+}
+
+#endif

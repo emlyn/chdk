@@ -33,6 +33,7 @@ typedef struct {
     int dng_raw;
     int raw_timer;
     int raw_dng_ext;
+    int dng_usb_ext;
 
     int show_osd;
     int hide_osd;

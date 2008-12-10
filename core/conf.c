@@ -74,6 +74,7 @@ static void conf_change_menu_symbol_rbf_file();
 static void conf_change_alt_mode_button();
 static void conf_change_grid_file();
 static void conf_change_video_bitrate();
+static void conf_change_dng_ext();
 
 void ubasic_camera_set_raw(int mode)
 {
@@ -395,6 +396,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(232, conf.flash_video_override,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(233, conf.flash_video_override_power,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(234, conf.raw_dng_ext,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(235, conf.dng_usb_ext,     CONF_DEF_VALUE, i:0, conf_change_dng_ext),
     };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 
@@ -454,6 +456,13 @@ void conf_change_dng(void){
  }
  else unload_bad_pixels_list_b();
 #endif
+}
+
+void conf_change_dng_ext(void){
+#if defined (DNG_EXT_FROM) && defined(DNG_EXT_TO)
+ save_ext_for_dng();
+ if (conf.dng_usb_ext) change_ext_to_dng(); else change_ext_to_default();
+#endif 
 }
 
 //-------------------------------------------------------------------
