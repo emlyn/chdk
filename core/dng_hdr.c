@@ -356,9 +356,11 @@ unsigned short get_metering_mode_for_exif(short metering_mode){
 
 struct t_data_for_exif* capture_data_for_exif(void){
  static struct t_data_for_exif data;
- data.time=time(NULL);
+ extern volatile long shutter_open_time; // defined in platform/generic/capt_seq.c
  data.iso=shooting_get_iso_market();
  get_property_case(PROPCASE_TV, &data.tv, sizeof(data.tv));
+ if (shutter_open_time) { data.time=shutter_open_time+pow(2,-data.tv/96.0); shutter_open_time=0;} // shutter closing time
+ else  data.time=time(NULL);
  get_property_case(PROPCASE_AV, &data.av, sizeof(data.av));
  get_property_case(PROPCASE_MIN_AV, &data.max_av, sizeof(data.max_av));
  get_property_case(PROPCASE_EV_CORRECTION_2, &data.exp_bias, sizeof(data.exp_bias));
