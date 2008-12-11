@@ -564,7 +564,7 @@
 423 "Rear curtain flash sync"
 424 "DNG format"
 425 "RAW buffer cached"
-426 "Cannot load CHDK/badpixel.bin"
+426 "Cannot load CHDK/badpixel.bin\nPlease run \nCHDK/SCRIPTS/TEST/badpixel.lua"
 427 "Show raw saving time"
 428 "Connect 4"
 429 "Opponent:"

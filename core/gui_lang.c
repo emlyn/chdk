@@ -544,7 +544,7 @@ static char* gui_lang_default = \
 "423 \"Rear curtain flash sync\"\n"
 "424 \"DNG format\"\n"
 "425 \"RAW buffer cached\"\n"
-"426 \"Cannot load CHDK/badpixel.bin\"\n"
+"426 \"Cannot load CHDK/badpixel.bin\\nPlease run \\nCHDK/SCRIPTS/TEST/badpixel.lua\"\n"
 "427 \"Show saving time\"\n"
 
 "428 \"Connect 4\"\n"

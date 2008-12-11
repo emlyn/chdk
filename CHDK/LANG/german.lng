@@ -601,7 +601,7 @@
 // DNG
 424 "DNG-Format"
 425 "RAW-Puffer nutzen"
-426 "Datei badpixel.bin fehlt!"
+426 "Datei badpixel.bin fehlt!\nBitte starte \nCHDK/SCRIPTS/TEST/badpixel.lua"
 427 "Zeige RAW Speicherzeit"
 
 428 "4 Gewinnt"
