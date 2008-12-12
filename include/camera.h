@@ -973,6 +973,7 @@
     #undef  CAM_HAS_IS
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define DNG_SUPPORT                 1
+    #define CAM_MULTIPART               1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color

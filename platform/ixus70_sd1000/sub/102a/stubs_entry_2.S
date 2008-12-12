@@ -32,7 +32,7 @@ NHSTUB(GetBatteryTemperature, 0xFFA344E4)
 NHSTUB(GetCCDTemperature, 0xFFA344D0)
 NHSTUB(GetOpticalTemperature, 0xFFA344BC)
 NHSTUB(PT_PlaySound, 0xFFB0B2EC)
-
+NHSTUB(WriteSDCard, 0xFFAAC394)
 
 NHSTUB(EnterToCompensationEVF, 0xffafab60)
 NHSTUB(ExitFromCompensationEVF, 0xffafabe4)
