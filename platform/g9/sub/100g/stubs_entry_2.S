@@ -128,13 +128,9 @@ NHSTUB(NewTaskShell, 0xff86f1ec)  // starts new shell on Console. GUI output?
 NHSTUB(UIFS_WriteFirmInfoToFile, 0xFF99C390) // should write 'A/FirmInfo.txt'
 // NHSTUB(dumpMemoryToFile, 0xFFC141Fa)         // writes a portion of memory into a file (char* filename, 0, (void*) src, int length) //no
 
-NHSTUB(GetBatteryTemperature, 0xFF84BEE8) 
-NHSTUB(GetCCDTemperature, 0xFF84BE78) 
-NHSTUB(GetOpticalTemperature, 0xFF84BF58)
 NHSTUB(PT_PlaySound, 0xFF866454) 
 
 
-NHSTUB(EnterToCompensationEVF, 0xFF8279A8) 
 NHSTUB(ExitFromCompensationEVF, 0xFF8279F8)
 
 
@@ -142,8 +138,6 @@ NHSTUB(ExitFromCompensationEVF, 0xFF8279F8)
 // !! UNKNOWN !!
 //// Not found, point to nullsub for immediate return
 // nullsub_1: 0xFF810958 
-
-NHSTUB(SetFileTimeStamp, 0xFF825808) //SetFileTimeStamp from EWAVR
 
 
 
@@ -201,6 +195,9 @@ NSTUB(taskIdListGet,			 0xFF810958)
 NSTUB(taskName,				 0xFF810958) 
 NSTUB(taskResume,			 0xFF810958) 
 NSTUB(taskSuspend,			 0xFF810958) 
+// not found
+NSTUB(PutInNdFilter, 0xFF810958)
+NSTUB(PutOutNdFilter, 0xFF810958)
 
 NHSTUB(WriteSDCard, 0xFF928CF4)
 

@@ -6,7 +6,7 @@ NSTUB(AllocateMemory, 0xffde6eac)
 NSTUB(AllocateUncacheableMemory, 0xffc19a08)
 NSTUB(Close, 0xffc14f20)
 NSTUB(CreateTask, 0xffc0baf0)
-NSTUB(DeleteFile_Fut, 0xffc14798)
+NSTUB(DeleteFile_Fut, 0xffc14788)
 // Best match: 79%
 NSTUB(EnterToCompensationEVF, 0xffc17108)
 NSTUB(ExecuteEventProcedure, 0xffc0c1a8)
