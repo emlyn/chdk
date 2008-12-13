@@ -564,7 +564,7 @@
 423 "Синхронізація спалаху 2-ю шторкою"
 424 "DNG формат"
 425 "Кешування RAW буферу"
-426 "Не вдається завантажити CHDK/badpixel.bin"
+426 "Cannot load CHDK/badpixel.bin\nPlease run \nCHDK/SCRIPTS/TEST/badpixel.lua"
 427 "Показ часу збереження RAW файлу"
 428 "Connect 4"
 429 "Опонент:"

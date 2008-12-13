@@ -1,27 +1,22 @@
 // Translated by Mete Ertugrul  -  ertugrul_m@hotmail.com
 //
-// ________________________________________________________________
+// _______________________________________________________
 //
 //
-// The English original had been translated into Turkish for CHDK.
+// Turkish Language File for CHDK
 //
-// ________________________________________________________________
-//
-//
-// Best Viewed With :  Codepage Win1254
-//
-// ________________________________________________________________
+// _______________________________________________________
 //
 //
-// Language :  Turkish (Win1254)
+// Language :  Turkish  ( Codepage Win1254 )
 //
 // Build    :  CHDK Autobuild
 //
-// Version  :  build 0.8.7, revision 614
+// Version  :  build 0.8.9, revision 632
 //
-// Date     :  Dec 4th, 2008
+// Date     :  Dec 12th, 2008
 //
-// ________________________________________________________________
+// _______________________________________________________
 //
 //
 // CHDK language file
@@ -73,8 +68,8 @@
  31 "Histogram Düzenlemesi"
  32 "Histogram Modu"
  33 "Histog. Az/Aþýrý POZL Göster"
- 34 "Sýnýrdaki Uçlarý Önmseme"
- 35 "Otomatik Boyutlandýr"
+ 34 "Sýnýr Tepelerini Önmseme"
+ 35 "Otomatik Büyüt"
 
 
  36 "Zebra"
@@ -83,8 +78,8 @@
  38 "Zebra Modu"
  39 "Az    Pozlama Eþiði"
  40 "Aþýrý Pozlama Eþiði"
- 41 "Orijinal Ekrana Dön"
- 42 "OSD'ye Dön"
+ 41 "Orijinal Ekraný Geri Yükle"
+ 42 "OSD'yi Geri Yükle"
  43 "Üzerine Zebra Çiz"
 
 
@@ -176,7 +171,7 @@
 107 "CHDK Sür : %s %s\nTarih    : %s\nSaat     : %s\nKamera   : %s\nFW Sürüm : %s\nDerleyici: %s\nTR Çeviri: Mete Ertuðrul"
 
 108 "***  Bellek  Bilgisi  ***"
-109 "Boþ Bellek: %d byte"
+109 "Boþ Bellek  : %d bayt\nCHDK Boyutu : %d bayt\n  Konumu : 0x%X"
 
 110 "***   Bilgi   ***"
 111 "Lütfen, kameranýzý\nGösterim Modu'na alýp\ntekrar deneyin. :)"
@@ -240,8 +235,8 @@
 155 "Berabere! :/"
 
 156 "*** Hatalý Hamle ***"
-157 "Buraya Koyamazsýnýz!"
-158 "Bu Kutu Boþ Deðil!"
+157 "Buraya koyamazsýnýz!"
+158 "Bu kutu boþ deðil!"
 
 159 " Hamle: Siz    "
 160 " Hamle: Kamera "
@@ -326,10 +321,10 @@
 220 "Çeþitli Deðerler Tablosu"
 221 "Gösterim Modu'nda Göster"	
 222 "Zoom Oraný             ' Z '"		
-223 "Gerçek Diyafram Aralýðý' Av'"
-224 "Gerçek ASA Hýzý        'I-R'"
-225 "Market ASA Hýzý        'I-M'"
-226 "  ISO, AutoISO Modunda Açýk"
+223 "'Gerçek' Diy. Açýklýðý ' Av'"
+224 "'Gerçek' ISO Deðeri    'I-R'"
+225 "'Market' ISO Deðeri    'I-M'"
+226 " ISO'yu Sad. AutoISO Mod.Gös"
 227 "Ayarlanan EV   (TV+AV) 'Evs'"
 228 "Ölçülen   EV   (BV+SV) 'Evm'"
 229 "Ayarla. Parlaklýk (BV) 'Bvs'"
@@ -358,9 +353,9 @@
 246 "    Deðer Çarpaný (mm)"
 
 
-247 "Sürekli Modda Bracket Çekimi"
+247 "Sürekli Modu'nda Bracket Çekimi"
 
-248 "Sürekli Modda Bracket Çekimi"
+248 "Sürekli Modu'nda Bracket Çek."
 249 "TV Bracket Deðeri"
 250 "AV Bracket Deðeri"
 251 "ISO Bracket Deðeri"
@@ -391,7 +386,7 @@
 268 "RAW Dosyasý Seç"
 269 "RAW Toplam"
 270 "RAW Ortalama"
-271 "Kartýnýzda Yeterli Alan Yok!\nGereken: %dM / Boþ Alan: %dM"
+271 "Kartýnýzda yeterli alan yok!\nGereken: %dM / Boþ Alan: %dM"
 
 
 272 "OSD'yi Ýnceleme Modunda Gös."
@@ -554,12 +549,12 @@
 384 "Parametreler Seti"
 
 // raw istisnalarý
-385 "Spor                       >"
-386 "Seri Çekim                 >"
-387 "EV Bracket                 >"
-388 "Zamanlayýcý                >"
+385 "  < Spor         >"
+386 "  < Seri Çekim   >"
+387 "  < EV Bracket   >"
+388 "  < Zamanlayýcý  >"
 389 "RAW Ýstisnalarý"
-390 "' ... Etkinse RAW Devre Dýþý '"
+390 "< ..... > Etkinse RAW Devre Dýþý "
 391 "Ýstisnada Uyar ?"
 
 392 "Menüyü Ýlk Giriþ Seçili Aç"
@@ -616,7 +611,7 @@
 
 424 "DNG Biçimi"
 425 "RAW Tampon Önbelleði"
-426 "CHDK/badpixel.bin Yüklenemedi"
+426 "Cannot load CHDK/badpixel.bin\nPlease run \nCHDK/SCRIPTS/TEST/badpixel.lua"
 427 "RAW Kaydetme Zamaný Göster"
 
 
@@ -631,8 +626,10 @@
 
 
 // raw istisnalarý (devam)
-435 "Keskin Yüzey               >"
-436 "Oto Modu (AUTO)            >"
+435 "  < Keskin Yüzey >"
+436 "  < OTO Modu     >"
 
 437 "Video'da Flaþ Etkin ?"
 438 "   Flaþ Çýkýþ Gücü"
+
+439 "'DNG' Dosya Uzantýsý"

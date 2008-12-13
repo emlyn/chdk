@@ -3,7 +3,7 @@
 // <id> "<text>"
 //   <id>   - pitäisi olla positiivinen numero
 //   <text> - teksti suljettuna lainausmerkkeihin
-//  29.11.2008 based on English rev 601
+//  12.12.2008 based on English rev 629
 1 "Päävalikko"
 
 2 "RAW-kuvat"
@@ -26,7 +26,7 @@
 16 "Vain sarjan 1. RAWina"
 17 "RAW ja JPEG samaan kansioon"
 18 "RAW-tiedoston etuliite"
-19 "RAW-tiedoston pääte"
+19 "RAW-tiedoston tunniste"
 
 
 20 "Kuvaruutunäytön asetukset"
@@ -47,7 +47,7 @@
 30 "Elävä histogrammi"
 31 "Histogrammin asettelu"
 32 "Histogrammin muoto"
-33 "Näytä ali/ylivalotus"
+33 "Näytä ali-/ylivalotus"
 34 "Ohita rajojen ylitykset"
 35 "Automaattinen suurennus"
 
@@ -532,7 +532,7 @@
 400 "Zoomin odotusviive 0.1s"
 401 "Käynnistysääni"
 402 "Raw vähennyksen etuliite"
-403 "Raw vähennyksen lopputunniste"
+403 "Raw vähennyksen tunniste"
 404 "Laskettava tumman arvo"
 405 "Tallennettava tumman arvo"
 406 "->"
@@ -544,8 +544,8 @@
 412 " Zoomin korvausarvo"
 413 "Zoomin korvaus"
 414 " Tyhjennä arvot käynnistyksessä"
-415 "lisää raw-etuliite"
-416 " Fahrenheit°"
+415 "lisää raw-takaliite"
+416 " Näytä Fahrenheit°"
 417 "Lataa reunan näyttö"
 418 "Tallenna reunan näyttö"
 419 "Käytä toistettaessa"
@@ -555,7 +555,7 @@
 423 "Takaverho-salaman tahdistus"
 424 "DNG-muoto"
 425 "RAW-puskuri tarkistettu"
-426 "badpixel.bin lataus epäonnistui"
+426 "badpixel.bin lataus epäonnistui.\nKäynnistä\nCHDK/SCRIPTS/TEST/badpixel.lua" 
 427 "Näytä raw-tallennusaika"
 428 "4 suora"
 429 "Vastustaja:"
@@ -566,4 +566,6 @@
 434 "Peli päättyi taspeliin"
 435 "Raw @ reunan näyttö ei käytössä"
 436 "Raw @ Auto tila ei käytössä"
-
+437 "Käytetäänkö salamaa videoissa?"
+438 " Salaman teho"
+439 "DNG-tiedoston tunniste" 

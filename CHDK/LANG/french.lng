@@ -1,4 +1,4 @@
-// CHDK language file french for autobuild 0.8.7, revision #607 (Win1252)
+// CHDK language file french for autobuild 0.8.9, revision #629 (Win1252)
 // Format of language line:
 // <id> "<text>"
 //   <id>   - should be positive number
@@ -435,9 +435,9 @@
 343 "  Include AutoIso & Bracketing?"
 344 "  Hide in ?"
 345 "Disable @ Video Rec?"
-346 "Show remaining videotime?"
+346 "Afficher le temps de vidéo restant?"
 347 "  Refreshrate (~sec)"
-348 "Remaining video time"
+348 "Temps de vidéo restant"
 349 "Clear videoparams on Start?"
 350 "Enable Fast Ev switch?"
 351 "   Step size (1 EV)?"
@@ -451,17 +451,17 @@
  
 359 "Menu utilisateur au démarrage"
 
-360 "Symbol font"
-361 "Select Symbol file"
-362 "Enable Symbols"
-363 "Symbol Text Color" 
-364 "Symbol Background Color"
+360 "Police de symbole"
+361 "Sélectionner fichier symbole"
+362 "Activer les symboles"
+363 "Couleur des symboles" 
+364 "Couleur de font des symboles"
 
 365 "Courbes utilisateur"
 366 "Courbes utilisateur"
-367 "Load curve profile..."
+367 "Charger un profil de courbe..."
 368 "activer courbe"
-369 "Selectionner fichier de courbe"
+369 "Sélectionner fichier de courbe"
 
 370 "Edge overlay"
 371 "Edge overlay"
@@ -480,17 +480,17 @@
 
 382 "Touche AF"
 383 "Charger paramètres par défaut"
-384 "Parameters set"
+384 "Régler les paramètres"
 
-385 "Disable Raw @ Sports"
-386 "Disable Raw @ Burst"
-387 "Disable Raw @ EV Bracketing"
-388 "Disable Raw @ Timer"
+385 "Désactiver Raw en Sports"
+386 "Désactiver Raw en Burst"
+387 "Désactiver Raw en EV Bracketing"
+388 "Désactiver Raw avec retardateur"
 
 389 "Exceptions"
 390 "Menu des exceptions RAW"
 391 "Alerter en cas d'exception?"
-392 "Always select 1st entry in menu"
+392 "Toujours sélectionner 1er ligne d'un menu"
 
 393 "Time-out (0.1s)"
 394 "Synchroniser la télécommande"
@@ -513,7 +513,7 @@
 411 "Video Ev display"
 412 "   Zoom Override Value"
 413 "Zoom Override"
-414 "   Clear on start"
+414 "   Effacer au démarrage"
 415 "Ajouter un suffix RAW"
 416 "  Fahrenheit"
 417 "Load Edge Overlay"
@@ -523,9 +523,9 @@
 421 "Load+Set Zoom"
 422 "Lock Edge Overlay"
 423 "Rear curtain flash sync"
-424 "DNG format"
+424 "Format DNG"
 425 "RAW buffer cached"
-426 "Cannot load CHDK/badpixel.bin"
+426 "Ne peut pas charger CHDK/badpixel.bin\nLancer\nCHDK/SCRIPTS/TEST/badpixel.lua"
 427 "Afficher temps de sauv. RAW"
 428 "Connect 4"
 429 "Opposent:"
@@ -535,6 +535,7 @@
 433 "Je vous ai battu"
 434 "The game ended a draw"
 435 "Disable Raw @ EdgerOverlay"
-436 "Disable Raw @ Auto Mode"
+436 "Désactiver Raw en mode Auto"
 437 "Activer le flash en video?"
 438 "   Puissance flash"
+439 "Extension de fichier DNG"

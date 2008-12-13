@@ -537,4 +537,4 @@
 423 "Синхрониз. по 2-й шторке"
 424 "В DNG формате"
 425 "Кешировать буфер RAW"
-426 "Невозможно загрузить CHDK/badpixel.bin"
+426 "Cannot load CHDK/badpixel.bin\nPlease run \nCHDK/SCRIPTS/TEST/badpixel.lua"

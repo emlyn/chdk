@@ -564,7 +564,7 @@
 423 "Sinc. flash 2da Cortina"
 424 "Formato DNG"
 425 "Buffer Cache de RAW"
-426 "No encuentra CHDK/badpixel.bin"
+426 "Cannot load CHDK/badpixel.bin\nPlease run \nCHDK/SCRIPTS/TEST/badpixel.lua"
 427 "Ver Tiempo Grabado de Raw"
 428 "Connect 4"
 429 "Oponente:"
@@ -577,3 +577,4 @@
 436 "Deshab. Raw @ Auto Mode"
 437 "Habil. flash en video?"
 438 "  Potencia Flash"
+439 "Extensión Arch. 'DNG'"

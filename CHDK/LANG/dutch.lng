@@ -46,7 +46,7 @@
  30 "Toon histogram"
  31 "Histogram layout"
  32 "Histogram mode"
- 33 "Toon histogram over/onder EXP"
+ 33 "Toon histogr. over/onder EXP"
  34 "Negeer grenspieken"
  35 "Schaal automatisch"
 
@@ -113,7 +113,7 @@
  82 "Toon diverse waarden"
  83 "Geheugenbeheer"
  84 "Alt +/- debug-actie"
- 85 "Maak geheugenkaart opstartbaar..."
+ 85 "Maak geheugenkaart opstartbaar"
 
 
  86 "Batterij"
@@ -134,7 +134,7 @@
  97 "Codepagina"
  98 "Splits tussen woorden"
  99 "Autoscroll activeren"
-100 "Autoscrollvertraging (sec)"
+100 "  Scrollvertraging (sec)"
 
 
 101 "Spelletjes"
@@ -289,7 +289,7 @@
 210 "DOF-Calculator"
 
 211 "DOF-Calculator"
-212 "Onderwerpafst. als dichtb.lim." 
+212 "Onderw.afst. als dichtb.lim." 
 213 "Gebr. EXIF-ond.afst. (PC65)"
 214 "Toon ond.afst. in Diversen"
 215 "Toon dichtbijlimiet in Div."
@@ -309,9 +309,9 @@
 226 " Toon ISO alleen in AutoISO"
 227 "Toon Kies belichting Ev (Tv+Av)"
 228 "Toon gemeten Ev (Bv+Sv)"
-229 "Toon Kies Bv (helderheidswaarde)"
+229 "Toon Kies Bv (helderheid)"
 230 "Toon gemeten Bv"
-231 "Toon overbel.waarde (Geen flits!)"
+231 "Toon overbel. (Geen flits!)"
 232 "Toon luminantie"
 
 
@@ -326,7 +326,7 @@
 238 "Extra Foto-instellingen"
 
 239 "Extra Foto-instellingen"
-240 "Overschrijf sluitersnelheid"
+240 "Overschr. sluitersnelh."
 241 "    Waardefactor"
 242 "Overscrijf Diafragmawaarde"
 243 "Overschrijf ISO-waarde"
@@ -342,7 +342,7 @@
 250 "AV-bracketing-waarde"
 251 "ISO-bracketing-waarde"
 252 "    Waardefactor"
-253 "Onderw.afst. bracketwaarde (MF)"
+253 "Onderw.afst. bracketwrd (MF)"
 254 "    Waardefactor (mm)"
 255 "Bracketing-type"
 
@@ -358,9 +358,9 @@
 262 "AV-belichting herbereken volgorde"
 263 "ISO-belichting herbereken volgorde"
 
-264 "Leeg overschrijfwaarden bij opstarten"
+264 "Leeg overschrijfwrd bij starten"
 
-265 "Toon Canon overbelichtingwaarde"
+265 "Toon Canon overbelichtingwrd"
 
 266 "RAW ontwikkelen"
 267 "Schakel camera naar\nopname-mode en neem\neen foto."
@@ -374,7 +374,7 @@
 
 274 "Afstand onderwerp tot lens"
 
-275 "Leeg bracket-waarden bij opstarten"
+275 "Leeg bracket-wrd bij starten"
 
 276 "Maak kaart met twee partities"
 277 "Wissel partities"
@@ -404,8 +404,8 @@
 
 297 "Toon waarden in video"
 
-298 "  Sluitersnelheid enum-type"
-299 "Gebruikersmenu inschakelen"
+298 "  Sluitersnelh. enum-type"
+299 "Gebr.menu inschakelen"
 300 "Gebruikersmenu"
 301 " "
 
@@ -437,9 +437,9 @@
 321 "Aangepaste Auto ISO"
 
 322 "Aangepaste Auto ISO"
-323 "Aangepaste Auto ISO ingeschakeld"
-324 "Minimum sluitersnelheid"
-325 "Gebruikersfactor (1/FL/factor)"
+323 "Aangepaste Auto ISO aan"
+324 "Minimum sluitersnelh."
+325 "Gebr.factor (1/FL/factor)"
 326 "IS-factor (Tv*factor)"
 327 "Max ISO HOOG (x10)"
 328 "Max ISO AUTO (x10)"
@@ -452,15 +452,15 @@
 334 "Centreer menu"
 335 "Geluid uit bij zoomen"
 
-336 "Slechte pixel verwijderen"
+336 "Slechte pixel wissen"
 337 "Uit"
 338 "Gemid."
 339 "RAWconv"
 
 340 "Overschrijf"
 341 "Overschrijf achtergr."
-342 "Overschrijvingen uitschakelen"
-343 "  Inclusief AutoIso & Bracketing?"
+342 "Overschrijvingen uit"
+343 "  Incl. AutoIso & Bracketing?"
 344 "  Verberg bij ?"
 345 "Uitschakelen @ Video-opname?"
 346 "Toon resterende videotijd?"
@@ -477,7 +477,7 @@
 357 "*** Verwerk RAW-bestanden ***"
 358 "Verwerk RAW"
  
-359 "Gebruikersmenu als Hoofd"
+359 "Gebr.menu als hoofdmenu"
 
 360 "Symboollettertype"
 361 "Kies symboolbestand"
@@ -507,7 +507,7 @@
 381 "Synchwachttijd 0,1s"
 
 382 "AF-toets"
-383 "Laad standaard param-waarden"
+383 "Laad standaard parameters"
 384 "Parameters ingesteld"
 
 385 "Schakel Raw uit @ Sport"
@@ -542,7 +542,7 @@
 412 "   Zoom Overschrijfwaarde"
 413 "Zoom Overschrijving"
 414 "   Leeg bij opstarten"
-415 "voeg raw-suffix toe"
+415 "Voeg raw-suffix toe"
 416 "  in Fahrenheit"
 417 "Laad randbedekking"
 418 "Sla randbedekking op"
@@ -553,7 +553,7 @@
 423 "Achter gordijn flitssynch"
 424 "DNG-formaat"
 425 "RAW-buffer gecached"
-426 "Kan CHDK/badpixel.bin niet laden"
+426 "Kan CHDK/badpixel.bin niet laden\nStart aub \nCHDK/SCRIPTS/TEST/badpixel.lua"
 427 "Toon raw-opslatijd"
 
 428 "4-op-een-rij"
@@ -569,3 +569,5 @@
 
 437 "Flits aan in video?"
 438 "   Flitskracht"
+
+439 "'DNG'-extensie"
