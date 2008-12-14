@@ -13,7 +13,7 @@ extern long wrs_kernel_bss_start;
 extern long wrs_kernel_bss_end;
 extern void createHook (void *pNewTcb);
 extern void deleteHook (void *pTcb);
-const long new_sa = MEMISOSTART + MEMISOSIZE;
+const char * const new_sa = &_end;
 
 void boot();
 

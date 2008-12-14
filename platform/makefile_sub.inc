@@ -7,7 +7,7 @@ CFLAGS+=-DLOW_LEVEL
 
 all: libplatformsub.a
 
-TARGET_PRIMARY = PRIMARY.BIN
+TARGET_PRIMARY=$(PRIMARY_ROOT)/$(PLATFORM)/sub/$(PLATFORMSUB)/PRIMARY.BIN
 
 #OBJS= should be defined in */sub/*/Makefile
 

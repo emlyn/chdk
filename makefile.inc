@@ -194,6 +194,9 @@ PLATFORMSUB=100a
 #PLATFORMSUB=100g
 
 MEMISOSIZE="(&_end-&_start)"
+# override this on the command line or in buildconf to use PRIMARY.BIN from a different tree
+# should be an absolute path
+PRIMARY_ROOT=$(topdir)platform
 include $(topdir)buildconf.inc
 include $(topdir)version.inc
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
