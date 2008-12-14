@@ -73,7 +73,6 @@ long vid_get_bitmap_screen_height()
 }
 
 int movie_status = 0;
-int zoom_status = 0;
 
 
 long vid_get_bitmap_buffer_width() { return 360; }
