@@ -15,3 +15,4 @@ DEF(focus_busy, 0xDD7C) //0xDD68 + 0x14 ??? to double check
 DEF(canon_menu_active,0xF7D4) //0xF7D0 + 4
 DEF(canon_shoot_menu_active,0xEDE5)   // 0xEDE4+1
 DEF(recreview_hold, 0xEBFC) // 0xEB50+0xAC
+DEF(zoom_status, 0x11E48)

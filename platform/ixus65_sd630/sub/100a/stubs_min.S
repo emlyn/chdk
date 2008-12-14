@@ -23,7 +23,7 @@ DEF(touch_keys_angle, 0x0000E8C8)
 DEF(zoom_busy, 0x79E20)
 DEF(focus_busy, 0x7A13C)
 DEF(movie_compression, 0x617C)
-
+DEF(zoom_status, 0x7450)
 DEF(FlashParamsTable,0xFF975EB0)
 
 // TODO: !!!!!!!!!!!!! THESE ARE INVALID !!!!!!!!

@@ -22,7 +22,7 @@ DEF(SwitchStatus, 0x0000E608)
 DEF(zoom_busy, 0x79C18)         // ZoomLens, 0xFFAA591C
 DEF(focus_busy, 0x79F34)        // FocusLensController, 0xFFAB58C8
 DEF(movie_compression, 0x6140)  // 0xFF956614
-
+DEF(zoom_status, 0x73D8)
 DEF(FlashParamsTable,0xFF9754E8)
 
 //DEF(canon_menu_active, 0x6CBC)

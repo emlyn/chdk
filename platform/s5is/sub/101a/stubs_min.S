@@ -22,3 +22,4 @@ DEF(canon_shoot_menu_active,0xC05D) // 0xC05C + 1
 
 DEF(recreview_hold, 0xBE2C) // 0xBD60 + 0xCC
 
+DEF(zoom_status, 0x68F8)

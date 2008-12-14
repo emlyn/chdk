@@ -127,6 +127,9 @@ void lens_set_zoom_point(long newpt)
     }
     _MoveZoomLensWithPoint((short*)&newpt);
     while (zoom_busy);
+    if (newpt==0) zoom_status=ZOOM_OPTICAL_MIN;
+    else if (newpt >= zoom_points) zoom_status=ZOOM_OPTICAL_MAX;
+    else zoom_status=ZOOM_OPTICAL_MEDIUM; 
 }
 
 void lens_set_zoom_speed(long newspd)
