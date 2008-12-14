@@ -213,6 +213,9 @@ NOZERO100K=TRUE
 
 ESED = sed -r
 
+# keep sort order consistent
+export LC_ALL=C
+
 ifndef OSTYPE
   HOSTPLATFORM:=$(patsubst MINGW%,MINGW,$(shell uname -s))
   ifeq ($(HOSTPLATFORM),MINGW)
