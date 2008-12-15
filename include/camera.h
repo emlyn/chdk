@@ -52,6 +52,10 @@
     #undef  CAM_REAR_CURTAIN                // Camera do not have front/rear curtain flash sync in menu
     #undef  CAM_BRACKETING                // Cameras that have bracketing (focus & ev) in original firmware already, most likely s- & g-series (propcase for digic III not found yet!)
 
+    #define CAM_MAKE                    "Canon"
+    #define CAM_SENSOR_BITS_PER_PIXEL   10  // Bits per pixel. Only value of 10 is currently supported
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+    #define CAM_BLACK_LEVEL             31
 //----------------------------------------------------------
 // Overridden values for each camera
 //----------------------------------------------------------
@@ -383,6 +387,9 @@
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
+    #define DNG_EXT_FROM ".DPS"
+    #define DNG_EXT_TO   ".DNG"
+
 //----------------------------------------------------------
 #elif defined (CAMERA_a590)
 #define CAM_PROPSET                 2
@@ -595,6 +602,9 @@
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
+    #define DNG_EXT_FROM ".CR2"
+    #define DNG_EXT_TO   ".DNG"
+
 //----------------------------------------------------------
 #elif defined (CAMERA_a700)
     #define CAM_PROPSET                 1
@@ -690,6 +700,9 @@
     #define CAM_ACTIVE_AREA_Y2 2474
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+
+    #define DNG_EXT_FROM ".CR2"
+    #define DNG_EXT_TO   ".DNG"
 
 //==========================================================
 // SD-Series (IXUS-Series)
@@ -993,6 +1006,10 @@
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
+    #define DNG_EXT_FROM ".DPS"
+    #define DNG_EXT_TO   ".DNG"
+
+
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus80_sd1100)
     #define CAM_PROPSET                 2
@@ -1189,6 +1206,9 @@
     #define CAM_ACTIVE_AREA_Y2 2332
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+
+    #define DNG_EXT_FROM ".DPS"
+    #define DNG_EXT_TO   ".DNG"
     
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus860_sd870)

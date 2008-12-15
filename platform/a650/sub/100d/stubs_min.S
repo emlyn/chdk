@@ -18,3 +18,5 @@ DEF(recreview_hold, 0xE480)
 DEF(movie_status, 0x5550)    // 0x5518 + 0x38
 DEF(some_flag_for_af_scan, 0x11040)
 DEF(zoom_status, 0x11174)
+DEF(some_f_for_dng, 0xC058)
+DEF(second_ext_for_dng, 0xC078)

@@ -16,7 +16,7 @@
 
 //-------------------------------------------------------------------
 
-#define RAW_ROWLEN ((CAM_RAW_ROWPIX*10)/8)
+#define RAW_ROWLEN ((CAM_RAW_ROWPIX*CAM_SENSOR_BITS_PER_PIXEL)/8)
 
 //-------------------------------------------------------------------
 extern int raw_savefile();

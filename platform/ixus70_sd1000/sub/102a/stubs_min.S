@@ -13,3 +13,5 @@ DEF(recreview_hold, 0x25AC) // (0x25B0 - 0x4) found in "AR:Snd:0x%04x"
 DEF(zoom_status, 0x2680)
 DEF(movie_status, 0xBB558)
 DEF(some_flag_for_af_scan, 0xCDB4) // found in _SsPrepareSeq.c__444+0x58, CMP R2,#0 | LDREQ R3,=0xCDB4 | STREQ R2,[R3]
+DEF(some_f_for_dng, 0x7104)
+DEF(second_ext_for_dng, 0x7128)

@@ -19,7 +19,7 @@ const int cam_AnalogBalance[]={1,1,1,1,1,1};
 const int cam_ColorMatrix1[9*2]={CAM_COLORMATRIX1};
 const char cam_name[32];
 const short cam_PreviewBitsPerSample[]={8,8,8};
-const char cam_chdk_ver[]=HDK_VERSION" ver. "BUILD_NUMBER"\x0";
+const char cam_chdk_ver[]=HDK_VERSION" ver. "BUILD_NUMBER;
 const int cam_Resolution[]={180,1};
 
 // warning: according to TIFF format specification, elements must be sorted by tag value in ascending order!
@@ -31,8 +31,8 @@ struct dir_entry IFD0[]={
  {0x102,  T_SHORT,     3,  (int)cam_PreviewBitsPerSample},   // BitsPerSample: 8,8,8
  {0x103,  T_SHORT,     1,  1},   // Compression: Uncompressed
  {0x106,  T_SHORT,     1,  2}, //PhotometricInterpretation: RGB
- {0x10E,  T_ASCII,     0,  0}, // ImageDescription
- {0x10F,  T_ASCII,     6,  (int)"Canon"}, // Make
+ {0x10E,  T_ASCII,     1,  0}, // ImageDescription
+ {0x10F,  T_ASCII,     sizeof(CAM_MAKE),  (int)CAM_MAKE}, // Make
  {0x110,  T_ASCII,     32, (int)cam_name}, //Model: Filled at header generation.
  {0x111,  T_LONG,      1,  0}, //StripOffsets: Offset
  {0x112,  T_SHORT,     1,  1}, //Orientation: 1 - 0th row is top, 0th column is left
@@ -43,7 +43,7 @@ struct dir_entry IFD0[]={
  {0x131,  T_ASCII,     (sizeof(cam_chdk_ver)/2)*2,  (int)cam_chdk_ver}, //Software
  {0x132,  T_ASCII,     20, 0}, // DateTime
  {0x14A,  T_LONG,      1,  0}, //SubIFDs offset
- {0x8298, T_ASCII,     0,  0}, // Copyright
+ {0x8298, T_ASCII,     1,  0}, // Copyright
  {0x8769, T_LONG,      1,  0}, //EXIF_IFD offset
  {0x9216, T_BYTE,      4,  0x00000001},  // TIFF/EPStandardID: 1.0.0.0
  {0xC612, T_BYTE,      4,  0x00000101}, //DNGVersion: 1.1.0.0
@@ -63,21 +63,21 @@ struct dir_entry IFD1[]={
  {0xFE,   T_LONG,      1,  0},       // NewSubFileType: Main Image
  {0x100,  T_LONG,      1,  CAM_RAW_ROWPIX},   // ImageWidth
  {0x101,  T_LONG,      1,  CAM_RAW_ROWS},   // ImageLength
- {0x102,  T_SHORT,     1,  10},   // BitsPerSample: 10
+ {0x102,  T_SHORT,     1,  CAM_SENSOR_BITS_PER_PIXEL},   // BitsPerSample
  {0x103,  T_SHORT,     1,  1},   // Compression: Uncompressed
  {0x106,  T_SHORT,     1,  0x8023}, //PhotometricInterpretation: CFA
  {0x111,  T_LONG,      1,  0}, //StripOffsets: Offset
  {0x115,  T_SHORT,     1,  1}, // SamplesPerPixel: 1
  {0x116,  T_SHORT,     1,  CAM_RAW_ROWS}, //RowsPerStrip
- {0x117,  T_LONG,      1,  CAM_RAW_ROWPIX*CAM_RAW_ROWS*10/8}, // StripByteCounts = CHDK RAW size
+ {0x117,  T_LONG,      1,  CAM_RAW_ROWPIX*CAM_RAW_ROWS*CAM_SENSOR_BITS_PER_PIXEL/8}, // StripByteCounts = CHDK RAW size
  {0x11A,  T_RATIONAL,  1,  (int)cam_Resolution}, // XResolution
  {0x11B,  T_RATIONAL,  1,  (int)cam_Resolution}, // YResolution
  {0x11C,  T_SHORT,     1,  1}, // PlanarConfiguration: 1
  {0x128,  T_SHORT,     1,  2}, // ResolutionUnit: inch
  {0x828D, T_SHORT,     2,  0x00020002}, // CFARepeatPatternDim: Rows = 2, Cols = 2
  {0x828E, T_BYTE,      4,  cam_CFAPattern},
- {0xC61A, T_LONG,      1,  31}, // BlackLevel: 31
- {0xC61D, T_LONG,      1,  1023}, // WhiteLevel: 1023
+ {0xC61A, T_LONG,      1,  CAM_BLACK_LEVEL}, // BlackLevel
+ {0xC61D, T_LONG,      1,  CAM_WHITE_LEVEL}, // WhiteLevel
  {0xC61F, T_LONG,      2,  (int)cam_DefaultCropOrigin},
  {0xC620, T_LONG,      2,  (int)cam_DefaultCropSize},
  {0xC68D, T_LONG,      4,  (int)cam_ActiveArea},
@@ -178,7 +178,7 @@ void create_dng_header(struct t_data_for_exif* exif_data){
    IFD_LIST[j].count++;
    raw_offset+=12; // IFD directory size
    size_ext=get_type_size(IFD_LIST[j].entry[i].type)*IFD_LIST[j].entry[i].count;
-   if (size_ext>4) raw_offset+=size_ext;
+   if (size_ext>4) raw_offset+=size_ext+(size_ext&1);
   }
  }
 
@@ -229,7 +229,7 @@ void create_dng_header(struct t_data_for_exif* exif_data){
    if (size_ext<=4) add_to_buf(&IFD_LIST[j].entry[i].offset, sizeof(int));
    else {
     add_to_buf(&extra_offset, sizeof(int));
-    extra_offset+=size_ext;    
+    extra_offset+=size_ext+(size_ext&1);    
    }
   }
  var=0; 
@@ -241,9 +241,13 @@ void create_dng_header(struct t_data_for_exif* exif_data){
 
  for (j=0;j<IFDs;j++) {
   int size_ext;
+  char zero=0;
   for(i=0; IFD_LIST[j].entry[i].tag; i++) {
    size_ext=get_type_size(IFD_LIST[j].entry[i].type)*IFD_LIST[j].entry[i].count;
-   if (size_ext>4) add_to_buf((void*)IFD_LIST[j].entry[i].offset, size_ext);
+   if (size_ext>4){
+    add_to_buf((void*)IFD_LIST[j].entry[i].offset, size_ext);
+    if (size_ext&1) add_to_buf(&zero, 1);
+   }
   }
  }
 
