@@ -40,7 +40,7 @@ struct dir_entry IFD0[]={
  {0x116,  T_SHORT,     1,  DNG_TH_HEIGHT}, //RowsPerStrip
  {0x117,  T_LONG,      1,  DNG_TH_WIDTH*DNG_TH_HEIGHT*3}, // StripByteCounts = preview size
  {0x11C,  T_SHORT,     1,  1}, // PlanarConfiguration: 1
- {0x131,  T_ASCII,     (sizeof(cam_chdk_ver)/2)*2,  (int)cam_chdk_ver}, //Software
+ {0x131,  T_ASCII,     sizeof(cam_chdk_ver),  (int)cam_chdk_ver}, //Software
  {0x132,  T_ASCII,     20, 0}, // DateTime
  {0x14A,  T_LONG,      1,  0}, //SubIFDs offset
  {0x8298, T_ASCII,     1,  0}, // Copyright
