@@ -139,5 +139,7 @@ NHSTUB(GetBatteryTemperature, 0xFFA3FCBC)
 NHSTUB(GetCCDTemperature, 0xFFA3FCA8)
 NHSTUB(GetOpticalTemperature, 0xFFA3FC94)
 NHSTUB(PT_PlaySound, 0xFFB16D08)
+NHSTUB(WriteSDCard, 0xFFAB7D7C)
+
 NHSTUB(EnterToCompensationEVF, 0xffb0657c) 
 NHSTUB(ExitFromCompensationEVF, 0xffb06600) 

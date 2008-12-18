@@ -16,4 +16,5 @@ DEF(canon_shoot_menu_active,0x27FD) // (0x2800 - 0x4 + 0x1) found in "taskcreate
 DEF(recreview_hold, 0x25E4) // (0x25E8 - 0x4) found in "AR:Snd:0x%04x"
 DEF(movie_status,0xBBC48)
 DEF(zoom_status, 0x26B8) // found near _MoveOpticalToTele, _StopOpticalZoom etc
-
+DEF(some_f_for_dng, 0x7214)
+DEF(second_ext_for_dng, 0x7238)

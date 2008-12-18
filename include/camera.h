@@ -933,7 +933,7 @@
     #undef CAM_USE_ZOOM_FOR_MF            // Zoom lever can be used for manual focus adjustments
     #undef  CAM_ADJUSTABLE_ALT_BUTTON       // ALT-button can be set from menu
     #undef CAM_REMOTE                     // Camera supports USB-remote
-    #undef  CAM_MULTIPART                   // Camera supports SD-card multipartitioning 
+    #define CAM_MULTIPART               1   // Camera supports SD-card multipartitioning 
     #define CAM_HAS_ZOOM_LEVER          1   // Camera has dedicated zoom buttons
     #undef  CAM_DRAW_EXPOSITION             // Output expo-pair on screen (for cameras which (sometimes) don't do that)
     #undef CAM_HAS_ERASE_BUTTON           // Camera has dedicated erase button
@@ -969,6 +969,10 @@
     #define CAM_ACTIVE_AREA_Y2 2338
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+    
+    #define DNG_EXT_FROM ".DPS"
+    #define DNG_EXT_TO   ".DNG"
+
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus70_sd1000)
     #define CAM_PROPSET                 2
