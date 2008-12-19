@@ -517,7 +517,9 @@ static CMenuItem video_submenu_items[] = {
 #if CAM_VIDEO_CONTROL
       {0x5c,LANG_MENU_FAST_SWITCH_VIDEO,   MENUITEM_BOOL,  &conf.fast_movie_control},
 #endif
+#if CAM_CHDK_HAS_EXT_VIDEO_MENU
       {0x5c,LANG_MENU_FAST_SWITCH_QUALITY_VIDEO,   MENUITEM_BOOL,  &conf.fast_movie_quality_control},
+#endif
 #if CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
       {0x5c,LANG_MENU_OPTICAL_ZOOM_IN_VIDEO,   MENUITEM_BOOL,  &conf.unlock_optical_zoom_for_video},							
 #endif

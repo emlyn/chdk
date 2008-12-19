@@ -497,6 +497,8 @@
     #define CAM_ACTIVE_AREA_Y2 2338
     // camera name
     #define PARAM_CAMERA_NAME 3 // parameter number for GetParameterData
+    #define DNG_EXT_FROM ".DPS"
+    #define DNG_EXT_TO   ".DNG"
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a630)
@@ -1392,6 +1394,8 @@
     // camera name
     #define PARAM_CAMERA_NAME 3 // parameter number for GetParameterData
     #define CAM_BRACKETING              1
+    #define DNG_EXT_FROM ".DPS"
+    #define DNG_EXT_TO   ".DNG"
 
 //----------------------------------------------------------
 #elif defined (CAMERA_s5is)

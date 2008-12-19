@@ -944,6 +944,7 @@ unsigned int hour=0, min=0, sec=0;
 int mode_video = MODE_IS_VIDEO(m); 
 
 
+#if CAM_CHDK_HAS_EXT_VIDEO_MENU
 if (mode_video || movie_status > 1) {
     // if manual adjust, show the field item to be adjusted
    // if any value overriden, show the override value
@@ -961,6 +962,7 @@ if (mode_video || movie_status > 1) {
 	 if(mode_video)
 	 return;
     }
+#endif
 
 if (movie_reset == 1)
 	{
