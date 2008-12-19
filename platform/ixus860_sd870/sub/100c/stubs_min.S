@@ -17,3 +17,5 @@ DEF(canon_shoot_menu_active,0xB65D)   // 0xB65C+1
 DEF(recreview_hold, 0xB474) // 0xB3C8+0xAC
 DEF(zoom_status, 0xE560)
 DEF(movie_status, 0x551C)  // 0x54E0 + 0x3C
+DEF(some_f_for_dng, 0x90AC)
+DEF(second_ext_for_dng, 0x90ÑÑ)

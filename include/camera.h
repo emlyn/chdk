@@ -465,6 +465,10 @@
     // camera name
     #define PARAM_CAMERA_NAME 3 // parameter number for GetParameterData
 
+    #define DNG_EXT_FROM ".DPS"
+    #define DNG_EXT_TO   ".DNG"
+
+
 //----------------------------------------------------------
 #elif defined (CAMERA_a620)
     #define CAM_PROPSET                 1
@@ -533,6 +537,8 @@
     #define CAM_ACTIVE_AREA_Y2 2476
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+    #define DNG_EXT_FROM ".DPS"
+    #define DNG_EXT_TO   ".DNG"
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a640)
@@ -567,6 +573,8 @@
     #define CAM_ACTIVE_AREA_Y2 2764
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+    #define DNG_EXT_FROM ".DPS"
+    #define DNG_EXT_TO   ".DNG"
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a650)
@@ -1254,6 +1262,9 @@
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
+    #define DNG_EXT_FROM ".CR2"
+    #define DNG_EXT_TO   ".DNG"
+
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus950_sd850)
     #define CAM_PROPSET                 2
@@ -1431,6 +1442,8 @@
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 //  #define CAM_BRACKETING              1 //propcase for dryos not found yet
+    #define DNG_EXT_FROM ".DPS"
+    #define DNG_EXT_TO   ".DNG"
 
 //==========================================================
 // TX-Series

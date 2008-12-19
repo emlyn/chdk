@@ -89,6 +89,8 @@ DEF(canon_shoot_menu_active,0xC05D) // 0xC05C + 1
 DEF(recreview_hold, 0xBE2C) // 0xBD60 + 0xCC
 DEF(movie_status,0x5868 + 0x38)
 DEF(zoom_status, 0x68F8)
+DEF(some_f_for_dng, 0x9B94)
+DEF(second_ext_for_dng, 0x9BB8)
 
 
 
