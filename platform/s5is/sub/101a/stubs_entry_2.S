@@ -89,7 +89,7 @@ NHSTUB(_sqrt                                  ,0xFFA95328)
 
 NHSTUB(qsort                                  ,0xFF9CA2EC)
 
-NHSTUB(strstr                                 ,0xFF9C9E0C)
+//NHSTUB(strstr                                 ,0xFF9C9E0C)
 NHSTUB(strncpy                                ,0xFF81E688)
 NHSTUB(strrchr                                ,0xFF8B32A0)
 NHSTUB(strncmp                                ,0xFF8B3230)

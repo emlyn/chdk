@@ -218,7 +218,7 @@ void raw_postprocess() {
 //-------------------------------------------------------------------
 
 void set_raw_pixel(unsigned int x, unsigned int y, unsigned short value){
- unsigned char* addr=get_raw_image_addr()+y*RAW_ROWLEN+(x/8)*CAM_SENSOR_BITS_PER_PIXEL;
+ unsigned char* addr=(unsigned char*)get_raw_image_addr()+y*RAW_ROWLEN+(x/8)*CAM_SENSOR_BITS_PER_PIXEL;
 #if CAM_SENSOR_BITS_PER_PIXEL==10
  switch (x%8) {
   case 0: addr[0]=(addr[0]&0x3F)|(value<<6); addr[1]=value>>2;                  break;
@@ -237,7 +237,7 @@ void set_raw_pixel(unsigned int x, unsigned int y, unsigned short value){
 
 //-------------------------------------------------------------------
 unsigned short get_raw_pixel(unsigned int x,unsigned  int y){
- unsigned char* addr=get_raw_image_addr()+y*RAW_ROWLEN+(x/8)*CAM_SENSOR_BITS_PER_PIXEL;
+ unsigned char* addr=(unsigned char*)get_raw_image_addr()+y*RAW_ROWLEN+(x/8)*CAM_SENSOR_BITS_PER_PIXEL;
 #if CAM_SENSOR_BITS_PER_PIXEL==10
  switch (x%8) {
   case 0: return ((0x3fc&(((unsigned short)addr[1])<<2)) | (addr[0] >> 6));

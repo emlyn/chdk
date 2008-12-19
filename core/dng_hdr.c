@@ -326,7 +326,7 @@ unsigned short get_exp_program_for_exif(int exp_program){
 }
 
 unsigned int* get_focal_length_for_exif(int focal_length){
- static int fl[2]={0,1000};
+ static unsigned int fl[2]={0,1000};
  fl[0]=focal_length;
  return fl;
 }
