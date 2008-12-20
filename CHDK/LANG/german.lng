@@ -617,7 +617,21 @@
 
 437 "Aktiviere Blitz in Video?"
 438 "   Stärke des Blitzes"
+439 "'DNG' als Dateiendung"
 
 // DNG
 439 "'DNG'-Dateiendung"
 440 "DNG sichtbar via USB"
+
+441 "Mastermind"
+442 "wählbare Farben"
+443 "richtige Stelle"
+444 "mit enthalten"
+445 "RICHTIG :-)"
+446 "GAME OVER"
+447 "[<-][->] Spalte wählen"
+448 "[UP][DOWN] Farbe wählen"
+449 "[SET] nächste Reihe"
+450 "KEINE FARBEN DOPPELT"
+
+

@@ -560,6 +560,20 @@ static char* gui_lang_default = \
 "438 \"   Power of flash\"\n"
 "439 \"'DNG' file extension\"\n"
 "440 \"DNG visible via USB\"\n"
+
+"441 \"Mastermind\"\n"
+"442 \"available colors\"\n"
+"443 \"on the right place\"\n"
+"444 \"color in answer\"\n"
+"445 \"CORRECT :-)\"\n"
+"446 \"GAME OVER\"\n"
+"447 \"[<-][->] select column\"\n"
+"448 \"[UP][DOWN] select color\"\n"
+"449 \"[SET] next row\"\n"
+"450 \"NO DOUBLE COLOR\"\n"
+
+
+
 ;
 
 //-------------------------------------------------------------------

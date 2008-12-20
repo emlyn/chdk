@@ -550,9 +550,19 @@
 #define LANG_MENU_FLASH_VIDEO_OVERRIDE_POWER     438
 #define LANG_MENU_RAW_DNG_EXT              439
 #define LANG_MENU_DNG_VIA_USB              440 
+#define LANG_MENU_GAMES_MASTERMIND     441
+#define LANG_MENU_GAMES_AC_COLORS      442
+#define LANG_MENU_GAMES_RIGHT_PLACE    443
+#define LANG_MENU_GAMES_C_IN_ANSWER    444
+#define LANG_MENU_GAMES_RIGHT          445
+#define LANG_MENU_GAMES_GAME_OVER      446
+#define LANG_MENU_GAMES_CURSOR1        447
+#define LANG_MENU_GAMES_CURSOR2        448
+#define LANG_MENU_GAMES_CURSOR3        449
+#define LANG_MENU_GAMES_DCOLOR        450
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  440
+#define GUI_LANG_ITEMS                  450
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();
