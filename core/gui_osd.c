@@ -53,7 +53,7 @@ static char osd_buf3[10];
 static char osd_buf4[10];
 
 static int step;
-static unsigned char *img_buf, *scr_buf;
+static unsigned char *img_buf, *scr_buf, *cur_buf;
 static int timer = 0;
 static char *buf = NULL;
 
@@ -86,7 +86,7 @@ void gui_osd_draw() {
         gui_osd_draw_state();
         gui_osd_draw_raw_info();
         gui_osd_draw_values();
-        gui_osd_draw_clock();
+        gui_osd_draw_clock(0,0,0);
         gui_osd_draw_temp();
       #if CAM_EV_IN_VIDEO
         gui_osd_draw_ev_video(1);
@@ -207,6 +207,18 @@ static void draw_pixel_buffered(unsigned int offset, color cl) {
 }
 
 //-------------------------------------------------------------------
+int draw_guard_pixel() {
+    unsigned char* buffer1 = vid_get_bitmap_fb()+screen_buffer_size/2;
+    unsigned char* buffer2 = buffer1+screen_buffer_size;
+    int has_disappeared=0;
+
+    if(*buffer1!=COLOR_GREEN) has_disappeared=1;
+    if(*buffer2!=COLOR_GREEN) has_disappeared=2;
+    *buffer1 = *buffer2 = COLOR_GREEN;
+    return has_disappeared;
+}
+
+//-------------------------------------------------------------------
 static void gui_osd_draw_zebra_osd() {
     switch (conf.zebra_draw_osd) {
         case ZEBRA_DRAW_NONE:
@@ -235,7 +247,7 @@ static void gui_osd_draw_zebra_osd() {
                 gui_batt_draw_osd();
                 gui_space_draw_osd();
                 if (conf.show_clock) {
-                    gui_osd_draw_clock();
+                    gui_osd_draw_clock(0,0,0);
                 }
                 if (conf.show_temp>0) {
                     gui_osd_draw_temp();
@@ -278,9 +290,24 @@ int gui_osd_draw_zebra() {
     if (!buf) {
         buf = malloc(screen_buffer_size);
         scr_buf = vid_get_bitmap_fb();
+        cur_buf = malloc(screen_buffer_size);
     }
 
     if (buf) {
+        if(timer==0) {
+            draw_guard_pixel();
+            timer=1;
+            return 0;
+        }
+        if(timer==1) {
+            short ready;
+            static int n=0;
+            get_property_case(PROPCASE_SHOOTING, &ready, 4);
+            n=draw_guard_pixel();
+            if(!ready || n==0) return 0;
+            if(n==1) memcpy(cur_buf, scr_buf, screen_buffer_size);
+            else memcpy(cur_buf, scr_buf+screen_buffer_size, screen_buffer_size);
+        }
         ++timer;
 	// Try to get the best viewport buffer. In playmode its the _d one, in
 	// record mode we try to get the fast live one first
@@ -305,14 +332,14 @@ int gui_osd_draw_zebra() {
                 f = 1; 
                 break;
             case ZEBRA_MODE_BLINKED_1:
-                f = timer&2; 
+                f = timer&1; 
                 break;
             case ZEBRA_MODE_BLINKED_3:
-                f = timer&8; 
+                f = timer&4; 
                 break;
             case ZEBRA_MODE_BLINKED_2:
             default:
-                f = timer&4; 
+                f = timer&2; 
                 break;
         }
         if (f) {
@@ -338,6 +365,8 @@ int gui_osd_draw_zebra() {
                         else if (((conf.zebra_mode == ZEBRA_MODE_ZEBRA_1 || conf.zebra_mode == ZEBRA_MODE_ZEBRA_2) && (y-x-timer)&f)) buf[s]=COLOR_TRANSPARENT;
                              else buf[s]=(yy>over)?cl_over:(yy<conf.zebra_under)?cl_under:COLOR_TRANSPARENT;
                         if (buf[s] != COLOR_TRANSPARENT && !zebra_drawn) zebra_drawn = 1;
+                        if(cur_buf[s]!=COLOR_TRANSPARENT) buf[s]=cur_buf[s];
+                        if(conf.zebra_multichannel && cur_buf[s+1]!=COLOR_TRANSPARENT) buf[s+1]=cur_buf[s+1];
                     }
                     s+=screen_buffer_width-screen_width;
                     if (y*screen_height/viewport_height == (s+screen_buffer_width)/screen_buffer_width) {
@@ -352,7 +381,7 @@ int gui_osd_draw_zebra() {
                 if (conf.zebra_restore_screen || conf.zebra_restore_osd) {
                     draw_restore();
                 } else {
-                    memset(buf, COLOR_TRANSPARENT, screen_buffer_size);
+                    memcpy(buf, cur_buf, screen_buffer_size);
                     gui_osd_draw_zebra_osd();
                     memcpy(scr_buf, buf, screen_buffer_size);
                     memcpy(scr_buf+screen_buffer_size, buf, screen_buffer_size);
@@ -856,7 +885,7 @@ void gui_osd_draw_values(int showtype) {
 #define CLOCK_WITH_SEC 2
 
 //-------------------------------------------------------------------
-void gui_osd_draw_clock() {
+void gui_osd_draw_clock(int x, int y, color cl) {
     unsigned long t;
     static struct tm *ttm;
     int w = 0;
@@ -909,9 +938,9 @@ void gui_osd_draw_clock() {
          break;  
     }
     if ((conf.show_clock==CLOCK_WITH_SEC || (conf.clock_format==CLOCK_FORMAT_12)) && (conf.clock_pos.x>=(z+w)*FONT_WIDTH) ) 
-       draw_string(conf.clock_pos.x-(z+w)*FONT_WIDTH, conf.clock_pos.y, osd_buf, conf.osd_color);
+       draw_string((x)?x-(z+w)*FONT_WIDTH:conf.clock_pos.x-(z+w)*FONT_WIDTH, (y)?y:conf.clock_pos.y, osd_buf, (cl)?cl:conf.osd_color);
 	else 
-	   draw_string(conf.clock_pos.x, conf.clock_pos.y, osd_buf, conf.osd_color);
+	   draw_string((x)?x:conf.clock_pos.x, (y)?y:conf.clock_pos.y, osd_buf, (cl)?cl:conf.osd_color);
 }
 
 

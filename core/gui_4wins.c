@@ -1,3 +1,4 @@
+//Conect4: Kettmeister, CHDKLover german forum (www.wirklemms.de)
 #include "stdlib.h"
 #include "keyboard.h"
 #include "platform.h"
@@ -5,6 +6,7 @@
 #include "lang.h"
 #include "conf.h"
 #include "gui.h"
+#include "gui_osd.h"
 #include "gui_draw.h"
 #include "gui_lang.h"
 #include "gui_batt.h"
@@ -13,19 +15,24 @@
 
 #define BORDER		 20
 #define RECT_SIZE	 30
+#define BORDER_TOP	 RECT_SIZE
 #define FIELD_HEIGHT 7
 #define FIELD_WIDTH	 7
 #define P1_COLOR	 MAKE_COLOR(0x23,0x23)
 #define P2_COLOR	 MAKE_COLOR(0x16,0x16)
-#define BG_COLOR	 MAKE_COLOR(COLOR_GREY,COLOR_GREY)
-#define FIELD_COLOR	 MAKE_COLOR(0xaa,0xaa)
+#define BG_COLOR	 MAKE_COLOR(0xDE,0xDE)
+#define FIELD_COLOR	 MAKE_COLOR(0xAA,0xAA)//(füllfarbe,rand)
+#define TEXT_COLOR   MAKE_COLOR(BG_COLOR, COLOR_WHITE)
+#define INFO_COLOR   MAKE_COLOR(0xEF, 0xEF)
+#define INFO_TEXT_COLOR   MAKE_COLOR(INFO_COLOR, COLOR_WHITE)
 
 char cursor_position,cur_player=1;
 char field[FIELD_HEIGHT][FIELD_WIDTH];
-char finished;
+char finished=0;
 char badColumns[7];
-char game_go=0;
+char in_game=0;
 char mode_rival=0; //1=person 0=cam
+char count_win[2]={0,0};
 
 //-------------------------------------------------------------------
 static char isFull(int column)
@@ -39,12 +46,12 @@ static char isFull(int column)
 static char set_stone(int column, char player, char visible)
 {
 	int i;
-    game_go=1;
+    in_game=1;
 	if(!isFull(column))
 	{
 		for(i=1;field[column-1][i];i++);			//1 ist wichtig (0=Fundament)
 		if (visible) {
-			draw_filled_ellipse((BORDER+((column-1)*RECT_SIZE))+15, (BORDER+((6-i)*RECT_SIZE))+15, 10,10, (cur_player==1)?P1_COLOR:P2_COLOR);
+			draw_filled_ellipse((BORDER+((column-1)*RECT_SIZE))+15, (BORDER+((6-i)*RECT_SIZE))+15+BORDER_TOP, 10,10, (cur_player==1)?P1_COLOR:P2_COLOR);
 		}
 		field[column-1][i]=player;
 		return 1;
@@ -147,7 +154,7 @@ char ki_findColumn(char mode, char player) {							//player = 1|2
                 unset_stone(i);
               } else badColumns[i-1]=9;								//9=full
 //              sprintf(str,"%d %d %d %d %d %d %d",badColumns[0],badColumns[1],badColumns[2],badColumns[3],badColumns[4],badColumns[5],badColumns[6]);
-//              draw_txt_string(30, 3, str, MAKE_COLOR(BG_COLOR, COLOR_WHITE));
+//              draw_txt_string(30, 3, str, TEXT_COLOR);
             }
           } else break;
           erg=ki_2(cam);												//ich2 (für passivere Methode vertauschen)
@@ -160,6 +167,24 @@ char ki_findColumn(char mode, char player) {							//player = 1|2
   return erg;
 }
 /*======================= K I   END ===============================*/
+void draw_txt_message(char* text) {
+    coord w, x, y;
+    int l;
+    color cl = MAKE_COLOR(COLOR_RED, COLOR_WHITE);
+    l=strlen(text);
+    w=l*FONT_WIDTH+10;
+
+    x = (screen_width-w)>>1; y = ((screen_height)>>1);
+    draw_filled_round_rect(x, y, x+w, y+FONT_HEIGHT+6, MAKE_COLOR(COLOR_RED, COLOR_RED));
+    draw_string(x+((w-strlen(text)*FONT_WIDTH)>>1), y+4, text, cl);
+}
+//-------------------------------------------------------------------
+static void change_player()
+{
+	if (cur_player==1) cur_player=2; else cur_player=1;
+	draw_filled_ellipse((BORDER+((cursor_position)*RECT_SIZE))+15, BORDER+10, 10,10, (cur_player==1)?P1_COLOR:P2_COLOR);
+}
+//-------------------------------------------------------------------
 static char win_query()
 {
 	int i=0;
@@ -200,17 +225,59 @@ static char win_query()
 	
 	return 0;
 }
-
-static void change_player()
+//-------------------------------------------------------------------
+void win() {
+  if(win_query()==1){
+    finished=1;
+    count_win[cur_player-1]++;
+    draw_txt_message(lang_str((cur_player==1)?LANG_CONNECT4_P1_WIN:(mode_rival)?LANG_CONNECT4_P2_WIN:LANG_CONNECT4_CAM_WIN));
+  }	else if (win_query()==9) {
+    finished=1;
+    draw_txt_message(lang_str(LANG_CONNECT4_DRAW));
+  }
+  change_player();
+}
+//-------------------------------------------------------------------
+void draw_mode()
 {
-	if (cur_player==1) cur_player=2; else cur_player=1;
-	draw_filled_rect(cursor_position*RECT_SIZE+BORDER+10, 210, cursor_position*RECT_SIZE+BORDER+20, 220, (cur_player==1)?P1_COLOR:P2_COLOR);	// overwrite old cursor
+	draw_txt_string(30, 4, "            ", TEXT_COLOR);
+	if (mode_rival==1)
+		draw_txt_string(30, 4, lang_str(LANG_CONNECT4_HUMAN), TEXT_COLOR);
+	else
+		draw_txt_string(30, 4, PLATFORM, TEXT_COLOR);
+}
+//-------------------------------------------------------------------
+void change_mode()
+{
+	cur_player=1;
+	count_win[0]=count_win[1]=0;
+	if(mode_rival==1)
+		mode_rival=0;	//CAM
+	else
+		mode_rival=1;	//HUMAN
+	draw_mode();
+}
+//-------------------------------------------------------------------
+void set()
+{
+	if(finished==0)
+	{
+		if(cursor_position==7 && in_game==0)	
+		{
+			change_mode();
+		}
+		else
+		{
+			if(cur_player==1 || (cur_player==2 && mode_rival==1)) if(set_stone(cursor_position+1,cur_player,1)) win();
+			if(mode_rival==0 && cur_player==2) if(set_stone(ki_findColumn(1, cur_player),cur_player, 1)) win();
+		}
+	}
 }
 //-------------------------------------------------------------------
 static void move_cursor(int in_x_pos)
 {
-	draw_filled_rect(cursor_position*RECT_SIZE+BORDER+10, 210, cursor_position*RECT_SIZE+BORDER+20, 220, BG_COLOR);	// overwrite old cursor
-	if(game_go!=0)
+	draw_filled_ellipse((BORDER+((cursor_position)*RECT_SIZE))+15, BORDER+10, 10,10,BG_COLOR);
+	if(in_game)
 	{
 		if(cursor_position==0 && in_x_pos<0) 
 			cursor_position=7+in_x_pos; 
@@ -224,108 +291,46 @@ static void move_cursor(int in_x_pos)
 		else 
 			cursor_position=(cursor_position+in_x_pos)%8;
 	}
-	draw_filled_rect(cursor_position*RECT_SIZE+BORDER+10, 210, cursor_position*RECT_SIZE+BORDER+20, 220, (cur_player==1)?P1_COLOR:P2_COLOR);	// draw new cursor
-}
-//-------------------------------------------------------------------
-void change_mode()
-{
-	if(mode_rival==1)
-		mode_rival=0;	//CAM
-	else
-		mode_rival=1;	//HUMAN
-	
-	draw_txt_string(30, 12, "            ", MAKE_COLOR(BG_COLOR, COLOR_WHITE));
-	if (mode_rival==1)
-		draw_txt_string(30, 12, lang_str(LANG_CONNECT4_HUMAN), MAKE_COLOR(BG_COLOR, COLOR_WHITE));
-	else
-		draw_txt_string(30, 12, PLATFORM, MAKE_COLOR(BG_COLOR, COLOR_WHITE));
-}
-//-------------------------------------------------------------------
-void set()
-{
-	if(finished==0)
-	{
-		if(cursor_position==7 && game_go==0)	
-		{
-			change_mode();
-		}
-		else
-		{
-			if(cur_player==1 || (cur_player==2 && mode_rival==1))
-			{
-				if(set_stone(cursor_position+1,cur_player,1))
-				{
-					if(win_query()==1)
-					{
-						finished=1;
-						if(cur_player==1)
-							draw_txt_string(4, 7, lang_str(LANG_CONNECT4_P1_WIN), MAKE_COLOR(BG_COLOR, P1_COLOR));
-						if(cur_player==2)
-							draw_txt_string(4, 7, lang_str(LANG_CONNECT4_P2_WIN), MAKE_COLOR(BG_COLOR, P2_COLOR));
-					}
-					else if (win_query()==9) {
-						finished=1;
-						draw_txt_string(4, 7, lang_str(LANG_CONNECT4_DRAW), MAKE_COLOR(BG_COLOR, COLOR_WHITE));
-					}
-					change_player();
-				}
-			}						
-			if(mode_rival==0 && cur_player==2)
-			{
-				if(!finished) 
-				{
-					set_stone(ki_findColumn(1, cur_player),cur_player, 1);
-					if(win_query()==1)
-					{
-						finished=1;
-						if(cur_player==1)
-							draw_txt_string(4, 7, lang_str(LANG_CONNECT4_P1_WIN), MAKE_COLOR(BG_COLOR, P1_COLOR));
-						if(cur_player==2)
-							draw_txt_string(4, 7, lang_str(LANG_CONNECT4_CAM_WIN), MAKE_COLOR(BG_COLOR, P2_COLOR));
-					}
-					else if (win_query()==9){
-						finished=1;
-						draw_txt_string(4, 7, lang_str(LANG_CONNECT4_DRAW), MAKE_COLOR(BG_COLOR, COLOR_WHITE));
-					}
-				change_player();
-				}
-			}
-		}
-	}
+	draw_filled_ellipse((BORDER+((cursor_position)*RECT_SIZE))+15, BORDER+10, 10,10, (cur_player==1)?P1_COLOR:P2_COLOR);
 }
 //-------------------------------------------------------------------
 int gui_4wins_init() 
 {
+	static char str[16];
 	int i=0,j=0;
 
 	cursor_position=3;
-	finished=game_go=0;
+	finished=in_game=0;
 	srand(time(NULL));
 	
 	draw_filled_rect(0, 0, 360, 240, BG_COLOR);		// draw backgraund
-	draw_filled_rect(BORDER, BORDER, BORDER+(7*RECT_SIZE), BORDER+(6*RECT_SIZE), FIELD_COLOR);
+	draw_filled_rect(BORDER, BORDER+BORDER_TOP, BORDER+(7*RECT_SIZE), BORDER+(6*RECT_SIZE)+BORDER_TOP, FIELD_COLOR);
+	draw_filled_round_rect(240, 90, 360-BORDER, 240-10, INFO_COLOR);
+    draw_txt_string(12, 0, lang_str(LANG_MENU_GAMES_CONNECT4), TEXT_COLOR);
+    draw_line(0,15,360,15,0xEF);
 
 	for(i=0;i<7;i++)
 	{
 		for(j=0;j<6;j++)
 		{
 			field[i][j+1]=0;
-			draw_filled_ellipse(BORDER+(i*RECT_SIZE)+(RECT_SIZE/2), BORDER+(j*RECT_SIZE)+(RECT_SIZE/2), 10, 10, BG_COLOR);
+			draw_filled_ellipse(BORDER+(i*RECT_SIZE)+(RECT_SIZE/2), BORDER+(j*RECT_SIZE)+(RECT_SIZE/2)+BORDER_TOP, 10, 10, BG_COLOR);
 		}
 	}
 	for(i=0;i<7;i++)
 	{
 		field[i][0]=9;
 	}
-	
-	draw_filled_rect(cursor_position*RECT_SIZE+BORDER+10, 210, cursor_position*RECT_SIZE+BORDER+20, 220, (cur_player==1)?P1_COLOR:P2_COLOR);	// draw cursor
 
-	draw_txt_string(30, 11, lang_str(LANG_CONNECT4_RIVAL), MAKE_COLOR(BG_COLOR, COLOR_WHITE));
-	if (mode_rival==1)
-		draw_txt_string(30, 12, lang_str(LANG_CONNECT4_HUMAN), MAKE_COLOR(BG_COLOR, COLOR_WHITE));
-	else
-		draw_txt_string(30, 12, PLATFORM, MAKE_COLOR(BG_COLOR, COLOR_WHITE));
-
+	move_cursor(0);
+	draw_txt_string(30, 3, lang_str(LANG_CONNECT4_RIVAL), TEXT_COLOR);
+    sprintf(str, "%d",count_win[0]);
+	draw_txt_string(screen_width/FONT_WIDTH-2-10, screen_height/FONT_HEIGHT-9, str, MAKE_COLOR(INFO_COLOR, P1_COLOR));
+    sprintf(str, ":");
+	draw_txt_string(screen_width/FONT_WIDTH-2-7, screen_height/FONT_HEIGHT-9, str, INFO_TEXT_COLOR);
+    sprintf(str, "%d",count_win[1]);
+	draw_txt_string(screen_width/FONT_WIDTH-2-4, screen_height/FONT_HEIGHT-9, str, MAKE_COLOR(INFO_COLOR, P2_COLOR));
+	draw_mode();
 	if(cur_player==2&&!mode_rival) set();
 	return 1;
 }
@@ -349,5 +354,8 @@ void gui_4wins_kbd_process()
 }
 //-------------------------------------------------------------------
 void gui_4wins_draw() {
-    draw_txt_string(10, 0, lang_str(LANG_MENU_GAMES_CONNECT4), MAKE_COLOR(BG_COLOR, COLOR_WHITE));
+  static char str[16];
+  sprintf(str, "%3d%%", get_batt_perc());
+  draw_txt_string(screen_width/FONT_WIDTH-2-13, screen_height/FONT_HEIGHT-2, str, INFO_TEXT_COLOR);
+  gui_osd_draw_clock(300,208,INFO_TEXT_COLOR);
 }

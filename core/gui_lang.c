@@ -559,6 +559,7 @@ static char* gui_lang_default = \
 "437 \"Enable flash in video?\"\n"
 "438 \"   Power of flash\"\n"
 "439 \"'DNG' file extension\"\n"
+"440 \"DNG visible via USB\"\n"
 ;
 
 //-------------------------------------------------------------------

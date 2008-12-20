@@ -422,7 +422,7 @@ static CMenuItem misc_submenu_items[] = {
 #endif
     {0x86,LANG_MENU_REMOTE_PARAM,            MENUITEM_SUBMENU,   (int*)&remote_submenu },
 #if defined (DNG_EXT_FROM) && defined(DNG_EXT_TO)
-    {0x5c,(int)"DNG visible via USB",        MENUITEM_BOOL | MENUITEM_ARG_CALLBACK, &conf.dng_usb_ext , (int)cb_change_dng_usb_ext},
+    {0x71,LANG_MENU_DNG_VIA_USB,        MENUITEM_BOOL | MENUITEM_ARG_CALLBACK, &conf.dng_usb_ext , (int)cb_change_dng_usb_ext},
 #endif
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
     {0},
@@ -2614,7 +2614,7 @@ void gui_draw_osd() {
     }
     
      if ((conf.show_clock) && (recreview_hold==0) &&  ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) &&  !((conf.hide_osd == 1) || (conf.hide_osd == 3)) )) && !(((conf.hide_osd == 2) || (conf.hide_osd == 3))&& (shooting_get_prop(PROPCASE_DISPLAY_MODE) == 1)))|| (conf.clock_halfpress==0) )) {
-        gui_osd_draw_clock();
+        gui_osd_draw_clock(0,0,0);
             }
     
     else if ((conf.show_clock) && (recreview_hold==0) &&  kbd_is_key_pressed(KEY_SHOOT_HALF) && conf.clock_halfpress==1) {
@@ -3123,9 +3123,9 @@ static void gui_draw_symbol_rbf_selected(const char *fn) {
     if (fn) {
         strcpy(conf.menu_symbol_rbf_file, fn);
         rbf_load_symbol(conf.menu_symbol_rbf_file);
-/*        if (!rbf_load(conf.menu_rbf_file))
+/*      if (!rbf_load(conf.menu_rbf_file))
             rbf_load_from_8x16(current_font);
-        rbf_set_codepage(FONT_CP_WIN);*/
+        		rbf_set_codepage(FONT_CP_WIN);*/        
         gui_menu_init(NULL);
     }
 }

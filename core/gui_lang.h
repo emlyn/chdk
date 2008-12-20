@@ -549,9 +549,10 @@
 #define LANG_MENU_FLASH_VIDEO_OVERRIDE     437
 #define LANG_MENU_FLASH_VIDEO_OVERRIDE_POWER     438
 #define LANG_MENU_RAW_DNG_EXT              439
+#define LANG_MENU_DNG_VIA_USB              440 
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  439
+#define GUI_LANG_ITEMS                  440
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

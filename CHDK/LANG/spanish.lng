@@ -564,7 +564,7 @@
 423 "Sinc. flash 2da Cortina"
 424 "Formato DNG"
 425 "Buffer Cache de RAW"
-426 "Cannot load CHDK/badpixel.bin\nPlease run \nCHDK/SCRIPTS/TEST/badpixel.lua"
+426 "No encuentra CHDK/badpixel.bin\n Por favor ejecute secuencia\nCHDK/SCRIPTS/TEST/badpixel.lua"
 427 "Ver Tiempo Grabado de Raw"
 428 "Connect 4"
 429 "Oponente:"
