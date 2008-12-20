@@ -21,3 +21,6 @@ DEF(movie_status, 0x64794)
 DEF(some_flag_for_af_scan, 0x64DD0)
 DEF(parameter_for_af_scan, 0x64DC8)
 DEF(zoom_status, 0x733C)
+
+DEF(some_f_for_dng, 0x887C) // found in sub_FFE39174
+DEF(second_ext_for_dng, 0x88A0) // .THM
