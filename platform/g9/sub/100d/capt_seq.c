@@ -97,7 +97,8 @@ void __attribute__((naked,noinline)) task_CaptSeqTask_my() //#fs  //FF861210
                 "STR     R0, [R4,#0x14]\n"
                 "MOV     R0, R4\n"
                 //"BL      sub_FF944478\n"
-                "BL      sub_FF944408_my\n"		//???
+                "BL      sub_FF944408_my\n"		// ----------->
+                "BL      capt_seq_hook_raw_here\n"      // ++
                 "TST     R0, #1\n"
                 "STRNE   R9, [R5,#4]\n"
                 "B       loc_FF8614B8\n"

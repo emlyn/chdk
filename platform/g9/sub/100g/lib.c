@@ -15,8 +15,7 @@ void *hook_raw_ret_addr()
 
 char *hook_raw_image_addr()
 {
- return (char*)0x108297C0;//OK // (*(int*)0x5684 ? 0x11F6B740 : 0x108057C0);   +++++
- //  return (char*)0x108057C0;
+ return (char*) (*(int*)(0x5854+0x18) ? 0x11F8F740 : 0x108297C0);
 }
 
 long hook_raw_size()

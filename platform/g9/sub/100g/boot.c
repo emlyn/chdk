@@ -15,7 +15,7 @@ extern long wrs_kernel_bss_end;
 void CreateTask_PhySw();
 void CreateTask_spytask();
 
-
+/*
 void CreateTask_blinker(); 
 void task_blinker();
 void dump_chdk();
@@ -75,6 +75,7 @@ void debug_my_blink_blue()
 
 
 #define DELAY 5000000			// DEBUG
+*/
 
 void boot() { //#fs
 
@@ -103,6 +104,7 @@ void boot() { //#fs
     for(i=0;i<canon_bss_len/4;i++)
 	canon_bss_start[i]=0;
 
+    *(int*)(0x261C+8)= (*(int*)0xC02200C0)&1 ? 1: 2;  // replacement of sub_FF822E10
 /*
     asm volatile (
 	"MRC     p15, 0, R0,c1,c0\n"
@@ -289,7 +291,7 @@ void __attribute__((naked,noinline)) CreateTask_Startup_my() { //#fs FF81DC0C
 "loc_FF81DC48:\n"
                 "B       loc_FF81DC48\n"
 "loc_FF81DC4C:\n"
-                "BL      sub_FF822E10\n"
+                //"BL      sub_FF822E10\n"   // removed, see boot() function
                 //"BL      nullsub_4\n"
                 "BL      sub_FF82A488\n"
                 "MOV     R1, #0x300000\n"
@@ -1685,10 +1687,11 @@ unsigned long __attribute__((naked,noinline)) _time(unsigned long *timer) {
           "LDR     R0, [SP,#0x10-0x10]\n"
           "LDMFD   SP!, {R3-R5,PC}\n"
      );
+   return 0;  // shut up the compiler
 }
 
 
- 
+/* 
 
 
 void CreateTask_blinker() {
@@ -1785,7 +1788,7 @@ void dump_chdk() { //#fs
     //finished();
 } //#fe 
 
-
+*/
 
 //*********************************************
  
