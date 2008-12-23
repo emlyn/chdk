@@ -1,4 +1,4 @@
-// Translation by Pavlo Kasperskyi (pkasperskyi[at]gmail{dot}com): December 1, 2008
+// Translation by Pavlo Kasperskyi (pkasperskyi[at]gmail{dot}com): December 21, 2008
 // Кодова сторінка Win1251
 // CHDK мовний файл
 // Формат стрічок:
@@ -564,7 +564,7 @@
 423 "Синхронізація спалаху 2-ю шторкою"
 424 "DNG формат"
 425 "Кешування RAW буферу"
-426 "Cannot load CHDK/badpixel.bin\nPlease run \nCHDK/SCRIPTS/TEST/badpixel.lua"
+426 "Не вдається завантажити CHDK/badpixel.bin\nЗапустіть \nCHDK/SCRIPTS/TEST/badpixel.lua"
 427 "Показ часу збереження RAW файлу"
 428 "Connect 4"
 429 "Опонент:"
@@ -577,3 +577,15 @@
 436 "Викл. для авторежиму"
 437 "Спалах при зйомці відео"
 438 "  сила спалаху"
+439 "  розширення 'DNG' для файлів"
+440 "DNG видимі по USB"
+441 "Mastermind"
+442 "доступні кольори"
+443 "на свому місці"
+444 "колір присутній"
+445 "ВІРНО! :-)"
+446 "ГРУ ЗАКІНЧЕНО"
+447 "[<-][->] вибір колонки"
+448 "[UP][DOWN] вибір кольору"
+449 "[SET] наступний рядок"
+450 "ОДНАКОВІ КОЛЬОРИ"
