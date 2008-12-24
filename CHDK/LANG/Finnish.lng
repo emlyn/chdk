@@ -3,8 +3,10 @@
 // <id> "<text>"
 //   <id>   - pitäisi olla positiivinen numero
 //   <text> - teksti suljettuna lainausmerkkeihin
-//  12.12.2008 based on English rev 629
+//  21.12.2008 based on English rev 649
 1 "Päävalikko"
+
+
 
 2 "RAW-kuvat"
 3 "Kuvaruutunäyttö"
@@ -16,6 +18,7 @@
 9 "Debug"
 10 "Palauta oletusasetukset..."
 11 "Tallenna asetukset nyt..."
+
 
 12 "Takaisin"
 
@@ -557,7 +560,7 @@
 425 "RAW-puskuri tarkistettu"
 426 "badpixel.bin lataus epäonnistui.\nKäynnistä\nCHDK/SCRIPTS/TEST/badpixel.lua" 
 427 "Näytä raw-tallennusaika"
-428 "4 suora"
+428 "4 Suora"
 429 "Vastustaja:"
 430 "Ihminen"
 431 "Pelaaja 1 voitti pelin"
@@ -569,3 +572,14 @@
 437 "Käytetäänkö salamaa videoissa?"
 438 " Salaman teho"
 439 "DNG-tiedoston tunniste" 
+440 "DNG-kuvat USB:n kautta"
+441 "Mastermind"
+442 "käytettävät värit"
+443 "oikeassa paikassa"
+444 "väri oikein"
+445 "OIKEIN :-)"
+446 "PELI LOPPUI"
+447 "[<-][->] valitse sarake"
+448 "[ylös/alas] valitse väri"
+449 "[SET] seuraava rivi"
+450 "Ei SAMAA VÄRIÄ"

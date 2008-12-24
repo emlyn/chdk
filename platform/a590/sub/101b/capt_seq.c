@@ -40,7 +40,7 @@ void __attribute__((naked,noinline)) sub_FFD18614_my(){
 				 "BL      sub_FFD19600\n"
                  //"BL      wait_until_remote_button_is_released\n"
                  "BL      capt_seq_hook_set_nr\n"
-                 "BL       sub_FFD18688\n"
+                 "B       sub_FFD18688\n"
  );
 }
 void __attribute__((naked,noinline)) task_CaptSeqTask_my() //#fs

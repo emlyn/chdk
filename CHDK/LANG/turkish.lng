@@ -8,13 +8,15 @@
 // _______________________________________________________
 //
 //
-// Language :  Turkish  ( Codepage Win1254 )
+// Language :  Turkish
+//
+// Codepage :  Win1254
 //
 // Build    :  CHDK Autobuild
 //
-// Version  :  build 0.8.9, revision 632
+// Version  :  build 0.8.10
 //
-// Date     :  Dec 12th, 2008
+// Date     :  Dec 22nd, 2008
 //
 // _______________________________________________________
 //
@@ -308,7 +310,7 @@
 
 211 "Alan Derinliði (DOF) Hesaply."
 212 "Nesne Uzk / Uzak&Yakýn Limit" 
-213 "EXIF Nesne Uzk. Kullan(PC65)"
+213 "EXIF Nesne Uz. Kullan (PC65)"
 214 "Nesne Uzk. Çeþitli'de Göster"
 215 "Yakýn Lim. Çeþitli'de Göster"
 216 "Uzak  Lim. Çeþitli'de Göster"
@@ -611,19 +613,17 @@
 
 424 "DNG Biçimi"
 425 "RAW Tampon Önbelleði"
-426 "Cannot load CHDK/badpixel.bin\nPlease run \nCHDK/SCRIPTS/TEST/badpixel.lua"
+426 "CHDK/badpixel.bin yüklenemedi.\n\nLütfen þu dosyayý çalýþtýrýn:\nCHDK/SCRIPTS/TEST/badpixel.lua"
 427 "RAW Kaydetme Zamaný Göster"
 
-
+// connect 4
 428 "4'e Tamamla"
-
 429 "Rakip:"
 430 "Ýnsan"
 431 " * KIRMIZI Kazandý * "
 432 " * SARI Kazandý * "
 433 " * SARI Kazandý * "
 434 " * Berabere Bitti * "
-
 
 // raw istisnalarý (devam)
 435 "  < Keskin Yüzey >"
@@ -633,3 +633,16 @@
 438 "   Flaþ Çýkýþ Gücü"
 
 439 "'DNG' Dosya Uzantýsý"
+440 "DNG, USB Yoluyla Görülebilir"
+
+// mastermind
+441 "Mastermind"
+442 " Geçerli Renkler"
+443 "Tam  Yerinde"
+444 "Yeri Deðiþik"
+445 "DOÐRU :-)"
+446 "OYUN BÝTTÝ"
+447 "[SOL] [SAÐ]  Sütun Seç"
+448 "[YUK] [AÞA]  Renk  Seç"
+449 "[SET]  Sonraki Satýr"
+450 " AYNI RENKTEN OLAMAZ"

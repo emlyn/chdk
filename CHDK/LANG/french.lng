@@ -1,4 +1,4 @@
-// CHDK language file french for autobuild 0.8.9, revision #629 (Win1252)
+// CHDK language file french for autobuild 0.8.10, revision #649 (Win1252)
 // Format of language line:
 // <id> "<text>"
 //   <id>   - should be positive number
@@ -539,3 +539,15 @@
 437 "Activer le flash en video?"
 438 "   Puissance flash"
 439 "Extension de fichier DNG"
+439 "'DNG' file extension"
+440 "DNG visible via USB"
+441 "Mastermind"
+442 "Couleurs disponible"
+443 "A la bonne place"
+444 "couleur de réponse"
+445 "CORRECTE :-)"
+446 "PERDU"
+447 "[<-][->] sélection de la colonne "
+448 "[Haut][Bas] sélection de la couleur"
+449 "[SET] ligne suivante"
+450 "Pas de double couleur"
