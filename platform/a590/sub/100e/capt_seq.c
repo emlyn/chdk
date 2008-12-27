@@ -2,7 +2,7 @@
 #include "platform.h"
 #include "core.h"
 
-static long *nrflag = (long*)0x85C4;
+static long *nrflag = (long*)0x85C0;
 
 #include "../../../generic/capt_seq.c"
 

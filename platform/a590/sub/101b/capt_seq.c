@@ -2,7 +2,7 @@
 #include "platform.h"
 #include "core.h"
 
-static long *nrflag = (long*)0x85C4;
+static long *nrflag = (long*)0x85C0;
 
 #include "../../../generic/capt_seq.c"
 
@@ -28,7 +28,7 @@ void __attribute__((naked,noinline)) sub_FFD18614_my(){
                  "LDR     R0, [R5,#0x74]\n"
                  "BL      sub_FFCD399C\n"
                  "BL      sub_FFC37744\n"
-                 "LDR     R2, =0x85C4\n"
+                 "LDR     R2, =0x85C4\n" 	
                  "ADD     R3, R4, #0x8C\n"
                  "STRH    R0, [R4,#0x88]\n"
                  "STR     R2, [SP]\n"
