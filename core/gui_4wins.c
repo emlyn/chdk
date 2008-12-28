@@ -269,7 +269,7 @@ void set()
 		else
 		{
 			if(cur_player==1 || (cur_player==2 && mode_rival==1)) if(set_stone(cursor_position+1,cur_player,1)) win();
-			if(mode_rival==0 && cur_player==2) if(set_stone(ki_findColumn(1, cur_player),cur_player, 1)) win();
+			if((mode_rival==0 && cur_player==2) && !finished) if(set_stone(ki_findColumn(1, cur_player),cur_player, 1)) win();
 		}
 	}
 }

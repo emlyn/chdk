@@ -3150,10 +3150,7 @@ void gui_draw_load_menu_rbf(int arg) {
 static void gui_draw_symbol_rbf_selected(const char *fn) {
     if (fn) {
         strcpy(conf.menu_symbol_rbf_file, fn);
-        rbf_load_symbol(conf.menu_symbol_rbf_file);
-/*      if (!rbf_load(conf.menu_rbf_file))
-            rbf_load_from_8x16(current_font);
-        		rbf_set_codepage(FONT_CP_WIN);*/        
+        if(!rbf_load_symbol(conf.menu_symbol_rbf_file)) conf.menu_symbol_enable=0;		//AKA
         gui_menu_init(NULL);
     }
 }

@@ -211,7 +211,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO( 59, conf.use_zoom_mf,            CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 60, conf.raw_save_first_only,    CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 61, conf.reader_wrap_by_words,   CONF_DEF_VALUE, i:1, NULL),
-    CONF_INFO( 62, conf.menu_symbol_rbf_file,   CONF_DEF_PTR,   ptr:"A/CHDK/SYMBOLS/icon_10.rbf", conf_change_menu_symbol_rbf_file),
+    CONF_INFO( 62, conf.menu_symbol_enable,     CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO( 63, conf.alt_mode_button,        CONF_DEF_VALUE, i:KEY_PRINT, conf_change_alt_mode_button),
     CONF_INFO( 64, conf.lang_file,              CONF_DEF_PTR,   ptr:"", NULL),
     CONF_INFO( 65, conf.font_cp,                CONF_DEF_VALUE, i:FONT_CP_WIN_1251, conf_change_font_cp),
@@ -344,7 +344,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(180, conf.fast_ev,                CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(181, conf.fast_ev_step,           CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(182, conf.mode_ev_pos,            CONF_DEF_PTR,   ptr:&def_mode_ev_pos , NULL),
-    CONF_INFO(183, conf.menu_symbol_enable,     CONF_DEF_VALUE, i:1, NULL),
+    CONF_INFO(183, conf.menu_symbol_rbf_file,   CONF_DEF_PTR,   ptr:"A/CHDK/SYMBOLS/icon_10.rbf", conf_change_menu_symbol_rbf_file),
     CONF_INFO(184, conf.menu_symbol_color,      CONF_DEF_VALUE, cl:MAKE_COLOR(COLOR_BG, COLOR_FG), NULL),
     CONF_INFO(185, conf.curve_file,             CONF_DEF_PTR, ptr:"", NULL),
     CONF_INFO(186, conf.curve_enable,           CONF_DEF_VALUE, i:0, NULL),
@@ -429,7 +429,7 @@ static void conf_change_menu_rbf_file() {
 }
 
 static void conf_change_menu_symbol_rbf_file() {
-    rbf_load_symbol(conf.menu_symbol_rbf_file);		//AKA
+    if(!rbf_load_symbol(conf.menu_symbol_rbf_file)) conf.menu_symbol_enable=0;		//AKA
 }
 
 static void conf_change_alt_mode_button() {

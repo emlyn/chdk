@@ -295,16 +295,16 @@ int gui_osd_draw_zebra() {
     color cl_under=conf.zebra_color>>8, cl_over=conf.zebra_color&0xFF;
     static int need_restore=0;
     int viewport_height;
-    int m = ((mode_get()&MODE_MASK) == MODE_REC);
+    int mrec = ((mode_get()&MODE_MASK) == MODE_REC);
     int zebra_drawn=0;
     color cls[] = {
         COLOR_TRANSPARENT,
-        (m)?0xDF:0xCC,
+        (mrec)?0xDF:0xCC,
         COLOR_GREEN,
-        (m)?COLOR_BLUE_LT:0x99,
+        (mrec)?COLOR_BLUE_LT:0x99,
         COLOR_RED,
-        (m)?0x66:0xE2,
-        (m)?COLOR_YELLOW:0x66,
+        (mrec)?0x66:0xE2,
+        (mrec)?COLOR_YELLOW:0x66,
         COLOR_BLACK
     };
 
@@ -327,11 +327,12 @@ int gui_osd_draw_zebra() {
             return 0;
         }
         if(timer==1) {
-            short ready;
+            int ready;
             static int n=0;
-            get_property_case(PROPCASE_SHOOTING, &ready, 4);
-            n=draw_guard_pixel();
-            if(!ready || n==0) return 0;
+            if (!mrec) ready=1;
+            else get_property_case(PROPCASE_SHOOTING, &ready, 4);
+            n=draw_guard_pixel(); // will be 0 in PLAY mode, should be 1 or 2 in REC mode.
+            if(!ready) return 0;
 #if ZEBRA_CANONOSD_BORDER_RESTORE
             // rescue Canon OSD from scr_buf to cur_buf_top and _bot:
             if (n==1) {
@@ -351,7 +352,7 @@ int gui_osd_draw_zebra() {
         ++timer;
 	// Try to get the best viewport buffer. In playmode its the _d one, in
 	// record mode we try to get the fast live one first
-	if( (mode_get() & MODE_MASK) == MODE_PLAY ) {
+	if (!mrec) {
 	    img_buf = vid_get_viewport_fb_d();
 	}
 	else {
@@ -406,14 +407,16 @@ int gui_osd_draw_zebra() {
                         else if (((conf.zebra_mode == ZEBRA_MODE_ZEBRA_1 || conf.zebra_mode == ZEBRA_MODE_ZEBRA_2) && (y-x-timer)&f)) buf[s]=COLOR_TRANSPARENT;
                         else buf[s]=(yy>over)?cl_over:(yy<conf.zebra_under)?cl_under:COLOR_TRANSPARENT;
                         if (buf[s] != COLOR_TRANSPARENT && !zebra_drawn) zebra_drawn = 1;
-                        // draw Canon OSD to buf[]
+                        if (mrec) {
+                            // draw Canon OSD to buf[] if in REC mode
 #if ZEBRA_CANONOSD_BORDER_RESTORE                        
-                        if(get_cur_buf(s)!=COLOR_TRANSPARENT) buf[s]=get_cur_buf(s); 
-                        if(conf.zebra_multichannel && get_cur_buf(s+1)!=COLOR_TRANSPARENT) buf[s+1]=get_cur_buf(s+1); 
+                            if(get_cur_buf(s)!=COLOR_TRANSPARENT) buf[s]=get_cur_buf(s); 
+                            if(conf.zebra_multichannel && get_cur_buf(s+1)!=COLOR_TRANSPARENT) buf[s+1]=get_cur_buf(s+1); 
 #else
-                        if(cur_buf[s]!=COLOR_TRANSPARENT) buf[s]=cur_buf[s];
-                        if(conf.zebra_multichannel && cur_buf[s+1]!=COLOR_TRANSPARENT) buf[s+1]=cur_buf[s+1];
+                            if(cur_buf[s]!=COLOR_TRANSPARENT) buf[s]=cur_buf[s];
+                            if(conf.zebra_multichannel && cur_buf[s+1]!=COLOR_TRANSPARENT) buf[s+1]=cur_buf[s+1];
 #endif
+                        }
                     }
                     s+=screen_buffer_width-screen_width;
                     if (y*screen_height/viewport_height == (s+screen_buffer_width)/screen_buffer_width) {
@@ -430,17 +433,22 @@ int gui_osd_draw_zebra() {
                 if (conf.zebra_restore_screen || conf.zebra_restore_osd) {
                     draw_restore();
                 } else {  // clear buf[] of zebra, only leave Canon OSD
+                    if (mrec) { // REC mode
 #if ZEBRA_CANONOSD_BORDER_RESTORE
-                    // copy rescued Canon OSD to buf[] top/bottom parts and fill center with transparent color:
-                    memcpy(buf, cur_buf_top, screen_buffer_width * ZFIX_TOP);
-                    memcpy(buf + screen_buffer_size - screen_buffer_width * ZFIX_BOTTOM, cur_buf_bot, screen_buffer_width * ZFIX_BOTTOM);
-                    for (s = screen_buffer_width*ZFIX_TOP; s < screen_buffer_size-screen_buffer_width*ZFIX_BOTTOM; s++) {
-                        buf[s]=COLOR_TRANSPARENT;
-                    }
+                        // copy rescued Canon OSD to buf[] top/bottom parts and fill center with transparent color:
+                        memcpy(buf, cur_buf_top, screen_buffer_width * ZFIX_TOP);
+                        memcpy(buf + screen_buffer_size - screen_buffer_width * ZFIX_BOTTOM, cur_buf_bot, screen_buffer_width * ZFIX_BOTTOM);
+                        for (s = screen_buffer_width*ZFIX_TOP; s < screen_buffer_size-screen_buffer_width*ZFIX_BOTTOM; s++) {
+                            buf[s]=COLOR_TRANSPARENT;
+                        }
 #else
-                    // copy from a complete Canon OSD rescue screen dump
-                    memcpy(buf, cur_buf, screen_buffer_size); 
+                        // copy from a complete Canon OSD rescue screen dump
+                        memcpy(buf, cur_buf, screen_buffer_size); 
 #endif
+                    } else { // Not REC mode
+                        // No Canon OSD restore, fill buf[] with transparent color:
+                        memset(buf, COLOR_TRANSPARENT, screen_buffer_size);
+                    }
                     // draw CHDK osd and histogram to buf[] (if enabled in config)
                     gui_osd_draw_zebra_osd();
                     // copy buf[] to both display buffers
