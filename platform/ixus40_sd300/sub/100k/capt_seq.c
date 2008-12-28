@@ -12,7 +12,7 @@
 
 static long raw_save_stage;
 
-void capt_seq_hook_raw_here()
+void __attribute__((naked,noinline)) capt_seq_hook_raw_here()
 {
  asm volatile("STMFD   SP!, {R0-R12,LR}\n");
 	long save_count=0; 
