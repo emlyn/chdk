@@ -121,7 +121,7 @@ void save_edge_overlay(void){
 
 	while( (de = readdir(d)) )
 	{
-		fr = get_edge_file_num(de->name);
+		fr = get_edge_file_num(de->d_name);
 		if( fr > fnum )
 		{
 			fnum = fr;

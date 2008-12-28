@@ -10,8 +10,12 @@
 #endif
 #include <stdlib.h>
 #include <string.h>
-#if 0
+#ifdef HOST_LUA
+#include <errno.h>
 #include <time.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <utime.h>
 #endif
 
 #define loslib_c
@@ -245,7 +249,11 @@ static int os_exit (lua_State *L) {
 // reyalp added
 static int os_mkdir (lua_State *L) {
   const char *dirname = luaL_checkstring(L, 1);
+#if defined(HOST_LUA) && !defined(_WIN32)
+  return os_pushresult(L, mkdir(dirname,0777) == 0, dirname);
+#else
   return os_pushresult(L, mkdir(dirname) == 0, dirname);
+#endif
 }
 
 /*
@@ -266,10 +274,10 @@ static int os_listdir (lua_State *L) {
     return os_pushresult(L, 0 , dirname);
   lua_newtable(L); 
   while((de = readdir(dir))) {
-	if(!all && (de->name[0] == 0xE5 || (strcmp(de->name,".")==0) || (strcmp(de->name,"..")==0)))
+	if(!all && (/*de->d_name[0] == 0xE5 ||*/ (strcmp(de->d_name,".")==0) || (strcmp(de->d_name,"..")==0)))
       continue;
   	lua_pushinteger(L, i);
-  	lua_pushstring(L, de->name);
+  	lua_pushstring(L, de->d_name);
 	lua_settable(L,-3);
 	++i;
   }
@@ -301,6 +309,25 @@ static int os_stat (lua_State *L) {
     setfield(L,"atime",st.st_atime);	/* time of last access */
     setfield(L,"mtime",st.st_mtime);	/* time of last modification */
     setfield(L,"ctime",st.st_ctime);	/* time of last change of file status */
+#ifdef HOST_LUA
+// fill in some sane values if we aren't running on the camera
+// from chdk stdlib
+#define DOS_ATTR_DIRECTORY      0x10            /* entry is a sub-directory */
+    setfield(L,"blksize",512); 
+    setfield(L,"blocks",(st.st_size/512) + (st.st_size%512)?1:0); 
+    if ( S_ISDIR(st.st_mode) ) {
+      setfield(L,"attrib",DOS_ATTR_DIRECTORY);
+      setboolfield(L,"is_dir",1);
+      setboolfield(L,"is_file",0);
+    }
+    else {
+      setboolfield(L,"is_dir",0);
+      setfield(L,"attrib",0);
+      if S_ISREG(st.st_mode) {
+        setboolfield(L,"is_file",1);
+      }
+    }
+#else
     setfield(L,"blksize",st.st_blksize); /* This is NOT the dos sector size. Appears to be 512 on all I've tested! */
     setfield(L,"blocks",st.st_blocks);   /* number of blocks required to store file. May not be the same as size on disk, per above*/
     setfield(L,"attrib",st.st_attrib);	/* file attribute byte (dosFs only) */
@@ -308,6 +335,7 @@ static int os_stat (lua_State *L) {
 	// note volume labels are neither file nor directory
 	setboolfield(L,"is_dir",st.st_attrib & DOS_ATTR_DIRECTORY);
 	setboolfield(L,"is_file",!(st.st_attrib & (DOS_ATTR_DIRECTORY | DOS_ATTR_VOL_LABEL)));
+#endif
 #if 0
     setfield(L,"reserved1",st.reserved1);
     setfield(L,"reserved2",st.reserved2);
@@ -353,7 +381,6 @@ static const luaL_Reg syslib[] = {
   {"listdir",   os_listdir}, // reyalp - NOT STANDARD
   {"stat",      os_stat}, // reyalp - NOT STANDARD
   {"utime",     os_utime}, // reyalp - NOT STANDARD
-  // TODO add directory listing functions
   {"remove",    os_remove},
   {"rename",    os_rename},
 #if 0

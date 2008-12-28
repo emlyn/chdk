@@ -123,20 +123,20 @@ static void gui_fselect_read_dir(const char* dir) {
     if (d) {
         de = readdir(d);
         while (de) {
-            if (de->name[0] != 0xE5 /* deleted entry */ && (de->name[0]!='.' || de->name[1]!=0)) {
+            if (de->d_name[0] != 0xE5 /* deleted entry */ && (de->d_name[0]!='.' || de->d_name[1]!=0)) {
                 *ptr = malloc(sizeof(struct fitem));
                 if (*ptr) {
                     (*ptr)->n = count;
-                    (*ptr)->name = malloc(strlen(de->name)+1);
+                    (*ptr)->name = malloc(strlen(de->d_name)+1);
                     if ((*ptr)->name)
-                        strcpy((*ptr)->name, de->name);
-                    sprintf(buf, "%s/%s", dir, de->name);
+                        strcpy((*ptr)->name, de->d_name);
+                    sprintf(buf, "%s/%s", dir, de->d_name);
                     if (stat(buf, &st)==0) {
                         (*ptr)->attr=st.st_attrib;
                         (*ptr)->size=st.st_size;
                         (*ptr)->mtime=st.st_mtime;
                     } else {
-                        (*ptr)->attr=(de->name[0]=='.' && de->name[1]=='.' && de->name[2]==0)?DOS_ATTR_DIRECTORY:0xFF;
+                        (*ptr)->attr=(de->d_name[0]=='.' && de->d_name[1]=='.' && de->d_name[2]==0)?DOS_ATTR_DIRECTORY:0xFF;
                         (*ptr)->size=(*ptr)->mtime=0;
                     }
                     (*ptr)->marked=0;
@@ -400,20 +400,20 @@ static void fselect_purge_cb(unsigned int btn) {
            sprintf(current_dir+strlen(current_dir), "/%s", selected->name);
            d=opendir(current_dir);
            while ((de=readdir(d)) != NULL) {//Loop to find all Canon folders
-               if (de->name[0] != '.' && de->name[1] != '.') {//If item is not UpDir
-                   sprintf(sub_dir, "%s/%s", current_dir, de->name);
+               if (de->d_name[0] != '.' && de->d_name[1] != '.') {//If item is not UpDir
+                   sprintf(sub_dir, "%s/%s", current_dir, de->d_name);
                    d2=opendir(sub_dir);
                    while ((de2=readdir(d2)) != NULL) {//Loop to find all the RAW files inside a Canon folder
-                       if (de2->name[0] == 'C' || de2->name[9] == 'C') {//If file is RAW (Either CRW/CR2 prefix or file extension)
+                       if (de2->d_name[0] == 'C' || de2->d_name[9] == 'C') {//If file is RAW (Either CRW/CR2 prefix or file extension)
                            d3=opendir(current_dir);
                            while ((de3=readdir(d3)) != NULL) {//Loop to find all Canon folders
-                               if (de3->name[0] != '.' && de3->name[1] != '.') {//If item is not UpDir
-                                   sprintf(sub_dir_search, "%s/%s", current_dir, de3->name);
+                               if (de3->d_name[0] != '.' && de3->d_name[1] != '.') {//If item is not UpDir
+                                   sprintf(sub_dir_search, "%s/%s", current_dir, de3->d_name);
                                    d4=opendir(sub_dir_search);
                                    while ((de4=readdir(d4)) != NULL) {//Loop to find a corresponding JPG file inside a Canon folder
-                                       if (de2->name[4] == de4->name[4] && de2->name[5] == de4->name[5] &&//If the four digits of the Canon number are the same
-                                           de2->name[6] == de4->name[6] && de2->name[7] == de4->name[7] &&
-                                           de4->name[9] == 'J' && !(de4->name[0] == 'C' || de4->name[9] == 'C' || de4->name[0] == 0xE5)) {//If file is JPG, is not CRW/CR2 and is not a deleted item
+                                       if (de2->d_name[4] == de4->d_name[4] && de2->d_name[5] == de4->d_name[5] &&//If the four digits of the Canon number are the same
+                                           de2->d_name[6] == de4->d_name[6] && de2->d_name[7] == de4->d_name[7] &&
+                                           de4->d_name[9] == 'J' && !(de4->d_name[0] == 'C' || de4->d_name[9] == 'C' || de4->d_name[0] == 0xE5)) {//If file is JPG, is not CRW/CR2 and is not a deleted item
                                            started();
                                            found=1;//A JPG file with the same Canon number was found
                                        }                                 
@@ -424,7 +424,7 @@ static void fselect_purge_cb(unsigned int btn) {
                            closedir(d3);
                            //If no JPG found, delete RAW file
                            if (found == 0) {
-                               sprintf(selected_item, "%s/%s", sub_dir, de2->name);
+                               sprintf(selected_item, "%s/%s", sub_dir, de2->d_name);
                                remove(selected_item);
                                finished();
                            }
@@ -447,12 +447,12 @@ static void fselect_purge_cb(unsigned int btn) {
            sprintf(current_dir+strlen(current_dir), "/%s", selected->name);
            d=opendir(current_dir);
            while ((de=readdir(d)) != NULL) {//Loop to find all the RAW files inside the Canon folder 
-               if (de->name[0] == 'C' || de->name[9] == 'C') {//If file is RAW (Either CRW/CR2 prefix or file extension)
+               if (de->d_name[0] == 'C' || de->d_name[9] == 'C') {//If file is RAW (Either CRW/CR2 prefix or file extension)
                    d2=opendir(current_dir);
                    while ((de2=readdir(d2)) != NULL) {//Loop to find a corresponding JPG file inside the Canon folder
-                       if (de->name[4] == de2->name[4] && de->name[5] == de2->name[5] &&//If the four digits of the Canon number are the same
-                           de->name[6] == de2->name[6] && de->name[7] == de2->name[7] &&
-                           de2->name[9] == 'J' && !(de2->name[0] == 'C' || de2->name[9] == 'C' || de2->name[0] == 0xE5)) {//If file is JPG and is not CRW/CR2 and is not a deleted item
+                       if (de->d_name[4] == de2->d_name[4] && de->d_name[5] == de2->d_name[5] &&//If the four digits of the Canon number are the same
+                           de->d_name[6] == de2->d_name[6] && de->d_name[7] == de2->d_name[7] &&
+                           de2->d_name[9] == 'J' && !(de2->d_name[0] == 'C' || de2->d_name[9] == 'C' || de2->d_name[0] == 0xE5)) {//If file is JPG and is not CRW/CR2 and is not a deleted item
                            started();
                            found=1;//A JPG file with the same Canon number was found
                        }                                 
@@ -460,7 +460,7 @@ static void fselect_purge_cb(unsigned int btn) {
                    closedir(d2); 
                    //If no JPG found, delete RAW file                
                    if (found == 0) {
-                       sprintf(selected_item, "%s/%s", current_dir, de->name);
+                       sprintf(selected_item, "%s/%s", current_dir, de->d_name);
                        remove(selected_item);
                        finished();
                    }
@@ -518,9 +518,9 @@ static void fselect_delete_folder_cb(unsigned int btn) {
         if (d) {
             de = readdir(d);
             while (de) {
-                if (de->name[0] != 0xE5 /* deleted entry */ && (de->name[0]!='.' || (de->name[1]!='.' && de->name[1]!=0) || (de->name[1]=='.' && de->name[2]!=0))) {
+                if (de->d_name[0] != 0xE5 /* deleted entry */ && (de->d_name[0]!='.' || (de->d_name[1]!='.' && de->d_name[1]!=0) || (de->d_name[1]=='.' && de->d_name[2]!=0))) {
                     started();
-                    sprintf(selected_file, "%s/%s", current_dir, de->name);
+                    sprintf(selected_file, "%s/%s", current_dir, de->d_name);
                     remove(selected_file);
                     finished();
                 }

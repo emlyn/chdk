@@ -21,7 +21,10 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
-
+#ifdef HOST_LUA
+#include <errno.h>
+#include <ctype.h>
+#endif
 
 #define IO_INPUT	1
 #define IO_OUTPUT	2

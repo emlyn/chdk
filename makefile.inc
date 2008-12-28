@@ -261,6 +261,7 @@ endif
 
 HOSTCC=gcc
 HOSTCFLAGS=-g -O2 -Wall
+HOSTAR=ar
 
 PAKWIF=$(topdir)tools/pakwif$(EXE)
 ENCODE_DISKBOOT=$(topdir)tools/dancingbits$(EXE)

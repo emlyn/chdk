@@ -10,7 +10,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef HOST_LUA
 #include <script.h>	// script_console_add_line
+#endif
 
 #define lbaselib_c
 #define LUA_LIB
@@ -70,7 +72,11 @@ static int luaB_print (lua_State *L) {
        break;
 
   }
+#ifdef HOST_LUA
+  fprintf(stdout,"%s\n",buf);
+#else
   script_console_add_line(buf);
+#endif
 
   return 0;
 }

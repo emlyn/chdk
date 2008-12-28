@@ -212,11 +212,11 @@ extern int errnoOfTaskGet(int tid);
 
 #if !CAM_DRYOS
 struct dirent {
-    char                name[100];
+    char                d_name[100];
 };
 #else
 struct dirent {
-    char                name[13];
+    char                d_name[13];
     unsigned long	unk1;
     unsigned char 	attrib;
     unsigned long 	size;

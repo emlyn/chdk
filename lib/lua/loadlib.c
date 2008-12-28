@@ -330,9 +330,15 @@ static int ll_loadlib (lua_State *L) {
 
 
 static int readable (const char *filename) {
+#ifdef HOST_LUA
+  FILE *f = fopen(filename, "r");  /* try to open file */
+  if (f == NULL) return 0;  /* open failed */
+  fclose(f);
+#else
   int f = open(filename,O_RDONLY,0777);
   if (f == -1) return 0;  /* open failed */
   close(f);
+#endif
   return 1;
 }
 
