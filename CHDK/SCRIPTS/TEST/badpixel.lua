@@ -40,6 +40,6 @@ if (x1==x2) then
   print("File is saved.");
  end
  os.remove("A/CHDK/bad_tmp.bin")
- else
-  print("Try this script again...")
- end
+else
+ print("Try this script again...")
+end

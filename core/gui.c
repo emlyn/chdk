@@ -42,9 +42,6 @@
 #ifdef OPT_CURVES
 	#include "curves.h"
 #endif
-#ifdef OPT_BOOTLOGO
-	#include "gui_logo.h"
-#endif
 #include "edgeoverlay.h"
 //-------------------------------------------------------------------
 
@@ -119,9 +116,7 @@ extern void dump_memory();
 
 static void gui_draw_osd();
 
-
-static void gui_draw_splash();
-
+static void gui_draw_splash(char* logo, int logo_size);
 
 void user_menu_save();
 void user_menu_restore();
@@ -2029,24 +2024,53 @@ void gui_force_restore() {
     gui_restore = gui_in_redraw;
 }
 
-//-------------------------------------------------------------------
-void gui_redraw()
-{
-    enum Gui_Mode gui_mode_old;
-    static int show_script_console=0;
-
-
+static void gui_handle_splash(void) {
+	static char *logo = NULL;
+    static int logo_size;
     if (gui_splash) {
+		static int need_logo=1; // don't use logo ptr, since we don't want to keep re-trying
+		if(need_logo) {
+    		const char *logo_name="A/CHDK/DATA/logo.dat";
+            FILE *fd;
+            struct stat st;
+			need_logo=0;
+            if (stat(logo_name,&st) == 0) {
+				logo_size=st.st_size;
+				logo=malloc(logo_size);
+				if(logo) {
+					fd = fopen(logo_name, "rb");
+					if(fd){
+						fread(logo,1,logo_size,fd);
+						fclose(fd);
+					}
+					else {
+						free(logo);
+						logo=NULL;
+					}
+            	}
+			}
+		}
         if (gui_splash>(SPLASH_TIME-4)) {
-            gui_draw_splash();
+            gui_draw_splash(logo,logo_size);
            //	conf.show_osd = 0;
         } else if (gui_splash==1 && (mode_get()&MODE_MASK) == gui_splash_mode && (gui_mode==GUI_MODE_NONE || gui_mode==GUI_MODE_ALT)) {
             draw_restore();
            // conf.show_osd = 1; //had to uncomment in order to fix a bug with disappearing osd...
         }
         --gui_splash;
+		if(!gui_splash) {
+			free(logo);
+		}
     }
+}
 
+//-------------------------------------------------------------------
+void gui_redraw()
+{
+    enum Gui_Mode gui_mode_old;
+    static int show_script_console=0;
+
+	gui_handle_splash();
 
     gui_in_redraw = 1;
     gui_mode_old = gui_mode;
@@ -2912,19 +2936,17 @@ void gui_draw_bench(int arg) {
 #endif
 //-------------------------------------------------------------------
 
-void gui_draw_splash() {
+void gui_draw_splash(char* logo, int logo_size) {
     coord w, h, x, y;
     static const char *text[] = {
         "CHDK Firmware '" HDK_VERSION " " BUILD_NUMBER "'" , 
         "Build: " __DATE__ " " __TIME__ ,
         "Camera: " PLATFORM " - " PLATFORMSUB };
     int i, l;
-   // color cl = MAKE_COLOR((gui_splash_mode==MODE_REC)?0xDA:0xD9, COLOR_WHITE);
     color cl = MAKE_COLOR(COLOR_RED, COLOR_WHITE);
 
-
     gui_splash_mode = (mode_get()&MODE_MASK);
-
+    
     h=sizeof(text)/sizeof(text[0])*FONT_HEIGHT+8;
     w=0;
     for (i=0; i<sizeof(text)/sizeof(text[0]); ++i) {
@@ -2938,31 +2960,30 @@ void gui_draw_splash() {
     for (i=0; i<sizeof(text)/sizeof(text[0]); ++i) {
         draw_string(x+((w-strlen(text[i])*FONT_WIDTH)>>1), y+i*FONT_HEIGHT+4, text[i], cl);
     }
-#ifdef OPT_BOOTLOGO
-    int pos;
-    int mx=0;
-    int my=0;
-    int offset_x = (screen_width-150)>>1;
-    int offset_y = ((screen_height-84)>>1) - 42;
-    const color color_lookup[8] = {0xFF, 0x2E, 0x22, 0x3D, 0x1F,  0x21, 0x00, 0x11};
+    if(logo){
+      int pos;
+      int mx=0;
+      int my=0;
+      int offset_x = (screen_width-150)>>1;
+      int offset_y = ((screen_height-84)>>1) - 42;
+      const color color_lookup[8] = {0xFF, 0x2E, 0x22, 0x3D, 0x1F,  0x21, 0x00, 0x11};
     
-    for(pos=0; pos<HEADER_DATA_LEN; pos++){
-        char data = header_data[pos];
-        color c = color_lookup[(data>>5) & 0x07];
-        for(i=0; i<(data&0x1F)+1; i++){
-            if (c!=0x00){
-                draw_pixel(offset_x+mx,offset_y+my,c);
-            }
-            if (mx==149){
-                mx=0;
-                my++;
-            }else{
-                mx++;
-            }
-            
-        }
+      for(pos=0; pos<logo_size; pos++){
+          char data = logo[pos];
+          color c = color_lookup[(data>>5) & 0x07];
+          for(i=0; i<(data&0x1F)+1; i++){
+              if (c!=0x00){
+                  draw_pixel(offset_x+mx,offset_y+my,c);
+              }
+              if (mx==149){
+                  mx=0;
+                  my++;
+              }else{
+                  mx++;
+              }     
+          }
+      }
     }
-#endif
 }
 
 //-------------------------------------------------------------------
