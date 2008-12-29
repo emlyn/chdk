@@ -111,9 +111,7 @@
     #define CAM_EMUL_KEYPRESS_DURATION  10
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_HAS_JOGDIAL             1
-    #define CAM_EV_IN_VIDEO             1
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
-    #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
 //	#define CAM_CONSOLE_LOG_ENABLED     1
 //  #define CAM_BRACKETING              1  //propcase still missing for dryos    
 //==========================================================
@@ -426,9 +424,9 @@
 #define CAM_JPEG_WIDTH  3264
 #define CAM_JPEG_HEIGHT 2448
 #define CAM_ACTIVE_AREA_X1 10
-#define CAM_ACTIVE_AREA_Y1 8
+#define CAM_ACTIVE_AREA_Y1 12
 #define CAM_ACTIVE_AREA_X2 3302
-#define CAM_ACTIVE_AREA_Y2 2474
+#define CAM_ACTIVE_AREA_Y2 2478
 
 // camera name
 #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData

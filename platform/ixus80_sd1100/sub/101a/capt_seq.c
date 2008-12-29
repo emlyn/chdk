@@ -3,7 +3,7 @@
 #include "core.h"
 #include "../../leds.h"
 
-static long *nrflag = (long*)0x9F90;
+static long *nrflag = (long*)0x8D14;
 
 #include "../../../generic/capt_seq.c"
 
@@ -41,7 +41,7 @@ void __attribute__((naked,noinline)) sub_FF939E24_my(long p) {
 		"ldr	r3,  =0x00008d14 \n"
 		"BL	sub_FF93AE38 \n"
 			"BL     capt_seq_hook_set_nr \n" // +
-			"BL		sub_FF939E98 \n" // + continue code in rom
+			"B		sub_FF939E98 \n" // + continue code in rom
  );
 }
 
