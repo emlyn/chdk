@@ -38,7 +38,9 @@ void *vid_get_viewport_fb()
 
 void *vid_get_viewport_fb_d()
 {
-    return (void*)(*(int*)0x7BBF0); 
+  #define BASE_FB_D (0x7BBF0)
+  return (void*) (*(int*)(BASE_FB_D+0x10) ? *(int*)(BASE_FB_D+0x0) : *(int*)(BASE_FB_D+0x14));
+//    return (void*)(*(int*)0x7BBF0); 
 }
 
 long vid_get_bitmap_screen_width()
