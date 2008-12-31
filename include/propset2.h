@@ -35,7 +35,7 @@ WARNING: this file is used gen_propset_lua.sh to generate propset.lua
 #define PROPCASE_DIGITAL_ZOOM_STATE                            94
 #define PROPCASE_DIGITAL_ZOOM_POSITION                         95
 #define PROPCASE_DISPLAY_MODE                         105
-#define PROPCASE_BRACKET_MODE                         278 //fictional value! need to find out!
+#define PROPCASE_BRACKET_MODE                         29
 #define PROPCASE_FLASH_SYNC_CURTAIN			64
 #define PROPCASE_METERING_MODE				155
 #define PROPCASE_WB_ADJ                               269 // (from CHDK Wiki)

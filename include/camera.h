@@ -113,7 +113,7 @@
     #define CAM_HAS_JOGDIAL             1
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
 //	#define CAM_CONSOLE_LOG_ENABLED     1
-//  #define CAM_BRACKETING              1  //propcase still missing for dryos    
+    #define CAM_BRACKETING              1  
 //==========================================================
 // A-series
 //==========================================================
@@ -1441,7 +1441,7 @@
     #define CAM_ACTIVE_AREA_Y2 2474
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
-//  #define CAM_BRACKETING              1 //propcase for dryos not found yet
+    #define CAM_BRACKETING              1 
     #define DNG_EXT_FROM ".DPS"
     #define DNG_EXT_TO   ".DNG"
 

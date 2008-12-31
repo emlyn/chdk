@@ -746,7 +746,7 @@ static CMenuItem histo_submenu_items[] = {
 static CMenu histo_submenu = {0x25,LANG_MENU_HISTO_TITLE, NULL, histo_submenu_items };
 
 static CMenuItem raw_exceptions_submenu_items[] = {
-    #if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_s5is)
+    #if defined CAM_HAS_VIDEO_BUTTON
      {0x5c,LANG_MENU_RAW_SAVE_IN_VIDEO,                MENUITEM_BOOL,      &conf.save_raw_in_video },
     #endif
     #if defined(CAMERA_s3is)
