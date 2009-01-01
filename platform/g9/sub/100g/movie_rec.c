@@ -1823,7 +1823,7 @@ void __attribute__((naked,noinline)) sub_FF85CF18_my(){  //
                 "ADD     R3, SP, #0x34\n"
                 "ADD     R6, SP, #0x14\n"
                 "STMIA   R6, {R0-R3}\n"
-                "LDR     R0, [SP,#0x14]\n"		//**
+                "LDR     R0, [SP,#0x24]\n"		//**
                 "LDR     R3, [R5,#0x5C]\n"
                 "LDR     R1, [SP,#0x28]\n"
                 "ADD     R2, SP, #0x38\n"
