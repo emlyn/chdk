@@ -1916,7 +1916,7 @@ static void wheel_left_statement(void){
 
 static void wheel_right_statement(void){
   accept(TOKENIZER_WHEEL_RIGHT);
-#ifdef CAM_HAS_JOGIDAL
+#ifdef CAM_HAS_JOGDIAL
   JogDial_CW();
 #endif
   accept_cr();
