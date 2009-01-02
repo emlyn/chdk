@@ -65,7 +65,7 @@ const ShutterSpeed shutter_speeds_table[] = {
     {  29,  928, "1/800",  1250 },
     {  30,  960, "1/1000", 1000 },
     {  31,  992, "1/1250",  800 },
-    {  32, 1008, "1/1500",  667 },
+    {  32, 1021, "1/1600",  625 },   // ROM:FF9B5A9C 0x3FD (word) = 1021
 };
 
 const ISOTable iso_table[] = {
