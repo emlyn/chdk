@@ -73,7 +73,6 @@
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #define CAM_MULTIPART               1
     #define CAM_HAS_ND_FILTER           1
-    #undef  CAM_HAS_IS
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
 	#define CAM_HAS_JOGDIAL             1
     #define DNG_SUPPORT                 1
@@ -103,15 +102,12 @@
 
     #define CAM_RAW_ROWPIX              4104   // for 12 MP
     #define CAM_RAW_ROWS                3048   // for 12 MP
-//  #define CAM_MULTIPART               1
     #define CAM_HAS_ND_FILTER           1
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
-    #define CAM_CAN_MUTE_MICROPHONE     1
     #undef  CAM_EMUL_KEYPRESS_DURATION
     #define CAM_EMUL_KEYPRESS_DURATION  10
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_HAS_JOGDIAL             1
-    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
 //	#define CAM_CONSOLE_LOG_ENABLED     1
     #define CAM_BRACKETING              1  
 //==========================================================
