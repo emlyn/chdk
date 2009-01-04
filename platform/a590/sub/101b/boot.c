@@ -266,7 +266,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
                 "BL      sub_FFC19A20\n"
                 "BL      sub_FFC1142C\n"
                 "BL      sub_FFC10CD0\n"
-                "BL      sub_FFC1A97C\n"     // (divert for SDHC-bootdisk-suppor
+                "BL      sub_FFC1A97C_my\n"     // (divert for SDHC-bootdisk-suppor
                 "BL      sub_FFC10C8C\n"
                 "LDMFD   SP!, {R4,PC}\n"        // restore stack to PC instead of LR to return to caller				
 				//"BL       sub_FFC05070\n"
