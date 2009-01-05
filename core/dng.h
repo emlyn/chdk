@@ -62,4 +62,6 @@ unsigned short get_metering_mode_for_exif(short metering_mode);
 int* get_shutter_speed_for_exif(short tv);
 int* get_aperture_for_exif(short av);
 
+void convert_dng_to_chdk_raw(char* fn);
+
 #endif

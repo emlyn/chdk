@@ -27,6 +27,9 @@ static struct {
         { MPOPUP_RAW_DEVELOP,   LANG_MENU_RAW_DEVELOP },
         { MPOPUP_PURGE,         LANG_POPUP_PURGE  },
         { MPOPUP_SUBTRACT,      LANG_POPUP_SUB_FROM_MARKED  },
+#if DNG_SUPPORT
+        { MPOPUP_DNG_TO_CRW,    (int)"DNG -> CHDK RAW"},
+#endif
 };
 
 #define ACTIONSNUM              (sizeof(actions)/sizeof(actions[0]))

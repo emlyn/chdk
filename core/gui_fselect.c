@@ -12,6 +12,7 @@
 #include "raw_merge.h"
 #include "raw.h"
 #include "conf.h"
+#include "dng.h"
 
 //-------------------------------------------------------------------
 #define HEAD_LINES              1
@@ -848,6 +849,30 @@ static void setup_batch_subtract(void) {
     gui_mbox_init(LANG_FSELECT_SUBTRACT, (int)buf,
                   MBOX_TEXT_CENTER|MBOX_BTN_YES_NO|MBOX_DEF_BTN2, fselect_subtract_cb);
 }
+//-------------------------------------------------------------------
+#if DNG_SUPPORT
+void process_dng_to_raw_files(void){
+ struct fitem *ptr;
+ int i=0;
+   started();
+   msleep(100);
+   finished();
+
+ if (fselect_real_marked_count()) {
+   for (ptr=head; ptr; ptr=ptr->next)
+     if (ptr->marked && ptr->attr != 0xFF && !(ptr->attr & DOS_ATTR_DIRECTORY)) {
+       sprintf(selected_file, "%s/%s", current_dir, ptr->name);
+       gui_browser_progress_show(selected_file, (i++)*100/fselect_real_marked_count()) ;
+       convert_dng_to_chdk_raw(selected_file);
+      }
+    }
+ else {
+   sprintf(selected_file, "%s/%s", current_dir, selected->name);
+   convert_dng_to_chdk_raw(selected_file);
+ }
+  gui_fselect_read_dir(current_dir);
+}
+#endif
 
 //-------------------------------------------------------------------
 static void fselect_mpopup_cb(unsigned int actn) {
@@ -922,6 +947,11 @@ static void fselect_mpopup_cb(unsigned int actn) {
             setup_batch_subtract();
             break;
         }
+#if DNG_SUPPORT
+	case MPOPUP_DNG_TO_CRW:
+            process_dng_to_raw_files();
+            break;
+#endif
     }
     gui_fselect_redraw = 2;
 }
@@ -983,6 +1013,10 @@ void gui_fselect_kbd_process() {
                     i |= MPOPUP_PURGE;//Display PURGE RAW function in popup menu
                 if(selected->size == hook_raw_size())
                     i |= MPOPUP_RAW_DEVELOP;
+#if DNG_SUPPORT
+                if((fselect_marked_count()>1)||(selected->size > hook_raw_size()))
+                    i |= MPOPUP_DNG_TO_CRW;
+#endif
                 gui_mpopup_init(i, fselect_mpopup_cb);
             }
             break;

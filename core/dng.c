@@ -388,4 +388,45 @@ struct t_data_for_exif* capture_data_for_exif(void){
  return &data;
 }
 
+void convert_dng_to_chdk_raw(char* fn){
+ #define BUF_SIZE (32768)
+ FILE *dng, *raw;
+ int *buf;
+ int i;
+ struct stat st;
+ struct utimbuf t;
+
+ if (stat(fn, &st) != 0 || st.st_size<=hook_raw_size())  return;
+ buf=malloc(BUF_SIZE);
+ if (buf){
+  started();
+  dng=fopen(fn,"rb");
+  if (dng){
+   fread(buf, 1, 8, dng);
+   if (buf[0]==0x2A4949 && buf[1]==8) {  // chdk dng header
+    i=strlen(fn)-3;
+    if (strncmp(fn+i,"CR",2)==0) strcpy(fn+i,"WAV"); else strcpy(fn+i,"CRW");
+    raw=fopen(fn,"w+b");
+    if (raw){
+     fseek(dng, st.st_size-hook_raw_size(), SEEK_SET); // SEEK_END is not working?
+     for (i=0; i<hook_raw_size()/BUF_SIZE; i++) {
+      fread(buf, 1, BUF_SIZE, dng);
+      reverse_bytes_order((char*)buf, BUF_SIZE);
+      fwrite(buf, 1, BUF_SIZE, raw);
+     }
+     fread(buf, 1, hook_raw_size()%BUF_SIZE, dng);
+     reverse_bytes_order((char*)buf, hook_raw_size()%BUF_SIZE);
+     fwrite(buf, 1, hook_raw_size()%BUF_SIZE, raw);
+     fclose(raw);
+     t.actime = t.modtime = time(NULL);
+     utime(fn, &t);
+    } // if (raw)
+   } // if chdk dng header
+  fclose(dng);
+  } //if (dng)
+ free(buf);
+ finished();
+ }  //if (buf)
+}
+
 #endif //DNG_SUPPORT

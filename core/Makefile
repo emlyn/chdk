@@ -53,7 +53,7 @@ OBJS=entry.o nothumb.o main.o gui_draw.o gui_menu.o gui_palette.o gui_mbox.o \
      gui_fselect.o gui.o kbd.o conf.o \
      histogram.o gui_batt.o gui_space.o gui_osd.o script.o raw.o \
      gui_lang.o gui_mpopup.o gui_grid.o motion_detector.o raw_merge.o \
-     luascript.o shot_histogram.o dng_hdr.o $(OPT_OBJS)
+     luascript.o shot_histogram.o dng.o $(OPT_OBJS)
 
 gui.o: FORCE
 
