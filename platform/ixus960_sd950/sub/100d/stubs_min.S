@@ -2,7 +2,7 @@
 
 DEF(physw_status, 0x14CFC)
 DEF(physw_run, 0x1ca4) 
-DEF(FlashParamsTable, 0xFFAD6F9C) // it seems
+DEF(FlashParamsTable, 0xFFAD6F9C) 
 
 // Key values for 'Feather' on joystic
 // Could be retrieved from 'PhySW' Task function
@@ -16,3 +16,4 @@ DEF(canon_menu_active,0xF7D4) //0xF7D0 + 4
 DEF(canon_shoot_menu_active,0xEDE5)   // 0xEDE4+1
 DEF(recreview_hold, 0xEBFC) // 0xEB50+0xAC
 DEF(zoom_status, 0x11E48)
+DEF(movie_status, 0x5524)  // 0x54E8+0x3C
