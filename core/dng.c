@@ -21,7 +21,7 @@ const char cam_name[32];
 const short cam_PreviewBitsPerSample[]={8,8,8};
 const char cam_chdk_ver[]=HDK_VERSION" ver. "BUILD_NUMBER;
 const int cam_Resolution[]={180,1};
-//int cam_AsShotNeutral[]={1000,1000,1000,1000,1000,1000};
+int cam_AsShotNeutral[]={1000,1000,1000,1000,1000,1000};
 
 // warning: according to TIFF format specification, elements must be sorted by tag value in ascending order!
 
@@ -51,7 +51,7 @@ struct dir_entry IFD0[]={
  {0xC614, T_ASCII,     32, (int)cam_name}, //UniqueCameraModel. Filled at header generation.
  {0xC621, T_SRATIONAL, 9,  (int)cam_ColorMatrix1},
  {0xC627, T_RATIONAL,  3,  (int)cam_AnalogBalance},
-// {0xC628, T_RATIONAL,  3,  (int)cam_AsShotNeutral},
+ {0xC628, T_RATIONAL,  3,  (int)cam_AsShotNeutral},
  {0xC62A, T_SRATIONAL, 1,  (int)cam_BaselineExposure},
  {0xC62B, T_RATIONAL,  1,  (int)cam_BaselineNoise},
  {0xC62C, T_RATIONAL,  1,  (int)cam_BaselineSharpness},
@@ -363,7 +363,7 @@ unsigned short get_metering_mode_for_exif(short metering_mode){
 struct t_data_for_exif* capture_data_for_exif(void){
  static struct t_data_for_exif data;
  extern volatile long shutter_open_time; // defined in platform/generic/capt_seq.c
-// int wb[3];
+ int wb[3];
  data.iso=shooting_get_iso_market();
  get_property_case(PROPCASE_TV, &data.tv, sizeof(data.tv));
  if (shutter_open_time) { data.time=shutter_open_time+pow(2,-data.tv/96.0); shutter_open_time=0;} // shutter closing time
@@ -379,12 +379,10 @@ struct t_data_for_exif* capture_data_for_exif(void){
  get_property_case(PROPCASE_FLASH_MODE, &data.flash_mode, sizeof(data.flash_mode));
  get_property_case(PROPCASE_FLASH_FIRE, &data.flash_fired, sizeof(data.flash_fired));
  get_property_case(PROPCASE_METERING_MODE, &data.metering_mode, sizeof(data.metering_mode));
-/*
  get_property_case(PROPCASE_WB_ADJ, &wb, sizeof(wb));  
  cam_AsShotNeutral[1]=wb[1];
  cam_AsShotNeutral[3]=wb[0];
  cam_AsShotNeutral[5]=wb[2];
-*/
  return &data;
 }
 
