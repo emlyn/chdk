@@ -1,11 +1,11 @@
-// Translated by Mete Ertugrul  -  ertugrul_m@hotmail.com
+// Translated by Mete Ertugrul - ertugrul_m@hotmail.com
 //
-// _______________________________________________________
+// _____________________________________________________
 //
 //
 // Turkish Language File for CHDK
 //
-// _______________________________________________________
+// _____________________________________________________
 //
 //
 // Language :  Turkish
@@ -14,11 +14,11 @@
 //
 // Build    :  CHDK Autobuild
 //
-// Version  :  build 0.8.10
+// Version  :  build 0.9.0
 //
-// Date     :  Dec 22nd, 2008
+// Date     :  Dec 22 2008
 //
-// _______________________________________________________
+// _____________________________________________________
 //
 //
 // CHDK language file
@@ -403,11 +403,11 @@
 276 "Kartý 2 Bölüm Yap"
 
 277 "Bölümleri Deðiþtir"
-278 "UYARI !!\nKarttaki tüm veri silinecek.\nDevam edilsin mi?"
-279 "Bu Kartta Sadece 1 Bölüm Var!"
+278 "Karttaki tüm veri silinecek.\nDevam edilsin mi?"
+279 "Bu kartta sadece 1 bölüm var."
 280 "Hata!"
-281 "Uyarý"
-282 "Bilgi"
+281 "UYARI !!"
+282 "Bilgi.."
 283 "RGB Zebra (Sadece AþýrýPOZL)"
 
 

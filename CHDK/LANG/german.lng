@@ -1,15 +1,10 @@
-// CHDK language file
-// 
-//
-// aktuelle Version ab rev. 524
-//
+// CHDK language file 
 // -----------------------------------------------
 // Optimale Schriftart: Libsans16b (mit Umlauten)
 // und Codepage Win1252 (West European Latin) 
 // -----------------------------------------------
 // <id> "<text>"
-//   <id>   - should be positive number
-//   <text> - any text enclosed into quotes
+
   
   1 "Hauptmenü"
 
@@ -26,7 +21,6 @@
 
  12 "zurück"
 
-
  13 "RAW"
 
  14 "Speichere RAW"
@@ -34,7 +28,6 @@
  17 "RAW-Datei in JPEG-Ordner"
  18 "RAW-Datei Präfix"
  19 "RAW-Datei Endung"
-
 
  20 "OSD"
 
@@ -47,7 +40,6 @@
  27 "OSD-Layouteditor..."
  28 "Batterie-Anzeige"
 
-
  29 "Histogramm"
 
  30 "Zeige Live-Histogramm"
@@ -56,7 +48,6 @@
  33 "Zeige Belichtungswarnungen"
  34 "Ignoriere Grenzwertspitzen"
  35 "Automatische Vergrößerung"
-
 
  36 "Zebra"
 
@@ -68,14 +59,12 @@
  42 "OSD wiederherstellen"
  43 "Überlagere Zebra mit:"
 
-
  44 "Skript"
 
  45 "Lade Skript-Datei..."
  46 "Verzög. nach Shoot(.1s)"
  47 "aktuelles Skript"
  48 "Skript-Parameter"
-
 
  49 "Anzeige-Einstellungen"
 
@@ -97,7 +86,6 @@
  65 "Textbetrachter-Text"
  66 "Textbetrachter-Hintergrund"
 
-
  67 "Verschiedenes"
 
  68 "Datei-Browser"
@@ -116,9 +104,9 @@
  79 "Debugging-Einstellungen"
 
  80 "Zeige PropCases"
- 81 "PropCase Seite"
+ 81 "PropCase-Seite"
  82 "Zeige verschiedene Werte"
- 83 "Speicher Browser"
+ 83 "Speicher-Browser"
  84 "Dump RAM bei ALT +/-"
  85 "Mache SD-Karte bootfähig..."
 
@@ -143,12 +131,10 @@
  99 "Autoscroll aktivieren"
 100 "Autoscroll-Verzög. (Sek.)"
 
-
 101 "Spiele"
 
 102 "Reversi"
 103 "Sokoban"
-
 
 104 "***Einstellungen zurücksetzen***"
 105 "Sicher, daß Sie die\nOptionen zurücksetzen möchten?"
@@ -156,20 +142,18 @@
 106 "***Versions-Info***"
 107 "CHDK Ver: %s %s\nDatum:    %s\nZeit:    %s\nKamera:  %s\nFW Vers: %s\nCompiler: %s"
 
-108 "***Speicher Info***"
+108 "***Speicher-Info***"
 109 "Freier Speicher: %d Bytes\nCHDK Größe:      %d Bytes\ngeladen bei: 0x%X"
 
 110 "*** Information ***"
 111 "Bitte in Wiedergabe-Modus\numschalten und\nerneut versuchen!"
 
-//  Datei Browser Titel
 112 "Datei-Browser"
 113 "Wähle Skriptdatei"
 114 "Wähle Textdatei"
 115 "Wähle RBF-Schriftart-Datei"
 116 "Wähle Sprachdatei"
 
-//  Kalender
 117 "Januar"
 118 "Februar"
 119 "März"
@@ -193,13 +177,11 @@
 
 136 "Heute:"
 
-//  Messagebox Buttons
 137 "Ok"
 138 "Ja"
 139 "Nein"
 140 "Abbruch"
 
-//  OSD Layout Editor
 141 "Histogramm"
 142 "DOF-Rechner"
 143 "Status-Anzeige"
@@ -208,13 +190,11 @@
 146 "Batt-Text"
 147 "Uhr"
 
-//  Palette
 148 "Drücke SET für bestimmte Farbe"
 149 "   Drücke MENU zum Verlassen    "
 150 "Farbe"
 151 "Mit %s Farbe auswählen"
 
-//  Reversi
 152 "*** Spielergebnis ***"
 153 "Sie haben gewonnen! :)"
 154 "Sie haben verloren! :("
@@ -231,24 +211,20 @@
 
 163 "*** Über ***"
 
-//  Sokoban
 164 "  Level"
 165 "  Züge"
 166 "*** Fertig ***"
 167 "Super!\n  Sie haben es geschafft!  "
 
-//  Skript Konsole
 168 "*** GESTARTET ***"
 169 "*** UNTERBROCHEN ***"
 170 "*** BEENDET ***"
 
-//  Datei Browser
 171 "*** Ordner löschen ***"
 172 "SICHER, daß Sie\nALLE Dateien im Ordner\nlöschen möchten?"
 173 "*** Datei löschen ***"
 174 "SICHER, daß Sie\ndie ausgewählte Datei\nlöschen möchten?"
 
-//  Benchmark
 175 "Benchmark"
 176 "Berechnung..."
 177 "Kamera-Benchmark: Starten mit [SET]"
@@ -262,7 +238,7 @@
 185 "Schreiben (64k):"
 186 "Lesen     (64k):"
 
-187 "LCD-Stromsparmodus"
+187 "Stromsparmodus aus"
 
 188 "Ausschneiden"
 189 "Kopieren"
@@ -290,7 +266,6 @@
 208 "Linienfarben"
 209 "Füllfarbe"
 
-//  Feldtiefenrechner
 210 "DOF-Rechner"
 211 "DOF-Rechner"
 212 "Canon Motiv-Dist. als Nah-Limit" 
@@ -301,7 +276,6 @@
 217 "Zeige Hyperfocal-Dist. in Div."
 218 "Zeige Schärfentiefe in Div."
 
-//  diverse Werte
 219 "Diverse Werte"
 220 "Diverse Werte"
 221 "Zeige im Rückblick-Modus"	
@@ -317,14 +291,12 @@
 231 "Zeige überbel. Wert (kein Blitz!)"
 232 "Zeige Szenen-Luminanz"
 
-//  Video Parameter
 233 "Video-Einstellungen"
 234 "Video-Einstellungen"
 235 "Video-Modus"
 236 "Video-Bitrate"
 237 "Video-Qualität"
 
-//  Ersatz Werte
 238 "Extra-Foto"
 239 "Extra-Foto-Einstellungen"
 240 "Ersetze Verschlußzeit"
@@ -335,7 +307,6 @@
 245 "Ersetze Motiv-Distanz"
 246 "    Multiplikator (mm)"
 
-//  Belichtungsreihen
 247 "Bracket im fortlauf. Modus"
 248 "Bracket im fortlauf. Modus"
 249 "TV Bracket-Wert"
@@ -346,7 +317,6 @@
 254 "    Multiplikator (mm)"
 255 "Bracket-Typ"
 
-//  Skriptsteuerung
 256 "Autostart"
 257 "USB-Fernbedienung an/aus"
 
@@ -412,7 +382,6 @@
 
 302 "Linsen-Adpt.-Skala 100=1x"
 
-//  Speicherplatz Karte
 303 "Balken-Anzeige"
 304 "    Balkenlänge"
 305 "    Breite/Höhe"
@@ -421,10 +390,8 @@
 308 "Einheit der Warnung"
 309 "Untergrenze Warnung"
 
-// Video
 310 "Opt. Zoom aktivieren"
 
-// Uhr
 311 "Uhrzeit-Einstellungen"
 312 "Uhrzeit-Einstellungen"
 313 "Uhrzeit-Format"
@@ -438,7 +405,6 @@
 319 "Speicherplatz-Anzeige"
 320 "Speicherplatz-Anzeige"
 
-// Auto ISO
 321 "Benutzer-Auto-ISO"
 322 "Benutzer-Auto-ISO"
 323 "Benutzer-Auto-ISO aktivieren"
@@ -449,14 +415,12 @@
 328 "Max. ISO Auto (x10)"
 329 "Min. ISO (x10)"
 
-// Menü
 330 "Menü-Titel-Text"
 331 "Menü-Titel-Hintergrund"
 332 "Menü-Cursor-Text"
 333 "Menü-Cursor-Hintergrund"
 334 "Menü zentriert"
 
-// Video
 335 "Zoomgeräusche abschalten" 
 
 336 "Pixelfehler entfernen" 
@@ -464,26 +428,23 @@
 338 "Mittelw." 
 339 "RAWconv" 
 
-340 "Ersatzwertfarbe"
-341 "Ersatzwerthintergrund"
+340 "Status-Anzeige-Text"
+341 "Status-Anzeige-Hintergrund"
 342 "Ersatzwert-Modus"
 
 343 "    Inkl. AutoIso & Bracket"
 344 "    Ausnahmen"
 345 "    Aus bei Videoaufn."
 
-// Videorestzeit
 346 "Zeige Restzeit Video"
 347 "    Wiederholrate (Sek.)"
 348 "Restzeit Video"
 349 "Lösche Einstellungen bei Start"
 
-// Ev-Korrektur
 350 "Schneller Ev-Wechsel an/aus"
 351 "    Schrittweite (1 EV)"
 352 "Ev-Korrektur"
 
-// RAW-Löschen-Dialog
 353 "Sicher, dass Sie ALLE RAW-Dateien\nim DCIM-Ordner ohne dazugehörige JPG\nlöschen wollen?"
 354 "Sicher, dass Sie ALLE RAW-Dateien\nim ausgew. Ordner ohne dazugehörige JPG\nlöschen wollen?"
 355 "Sicher, dass Sie RAW-Dateien ohne\ndazügehörige JPG (ausgeschl. markierte)\nlöschen wollen?"
@@ -491,31 +452,26 @@
 357 "*** Lösche RAW-Dateien ***"
 358 "Lösche RAW"
  
-// Menü
 359 "Benutzermenü als Hauptmenü"
 
-// Symbole
 360 "Symbolfont laden"
 361 "Wähle Symbolfont-Datei"
 362 "Symbole an/aus"
-363 "Symboltextfarbe"
-364 "Symbolhintergrundfarbe"
+363 "Symbol"
+364 "Symbol-Hintergrund"
 
-// Tonwertkurven
 365 "Tonwertkurven"
 366 "Tonwertkurven"
 367 "Lade Kurvenprofile..."
 368 "Kurven an/aus"
 369 "Wähle Kurven-Datei aus"
 
-// Konturenüberlagerung
 370 "Konturenüberlagerung"
 371 "Konturenüberlagerung"
 372 "Konturenüberlagerung an/aus"
 373 "    Grenzwert"
 374 "    Überlagerungsfarbe"
 
-// Fernbedienung
 375 "USB-Fernbedienung-Parameter"
 376 "USB-Fernbedienung-Parameter"
 377 "Synchro-Funktion an/aus"
@@ -524,14 +480,11 @@
 380 "    Verzögerung 0.1ms"
 381 "    Verzögerung 0.1s"
 
-// Video
-382 "AF Taste"
+382 "AF-Taste"
 
-// Skripte
 383 "Lade Standardparameter ..."
 384 "Parameter-Satz-Nr."
 
-// RAW-Ausnahmen
 385 "RAW im Sportmodus aus"
 386 "RAW bei Reihenaufnahme aus"
 387 "RAW bei Ev-Bracketing aus"
@@ -540,30 +493,23 @@
 390 "RAW-Ausnahmen"
 391 "Ausnahmewarnung an/aus"
 
-// Menü
 392 "Erste Zeile selektieren"
 
-// Fernbedienung
 393 "Zeitlimit 0,1s"
 394 "Synchro-Funktion"
 
-// Video
-395 "Schnelle Video Kontrolle"
+395 "Schnelle Video-Kontrolle"
 
 396 "Temperatur"
 397 "Temperaturanzeige"
 
-398 "Video Qualität Kontrolle"
+398 "Video-Qualität-Kontrolle"
 
-// Fernbedienung
 399 "Fernbedienung-Zoom"
 400 "Zoom Zeitlimit 0.1s"
 
-// diverses
 401 "Start-Sound an/aus"
 
-
-// RAW
 402 "RAW-Subtr.-Präfix"
 403 "RAW-Subtr.-Endung"
 404 "Subtr. du. Eingangswert"
@@ -573,13 +519,10 @@
 408 "Abziehen"
 409 "Subtr. von markiert."
 
-// Skript
 410 "Parameterspeicher an/aus"
 
-// Layout-Editor
 411 "Video-Ev-Anzeige"
 
-// Extra Foto
 412 "    Zoom-Wert"
 413 "Ersetze Zoom-Wert"
 414 "    Bei Neustart löschen"
@@ -588,17 +531,15 @@
 
 416 "    in Fahrenheit"
 
-// Konturenüberlagerung
 417 "Lade Konturen ..."
 418 "Speichere Konturen ..."
-419 "Auch im Playmode?"
+419 "Auch im Wiedegabe-Modus?"
 420 "Gib Speicher frei ..."
 421 "Lade und setze Zoom"
 422 "Sperre Konturenüberlagerung"
 
 423 "2. Vorhang Blitzsynchro"
 
-// DNG
 424 "DNG-Format"
 425 "RAW-Puffer nutzen"
 426 "Datei badpixel.bin fehlt!\nBitte starte \nCHDK/SCRIPTS/TEST/badpixel.lua"
@@ -612,15 +553,13 @@
 433 "Ich habe gewonnen :-)"
 434 "Unentschieden"
 
-435 "RAW im EdgeOverlayModus aus"
-436 "RAW im Auto Modus aus"
+435 "RAW im Konturen-Modus aus"
+436 "RAW im Auto-Modus aus"
 
 437 "Aktiviere Blitz in Video?"
-438 "   Stärke des Blitzes"
-439 "'DNG' als Dateiendung"
+438 "    Stärke des Blitzes"
 
-// DNG
-439 "'DNG'-Dateiendung"
+439 "DNG als Dateiendung"
 440 "DNG sichtbar via USB"
 
 441 "Mastermind"
@@ -629,9 +568,9 @@
 444 "mit enthalten"
 445 "RICHTIG :-)"
 446 "GAME OVER"
-447 "[<-][->] Spalte wählen"
+447 "[<-][->]   Spalte wählen"
 448 "[UP][DOWN] Farbe wählen"
-449 "[SET] nächste Reihe"
+449 "[SET]      nächste Reihe"
 450 "KEINE FARBEN DOPPELT"
 
 

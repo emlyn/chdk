@@ -82,15 +82,15 @@ void CreateColorCombo(){
 	for(i=0;i<4;i++)answer[i]=99;
 	i=0;
 	while(i<4){
-		tmp=rand()%5;
+		tmp=rand()%6;
 		if(answer[0]!=tmp && answer[1]!=tmp && answer[2]!=tmp && answer[3]!=tmp){
 			answer[i]=tmp;
 			i++;
 		}
 	}
 	
-	for (i=0; i<4;i++)
-		draw_filled_rect(BORDER+(2*i*10), 213, BORDER+(2*i*10)+10,223, MAKE_COLOR(colors[answer[i]],colors[answer[i]]));
+	//for (i=0; i<4;i++)
+	//	draw_filled_rect(BORDER+(2*i*10), 213, BORDER+(2*i*10)+10,223, MAKE_COLOR(colors[answer[i]],colors[answer[i]]));
 
 }
 
@@ -99,7 +99,7 @@ int gui_mastermind_init() {
 	colors[0]=0xAA;
 	colors[1]=0x55;
 	colors[2]=0x22;
-	colors[3]=0x81;
+	colors[3]=0x66;
 	colors[4]=0x88;
 	colors[5]=0xD2;
 	curr_color[0]=0;
