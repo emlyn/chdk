@@ -149,7 +149,7 @@
 105 "Opravdu vrátit nastavení na výchozí hodnoty?"
 
 106 "*** Informace o programu ***"
-107 "CHDK Ver: %s, #%s\nDatum:    %s\nCas:    %s\nPrístr:  %s\nFW Ver: %s\nCompiler: %s"
+107 "CHDK Ver: %s, #%s\nDatum:    %s\nCas:    %s\nPrístr:  %s\nFW Ver: %s"
 
 108 "*** Informace o pameti ***"
 109 "Volná pamet: %d bytu"
@@ -274,8 +274,8 @@
 
 200 "Zobrazovat mrížku"
 201 "Otevrít mrížku ze souburu..."
-202 "Mrížka"
-203 "Nastavení mrížky"
+202 "Cáry"
+203 "Mrížka"
 204 "Výber souboru s mrížkou"
 205 "Aktuální mrížka"
 
@@ -350,9 +350,9 @@
 
 264 "Vymazat hodn. prekr. pri spušt."
 
-265 "Zobr, hodn. 'Canon' preexp."
+265 "Zobr. hodn. 'Canon' preexp."
 
-266 "Prepracování RAW"
+266 "Zpracování RAW"
 267 "Prosím prepnete fotoaparát\ndo režimu focení a zhotovte\njednu fotografii."
 268 "Výber RAW souboru"
 269 "RAW suma"
@@ -360,8 +360,7 @@
 271 "Nedostatek místa na karte:\n%dM požadováno, %dM k dispozici."
 
 272 "Zobrazit OSD v módu náhledu"
-273 "Zobrazovat Parameter Data
-
+273 "Spuštení seznamu úkolu"
 274 "Subj. vzdál od cocek"
 
 275 "Vymaz. hodn. bracketu & spušt."
@@ -386,13 +385,13 @@
 290 "Zbývající místo"
 291 "Zobr. místo na karte v proc."
 292 "Zobr. místo na karte v MB"
-293 "Filespace Text"
+293 "Prostor Text"
 294 "  Zobrazit pocet zbýv. RAW"
 295 "Zbývající pro RAW"
 
 296 "Zobrazit stav RAW"
 
-297 "Zobraz. hodnoty pri videu"
+297 "Zobraz. hodnot pri videu"
 
 298 "    Druh koef. záverky"
 299 "Uživatel. menu aktivní"
@@ -472,7 +471,6 @@
 364 "Barva pozadí symbolu"
 
 365 "Uživatelské tonální krivky"
-//"366 "Uživat. tonální krivky"
 366 "Uživatelské tonální krivky"
 367 "Otevrít profil krivky..."
 368 "Povolit krivky"
@@ -525,3 +523,43 @@
 408 "Odecítání"
 409 "Odecíst od oznaceného"
 410 "Ukládat parametry"
+411 "Zobrazení Video Ev"
+412 "   Hodnota prekrytí Zoom"
+413 "Prekrytí Zoom"
+414 "Nulovat na zacátku"
+415 "Pripojit RAW príponu"
+416 "  ve Fahrenheitech"
+417 "Otevrít prekrytí okraju"
+418 "Uložit prekrytí okraju"
+419 "Povolit v Prohlížení"
+420 "Volná vnitrní pamet"
+421 "Otevrít + nastavit Zoom"
+422 "Zamknout prekrytí okraju"
+423 "Synch.blesku na zadní lamelu"
+424 "DNG formát"
+425 "RAW buffer uložen"
+426 "Nemohu otevrít CHDK/badpixel.bin\nProsím spust \nCHDK/SCRIPTS/TEST/badpixel.lua"
+427 "Ukázat ukládací cas RAW"
+428 "Pripojit 4"
+429 "Souper:"
+430 "Clovek"
+431 "Hrác c.1 vyhrál"
+432 "Hrác c.2 vyhrál"
+433 "Porazil jsem Te"
+434 "Nerozhodne"
+435 "Zakázat RAW @ prekryzí okraju"
+436 "Zakázat RAW @ Auto Mode"
+437 "Povolit blesk ve videu?"
+438 "   Výkon blesku"
+439 "´DNG´ prípona"
+440 "DNG viditelné pres USB"
+441 "Mastermind"
+442 "dostupné barvy"
+443 "na správné míste"
+444 "odpovídající barvy"
+445 "OPRAVIT :-)"
+446 "KONEC"
+447 "\[<-] [->] vyber sloupec"
+448 "[UP] [DOWN] vyber barvu"
+449 "[SET] další rádek"
+450 "Není zdvojená barva"
