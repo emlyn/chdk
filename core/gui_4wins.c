@@ -187,10 +187,7 @@ static void change_player()
 //-------------------------------------------------------------------
 static char win_query()
 {
-	int i=0;
-	int j=0;
-	
-	if (isFull(1) && isFull(2) && isFull(3) && isFull(4) && isFull(5) && isFull(6) && isFull(7)) return 9;
+	int i=0,j=0;
 
 	for(i=0;i<4;i++)
 	{
@@ -222,6 +219,8 @@ static char win_query()
 			if(field[i][j]==1 && field[i+1][j]==1 && field[i+2][j]==1 && field[i+3][j]==1) return 1;	// horizontal  >  -
 		}
 	}
+
+	if (isFull(1) && isFull(2) && isFull(3) && isFull(4) && isFull(5) && isFull(6) && isFull(7)) return 9;
 	
 	return 0;
 }
