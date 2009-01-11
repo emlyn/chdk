@@ -633,7 +633,7 @@ LUALIB_API int luaopen_io (lua_State *L) {
   luaL_register(L, LUA_IOLIBNAME, iolib);
   /* create (and set) default files */
   newfenv(L, io_noclose);  /* close function for default files */
-#if 0
+#ifdef HOST_LUA
   createstdfile(L, stdin, IO_INPUT, "stdin");
   createstdfile(L, stdout, IO_OUTPUT, "stdout");
   createstdfile(L, stderr, 0, "stderr");

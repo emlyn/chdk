@@ -22,22 +22,18 @@ HOSTCFLAGS+=-DHOST_LUA -DLUA_ANSI -I./include
 	@echo $^ \-\> $@
 	$(HOSTAR) rcs $@ $^
 
+# these are always built for hostlua, you can hide them from scripts by setting 
+# the corresponding globals to nil
 LUA_OPTLIB_OBJS=
 
-ifdef OPT_LUA_IOLIB
 HOSTCFLAGS+=-DOPT_LUA_IOLIB
 LUA_OPTLIB_OBJS+=liolib.o
-endif
 
-ifdef OPT_LUA_OSLIB
 HOSTCFLAGS+=-DOPT_LUA_OSLIB
 LUA_OPTLIB_OBJS+=loslib.o
-endif
 
-ifdef OPT_LUA_STRLIB
 HOSTCFLAGS+=-DOPT_LUA_STRLIB
 LUA_OPTLIB_OBJS+=lstrlib.o
-endif
 
 COMMON_OBJS = lapi.o lcode.o ldebug.o ldo.o ldump.o lfunc.o lgc.o llex.o \
 	lmem.o lobject.o lopcodes.o lparser.o lstate.o lstring.o ltable.o ltm.o \

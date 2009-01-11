@@ -42,7 +42,7 @@ static int os_pushresult (lua_State *L, int i, const char *filename) {
 }
 
 
-#if 0
+#ifdef HOST_LUA
 static int os_execute (lua_State *L) {
   lua_pushinteger(L, system(luaL_optstring(L, 1, NULL)));
   return 1;
@@ -76,7 +76,7 @@ static int os_tmpname (lua_State *L) {
 }
 #endif
 
-#if 0
+#ifdef HOST_LUA
 static int os_getenv (lua_State *L) {
   lua_pushstring(L, getenv(luaL_checkstring(L, 1)));  /* if NULL push nil */
   return 1;
@@ -240,7 +240,7 @@ static int os_setlocale (lua_State *L) {
 }
 #endif
 
-#if 0
+#ifdef HOST_LUA
 static int os_exit (lua_State *L) {
   exit(luaL_optint(L, 1, EXIT_SUCCESS));
 }
@@ -274,7 +274,7 @@ static int os_listdir (lua_State *L) {
     return os_pushresult(L, 0 , dirname);
   lua_newtable(L); 
   while((de = readdir(dir))) {
-	if(!all && (/*de->d_name[0] == 0xE5 ||*/ (strcmp(de->d_name,".")==0) || (strcmp(de->d_name,"..")==0)))
+	if(!all && (de->d_name[0] == '\xE5' || (strcmp(de->d_name,".")==0) || (strcmp(de->d_name,"..")==0)))
       continue;
   	lua_pushinteger(L, i);
   	lua_pushstring(L, de->d_name);
@@ -372,7 +372,7 @@ static const luaL_Reg syslib[] = {
 #endif
   {"date",      os_date},
   {"difftime",  os_difftime},
-#if 0
+#ifdef HOST_LUA
   {"execute",   os_execute},
   {"exit",      os_exit},
   {"getenv",    os_getenv},
