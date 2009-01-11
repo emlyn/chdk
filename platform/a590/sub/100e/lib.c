@@ -48,8 +48,11 @@ void *vid_get_viewport_fb()
 void *vid_get_viewport_fb_d()
 {
 
-	return (void*)(*(int*)0x5228);
+	//return (void*)(*(int*)0x5228);
 	//520c+1c
+	// http://chdk.setepontos.com/index.php/topic,2361.msg27125.html#msg27125
+	// sub_FFC45328
+	return (void*)(*(int*)(0x520C+0x4C));  //0x5258
 	
 }
 

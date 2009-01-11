@@ -28,7 +28,7 @@ void boot() { //#fs
     long i;
 
 
-    // Code taken from VxWorks CHDK. Changes CPU speed?
+    // Enable CPU caches and MPU
     asm volatile (
 	"MRC     p15, 0, R0,c1,c0\n"
 	"ORR     R0, R0, #0x1000\n"
@@ -267,7 +267,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
                 "BL      sub_FFC19A20\n"
                 "BL      sub_FFC1142C\n"
                 "BL      sub_FFC10CD0\n"
-				"BL      sub_FFC1A97C_my\n"     // divert for SDHC-bootdisk-suppor
+				"BL      sub_FFC1A97C_my\n"     // divert for SDHC-bootdisk-support
                 "BL      sub_FFC10C8C\n"
                 "LDMFD   SP!, {R4,PC}\n"        // restore stack to PC instead of LR to return to caller				
 				//"BL       sub_FFC05070\n"
@@ -679,7 +679,8 @@ asm volatile (
 "loc_FFC1A898:\n"
 				"MOV     R0, R4\n"
 "loc_FFC1A89C:\n"
-                //"BL      sub_FFC64678_my\n"
+//              "BL      sub_FFC64678_my\n" // this crashes per
+                                            // http://chdk.setepontos.com/index.php/topic,2361.msg27472.html#msg27472
 				"BL      sub_FFC64678\n"
                 "LDMFD   SP!, {R3-R11,PC}\n"
 "loc_FFC1A8A4:\n"
@@ -1028,7 +1029,8 @@ void __attribute__((naked,noinline)) sub_FFC64678_my() { //#fs
 "loc_FFC648A4:\n"
                 "MOV     R0, R6\n"
 "                LDMFD   SP!, {R4-R8,LR}\n"
-				"BL      sub_FFC64338\n"  // branch for movie support
+				"BL      sub_FFC64338\n"  // branch for movie support (why not enabled ?)
+//				"BL      sub_FFC64338_my\n"
 "loc_FFC648B0:\n"
                 "LDR     R12, =0x10B0\n"
 "                CMP     R6, R12\n"

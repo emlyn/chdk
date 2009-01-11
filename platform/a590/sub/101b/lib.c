@@ -41,14 +41,16 @@ void *vid_get_bitmap_fb()  //OSD buffer
 
 void *vid_get_viewport_fb()
 {
-    //return (void*)0x1065A4D0; // 0x107D5FD0
-	 return ((void **)0x2168)[*((unsigned char*)0x1FE8)];
+	 return (void*)0x10659E80; // same as 100e, search on constant
+
 }
 
 void *vid_get_viewport_fb_d()
 {
-    return (void*)(*(int*)0x540C);  //5410
-	
+    //return (void*)(*(int*)0x5228);  // same as 100e, eg FFC44B58
+	// http://chdk.setepontos.com/index.php/topic,2361.msg27125.html#msg27125
+	// sub_FFC45328
+	return (void*)(*(int*)(0x520C+0x4C));  //0x5258
 }
 
 
@@ -68,7 +70,7 @@ long vid_get_viewport_height()
 }
 char *camera_jpeg_count_str()
 {
-    return (char*)0x580CC;
+    return (char*)0x49344; // same as 100e, found @ FFD727B0
 }
 
 long vid_get_bitmap_buffer_width() { return 360; }
