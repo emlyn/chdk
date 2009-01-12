@@ -1,0 +1,602 @@
+// CHDK Romanian language file
+// Done without Romanian specific diacritics so should work 
+// without any special code pages.
+// Original translation done by Marius Hudea (mariusads <at> helpedia.com)
+//
+// Format of language line:
+// <id> "<text>"
+//   <id>   - should be positive number
+//   <text> - any text enclosed into quotes
+  
+  1 "Meniu principal"
+
+//  2 "Parametrii RAW ->"
+//  3 "Parametrii OSD ->"
+//  4 "Parametrii histograma ->"
+//  5 "Parametrii Zebra ->"
+//  6 "Parametrii script ->"
+//  7 "Optiuni vizuale ->"
+//  8 "Diverse ->"
+//  9 "Parametrii diagnostic ->"
+  2 "Parametrii RAW"
+  3 "Parametrii OSD"
+  4 "Parametrii histograma"
+  5 "Parametrii Zebra"
+  6 "Parametrii script"
+  7 "Optiuni vizuale"
+  8 "Diverse"
+  9 "Parametrii diagnostic"
+ 10 "Revenire la valori initiale..."
+ 11 "Salvare optiuni acum..."
+
+// 12 "<- Inapoi"
+ 12 "Inapoi"
+
+
+ 13 "RAW"
+
+ 14 "Salvare RAW"
+ 16 "Doar primul fisier RAW"
+ 17 "Fisier RAW in folder cu JPEG"
+ 18 "Prefix fisier RAW"
+ 19 "Extensie fisier RAW"
+
+
+ 20 "OSD"
+
+ 21 "Arata OSD"
+ 22 "Arata afisaj status"
+ 23 "Arata valori diverse"
+ 24 "Valoare Zoom"
+ 25 "Arata calculator DOF"
+ 26 "Arata ceas"
+ 27 "Editor aspect OSD"
+// 28 "Baterie ->"
+ 28 "Baterie"
+
+
+ 29 "Histograma"
+
+ 30 "Arata histograma"
+ 31 "Aspect histograma"
+ 32 "Mod histograma"
+ 33 "Arata SUPRA/SUB expunere histograma"
+ 34 "Ignora varfuri margini"
+ 35 "Auto marire"
+
+
+ 36 "Zebra"
+
+ 37 "Deseneaza Zebra"
+ 38 "Mod Zebra"
+ 39 "Nivel limita subexpunere"
+ 40 "Nivel limita supraexpunere"
+ 41 "Restaureaza ecran original"
+ 42 "Restaureaza OSD"
+ 43 "Deseneaza peste Zebra"
+
+
+ 44 "Script"
+
+ 45 "Incarca script din fisier..."
+ 46 "Script intarziere poza (.1s)"
+ 47 "Script curent"
+ 48 "Parametrii script"
+
+
+ 49 "Optiuni vizuale"
+
+ 50 "Limba..."
+ 51 "Pagina limba OSD"
+ 52 "Font RBF pentru meniu..."
+ 53 "Culori"
+ 54 "Text OSD"
+ 55 "Fundal OSD"
+ 56 "Histograma"
+ 57 "Culoare fundal histograma"
+ 58 "Bordura histograma"
+ 59 "Marcaje EXP histograma"
+ 60 "Supraexpunere Zebra"
+ 61 "Subexpunere Zebra"
+ 62 "Simbol baterie"
+ 63 "Text meniu"
+ 64 "Fundal meniu"
+ 65 "Text vizualizare text"
+ 66 "Fundal vizualizare text"
+
+
+ 67 "Diverse"
+
+ 68 "Manager fisiere"
+ 69 "Calendar"
+// 70 "Vizualizare text ->"
+// 71 "Jocuri ->"
+ 70 "Vizualizare text"
+ 71 "Jocuri"
+ 72 "Lanterna"
+ 73 "Ecran titlu la pornire"
+ 74 "Foloseste butoane Zoom pentru MF"
+ 75 "Butoane pentru mod <ALT>"
+ 76 "Deseneaza paleta grafica"
+ 77 "Arata informatii versiune"
+ 78 "Arata informatii memorie"
+
+
+ 79 "Diagnostic"
+
+// 80 "Afiseaza PropCases"
+ 80 "Afiseaza date diagnostic"
+ 81 "Pagina PropCase"
+ 82 "Arata valori diverse"
+ 83 "Exploreaza memoria"
+// 84 "Descarca RAM la apas. ALT +/-"
+ 84 "Actiune diagn. ALT +/-"
+ 85 "Creeaza card bootabil..."
+
+
+86 "Optiuni afisare baterie"
+
+ 87 "Voltaj MAXim (mV)"
+ 88 "Voltaj MINim (mV)"
+ 89 "Marime niv. (ON=25mV,OFF=1mV)"
+ 90 "Arata procent"
+ 91 "Arata voltaj"
+ 92 "Arata simbol"
+
+
+ 93 "Vizualizare text"
+
+ 94 "Deschide fisier nou..."
+ 95 "Deschide ultimul fisier accesat"
+ 96 "Alege font RBF"
+ 97 "Tip caractere"
+ 98 "Segmenteaza linii lungi"
+ 99 "Activeaza scroll automat"
+100 "Intarz. scroll aut. (sec)"
+
+
+101 "Jocuri"
+
+102 "Reversi"
+103 "Sokoban"
+
+
+104 "*** Resetare optiuni ***"
+105 "Esti SIGUR ca doresti revenirea\noptiunilor la valorile implicite?"
+
+106 "*** Informatii versiune ***"
+107 "Ver CHDK: %s %s\nData:    %s\nOra:    %s\nCamera:  %s\nFW Vers: %s\nCompilator: %s"
+
+108 "*** Informatii memorie ***"
+109 "Memorie libera: %d bytes\nMarime CHDK:   %d bytes\nIncarcat la: 0x%X"
+
+110 "*** Informatii ***"
+111 "Comutati camera \nin modul PLAY \nsi incercati din nou."
+
+// file browser titles
+112 "Manager fisiere"
+113 "Alege fisier script"
+114 "Alege fisier text"
+115 "Alege fisier font RBF"
+116 "Alege fisier limba"
+
+// for calendar
+117 "Ianuarie"
+118 "Februarie"
+119 "Martie"
+120 "Aprilie"
+121 "Mai"
+122 "Iunie"
+123 "Iulie"
+124 "August"
+125 "Septembrie"
+126 "Octobrie"
+127 "Noiembrie"
+128 "Decembrie"
+
+// There are no short words for the days of the week in Romanian, we just use the first letter,
+// even though there are two M's (Tuesday is Marti, Wednesday is Miercuri)
+129 "L"
+130 "M"
+131 "M"
+132 "J"
+133 "V"
+134 "S"
+135 "D"
+
+136 "Azi:"
+
+// messagebox buttons
+137 "OK"
+138 "Da"
+139 "Nu"
+140 "Revocare"
+
+// OSD layout editor
+141 "Histograma"
+142 "Calculator profunzime camp"
+143 "Afisaj stare"
+144 "Valori diverse"
+145 "Simbol baterie"
+146 "Text baterie"
+147 "Ceas"
+
+// palette
+148 "Apasa SET pentru culoare"
+149 "    Apasa MENU pentru iesire       "
+150 "Culoare"
+151 "Foloseste %s pentru selectie"
+
+// reversi
+152 "*** Rezultate Joc ***"
+153 "Ai castigat! :-)"
+154 "Ai pierdut! :-("
+155 "Remiza! :-/"
+
+156 "*** Miscare Gresita ***"
+157 "Nu poti plasa aici!"
+158 "Aceasta celula nu e libera!"
+
+159 "Muta: Tu      "
+160 "Muta: Calculator"
+161 "   SFARSIT    "
+162 "  Alb   Negru "
+
+163 "*** Despre ***"
+
+// sokoban
+164 "  Nivel"
+165 " Mutari"
+166 "*** Finalizat ***"
+167 "DA!\n  Ai reusit!  "
+
+// console
+168 "*** PORNIT ***"
+169 "*** INTRERUPT ***"
+170 "*** FINALIZAT ***"
+
+// file browser
+171 "*** Sterge folder ***"
+172 "Esti SIGUR ca doresti\nsa stergi TOATE fisierele\nsdin folderul ales?"
+173 "*** Sterge fisier ***"
+174 "Esti SIGUR ca doresti sa\nstergi fisierul ales?"
+
+// benchmark
+175 "Test performanta"
+176 "Calculez..."
+177 "Test perf. camera   Apasa [SET] pt start"
+178 "Ecran"
+179 "Scriere     :"
+180 "Citire      :"
+181 "Memorie"
+182 "Card Flash"
+183 "Scriere RAW :"
+184 "Scriere mem :"
+185 "Scriere 64K :"
+186 "Citire  64K :"
+
+187 "Dezactiv. oprire LCD"
+
+188 "Decupati"
+189 "Copiati"
+190 "Inserati"
+191 "Stergeti"
+192 "Inversati selectia"
+193 "*** Decupare fisiere ***"
+194 "Esti SIGUR ca doresti\nsa decupezi cele %d fisiere\nalese din %s/?"
+195 "*** Copiere fisiere ***"
+196 "Esti SIGUR ca doresti\nsa copiezi cele %d fisiere\nalese din %s/?"
+197 "*** Stergere fisiere ***"
+198 "Esti SIGUR ca doresti\n sa stergi cele %d fisiere alese?"
+199 "Asteapta..."
+
+200 "Arata linii grid"
+201 "Incarca grid din fisier..."
+202 "Linii grid"
+//203 "Grid ->"
+203 "Grid"
+204 "Alege fisier grid"
+205 "Grid curent"
+
+// I'm not sure what dark frame means, if it's photo specific term or not
+206 "Eliminare Dark Frame"
+
+207 "Schimba culori grid"
+208 "Culoare linie"
+209 "Culoare umplere"
+
+// DOF - Depth Of Field - "Profunzime de câmp" in Romanian, Profunz. is short for Profunzime
+// Could use PF if the long name is a problem
+210 "Calculator profunz. camp"
+//211 "Calculator profunz. camp ->"
+211 "Calculator profunz. camp"
+212 "Dist. sub. ca lim. apropiata" 
+213 "Folos. dist. sub. EXIF PC65"
+214 "Dist. sub. in Diverse"
+215 "Limita aprop. in Diverse"
+216 "Limita depar. in Diverse"
+217 "Dist. hiperf. in Diverse"
+218 "Profunzime camp in Diverse"
+
+
+219 "Valori diverse"
+//220 "Valori diverse ->"
+220 "Valori diverse"
+221 "Arata in mod Review"	
+222 "Zoom"		
+223 "Apertura 'reala'"
+224 "ISO 'real'"
+225 "ISO 'comercial'"
+226 "ISO doar in AutoISO"
+227 "Exp. aleasa Ev (Tv+Av)"
+228 "Exp. masur. Ev (Bv+Sv)"
+229 "Exp. aleasa Bv (Luminoz.)"
+230 "Exp. masur. Bv"
+231 "Val. supraexp. (fara Flash!)"
+232 "Luminozitate scena"
+
+233 "Parametrii video"
+//234 "Parametrii video ->"
+234 "Parametrii video"
+235 "Mod"
+236 "Rata transfer"
+237 "Calitate"
+
+
+238 "Operatiuni foto suplimentare"
+//239 "Operatiuni foto suplimentare ->"
+239 "Operatiuni foto suplimentare"
+240 "Forteaza viteza shutter"
+241 "     Factorul valorii"
+242 "Forteaza valoare diafragma"
+243 "Forteaza valoare ISO"
+244 "     Factorul valorii"
+245 "Forteaza valoare dist. sub."
+246 "Factorul valorii (mm)"
+
+247 "Bracketing in mod continuu"
+//248 "Bracketing in mod continuu ->"
+248 "Bracketing in mod continuu"
+249 "Valoare Bracketing TV"
+250 "Valoare Bracketing AV"
+251 "Valoare Bracketing ISO"
+252 " Factorul valorii"
+253 "Val. Bracket. dist. sub. (MF)"
+254 " Factorul valorii (mm)"
+255 "Tip Bracketing"
+
+256 "Start auto"
+257 "Activeaza telecomanda"
+
+258 "Control expunere (fara Flash)"
+//259 "Control expunere (fara Flash) ->"
+259 "Control expunere (fara Flash)"
+260 "Recalculeaza expunere"
+261 "Ordine recalculare exp. TV"
+262 "Ordine recalculare exp. AV"
+263 "Ordine recalculare exp. ISO"
+
+264 "Anul. valori fortate la start"
+
+265 "Arata val. supraexp. Canon"
+
+266 "Developare RAW"
+267 "Comutati camera\nin modul Record si realizati\no fotografie."
+268 "Alege fisier RAW"
+269 "Suma RAW"
+270 "Media RAW"
+271 "Insuficient spatiu pe card:\n%dM necesar, %dM disponibil."
+
+272 "Arata OSD in mod Review"
+//273 "Arata datele parametrilor"
+273 "Porneste lista comenzi"
+
+274 "Dist. subiectiva de la lentila"
+
+275 "Anul. valori Bracket la start"
+
+276 "Creeaza card cu doua partitii"
+277 "Comuta partitiile"
+278 "Acest proces DISTRUGE INFORMATIILE\nde pe card. Continuati?"
+279 "Acest card are o singura partitie."
+280 "Eroare"
+281 "Avertisment"
+282 "Informatie"
+283 "Zebra RGB (doar supraexpunere)"
+
+284 "Stare filtru ND"
+
+285 "Arata grid histograma Ev"
+
+286 "Avertisment OSD"
+287 "Fundal avertisment OSD"
+288 "Culoare simbol spatiu disp."
+289 "Arata simbol spatiu fisiere"
+290 "Spatiu ramas"
+291 "Arata spatiul liber in procente"
+292 "Arata spatiul liber in MB"
+293 "Textul pentru spatiu"
+294 "  Arata numar poze RAW posibile"
+295 "Spatiu RAW"
+
+296 "Arata stare RAW"
+
+297 "Arata valori in video"
+
+298 "  Mod enumerare viteza shutter"
+299 "Activeaza meniu utilizator"
+300 "Meniu utilizator"
+301 " "
+
+302 "  Scala lentila, 100=1x"
+303 "Arata bara de spatiu"
+304 "  Marime pe ecran"
+305 "  Latime / Inaltime"
+306 "  Limita in procente"
+307 "  Limita in MB"
+308 "Unitate de avertizare"
+309 "  Limita avertizarii"
+310 "Activeaza Zoom optic"
+//311 "Ceas ->"
+311 "Ceas"
+312 "Optiuni"
+313 "Format"
+314 "Culoare fundal spatiu liber"
+315 "Ceas 12h/24h"
+316 "La semi-declans. shutter"
+
+317 "Optiuni fotografie RAW"
+//318 "RAW ->"
+318 "RAW"
+
+319 "Optiuni spatiu fisiere"
+//320 "Spatiu pentru fisiere ->"
+320 "Spatiu fisiere"
+
+321 "Auto ISO customizat"
+//322 "Auto ISO customizat ->"
+322 "Auto ISO customizat"
+323 "Activeaza Auto ISO customizat"
+324 "Viteza minima shutter"
+325 "Fact. utiliz. (1/FL/factor)"
+326 "Factor IS (Tv*factor)"
+327 "ISO HI MAXim (x10)"
+328 "ISO AUTO MAXim (x10)"
+329 "ISO MINim (x10)"
+
+330 "Culoare text titlu meniu"
+331 "Culoare fundal titlu meniu"
+332 "Culoare cursor text"
+333 "Culoare fundal cursor text"
+334 "Meniu central"
+335 "Dezact. sunet cand la Zoom"
+
+336 "Repara pixeli defecti"
+337 "Oprit"
+338 "Medie"
+339 "RAW conv"
+
+340 "Forteaza"
+341 "Forteaza fundalul"
+342 "Dezact. valori fortate"
+343 " Includ AutoISO&Bracketing?"
+344 " Ascund in?"
+345 "Dezact. la inreg. video?"
+346 "Arata timp video ramas"
+347 " Rata actualizare (~sec)"
+348 "Timp ramas"
+349 "Sterg. param. video initiali"
+350 "Activeaza comutator Fast Ev"
+351 " Marime treapta (1 EV)"
+352 "Corectie EV"
+353 "Esti SIGUR ca vrei sa stergi TOATE\nfisierele RAW fara JPG coresp.\nin folderul DCIM?"
+354 "Esti SIGUR ca vrei sa stergi TOATE\nfisiere RAW fara JPG coresp.\nin folderul ales?"
+355 "Esti SIGUR ca vrei sa stergi TOATE\nfara JPG corespunzator?\n(Cu exceptia celor marcate)"
+356 "Optiunea eliminare fisiere RAW\nnu este aplicabila acestui fisier"
+357 "*** Eliminare fisiere RAW ***"
+358 "Elimina fisierele RAW"
+ 
+359 "Meniu utilizator ca baza"
+
+360 "Font simboluri"
+361 "Alege fisier simboluri"
+362 "Activeaza simboluri"
+363 "Culoare text simboluri" 
+364 "Culoare fundal simboluri"
+
+365 "Curbe customizate"
+//"366 "Curbe customizate ->"
+366 "Curbe customizate"
+367 "Incarca profil curba..."
+368 "Activeaza curbe"
+369 "Alege fisier curba"
+
+370 "Suprapunere margini"
+371 "Suprapunere margini"
+
+372 "Activeaza suprap. margini"
+373 "Limita suprap. margini"
+374 "Culoare suprap. margini"
+
+375 "Parametrii telecomanda"
+376 "Parametrii telecomanda"
+377 "Activeaza telecomanda"
+378 "Activeaza sincronizare"
+379 "Activeaza intarziere sincroniz."
+380 "Intarziere sincronizare 0.1ms"
+381 "Intarziere sincronizare 0.1s"
+
+382 "Tasta AF"
+383 "Incarca valorile implicite"
+384 "Parametrii sunt actualizati"
+
+385 "Dezactiv. RAW@Sporturi"
+386 "Dezactiv. RAW@Serie poze"
+387 "Dezactiv. RAW@Bracketing EV"
+388 "Dezactiv. RAW@Cronometru"
+
+389 "Exceptii"
+390 "Meniu exceptii RAW"
+391 "Avertizare la o exceptie?"
+392 "Alege mereu prima optiune"
+
+// I honestly can't think of any word/phrase in Romanian translating Time-out
+393 "Time-out (0.1s)"
+394 "Telecomanda sincronizabila"
+395 "Control video rapid?"
+396 "Temperatura"
+397 "Arata temperatura"
+398 "Control al calitatii video"
+399 "Activeaza Zoom la distanta"
+400 "Time-out Zoom 0.1s"
+401 "Sunet pornire"
+402 "Prefix extragere RAW"
+403 "Extensie extragere RAW"
+404 "Val. intunec. pt. input extr."
+405 "Val. intunec. pt. output extr."
+406 "de la"
+407 "...%d fisiere"
+408 "Extrage"
+409 "Extrage de la marcate"
+410 "Salvare parametrii"
+411 "Afisaj Video Ev"
+412 "   Forteaza valoare Zoom"
+413 "Forteaza Zoom"
+414 "   Anuleaza la pornire"
+415 "Adauga sufix RAW"
+416 "  in Fahrenheit"
+417 "Incarca suprap. margini"
+418 "Salveaza suprap. margini"
+419 "Activeaza in mod Play"
+420 "Memorie interna libera"
+421 "Incarca si activeaza Zoom"
+422 "Blocheaza suprap. margini"
+// no translation for rear courtain, even in Romanian Canon manuals is written like this.
+423 "Sincronizare Flash Rear curtain"
+424 "Format DNG"
+425 "Bufferul RAW cu cache"
+426 "Imposibil de incarcat CHDK/badpixel.bin\nPorniti\nCHDK/SCRIPTS/TEST/badpixel.lua"
+427 "Arata timp salvare RAW"
+428 "Conecteaza 4"
+429 "Oponent:"
+430 "Om"
+431 "Jucatorul 1 a castigat"
+432 "Jucatorul 2 a castigat"
+433 "Te-am invins!"
+434 "Jocul s-a terminat cu remiza"
+435 "Dezactiv. RAW@Suprap. margini"
+436 "Dezactiv. RAW@Mod automat"
+437 "Activeaza Flash in video?"
+438 "  Putere Flash"
+439 "Extensie fisier 'DNG'"
+440 "DNG vizibil via USB"
+441 "Geniu"
+442 "Culori disponibile"
+443 "In locul potrivit"
+444 "Culori in raspuns"
+445 "CORECT :-)"
+446 "SFARSIT"
+447 "[<-][->] Alege coloana"
+448 "[UP][DOWN] Alege culoare"
+449 "[SET] Randul urmator"
+450 "FARA CULORI DUBLE"
