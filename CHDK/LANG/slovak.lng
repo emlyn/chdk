@@ -1,5 +1,5 @@
-// Ver. 3.02 Based on Build  491 Morebest of English.lng
-// Slovak translation by Jan Tuska 27.8.2008
+//Ver. 4.01 Based on AutoBuild  677 English.lng
+// Slovak translation by Jan Tuska 13.1.2009
 // you can modify the content of this file copy as you need
 // obsah kópie tohto súboru si môžete upravit podla svojich potrieb a jazykového cítenia
   
@@ -36,7 +36,7 @@
  24 "Typ zoomu"
  25 "Hlbka ostrosti"
  26 "Hodiny"
- 27 "Rozmiestni OSD"
+ 27 "Editor OSD"
  28 "Batéria"
 
 
@@ -46,7 +46,7 @@
  31 "Zložky"
  32 "Typ"
  33 "Pre/podexpozícia"
- 34 "Ignoruj hranicné špicky"
+ 34 "Ignorovat hranicné špicky"
  35 "Automatická mierka"
 
 
@@ -56,14 +56,14 @@
  38 "Typ"
  39 "Podexpozícia - prah"
  40 "Preexpozícia - prah"
- 41 "Obnov CANON displej"
- 42 "Obnov OSD"
- 43 "Prekresli zebru"
+ 41 "Obnovit CANON displej"
+ 42 "Obnovit OSD"
+ 43 "Prekreslit zebru"
 
 
  44 "Skript"
 
- 45 "Vlož skript"
+ 45 "Vložit zo súboru"
  46 "Oneskorenie (.1s)"
  47 "Aktuálny skript"
  48 "Parametre"
@@ -107,12 +107,12 @@
 
  79 "Ladenie"
 
- 80 "PropCases"
+ 80 "Zobrazit dáta"
  81 "Stránka PropCase"
  82 "Ladiace hodnoty"
  83 "Prehliadac pamäte"
- 84 "Pri stlacení ALT +/-"
- 85 "Vytvor bootovaciu kartu"
+ 84 "ALT +/- cinnost pri ladení"
+ 85 "Vytvorit bootovaciu kartu"
 
 
  86 "Batéria"
@@ -131,9 +131,9 @@
  95 "Predošlý súbor"
  96 "Font"
  97 "Kódová stránka"
- 98 "Zalamuj slová"
+ 98 "Zalamovat slová"
  99 "Autoposun"
-100 "Oneskor autoposun o (s)"
+100 "Oneskorit posun o (s)"
 
 
 101 "Hry"
@@ -195,15 +195,15 @@
 // rozmiestnenie OSD
 141 "Histogram"
 142 "Hlbka ostrosti"
-143 "Extra
+143 "Extra"
 144 "Prídavné hodnoty"
 145 "Ikona batérie"
 146 "Stav batérie"
 147 "Hodiny"
 
 // paleta
-148 "Pre vykreslenie farby stlac SET"
-149 "     Pre ukoncenie stlac MENU    "
+148 "Vykreslenie farby - [SET]"
+149 "     Ukoncenie - [MENU]   "
 150 "Farba"
 151 "%s pre výber farby"
 
@@ -214,7 +214,7 @@
 155 "Remíza! :/"
 
 156 "*** Chybný tah ***"
-157 "Sem nemôžeš tahat!"
+157 "Sem nemožno tahat!"
 158 "Táto bunka nie je prázdna!"
 
 159 "Na tahu: Ty     "
@@ -244,7 +244,7 @@
 // test výkonu
 175 "Test výkonu"
 176 "Výpocet..."
-177 "Štart - stlac [set]"
+177 "Štart - [SET]"
 178 "Obrazovka"
 179 "Zápis        :"
 180 "Cítanie        :"
@@ -255,12 +255,12 @@
 185 "Zápis (64k) :"
 186 "Cítanie (64k) :"
 
-187 "Zakáž vypnutie LCD"
+187 "Zakázat vypnutie LCD"
 
-188 "Vystrihni"
-189 "Kopíruj"
-190 "Prilep"
-191 "Odstrán"
+188 "Vystrihnút"
+189 "Kopírovat"
+190 "Prilepit"
+191 "Odstránit"
 192 "Inverzia výberu"
 193 "*** Vystrihnutie súborov ***"
 194 "Vystrihnút\n%d súborov\nz %s/?"
@@ -271,22 +271,22 @@
 199 "Cakaj..."
 
 200 "Mriežka"
-201 "Vlož mriežku"
-202 "Mriežka"
+201 "Vložit zo súboru"
+202 "Ciary"
 203 "Mriežka"
 204 "Súbor mriežky"
 205 "Aktuálna mriežka"
 
-206 "Redukuj šum"
+206 "Redukcia šumu"
 
-207 "Zmen farby mriežky"
+207 "Zmenit farby mriežky"
 208 "    Ciary"
 209 "    Výpln"
 
 210 "Hlbka ostrosti"
 211 "Hlbka ostrosti"
 212 "Canon vzdial.-predná rov. HO" 
-213 "Použi EXIF vzdialenost"
+213 "Použit EXIF vzdialenost"
 214 "Vzdialenost v príd.hodnotách"
 215 "Predná rovina HO v príd.hod."
 216 "Zadná rovina HO v príd.hod."
@@ -296,7 +296,7 @@
 
 219 "Prídavné hodnoty"
 220 "Prídavné hodnoty"
-221 "Zobraz pri náhlade"	
+221 "Zobrazit pri náhlade"	
 222 "Zoom"		
 223 "Skutocná' clona"
 224 "Skutocná' ISO"
@@ -326,27 +326,27 @@
 245 "Extra vzdialenost"
 246 "    Násobok (mm)"
 
-247 "Stupnuj expozíciu pri sérii"
-248 "Stupnuj expozíciu pri sérii"
-249 "Stupnuj cas"
-250 "Stupnuj clonu"
-251 "Stupnuj ISO"
+247 "Stupnovanie expozície pri sérii"
+248 "Stupnovanie expozície pri sérii"
+249 "Stupen casu"
+250 "Stupen clony"
+251 "Stupen ISO"
 252 "    Násobok"
-253 "Stupnuj vzdialenost (MF)"
+253 "Stupen vzdialenosti (MF)"
 254 "    Násobok (mm)"
 255 "Smer stupnovania"
 
 256 "Autoštart"
 257 "Dialková spúšt"
 
-258 "Riad expozíciu (bez blesku)"
-259 "Riad expozíciu (bez blesku)"
-260 "Prepocítaj expozíciu"
-261 "Prepocítaj Tv expozíciu"
-262 "Prepocítaj Av expozíciu"
-263 "Prepocítaj ISO expozíciu"
+258 "Riadit expozíciu (bez blesku)"
+259 "Riadit expozíciu (bez blesku)"
+260 "Prepocítat expozíciu"
+261 "Prepocítat Tv expozíciu"
+262 "Prepocítat Av expozíciu"
+263 "Prepocítat ISO expozíciu"
 
-264 "Nuluj hodnoty pri štarte"
+264 "Nulovat hodnoty pri štarte"
 
 265 "Canon preexpozícia"
 
@@ -362,10 +362,10 @@
 
 274 "Vzdialenost od šošoviek"
 
-275 "Zruš stupnovanie pri štarte"
+275 "Zrušit stupnovanie pri štarte"
 
-276 "Vytvor kartu s dvoma partíciami"
-277 "Zamen partitície"
+276 "Vytvorit kartu s 2 partíciami"
+277 "Zamenit partitície"
 278 "Toto ZNICÍ VŠETKY INFORMÁCIE\nna karte. Pokracovat?"
 279 "Táto karta má iba jednu partíciu."
 280 "Chyba"
@@ -379,7 +379,7 @@
 
 286 "OSD varovanie"
 287 "OSD varovanie - pozadie"
-288 "Ikona volného miesta"
+288 "Volné miesto - farba ikony"
 289 "Volné miesto - ikona"
 290 "Volné miesto na karte"
 291 "Volné miesto - %"
@@ -390,7 +390,7 @@
 
 296 "RAW - stav"
 
-297 "Video - stav"
+297 "Video - hodnoty"
 
 298 "    Typ násobku"
 299 "Vlastné menu"
@@ -409,11 +409,11 @@
 311 "Hodiny"
 312 "Nastavenie hodín"
 313 "Formát hodín"
-314 "Pozadie volného miesta"
+314 "Volné miesto - farba pozadia"
 315 "Indikátor 12 h formátu"
 316 "Pri pol. stlac. spúšte"
 
-317 "Zobrazenie RAW"
+317 "Nastavenie RAW"
 318 "RAW"
 
 319 "Volné miesto na karte"
@@ -433,24 +433,24 @@
 331 "Názov menu - pozadie" 
 332 "Kurzor - text" 
 333 "Kurzor - pozadie" 
-334 "Centruj menu" 
-335 "Stlm zvuk pri zoomovaní"
+334 "Centrovat menu" 
+335 "Stlmit pocas zoomu"
 
-336 "Odstrán vadné pixely"
+336 "Odstránit vadné pixely"
 337 "Vypnút"
 338 "Priemer"
 339 "RAWkonv"
 
 340 "Extra nastavenia"
 341 "Extra nastavenia - pozadie"
-342 "Zakáž extra nastavenia"
-343 "  Zahrn AutoISO & stupnov."
-344 "  Skry OSD"
+342 "Zakázat extra nastavenia"
+343 "  Zahrnút AutoISO & stupnov."
+344 "  Skryt OSD"
 345 "Nie pri videozázname"
 346 "Zvyšný cas videa"
 347 "  Rýchlost obnovovania (~s)"
 348 "Zvyšný cas videa"
-349 "Zruš param. videa pri štarte"
+349 "Zrušit par. videa pri štarte"
 350 "Rýchle prepnutie EV"
 351 "   Velkost kroku"
 352 "Korekcia EV"
@@ -471,7 +471,7 @@
 
 365 "Vlastné krivky"
 366 "Vlastné krivky"
-367 "Vlož profil krivky"
+367 "Vložit profil krivky"
 368 "Krivka"
 369 "Súbor krivky"
 
@@ -486,18 +486,18 @@
 376 "Dialková spúšt"
 377 "Synch. dialková spúšt"
 378 "Synchronizácia"
-379 "Oneskor synchronizáciu"
+379 "Oneskorit synchronizáciu"
 380 "Oneskorenie (krok 0.1ms)"
 381 "Oneskorenie (krok 0.1s)"
 
-382 "Tlacítko AF - video"
+382 "Tlacidlo AF"
 383 "Prvotné hodnoty parametrov"
 384 "Nastavenie parametrov"
 
-385 "RAW nie pri športe"
-386 "RAW nie pri burst"
-387 "RAW nie pri EV stupnovaní"
-388 "RAW nie pri casovaci"
+385 "Zakázat RAW @ šport"
+386 "Zakázat RAW @ burst"
+387 "Zakázat RAW @ EV stupnovanie"
+388 "Zakázat RAW @ casovac"
 
 389 "Výnimky"
 390 "Menu výnimiek RAW"
@@ -515,10 +515,50 @@
 401 "Zvuk pri štarte"
 402 "Odcít. RAW - predpona"
 403 "Odcít. RAW - prípona"
-404 "Odcítaj vstup. hodn. tmy"
-405 "Odcítaj výst. hodn. tmy"
+404 "Odcítat vstup. hodn. tmy"
+405 "Odcítat výst. hodn. tmy"
 406 "od"
 407 "...%d viac súborov"
 408 "Odcítanie"
-409 "Odcítaj od oznaceného"
-410 "Ulož parametre"
+409 "Odcítat od oznaceného"
+410 "Uložit parametre"
+411 "Video Ev display"
+412 " Hodnota prestavenia zoomu"
+413 "Prestavenie zoomu"
+414 "   Nulovat pri štarte"
+415 "pridat príponu RAW"
+416 "  vo Fahrenheitoch"
+417 "Vložit prekrytie okrajov"
+418 "Ulozit prekrytie okrajov"
+419 "Povolit pri prehliadaní"
+420 "Volná vnútorná pamät"
+421 "Vložit+nastavit zoom"
+422 "Zamknút prekrytie okrajov"
+423 "Blesk na zadnú lamelu"
+424 "DNG formát"
+425 "RAW buffer uložený"
+426 "Nemožno vložit CHDK/badpixel.bin\nSpusti \nCHDK/SCRIPTS/TEST/badpixel.lua"
+427 "Cas ukladania RAW"
+428 "Štvorica"
+429 "Protivník:"
+430 "Clovek"
+431 "Hru vyhral hrác 1"
+432 "Hru vyhral hrác 2"
+433 "Porazil som Ta!"
+434 "Hra skoncila remízou"
+435 "Zakázat RAW @ Prekrytie okrajov"
+436 "Zakázat RAW @ Auto"
+437 "Blesk pri video?"
+438 "   Výkon blesku"
+439 "Prípona 'DNG' súboru"
+440 "DNG viditelné cez USB"
+441 "Mastermind"
+442 "dostupné farby"
+443 "na správnom mieste"
+444 "správna farba"
+445 "SPRÁVNE :-)"
+446 "KONIEC HRY"
+447 "[<-][->] výber stlpca"
+448 "[UP][DOWN] výber farby"
+449 "[SET] další riadok"
+450 "ŽIADNA FARBA 2x"
