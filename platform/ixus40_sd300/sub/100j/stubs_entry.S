@@ -99,6 +99,8 @@ NSTUB(SleepTask, 0xff8235e4)
 // ALT: NSTUB(SleepTask, 0xfff14204) // 31/0
 NSTUB(TakeSemaphore, 0xff822f5c)
 // ALT: NSTUB(TakeSemaphore, 0xfff13ac8) // 31/0
+NSTUB(TurnOffBackLight, 0xff99e594)
+NSTUB(TurnOnBackLight, 0xff99e568)
 // Best match: 65%
 NSTUB(UnlockMainPower, 0xff95625c)
 NSTUB(Unmount_FileSystem, 0xff870344)

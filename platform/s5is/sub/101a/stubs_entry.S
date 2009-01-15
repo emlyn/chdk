@@ -73,6 +73,10 @@ NSTUB(SetPropertyCase, 0xff86b32c)
 // Best match: 92%
 NSTUB(SleepTask, 0xff82ac20)
 NSTUB(TakeSemaphore, 0xff81b860)
+// Best match: 58%
+NSTUB(TurnOffBackLight, 0xff888468)
+// Best match: 77%
+NSTUB(TurnOnBackLight, 0xff888450)
 // ERROR: UIFS_WriteFirmInfoToFile is not found!
 // Best match: 60%
 NSTUB(UnlockMainPower, 0xff877d4c)

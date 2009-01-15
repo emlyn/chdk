@@ -82,6 +82,8 @@ NSTUB(SetParameterData, 0xff994a88)
 NSTUB(SetPropertyCase, 0xff824870)
 NSTUB(SleepTask, 0xff82156c)
 NSTUB(TakeSemaphore, 0xff821068)
+NSTUB(TurnOffBackLight, 0xff9e6b2c)
+NSTUB(TurnOnBackLight, 0xff9e6afc)
 NSTUB(UnlockMainPower, 0xff98f1b0)
 NSTUB(Unmount_FileSystem, 0xff870244)
 // ERROR: UnsetZoomForMovie is not found!

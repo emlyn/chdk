@@ -632,6 +632,16 @@ void ExitFromCompensationEVF()
   _ExitFromCompensationEVF();
 }
 
+void TurnOnBackLight(void)
+{
+  _TurnOnBackLight();
+}
+
+void TurnOffBackLight(void)
+{
+  _TurnOffBackLight();
+}
+
 #if CAM_MULTIPART
 
 #define SECTOR_SIZE 512

@@ -849,6 +849,16 @@ static int luaCB_raw_merge_end( lua_State* L )
   return 0;
 }
 
+// Enable/disable LCD back light (input argument 1/0)
+static int luaCB_set_backlight( lua_State* L )
+{
+  int val = (luaL_checknumber(L,1));
+
+  if (val > 0) TurnOnBackLight();
+  else TurnOffBackLight();
+  return 0;
+}
+
 void register_lua_funcs( lua_State* L )
 {
 #define FUNC( X )			\
@@ -983,4 +993,5 @@ void register_lua_funcs( lua_State* L )
   FUNC(raw_merge_start);
   FUNC(raw_merge_add_file);
   FUNC(raw_merge_end);
+  FUNC(set_backlight);
 }

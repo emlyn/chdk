@@ -3440,6 +3440,55 @@ static FuncSig func_sig_iosDevFind_1[] = {
 	/* 27/32 */
 };
 
+static FuncSig func_sig_TurnOnBackLight_1[] = {
+	{   0, 0xe59f000c, 0xfdffffff }, // ldr:4:0xE59F000C
+	{   1, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{   2, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF9CD1C
+	{   3, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{   4, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDFD0D
+	{   7, 0x4066664f, 0xfdffffff }, // rsb:6:0x4266664F
+	{  10, 0x00000000, 0xfdffffff }, // and:6:0x00000000
+	{  11, 0xe59f000c, 0xfdffffff }, // ldr:4:0xE59F000C
+	{  12, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  13, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF9CD11
+	{  14, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  15, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDFD3B
+	{  20, 0x61536c61, 0xfdffffff }, // cmp:7:0x63536C61
+	{  22, 0x00000000, 0xfdffffff }, // and:6:0x00000000
+	{  23, 0xe59f000c, 0xfdffffff }, // ldr:4:0xE59F000C
+	{  24, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  25, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF9CD05
+	{  26, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  27, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDF05F
+	{  30, 0x5066664f, 0xfdffffff }, // rsb:6:0x5066664F
+	{ -1, -1, -1 },
+	/* 20/32 */
+};
+
+static FuncSig func_sig_TurnOffBackLight_1[] = {
+	{   0, 0xe59f000c, 0xfdffffff }, // ldr:4:0xE59F000C
+	{   1, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{   2, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF9CD11
+	{   3, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{   4, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDFD3B
+	{   9, 0x61536c61, 0xfdffffff }, // cmp:7:0x63536C61
+	{  11, 0x00000000, 0xfdffffff }, // and:6:0x00000000
+	{  12, 0xe59f000c, 0xfdffffff }, // ldr:4:0xE59F000C
+	{  13, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  14, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF9CD05
+	{  15, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  16, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDF05F
+	{  19, 0x5066664f, 0xfdffffff }, // rsb:6:0x5066664F
+	{  23, 0x0000006e, 0xfdffffff }, // and:6:0x0000006E
+	{  24, 0xe59f000c, 0xfdffffff }, // ldr:4:0xE59F000C
+	{  25, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  26, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF9CCF9
+	{  27, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  28, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDF067
+	{ -1, -1, -1 },
+	/* 19/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   1, 0xe59f6030, 0xfdffffff }, // ldr:4:0xE59F6030
 	{   2, 0xe5965000, 0xfdffffff }, // ldr:4:0xE5965000
@@ -4659,6 +4708,60 @@ static FuncSig func_sig_PutOutNdFilter_2[] = {
 	/* 17/32 */
 };
 
+static FuncSig func_sig_TurnOnBackLight_2[] = {
+	{   0, 0xe59f1010, 0xfdffffff }, // ldr:4:0xE59F1010
+	{   1, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{   2, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF929AA
+	{   4, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{   5, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDEB6B
+	{   8, 0x4066664f, 0xfdffffff }, // rsb:6:0x4266664F
+	{  11, 0x00000000, 0xfdffffff }, // and:6:0x00000000
+	{  12, 0xe59f1010, 0xfdffffff }, // ldr:4:0xE59F1010
+	{  13, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  14, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  15, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF9299E
+	{  16, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  17, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDEB7A
+	{  22, 0x61536c61, 0xfdffffff }, // cmp:7:0x63536C61
+	{  24, 0x00000000, 0xfdffffff }, // and:6:0x00000000
+	{  25, 0xe59f1010, 0xfdffffff }, // ldr:4:0xE59F1010
+	{  26, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  27, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  28, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF92991
+	{  29, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  30, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDDFEA
+	{ -1, -1, -1 },
+	/* 22/32 */
+};
+
+static FuncSig func_sig_TurnOffBackLight_2[] = {
+	{   0, 0xe59f1010, 0xfdffffff }, // ldr:4:0xE59F1010
+	{   1, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{   2, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF9299E
+	{   4, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{   5, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDEB7A
+	{  10, 0x61536c61, 0xfdffffff }, // cmp:7:0x63536C61
+	{  12, 0x00000000, 0xfdffffff }, // and:6:0x00000000
+	{  13, 0xe59f1010, 0xfdffffff }, // ldr:4:0xE59F1010
+	{  14, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  15, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  16, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF92991
+	{  17, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  18, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDDFEA
+	{  21, 0x5066664f, 0xfdffffff }, // rsb:6:0x5066664F
+	{  25, 0x0000006e, 0xfdffffff }, // and:6:0x0000006E
+	{  26, 0xe59f1010, 0xfdffffff }, // ldr:4:0xE59F1010
+	{  27, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  28, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  29, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF92984
+	{  30, 0xe49de004, 0xfdffffff }, // ldr:4:0xE49DE004
+	{  31, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFDDFF1
+	{ -1, -1, -1 },
+	/* 22/32 */
+};
+
 static FuncSig func_sig_Fclose_Fut_3[] = {
 	{   1, 0xe0506000, 0xfdffffff }, // sub:6:0xE2506000
 	{   2, 0xe04dd03c, 0xfdffffff }, // sub:6:0xE24DD03C
@@ -5113,6 +5216,10 @@ FuncsList func_list[] = {
 	{ "SetPropertyCase", func_sig_SetPropertyCase_2 },
 	{ "SleepTask", func_sig_SleepTask_1 },
 	{ "TakeSemaphore", func_sig_TakeSemaphore_1 },
+	{ "TurnOffBackLight", func_sig_TurnOffBackLight_1 },
+	{ "TurnOffBackLight", func_sig_TurnOffBackLight_2 },
+	{ "TurnOnBackLight", func_sig_TurnOnBackLight_1 },
+	{ "TurnOnBackLight", func_sig_TurnOnBackLight_2 },
 	{ "UnlockMainPower", func_sig_UnlockMainPower_1 },
 	{ "UnlockMainPower", func_sig_UnlockMainPower_2 },
 	{ "Unmount_FileSystem", func_sig_Unmount_FileSystem_1 },

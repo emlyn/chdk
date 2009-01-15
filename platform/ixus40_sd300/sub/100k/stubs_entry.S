@@ -80,6 +80,8 @@ NSTUB(RenameFile_Fut, 0xff869934)
 NSTUB(SleepTask, 0xff8235e4)
 // ALT: NSTUB(SleepTask, 0xff823698) // 31/0
 NSTUB(TakeSemaphore, 0xff822f5c)
+NSTUB(TurnOffBackLight, 0xff99e594)
+NSTUB(TurnOnBackLight, 0xff99e568)
 // Best match: 65%
 NSTUB(UnlockMainPower, 0xff95625c)
 NSTUB(Unmount_FileSystem, 0xff870344)

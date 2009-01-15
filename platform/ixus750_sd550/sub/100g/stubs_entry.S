@@ -80,6 +80,8 @@ NSTUB(SetPropertyCase, 0xff825414)
 NSTUB(SleepTask, 0xff8220d4)
 // ALT: NSTUB(SleepTask, 0xff822188) // 31/0
 NSTUB(TakeSemaphore, 0xff821a90)
+NSTUB(TurnOffBackLight, 0xff9a2d8c)
+NSTUB(TurnOnBackLight, 0xff9a2d60)
 // Best match: 96%
 NSTUB(UnlockMainPower, 0xff960260)
 NSTUB(Unmount_FileSystem, 0xff86eb44)

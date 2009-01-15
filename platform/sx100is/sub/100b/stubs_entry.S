@@ -65,6 +65,10 @@ NSTUB(SetPropertyCase, 0xffc52d28)
 // Best match: 92%
 NSTUB(SleepTask, 0xffc19cb8)
 NSTUB(TakeSemaphore, 0xffc0ba54)
+// Best match: 58%
+NSTUB(TurnOffBackLight, 0xffc6bd54)
+// Best match: 77%
+NSTUB(TurnOnBackLight, 0xffc6bd3c)
 NSTUB(UIFS_WriteFirmInfoToFile, 0xffd61640)
 NSTUB(UnlockMainPower, 0xffc5f668)
 NSTUB(UpdateMBROnFlash, 0xffc40434)

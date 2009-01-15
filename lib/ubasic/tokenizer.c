@@ -150,6 +150,7 @@ static const struct keyword_token keywords[] = {
   {"set_av_rel",              TOKENIZER_SET_USER_AV_BY_ID_REL}, //FOR COMPATIBILITY
   {"set_av96",                TOKENIZER_SET_AV96},
   {"set_av",                  TOKENIZER_SET_USER_AV_BY_ID}, //FOR COMPATIBILITY
+  {"set_backlight",           TOKENIZER_SET_BACKLIGHT},
   {"set_focus",               TOKENIZER_SET_FOCUS},
   {"set_iso_mode",            TOKENIZER_SET_ISO_MODE},
   {"set_iso_real",            TOKENIZER_SET_ISO_REAL},

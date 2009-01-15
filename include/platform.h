@@ -465,6 +465,9 @@ extern int zoom_status;
 void EnterToCompensationEVF(void);
 void ExitFromCompensationEVF(void);
 
+void TurnOnBackLight(void);
+void TurnOffBackLight(void);
+
 void wait_until_remote_button_is_released(void);
 short shooting_get_ev_correction1();
 

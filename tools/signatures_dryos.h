@@ -2969,6 +2969,62 @@ static FuncSig func_sig_SetFileTimeStamp_1[] = {
 	/* 18/20 */
 };
 
+static FuncSig func_sig_TurnOnBackLight_1[] = {
+	{   1, 0xe08f10c4, 0xfdffffff }, // add:6:0xE28F10C4
+	{   2, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFC1F5
+	{   5, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFF2ED5
+	{   7, 0xe08f10bc, 0xfdffffff }, // add:6:0xE28F10BC
+	{   8, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{   9, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFC1EF
+	{  11, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFF2EF5
+	{  13, 0xe08f10b8, 0xfdffffff }, // add:6:0xE28F10B8
+	{  14, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  15, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFC1E9
+	{  17, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFF2B4E
+	{  19, 0xe08f10b8, 0xfdffffff }, // add:6:0xE28F10B8
+	{  20, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  21, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFC1E3
+	{  23, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFF2B3A
+	{  25, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  26, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  27, 0xe08f10b0, 0xfdffffff }, // add:6:0xE28F10B0
+	{  28, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFC1DC
+	{  29, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  31, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFF2B4E
+	{ -1, -1, -1 },
+	/* 22/32 */
+};
+
+static FuncSig func_sig_TurnOffBackLight_1[] = {
+	{   1, 0xe08f10bc, 0xfdffffff }, // add:6:0xE28F10BC
+	{   2, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFC1EF
+	{   5, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFF2EF5
+	{   7, 0xe08f10b8, 0xfdffffff }, // add:6:0xE28F10B8
+	{   8, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{   9, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFC1E9
+	{  11, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFF2B4E
+	{  13, 0xe08f10b8, 0xfdffffff }, // add:6:0xE28F10B8
+	{  14, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  15, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFC1E3
+	{  17, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFF2B3A
+	{  19, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  20, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  21, 0xe08f10b0, 0xfdffffff }, // add:6:0xE28F10B0
+	{  22, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFC1DC
+	{  23, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  25, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFF2B4E
+	{  26, 0xe08f10ac, 0xfdffffff }, // add:6:0xE28F10AC
+	{  27, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  28, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFC1D6
+	{  29, 0xe08f10c4, 0xfdffffff }, // add:6:0xE28F10C4
+	{  30, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  31, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFC1D3
+	{ -1, -1, -1 },
+	/* 24/32 */
+};
+
 static FuncSig func_sig_AllocateMemory_2[] = {
 	{   0, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
 	{   1, 0xea000000, 0xff000000 }, // b, bl:3:0xEAF80561
@@ -3662,6 +3718,8 @@ FuncsList func_list[] = {
 	{ "SetPropertyCase", func_sig_SetPropertyCase_2 },
 	{ "SleepTask", func_sig_SleepTask_1 },
 	{ "TakeSemaphore", func_sig_TakeSemaphore_1 },
+	{ "TurnOffBackLight", func_sig_TurnOffBackLight_1 },
+	{ "TurnOnBackLight", func_sig_TurnOnBackLight_1 },
 	{ "UIFS_WriteFirmInfoToFile", func_sig_UIFS_WriteFirmInfoToFile_1 },
 	{ "UnlockMainPower", func_sig_UnlockMainPower_1 },
 	{ "UpdateMBROnFlash", func_sig_UpdateMBROnFlash_1 },

@@ -83,6 +83,8 @@ NSTUB(SetParameterData, 0xffd5d658)
 NSTUB(SetPropertyCase, 0xffc143d4)
 NSTUB(SleepTask, 0xffc11170)
 NSTUB(TakeSemaphore, 0xffc10c6c)
+NSTUB(TurnOffBackLight, 0xffda486c)
+NSTUB(TurnOnBackLight, 0xffda483c)
 NSTUB(UnlockMainPower, 0xffd5870c)
 NSTUB(Unmount_FileSystem, 0xffc5d880)
 // Best match: 89%

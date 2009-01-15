@@ -1922,6 +1922,16 @@ static void wheel_right_statement(void){
   accept_cr();
 }
 
+static void set_backlight_statement(void)
+{
+  int val;
+  accept(TOKENIZER_SET_BACKLIGHT);
+  val = expr();
+  if (val > 0) TurnOnBackLight();
+  else TurnOffBackLight();
+  accept_cr();
+}
+
 
 static void shutdown_statement(void){
   accept(TOKENIZER_SHUT_DOWN);
@@ -2362,6 +2372,9 @@ statement(void)
     break;
   case TOKENIZER_SHUT_DOWN:
     shutdown_statement();
+    break;
+  case TOKENIZER_SET_BACKLIGHT:
+    set_backlight_statement();
     break;
 
 // >> mx3 . motion detector

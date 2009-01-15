@@ -97,3 +97,5 @@ DeleteFile_Fut 0xFFC14894
 RenameFile_Fut 0xFFC14840 17
 MakeDirectory_Fut 0xFFC14908 28
 SetFileTimeStamp 0xFFC15308 20
+TurnOnBackLight 0xffc676dc
+TurnOffBackLight 0xffc676f4

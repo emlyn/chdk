@@ -128,3 +128,5 @@ DeleteFile_Fut 0xFFC55A2C 12
 MakeDirectory_Fut 0xFFC55AB8
 errnoOfTaskGet 0xFFEB85C8
 iosDevFind 0xFFEBD008
+TurnOnBackLight 0xffd93428
+TurnOffBackLight 0xffd93454

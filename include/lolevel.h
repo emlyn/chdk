@@ -213,6 +213,9 @@ extern void _SetAE_ShutterSpeed(short* tv);
 extern void _EnterToCompensationEVF(void);
 extern void _ExitFromCompensationEVF(void);
 
+extern void _TurnOnBackLight(void);
+extern void _TurnOffBackLight(void);
+
 // reyalp used to calculate size of loaded CHDK
 // these are linker symbols, with no actual data attached!
 extern const char _start,_end;

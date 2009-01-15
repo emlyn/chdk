@@ -81,6 +81,8 @@ NSTUB(SetPropertyCase, 0xff81bc1c)
 NSTUB(SleepTask, 0xffb419dc)
 // Best match: 61%
 NSTUB(TakeSemaphore, 0xffb41494)
+NSTUB(TurnOffBackLight, 0xff848a6c)
+NSTUB(TurnOnBackLight, 0xff848a3c)
 NSTUB(UnlockMainPower, 0xffb63918)
 NSTUB(Unmount_FileSystem, 0xffaae028)
 // ERROR: UnsetZoomForMovie is not found!
