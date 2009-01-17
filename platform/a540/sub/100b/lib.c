@@ -44,7 +44,11 @@ void *vid_get_viewport_fb()
 
 void *vid_get_viewport_fb_d()
 {
-    return (void*)(*(int*)0x60BA0); // OK (find on "WBTblAdj.c")
+  // copied from a570, equivalent address found searching ImagePlayer.c
+  // I'm not convinced this code is right, but the address appears to be right most of the time.
+  #define BASE_FB_D (0x63998)
+  return (void*) (*(int*)(BASE_FB_D+0x10) ? *(int*)(BASE_FB_D+0x0) : *(int*)(BASE_FB_D+0x14));
+//    return (void*)(*(int*)0x60BA0); // OK (find on "WBTblAdj.c")
 }
 
 long vid_get_bitmap_screen_width()
