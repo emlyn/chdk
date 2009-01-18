@@ -48,3 +48,5 @@ NHSTUB(PT_PlaySound, 0xFF960080)
 //NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
 NHSTUB(MakeAFScan, 0xFF94EF7C)  //DoAFLock
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFF8F94B8)  
+NHSTUB(DoAFLock, 0xff94ef7c)
+NHSTUB(UnlockAF, 0xff94eff4)

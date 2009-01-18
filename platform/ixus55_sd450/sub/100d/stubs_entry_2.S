@@ -25,3 +25,5 @@ NHSTUB(PT_PlaySound, 0xFF957554)
 
 NHSTUB(EnterToCompensationEVF, 0xff94c3ac) 
 NHSTUB(ExitFromCompensationEVF, 0xff94c40c) 
+NHSTUB(DoAFLock, 0xff94a558)
+NHSTUB(UnlockAF, 0xff94a598)

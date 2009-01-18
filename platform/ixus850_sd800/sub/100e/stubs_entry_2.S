@@ -45,3 +45,5 @@ NHSTUB(WriteSDCard, 0xFF8896FC)
 
 //NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
 //NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
+NHSTUB(DoAFLock, 0xff995318)
+NHSTUB(UnlockAF, 0xff995364)

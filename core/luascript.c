@@ -13,6 +13,15 @@
 #include "raw.h"
 #include "raw_merge.h"
 
+static int luaCB_set_aflock(lua_State* L) 
+{
+  int val = luaL_checknumber(L, 1);
+  if (val>0) DoAFLock();  // 1: enable AFLock
+  else UnlockAF();       // 0: disable unlock AF
+  return 0;
+}
+
+
 static int luaCB_shoot( lua_State* L )
 {
   kbd_sched_shoot();
@@ -994,4 +1003,5 @@ void register_lua_funcs( lua_State* L )
   FUNC(raw_merge_add_file);
   FUNC(raw_merge_end);
   FUNC(set_backlight);
+   FUNC(set_aflock);
 }

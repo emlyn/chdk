@@ -50,3 +50,5 @@ NHSTUB(PT_PlaySound, 0xFF969874)
 
 //NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
 //NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
+NHSTUB(DoAFLock, 0xff95b8e8)
+NHSTUB(UnlockAF, 0xff95b92c)

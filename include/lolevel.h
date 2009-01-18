@@ -220,4 +220,7 @@ extern void _TurnOffBackLight(void);
 // these are linker symbols, with no actual data attached!
 extern const char _start,_end;
 
+extern void _DoAFLock(void);
+extern void _UnlockAF(void);
+
 #endif

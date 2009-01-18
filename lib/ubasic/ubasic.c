@@ -1932,6 +1932,17 @@ static void set_backlight_statement(void)
   accept_cr();
 }
 
+static void
+set_aflock_statement(void)
+{
+  int val;
+  accept(TOKENIZER_SET_AFLOCK);
+  val = expr();
+  if (val>0) DoAFLock();  // 1: enable AFLock
+  else UnlockAF();       // 0: disable unlock AF
+  accept_cr();
+}
+
 
 static void shutdown_statement(void){
   accept(TOKENIZER_SHUT_DOWN);
@@ -2092,6 +2103,10 @@ statement(void)
   token = tokenizer_token();
 
   switch(token) {
+// aflock
+  case TOKENIZER_SET_AFLOCK:
+    set_aflock_statement();
+    break;
 
   case TOKENIZER_PRINT_SCREEN:
     print_screen_statement();

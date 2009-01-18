@@ -211,6 +211,7 @@ static const struct keyword_token keywords[] = {
   {"get_nd_present",          TOKENIZER_GET_ND_PRESENT},
   {"get_histo_range",         TOKENIZER_GET_HISTO_RANGE},
    {"shot_histo_enable",       TOKENIZER_SHOT_HISTO_ENABLE},
+   {"set_aflock",            TOKENIZER_SET_AFLOCK},
   
   {"end",                     TOKENIZER_END},
 

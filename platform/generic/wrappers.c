@@ -642,6 +642,16 @@ void TurnOffBackLight(void)
   _TurnOffBackLight();
 }
 
+void DoAFLock(void)
+{
+  _DoAFLock();
+}
+
+void UnlockAF(void)
+{
+  _UnlockAF();
+}
+
 #if CAM_MULTIPART
 
 #define SECTOR_SIZE 512

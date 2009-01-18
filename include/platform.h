@@ -482,6 +482,10 @@ void save_ext_for_dng(void);
 void change_ext_to_dng(void);
 void change_ext_to_default(void);
 
+void DoAFLock(void);
+void UnlockAF(void);
+
+
 
 #define started() debug_led(1)
 #define finished() debug_led(0)

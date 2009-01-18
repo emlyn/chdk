@@ -33,4 +33,6 @@ NSTUB(Unmount_FileSystem, 0xffc00948)
 NSTUB(Mount_FileSystem, 0xffc00948)
 NSTUB(rewinddir, 0xffc00948)
 NSTUB(SetZoomActuatorSpeedPercent, 0xffc00948)
+NHSTUB(DoAFLock, 0xffc15b04)
+NHSTUB(UnlockAF, 0xffc15c1c)
 

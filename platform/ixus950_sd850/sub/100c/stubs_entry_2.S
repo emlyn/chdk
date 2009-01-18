@@ -60,3 +60,5 @@ NHSTUB(taskNameToId, 0xFF935A64)
 
 //NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
 //NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
+NHSTUB(DoAFLock, 0xffb09200)
+NHSTUB(UnlockAF, 0xffb09280)

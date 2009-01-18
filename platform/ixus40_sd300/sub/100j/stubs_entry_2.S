@@ -114,5 +114,7 @@ NHSTUB(PT_PlaySound, 0xff94f2bc) // dk - wrong in 100k version!
 
 NHSTUB(EnterToCompensationEVF, 0xff93e1e0)  // dk
 NHSTUB(ExitFromCompensationEVF, 0xff93e220) // dk
+NHSTUB(DoAFLock, 0xff93e07c)
+NHSTUB(UnlockAF, 0xff93e0dc)
 
 

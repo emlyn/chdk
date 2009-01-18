@@ -35,3 +35,5 @@ NHSTUB(WriteSDCard, 0xFFAAC394)
 
 NHSTUB(EnterToCompensationEVF, 0xffafaae0) 
 NHSTUB(ExitFromCompensationEVF, 0xffafab64) 
+NHSTUB(DoAFLock, 0xffafa738)
+NHSTUB(UnlockAF, 0xffafa7b8)
