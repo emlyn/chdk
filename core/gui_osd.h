@@ -37,8 +37,6 @@ extern void gui_osd_init();
 extern void gui_osd_kbd_process();
 extern void gui_osd_draw();
 
-extern void gui_osd_zebra_init();
-
 extern void gui_osd_draw_histo();
 extern void gui_osd_draw_dof();
 extern void gui_osd_draw_state();
@@ -54,7 +52,7 @@ extern void gui_osd_calc_dof();
 extern void gui_osd_calc_expo_param();
 //ARM End
 
-extern int  gui_osd_draw_zebra();
+extern int  gui_osd_draw_zebra(int show);
 extern void gui_osd_draw_movie_time_left();
 
 extern void gui_osd_draw_ev_video(int visible);
