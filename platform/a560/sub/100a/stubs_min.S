@@ -13,3 +13,5 @@ DEF(recreview_hold, 0x2598)
 DEF(movie_status, 0xA2780)  
 DEF(some_flag_for_af_scan, 0xBFA8)
 DEF(zoom_status, 0x2660)
+DEF(some_f_for_dng, 0x665C) 
+DEF(second_ext_for_dng, 0x6680) // ".THM"

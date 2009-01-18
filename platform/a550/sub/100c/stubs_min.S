@@ -12,4 +12,6 @@ DEF(recreview_hold, 0x2588)	// sync with a560 and a630
 DEF(movie_status, 0x9BAFC)  
 DEF(some_flag_for_af_scan, 0xB92C)
 DEF(zoom_status, 0x2650)
+DEF(some_f_for_dng, 0x60C8) 
+DEF(second_ext_for_dng, 0x60EC) // ".THM"
 

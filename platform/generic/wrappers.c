@@ -845,7 +845,9 @@ asm volatile(
  );
 }
 
-#if defined (DNG_EXT_FROM) && defined(DNG_EXT_TO)
+#if defined (DNG_EXT_FROM)
+
+#define DNG_EXT_TO ".DNG"
 
 typedef int(*p_some_f)(char*, int);
 

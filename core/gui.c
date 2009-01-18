@@ -260,7 +260,7 @@ static void cb_zebra_restore_osd();
 #if DNG_SUPPORT
 static void cb_change_dng(); 
 #endif
-#if defined (DNG_EXT_FROM) && defined(DNG_EXT_TO)
+#if defined (DNG_EXT_FROM)
 static void cb_change_dng_usb_ext(); 
 #endif
 
@@ -421,7 +421,7 @@ static CMenuItem misc_submenu_items[] = {
     {0x2a,LANG_MENU_MAIN_DEBUG,              MENUITEM_SUBMENU,   (int*)&debug_submenu },
 #endif
     {0x86,LANG_MENU_REMOTE_PARAM,            MENUITEM_SUBMENU,   (int*)&remote_submenu },
-#if defined (DNG_EXT_FROM) && defined(DNG_EXT_TO)
+#if defined (DNG_EXT_FROM)
     {0x71,LANG_MENU_DNG_VIA_USB,        MENUITEM_BOOL | MENUITEM_ARG_CALLBACK, &conf.dng_usb_ext , (int)cb_change_dng_usb_ext},
 #endif
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
@@ -972,7 +972,7 @@ void cb_change_dng(){
 }
 #endif
 
-#if defined (DNG_EXT_FROM) && defined(DNG_EXT_TO)
+#if defined (DNG_EXT_FROM)
 void cb_change_dng_usb_ext(){
  if (conf.dng_usb_ext) change_ext_to_dng(); else change_ext_to_default();
 }

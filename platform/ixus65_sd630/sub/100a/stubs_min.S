@@ -42,3 +42,5 @@ canon_menu_active_prev:
 canon_menu_active:
 	.word canon_menu_active_prev
 
+DEF(some_f_for_dng, 0x8CBC)
+DEF(second_ext_for_dng, 0x8CE0)

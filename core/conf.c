@@ -459,7 +459,7 @@ void conf_change_dng(void){
 }
 
 void conf_change_dng_ext(void){
-#if defined (DNG_EXT_FROM) && defined(DNG_EXT_TO)
+#if defined (DNG_EXT_FROM)
  save_ext_for_dng();
  if (conf.dng_usb_ext) change_ext_to_dng(); else change_ext_to_default();
 #endif 
