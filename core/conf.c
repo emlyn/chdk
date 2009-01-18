@@ -43,7 +43,6 @@ int state_expos_recalculated;
 int state_expos_under;
 int state_expos_over;
 int auto_started;
-int shot_histogram_enabled;
 
 int state_debug1;
 int debug_propcase_show;

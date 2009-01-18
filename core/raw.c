@@ -102,7 +102,7 @@ int raw_savefile() {
      char *thumbnail_buf = NULL;
      if (conf.dng_raw) exif_data=capture_data_for_exif();
 #endif    
-    if (state_kbd_script_run && shot_histogram_enabled) build_shot_histogram();
+    if (state_kbd_script_run && shot_histogram_isenabled()) build_shot_histogram();
 
     // ! ! ! exclusively for special script which creates badpixel.bin ! ! !
     if (conf.save_raw==255) conf.save_raw=get_bad_count_and_write_file("A/CHDK/bad_tmp.bin");

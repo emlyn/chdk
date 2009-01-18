@@ -425,8 +425,6 @@ void ubasic_camera_set_script_autostart();
 void exit_alt();
 void camera_shutdown_in_a_second(void); 
 
-extern int shot_histogram_enabled;
-
 void disable_shutdown();
 void enable_shutdown();
 

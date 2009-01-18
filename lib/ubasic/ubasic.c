@@ -443,7 +443,7 @@ case TOKENIZER_IS_PRESSED:
     accept(TOKENIZER_GET_HISTO_RANGE);
     int from = expr();
     int to = expr();
-    if (shot_histogram_enabled) r = (unsigned short)shot_histogram_get_range(from, to);
+    if (shot_histogram_isenabled()) r = (unsigned short)shot_histogram_get_range(from, to);
     else r = -1;
     break;
   case TOKENIZER_GET_TEMPERATURE:
@@ -2090,7 +2090,7 @@ static void shot_histo_enable_statement()
     int to;
     accept(TOKENIZER_SHOT_HISTO_ENABLE);
     to = expr();
-    shot_histogram_enabled = to;
+    shot_histogram_set(to);
     accept_cr();
 }
 

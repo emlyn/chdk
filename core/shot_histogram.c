@@ -8,8 +8,33 @@
 #define RAW_TARGET_DIRECTORY    "A/DCIM/%03dCANON"
 #define RAW_TARGET_FILENAME     "%s_%04d.%s"
 
-unsigned short shot_histogram[1024];
+#define SHOT_HISTOGRAM_SAMPLES 1024
+#define SHOT_HISTOGRAM_SIZE (SHOT_HISTOGRAM_SAMPLES*sizeof(short))
+
+unsigned short *shot_histogram=NULL;
 unsigned short shot_margin_left=0, shot_margin_top=0, shot_margin_right=0, shot_margin_bottom=0;
+
+// enable or disable shot histogram
+int shot_histogram_set(int enable)
+{
+ if(enable) {
+  if(shot_histogram)
+   return 1;
+  shot_histogram=malloc(SHOT_HISTOGRAM_SIZE);
+  if(!shot_histogram)
+   return 0;
+ }
+ else {
+  free(shot_histogram);
+  shot_histogram=NULL;
+ }
+ return 1;
+}
+
+int shot_histogram_isenabled()
+{
+ return(shot_histogram != NULL);
+}
 
 void build_shot_histogram()
 {
@@ -18,16 +43,15 @@ void build_shot_histogram()
  // we just need an estimate of luminance
  // SHOT_HISTOGRAM_MARGIN defines a margin around the sensor that will be ignored 
  // (dead area)
+ if(!shot_histogram_isenabled())
+ 	return;
  
  int x, y, x0, x1, y0, y1;
  
  int marginstep;
  
  short p;
- for (x = 0; x < 1024; x ++ ) 
- {
-  shot_histogram[x]=0;
- }
+ memset(shot_histogram,0,SHOT_HISTOGRAM_SIZE);
  
  marginstep= (CAM_RAW_ROWPIX - 2 * SHOT_HISTOGRAM_MARGIN)/10;
 
@@ -78,6 +102,8 @@ int shot_histogram_get_range(int histo_from, int histo_to)
  tot=0;
  rng=0;
  
+ if(!shot_histogram_isenabled()) // TODO we could return an error somehow
+  return 0;
  for (x = 0 ; x < 1024; x ++ )  
  {
 	 tot += shot_histogram[x];

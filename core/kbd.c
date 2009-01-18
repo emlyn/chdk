@@ -250,7 +250,7 @@ void script_start( int autostart )
 {
     int i;
 
-    shot_histogram_enabled = 0;
+    shot_histogram_set(0);
     if (autostart) auto_started = 1; else auto_started = 0;
     delay_target_ticks = 0;
     kbd_int_stack_ptr = 0;
@@ -313,6 +313,7 @@ void script_end()
       ubasic_end();
     }
 	md_close_motion_detector();
+	shot_histogram_set(0);
     if (conf.alt_prevent_shutdown != ALT_PREVENT_SHUTDOWN_NO) {
         disable_shutdown();
     }

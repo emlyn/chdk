@@ -656,14 +656,14 @@ static int luaCB_get_histo_range( lua_State* L )
 {
   int from = (luaL_checknumber(L,1));
   int to = (luaL_checknumber(L,2));
-  if (shot_histogram_enabled) lua_pushnumber( L, (unsigned short)shot_histogram_get_range(from, to) );
-  else lua_pushnumber( L, -1 );
+  if (shot_histogram_isenabled()) lua_pushnumber( L, shot_histogram_get_range(from, to) );
+  else lua_pushnumber( L, -1 ); // TODO should probably return nil 
   return 1;
 }
 
 static int luaCB_shot_histo_enable( lua_State* L )
 {
-  shot_histogram_enabled = luaL_checknumber( L, 1 );
+  shot_histogram_set(luaL_checknumber( L, 1 ));
   return 0;
 }
 
