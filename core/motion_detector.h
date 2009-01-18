@@ -104,7 +104,7 @@ function md_get_cell_diff (
 void kbd_sched_motion_detector();
 
 
-
+void md_close_motion_detector();
 int md_init_motion_detector(
 
  int columns, // input parameter. number of columns to split screen into

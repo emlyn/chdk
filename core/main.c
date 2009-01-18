@@ -85,7 +85,6 @@ void core_spytask()
 
     conf_restore();
     gui_init();
-    md_init();
 
 #if CAM_CONSOLE_LOG_ENABLED
     console_init();

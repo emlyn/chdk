@@ -49,6 +49,9 @@ ifdef OPT_EDGEOVERLAY
 CFLAGS+=-DOPT_EDGEOVERLAY
 OPT_OBJS+=edgeoverlay.o 
 endif
+ifdef OPT_MD_DEBUG
+CFLAGS+=-DOPT_MD_DEBUG
+endif 
 OBJS=entry.o nothumb.o main.o gui_draw.o gui_menu.o gui_palette.o gui_mbox.o \
      gui_fselect.o gui.o kbd.o conf.o \
      histogram.o gui_batt.o gui_space.o gui_osd.o script.o raw.o \

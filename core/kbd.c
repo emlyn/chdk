@@ -312,7 +312,7 @@ void script_end()
     else {
       ubasic_end();
     }
-
+	md_close_motion_detector();
     if (conf.alt_prevent_shutdown != ALT_PREVENT_SHUTDOWN_NO) {
         disable_shutdown();
     }
