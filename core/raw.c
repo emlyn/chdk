@@ -355,25 +355,25 @@ void load_bad_pixels_list_b(char* filename){
  struct stat st;
  long filesize;
  void* ptr;
- int fd;
+ FILE *fd;
  binary_count=0;
  if (stat(filename,&st)!=0) return;
  filesize=st.st_size;
  if ((filesize==0) || (filesize%(2*sizeof(short))!=0)) return;
- ptr=umalloc(filesize);
+ ptr=malloc(filesize);
  if (!ptr) return;
- fd=open(filename, O_RDONLY, 0777);
+ fd=fopen(filename, "rb");
  if (fd) {
-  read(fd, ptr, filesize);
-  close(fd);
+  fread(ptr,1, filesize,fd);
+  fclose(fd);
   binary_list=ptr;
   binary_count=filesize/(2*sizeof(short));
  }
- else   ufree(ptr);
+ else free(ptr);
 }
 
 void unload_bad_pixels_list_b(void){
- if (binary_list) ufree(binary_list);
+ if (binary_list) free(binary_list);
  binary_list=NULL;
  binary_count=0;
 }

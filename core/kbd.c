@@ -16,7 +16,7 @@
 #include "lauxlib.h"
 #include "luascript.h"
 #include "../lib/lua/lstate.h"	// for L->nCcalls, baseCcalls
-
+#include "shot_histogram.h"
 
 #define SCRIPT_END              0
 #define SCRIPT_CLICK            1
