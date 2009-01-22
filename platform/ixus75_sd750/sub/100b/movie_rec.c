@@ -82,7 +82,7 @@ void __attribute__((naked,noinline)) movie_record_task(){
 								"STR     R4, [R1]\n"
 								"LDR     R0, [R3]\n"
 								"MOV     R2, R4\n"
-								"BL      sub_FFB1F228\n"		// PostMessageQueue
+								"BL      sub_FFB1F3CC\n"		// PostMessageQueue
 								"B       loc_FFB8E934\n"
 	);
 }
