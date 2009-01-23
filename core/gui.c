@@ -990,6 +990,8 @@ const char* gui_conf_curve_enum(int change, int arg) {
     else if (conf.curve_enable>=(sizeof(modes)/sizeof(modes[0])))
         conf.curve_enable=0;
 
+	if(change)
+		curve_init_mode();
     return modes[conf.curve_enable];
 }
 #endif
@@ -1971,8 +1973,8 @@ void gui_init()
     load_bad_pixels_list("A/CHDK/badpixel");
     load_bad_pixels_list("A/CHDK/badpixel.txt");
 #ifdef OPT_CURVES
-    curve_load(conf.curve_file); // load curve upon init 
-    drcurve_load("A/CHDK/SYSCURVES.CVF"); // load system L curves
+	// initialize curves, loading files if required by current mode
+	curve_init_mode();
 #endif		
 #if ZOOM_OVERRIDE
 // reyalp - need to do this in capt_seq
@@ -1988,8 +1990,12 @@ static void gui_load_edge_selected( const char* fn ) {
 //-------------------------------------------------------------------
 #ifdef OPT_CURVES
 static void gui_load_curve_selected(const char *fn) {
-    if (fn)
-        curve_load(fn);
+	if (fn) {
+		// TODO we could sanity check here, but curve_set_type should fail gracefullish
+		strcpy(conf.curve_file,fn);
+		if(conf.curve_enable == 1)
+			curve_init_mode();
+	}
 }
 
 //-------------------------------------------------------------------
