@@ -32,6 +32,7 @@ DEF(FlashParamsTable,0xFF9754E8)
 //DEF(canon_menu_active, 0x6CBC)
 //DEF(canon_shoot_menu_active, 0x6CBC)
 
+DEF(movie_status, 0x6EBBC)
 
 canon_menu_active_prev:
 	.word 0x10

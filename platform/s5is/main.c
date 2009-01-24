@@ -126,7 +126,3 @@ long get_vbatt_max()
 	return 5500;
 }
 
-void change_video_tables(int a, int b){
-	// Shuts up the compiler until video overrides are fixed for DryOS
-
-}

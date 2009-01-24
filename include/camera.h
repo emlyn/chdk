@@ -847,12 +847,10 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_DRAW_EXPOSITION		    1
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
-    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
     #define CAM_FEATURE_FEATHER         1
 
 //    #define CAM_CONSOLE_LOG_ENABLED     1  //100a won't compile if this is defined ("undefined reference to `_iosDevFind'")
     #undef  CAM_HAS_IS
-    #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
     #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
@@ -1416,7 +1414,6 @@
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
-    #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
     #define  CAM_HAS_VIDEO_BUTTON       1
     #define DNG_SUPPORT                 1
     // pattern
@@ -1516,6 +1513,7 @@
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
     #define DNG_EXT_FROM ".CR2"
+    #define CAM_MULTIPART               1
 
 
 //----------------------------------------------------------

@@ -655,11 +655,12 @@ void UnlockAF(void)
 #if CAM_MULTIPART
 
 #define SECTOR_SIZE 512
-char *mbr_buf;
+static char *mbr_buf=(void*)0;
 static unsigned long drive_sectors;
 
 int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long *part_start_sector,  unsigned long *part_length){
 // return value: 1 - success, 0 - fail
+// called only in VxWorks
  
  int offset=0x10; // points to partition #2
  int valid;
@@ -690,10 +691,13 @@ int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long 
 }
 
 
-
-
-
-
+int mbr_read_dryos(unsigned long drive_total_sectors, char* mbr_sector ){
+// Called only in DRYOS
+ mbr_buf=_AllocateUncacheableMemory(SECTOR_SIZE);
+ _memcpy(mbr_buf,mbr_sector,SECTOR_SIZE);
+ drive_sectors=drive_total_sectors;
+ return drive_total_sectors;
+}
 
 int get_part_count(void){
  unsigned long part_start_sector, part_length;

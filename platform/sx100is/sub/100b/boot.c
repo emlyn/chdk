@@ -1370,7 +1370,10 @@ void __attribute__((naked,noinline)) sub_FFC3FF48_my() { //#fs
 		 "MOV	R0, R8\n"
 		 "BL	sub_FFCFF884\n"			// Add FAT32 autodetect-code after this line\n"
 
-// Start of DataGhost's FAT32 autodetection code
+		 "MOV   R1, R4\n"           //  pointer to MBR in R1
+		 "BL    mbr_read_dryos\n"   //  total sectors count in R0 before and after call
+
+                 // Start of DataGhost's FAT32 autodetection code
 // Policy: If there is a partition which has type W95 FAT32, use the first one of those for image storage
 // According to the code below, we can use R1, R2, R3 and R12.
 // LR wasn't really used anywhere but for storing a part of the partition signature. This is the only thing

@@ -25,3 +25,4 @@ DEF(recreview_hold, 0xBE2C) // 0xBD60 + 0xCC
 DEF(zoom_status, 0x68F8)
 DEF(some_f_for_dng, 0x9B94)
 DEF(second_ext_for_dng, 0x9BB8)
+DEF(movie_status,0x5868 + 0x38)

@@ -17,6 +17,11 @@ void boot();
 void __attribute__((naked,noinline)) task_blinker();
 void dump_chdk();
 
+void taskCreateHook(int *p) { 
+ p-=16;
+ if (p[0]==0xFF862F10)  p[0]=(int)movie_record_task;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Note to developers:
 // The code below is just somewhat annotated in an attempt to figure out what
@@ -138,6 +143,7 @@ void __attribute__((naked,noinline)) sub_FF81000C_my() {
 
 
 void __attribute__((naked,noinline)) sub_FF8101B8_my() {
+     *(int*)0x1930=(int)taskCreateHook;
      asm volatile (
      "loc_FF8101B8:\n"
           "LDR     R0, =0xFF810230\n"
