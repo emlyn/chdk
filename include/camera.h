@@ -850,6 +850,7 @@
     #define CAM_FEATURE_FEATHER         1
 
 //    #define CAM_CONSOLE_LOG_ENABLED     1  //100a won't compile if this is defined ("undefined reference to `_iosDevFind'")
+    #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
     #undef  CAM_HAS_IS
     #define DNG_SUPPORT                 1
     // pattern

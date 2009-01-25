@@ -1,3 +1,4 @@
+/*
 #include "conf.h"
 
 int *video_quality = &conf.video_quality;
@@ -601,11 +602,11 @@ void __attribute__((naked,noinline)) sub_FF955B60_my(){
 "loc_FF955BBC:\n"
                 "LDR     R2, =0x6EC04\n"
                 "LDR     R3, [R2]\n"
-                "LDR     R5, =table1\n"          //*
+                "LDR     R5, =table1\n"          // *
                 "ADD     R3, R3, R3,LSL#1\n"
                 "MOV     LR, R3,LSL#2\n"
                 "LDR     R2, [R5,LR]\n"
-                "LDR     R4, =table2\n"          //*
+                "LDR     R4, =table2\n"          // *
                 "RSB     R12, R2, R0\n"
                 "LDR     R3, [R4,LR]\n"
                 "CMP     R12, #0\n"
@@ -656,7 +657,7 @@ void __attribute__((naked,noinline)) sub_FF955B60_my(){
            //   "LDR     R1, =0x6134\n"  //-
                 "LDR     R1, =video_mode\n"  //+
                 "LDR     R0, [R3]\n"
-                "LDR     R2, =CompressionRateTable\n"   //*
+                "LDR     R2, =CompressionRateTable\n"   // *
                 "LDR     R12, [R1]\n"
                 "LDR     R12, [R12]\n"                  //+
                 "LDR     LR, [R2,R0,LSL#2]\n"
@@ -672,3 +673,4 @@ void __attribute__((naked,noinline)) sub_FF955B60_my(){
                 "LDMFD   SP!, {R4-R7,PC}\n"
  );
 }
+*/
