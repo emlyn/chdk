@@ -65,6 +65,11 @@ static int curve_load_data(const char *name,CURVE_TYPE curve_type) {
 		return 1;
 	}
 
+	if(!name || !*name) {
+		curve_free_data();
+		return 0;
+	}
+
  	if( curve_type == CURVE_CUSTOM ) {
  		size = CURVE_BYTES*4;
 	}
