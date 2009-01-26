@@ -94,7 +94,8 @@ void create_thumbnail(char* buf){
 //-------------------------------------------------------------------
 
 int raw_savefile() {
-		int fd, m=(mode_get()&MODE_SHOOTING_MASK);
+    int ret = 0;  
+    int fd, m=(mode_get()&MODE_SHOOTING_MASK);
     static struct utimbuf t;
     static int br_counter; 
 #if DNG_SUPPORT
@@ -164,7 +165,7 @@ int timer; char txt[30];
             conf.dng_raw&&conf.raw_dng_ext ? ".DNG" : img_exts[conf.raw_ext]); 
         fd = open(fn, O_WRONLY|O_CREAT, 0777);
         if (fd>=0) {
-timer=get_tick_count();
+            timer=get_tick_count();
 #if DNG_SUPPORT
             if (conf.dng_raw) {
              fill_gamma_buf();
@@ -192,23 +193,22 @@ timer=get_tick_count();
              if (thumbnail_buf) free(thumbnail_buf);
             }
 #endif
-if (conf.raw_timer)
-	{
-    timer=get_tick_count()-timer;
-    sprintf(txt, "saving time=%d", timer);
-    script_console_add_line(txt);
-  }
+            if (conf.raw_timer) {
+                timer=get_tick_count()-timer;
+                sprintf(txt, "saving time=%d", timer);
+                script_console_add_line(txt);
+            }
         }
 
         finished();
 
-        return (fd >= 0);
+        ret = (fd >= 0);
     }
 
 #ifdef OPT_CURVES
     if (conf.curve_enable) curve_apply();
 #endif
-    return 0;
+    return ret;
 }
 
 //-------------------------------------------------------------------
