@@ -167,6 +167,7 @@ static void gui_raw_develop(int arg);
 static void gui_menuproc_break_card(int arg);
 #endif
 static void gui_menuproc_swap_patitons(int arg);
+static void gui_menuproc_reset_files(int arg);
 #ifdef OPT_CURVES
 	static void gui_load_curve_selected(const char *fn);
 	static void gui_load_curve(int arg);
@@ -646,7 +647,8 @@ static CMenuItem visual_submenu_items[] = {
     {0x35,LANG_MENU_VIS_LANG,                MENUITEM_PROC,      (int*)gui_draw_load_lang },
     {0x5f,LANG_MENU_VIS_OSD_FONT,            MENUITEM_ENUM,      (int*)gui_font_enum },
     {0x35,LANG_MENU_VIS_MENU_FONT,           MENUITEM_PROC,      (int*)gui_draw_load_menu_rbf },
-    {0x35,LANG_MENU_VIS_MENU_SYMBOL_FONT,    MENUITEM_PROC,      (int*)gui_draw_load_symbol_rbf }, //AKA
+    {0x35,LANG_MENU_VIS_MENU_SYMBOL_FONT,    MENUITEM_PROC,      (int*)gui_draw_load_symbol_rbf },
+    {0x80,LANG_MENU_RESET_FILES		 ,         MENUITEM_PROC, 	   (int*)gui_menuproc_reset_files },
     {0x0,LANG_MENU_VIS_COLORS,              MENUITEM_SEPARATOR },
     {0x65,LANG_MENU_VIS_OSD_TEXT,            MENUITEM_COLOR_FG,  (int*)&conf.osd_color },
     {0x65,LANG_MENU_VIS_OSD_BKG,             MENUITEM_COLOR_BG,  (int*)&conf.osd_color },
@@ -1826,6 +1828,17 @@ void gui_raw_develop(int arg){
 }
 
 //-------------------------------------------------------------------
+
+static void gui_menuproc_reset_files(int arg){
+conf.lang_file[0] = 0;
+conf.menu_symbol_rbf_file[0] = 0;
+conf.menu_rbf_file[0] = 0;
+conf_save();
+gui_mbox_init(LANG_INFORMATION, LANG_MENU_RESTART_CAMERA, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
+
+}
+
+//-------------------------------------------------------------------
 #ifdef OPT_DEBUGGING
 #define TASKLIST_MAX_LINES 12 // probably as much as will fit on screen
 #define TASKLIST_NUM_TASKS 64 // should be enough ?
@@ -1938,7 +1951,11 @@ static void gui_menuproc_break_card(int arg){
 
 static void gui_menuproc_swap_patitons(int arg){
  if (get_part_count()<2) gui_mbox_init(LANG_ERROR, LANG_ONLY_ONE_PARTITION, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
- else swap_partitions();
+ else 
+ 	{
+ 		swap_partitions();
+ 		gui_mbox_init(LANG_INFORMATION, LANG_SOKOBAN_MSG_FINISH_TITLE, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
+ 	}
 }
 #endif
 

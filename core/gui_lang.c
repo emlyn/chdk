@@ -571,7 +571,8 @@ static char* gui_lang_default = \
 "448 \"[UP][DOWN] select color\"\n"
 "449 \"[SET] next row\"\n"
 "450 \"NO DOUBLE COLOR\"\n"
-
+"451 \"Reset files\"\n"
+"452 \"Restart Camera...\"\n"
 
 
 ;

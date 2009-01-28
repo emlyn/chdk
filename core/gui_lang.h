@@ -560,9 +560,11 @@
 #define LANG_MENU_GAMES_CURSOR2        448
 #define LANG_MENU_GAMES_CURSOR3        449
 #define LANG_MENU_GAMES_DCOLOR        450
+#define LANG_MENU_RESET_FILES         451
+#define LANG_MENU_RESTART_CAMERA         452
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  450
+#define GUI_LANG_ITEMS                  452
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();
