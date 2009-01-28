@@ -33,6 +33,7 @@ ifdef PLATFORMOS
 	$(PAKWIF) $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR \
 	     $(topdir)/bin/main.bin\
 	    $(PLATFORMID) 0x01000101
+	    mv $(topdir)/bin/$(PLATFORM)-$(PLATFORMSUB).FIR $(topdir)/bin/PS.FIR
   endif
   ifeq ($(PLATFORMOS),dryos)
 	#@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FI2
@@ -70,9 +71,7 @@ firzipsub: infoline clean firsub
 	    zip -9jz $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/DISKBOOT.BIN > $(DEVNULL)
 ifdef PLATFORMOS
   ifeq ($(PLATFORMOS),vxworks)
-	cp $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR $(topdir)bin/PS.FIR
 	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FIR > $(DEVNULL)
-	rm -f $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR
 	rm -f $(topdir)bin/PS.FIR
   endif
   ifeq ($(PLATFORMOS),dryos)
@@ -111,13 +110,11 @@ firzipsubcomplete: infoline clean firsub
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)tools/vers.req  > $(DEVNULL)
 ifdef PLATFORMOS
   ifeq ($(PLATFORMOS),vxworks)
-	cp $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR $(topdir)bin/PS.FIR
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)bin/PS.FIR > $(DEVNULL)
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FIR > $(DEVNULL)
 	cat $(topdir)doc/1_intro.txt $(topdir)/platform/$(PLATFORM)/notes.txt $(topdir)doc/2_vxworks.txt $(topdir)doc/3_faq.txt $(topdir)doc/4_urls.txt $(topdir)doc/5_gpl.txt > $(topdir)doc/readme.txt
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)doc/readme.txt  > $(DEVNULL)
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)doc/readme.txt  > $(DEVNULL)
-	rm -f $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR
 	rm -f $(topdir)bin/PS.FIR
   endif
   ifeq ($(PLATFORMOS),dryos)
