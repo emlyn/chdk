@@ -279,7 +279,7 @@ static char* gui_lang_default = \
 "205 \"Current grid\"\n"
 
 //"206 \"Noise reduction\"\n"
-"206 \"Dark Frame Substraction\"\n"
+"206 \"Dark Frame Subtraction\"\n"
 
 "207 \"Override grid colors\"\n"
 "208 \"Line color\"\n"
