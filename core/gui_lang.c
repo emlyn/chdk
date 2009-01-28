@@ -556,7 +556,7 @@ static char* gui_lang_default = \
 "434 \"The game ended a draw\"\n"
 "435 \"Disable Raw @ Edgeoverlay\"\n"
 "436 \"Disable RAW @ Auto\"\n"
-"437 \"Enable flash in video?\"\n"
+"437 \"   only in video\"\n"
 "438 \"   Power of flash\"\n"
 "439 \"'DNG' file extension\"\n"
 "440 \"DNG visible via USB\"\n"
@@ -573,7 +573,7 @@ static char* gui_lang_default = \
 "450 \"NO DOUBLE COLOR\"\n"
 "451 \"Reset files\"\n"
 "452 \"Restart Camera...\"\n"
-
+"453 \"Force manual flash\"\n"
 
 ;
 

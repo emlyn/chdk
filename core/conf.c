@@ -115,6 +115,7 @@ void clear_values()
     conf.fast_movie_quality_control = 0;
     conf.zoom_scale = 100;
     conf.platformid = PLATFORMID;
+    conf.flash_video_override = 0;
 	}
 
 	if (conf.clear_override)
@@ -396,6 +397,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(233, conf.flash_video_override_power,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(234, conf.raw_dng_ext,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(235, conf.dng_usb_ext,     CONF_DEF_VALUE, i:0, conf_change_dng_ext),
+    CONF_INFO(236, conf.flash_manual_override,     CONF_DEF_VALUE, i:0, NULL),
     };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

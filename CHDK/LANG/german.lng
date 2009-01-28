@@ -556,8 +556,8 @@
 435 "RAW im Konturen-Modus aus"
 436 "RAW im Auto-Modus aus"
 
-437 "Aktiviere Blitz in Video?"
-438 "    Stärke des Blitzes"
+437 "   NUR in Video"
+438 "   Stärke des Blitzes"
 
 439 "DNG als Dateiendung"
 440 "DNG sichtbar via USB"
@@ -574,4 +574,4 @@
 450 "KEINE FARBEN DOPPELT"
 451 "reset files"
 452 "Kamera neustarten..."
-
+453 "Erzwinge manuellen Blitz"

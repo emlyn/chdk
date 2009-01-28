@@ -30,10 +30,9 @@ endif
 ifdef PLATFORMOS
   ifeq ($(PLATFORMOS),vxworks)
 	@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FIR
-	$(PAKWIF) $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FIR \
+	$(PAKWIF) $(topdir)bin/PS.FIR \
 	     $(topdir)/bin/main.bin\
 	    $(PLATFORMID) 0x01000101
-	    mv $(topdir)/bin/$(PLATFORM)-$(PLATFORMSUB).FIR $(topdir)/bin/PS.FIR
   endif
   ifeq ($(PLATFORMOS),dryos)
 	#@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FI2

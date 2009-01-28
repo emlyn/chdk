@@ -562,9 +562,10 @@
 #define LANG_MENU_GAMES_DCOLOR        450
 #define LANG_MENU_RESET_FILES         451
 #define LANG_MENU_RESTART_CAMERA         452
+#define LANG_MENU_FLASH_MANUAL_OVERRIDE        453
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  452
+#define GUI_LANG_ITEMS                  453
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

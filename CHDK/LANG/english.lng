@@ -575,7 +575,7 @@
 434 "The game ended a draw"
 435 "Disable Raw @ EdgerOverlay"
 436 "Disable Raw @ Auto Mode"
-437 "Enable flash in video?"
+437 "   ONLY in video"
 438 "   Flash Power"
 439 "'DNG' file extension"
 440 "DNG visible via USB"
@@ -591,3 +591,4 @@
 450 "NO DOUBLE COLOR"
 451 "reset files"
 452 "restart camera..."
+453 "Force manual flash"

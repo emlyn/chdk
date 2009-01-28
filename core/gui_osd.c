@@ -918,6 +918,7 @@ void gui_osd_draw_state() {
     }
 #endif
     if (conf.override_disable == 1) gui_print_osd_state_string_chr("NO ", "OVERRIDES");
+    if (conf.flash_manual_override) gui_print_osd_state_string_chr("Flash:", "Manual Override");
 /*
  draw_string(conf.mode_state_pos.x, conf.mode_state_pos.y+n, get_debug(), conf.osd_color);
         n+=FONT_HEIGHT;*/
