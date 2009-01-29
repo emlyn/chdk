@@ -29,13 +29,14 @@ endif
 endif
 ifdef PLATFORMOS
   ifeq ($(PLATFORMOS),vxworks)
-	@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FIR
+	@echo \-\> PS.FIR
 	$(PAKWIF) $(topdir)bin/PS.FIR \
 	     $(topdir)/bin/main.bin\
 	    $(PLATFORMID) 0x01000101
   endif
   ifeq ($(PLATFORMOS),dryos)
-	#@echo \-\> $(PLATFORM)-$(PLATFORMSUB).FI2
+#	@echo \-\> PS.FI2
+#	$(PAKFI2) $(topdir)/bin/main.bin -p $(PLATFORMID) -key $(FI2KEY) -iv $(FI2IV)  $(topdir)bin/PS.FI2
   endif
 endif
 ifdef NEED_ENCODED_DISKBOOT
@@ -74,9 +75,8 @@ ifdef PLATFORMOS
 	rm -f $(topdir)bin/PS.FIR
   endif
   ifeq ($(PLATFORMOS),dryos)
-	#cp $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FI2 $(topdir)bin/PS.FI2
-	#zip -9jc $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
-	#rm -f $(topdir)bin/PS.FI2
+#	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
+#	rm -f $(topdir)bin/PS.FI2
   endif
 endif
 	rm -f $(topdir)bin/DISKBOOT.BIN
@@ -120,10 +120,9 @@ ifdef PLATFORMOS
 	cat $(topdir)doc/1_intro.txt $(topdir)/platform/$(PLATFORM)/notes.txt $(topdir)doc/2_dryos.txt $(topdir)doc/3_faq.txt $(topdir)doc/4_urls.txt $(topdir)doc/5_gpl.txt > $(topdir)doc/readme.txt
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)doc/readme.txt  > $(DEVNULL)
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)doc/readme.txt  > $(DEVNULL)
-	#cp $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB).FI2 $(topdir)bin/PS.FI2
-	#zip -9jc $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)bin/PS.FI2 > $(DEVNULL)
-	#zip -9jc $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
-	#rm -f $(topdir)bin/PS.FI2
+#	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)bin/PS.FI2 > $(DEVNULL)
+#	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
+#	rm -f $(topdir)bin/PS.FI2
   endif
 endif
 	rm -f $(topdir)bin/DISKBOOT.BIN

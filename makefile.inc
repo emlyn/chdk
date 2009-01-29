@@ -261,6 +261,7 @@ HOSTCFLAGS=-g -O2 -Wall
 HOSTAR=ar
 
 PAKWIF=$(topdir)tools/pakwif$(EXE)
+PAKFI2=$(topdir)tools/packfi2/fi2enc$(EXE)
 ENCODE_DISKBOOT=$(topdir)tools/dancingbits$(EXE)
 
 ##########################################################################
