@@ -54,17 +54,6 @@ Why would I want to use CHDK?
 
 What are scripts? Scripts are BASIC language programs that give you the ability to control the operation of the camera under program control. They have been used to add or extend the native capability of the camera: more flexible intervalometers, extended-range exposure compensation, extended bracketing ability, lightning photography, etc. See the script pages for more details.
 
-Beyond "Standard" CHDK
-
-Several developers have extended the basic features of CHDK to add additional major functions. You'll find these extended features in "special builds".
-
-There are several "Motion Detection" versions available that allow scripts to detect when motion (or any change in light intensity) occurs in one or more predefined regions of the images (the script can then take a photograph, a video, start a timer, etc) and there are some *very* cool applications based on this implementation.
-
-There is a "Stereo Data Maker" (SDM) version, specifically geared to stereo image applications (which also incorporates the Motion Detection routines).
-
-Additional video compression options (more or less), and the ability to go beyond the 1 Gbyte limit.
-
-Use your USB port as a remote control / "cable release".
 
 (to be expanded)
 

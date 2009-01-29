@@ -19,10 +19,6 @@ In-Depth Guide explaining a lot of things: http://chdk.setepontos.com/index.php/
 
 Timeline (changelog) of chdk: http://tools.assembla.com/chdk/timeline
 
-For more information about this build visit: http://chdk.setepontos.com/index.php/topic,688.0.html
-
-Download the sources of this build here: http://tools.assembla.com/chdk/changeset/head/branches/juciphox?old_path=%2F&format=zip
-
 You can get a nice app that will help you making your card bootable on windows: http://chdk.setepontos.com/index.php/topic,964.0.html
 
 <insert text with small description of chdk here>
