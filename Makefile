@@ -35,8 +35,10 @@ ifdef PLATFORMOS
 	    $(PLATFORMID) 0x01000101
   endif
   ifeq ($(PLATFORMOS),dryos)
-#	@echo \-\> PS.FI2
-#	$(PAKFI2) $(topdir)/bin/main.bin -p $(PLATFORMID) -key $(FI2KEY) -iv $(FI2IV)  $(topdir)bin/PS.FI2
+ifdef OPT_FI2
+	@echo \-\> PS.FI2
+	$(PAKFI2) $(topdir)/bin/main.bin -p $(PLATFORMID) -key $(FI2KEY) -iv $(FI2IV)  $(topdir)bin/PS.FI2
+endif
   endif
 endif
 ifdef NEED_ENCODED_DISKBOOT
@@ -75,8 +77,10 @@ ifdef PLATFORMOS
 	rm -f $(topdir)bin/PS.FIR
   endif
   ifeq ($(PLATFORMOS),dryos)
-#	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
-#	rm -f $(topdir)bin/PS.FI2
+  ifdef OPT_FI2
+	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
+	rm -f $(topdir)bin/PS.FI2
+  endif
   endif
 endif
 	rm -f $(topdir)bin/DISKBOOT.BIN
@@ -120,9 +124,11 @@ ifdef PLATFORMOS
   ifeq ($(PLATFORMOS),dryos)
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)doc/readme.txt  > $(DEVNULL)
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)doc/readme.txt  > $(DEVNULL)
-#	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)bin/PS.FI2 > $(DEVNULL)
-#	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
-#	rm -f $(topdir)bin/PS.FI2
+ifdef OPT_FI2
+	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)bin/PS.FI2 > $(DEVNULL)
+	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
+	rm -f $(topdir)bin/PS.FI2
+endif
   endif
 endif
 	rm -f $(topdir)bin/DISKBOOT.BIN

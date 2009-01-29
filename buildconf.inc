@@ -12,6 +12,7 @@ OPT_DEBUGGING=1
 OPT_EDGEOVERLAY=1
 OPT_LUA_STRLIB=1
 #OPT_MD_DEBUG=1
+#OPT_FI2=1                  // needs proper fi2.inc in platform/ !!! see http://chdk.setepontos.com/index.php/topic,2995.0.html
 #!OPT_UBASIC=1              // Shall ubasic be compiled into build? not done yet
 #!OPT_LUA=1                 // Shall lua support be compiled into build? not done yet
 #!OPT_SYMBOLS=1             // the symbols / not done yet

@@ -6,7 +6,9 @@ include $(topdir)makefile.inc
 
 OBJS=pakwif.o finsig.o gensig.o dumpchk.o dancingbits.o
 
-#SUBDIRS=packfi2
+ifdef OPT_FI2
+  SUBDIRS=packfi2
+endif
 
 all: pakwif$(EXE) finsig$(EXE) dancingbits$(EXE)
 
