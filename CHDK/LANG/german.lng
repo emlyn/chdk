@@ -62,7 +62,7 @@
  44 "Skript"
 
  45 "Lade Skript-Datei..."
- 46 "Verzög. nach Shoot(.1s)"
+ 46 "Verzög. nach Shoot(,1s)"
  47 "aktuelles Skript"
  48 "Skript-Parameter"
 
@@ -103,11 +103,11 @@
 
  79 "Debugging-Einstellungen"
 
- 80 "Zeige PropCases"
+ 80 "Debug-Daten-Anzeige"
  81 "PropCase-Seite"
  82 "Zeige verschiedene Werte"
  83 "Speicher-Browser"
- 84 "Dump RAM bei ALT +/-"
+ 84 "ALT[+/-] Debug-Funkt."
  85 "Mache SD-Karte bootfähig..."
 
 
@@ -327,7 +327,7 @@
 262 "Av Exposure Neuberechnung"
 263 "ISO Exposure Neuberechnung"
 
-264 "Lösche Werte bei Neustart"
+264 "Lösche Ersatzerte bei Neustart"
 
 265 "Zeige Canon-Überbeli-Wert"
 
@@ -339,7 +339,7 @@
 271 "Nicht genug Speicherkartenplatz:\n%dM benötigt, %dM verfügbar."
 
 272 "OSD im Review-Modus an/aus"
-273 "Zeige Parameter-Daten"
+273 "Task-List-Start"
 
 274 "Motiventfernung von Linse"
 
@@ -493,7 +493,7 @@
 390 "RAW-Ausnahmen"
 391 "Ausnahmewarnung an/aus"
 
-392 "Erste Zeile selektieren"
+392 "Autom. 1. Menü-Zeile wählen"
 
 393 "Zeitlimit 0,1s"
 394 "Synchro-Funktion"
@@ -572,6 +572,6 @@
 448 "[UP][DOWN] Farbe wählen"
 449 "[SET]      nächste Reihe"
 450 "KEINE FARBEN DOPPELT"
-451 "reset files"
-452 "Kamera neustarten..."
+451 "Dateien zurücksetzen ..."
+452 "Kamera neu starten ..."
 453 "Erzwinge manuellen Blitz"

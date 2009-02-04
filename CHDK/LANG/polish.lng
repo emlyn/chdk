@@ -1,4 +1,4 @@
-// Translation by hADeSik http://www.hadesik.waw.pl (ehadesik[at]gmail{dot}com): January 28, 2008
+// Translation by hADeSik http://www.hadesik.waw.pl (ehadesik[at]gmail{dot}com): February 4, 2009
 // Uwagi i poprawki do t³umaczenia: http://chdk.wikia.com/wiki/Talk:Language:_Polish i http://chdk.wikia.com/wiki/Language:_Polish
 // Podziêkowania dla [OSO], winiarro, AndrzejM i wszystkich tych, którzy pomagali przy powstaniu tego t³umaczenia
 // Plik jêzykowy dla CHDK
@@ -349,7 +349,7 @@
 262 "Kolejnoœæ przeliczania ekspozycji AV"
 263 "Kolejnoœæ przeliczania ekspozycji ISO"
 
-264 "Wyczyœæ wymuszane opcje przy starcie"
+264 "Wyczyœæ wymuszane opcje@start"
 
 265 "'Canonowska' wartoœæ przeœwietlenia"
 
@@ -396,7 +396,7 @@
 
 297 "Poka¿ wartoœci w wideo"
 
-298 "  Metoda zmiany szyb.migawki Tv"
+298 "Metoda zmiany szyb.migawki Tv"
 299 "Aktywuj menu u¿ytkownika"
 300 "Menu u¿ytkownika"
 301 " "
@@ -507,7 +507,7 @@
 389 "Wyj¹tki"
 390 "Menu wyj¹tków RAW"
 391 "Ostrzegaæ przy wyj¹tkach?"
-392 "Zawsze wybieraj pierwsz¹ pozycjê menu"
+392 "Auto.wybieraj 1sz¹ pozycjê @ menu"
 
 393 "Time-out (0.1s)"
 394 "Zdalna sychronizacja"
