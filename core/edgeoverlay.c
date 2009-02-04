@@ -90,7 +90,7 @@ void free_memory_edge_overlay(void){
 	char buf[64];
 	free(imgbuf);
 	imgbuf = 0;
-	sprintf(buf,"Freed %u bytes",viewport_size);
+	sprintf(buf,"Freed %u byte",viewport_size);
 	draw_string(30, 10, buf, conf.osd_color);
 	viewport_size = 0;
 }

@@ -306,7 +306,7 @@
 223 "Toon 'echt' diafragma"
 224 "Toon 'echte' ISO"
 225 "Toom 'markt' ISO"
-226 " Toon ISO alleen in AutoISO"
+226 "Toon ISO alleen in AutoISO"
 227 "Toon Kies belichting Ev (Tv+Av)"
 228 "Toon gemeten Ev (Bv+Sv)"
 229 "Toon Kies Bv (helderheid)"
@@ -467,7 +467,7 @@
 347 "  Vernieuwing (~sec)"
 348 "Resterende videotijd"
 349 "Wis videoinst. bij opstarten?"
-350 "Shakel snelle Ev-wissel in?"
+350 "Schakel snelle Ev-wissel in?"
 351 "   Stapgrootte (1 EV)?"
 352 "EV-correctie"
 353 "Wil je ECHT ALLE RAW-bestanden\nzonder bijbehorende JPG\nin DCIM-map wissen?"
@@ -566,8 +566,7 @@
 
 435 "Raw uit @ RandBedekking"
 436 "Raw uit @ Auto Mode"
-
-437 "Flits aan in video?"
+437 "   ALLEEN in video"
 438 "   Flitskracht"
 
 439 "'DNG'-extensie"
@@ -583,3 +582,7 @@
 448 "[OP][NEER] kies kleur"
 449 "[SET] volg. rij"
 450 "GEEN DUB. KLEUR"
+
+451 "Herstel bestanden"
+452 "Herstart camera..."
+453 "Forceer handm. flits"

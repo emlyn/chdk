@@ -1,4 +1,4 @@
-// CHDK language file french for autobuild 0.8.10, revision #649 (Win1252)
+// CHDK language file french for autobuild 0.9.4, revision #700 (Win1252)
 // Format of language line:
 // <id> "<text>"
 //   <id>   - should be positive number
@@ -424,7 +424,7 @@
 334 "Menu centré"
 335 "Silence pendant zooming"
 
-336 "Bad pixel removal"
+336 "Suppression des mauvais pixels"
 337 "Off"
 338 "Moyen"
 339 "RAWconv"
@@ -438,7 +438,7 @@
 346 "Afficher le temps de vidéo restant?"
 347 "  Refreshrate (~sec)"
 348 "Temps de vidéo restant"
-349 "Clear videoparams on Start?"
+349 "Eff. param. vidéo au démarrage?"
 350 "Enable Fast Ev switch?"
 351 "   Step size (1 EV)?"
 352 "EV correction"
@@ -446,8 +446,8 @@
 354 "Are you SURE to delete ALL\nRAW files without corresponding JPG\nin selected folder?"
 355 "Are you SURE to delete RAW files\nwithout corresponding JPG?\n(Excluding marked)"
 356 "Purge RAW feature\ndoes not apply to this item"
-357 "*** Purge RAW files ***"
-358 "Purge RAW"
+357 "*** Effacer les fichier RAW ***"
+358 "Effacer les RAW"
  
 359 "Menu utilisateur au démarrage"
 
@@ -536,7 +536,7 @@
 434 "The game ended a draw"
 435 "Disable Raw @ EdgerOverlay"
 436 "Désactiver Raw en mode Auto"
-437 "Activer le flash en video?"
+437 "Seulement en video"
 438 "   Puissance flash"
 439 "Extension de fichier DNG"
 439 "'DNG' file extension"
@@ -551,3 +551,6 @@
 448 "[Haut][Bas] sélection de la couleur"
 449 "[SET] ligne suivante"
 450 "Pas de double couleur"
+451 "Reset fichiers"
+452 "Redémarre le photoscope..."
+453 "Forcer le flash manuellement"

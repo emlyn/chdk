@@ -1,4 +1,4 @@
-// Translation by hADeSik http://www.hadesik.waw.pl (ehadesik[at]gmail{dot}com): December 21, 2008
+// Translation by hADeSik http://www.hadesik.waw.pl (ehadesik[at]gmail{dot}com): January 28, 2008
 // Uwagi i poprawki do t³umaczenia: http://chdk.wikia.com/wiki/Talk:Language:_Polish i http://chdk.wikia.com/wiki/Language:_Polish
 // Podziêkowania dla [OSO], winiarro, AndrzejM i wszystkich tych, którzy pomagali przy powstaniu tego t³umaczenia
 // Plik jêzykowy dla CHDK
@@ -414,7 +414,7 @@
 312 "Ustawienia zegara"
 313 "Format wyœwietlania czasu"
 314 "Kolor t³a ikony 'wolna pamiêæ'"
-315 "zegar 12 godz."
+315 "Zegar 12 godz."
 316 "Naciskaj¹c migawkê poka¿"
 
 317 "Ustawienia wskaŸnika Raw"
@@ -553,7 +553,7 @@
 434 "Gra zakoñczona remisem"
 435 "Wy³¹cz Raw dla pokrywania krawêdzi (EdgerOverlay)"
 436 "Wy³¹cz Raw w trybie automatycznym"
-437 "W³¹czyæ flash dla filmów wideo?"
+437 "   TYLKO w wideo"
 438 "   Zasilanie lampy b³yskowej"
 439 "Rozszerzenie pliku 'DNG'"
 440 "DNG widoczne przez USB"
@@ -567,3 +567,6 @@
 448 "[GÓRA][DÓ£] wybór koloru"
 449 "[SET] nastêpny rz¹d"
 450 "NIE POWTARZAJ KOLORU"
+451 "Resetuj pliki"
+452 "Uruchom ponownie aparat..."
+453 "Wymuszaj rêcznie lampê b³yskow¹"

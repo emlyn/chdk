@@ -2,8 +2,8 @@
 #include "keyboard.h"
 
 /***********
-ROM:FF8EBD04 loc_FF8EBD04                            ; CODE XREF: sub_FF8EBA14+288j
-ROM:FF8EBD04                                         ; sub_FF8EBA14+2A8j
+ROM:FF8EBD04 loc_FF8EBD04                            ; CODE XREF: sub_FF8EBA14+288
+ROM:FF8EBD04                                         ; sub_FF8EBA14+2A8
 ROM:FF8EBD04                 LDR     R5, =unk_4BB44
 ROM:FF8EBD08                 MOV     R2, #0
 ROM:FF8EBD0C                 MOV     R1, #0x220000
@@ -20,15 +20,13 @@ ROM:FF8EBD34                 LDR     PC, [R2]
 ROM:FF8EBD38                 BL      nullsub_46 <-- hook_raw_ret_addr points here
 ROM:FF8EBD3C                 LDR     R3, =unk_5840
 ***********/
-
 void *hook_raw_fptr()
 {
-    return (void*)0x4BB58; // find on "taskcreate_ImageSensorTask" 
+    return (void*)0x4BB58;   // find on "taskcreate_ImageSensorTask"
 }
-
 void *hook_raw_ret_addr()
 {
-    return (void*)0xFF9B8524; // BL      nullsub_46
+    return (void*)0xFF9B8524;   // BL      nullsub_46
 }
 
 /***********
@@ -41,19 +39,17 @@ ROM:FF8E513C                 ADD     R8, SP, #0x16C+var_168
 ROM:FF8E5148                 MOV     R2, R7          ; raw_image_addr = 0x10F00600
 ROM:FF8E514C                 ADD     R3, R3, #0x10   ; raw_size = 0x8CAE10
 ***********/
-
 char *hook_raw_image_addr()
 {
-    return (char*)(0x10F00600);	// 0x10F00000 + 0x600 (find on "A/%08.CRW")
+    return (char*)(0x10F00600);   // 0x10F00000 + 0x600 (find on "A/%08.CRW")
 }
-
 long hook_raw_size()
 {
-    return 0x8CAE10; //7mpx (0x8C0000 + 0xAE00 + 0x10)(find on "A/%08x.CRW")
+    return 0x8CAE10;   //7mpx (0x8C0000 + 0xAE00 + 0x10)(find on "A/%08x.CRW")
 }
 
 /***************
-ROM:FFB19720 loc_FFB19720                            ; CODE XREF: sub_FFB196D4+34j
+ROM:FFB19720 loc_FFB19720                            ; CODE XREF: sub_FFB196D4+34
 ROM:FFB19720                 BL      sub_FF8BF204
 ROM:FFB19724                 LDR     R2, =0x106571F0
 ROM:FFB19728                 MOVL    R3, 0x7E900
@@ -69,14 +65,12 @@ ROM:FFB19750                 LDMFD   SP!, {R4-R7,PC}
 ROM:FFB19750 ; End of function sub_FFB196D4
 ROM:FFB19750
 ROM:FFB19750 ; ---------------------------------------------------------------------------
-ROM:FFB19754 viewport_fb     DCD 0x106571F0          ; DATA XREF: sub_FFB196D4+50r
-ROM:FFB19758 off_FFB19758    DCD aVramAddressP       ; DATA XREF: sub_FFB196D4+64r
+ROM:FFB19754 viewport_fb     DCD 0x106571F0          ; DATA XREF: sub_FFB196D4+50
+ROM:FFB19758 off_FFB19758    DCD aVramAddressP       ; DATA XREF: sub_FFB196D4+64
 ROM:FFB19758                                         ; "VRAM Address  : %p\r"
-ROM:FFB1975C off_FFB1975C    DCD aVramSize0xX        ; DATA XREF: sub_FFB196D4+70r
+ROM:FFB1975C off_FFB1975C    DCD aVramSize0xX        ; DATA XREF: sub_FFB196D4+70
 ROM:FFB1975C                                         ; "VRAM Size     : 0x%x\r"
-
 ***************/
-
 void *vid_get_viewport_live_fb()
 {
 //    return (void*)0; // 0x106571F0 + 0x7E900
@@ -98,10 +92,9 @@ ROM:FF960DCC                 MOV     R12, #0x2D0
 ROM:FF960DD0                 MOV     R2, #0xF0 ; '='
 ROM:FF960DD4                 ADD     R3, R3, #0x1000
 ***********/
-
 void *vid_get_bitmap_fb()
 {
-    return (void*)0x10361000;	// 0x10360000 + 0x1000, see after "BmpDDev.c" in sub_FF960E00
+    return (void*)0x10361000;   // 0x10360000 + 0x1000, see after "BmpDDev.c" in sub_FF960E00
 }
 
 /***********
@@ -110,20 +103,18 @@ ROM:FFB19724                 LDR     R2, =0x106571F0
 ROM:FFB19728                 MOVL    R3, 0x7E900
 ROM:FFB19730                 MOV     R1, R2
 ***********/
-
 void *vid_get_viewport_fb()
 {
-    return (void*)0x106571F0;	// see after "VRAM Address  : %p" in loc_FFB19720
+    return (void*)0x106571F0;   // see after "VRAM Address  : %p" in loc_FFB19720
 }
 
 /***********
 ROM:FF962874                 LDR     R1, =0x89818
 ROM:FF962878                 ADD     R3, R3, R3,LSL#2
 ***********/
-
 void *vid_get_viewport_fb_d()
 {
-    return (void*)(*(int*)0x89818); // see before "ImagePlayer.c" at loc_FF962874
+    return (void*)(*(int*)0x89818);   // see before "ImagePlayer.c" at loc_FF962874
 }
 
 long vid_get_bitmap_screen_width()
@@ -142,17 +133,17 @@ long vid_get_viewport_height()
 }
 
 /*****************
-ROM:FFAA77B4 a9999           DCB "9999",0            ; DATA XREF: ROM:off_FFAA7824o
+ROM:FFAA77B4 a9999           DCB "9999",0            ; DATA XREF: ROM:off_FFAA7824
 ROM:FFAA77B9                 DCB    0
 ROM:FFAA77BA                 DCB    0
 ROM:FFAA77BB                 DCB    0
-ROM:FFAA77BC aD_0            DCB "%d",0              ; DATA XREF: ROM:off_FFAA7828o
+ROM:FFAA77BC aD_0            DCB "%d",0              ; DATA XREF: ROM:off_FFAA7828
 ROM:FFAA77BF                 DCB    0
 ROM:FFAA77C0
 ROM:FFAA77C0 ; =============== S U B R O U T I N E =======================================
 ROM:FFAA77C0
 ROM:FFAA77C0
-ROM:FFAA77C0 sub_FFAA77C0                            ; CODE XREF: sub_FFAA79F0+D4p
+ROM:FFAA77C0 sub_FFAA77C0                            ; CODE XREF: sub_FFAA79F0+D4
 ROM:FFAA77C0                 MOV     R3, #0x2700
 ROM:FFAA77C4                 MOV     R2, R0
 ROM:FFAA77C8                 STMFD   SP!, {R4,LR}
@@ -163,16 +154,11 @@ ROM:FFAA77D8                 LDR     R1, =a9999
 ROM:FFAA77DC                 MOV     R0, R4
 ROM:FFAA77E0                 BLS     loc_FFAA77EC
 *****************/
-
 char *camera_jpeg_count_str()
 {
     return (char*)0x96F80;
 }
 
-
 long vid_get_bitmap_buffer_width() { return 360; }
 
 long vid_get_bitmap_buffer_height() { return 240; }
-
-void _EnterToCompensationEVF() {} // Dummy function. To be removed after stub is found. See stubs_entry_2.S.
-void _ExitFromCompensationEVF() {} // Dummy function. To be removed after stub is found. See stubs_entry_2.S.

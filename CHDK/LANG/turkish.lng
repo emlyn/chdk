@@ -14,9 +14,7 @@
 //
 // Build    :  CHDK Autobuild
 //
-// Version  :  build 0.9.0
-//
-// Date     :  Dec 22 2008
+// Date     :  29 January 2009
 //
 // _____________________________________________________
 //
@@ -170,7 +168,7 @@
 105 "Tercihleri varsayýlan\ndeðerlerine getirmek\nistediðinizden emin misiniz?"
 
 106 "***  Mimari  Bilgisi  ***"
-107 "CHDK Sür : %s %s\nTarih    : %s\nSaat     : %s\nKamera   : %s\nFW Sürüm : %s\nDerleyici: %s\nTR Çeviri: Mete Ertuðrul"
+107 "CHDK Sür : %s %s\nTarih    : %s\nSaat     : %s\nKamera   : %s\nFW Sürüm : %s\nDerleyici: %s\nÇeviren  : Mete Ertuðrul"
 
 108 "***  Bellek  Bilgisi  ***"
 109 "Boþ Bellek  : %d bayt\nCHDK Boyutu : %d bayt\n  Konumu : 0x%X"
@@ -502,13 +500,13 @@
 351 "   Adým Boyutu (1 EV)?"
 352 "'EV' Doðruluðu"
 
-353 "DCIM alt klasörlerindeki ;\nJPEG eþi silinmiþ olan tüm\nRAW dosyalarýný temizlemek\nistediðinizden emin misiniz?"
-354 "Bu klasördeki tüm RAW\ndosyalarýný temizlemek\nistediðinizden emin misiniz?\n*  *  *  *\nNOT:  JPEG eþi ayný klasörde\nolan RAW'lar silinmeyecek."
-355 "Seçilenler (varsa) dýþýndaki\ntüm RAW dosyalarýný temizlemek\nistediðinizden emin misiniz?\n*  *  *  *\nNOT:  JPEG eþi ayný klasörde\nolan RAW'lar silinmeyecek."
+353 "DCIM alt klasörlerindeki ;\nJPEG eþi silinmiþ olan tüm\nRAW dosyalarýný ayýklamak\nistediðinizden emin misiniz?"
+354 "Bu klasördeki tüm RAW\ndosyalarýný ayýklamak\nistediðinizden emin misiniz?\n*  *  *  *\n BÝLGÝ : JPEG eþi ayný klasörde \nolan RAW'lar silinmeyecek."
+355 "Seçilenler (varsa) dýþýndaki\ntüm RAW dosyalarýný ayýklamak\nistediðinizden emin misiniz?\n*  *  *  *\n BÝLGÝ : JPEG eþi ayný klasörde \nolan RAW'lar silinmeyecek."
 
-356 "'RAW Temizle' komutu, bu\nmadde için geçerli deðildir."
-357 "***   RAW  Temizle   ***"
-358 "RAW Temizle"
+356 "'RAW Ayýkla' komutu, bu\nmadde için geçerli deðildir."
+357 "***    RAW   Ayýkla    ***"
+358 "RAW Ayýkla"
 
 359 "Kök Kullanýcý Menüsü"
 
@@ -646,3 +644,7 @@
 448 "[YUK] [AÞA]  Renk  Seç"
 449 "[SET]  Sonraki Satýr"
 450 " AYNI RENKTEN OLAMAZ"
+
+451 "Dosyalarý Sýfýrla"
+452 "Kamerayý yeniden baþlatýn..."
+453 "'El Ýle Flaþ' Zorlamasý"

@@ -11,8 +11,6 @@ NHSTUB(kbd_pwr_off, 0xFF82930C) // corrected
 NHSTUB(kbd_pwr_on, 0xFF8292CC) // corrected
 NHSTUB(kbd_read_keys_r2, 0xFF828E30) // added
 
-NSTUB(GetCurrentAvValue, 0xFFB132B0)
-
 NHSTUB(AllocateMemory, 0xFF81AD84)
 NHSTUB(FreeMemory, 0xFF81AD70)
 NHSTUB(GetFocusLensSubjectDistance, 0xFFB021E8) 
@@ -43,7 +41,8 @@ NHSTUB(GetOpticalTemperature, 0xFF82E4C8)
 NHSTUB(PT_PlaySound, 0xFF9A4EE8)
 NHSTUB(WriteSDCard, 0xFF8896FC)
 
-//NHSTUB(EnterToCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
-//NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
+NHSTUB(EnterToCompensationEVF, 0xFF9954EC)
+NHSTUB(ExitFromCompensationEVF, 0xFF99552C)
+
 NHSTUB(DoAFLock, 0xff995318)
 NHSTUB(UnlockAF, 0xff995364)

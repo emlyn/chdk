@@ -367,7 +367,7 @@
 262 "AV Exposure Recalc Order"
 263 "ISO Exposure Recalc Order"
 
-264 "Clear Override Values on Start"
+264 "Clear override values@start"
 
 265 "Show Canon Overexp. Value"
 
@@ -414,7 +414,7 @@
 
 297 "Show values in video"
 
-298 "  Shutter speed enum type"
+298 "Shutterspeed enum type"
 299 "User Menu Enable"
 300 "User Menu"
 301 " "
@@ -529,7 +529,7 @@
 389 "Exceptions"
 390 "RAW Exceptions Menu"
 391 "Warn when Exception?"
-392 "Always select 1st entry in menu"
+392 "Auto select 1st entry @ menu"
 
 393 "Time-out (0.1s)"
 394 "synchable remote"

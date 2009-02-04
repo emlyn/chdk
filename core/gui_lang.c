@@ -352,7 +352,7 @@ static char* gui_lang_default = \
 "262 \"AV Exposure recalc order\"\n"
 "263 \"ISO Exposure recalc order\"\n"
 
-"264 \"Clear override values on start\"\n"
+"264 \"Clear override values@start\"\n"
 
 "265 \"Show Canon overexp. value\"\n"
 
@@ -397,7 +397,7 @@ static char* gui_lang_default = \
 
 "297 \"Show values in video\"\n"
 
-"298 \"  Shutter speed enum type\"\n"
+"298 \"Shutterspeed enum type\"\n"
 "299 \"User Menu Enable\"\n"
 "300 \"User Menu\"\n"
 "301 \" \"\n"
@@ -508,7 +508,7 @@ static char* gui_lang_default = \
 "389 \"Exceptions\"\n"
 "390 \"RAW Exceptions Menu\"\n"
 "391 \"Warn when exception?\"\n"
-"392 \"Always select 1st entry in menu?\"\n"
+"392 \"Auto select 1st entry @ menu\"\n"
 
 "393 \"Time-out (0.1s)\"\n"
 "394 \"synchable remote\"\n"
