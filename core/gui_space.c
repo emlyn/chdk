@@ -197,20 +197,19 @@ static void gui_space_draw_mb() {
     int perc = get_space_perc();
     color cl = conf.space_color;
     if (conf.space_warn_type == 0){
-    cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color);
+        cl = (perc<=conf.space_perc_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 1){
-    cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:(conf.space_color);
+        cl = (GetFreeCardSpaceKb()/1024<=conf.space_mb_warn)?conf.osd_color_warn:(conf.space_color);
     }
     if (conf.space_warn_type == 2){
-    cl = conf.space_color;
+        cl = conf.space_color;
     }
-  sprintf(osd_buf, "%3d%M",GetFreeCardSpaceKb()/1024 );
+  unsigned int freemb=GetFreeCardSpaceKb()/1024;
+  if (freemb < 10000) sprintf(osd_buf, "%3d%M",freemb);
+  else sprintf(osd_buf, "%3d%G",freemb/1024); // if 10 GiB or more free, print in GiB instead of MiB.
   osd_buf[5]=0;
   draw_string(conf.space_txt_pos.x, conf.space_txt_pos.y, osd_buf, cl);
-    
-
-
 }
 
 
