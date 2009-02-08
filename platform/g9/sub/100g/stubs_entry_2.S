@@ -195,9 +195,9 @@ NSTUB(taskIdListGet,			 0xFF810958)
 NSTUB(taskName,				 0xFF810958) 
 NSTUB(taskResume,			 0xFF810958) 
 NSTUB(taskSuspend,			 0xFF810958) 
-// not found
-NSTUB(PutInNdFilter, 0xFF810958)
-NSTUB(PutOutNdFilter, 0xFF810958)
+
+NSTUB(PutInNdFilter, 0xFFA0C550)
+NSTUB(PutOutNdFilter, 0xFFA0C588)
 
 NHSTUB(WriteSDCard, 0xFF928CF4)
 NHSTUB(DoAFLock, 0xff8275cc)
