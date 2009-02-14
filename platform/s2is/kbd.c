@@ -305,9 +305,7 @@ void my_kbd_read_keys_cont(long *canon_key_state)
 			  (kbd_mod_state[2] & KEYS_MASK2);
     }
 
-    canon_key_state[0] = physw_status[0];
-    canon_key_state[1] = physw_status[1];
-    canon_key_state[2] = physw_status[2];
+
 	// phot's code
 		remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
 		if (remote_key) 
@@ -317,8 +315,13 @@ void my_kbd_read_keys_cont(long *canon_key_state)
 			remote_count = 0;
 		}
 	if (conf.remote_enable) {
+		physw_status[USB_REG] = kbd_new_state[USB_REG] & ~USB_MASK;
 		physw_status[2] =  physw_status[2] & ~SD_READONLY_FLAG;
 	}
+
+    canon_key_state[0] = physw_status[0];
+    canon_key_state[1] = physw_status[1];
+    canon_key_state[2] = physw_status[2];
 
 }
 int get_usb_power(int edge)

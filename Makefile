@@ -18,35 +18,35 @@ distclean: distclean-recursive
 fir: version firsub
 
 firsub: all
-	mkdir -p $(topdir)/bin
-	cp $(topdir)loader/$(PLATFORM)/main.bin $(topdir)/bin/main.bin
+	mkdir -p  $(topdir)bin
+	cp $(topdir)loader/$(PLATFORM)/main.bin  $(topdir)bin/main.bin
 ifndef NOZERO100K
 ifeq ($(OSTYPE),Windows)
-	zero | dd bs=1k count=100 >> $(topdir)/bin/main.bin 2> $(DEVNULL)
+	zero | dd bs=1k count=100 >>  $(topdir)bin/main.bin 2> $(DEVNULL)
 else
-	dd if=/dev/zero bs=1k count=100 >> $(topdir)/bin/main.bin 2> $(DEVNULL)
+	dd if=/dev/zero bs=1k count=100 >>  $(topdir)bin/main.bin 2> $(DEVNULL)
 endif
 endif
 ifdef PLATFORMOS
   ifeq ($(PLATFORMOS),vxworks)
 	@echo \-\> PS.FIR
 	$(PAKWIF) $(topdir)bin/PS.FIR \
-	     $(topdir)/bin/main.bin\
+	      $(topdir)bin/main.bin\
 	    $(PLATFORMID) 0x01000101
   endif
   ifeq ($(PLATFORMOS),dryos)
 ifdef OPT_FI2
 	@echo \-\> PS.FI2
-	$(PAKFI2) $(topdir)/bin/main.bin -p $(PLATFORMID) -key $(FI2KEY) -iv $(FI2IV)  $(topdir)bin/PS.FI2
+	$(PAKFI2)  $(topdir)bin/main.bin -p $(PLATFORMID) -key $(FI2KEY) -iv $(FI2IV)  $(topdir)bin/PS.FI2
 endif
   endif
 endif
 ifdef NEED_ENCODED_DISKBOOT
 	@echo dance \-\> DISKBOOT.BIN
-	$(ENCODE_DISKBOOT) $(topdir)/bin/main.bin $(topdir)/bin/DISKBOOT.BIN
-	rm $(topdir)/bin/main.bin
+	$(ENCODE_DISKBOOT)  $(topdir)bin/main.bin  $(topdir)bin/DISKBOOT.BIN
+	rm  $(topdir)bin/main.bin
 else
-	mv $(topdir)/bin/main.bin $(topdir)/bin/DISKBOOT.BIN
+	mv  $(topdir)bin/main.bin  $(topdir)bin/DISKBOOT.BIN
 endif
 	@echo "**** Firmware creation completed successfully"
 
@@ -111,7 +111,7 @@ firzipsubcomplete: infoline clean firsub
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)doc/changelog.txt  > $(DEVNULL)
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)doc/changelog.txt  > $(DEVNULL)
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)tools/vers.req  > $(DEVNULL)
-	cat $(topdir)doc/1_intro.txt $(topdir)/platform/$(PLATFORM)/notes.txt $(topdir)doc/2_installation.txt $(topdir)doc/3_faq.txt $(topdir)doc/4_urls.txt $(topdir)doc/5_gpl.txt > $(topdir)doc/readme.txt
+	cat $(topdir)doc/1_intro.txt  $(topdir)platform/$(PLATFORM)/notes.txt $(topdir)doc/2_installation.txt $(topdir)doc/3_faq.txt $(topdir)doc/4_urls.txt $(topdir)doc/5_gpl.txt > $(topdir)doc/readme.txt
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)doc/readme.txt  > $(DEVNULL)
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)doc/readme.txt  > $(DEVNULL)
 

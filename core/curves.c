@@ -95,6 +95,11 @@ static int curve_load_data(const char *name,CURVE_TYPE curve_type) {
 	return 1;
 }
 
+void curve_set_mode(int value) {
+	if((value>=0) && (value<=4)) conf.curve_enable=value;
+	curve_init_mode();
+}
+
 void curve_init_mode() {
 	switch(conf.curve_enable) {
 		case 1: // custom - ensure alloc and load conf.curve_file

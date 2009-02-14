@@ -13,6 +13,6 @@ PLFLAGS=-DMEMBASEADDR=$(MEMBASEADDR) -DMEMISOSTART=$(MEMISOSTART) -DMEMISOSIZE=$
 PLFLAGS+=-DRESTARTSTART=$(RESTARTSTART)
 KEYSYS=d3
 ifdef OPT_FI2
-include $(topdir)/platform/fi2.inc
+include  $(topdir)platform/fi2.inc
 endif
 
