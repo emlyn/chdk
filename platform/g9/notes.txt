@@ -8,4 +8,4 @@ Camera depending notes:
 - G9 supports Multipartition
 - G9 has an ND Filter AND real iris diaphragm (which can be set via photo overrides)
 - 100g and 100f are the same, development is done in the 100g tree
-
+- 100i and 100h basically are the same, development is done in the 100i tree

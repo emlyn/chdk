@@ -212,6 +212,7 @@ batch-zip: version
 	cp $(topdir)bin/$(VER)-ixus75_sd750-101a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus75_sd750-101b-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/$(VER)-ixus80_sd1100-101a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus80_sd1100-101b-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/$(VER)-g9-100g-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g9-100f-$(BUILD_NUMBER).zip
+	cp $(topdir)bin/$(VER)-g9-100i-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g9-100h-$(BUILD_NUMBER).zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
@@ -303,6 +304,8 @@ batch-zip-complete: version
 	cp $(topdir)bin/ixus80_sd1100-101a-$(BUILD_NUMBER).zip $(topdir)bin/ixus80_sd1100-101b-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/g9-100g-$(BUILD_NUMBER)-full.zip $(topdir)bin/g9-100f-$(BUILD_NUMBER)-full.zip
 	cp $(topdir)bin/g9-100g-$(BUILD_NUMBER).zip $(topdir)bin/g9-100f-$(BUILD_NUMBER).zip
+	cp $(topdir)bin/g9-100i-$(BUILD_NUMBER)-full.zip $(topdir)bin/g9-100h-$(BUILD_NUMBER)-full.zip
+	cp $(topdir)bin/g9-100i-$(BUILD_NUMBER).zip $(topdir)bin/g9-100h-$(BUILD_NUMBER).zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
