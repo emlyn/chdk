@@ -154,7 +154,7 @@ int md_init_motion_detector(
 
 	if(!motion_detector) {
 		motion_detector=malloc(sizeof(struct motion_detector_s));
-		if(motion_detector)
+		if(!motion_detector)
 			return 0; // TODO make sure callers handle this
 	}
 #ifdef OPT_MD_DEBUG

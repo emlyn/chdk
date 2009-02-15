@@ -486,16 +486,17 @@ static int luaCB_md_detect_motion( lua_State* L )
   int pixels_step = (luaL_optnumber(L,15,6));
   int msecs_before_trigger = (luaL_optnumber(L,16,0));
   ubasic_set_variable(0, 0);
-  md_init_motion_detector(
+  if(md_init_motion_detector(
     columns, rows, pixel_measure_mode, detection_timeout, 
     measure_interval, threshold, draw_grid, 0,
     clipping_region_mode,
     clipping_region_column1, clipping_region_row1,
     clipping_region_column2, clipping_region_row2,
     parameters, pixels_step, msecs_before_trigger
-  );
-
-  return lua_yield(L, 0);
+  ))
+    return lua_yield(L, 0);
+  else
+    luaL_error( L, "md_init_motion_detector failed" );
 }
 
 static int luaCB_autostarted( lua_State* L )
