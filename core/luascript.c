@@ -496,7 +496,7 @@ static int luaCB_md_detect_motion( lua_State* L )
   ))
     return lua_yield(L, 0);
   else
-    luaL_error( L, "md_init_motion_detector failed" );
+    return luaL_error( L, "md_init_motion_detector failed" );
 }
 
 static int luaCB_autostarted( lua_State* L )
