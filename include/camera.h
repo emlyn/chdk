@@ -772,6 +772,26 @@
     #undef  CAM_HAS_IS
 	//#define CAM_CONSOLE_LOG_ENABLED     1
     #undef  CAM_VIDEO_CONTROL
+    #define DNG_SUPPORT                 1
+    // pattern
+    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
+    // color
+    #define CAM_COLORMATRIX1                                  \
+      685247,  1000000, -204939,  1000000, -106531,  1000000, \
+     -267616,  1000000,  790509,  1000000,   73359,  1000000, \
+       32401,  1000000,   15655,  1000000,  314892,  1000000
+    
+    #define cam_CalibrationIlluminant1 1 // Daylight
+    // cropping
+    #define CAM_JPEG_WIDTH  2592
+    #define CAM_JPEG_HEIGHT 1944
+    #define CAM_ACTIVE_AREA_X1 12
+    #define CAM_ACTIVE_AREA_Y1 8
+    #define CAM_ACTIVE_AREA_X2 2628
+    #define CAM_ACTIVE_AREA_Y2 1968
+    // camera name
+    #define PARAM_CAMERA_NAME 2 // parameter number for GetParameterData
+
 
 //----------------------------------------------------------
 

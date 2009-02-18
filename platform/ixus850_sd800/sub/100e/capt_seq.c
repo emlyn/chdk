@@ -113,6 +113,43 @@ void __attribute__((naked,noinline)) sub_FF998960_my(long p)
     );
 }
 
+
+void __attribute__((naked,noinline)) sub_FF998A50_my(){
+    asm volatile (
+                 "STMFD   SP!, {R4,LR}\n"
+                 "BL      sub_FF9985E8\n"
+                 "LDR     R3, =0xB7CA0\n"
+                 "LDR     R2, [R3,#0x28]\n"
+                 "CMP     R2, #0\n"
+                 "MOV     R4, R0\n"
+                 "MOV     R0, #0xC\n"
+                 "BEQ     loc_FF998A98\n"
+                 "BL      sub_FF9A2710\n"
+                 "TST     R0, #1\n"
+                 "BEQ     loc_FF998A98\n"
+                 "LDR     R3, [R4,#8]\n"
+                 "LDR     R2, =0x6AB0\n"
+                 "ORR     R3, R3, #0x40000000\n"
+                 "MOV     R1, #1\n"
+                 "STR     R1, [R2]\n"
+                 "STR     R3, [R4,#8]\n"
+                 "LDMFD   SP!, {R4,PC}\n"
+ "loc_FF998A98:\n"
+                 "BL      sub_FF9DA8C8\n"
+                 "BL      sub_FF825C10\n"
+                 "STR     R0, [R4,#0x14]\n"
+                 "MOV     R0, R4\n"
+                 "BL      sub_FF99BA84_my\n"  //--------->
+                 "BL      capt_seq_hook_raw_here\n"  // +
+                 "TST     R0, #1\n"
+                 "LDRNE   R3, =0x6AB0\n"
+                 "MOVNE   R2, #1\n"
+                 "STRNE   R2, [R3]\n"
+                 "LDMFD   SP!, {R4,PC}\n"
+ );
+}
+
+
 void __attribute__((naked,noinline)) capt_seq_task()
 {
 	asm volatile (
@@ -157,7 +194,7 @@ void __attribute__((naked,noinline)) capt_seq_task()
 				"LDR     R2, [R3,#0x28]\n"
                 "CMP     R2, #0\n"
 				"BEQ     loc_FF998F8C\n"
-				"BL      sub_FF998A50\n"
+				"BL      sub_FF998A50_my\n"  //--------->
 				"B       loc_FF998F8C\n"
  "loc_FF998EBC:\n"
                                         
