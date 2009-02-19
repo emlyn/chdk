@@ -121,21 +121,6 @@ void  h_usrKernelInit() // Orig. starts at FF81181C
     );
 };
 
-static long drv_struct[16];
- 
-static long dh_err()
-{
-    return -1;
-}
-
-static void drv_self_hide()
-{
-    long drvnum;
-    
-    drvnum = _iosDrvInstall(dh_err,dh_err,dh_err,dh_err,dh_err,dh_err,dh_err);
-    if (drvnum >= 0)
-	_iosDevAdd(drv_struct, "A/DISKBOOT.BIN", drvnum);
-}
 
 
 void  h_usrRoot() // Orig. starts at FF811B44

@@ -130,3 +130,4 @@ errnoOfTaskGet 0xFFEB85C8
 iosDevFind 0xFFEBD008
 TurnOnBackLight 0xffd93428
 TurnOffBackLight 0xffd93454
+iosDevDelete 0xFFEBD054

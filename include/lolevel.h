@@ -134,6 +134,7 @@ extern long _taskUnlock();
 extern int _taskCreateHookAdd (void *createHook);
 extern int _taskDeleteHookAdd (void *deleteHook);
 extern long _iosDevAdd(void*,void*,int);
+extern long _iosDevDelete(void*);
 extern long _iosDrvInstall(void*,void*,void*,void*,void*,void*,void*);
 extern void _GiveSemaphore(int sem);
 

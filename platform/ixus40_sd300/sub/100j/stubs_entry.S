@@ -145,6 +145,8 @@ NSTUB(ioctl, 0xffac29cc)
 // ALT: NSTUB(ioctl, 0xfff56a7c) // 28/0
 NSTUB(iosDevAdd, 0xffac3aac)
 // ALT: NSTUB(iosDevAdd, 0xfff57b5c) // 28/0
+NSTUB(iosDevDelete, 0xffac3a84)
+// ALT: NSTUB(iosDevDelete, 0xfff57b34) // 28/0
 NSTUB(iosDevFind, 0xffac3a38)
 // ALT: NSTUB(iosDevFind, 0xfff57ae8) // 27/0
 NSTUB(iosDrvInstall, 0xffac3d70)

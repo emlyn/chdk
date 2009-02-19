@@ -898,3 +898,28 @@ void change_ext_to_default(void){
 }
 
 #endif
+
+
+static long drv_struct[16];
+
+long dh_err()
+{
+    return -1;
+}
+
+void drv_self_hide()
+{
+#if !CAM_DRYOS
+    long drvnum;
+    
+    drvnum = _iosDrvInstall(dh_err,dh_err,dh_err,dh_err,dh_err,dh_err,dh_err);
+    if (drvnum >= 0)
+	_iosDevAdd(drv_struct, "A/DISKBOOT.BIN", drvnum);
+#endif
+}
+
+void drv_self_unhide(){
+#if !CAM_DRYOS
+ _iosDevDelete(drv_struct);
+#endif
+}

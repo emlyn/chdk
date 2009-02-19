@@ -483,7 +483,8 @@ void change_ext_to_default(void);
 void DoAFLock(void);
 void UnlockAF(void);
 
-
+void drv_self_hide(void);
+void drv_self_unhide(void);
 
 #define started() debug_led(1)
 #define finished() debug_led(0)

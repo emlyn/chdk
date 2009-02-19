@@ -3489,6 +3489,39 @@ static FuncSig func_sig_TurnOffBackLight_1[] = {
 	/* 19/32 */
 };
 
+static FuncSig func_sig_iosDevDelete_1[] = {
+	{   1, 0xe1a0b000, 0xfdffffff }, // mov:6:0xE1A0B000
+	{   2, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFF90
+	{   3, 0xe59f038c, 0xfdffffff }, // ldr:4:0xE59F038C
+	{   4, 0xe1a0100b, 0xfdffffff }, // mov:6:0xE1A0100B
+	{   5, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB005358
+	{   6, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFF8F
+	{   7, 0xe59b000c, 0xfdffffff }, // ldr:4:0xE59B000C
+	{   9, 0xea000000, 0xff000000 }, // b, bl:3:0xEA00078A
+	{  11, 0xe1a0a000, 0xfdffffff }, // mov:6:0xE1A0A000
+	{  12, 0xe1a0b001, 0xfdffffff }, // mov:6:0xE1A0B001
+	{  13, 0xe1a09002, 0xfdffffff }, // mov:6:0xE1A09002
+	{  14, 0xe1a00001, 0xfdffffff }, // mov:6:0xE1A00001
+	{  15, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFFC3
+	{  16, 0xe1b01000, 0xfdffffff }, // mov:6:0xE1B01000
+	{  17, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000008
+	{  18, 0xe590000c, 0xfdffffff }, // ldr:4:0xE590000C
+	{  19, 0xe1a0100b, 0xfdffffff }, // mov:6:0xE1A0100B
+	{  20, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFE292
+	{  21, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{  22, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000003
+	{  23, 0xe59f036c, 0xfdffffff }, // ldr:4:0xE59F036C
+	{  24, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFED51
+	{  26, 0xea000000, 0xff000000 }, // b, bl:3:0xEA000011
+	{  27, 0xe1a0000b, 0xfdffffff }, // mov:6:0xE1A0000B
+	{  28, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFE348
+	{  29, 0xe0800001, 0xfdffffff }, // add:6:0xE2800001
+	{  30, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000772
+	{  31, 0xe1b01000, 0xfdffffff }, // mov:6:0xE1B01000
+	{ -1, -1, -1 },
+	/* 28/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   1, 0xe59f6030, 0xfdffffff }, // ldr:4:0xE59F6030
 	{   2, 0xe5965000, 0xfdffffff }, // ldr:4:0xE5965000
@@ -5247,6 +5280,7 @@ FuncsList func_list[] = {
 	{ "ints_enable", func_sig_ints_enable_1 },
 	{ "ioctl", func_sig_ioctl_1 },
 	{ "iosDevAdd", func_sig_iosDevAdd_1 },
+	{ "iosDevDelete", func_sig_iosDevDelete_1 },
 	{ "iosDevFind", func_sig_iosDevFind_1 },
 	{ "iosDrvInstall", func_sig_iosDrvInstall_1 },
 	{ "isalpha", func_sig_isalpha_1 },

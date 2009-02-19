@@ -82,6 +82,7 @@ void core_spytask()
     started();
     msleep(50);
     finished();
+    drv_self_unhide();
 
     conf_restore();
     gui_init();
