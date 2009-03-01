@@ -714,8 +714,8 @@
 #elif defined (CAMERA_ixus40_sd300)
     #define CAM_PROPSET                 1
 
-    #define CAM_RAW_ROWPIX              (2376) //(2272+80) //for 4 MP guessed!!
-    #define CAM_RAW_ROWS                (1704+24) // for 4 MP guessed!!
+    #define CAM_RAW_ROWPIX              2400
+    #define CAM_RAW_ROWS                1776
 
     #define CAM_USE_ZOOM_FOR_MF 1
     #undef  CAM_HAS_ERASE_BUTTON
