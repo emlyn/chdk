@@ -17,7 +17,7 @@ return (char*)0x10A795A8; //OK: 0x10A795A8
 
 long hook_raw_size()
 {
-    return 0x514C80; //OK
+    return 0x50D750; //OK
 }
 
 // buffer of live picture when shoot button is not pressed
