@@ -21,6 +21,7 @@
 #define NR_OFF (0)
 
 static long raw_save_stage;
+volatile long shutter_open_time=0; // for DNG EXIF creation, dummy for this camera
 
 void __attribute__((naked,noinline)) capt_seq_hook_raw_here()
 {

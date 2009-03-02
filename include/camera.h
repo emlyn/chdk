@@ -729,8 +729,6 @@
     #undef CAM_CONSOLE_LOG_ENABLED
 
 
-/*   DNG support is blocked due to mismatch RAW size in this file and DNG4PS2 settings (2400x1720).
-
     #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
@@ -745,13 +743,11 @@
     #define CAM_JPEG_WIDTH  2272
     #define CAM_JPEG_HEIGHT 1704
     #define CAM_ACTIVE_AREA_X1 12
-    #define CAM_ACTIVE_AREA_Y1 24
-    #define CAM_ACTIVE_AREA_X2 2394
-    #define CAM_ACTIVE_AREA_Y2 1708
+    #define CAM_ACTIVE_AREA_Y1 12
+    #define CAM_ACTIVE_AREA_X2 2356
+    #define CAM_ACTIVE_AREA_Y2 1764
     // camera name
     #define PARAM_CAMERA_NAME 2 // parameter number for GetParameterData
-
-    */
 
 //----------------------------------------------------------
 
