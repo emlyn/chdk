@@ -4,8 +4,8 @@
 //   <id>   - should be positive number
 //   <text> - any text enclosed into quotes
 //
-// hungarian translate by kuf(at)megesz(dot).hu & Titan_G9
-// version v0.98c - dont't forget codepage Win1252
+// hungarian translate by kuf(at)megesz(dot).hu & Titan_G9 & rhen
+// version v0.99 - dont't forget codepage Win1252
 
 
 
@@ -30,8 +30,9 @@
  13 "RAW"
 
  14 "RAW-ba mentés"
- 15 "'Sötét' képkocka mentése"
- 16 "Csak az elsö RAW mentése"
+// 15 "'Sötét' képkocka mentése"
+// 16 "Csak az elsö RAW mentése"
+ 16 "Csak a sorozat elsö képe RAW"
  17 "RAW fájl a JPEG-ek mellett"
  18 "RAW fájl elötag"
  19 "RAW fájl kiterjesztés"
@@ -40,28 +41,31 @@
  20 "OSD"
 
  21 "OSD megjelenítése"
- 22 "RAW/SCR/EXP megjelenítése"
+// 22 "RAW/SCR/EXP megjelenítése"
+ 22 "Állapotjelzök megjelenítése"
  23 "Egyéb értékek megjelenítése"
- 24 "Zoom érték mutatása"
+ 24 " Zoom érték mutatása"
  25 "DOF kalkulátor mutatása"
  26 "Óra megjelenítése"
- 27 "OSD szerkesztés"
+ 27 "OSD szerkesztése"
  28 "Akku opciók"
 
 
  29 "Hisztogram"
 
- 30 "Élo hisztogram mutatás"
+ 30 "Élö hisztogram mutatása"
  31 "Hisztogram típusa"
  32 "Hisztogram mód"
- 33 "Hisztogram az EXP felett/alatt"
- 34 "Hisztogram csúcsok"
+// 33 "Hisztogram az EXP felett/alatt"
+ 33 "Alul/Túl EXP mutatása a Hisztogramon"
+// 34 "Hisztogram csúcsok"
+ 34 "Csúcsok figyelmen kívül hagyása"
  35 "Automatikus nagyítás"
 
 
  36 "Zebra"
 
- 37 "Zebra megjelenítés"
+ 37 "Zebra megjelenítése"
  38 "Zebra mód"
  39 "Alulexponálási határ"
  40 "Túlexponálási határ"
@@ -82,19 +86,19 @@
 
  50 "Nyelv..."
  51 "OSD kódlap"
- 52 "Menü RBF font..."
+ 52 "Menü RBF betütípus..."
  53 "Színek"
  54 "OSD szöveg"
  55 "OSD háttér"
  56 "Hisztogram"
- 57 "Hisztogram háttére"
- 58 "Hisztogram kerete"
- 59 "Hisztogram EXP ikon"
+ 57 "Hisztogram háttér"
+ 58 "Hisztogram keret"
+ 59 "Hisztogram EXP jelölö"
  60 "Zebra Alulexponáláskor"
  61 "Zebra Túlexponáláskor"
  62 "Akku/elem ikon"
  63 "Menü szöveg"
- 64 "menü háttére"
+ 64 "menü háttér"
  65 "Szövegolvasó szöveg"
  66 "Szövegolvasó háttére"
 
@@ -105,23 +109,23 @@
  69 "Naptár"
 // 70 "Szövegfile olvasás ->"
 // 71 "Játékok ->"
- 70 "Szövegfájl olvasás"
+ 70 "Szövegfájl olvasó"
  71 "Játékok"
  72 "Zseblámpa"
- 73 "Bemutatkozó képernyö"
- 74 "Zoomgyuru mint MF"
+ 73 "Bemutatkozó képernyö mutatása"
+ 74 "Zoomgyürü mint MF"
  75 "<ALT> mód gomb"
- 76 "Paletta megjelenítés"
+ 76 "Paletta megjelenítése"
  77 "Programverzió infó"
  78 "Memória infó"
 
 
- 79 "Debug"
+ 79 "Hibakeresés"
 
 // 80 "Show PropCases"
  80 "Hibakeresési adatok"
- 81 "PropCase oldalak"
- 82 "Egyéb értékek"
+ 81 "PropCase oldal"
+ 82 "Egyéb értékek mutatása"
  83 "Memória böngészö"
 // 84 "Dump RAM on ALT +/- press"
  84 "ALT +/- debug hatás"
@@ -130,19 +134,19 @@
 
  86 "Akku"
 
- 87 "Akku MAX. Volt értéke"
- 88 "Akku MIN. Volt értéke"
+ 87 "Akku MAX Feszültség (mV)"
+ 88 "Akku MIN Feszültség (mV)"
  89 "Lépésköz (ON= 25, OFF= 1 mV)"
  90 "Százalékos megjelentítés"
- 91 "Volt megjelenítés"
- 92 "Ikon megjelenítés"
+ 91 "Feszültség megjelenítése"
+ 92 "Ikon megjelenítése"
 
 
- 93 "Szövegolvasó"
+ 93 "Szövegfájl olvasó"
 
- 94 "Fájl megnyitás"
- 95 "Utoljára olvasott.."
- 96 "RBF font váltás"
+ 94 "Fájl megnyitása..."
+ 95 "Utoljára olvasott"
+ 96 "RBF betütípus választás"
  97 "Kódlap"
  98 "Szövegtördelés"
  99 "Auto görgetés"
@@ -171,7 +175,7 @@
 112 "Fájlkezelö"
 113 "Szkript választás"
 114 "Szövegfájl választás"
-115 "RBF-font választás"
+115 "RBF betütípusfájl választás"
 116 "Nyelv fájl választás"
 
 // for calendar
@@ -207,7 +211,8 @@
 // OSD layout editor
 141 "Hisztogram"
 142 "DOF calc"
-143 "RAW/SCR/EXP"
+//143 "RAW/SCR/EXP"
+143 "Állapotjelzök"
 144 "Egyéb értékek"
 145 "Akku ikon"
 146 "Akku szöveg"
@@ -215,7 +220,7 @@
 
 // palette
 148 "Nyomj SET-et az egyéni színhez"
-149 "Nyomd meg a MENÜ-t kilépéshez         "
+149 "Nyomd meg a MENÜ-t kilépéshez "
 150 "Szín"
 151 "Használd a %s -t színválasztáshoz"
 
@@ -229,8 +234,8 @@
 157 "Nem rakhatod oda!"
 158 "A cella nem üres!"
 
-159 "Lépés:Te     "
-160 "Lépés:Computer"
+159 "Lépés: Te     "
+160 "Lépés: Computer"
 161 "  GAME  OVER  "
 162 " Fehér  Fekete "
 
@@ -289,7 +294,7 @@
 204 "Rács kiválasztás"
 205 "Jelenlegi rács"
 
-206 "Zajszurés"
+206 "Zajszürés"
 
 207 "Rácsszín felülbírálása"
 208 "Vonal szín"
@@ -308,9 +313,9 @@
 
  219 "Egyéb értékek"
  220 "Egyéb értékek"
- 221 "Elönézeti mód kijelzése"
+ 221 "Megjelenités elönézeti módban"
  222 "Zoom kijelzése"
- 223 "Valós Apertura kijelzése"
+ 223 "Valós Rekesz érték kijelzése"
  224 "Valós ISO kijelzése"
  225 "Market ISO kijelzése"
  226 "ISO kijelzés ha AutoISO van"
@@ -319,33 +324,33 @@
  229 "Set Bv (Brightness Value) kijelzése"
  230 "Mért Bv érték kijelzése"
  231 "Túlexponálási érték kijelzése (No vaku!)"
- 232 "Jelenet fénysurusége"
+ 232 "Jelenet fénysürüsége"
 
  233 "Videó opciók"
  234 "Videó opciók"
  235 "Videó mód"
  236 "Videó bit ráta"
- 237 "Videó minösége"
+ 237 "Videó minöség"
 
  238 "Extra fotó opciók"
  239 "Extra fotó opciók"
- 240 "Zár idö érték felülbírálás"
+ 240 "Záridö érték felülbírálása"
  241 "    Szorzótényezö"
- 242 "Rekesz érték überelése"
- 243 "ISO érték überelése"
+ 242 "Rekesz érték felülbírálása"
+ 243 "ISO érték felülbírálása"
  244 "    Szorzótényezö"
- 245 "Tárgy táv. überelése"
+ 245 "Tárgy táv. felülbírálása"
  246 "    Szorzótényezö (mm)"
 
- 247 "Sorozatfelv foly. módban"
- 248 "Sorozatfelv foly. módban"
- 249 "TV sorozat érték"
- 250 "AV sorozat érték"
- 251 "ISO sorozat érték"
+ 247 "Expozíció sorozat foly. módban"
+ 248 "Expozíció sorozat foly. módban"
+ 249 "TV Exp. sorozat érték"
+ 250 "AV Exp. sorozat érték"
+ 251 "ISO Exp. sorozat érték"
  252 "    Szorzótényezö"
  253 "Tárgy táv. sorozat érték (MF)"
  254 "    Szorzótényezö"
- 255 "Sorozat felvétel típusa"
+ 255 "Expozíciósorozat típusa"
 
  256 "Autostart"
  257 "Távvezérlés"
@@ -374,7 +379,7 @@
 
  274 "Tárhy táv. objektívtöl"
 
- 275 "Induláskor fenti értékek alaphleyzetbe"
+ 275 "Induláskor értékek alaphleyzetbe"
 
  276 "Kártya 2 particióra osztása"
  277 "Partició csere"
@@ -404,26 +409,26 @@
 
  297 "Értékek kijelzése videó módban"
 
- 298 "    Záridö sorozat típ"
+ 298 "Záridö sorozat típ"
  299 "Felhasz. menü mód"
  300 "Felhasználói menü"
  301 " "
 
- 302 "Elötétlencse arány 100=1x"
+ 302 " Elötétlencse arány 100=1x"
  303 "Üres hely sáv kijelzése"
  304 "  Mérete a kijelzön"
- 305 "  Szélessége/Hosszúsága"
+ 305 "  Szélesség/Hosszúság"
  306 "  %  határérték"
  307 "  MB határéték"
  308 "Figyelmeztetési egység"
- 309 "  Figyelmeztetési érték"
+ 309 "  Figyelmeztetési határérték"
  310 "Optikai Zoom engedélyezése"
  311 "Óra"
  312 "Óra beállítások"
  313 "Óra formátum"
  314 "Üres hely háttér színe"
  315 "12 órás formátum"
- 316 "Shutter félignyomáskor"
+ 316 "Exp. gomb félignyomáskor"
 
  317 "RAW kijelzés beállítások"
  318 "RAW"
@@ -434,7 +439,7 @@
  321 "Egyedi Auto ISO"
  322 "Egyedi Auto ISO"
  323 "Egyedi Auto ISO engedélyezése"
- 324 ""Minimális záridö
+ 324 "Minimális záridö"
  325 "Felh.tényezö(1/FL/factor)"
  326 "IS tényezö (Tv*tényezö)"
  327 "Max ISO HI (x10)"
@@ -445,12 +450,12 @@
  331 "Menü cimke háttér színe"
  332 "Kurzor szöveg színe"
  333 "Kurzor háttér színe"
- 334 "Központi menü"
+ 334 "Középre igazított menü"
  335 "Némítás zoom alatt"
 
  336 "Hibás pixel eltávolítás"
  337 "Kikapcsolva"
- 338 ""Átlagolás
+ 338 "Átlagolás"
  339 "RAW konv"
 
  340 "Felülbírálás"
@@ -458,7 +463,7 @@
  342 "Felülbírálások kikapcsolása"
  343 "  AutoISO és Sorozatfelv is"
  344 "  Elrejtés ?"
- 345 "Kikapcsolva @Videó felvételnél"
+ 345 "Kikapcsolva videó felvételnél"
  346 "Maradék Videó felv.idö"
  347 "  Frissítési idö (~sec)"
  348 "Maradék felvételi idö"
@@ -475,15 +480,15 @@
 
  359 "Felhasználói menü, mint Fömenü"
 
- 360 "Szimbolum font"
+ 360 "Szimbolum betütipus"
  361 "Szimbolum fájl választás"
  362 "Szimbolumok engedélyezése"
  363 "Szimbolum szöveg színe"
  364 "Szimbolum háttér színe"
- 365 "Egyedi görbe"
- 366 "Egyedi görbe"
+ 365 "Egyedi görbék"
+ 366 "Egyedi görbék"
  367 "Görbe fájl betöltése..."
- 368 "Görbe engedélyezés"
+ 368 "Görbe engedélyezése"
  369 "Görbe fájl választás"
 
  370 "Élek kijelzése"
@@ -536,3 +541,42 @@
  412 "   Zoom überelés értéke" 
  413 "Zoom überelés" 
  414 "   Törlés induláskor" 
+415 "RAW utótag hozzáadása"
+416 "  Fahrenheitben"
+417 "Elmentett élek betöltése"
+418 "Élek mentése"
+419 "Engedélyezés visszajátszás módban"
+420 "Belsö memória felszabadítása"
+421 "Zoom betöltése majd beállítása"
+422 "Élek zárolása"
+423 "2. redöny vakuszinkron"
+424 "DNG formátum"
+425 "RAW cache memória használata"
+426 "CHDK/badpixel.bin fájlt nem lehet betölteni\nFuttasd a következöt:\nCHDK/SCRIPTS/TEST/badpixel.lua"
+427 "RAW mentés idejének megjelenítése"
+428 "Connect 4"
+429 "Ellenfél:"
+430 "Te"
+431 "1. játékos nyerte a játékot"
+432 "2. játékos nyerte a játékot"
+433 "Lenyomtalak! :P"
+434 "The game ended a draw"
+435 "Raw @ Élek kijelzése kikapcsolása"
+436 "Raw @ Auto kikapcsolása"
+437 "   Csak videó módban"
+438 "   Vaku erösség"
+439 "'DNG' file kiterjesztés"
+440 "DNG látható USB-n keresztül"
+441 "Mastermind"
+442 "elérhetö színek"
+443 "jó helyen"
+444 "szín a válaszban"
+445 "HELYES :-)"
+446 "Vesztettél"
+447 "[<-][->] oszlop kiválasztása"
+448 "[UP][DOWN] szín kiválasztása"
+449 "[SET] következö sor"
+450 "NINCSENEK DUPLA SZÍNEK"
+451 "fájlok visszaállítása"
+452 "fényképezögép újraindítása..."
+453 "Kézi vaku eröltetése"

@@ -1,4 +1,4 @@
-// CHDK language file french for autobuild 0.9.4, revision #700 (Win1252)
+// CHDK language file french for autobuild 0.9.6, revision #706 (Win1252)
 // Format of language line:
 // <id> "<text>"
 //   <id>   - should be positive number
@@ -32,7 +32,7 @@
 
  21 "Afficher OSD"
  22 "Afficher état RAW/SCR/EXP"
- 23 "Afficher valeurs diverses"
+ 23 "Aff. valeurs diverses"
  24 "Valeur de zoom"
  25 "Afficher calcul de PDC"
  26 "Afficher heure"
@@ -101,9 +101,9 @@
 
  79 "Débugage"
 
- 80 "Afficher données de débugage"
+ 80 "Aff. données de débugage"
  81 "Page PropCase"
- 82 "Afficher valeurs diverses"
+ 82 "Aff. valeurs diverses"
  83 "Explorateur mémoire"
  84 "Action sur pression ALT +/-"
  85 "Rendre la carte bootable..."
@@ -268,17 +268,17 @@
 
 206 "Réduction du bruit"
 
-207 "Ignorer la couleur de la grille"
+207 "Ignorer couleur de grille"
 208 "Couleur de ligne"
 209 "Couleur de remplissage"
 
 210 "Haute compression vidéo"
 211 "Haute compression vidéo"
 212 "Dist. sujet Canon en Limite Proche"
-213 "Util. dist. sujet EXIF (PC65)"
-214 "Aff. dist. sujet dans val.div."
-215 "Aff. limite proche dans val.div."
-216 "Aff. limite loint. dans Val.div."
+213 "Util. dist. sujet EXIF PC65"
+214 "Aff. dist. sujet ds val.div."
+215 "Aff. limite proche ds val.div."
+216 "Aff. limite loint. ds Val.div."
 217 "Aff. dist. hyperfocale dist. dans val.div."
 218 "Aff. prof. de champ dans val.div."
 
@@ -290,11 +290,11 @@
 224 "Aff. ISO 'réel'"
 225 "Aff. ISO 'Commercial'"
 226 "Aff. ISO slt en mode AutoISO"
-227 "Aff. expos. choisie Ev (Tv+Av)"
-228 "Aff. expos. mesurée Ev (Bv+Sv)"
-229 "Aff. expos. choisie Bv (Brightness Value)"
-230 "Aff. expos. mesurée Bv"
-231 "Aff. valeur surexpos. (No Flash!)"
+227 "Aff. exp. choisie Ev (Tv+Av)"
+228 "Aff. exp. mesurée Ev (Bv+Sv)"
+229 "Aff. exp. choisie Bv (Brightness Value)"
+230 "Aff. exp. mesurée Bv"
+231 "Aff. val. surexp. (No Flash!)"
 232 "Aff. luminance scène"
 
 233 "Paramètres vidéo"
@@ -305,9 +305,9 @@
 
 238 "Opérations Photo Extra"
 239 "Opérations Photo Extra"
-240 "Forcer valeur vites. décl."
+240 "Forcer val. vites. décl."
 241 "    Facteur de valeur"
-242 "Forcer valeur ouverture"
+242 "Forcer val. ouverture"
 243 "Forcer valeur ISO"
 244 "    Facteur de valeur"
 245 "Forcer valeur dist. sujet"
@@ -327,8 +327,8 @@
 257 "Activer télécommande (USB)"
 
 258 "Contrôle exposition (sans flash)"
-259 "Contrôle sxposition (sans flash)"
-260 "Recalcul sxposition"
+259 "Contrôle exposition (sans flash)"
+260 "Recalcul exposition"
 261 "Ordre recalcul expos. TV"
 262 "Ordre recalcul expos. AV"
 263 "Ordre recalcul expos. ISO"
@@ -381,11 +381,11 @@
 297 "Aff. valeur sur vidéo"
 
 298 "  Type enum de vitesse de décl."
-299 "Activer menu personalisé"
-300 "Menu personalisé"
+299 "Activer menu perso."
+300 "Menu personnalisé"
 301 " "
 
-302 " Echelle lentille additive, 100=1x"
+302 " Ech. lentille additive, 100=1x"
 303 "Aff. barre d'espace"
 304 "  Taille sur l'écran"
 305 "  Largeur/hauteur"
@@ -424,7 +424,7 @@
 334 "Menu centré"
 335 "Silence pendant zooming"
 
-336 "Suppression des mauvais pixels"
+336 "Sup. des mauvais pixels"
 337 "Off"
 338 "Moyen"
 339 "RAWconv"
@@ -435,7 +435,7 @@
 343 "  Include AutoIso & Bracketing?"
 344 "  Hide in ?"
 345 "Disable @ Video Rec?"
-346 "Afficher le temps de vidéo restant?"
+346 "Aff. temps de vidéo restant?"
 347 "  Refreshrate (~sec)"
 348 "Temps de vidéo restant"
 349 "Eff. param. vidéo au démarrage?"
@@ -446,7 +446,7 @@
 354 "Are you SURE to delete ALL\nRAW files without corresponding JPG\nin selected folder?"
 355 "Are you SURE to delete RAW files\nwithout corresponding JPG?\n(Excluding marked)"
 356 "Purge RAW feature\ndoes not apply to this item"
-357 "*** Effacer les fichier RAW ***"
+357 "*** Effacer les fichiers RAW ***"
 358 "Effacer les RAW"
  
 359 "Menu utilisateur au démarrage"
@@ -490,13 +490,13 @@
 389 "Exceptions"
 390 "Menu des exceptions RAW"
 391 "Alerter en cas d'exception?"
-392 "Toujours sélectionner 1er ligne d'un menu"
+392 "Toujours sélect. 1er ligne d'un menu"
 
 393 "Time-out (0.1s)"
 394 "Synchroniser la télécommande"
 395 "Fast Video Control?"
 396 "Température"
-397 "Afficher la température?"
+397 "Aff. température?"
 398 "Contrôle de qualité vidéo?"
 399 "Activer télécommande du Zoom"
 400 "Zoom Time-out 0.1s"
@@ -536,7 +536,7 @@
 434 "The game ended a draw"
 435 "Disable Raw @ EdgerOverlay"
 436 "Désactiver Raw en mode Auto"
-437 "Seulement en video"
+437 "Seulement en vidéo"
 438 "   Puissance flash"
 439 "Extension de fichier DNG"
 439 "'DNG' file extension"

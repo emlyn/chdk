@@ -1,0 +1,572 @@
+// CHDK language file
+// Format of language line:
+// <id> "<text>"
+//   <id>   - should be positive number
+//   <text> - any text enclosed into quotes
+// by Fernando Bassani - Brasil
+// Revisado e atualizado por: Bremm <bremm.AT.vtnc.org>
+// Revisado (de novo) e acrescido de mais entradas por: RJP <rjp.AT.email.com.br>
+// Se você puder melhorar essa tradução, envie-nos um cópia por email. Obrigado!
+
+  1 "Menu Principal"
+
+  2 "Parametros RAW"
+  3 "Parametros OSD"
+  4 "Parametros Histograma"
+  5 "Parametros zebra"
+  6 "Parametros scripting"
+  7 "Definicoes de visual"
+  8 "Miscelanea"
+  9 "Parametros de depuracao"
+ 10 "Restaura opcoes originais..."
+ 11 "Salva opcões agora..."
+
+ 12 "Voltar"
+
+
+ 13 "RAW"
+
+ 14 "Salva RAW"
+ 15 "Subtracão de quadro negro"
+ 16 "RAW somente na primeira foto"
+ 17 "RAW e JPG na mesma pasta"
+ 18 "Prefixo do arquivo RAW"
+ 19 "Extensão do arquivo RAW"
+
+
+ 20 "OSD"
+
+ 21 "Exibe OSD"
+ 22 "Exibe estado RAW/EXP"
+ 23 "Exibe outros valores"
+ 24 "Valor do Zoom"
+ 25 "Exibe calculadora DoF"
+ 26 "Exibe relogio"
+ 27 "Editor de disposicao OSD"
+ 28 "Parametros de bateria"
+
+
+ 29 "Histograma"
+
+ 30 "Exibe histograma ao vivo"
+ 31 "Disposicao histograma"
+ 32 "Modo do histograma"
+ 33 "Exibe sobre/subexp. histograma"
+ 34 "Ignora picos de limite"
+ 35 "Ajuste automatico de escala"
+
+
+ 36 "Zebra"
+
+ 37 "Exibe Zebra"
+ 38 "Modo de Zebra"
+ 39 "Limite de Subexposicao"
+ 40 "Limite de Superexposicao"
+ 41 "Restaura visualizacao original"
+ 42 "Restaura OSD"
+ 43 "Exibe sobre zebra"
+
+
+ 44 "Script"
+
+ 45 "Carregar script de arquivo..."
+ 46 "Intervalo script de disparo (.1s)"
+ 47 "Script atual"
+ 48 "Parametros de script"
+
+
+ 49 "Definicões de Visual"
+
+ 50 "Idioma..."
+ 51 "Codificacao de caracteres"
+ 52 "Fonte menu RBF..."
+ 53 "Cores"
+ 54 "Texto OSD"
+ 55 "Plano de fundo OSD"
+ 56 "Histograma"
+ 57 "Plano de fundo Histograma"
+ 58 "Borda Histograma"
+ 59 "Marcacoes EXP histograma"
+ 60 "Subexposicao zebra"
+ 61 "Superexposicao zebra"
+ 62 "Icone bateria"
+ 63 "Texto Menu"
+ 64 "Plano de fundo menu"
+ 65 "Texto - leitor de textos"
+ 66 "Cor de fundo leitor de textos"
+
+
+ 67 "Miscelanea"
+
+ 68 "Navegador de arquivos"
+ 69 "Calendario"
+ 70 "Leitor de arquivos"
+ 71 "Jogos"
+ 72 "Luz e flash"
+ 73 "Exibe tela inicial"
+ 74 "Botoes zoom p/ foco manual"
+ 75 "Botao modo <ALT>"
+ 76 "Desenhar paleta de cores"
+ 77 "Exibe info. compilacao"
+ 78 "Exibe info. memoria"
+
+
+ 79 "Depuracão"
+
+ 80 "Exibe PropCases"
+ 81 "Pagina PropCase"
+ 82 "Exibe outros valores"
+ 83 "Navegador de memoria"
+ 84 "Descarregar RAM ao apertar ALT +/-"
+ 85 "Fazer cartao inicializavel..."
+
+
+ 86 "Bateria"
+
+ 87 "Voltagem MAX"
+ 88 "Voltagem MIN"
+ 89 "Incremento 25+"
+ 90 "Exibe percentual"
+ 91 "Exibe voltagem"
+ 92 "Exibe icone"
+
+
+ 93 "Leitor de textos"
+
+ 94 "Abre arquivo..."
+ 95 "Abre ultimo arquivo aberto"
+ 96 "Escolher fonte RBF"
+ 97 "Pagina de codigo"
+ 98 "Quebra de palavras"
+ 99 "Habilita rolagem automatica"
+100 "Intervalo rol. auto. (sec)"
+
+
+101 "Jogos"
+
+102 "Reversi"
+103 "Sokoban"
+
+
+104 "*** Reinicia opcões ***"
+105 "Tem certeza que deseja\nreiniciar as opcões?"
+
+106 "*** Informacões de compilacão ***"
+107 "CHDK Ver: %s, #%s\nData:    %s\nHora:    %s\nCamera:  %s\nVer FW: %s"
+
+108 "*** Informacões de memoria ***"
+109 "Memoria livre: %d bytes"
+
+110 "*** Informacao ***"
+111 "Mude sua camera \npara modo de Exibicão\ndas fotos. :)"
+
+// file browser titles
+112 "Navegador de arquivos"
+113 "Escolha arquivo de script"
+114 "Escolha arquivo de textos"
+115 "Escolha arquivo de fonte RBF"
+116 "Escolha arquivo de idioma"
+
+// for calendar
+117 "Janeiro"
+118 "Fevereiro"
+119 "Marco"
+120 "Abril"
+121 "Maio"
+122 "Junho"
+123 "Julho
+124 "Agosto"
+125 "Setembro"
+126 "Outubro"
+127 "Novembro"
+128 "Dezembro"
+
+129 "Seg"
+130 "Ter"
+131 "Qua"
+132 "Qui"
+133 "Sex"
+134 "Sab"
+135 "Dom"
+
+136 "Hoje:"
+
+// messagebox buttons
+137 "OK"
+138 "Sim"
+139 "Não"
+140 "Cancelar"
+
+// OSD layout editor
+141 "Histograma"
+142 "Calculadora DoF"
+143 "RAW/EXP"
+144 "Valores miscelanea"
+145 "Ícone Bateria"
+146 "Texto Bateria"
+147 "Relogio"
+
+// palette
+148 "Pressione SET para exibir uma cor especifica"
+149 "       Pressione MENU para sair         "
+150 "Cor"
+151 "Use %s para selecionar a cor"
+
+// reversi
+152 "*** Resultados do Jogo ***"
+153 "Voce ganhou! :)"
+154 "Voce perdeu! :("
+155 "Empatados! :/"
+
+156 "*** Movimento errado ***"
+157 "Voce não pode colocar ai!"
+158 "Esta celula não esta vazia!"
+
+159 "Movimento: Voce     "
+160 "Movimento: Computador"
+161 "  Fim de Jogo  "
+162 " Branco  Preto "
+
+163 "*** Sobre ***"
+
+// sokoban
+164 "  Nivel"
+165 "  Movimentos"
+166 "*** Terminado ***"
+167 "Sim!\n  Voce conseguiu!  "
+
+// console
+168 "*** INICIADO ***"
+169 "*** INTERROMPIDO ***"
+170 "*** TERMINADO ***"
+
+// file browser
+171 "*** Apagar diretorio ***"
+172 "Tem certeza que quer\napagar TODOS\nos arquivos no diretorio selecionado?"
+173 "*** Apagar arquivo ***"
+174 "Tem certeza de que deseja apagar\no arquivo selecionado?"
+
+// benchmark
+175 "Teste de Desempenho"
+176 "Calculando..."
+177 "Desempenho -- Pressione [set] para iniciar"
+178 "Tela"
+179 "Escrita       :"
+180 "Leitura       :"
+181 "Memoria"
+182 "Cartão de memoria"
+183 "Escrita (RAW) :"
+184 "Escrita (Mem) :"
+185 "Escrita (64k) :"
+186 "Leitura (64k) :"
+
+187 "Desabilita desligamento LCD"
+
+188 "Move"
+189 "Copia"
+190 "Cola"
+191 "Apaga"
+192 "Inverte selecão"
+193 "*** Move arquivos ***"
+194 "Tem certeza que deseja mover\n%d arquivos selecionados\nde %s/?"
+195 "*** Copia arquivos ***"
+196 "Tem certeza que deseja copiar\n%d arquivos selecionados\nde %s/?"
+197 "*** Apaga arquivos ***"
+198 "Tem certeza de que deseja apagar\n%d arquivos selecionados?"
+199 "Aguarde..."
+
+200 "Exibe linhas de grade"
+201 "Le grade a partir de arquivo..."
+202 "Linhas de grade"
+203 "Definicoes de grade"
+204 "Escolha arquivo de grade"
+205 "Grade atual"
+
+206 "Reducao de ruidos"
+
+207 "Sobrescrever cores de grade"
+208 "Cor da linha"
+209 "Cor do preenchimento"
+
+210 "Calculadora DoF" 
+211 "Calculadora DoF" 
+212 "Dist. objeto - limite proximo" 
+213 "Use dist. objeto - EXIF (PC65)" 
+214 "Exibe dist. objeto em miscelanea" 
+215 "Exibe limite proximo em miscelanea" 
+216 "Exibe limite longo em miscelanea" 
+217 "Exibe dist. hiperfocal em miscelanea" 
+218 "Exibe prof. de campo em miscelanea"
+
+
+219 "Valores - Miscelanea"
+220 "Valores - Miscelanea"
+221 "Exibe em modo de revisao"	
+222 "Exibe zoom"		
+223 "Exibe abertura 'real'"
+224 "Exibe ISO 'real'"
+225 "Exibe ISO 'virtual'"
+226 "Exibe so ISO em AutoISO"
+227 "Exibe exposicao (Ve=Tv+Av)"
+228 "Exibe Ve medido (Vb+Sv)"
+229 "Exibe brilho (Vb)"
+230 "Exibe Vb medido"
+231 "Exibe superexp. (s/ flash)"
+232 "Exibe luminancia da cena"
+
+233 "Parametros de video"
+234 "Parametros de video"
+235 "Modo de video"
+236 "Bitrate do video"
+237 "Qualidade do video"
+
+
+238 "Operacoes extra foto"
+239 "Operacoes extra foto"
+240 "Sobrepoe velocidade"
+241 "    Fator"
+242 "Sobrepoe abertura"
+243 "Sobrepoe ISO"
+244 "    Fator"
+245 "Sobrepoe dist. objeto"
+246 "    Fator (mm)"
+
+247 "Bracketing em modo continuo"
+248 "Bracketing em modo continuo"
+249 "Valor TV em bracketing"
+250 "Valor AV em bracketing"
+251 "Valor ISO em bracketing"
+252 "    Fator"
+253 "Valor bracket para dist. objeto (MF)"
+254 "    Fator (mm)"
+255 "Tipo de bracketing"
+
+256 "Autoinicializacao"
+257 "Liga remoto"
+
+258 "Controle de exposicão (sem flash)"
+259 "Controle de exposicão (sem flash)"
+260 "Recalcula exposicão"
+261 "Ordem recalculo da exposicão - TV"
+262 "Ordem recalculo da exposicão - AV"
+263 "Ordem recalculo da exposicão - ISO"
+
+264 "Reinicia valores ao ligar"
+
+265 "Exibe valores de superexposicão da Canon"
+
+266 "Desenvolvimento RAW"
+267 "Por favor coloque a camera \nem modo de gravacão e tire\numa foto."
+268 "Escolha arquivo RAW"
+269 "Soma RAW"
+270 "Media RAW"
+271 "Não ha memoria suficiente no cartão:\n%dM necessario, %dM disponivel."
+
+272 "Exibe OSD - modo de revisão"
+273 "Inicia lista de tarefas"
+
+274 "Distancia do objeto da lente"
+
+275 "Limpa bracket ao ligar"
+
+276 "Cria cartão com 2 particões"
+277 "Troca particões"
+278 "Isto DESTRUIRÁ TODA INFORMAÇAO\nno cartão. Continua?"
+279 "Este cartão tem uma única particão."
+280 "Erro"
+281 "Aviso"
+282 "Informacão"
+283 "RGB zebra (so superexposicao)"
+
+284 "Estado do filtro ND"
+
+285 "Exibe grade histograma Ev"
+
+286 "Aviso OSD"
+287 "Aviso OSD (fundo)"
+288 "Icone espaco cores restantes"
+289 "Exibe icone sist. arquivos"
+290 "Espaco remanscente"
+291 "Exibe espaco cartao (%)"
+292 "Exibe espaco cartão (Mb)"
+293 "Texto espaco arquivo"
+294 "  Exibe foto RAW de sobra"
+295 "RAW de sobra"
+
+296 "Exibe estado do RAW"
+
+297 "Exibe valores em video"
+
+298 "Verificacao velocidade"
+299 "Liga menu do usuario"
+300 "Menu do usuario"
+301 " "
+
+302 " Escala lente adaptador, 100=1x"
+303 "Exibe barra de espaco"
+304 "  Tamanho na tela"
+305 "  Largura/Altura"
+306 "  Limite porcentual"
+307 "  Limite MB"
+308 "Unidade de aviso"
+309 "  Limite do aviso"
+310 "Liga zoom otico"
+311 "Relogio"
+312 "Definicoes do relogio"
+313 "Formato do relogio"
+314 "Cor de fundo do espaco remanescente"
+315 "Relogio em 12h"
+316 "Exibe 1/2 pressao disparador"
+
+317 "Definicoes mostrar RAW"
+318 "RAW"
+
+319 "Definicoes - mostrar arquivos"
+320 "Espaco de arquivos"
+
+321 "AutoISO customizado"
+322 "AutoISO customizado"
+323 "Liga AutoISO customizado"
+324 "Velocidade minima do disparador"
+325 "Fator do usuario (1/FL/fator)"
+326 "Fator IS (Tv*fator)"
+327 "ISO Maximo - HI (x10)"
+328 "ISO Maximo - AUTO (x10)"
+329 "ISO Minimo (x10)"
+
+330 "Cor do titulo do menu"
+331 "Cor de fundo do titulo do menu"
+332 "Cor do texto do cursor"
+333 "Cor de fundo do cursor"
+334 "Centra menu"
+335 "Mudez durante a ampliacão"
+
+336 "Remove pixels ruins"
+337 "Off"
+338 "Media"
+339 "Conversão de RAW"
+
+340 "Sobrepoe"
+341 "Sobrepoe fundo"
+342 "Desliga sobreposicao"
+343 "  Inclui AutoISO e Bracketing?"
+344 "  Esconde?"
+345 "Desliga enquanto grava video?"
+346 "Exibe tempo de sobra video?"
+347 "  Taxa atualizacao (~seg)"
+348 "Tempo de sobra do video"
+349 "Limpa param. de video ao ligar?"
+350 "Liga modo rapido de Ev?"
+351 "   Tamanho do passo (1 EV)?"
+352 "Correcão Ev"
+353 "Voce tem certeza que quer apagar \nTODOS os arquivos RAW sem o diretorio\nDCIM JPG correspondente?"
+354 "Voce tem certeza que quer apagar \nTODOS os arquivos RAW sem o diretorio\nJPG correspondente?"
+355 "Voce tem certeza que quer apagar \narquivos RAW sem o diretorio JPG\n correspondente (excluidos\n os marcados)?"
+356 "Limpa caracteristica RAW \nnão se aplica a esse item"
+357 "*** Limpa arquivos RAW ***"
+358 "Limpa RAW"
+ 
+359 "Menu do usuario como root"
+
+360 "Fonte - simbolos"
+361 "Escolha arquivo de simbolos"
+362 "Liga simbolos"
+363 "Cor dos simbolos" 
+364 "Cor de fundo dos simbolos"
+
+365 "Curvas customizadas"
+366 "Curvas customizadas"
+367 "Le perfil da curva..."
+368 "Liga curva"
+369 "Escolha arquivo da curva"
+
+370 "Superposicao de borda"
+371 "Superposicao de borda"
+
+372 "Liga superposicao de borda"
+373 "Limite da superp. de borda"
+374 "Cor da superposicao de borda"
+
+375 "Parametros remotos"
+376 "Parametros remotos"
+377 "Liga Remoto"
+378 "Liga Sincronismo"
+379 "Liga Atraso sincronismo"
+380 "Atraso sinc. 0,1ms"
+381 "Atraso sinc. 0,1s"
+
+382 "Autofoco"
+383 "Le valores padrao para parametros"
+384 "Seta parametros"
+
+385 "Desliga RAW em Esportes"
+386 "Desliga RAW em Burst"
+387 "Desliga RAW em EV Bracketing"
+388 "Desliga RAW no Timer"
+
+389 "Excecoes"
+390 "Menu de excecoes RAW"
+391 "Avisa quando tiver uma excecao?"
+392 "Autoseleciona primeira entrada no menu"
+
+393 "Tempo esgotado (0,1s)"
+394 "Remoto sincronizavel"
+395 "Controle rapido do video?"
+396 "Temperatura"
+397 "Exibe temperatura?"
+398 "Controle de qualidade do video?"
+399 "Liga Zoom remoto"
+400 "Tempo do zoom (0,1s)"
+401 "Som ao ligar"
+402 "Subtrai prefixo RAW"
+403 "Subtrai extensao RAW"
+404 "Subtrai val. escuro entrada"
+405 "Subtrai val. escuro saida"
+406 "a partir de"
+407 "...%d mais arquivos"
+408 "Subtrai"
+409 "Subtrai dos marcados"
+410 "Salva parametros"
+411 "Ver video Ev"
+412 "   Valor sobreposto de zoom"
+413 "Zoom sobreposto"
+414 "   Limpa ao iniciar"
+415 "Adiciona sufixo RAW"
+416 "  em Fahrenheit"
+417 "Le superposicao de borda"
+418 "Salva superposicao de borda"
+419 "Liga em Play"
+420 "Memoria interna livre"
+421 "Le e liga zoom"
+422 "Trava superposicao de borda"
+423 "Sinc. flash com cortina de tras"
+424 "Formato DNG"
+425 "Buffer RAW em cache"
+426 "Nao consegue ler CHDK/badpixel.bin\nPor favor execute \nCHDK/SCRIPTS/TEST/badpixel.lua"
+427 "Exibe tempo - gravacao RAW"
+428 "Conecte 4"
+429 "Oponente:"
+430 "Humano"
+431 "Jogador 1 venceu o jogo"
+432 "Jogador 1 venceu o jogo"
+433 "Venci voce"
+434 "O jogo terminou sem vencedores"
+435 "Desliga RAW na superp. de bordas"
+436 "Desliga RAW no modo automatico"
+437 "   SOMENTE em video"
+438 "   Potencia do flash"
+439 "Extensao do arquivo 'DNG'"
+440 "DNG visivel via USB"
+441 "Jogo da memoria"
+442 "Cores disponiveis"
+443 "no lugar certo"
+444 "cor em resposta"
+445 "CORRETO :-)"
+446 "FIM DE JOGO"
+447 "[<-][->] selecione cor"
+448 "[ACIMA][ABAIXO] selecione cor"
+449 "[SET] proxima linha"
+450 "SEM CORES DUPLICADAS"
+451 "Reseta arquivos"
+452 "Reinicie a camera..."
+453 "Force flash manual"

@@ -5,7 +5,6 @@
 // -----------------------------------------------
 // <id> "<text>"
 
-  
   1 "Hauptmenü"
 
   2 "RAW-Einstellungen"
@@ -299,23 +298,23 @@
 
 238 "Extra-Foto"
 239 "Extra-Foto-Einstellungen"
-240 "Ersetze Verschlußzeit"
+240 "Ersetze Verschlusszeit"
 241 "    Multiplikator"
 242 "Ersetze Blenden-Wert"
 243 "Ersetze ISO-Wert"
 244 "    Multiplikator"
-245 "Ersetze Motiv-Distanz"
-246 "    Multiplikator (mm)"
+245 "Ersetze Fokus-Distanz"
+246 "    Eingabeschrittweite"
 
-247 "Bracket im fortlauf. Modus"
-248 "Bracket im fortlauf. Modus"
-249 "TV Bracket-Wert"
-250 "AV Bracket-Wert"
-251 "ISO Bracket-Wert"
+247 "Reihe im fortlauf. Modus"
+248 "Reihe im fortlauf. Modus"
+249 "Tv-Reihe Betrag"
+250 "Av-Reihe Betrag"
+251 "ISO-Reihe Betrag"
 252 "    Multiplikator"
-253 "Motiv-Dist. Bracket-Wert (MF)"
-254 "    Multiplikator (mm)"
-255 "Bracket-Typ"
+253 "Fokus-Reihe Betrag"
+254 "    Multiplikator"
+255 "Reihen-Typ"
 
 256 "Autostart"
 257 "USB-Fernbedienung an/aus"
@@ -327,7 +326,7 @@
 262 "Av Exposure Neuberechnung"
 263 "ISO Exposure Neuberechnung"
 
-264 "Lösche Ersatzerte bei Neustart"
+264 "Lösche Ersatzwerte bei Neustart"
 
 265 "Zeige Canon-Überbeli-Wert"
 
@@ -343,7 +342,7 @@
 
 274 "Motiventfernung von Linse"
 
-275 "Lösche Bracket-Werte bei Start"
+275 "Lösche Beträge bei Neustart"
 
 276 "Erzeuge Karte mit 2 Partitionen"
 277 "Tausche Partitionen"
@@ -373,7 +372,7 @@
 
 297 "Zeige Werte in Video"
 
-298 "    Verschlußzeit-Typ"
+298 "    Verschlusszeit-Typ"
 
 299 "Benutzermenü-Status"
 300 "Benutzermenü"
@@ -408,7 +407,7 @@
 321 "Benutzer-Auto-ISO"
 322 "Benutzer-Auto-ISO"
 323 "Benutzer-Auto-ISO aktivieren"
-324 "Min. Verschlußzeit"
+324 "Min. Verschlusszeit"
 325 "Benutzer-Faktor (1/FL/F)"
 326 "IS Faktor (Tv x Faktor)"
 327 "Max. ISO Hi (x10)"
@@ -428,11 +427,11 @@
 338 "Mittelw." 
 339 "RAWconv" 
 
-340 "Status-Anzeige-Text"
-341 "Status-Anzeige-Hintergrund"
-342 "Ersatzwert-Modus"
+340 "Ersatzwerte-Text"
+341 "Ersatzwerte-Hintergrund"
+342 "Sperre Ersatzwerte"
 
-343 "    Inkl. AutoIso & Bracket"
+343 "    Inkl. AutoISO & Reihen"
 344 "    Ausnahmen"
 345 "    Aus bei Videoaufn."
 
@@ -493,7 +492,7 @@
 390 "RAW-Ausnahmen"
 391 "Ausnahmewarnung an/aus"
 
-392 "Autom. 1. Menü-Zeile wählen"
+392 "Auto-Auswahl 1. Menü-Zeile"
 
 393 "Zeitlimit 0,1s"
 394 "Synchro-Funktion"
