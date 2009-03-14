@@ -8,6 +8,7 @@
 #define RAW_TARGET_DIRECTORY    "A/DCIM/%03dCANON"
 #define RAW_TARGET_FILENAME     "%s_%04d.%s"
 
+// we could use sensor bitdepth here. For now, we just discard low bits if > 10bpp
 #define SHOT_HISTOGRAM_SAMPLES 1024
 #define SHOT_HISTOGRAM_SIZE (SHOT_HISTOGRAM_SAMPLES*sizeof(short))
 
@@ -38,7 +39,7 @@ int shot_histogram_isenabled()
 
 void build_shot_histogram()
 {
- // read samples fromRAW memory and build an histogram of its luminosity
+ // read samples from RAW memory and build an histogram of its luminosity
  // actually, it' just reading pixels, ignoring difference between R, G and B, 
  // we just need an estimate of luminance
  // SHOT_HISTOGRAM_MARGIN defines a margin around the sensor that will be ignored 
@@ -72,6 +73,10 @@ void build_shot_histogram()
  for (x = x0 ; x < x1; x +=SHOT_HISTOGRAM_STEP )  
  {
   p=get_raw_pixel(x,y);
+// > 10bpp compatibility: discard the lowest N bits
+#if CAM_SENSOR_BITS_PER_PIXEL > 10
+  p >>= CAM_SENSOR_BITS_PER_PIXEL-10;
+#endif
   shot_histogram[p]++;
  }
  /*
@@ -104,7 +109,7 @@ int shot_histogram_get_range(int histo_from, int histo_to)
  
  if(!shot_histogram_isenabled()) // TODO we could return an error somehow
   return 0;
- for (x = 0 ; x < 1024; x ++ )  
+ for (x = 0 ; x < SHOT_HISTOGRAM_SAMPLES; x ++ )  
  {
 	 tot += shot_histogram[x];
 	 if (x>=histo_from  && x <= histo_to)  

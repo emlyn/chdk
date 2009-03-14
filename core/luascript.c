@@ -12,6 +12,8 @@
 #include "stdlib.h"
 #include "raw.h"
 #include "raw_merge.h"
+
+#ifdef OPT_CURVES
 #include "curves.h"
 
 static int luaCB_set_curve_state( lua_State* L )
@@ -21,7 +23,7 @@ static int luaCB_set_curve_state( lua_State* L )
   curve_set_mode(value);
   return 0;
 }
-
+#endif
 
 static int luaCB_set_aflock(lua_State* L) 
 {
@@ -1015,5 +1017,7 @@ void register_lua_funcs( lua_State* L )
   FUNC(raw_merge_end);
   FUNC(set_backlight);
    FUNC(set_aflock);
+#ifdef OPT_CURVES
    FUNC(set_curve_state);
+#endif
 }

@@ -2,6 +2,9 @@
 #include "conf.h"
 #include "stdlib.h"
 #include "raw.h"
+
+#ifdef OPT_CURVES
+
 #include "curves.h"
 
 /*
@@ -389,3 +392,4 @@ void curve_apply() {
 	
 }
 
+#endif

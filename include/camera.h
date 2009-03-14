@@ -52,8 +52,10 @@
     #undef  CAM_REAR_CURTAIN                // Camera do not have front/rear curtain flash sync in menu
     #undef  CAM_BRACKETING                // Cameras that have bracketing (focus & ev) in original firmware already, most likely s- & g-series (propcase for digic III not found yet!)
 
+    #define CAM_UNCACHED_BIT    0x10000000 // bit indicating the uncached memory
+
     #define CAM_MAKE                    "Canon"
-    #define CAM_SENSOR_BITS_PER_PIXEL   10  // Bits per pixel. Only value of 10 is currently supported
+    #define CAM_SENSOR_BITS_PER_PIXEL   10  // Bits per pixel. 10 is standard, 12 is supported except for curves
     #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
     #define CAM_BLACK_LEVEL             31
 //----------------------------------------------------------
@@ -1347,6 +1349,66 @@
 
     #define DNG_EXT_FROM ".CR2"
 
+#elif defined (CAMERA_ixus980_sd990)
+    #define CAM_PROPSET                 2 // all values checked so far match propset 2
+    #define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              4480 // 14.7 MP 12bpp
+    #define CAM_RAW_ROWS                3348   
+
+    #undef  CAM_USE_ZOOM_FOR_MF
+    #undef  CAM_HAS_ERASE_BUTTON
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define CAM_HAS_ND_FILTER           1
+    #define  CAM_HAS_MANUAL_FOCUS		1
+    #define  CAM_HAS_USER_TV_MODES		1 //include M/P ? needed to make Tv bracketing work
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #undef CAM_CHDK_HAS_EXT_VIDEO_MENU
+    #define CAM_NEED_SCREENLOCK          1
+    #define CAM_NEED_VIEWPORT_WIDTH      1
+    #undef CAM_UNCACHED_BIT  // shut up compiler
+    #define CAM_UNCACHED_BIT    0x40000000
+    #undef CAM_BITMAP_PALETTE
+    #define CAM_BITMAP_PALETTE    2
+
+	#undef CAM_BLACK_LEVEL
+    #define CAM_BLACK_LEVEL             127
+//    #define CAM_HAS_JOGDIAL             1
+//    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+//    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
+	// disabled until we get movie task running
+    #undef CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+//    #define CAM_REMOTE 1
+//   #define CAM_SYNCH  1 
+	#undef CAM_SENSOR_BITS_PER_PIXEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
+	#undef CAM_WHITE_LEVEL
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+
+    #define DNG_SUPPORT                 1
+    // pattern
+//    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
+    #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
+    // color TODO
+    #define CAM_COLORMATRIX1                               \
+      837237, 1000000, -290137, 1000000, -128156, 1000000, \
+      -127762, 1000000, 643909, 1000000,  52973,  1000000, \
+      4446,  1000000, 88354,   1000000,  224246, 1000000
+    
+    #define cam_CalibrationIlluminant1 1 // Daylight
+    // cropping 
+	// TODO, capture the full frame for now
+    #define CAM_JPEG_WIDTH  4416
+    #define CAM_JPEG_HEIGHT 3312
+    #define CAM_ACTIVE_AREA_X1 12
+    #define CAM_ACTIVE_AREA_Y1 12
+    #define CAM_ACTIVE_AREA_X2 4444
+    #define CAM_ACTIVE_AREA_Y2 3324
+    // camera name
+    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData sd990: OK
+
+//    #define DNG_EXT_FROM ".CR2"
+
 //==========================================================
 // S-Series
 //==========================================================
@@ -1536,9 +1598,65 @@
 
 //----------------------------------------------------------
 
+#elif defined (CAMERA_sx10)
+    #define CAM_PROPSET                 2
+    #define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              3720   
+    #define CAM_RAW_ROWS                2772   
+    
+    #define CAM_SWIVEL_SCREEN           1
+    #define CAM_ADJUSTABLE_ALT_BUTTON   1
+    #undef  CAM_CAN_SD_OVER_NOT_IN_MF
+    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+    #define CAM_HAS_VIDEO_BUTTON       1
+    #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
+    #define CAM_BRACKETING              1 
+    #undef  CAM_VIDEO_CONTROL
+    #define CAM_MULTIPART               1
+    #define CAM_HAS_JOGDIAL             1
+    #undef  CAM_USE_ZOOM_FOR_MF
+    #undef  CAM_UNCACHED_BIT  // shut up compiler
+    #define CAM_UNCACHED_BIT    0x40000000
+
+//    #undef  OPT_CURVES
+
+    #define DNG_SUPPORT                 1
+    // pattern
+    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
+    // color
+    #define CAM_COLORMATRIX1                               \
+      650591, 1000000, -199585, 1000000, -123118, 1000000, \
+     -69617,  1000000, 583926,  1000000,  34354,  1000000, \
+     -19113,  1000000, 82163,   1000000, 210786,  1000000
+    
+    #define cam_CalibrationIlluminant1 1 // Daylight
+    // cropping
+    #define CAM_JPEG_WIDTH  3648
+    #define CAM_JPEG_HEIGHT 2736
+    #define CAM_ACTIVE_AREA_X1 6
+    #define CAM_ACTIVE_AREA_Y1 12
+    #define CAM_ACTIVE_AREA_X2 3690
+    #define CAM_ACTIVE_AREA_Y2 2772
+    // camera name
+    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+    #undef  CAM_SENSOR_BITS_PER_PIXEL
+    #undef  CAM_WHITE_LEVEL
+    #undef  CAM_BLACK_LEVEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+    #define CAM_BLACK_LEVEL             127
+ 
+//----------------------------------------------------------
+
 #else
     #error camera type not defined
 
+#endif
+
+// curves only work in 10bpp for now
+#if CAM_SENSOR_BITS_PER_PIXEL != 10
+#undef OPT_CURVES
 #endif
 
 #endif /* CAMERA_H */
