@@ -21,6 +21,10 @@ void taskCreateHook(int *p) {
  if (p[0]==0xFF877284)  p[0]=(int)init_file_modules_task;
 }
 
+void taskCreateHook2(int *p) { 
+ p-=16;
+ if (p[0]==0xFF877284)  p[0]=(int)init_file_modules_task;
+}
 
 void boot() { 
 
@@ -49,6 +53,7 @@ void boot() {
     *(int*)(0x261C+8)= (*(int*)0xC02200C0)&1 ? 1: 2;  // replacement of sub_FF822E10
 
     *(int*)0x1930=(int)taskCreateHook; 
+    *(int*)0x1934=(int)taskCreateHook2; 
 /*
     asm volatile (
 	"MRC     p15, 0, R0,c1,c0\n"

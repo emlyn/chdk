@@ -17,15 +17,15 @@ static long kbd_prev_state[3];
 static long kbd_mod_state[3];
 static KeyMap keymap[];
 static long last_kbd_key = 0;
-static long alt_mode_key_mask = 0x00001800;  
-static long alt_mode_key_reg  = 2;      //KEY PRINT 
+static long alt_mode_key_mask = 0x00001000;  
+static long alt_mode_key_reg  = 1;     
 static int usb_power=0;
 static int remote_key, remote_count;
 static int shoot_counter=0;
 #define DELAY_TIMEOUT 10000
 
 #define KEYS_MASK0 (0xC0000000)
-#define KEYS_MASK1 (0x3F1F1418)
+#define KEYS_MASK1 (0x1F1F1018)
 #define KEYS_MASK2 (0x00000000)
  
 #define NEW_SS (0x2000)
