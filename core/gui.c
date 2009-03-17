@@ -782,8 +782,8 @@ static CMenuItem raw_submenu_items[] = {
     {0x5f,LANG_MENU_RAW_EXTENSION,           MENUITEM_ENUM,      (int*)gui_raw_ext_enum },
     {0x5f,LANG_MENU_SUB_PREFIX,              MENUITEM_ENUM,      (int*)gui_sub_batch_prefix_enum },
     {0x5f,LANG_MENU_SUB_EXTENSION,           MENUITEM_ENUM,      (int*)gui_sub_batch_ext_enum },
-    {0x60,LANG_MENU_SUB_IN_DARK_VALUE,       MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.sub_in_dark_value, MENU_MINMAX(0, 1023)},
-    {0x60,LANG_MENU_SUB_OUT_DARK_VALUE,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.sub_out_dark_value, MENU_MINMAX(0, 1023)},
+//  {0x60,LANG_MENU_SUB_IN_DARK_VALUE,       MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.sub_in_dark_value, MENU_MINMAX(0, 1023)},
+//  {0x60,LANG_MENU_SUB_OUT_DARK_VALUE,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.sub_out_dark_value, MENU_MINMAX(0, 1023)},
     {0x2a,LANG_MENU_RAW_DEVELOP,             MENUITEM_PROC,      (int*)gui_raw_develop },
     {0x5c,LANG_MENU_BAD_PIXEL_REMOVAL,       MENUITEM_ENUM,      (int*)gui_bad_pixel_enum },
 #if DNG_SUPPORT
@@ -2669,6 +2669,7 @@ void gui_draw_osd() {
     if ((recreview_hold==0) &&  (!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) &&  !((conf.hide_osd == 1) || (conf.hide_osd == 3)) )) && !(((conf.hide_osd == 2) || (conf.hide_osd == 3))&& (shooting_get_prop(PROPCASE_DISPLAY_MODE) == 1))))   {
         gui_batt_draw_osd();
         gui_space_draw_osd();
+        if (conf.fast_ev && !mode_video && (m&MODE_MASK) == MODE_REC ) gui_osd_draw_ev();
     }
     
     if ((conf.show_clock) && (recreview_hold==0) &&  ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) &&  !((conf.hide_osd == 1) || (conf.hide_osd == 3)) )) && !(((conf.hide_osd == 2) || (conf.hide_osd == 3))&& (shooting_get_prop(PROPCASE_DISPLAY_MODE) == 1)))|| (conf.clock_halfpress==0) )) {
@@ -2685,9 +2686,6 @@ void gui_draw_osd() {
         gui_osd_draw_movie_time_left();
     }
  
-    if ((conf.fast_ev) && (recreview_hold==0) && ((mode_get()&MODE_SHOOTING_MASK) != MODE_VIDEO_STD) && ((!kbd_is_key_pressed(KEY_SHOOT_HALF) &&  (  ((m&MODE_MASK) == MODE_REC) || (!((m&MODE_MASK) == MODE_REC) &&  !((conf.hide_osd == 1) || (conf.hide_osd == 3)) )) && !(((conf.hide_osd == 2) || (conf.hide_osd == 3))&& (shooting_get_prop(PROPCASE_DISPLAY_MODE) == 1))) )) {
-        gui_osd_draw_ev();
-    }
 #if CAM_DRAW_EXPOSITION
     if (gui_mode==GUI_MODE_NONE && kbd_is_key_pressed(KEY_SHOOT_HALF) && ((m&MODE_MASK)==MODE_REC) && ((m&MODE_SHOOTING_MASK))!=MODE_VIDEO_STD && (m&MODE_SHOOTING_MASK)!=MODE_VIDEO_COMPACT) {
      strcpy(osd_buf,shooting_get_tv_str());

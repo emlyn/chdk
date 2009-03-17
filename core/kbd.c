@@ -1360,6 +1360,7 @@ long kbd_use_up_down_left_right_as_fast_switch() {
     int m=mode_get(); 
     int mode_video = MODE_IS_VIDEO(m) || (movie_status > 1);
     int ev_video=0;
+    int jogdial;
 
 #if CAM_EV_IN_VIDEO
     ev_video=get_ev_video_avail(); 
@@ -1370,6 +1371,7 @@ long kbd_use_up_down_left_right_as_fast_switch() {
     if (canon_shoot_menu_active!=0 || (m&MODE_MASK) != MODE_REC)
         return 0;
 
+#if !CAM_HAS_JOGDIAL
     if (kbd_is_key_pressed(KEY_UP) && ((m&MODE_SHOOTING_MASK) != MODE_M) && !mode_video) {
         if (conf.fast_ev && key_pressed == 0) {
             shooting_set_prop(PROPCASE_EV_CORRECTION_1,shooting_get_prop(PROPCASE_EV_CORRECTION_1)+(conf.fast_ev_step+1)*16);
@@ -1381,6 +1383,36 @@ long kbd_use_up_down_left_right_as_fast_switch() {
         }
 
     } 
+
+    if (kbd_is_key_pressed(KEY_DOWN) && ((m&MODE_SHOOTING_MASK) != MODE_M) && !mode_video) {
+        if (conf.fast_ev && key_pressed == 0) {
+            kbd_key_release_all();
+            shooting_set_prop(PROPCASE_EV_CORRECTION_1,shooting_get_prop(PROPCASE_EV_CORRECTION_1)-(conf.fast_ev_step+1)*16);
+            shooting_set_prop(PROPCASE_EV_CORRECTION_2,shooting_get_prop(PROPCASE_EV_CORRECTION_2)-(conf.fast_ev_step+1)*16);
+            key_pressed = KEY_DOWN;
+            EnterToCompensationEVF();
+            return 1;
+        }
+    } 
+
+#else
+    jogdial=get_jogdial_direction();
+
+    if (conf.fast_ev &&kbd_is_key_pressed(KEY_SHOOT_HALF) && (jogdial==JOGDIAL_RIGHT) && ((m&MODE_SHOOTING_MASK) != MODE_M) && !mode_video) {
+            shooting_set_prop(PROPCASE_EV_CORRECTION_1,shooting_get_prop(PROPCASE_EV_CORRECTION_1)+(conf.fast_ev_step+1)*16);
+            shooting_set_prop(PROPCASE_EV_CORRECTION_2,shooting_get_prop(PROPCASE_EV_CORRECTION_2)+(conf.fast_ev_step+1)*16);
+            EnterToCompensationEVF();
+        }
+
+    if (conf.fast_ev &&kbd_is_key_pressed(KEY_SHOOT_HALF) && (jogdial==JOGDIAL_LEFT) && ((m&MODE_SHOOTING_MASK) != MODE_M) && !mode_video) {
+            shooting_set_prop(PROPCASE_EV_CORRECTION_1,shooting_get_prop(PROPCASE_EV_CORRECTION_1)-(conf.fast_ev_step+1)*16);
+            shooting_set_prop(PROPCASE_EV_CORRECTION_2,shooting_get_prop(PROPCASE_EV_CORRECTION_2)-(conf.fast_ev_step+1)*16);
+            EnterToCompensationEVF();
+        }
+     
+
+#endif
+
     if (kbd_is_key_pressed(KEY_UP) && mode_video && movie_status == 4 ) {
         if (conf.fast_movie_quality_control && key_pressed == 0) {
             if (conf.video_mode==0) {
@@ -1397,16 +1429,6 @@ long kbd_use_up_down_left_right_as_fast_switch() {
                 movie_reset = 1;
             }              
             key_pressed = KEY_UP;
-            return 1;
-        }
-    } 
-    if (kbd_is_key_pressed(KEY_DOWN) && ((m&MODE_SHOOTING_MASK) != MODE_M) && !mode_video) {
-        if (conf.fast_ev && key_pressed == 0) {
-            kbd_key_release_all();
-            shooting_set_prop(PROPCASE_EV_CORRECTION_1,shooting_get_prop(PROPCASE_EV_CORRECTION_1)-(conf.fast_ev_step+1)*16);
-            shooting_set_prop(PROPCASE_EV_CORRECTION_2,shooting_get_prop(PROPCASE_EV_CORRECTION_2)-(conf.fast_ev_step+1)*16);
-            key_pressed = KEY_DOWN;
-            EnterToCompensationEVF();
             return 1;
         }
     } 

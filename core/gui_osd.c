@@ -1159,12 +1159,11 @@ if (movie_reset == 1)
         }
 
 void gui_osd_draw_ev() {
-#if (CAM_PROPSET == 1)  
-    sprintf(osd_buf, "EV: %+d,%2d", shooting_get_prop(25)/96,shooting_get_prop(25)%96);
-#elif (CAM_PROPSET == 2)
-    sprintf(osd_buf, "EV: %+d,%2d", shooting_get_prop(107)/96,shooting_get_prop(107)%96);
-#endif
-
+    static char *s[6]={"   ", "1/6", "1/3", "1/2", "2/3", "5/6"};
+    short ev=shooting_get_prop(PROPCASE_EV_CORRECTION_1);
+    if (ev/96 || (ev==0)) sprintf(osd_buf, "EV:  %d %s", abs(ev/96), s[abs(ev/16%6)]);
+    else sprintf(osd_buf, "EV:  %s   ", s[abs(ev/16%6)]);
+    if (ev>0) osd_buf[4]='+'; else if (ev<0) osd_buf[4]='-';
     draw_string(conf.mode_ev_pos.x, conf.mode_ev_pos.y, osd_buf, conf.osd_color);
 
 }
