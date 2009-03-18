@@ -33,7 +33,7 @@
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1 // Camera can unlock optical zoom in video (if it is locked)
     #undef  CAM_FEATURE_FEATHER             // Cameras with "feather" or touch wheel.
     #define CAM_HAS_IS                  1   // Camera has image stabilizer
-	#undef  CAM_HAS_JOGDIAL                 // Camera has a "jog dial"
+    #undef  CAM_HAS_JOGDIAL                 // Camera has a "jog dial"
 
     #undef  CAM_CONSOLE_LOG_ENABLED         // Development: internal camera stdout -> A/stdout.txt
     #define CAM_CHDK_HAS_EXT_VIDEO_MENU 1   // In CHDK for this camera realized adjustable video compression
@@ -1494,7 +1494,7 @@
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
-    #define  CAM_HAS_VIDEO_BUTTON       1
+    #define CAM_HAS_VIDEO_BUTTON       1
     #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
@@ -1619,17 +1619,17 @@
     #undef  CAM_UNCACHED_BIT  // shut up compiler
     #define CAM_UNCACHED_BIT    0x40000000
 
-//    #undef  OPT_CURVES
 
     #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
+
     #define CAM_COLORMATRIX1                               \
-      650591, 1000000, -199585, 1000000, -123118, 1000000, \
-     -69617,  1000000, 583926,  1000000,  34354,  1000000, \
-     -19113,  1000000, 82163,   1000000, 210786,  1000000
-    
+      827547, 1000000, -290458, 1000000, -126086, 1000000, \
+     -12829,  1000000, 530507,  1000000, 50537,   1000000, \
+      5181,   1000000, 48183,   1000000, 245014,  1000000
+
     #define cam_CalibrationIlluminant1 1 // Daylight
     // cropping
     #define CAM_JPEG_WIDTH  3648

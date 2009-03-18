@@ -162,11 +162,13 @@ extern void _UniqueLedOn(void *addr, long brightness);
 extern void _UniqueLedOff(void *addr);
 struct led_control {int led_num; int action; int brightness; int blink_count;};
 extern int _PostLEDMessage(struct led_control *);
+int _LEDDrive(int led, int action); 
 
 
 extern long _LockMainPower();
 extern long _UnlockMainPower();
 extern void _SetAutoShutdownTime(int t);
+extern int  _PostLogicalEventForNotPowerType(int event, int unk);
 
 
 /* math */

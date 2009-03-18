@@ -74,7 +74,7 @@ static int nFirst=1;
 static int nTxtbl[]={0,1,2,3,4,5,6};
 #endif
 
-#if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_s5is)
+#if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_s5is) || defined(CAMERA_sx10)
 #define ZSTEP_TABLE_SIZE 8
 static int nTxtbl[]={0,11,25,41,64,86,105,128};
 #endif

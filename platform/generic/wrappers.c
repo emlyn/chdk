@@ -88,7 +88,7 @@ void mark_filesystem_bootable()
     _UpdateMBROnFlash(0, 0x40, "BOOTDISK");
 }
 
-void vid_bitmap_refresh()
+void __attribute__((weak)) vid_bitmap_refresh()
 {
     _RefreshPhysicalScreen(1);
 }

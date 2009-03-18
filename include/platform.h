@@ -65,7 +65,8 @@ MODE_VIDEO_AQUARIUM     ,
 MODE_VIDEO_SUPER_MACRO  ,
 MODE_VIDEO_STITCH       ,
 MODE_VIDEO_MANUAL       ,
-MODE_SPORTS			    ,
+MODE_SPORTS             ,
+MODE_SCN_SUNSET         ,
 };
 
 // this is nasty, but not as nasty as checking each of the flags all over the place
