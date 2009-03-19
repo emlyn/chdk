@@ -1416,11 +1416,13 @@ long kbd_use_up_down_left_right_as_fast_switch() {
     if (kbd_is_key_pressed(KEY_UP) && mode_video && movie_status == 4 ) {
         if (conf.fast_movie_quality_control && key_pressed == 0) {
             if (conf.video_mode==0) {
+#if !VIDEO_QUALITY_ONLY
                 conf.video_bitrate+=1;
                 if (conf.video_bitrate>=VIDEO_BITRATE_STEPS)
                     conf.video_bitrate=VIDEO_BITRATE_STEPS-1;
                 shooting_video_bitrate_change(conf.video_bitrate);
                 movie_reset = 1;
+#endif
             }    
             else if (conf.video_mode==1) {
                 conf.video_quality+=1;
@@ -1436,12 +1438,14 @@ long kbd_use_up_down_left_right_as_fast_switch() {
     if (kbd_is_key_pressed(KEY_DOWN) && mode_video && movie_status == 4) {
         if (conf.fast_movie_quality_control && key_pressed == 0) {
             if (conf.video_mode==0) {                
+#if !VIDEO_QUALITY_ONLY
                 conf.video_bitrate-=1;
                 if (conf.video_bitrate<0)
                     conf.video_bitrate=0;
 
                 shooting_video_bitrate_change(conf.video_bitrate);
                 movie_reset = 1;
+#endif
             }
             else if (conf.video_mode==1) {
                 conf.video_quality-=1;

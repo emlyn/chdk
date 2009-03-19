@@ -1610,7 +1610,7 @@
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
     #define CAM_HAS_VIDEO_BUTTON       1
-    #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
+    #define VIDEO_QUALITY_ONLY          1  
     #define CAM_BRACKETING              1 
     #undef  CAM_VIDEO_CONTROL
     #define CAM_MULTIPART               1

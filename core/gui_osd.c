@@ -1083,11 +1083,13 @@ int mode_video = MODE_IS_VIDEO(m);
 if (mode_video || movie_status > 1) {
     // if manual adjust, show the field item to be adjusted
    // if any value overriden, show the override value
+#if !VIDEO_QUALITY_ONLY
    if ((conf.video_mode == 0 && conf.fast_movie_quality_control==1) || conf.video_bitrate != VIDEO_DEFAULT_BITRATE) {
        // gui_print_osd_state_string_chr("Bitrate: ",video_bitrate_strings[conf.video_bitrate]);
        sprintf(osd_buf3, "Bit:%5s",video_bitrate_strings[conf.video_bitrate]);
        draw_string( conf.mode_video_pos.x, conf.mode_video_pos.y+2*FONT_HEIGHT, osd_buf3, conf.osd_color);
    }
+#endif
    if ((conf.video_mode == 1 && conf.fast_movie_quality_control==1) || conf.video_quality != VIDEO_DEFAULT_QUALITY) {
        // gui_print_osd_state_string_int("Quality: ",conf.video_quality);
 			 sprintf(osd_buf4, "Qual:%2i",conf.video_quality);
