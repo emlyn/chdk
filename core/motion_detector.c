@@ -477,6 +477,7 @@ img += bufoff * 0x7E900;
 							break;
 						MD_MEASURE_MODE_U:
 							val=cu;
+							break;
 						MD_MEASURE_MODE_V:
 								val = cv;
 							break;
