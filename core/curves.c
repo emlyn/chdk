@@ -26,6 +26,8 @@
 	External function added:  shooting_get_ev_correction1 (added in generic/shooting)
 	Modified gui.c for curve enable
 	
+	3/28/09: Fix black holes, and column skipping, use Green as luminance in Luminance curve
+	
 */
 unsigned short *curve_data = NULL;
 
@@ -33,7 +35,6 @@ unsigned short *curve_data = NULL;
 #define CURVE_BYTES (CURVE_SIZE*sizeof(unsigned short))
 
 #define BLACK 32
-#define LUM(a,b) (((a)+(b)) >> 1)
 #define LIM( a ) (((a)>1023) ? 1023: a )
 #define RBLACK( a ) (((a)>BLACK) ? ((a)-BLACK) : 0)
 
@@ -135,18 +136,13 @@ void curveRGB_apply() {
 		return;
 	
 	// Set pointer to picture raw data in memory
-	src = (unsigned char *) hook_raw_image_addr();	
+	src = (unsigned char *) get_raw_image_addr();	
+	
 	
 	// Loop through picture rows
-	col = CAM_RAW_ROWPIX-48;
-	src += 8 * (CAM_RAW_ROWPIX * 10 / 8);	// skip 8 first rows
-	for (i=CAM_RAW_ROWS - 8; i;i-=2){		// skip 8 first rows
-//	for (i=CAM_RAW_ROWS; i;i-=2){ 	// No skip 8 first rows
+	for (i=CAM_RAW_ROWS; i;i-=2){
 		// Loop through picture columns 
-//		for (j=CAM_RAW_ROWPIX; j; j-=8, src+=10){ 	// No skip 8 first and 40 last columns
-		src += 10;										// Skip columns
-		for (j=col; j; j-=8, src+=10){	// Skip columns
-			//Skip first 8 columns and 40 last columns
+		for (j=CAM_RAW_ROWPIX; j; j-=8, src+=10){
 			pixVal0=((0x3fc&(((unsigned short)(src[1]))<<2)) | (src[0] >> 6));
 			pixVal1=((0x3f0&(((unsigned short)(src[0]))<<4)) | (src[3] >> 4));
 				pixVal0 = curve0[pixVal0];
@@ -177,9 +173,7 @@ void curveRGB_apply() {
             *(src+9) = (unsigned char) ((pixVal2<<2)|(pixVal0>>8)); // 6,7 =>(2,0)
             *(src+8) = (unsigned char) ((pixVal0)); //7 (=>0)		}
 		}
-		src += 60;	// skip columns 40+8	
-//		for (j=CAM_RAW_ROWPIX;j; j-=8, src+=10){ 	// No skip
-		for (j=col; j; j-=8, src+=10){
+		for (j=CAM_RAW_ROWPIX;j; j-=8, src+=10){
 			pixVal0=((0x3fc&(((unsigned short)(src[1]))<<2)) | (src[0] >> 6));
 			pixVal1=((0x3f0&(((unsigned short)(src[0]))<<4)) | (src[3] >> 4));
 				pixVal0 = curve2[pixVal0];
@@ -210,14 +204,13 @@ void curveRGB_apply() {
             *(src+9) = (unsigned char) ((pixVal2<<2)|(pixVal0>>8)); // 6,7 =>(2,0)
             *(src+8) = (unsigned char) ((pixVal0)); //7 (=>0)
 		}
-		src += 50; // skip columns
 	}
 }
 
 
 void curveL_apply(unsigned sys_index) {
 	int i,j;
-	unsigned short pixVal0, pixVal1, pixVal2, y, col;
+	unsigned short pixVal0, pixVal1, pixVal2, col;
 	unsigned char *src;
 	
 	unsigned short *curve0;
@@ -240,122 +233,137 @@ void curveL_apply(unsigned sys_index) {
 
 
 	// Set pointer to picture raw data in memory
-	src = (unsigned char *) hook_raw_image_addr();	
+	src = (unsigned char *) get_raw_image_addr();	
 	
 	// Loop through picture rows
-	col = CAM_RAW_ROWPIX-48;
-	src += 8 * (CAM_RAW_ROWPIX * 10 / 8);	// skip 8 first rows
-	for (i=CAM_RAW_ROWS - 8; i;i-=2){		// skip 8 first rows
-//	for (i=CAM_RAW_ROWS; i;i-=2){ 	// No skip 8 first rows
+	for (i=CAM_RAW_ROWS; i;i-=2){
 		// Loop through picture columns 
-//		for (j=CAM_RAW_ROWPIX; j; j-=8, src+=10){ 	// No skip 8 first and 40 last columns
-		src += 10;										// Skip columns
-		for (j=col; j; j-=8, src+=10){	// Skip columns
-			//Skip first 8 columns and 40 last columns
+		for (j=CAM_RAW_ROWPIX; j; j-=8, src+=10){
 			pixVal0=((0x3fc&(((unsigned short)(src[1]))<<2)) | (src[0] >> 6));
 			pixVal1=((0x3f0&(((unsigned short)(src[0]))<<4)) | (src[3] >> 4));
-				pixVal0 = RBLACK( pixVal0 );
+			if (pixVal1) {
 				pixVal1 = RBLACK( pixVal1 );
-				y = LUM(pixVal0,pixVal1);
-				pixVal0 = CURVE0( pixVal0, y ) + BLACK;
-				pixVal1 = CURVE1( pixVal1, y ) + BLACK;
-				pixVal0 = LIM( pixVal0 );
+				if (pixVal0) {
+					pixVal0 = RBLACK( pixVal0 );
+					pixVal0 = CURVE0( pixVal0, pixVal1 ) + BLACK;
+					pixVal0 = LIM( pixVal0 );
+				}
+				pixVal1 = CURVE1( pixVal1, pixVal1 ) + BLACK;
 				pixVal1 = LIM( pixVal1 );
+			}
             *(src+1) = (unsigned char) ((pixVal0>>2)); // 0
             *src = (unsigned char) ((pixVal0<<6)|(pixVal1>>4)); //0, 1
 
 			pixVal2=((0x3c0&(((unsigned short)(src[3]))<<6)) | (src[2] >> 2));
 			pixVal0=((0x300&(((unsigned short)(src[2]))<<8)) | (src[5])); 
-				pixVal2 = RBLACK( pixVal2 );
+			if (pixVal0) {
 				pixVal0 = RBLACK( pixVal0 );
-				y = LUM(pixVal2,pixVal0);
-				pixVal2 = CURVE0( pixVal2, y ) + BLACK;
-				pixVal0 = CURVE1( pixVal0, y ) + BLACK;
-				pixVal2 = LIM( pixVal2 );
+				if (pixVal2) {
+					pixVal2 = RBLACK( pixVal2 );
+					pixVal2 = CURVE0( pixVal2, pixVal0 ) + BLACK;
+					pixVal2 = LIM( pixVal2 );
+				}
+				pixVal0 = CURVE1( pixVal0, pixVal0 ) + BLACK;
 				pixVal0 = LIM( pixVal0 );
+			}
             *(src+3) = (unsigned char) ((pixVal1<<4)|(pixVal2>>6)); //1,2
             *(src+2) = (unsigned char) ((pixVal2<<2)|(pixVal0>>8)); //2,3 =>(2,0)
             *(src+5) = (unsigned char) ((pixVal0)); //3 (=>0)
 
 			pixVal0=((0x3fc&(((unsigned short)(src[4]))<<2)) | (src[7] >> 6)); 
 			pixVal1=((0x3f0&(((unsigned short)(src[7]))<<4)) | (src[6] >> 4)); 
-				pixVal0 = RBLACK( pixVal0 );
+			if (pixVal1) {
 				pixVal1 = RBLACK( pixVal1 );
-				y = LUM(pixVal0,pixVal1);
-				pixVal0 = CURVE0( pixVal0, y ) + BLACK;
-				pixVal1 = CURVE1( pixVal1, y ) + BLACK;
-				pixVal0 = LIM( pixVal0 );
+				if (pixVal0) {
+					pixVal0 = RBLACK( pixVal0 );
+					pixVal0 = CURVE0( pixVal0, pixVal1 ) + BLACK;
+					pixVal0 = LIM( pixVal0 );
+				}
+				pixVal1 = CURVE1( pixVal1, pixVal1 ) + BLACK;
 				pixVal1 = LIM( pixVal1 );
+			}
             *(src+4) = (unsigned char) ((pixVal0>>2)); // 4 => 0
             *(src+7) = (unsigned char) ((pixVal0<<6)|(pixVal1>>4)); // 4,5 => (0,1)
 
 			pixVal2=((0x3c0&(((unsigned short)(src[6]))<<6)) | (src[9] >> 2)); 
 			pixVal0=((0x300&(((unsigned short)(src[9]))<<8)) | (src[8]));
-				pixVal2 = RBLACK( pixVal2 );
+			if (pixVal0) {
 				pixVal0 = RBLACK( pixVal0 );
-				y = LUM(pixVal2,pixVal0);
-				pixVal2 = CURVE0( pixVal2, y ) + BLACK;
-				pixVal0 = CURVE1( pixVal0, y ) + BLACK;
-				pixVal2 = LIM( pixVal2 );
+				if (pixVal2) {
+					pixVal2 = RBLACK( pixVal2 );
+					pixVal2 = CURVE0( pixVal2, pixVal0 ) + BLACK;
+					pixVal2 = LIM( pixVal2 );
+				}
+				pixVal0 = CURVE1( pixVal0, pixVal0 ) + BLACK;
 				pixVal0 = LIM( pixVal0 );
-            *(src+6) = (unsigned char) ((pixVal1<<4)|(pixVal2>>6)); // 5,6 => (1,2)
-            *(src+9) = (unsigned char) ((pixVal2<<2)|(pixVal0>>8)); // 6,7 =>(2,0)
-            *(src+8) = (unsigned char) ((pixVal0)); //7 (=>0)		}
-		}
-		src += 60;	// skip columns 40+8	
-//		for (j=CAM_RAW_ROWPIX;j; j-=8, src+=10){ 	// No skip
-		for (j=col; j; j-=8, src+=10){
-			pixVal0=((0x3fc&(((unsigned short)(src[1]))<<2)) | (src[0] >> 6));
-			pixVal1=((0x3f0&(((unsigned short)(src[0]))<<4)) | (src[3] >> 4));
-				pixVal0 = RBLACK( pixVal0 );
-				pixVal1 = RBLACK( pixVal1 );
-				y = LUM(pixVal0,pixVal1);
-				pixVal0 = CURVE2( pixVal0, y ) + BLACK;
-				pixVal1 = CURVE3( pixVal1, y ) + BLACK;
-				pixVal0 = LIM( pixVal0 );
-				pixVal1 = LIM( pixVal1 );
-            *(src+1) = (unsigned char) ((pixVal0>>2)); // 0
-            *src = (unsigned char) ((pixVal0<<6)|(pixVal1>>4)); //0, 1
-
-			pixVal2=((0x3c0&(((unsigned short)(src[3]))<<6)) | (src[2] >> 2));
-			pixVal0=((0x300&(((unsigned short)(src[2]))<<8)) | (src[5])); 
-				pixVal2 = RBLACK( pixVal2 );
-				pixVal0 = RBLACK( pixVal0 );
-				y = LUM(pixVal2,pixVal0);
-				pixVal2 = CURVE2( pixVal2, y ) + BLACK;
-				pixVal0 = CURVE3( pixVal0, y ) + BLACK;
-				pixVal2 = LIM( pixVal2 );
-				pixVal0 = LIM( pixVal0 );
-            *(src+3) = (unsigned char) ((pixVal1<<4)|(pixVal2>>6)); //1,2
-            *(src+2) = (unsigned char) ((pixVal2<<2)|(pixVal0>>8)); //2,3 =>(2,0)
-            *(src+5) = (unsigned char) ((pixVal0)); //3 (=>0)
-
-			pixVal0=((0x3fc&(((unsigned short)(src[4]))<<2)) | (src[7] >> 6)); 
-			pixVal1=((0x3f0&(((unsigned short)(src[7]))<<4)) | (src[6] >> 4)); 
-				pixVal0 = RBLACK( pixVal0 );
-				pixVal1 = RBLACK( pixVal1 );
-				y = LUM(pixVal0,pixVal1);
-				pixVal0 = CURVE2( pixVal0, y ) + BLACK;
-				pixVal1 = CURVE3( pixVal1, y ) + BLACK;
-				pixVal0 = LIM( pixVal0 );
-				pixVal1 = LIM( pixVal1 );
-            *(src+4) = (unsigned char) ((pixVal0>>2)); // 4 => 0
-            *(src+7) = (unsigned char) ((pixVal0<<6)|(pixVal1>>4)); // 4,5 => (0,1)
-
-			pixVal2=((0x3c0&(((unsigned short)(src[6]))<<6)) | (src[9] >> 2)); 
-			pixVal0=((0x300&(((unsigned short)(src[9]))<<8)) | (src[8]));
-				pixVal2 = RBLACK( pixVal2 );
-				pixVal0 = RBLACK( pixVal0 );
-				y = LUM(pixVal2,pixVal0);
-				pixVal2 = CURVE2( pixVal2, y ) + BLACK;
-				pixVal0 = CURVE3( pixVal0, y ) + BLACK;
-				pixVal2 = LIM( pixVal2 );
-				pixVal0 = LIM( pixVal0 );
+			}
             *(src+6) = (unsigned char) ((pixVal1<<4)|(pixVal2>>6)); // 5,6 => (1,2)
             *(src+9) = (unsigned char) ((pixVal2<<2)|(pixVal0>>8)); // 6,7 =>(2,0)
             *(src+8) = (unsigned char) ((pixVal0)); //7 (=>0)
 		}
-		src += 50; // skip columns
+		for (j=CAM_RAW_ROWPIX;j; j-=8, src+=10){
+			pixVal0=((0x3fc&(((unsigned short)(src[1]))<<2)) | (src[0] >> 6));
+			pixVal1=((0x3f0&(((unsigned short)(src[0]))<<4)) | (src[3] >> 4));
+			if (pixVal0) {
+				pixVal0 = RBLACK( pixVal0 );
+				if (pixVal1) {
+					pixVal1 = RBLACK( pixVal1 );
+					pixVal1 = CURVE3( pixVal1, pixVal0 ) + BLACK;
+					pixVal1 = LIM( pixVal1 );
+				}
+				pixVal0 = CURVE2( pixVal0, pixVal0 ) + BLACK;
+				pixVal0 = LIM( pixVal0 );
+			}
+            *(src+1) = (unsigned char) ((pixVal0>>2)); // 0
+            *src = (unsigned char) ((pixVal0<<6)|(pixVal1>>4)); //0, 1
+
+			pixVal2=((0x3c0&(((unsigned short)(src[3]))<<6)) | (src[2] >> 2));
+			pixVal0=((0x300&(((unsigned short)(src[2]))<<8)) | (src[5])); 
+			if (pixVal2) {
+				pixVal2 = RBLACK( pixVal2 );
+				if (pixVal0) {
+					pixVal0 = RBLACK( pixVal0 );
+					pixVal0 = CURVE3( pixVal0, pixVal2 ) + BLACK;
+					pixVal0 = LIM( pixVal0 );
+				}
+				pixVal2 = CURVE2( pixVal2, pixVal2 ) + BLACK;
+				pixVal2 = LIM( pixVal2 );
+			}
+            *(src+3) = (unsigned char) ((pixVal1<<4)|(pixVal2>>6)); //1,2
+            *(src+2) = (unsigned char) ((pixVal2<<2)|(pixVal0>>8)); //2,3 =>(2,0)
+            *(src+5) = (unsigned char) ((pixVal0)); //3 (=>0)
+
+			pixVal0=((0x3fc&(((unsigned short)(src[4]))<<2)) | (src[7] >> 6)); 
+			pixVal1=((0x3f0&(((unsigned short)(src[7]))<<4)) | (src[6] >> 4)); 
+			if (pixVal0) {
+				pixVal0 = RBLACK( pixVal0 );
+				if (pixVal1) {
+					pixVal1 = RBLACK( pixVal1 );
+					pixVal1 = CURVE3( pixVal1, pixVal0 ) + BLACK;
+					pixVal1 = LIM( pixVal1 );
+				}
+				pixVal0 = CURVE2( pixVal0, pixVal0 ) + BLACK;
+				pixVal0 = LIM( pixVal0 );
+			}
+            *(src+4) = (unsigned char) ((pixVal0>>2)); // 4 => 0
+            *(src+7) = (unsigned char) ((pixVal0<<6)|(pixVal1>>4)); // 4,5 => (0,1)
+
+			pixVal2=((0x3c0&(((unsigned short)(src[6]))<<6)) | (src[9] >> 2)); 
+			pixVal0=((0x300&(((unsigned short)(src[9]))<<8)) | (src[8]));
+			if (pixVal2) {
+				pixVal2 = RBLACK( pixVal2 );
+				if (pixVal0) {
+					pixVal0 = RBLACK( pixVal0 );
+					pixVal0 = CURVE3( pixVal0, pixVal2 ) + BLACK;
+					pixVal0 = LIM( pixVal0 );
+				}
+				pixVal2 = CURVE2( pixVal2, pixVal2 ) + BLACK;
+				pixVal2 = LIM( pixVal2 );
+			}
+            *(src+6) = (unsigned char) ((pixVal1<<4)|(pixVal2>>6)); // 5,6 => (1,2)
+            *(src+9) = (unsigned char) ((pixVal2<<2)|(pixVal0>>8)); // 6,7 =>(2,0)
+            *(src+8) = (unsigned char) ((pixVal0)); //7 (=>0)
+		}
 	}
 }
 
