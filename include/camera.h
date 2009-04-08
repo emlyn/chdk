@@ -51,6 +51,7 @@
     #undef  DNG_SUPPORT                 
     #undef  CAM_REAR_CURTAIN                // Camera do not have front/rear curtain flash sync in menu
     #undef  CAM_BRACKETING                // Cameras that have bracketing (focus & ev) in original firmware already, most likely s- & g-series (propcase for digic III not found yet!)
+    #undef  CAM_EXT_TV_RANGE             // CHDK can make exposure time lonher than 64s
 
     #define CAM_UNCACHED_BIT    0x10000000 // bit indicating the uncached memory
 
@@ -241,6 +242,8 @@
     // camera name
     #define PARAM_CAMERA_NAME 3 // parameter number for GetParameterData
     #define DNG_EXT_FROM ".DPS"
+
+    #define CAM_EXT_TV_RANGE            1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a540)
@@ -677,6 +680,8 @@
 
     #define DNG_EXT_FROM ".DPS"
 
+    #define CAM_EXT_TV_RANGE            1
+
 //----------------------------------------------------------
 #elif defined (CAMERA_a720)
     #define CAM_PROPSET                 2
@@ -1074,6 +1079,8 @@
     #define CAM_ACTIVE_AREA_Y2 2476
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+
+    #define CAM_EXT_TV_RANGE            1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus700_sd500)
@@ -1482,6 +1489,8 @@
     #define CAM_BRACKETING              1
     #define DNG_EXT_FROM ".DPS"
 
+    #define CAM_EXT_TV_RANGE            1
+
 //----------------------------------------------------------
 #elif defined (CAMERA_s5is)
     #define CAM_PROPSET                 2
@@ -1646,6 +1655,8 @@
     #define CAM_SENSOR_BITS_PER_PIXEL   12
     #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
     #define CAM_BLACK_LEVEL             127
+
+    #define CAM_EXT_TV_RANGE            1
  
 //----------------------------------------------------------
 

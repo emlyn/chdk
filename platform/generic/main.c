@@ -119,6 +119,12 @@ void createHook (void *pNewTcb)
 	  #endif
 	}
 
+        #if CAM_EXT_TV_RANGE	
+	if (my_ncmp(name, "tExpDrvTas", 10) == 0){
+	    *entry = (long)exp_drv_task;
+	}
+        #endif
+
 	core_hook_task_create(pNewTcb);
     }
 }

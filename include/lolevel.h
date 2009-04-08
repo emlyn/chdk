@@ -152,6 +152,7 @@ void __attribute__((naked,noinline)) mykbd_task();
 extern void capt_seq_task();
 extern void movie_record_task();
 extern void init_file_modules_task();
+extern void exp_drv_task();
 
 void kbd_fetch_data(long *dst);
 
@@ -225,5 +226,7 @@ extern const char _start,_end;
 
 extern void _DoAFLock(void);
 extern void _UnlockAF(void);
+
+extern int _apex2us(int);
 
 #endif

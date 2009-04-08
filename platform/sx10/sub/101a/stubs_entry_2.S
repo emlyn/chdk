@@ -27,6 +27,7 @@ NHSTUB(UnlockAF, 0xFF82589C)
 NHSTUB(LEDDrive, 0xFF84AB48)
 NHSTUB(WriteSDCard, 0xFF92A9A4)
 NHSTUB(PostLogicalEventForNotPowerType, 0xFF87EC9C)
+NHSTUB(apex2us, 0xFF9E0128)
 
 // null sub
 
@@ -36,5 +37,6 @@ NHSTUB(Mount_FileSystem, 0xFFC00958)
 NHSTUB(Unmount_FileSystem, 0xFFC00958)
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFFC00958)
 NHSTUB(rewinddir, 0xFFC00958)
+
 
 

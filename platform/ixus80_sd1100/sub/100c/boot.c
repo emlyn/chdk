@@ -18,6 +18,15 @@ void CreateTask_spytask();
 void boot();
 void __attribute__((naked,noinline)) task_blinker();
 
+void taskCreateHook(int *p) { 
+ p-=16;
+ if (p[0]==0xFF8B3D68)  p[0]=(int)exp_drv_task;
+}
+
+void taskCreateHook2(int *p) { 
+ p-=16;
+ if (p[0]==0xFF8B3D68)  p[0]=(int)exp_drv_task;
+}
 
 void boot() { //#fs
     long *canon_data_src  = (void*)0xffb126fc;
@@ -44,6 +53,10 @@ void boot() { //#fs
 
     for(i=0;i<canon_bss_len/4;i++)
 	canon_bss_start[i]=0;
+
+    *(int*)0x1930=(int)taskCreateHook; 
+    *(int*)0x1934=(int)taskCreateHook2; 
+
 /*
     asm volatile (
     "MRC     p15, 0, R0,c1,c0\n"
