@@ -2,6 +2,7 @@
 #include "lolevel.h"
 #include "platform.h"
 #include "conf.h"
+#include "math.h"
 
 #if CAM_DRYOS
 #define _U	0x01	/* upper */
@@ -926,7 +927,7 @@ void drv_self_unhide(){
 
 #if CAM_EXT_TV_RANGE
 int  apex2us(int apex_tv){
- if (apex_tv<-576) return 1000000.0*__pow(2.0, -apex_tv/96.0);
+ if (apex_tv<-576) return 1000000.0*pow(2.0, -apex_tv/96.0);
  else return _apex2us(apex_tv);
 }
 #endif
