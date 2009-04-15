@@ -312,7 +312,7 @@ static int luaCB_set_led( lua_State* L )
   to1 = luaL_checknumber( L, 2 );
   to2 = 200;
   if( lua_isnumber( L, 3 ) )
-    to = lua_tonumber( L, 3 );
+    to2 = lua_tonumber( L, 3 );
   ubasic_set_led(to, to1, to2);
   return 0;
 }
