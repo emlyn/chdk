@@ -28,7 +28,7 @@ void boot()
 	long *canon_data_dst = (void*)0x1900;
 	long canon_data_len = 0xF164 - 0x1900; // data_end - data_start
 	long *canon_bss_start = (void*)0xF164; // just after data
-	long canon_bss_len = 0xCBD40 - 0xF164; // 0xFEBC;
+	long canon_bss_len = 0xCBD40 - 0xF164;
 
 	long i;
 

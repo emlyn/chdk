@@ -829,7 +829,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 
 		"loc_FF8B6C78:\n"
 		// jumptable FF8B6B6C entries 10,11
-		//"BL      sub_FF8B42DC_my\n" // LOCATION: ExpDrv.c:2
+		//"BL      sub_FF8B42DC\n" // LOCATION: ExpDrv.c:2
 		"BL      sub_FF8B42DC_my\n" //------------>
 		"MOV     R4, #0\n"
 		"B       loc_FF8B6D70\n"
@@ -1075,7 +1075,7 @@ void __attribute__((naked,noinline)) sub_FF8B42DC_my()
 		"BL      sub_FF827A44\n" // LOCATION: KerFlag.c:0
 		"TST     R0, #1\n"
 		"LDRNE   R1, =0x532\n"
-		"LDRNE   R0, =0xFF8AA90C\n" // aExpdrv_c  ; "ExpDrv.c"
+		"LDRNE   R0, =0xFF8B399C\n" // aExpdrv_c  ; "ExpDrv.c"
 		"BLNE    sub_FF81BCF0\n" // DebugAssert
 
 		"loc_FF8B43E8:\n"
@@ -1087,7 +1087,7 @@ void __attribute__((naked,noinline)) sub_FF8B42DC_my()
 		"BL      sub_FF827A44\n" // LOCATION: KerFlag.c:0
 		"TST     R0, #1\n"
 		"LDRNE   R1, =0x537\n"
-		"LDRNE   R0, =0xFF8AA90C\n" // aExpdrv_c  ; "ExpDrv.c"
+		"LDRNE   R0, =0xFF8B399C\n" // aExpdrv_c  ; "ExpDrv.c"
 		"LDMNEFD SP!, {R4-R8,LR}\n"
 		"BNE     sub_FF81BCF0\n" // DebugAssert
 		"LDMFD   SP!, {R4-R8,PC}\n"
@@ -1111,7 +1111,7 @@ void __attribute__((naked,noinline)) sub_FF895968_my()
 		"LDREQ   R1, =0x173\n"
 		"LDREQ   R0, =0xFF895700\n" // aShutter_c  ; "Shutter.c"
 		"STRH    R4, [R5,#2]\n"
-		"BLNE    sub_FF81BCF0\n" // DebugAssert
+		"BLEQ    sub_FF81BCF0\n" // DebugAssert
 		"MOV     R0, R4\n"
 		//"BL      sub_FF9B2824\n"
 		"BL      apex2us\n" // +
@@ -1120,10 +1120,10 @@ void __attribute__((naked,noinline)) sub_FF895968_my()
 		"MOV     R0, R4\n"
 		"BL      sub_FF8C98BC\n"
 		"TST     R0, #1\n"
-		"LDRNE   R1, =0x178\n"
 		"LDMNEFD SP!, {R4-R6,LR}\n"
+		"MOVNE   R1, #0x178\n"
 		"LDRNE   R0, =0xFF895700\n" // aShutter_c  ; "Shutter.c"
-		"BLNE    sub_FF81BCF0\n" // DebugAssert
+		"BNE     sub_FF81BCF0\n" // DebugAssert
 		"LDMFD   SP!, {R4-R6,PC}\n"
 		);
 }

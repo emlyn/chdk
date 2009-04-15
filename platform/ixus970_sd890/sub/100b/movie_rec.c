@@ -94,6 +94,7 @@ void __attribute__((naked,noinline)) movie_record_task()
 
 		"loc_FF85A0A0:\n"
 		// jumptable FF85A048 entry 0
+		"BL      unlock_optical_zoom\n" //------------->
 		"BL      sub_FF859DD0\n" // LOCATION: MovieRecorder.c:0
 		"B       loc_FF85A0EC\n"
 

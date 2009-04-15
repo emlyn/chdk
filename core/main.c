@@ -77,7 +77,7 @@ void core_spytask()
 
     spytask_can_start=0;
 
-    while((i++<250) && !spytask_can_start) msleep(10);
+    while((i++<400) && !spytask_can_start) msleep(10);
 
     started();
     msleep(50);
