@@ -37,7 +37,19 @@ static const double k=12.5;//K is the reflected-light meter calibration constant
 static const short koef[] = {0, 1,10,100,1000};
 static const float shutter_koef[] = {0, 0.00001, 0.0001,0.001,0.01,0.1,1,10,100,1000};
 static const char * expo_shift[] = { "Off", "1/3Ev","2/3Ev", "1Ev", "1 1/3Ev", "1 2/3Ev", "2Ev", "2 1/3Ev", "2 2/3Ev", "3Ev", "3 1/3Ev", "3 2/3Ev", "4Ev"};
-static const char* tv_override[]={"64","50.8", "40.3", "32", "25.4","20","16", "12.7", "10","8", "6.3","5","4","3.2", "2.5","2", "1.6", "1.3", "1", "0.8", "0.6", "0.5", "0.4", "0.3", "1/4", "1/5", "1/6", "1/8", "1/10", "1/13", "1/15", "1/20", "1/25", "1/30", "1/40", "1/50", "1/60", "1/80", "1/100", "1/125", "1/160", "1/200", "1/250", "1/320", "1/400", "1/500", "1/640","1/800", "1/1000", "1/1250", "1/1600","1/2000","1/2500","1/3200","1/4000", "1/5000", "1/6400", "1/8000", "1/10000", "1/12500", "1/16000", "1/20000", "1/25000", "1/32000", "1/40000", "1/50000", "1/64000","1/80000", "1/100k"};
+const char* tv_override[]={
+#ifdef CAM_EXT_TV_RANGE
+    // add very long time exposures as approximately powers of 2, adding 15 exposures
+    "2048","1625","1290","1024","812","645","512","406","322","256","203","161","128","101","80",
+#endif
+    "64","50.8", "40.3", "32", "25.4","20","16", "12.7", "10","8", "6.3","5","4","3.2", "2.5","2", "1.6", "1.3", "1", "0.8", "0.6", "0.5", "0.4", "0.3", "1/4", "1/5", "1/6", "1/8", "1/10", "1/13", "1/15", "1/20", "1/25", "1/30", "1/40", "1/50", "1/60", "1/80", "1/100", "1/125", "1/160", "1/200", "1/250", "1/320", "1/400", "1/500", "1/640","1/800", "1/1000", "1/1250", "1/1600","1/2000","1/2500","1/3200","1/4000", "1/5000", "1/6400", "1/8000", "1/10000", "1/12500", "1/16000", "1/20000", "1/25000", "1/32000", "1/40000", "1/50000", "1/64000","1/80000", "1/100k"};
+const int tv_override_amount = sizeof(tv_override)/sizeof(tv_override[0]);
+
+#if CAM_EXT_TV_RANGE
+const int tv_override_zero_shift = 18+15;
+#else
+const int tv_override_zero_shift = 18;
+#endif
 static const char * expo_type[] = { "+/-", "-","+"};
 
 static PHOTO_PARAM photo_param_put_off;
@@ -1220,7 +1232,8 @@ void __attribute__((naked,noinline)) shooting_expo_param_override(void){
    else if (((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef) && !(conf.override_disable==1))
    { 
    if (conf.tv_enum_type) 
-     shooting_set_tv96_direct(32*(conf.tv_override_value-18),SET_NOW);
+//     shooting_set_tv96_direct(32*(conf.tv_override_value-18),SET_NOW);
+     shooting_set_tv96_direct(32*(conf.tv_override_value-(tv_override_zero_shift)),SET_NOW);
    else   
     shooting_set_tv96_direct(shooting_get_tv96_from_shutter_speed(shooting_get_shutter_speed_override_value()), SET_NOW); 
    }
