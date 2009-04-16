@@ -1286,6 +1286,8 @@
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus950_sd850)
+
+    #define CAM_EXT_TV_RANGE            1
     #define CAM_PROPSET                 2
 
     #define CAM_RAW_ROWPIX              3336   // for new 8 MP

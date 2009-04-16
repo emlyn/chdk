@@ -62,3 +62,4 @@ NHSTUB(taskNameToId, 0xFF935A64)
 //NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
 NHSTUB(DoAFLock, 0xffb09200)
 NHSTUB(UnlockAF, 0xffb09280)
+NHSTUB(apex2us,0xFF93CE88);
