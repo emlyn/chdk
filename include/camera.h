@@ -1710,8 +1710,58 @@
     #define CAM_BLACK_LEVEL             127
 
     #define CAM_EXT_TV_RANGE            1
+
+#elif defined (CAMERA_sx1)
+    #define CAM_PROPSET                 2
+    #define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              4152 
+    #define CAM_RAW_ROWS                2772  
+    
+    #define CAM_SWIVEL_SCREEN           1
+    #define CAM_ADJUSTABLE_ALT_BUTTON   1
+    #undef  CAM_CAN_SD_OVER_NOT_IN_MF
+    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+    #define CAM_HAS_VIDEO_BUTTON       1
+    #define VIDEO_QUALITY_ONLY          1  
+    #define CAM_BRACKETING              1 
+    #undef  CAM_VIDEO_CONTROL
+    #define CAM_MULTIPART               1
+    #define CAM_HAS_JOGDIAL             1
+    #undef  CAM_USE_ZOOM_FOR_MF
+    #undef  CAM_UNCACHED_BIT  // shut up compiler
+    #define CAM_UNCACHED_BIT    0x40000000
+
+
+    #define DNG_SUPPORT                 1
+    // pattern
+    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
+    // color
+
+    #define CAM_COLORMATRIX1                               \
+      827547, 1000000, -290458, 1000000, -126086, 1000000, \
+     -12829,  1000000, 530507,  1000000, 50537,   1000000, \
+      5181,   1000000, 48183,   1000000, 245014,  1000000
+
+    #define cam_CalibrationIlluminant1 1 // Daylight
+    // cropping
+    #define CAM_JPEG_WIDTH  3648
+    #define CAM_JPEG_HEIGHT 2736
+    #define CAM_ACTIVE_AREA_X1 344
+    #define CAM_ACTIVE_AREA_Y1 24
+    #define CAM_ACTIVE_AREA_X2 3991
+    #define CAM_ACTIVE_AREA_Y2 2759  
+    // camera name
+    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+    #undef  CAM_SENSOR_BITS_PER_PIXEL
+    #undef  CAM_WHITE_LEVEL
+    #undef  CAM_BLACK_LEVEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+    #define CAM_BLACK_LEVEL             127
  
-//----------------------------------------------------------
+     #define CAM_EXT_TV_RANGE            1
+//---------------------------------------------------------- 
 
 #else
     #error camera type not defined

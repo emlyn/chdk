@@ -2,7 +2,7 @@
 
 // Turn OFF SD Card power
 // to support autostart
-	LDR     R3, =0xC0220018
+	LDR     R3, =0xC0220018  // found at FF85EC9C + FF85ECC0
 	MOV     R2, #0x44
 	STR     R2, [R3]
 	

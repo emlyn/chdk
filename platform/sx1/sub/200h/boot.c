@@ -8,18 +8,18 @@ void JogDial_task_my(void);
 
 void taskCreateHook(int *p) { 
  p-=17;
- if (p[0]==0xFF868B98)  p[0]=(int)capt_seq_task;
- if (p[0]==0xFF821784)  p[0]=(int)mykbd_task;
- if (p[0]==0xFF884A54)  p[0]=(int)init_file_modules_task;
- if (p[0]==0xFF84B8D8)  p[0]=(int)JogDial_task_my;
- if (p[0]==0xFF86458C)  p[0]=(int)movie_record_task;
- if (p[0]==0xFF8AD7CC)  p[0]=(int)exp_drv_task;
+ if (p[0]==0xFF86CB80)  p[0]=(int)capt_seq_task;
+ if (p[0]==0xFF821764)  p[0]=(int)mykbd_task;
+ if (p[0]==0xFF8892BC)  p[0]=(int)init_file_modules_task;
+ if (p[0]==0xFF84DAF0)  p[0]=(int)JogDial_task_my;
+ if (p[0]==0xFF867D90)  p[0]=(int)movie_record_task;
+ if (p[0]==0xFF8B3E4C)  p[0]=(int)exp_drv_task;
 }
 
 void taskCreateHook2(int *p) { 
  p-=17;
- if (p[0]==0xFF884A54)  p[0]=(int)init_file_modules_task;
- if (p[0]==0xFF8AD7CC)  p[0]=(int)exp_drv_task;
+ if (p[0]==0xFF8892BC)  p[0]=(int)init_file_modules_task;
+ if (p[0]==0xFF8B3E4C)  p[0]=(int)exp_drv_task;
 }
 
 void CreateTask_spytask() {
@@ -42,9 +42,9 @@ void __attribute__((naked,noinline)) boot() {
                  "MCR     p15, 0, R0,c6,c0\n"
                  "MOV     R0, #0xC000002F\n"
                  "MCR     p15, 0, R0,c6,c1\n"
-                 "MOV     R0, #0x33\n"
+                 "MOV     R0, #0x35\n"
                  "MCR     p15, 0, R0,c6,c2\n"
-                 "MOV     R0, #0x40000033\n"
+                 "MOV     R0, #0x40000035\n"
                  "MCR     p15, 0, R0,c6,c3\n"
                  "MOV     R0, #0x80000017\n"
                  "MCR     p15, 0, R0,c6,c4\n"
@@ -102,15 +102,15 @@ void __attribute__((naked,noinline)) boot() {
                  "LDR     R1, [R2]\n"
                  "ORR     R1, R1, #1\n"
                  "STR     R1, [R2]\n"
-                 "LDR     R0, =0xFFB9B27C\n"
+                 "LDR     R0, =0xFFBE2C64\n"
                  "LDR     R1, =0x1900\n"
-                 "LDR     R3, =0x10A50\n"
+                 "LDR     R3, =0x11934\n"
  "loc_FF81013C:\n"
                  "CMP     R1, R3\n"
                  "LDRCC   R2, [R0],#4\n"
                  "STRCC   R2, [R1],#4\n"
                  "BCC     loc_FF81013C\n"
-                 "LDR     R1, =0xACB74\n"
+                 "LDR     R1, =0xC2D08\n"
                  "MOV     R2, #0\n"
  "loc_FF810154:\n"
                  "CMP     R3, R1\n"
@@ -124,7 +124,7 @@ void __attribute__((naked,noinline)) boot() {
 void __attribute__((naked,noinline)) sub_FF8101A0_my() {
    *(int*)0x1930=(int)taskCreateHook;
    *(int*)0x1934=(int)taskCreateHook2;
-   *(int*)(0x25BC+4)= (*(int*)0xC0220134)&1 ? 0x2000000 : 0x1000000; // replacement of sub_FF8218C8 for correct power-on.
+   *(int*)(0x2658+4)= (*(int*)0xC0220134)&1 ? 0x2000000 : 0x1000000; // replacement of sub_FF8218A8 for correct power-on.
    asm volatile (
                  "LDR     R0, =0xFF810218\n"
                  "MOV     R1, #0\n"
@@ -165,14 +165,14 @@ void __attribute__((naked,noinline)) sub_FF810F94_my() {
                  "SUB     SP, SP, #0x74\n"
                  "MOV     R0, SP\n"
                  "MOV     R1, #0x74\n"
-                 "BL      sub_FFB00260\n"
+                 "BL      sub_FFB26CC0\n"
                  "MOV     R0, #0x53000\n"
                  "STR     R0, [SP,#4]\n"
-            //   "LDR     R0, =0xACB74\n"
+            //   "LDR     R0, =0xC2D08\n"
                  "LDR     R0, =new_sa\n"        // +
                  "LDR     R0, [R0]\n"           // +
-                 "LDR     R2, =0x2B9C00\n"
-                 "LDR     R1, =0x2B24A8\n"
+                 "LDR     R2, =0x379C00\n"
+                 "LDR     R1, =0x3724A8\n"
                  "STR     R0, [SP,#8]\n"
                  "SUB     R0, R1, R0\n"
                  "ADD     R3, SP, #0xC\n"
@@ -217,29 +217,29 @@ void __attribute__((naked,noinline)) sub_FF814D8C_my() {
                  "BL      sub_FF810940\n"
                  "BL      sub_FF81901C\n"
                  "CMP     R0, #0\n"
-                 "LDRLT   R0, =0xFF814EA0\n"
+                 "LDRLT   R0, =0xFF814EA0\n"   // "dmSetup"
                  "BLLT    sub_FF814E80\n"
                  "BL      sub_FF8149B4\n"
                  "CMP     R0, #0\n"
-                 "LDRLT   R0, =0xFF814EA8\n"
+                 "LDRLT   R0, =0xFF814EA8\n"   //"termDriverInit"
                  "BLLT    sub_FF814E80\n"
-                 "LDR     R0, =0xFF814EB8\n"
+                 "LDR     R0, =0xFF814EB8\n"   //"/_term"
                  "BL      sub_FF814A9C\n"
                  "CMP     R0, #0\n"
-                 "LDRLT   R0, =0xFF814EC0\n"
+                 "LDRLT   R0, =0xFF814EC0\n"   //"termDeviceCreate"
                  "BLLT    sub_FF814E80\n"
-                 "LDR     R0, =0xFF814EB8\n"
+                 "LDR     R0, =0xFF814EB8\n"   //";_term"
                  "BL      sub_FF813548\n"
                  "CMP     R0, #0\n"
-                 "LDRLT   R0, =0xFF814ED4\n"
+                 "LDRLT   R0, =0xFF814ED4\n"   //"stdioSetup"
                  "BLLT    sub_FF814E80\n"
                  "BL      sub_FF818BA4\n"
                  "CMP     R0, #0\n"
-                 "LDRLT   R0, =0xFF814EE0\n"
+                 "LDRLT   R0, =0xFF814EE0\n"   //"stdlibSetup"
                  "BLLT    sub_FF814E80\n"
                  "BL      sub_FF811478\n"
                  "CMP     R0, #0\n"
-                 "LDRLT   R0, =0xFF814EEC\n"
+                 "LDRLT   R0, =0xFF814EEC\n"   //"armlib_setup"
                  "BLLT    sub_FF814E80\n"
                  "LDMFD   SP!, {R4,LR}\n"
                  "B       taskcreate_Startup_my\n" //---------->
@@ -247,31 +247,31 @@ void __attribute__((naked,noinline)) sub_FF814D8C_my() {
 };
 
 
-void __attribute__((naked,noinline)) taskcreate_Startup_my() {
-     asm volatile (
+void __attribute__((naked,noinline)) taskcreate_Startup_my()  //sub_FF81C1A8 Replacement
+    { asm volatile (
                  "STMFD   SP!, {R3,LR}\n"
-        //       "BL      j_nullsub_174\n"
-                 "BL      sub_FF829940\n"
+        //       "BL      j_nullsub_259\n"
+                 "BL      sub_FF8299E8\n"
                  "CMP     R0, #0\n"
                  "BNE     loc_FF81C1E0\n"
-                 "BL      sub_FF8218BC\n"
+                 "BL      sub_FF82189C\n"
                  "CMP     R0, #0\n"
                  "BNE     loc_FF81C1E0\n"
-                 "BL      sub_FF821050\n"
+                 "BL      sub_FF82104C\n"
                  "LDR     R1, =0xC0220000\n"
                  "MOV     R0, #0x44\n"
                  "STR     R0, [R1,#0x1C]\n"
-                 "BL      sub_FF82123C\n"
+                 "BL      sub_FF821238\n"
  "loc_FF81C1DC:\n"
                  "B       loc_FF81C1DC\n"
  "loc_FF81C1E0:\n"
-        //       "BL      sub_FF8218C8\n"   // removed for correct power-on on 'on/off' button.
-        //       "BL      j_nullsub_175\n"
-                 "BL      sub_FF827AC8\n"
-                 "LDR     R1, =0x30E000\n"
+      //        "BL      sub_FF8218A8\n"   // removed for correct power-on on 'on/off' button.
+      //           "BL      j_nullsub_260\n"  // removed for correct power-on on 'on/off' button.
+                 "BL      sub_FF827B68\n"
+                 "LDR     R1, =0x3CE000\n"
                  "MOV     R0, #0\n"
-                 "BL      sub_FF827F10\n"
-                 "BL      sub_FF827CBC\n"
+                 "BL      sub_FF827FB0\n"
+                 "BL      sub_FF827D5C\n"
                  "MOV     R3, #0\n"
                  "STR     R3, [SP]\n"
                  "LDR     R3, =task_Startup_my\n"   //------------>
@@ -288,27 +288,27 @@ void __attribute__((naked,noinline)) task_Startup_my() {
      asm volatile (
                  "STMFD   SP!, {R4,LR}\n"
                  "BL      sub_FF8153CC\n"
-                 "BL      sub_FF822A24\n"
-                 "BL      sub_FF820CE8\n"
-      //         "BL      j_nullsub_178\n"
-                 "BL      sub_FF829B48\n"
-      //         "BL      sub_FF829A08\n"    // start diskboot.bin
-                 "BL      sub_FF829D00\n"
+                 "BL      sub_FF822A04\n"
+                 "BL      sub_FF820CE8\n" 
+      //         "BL      j_nullsub_263\n"
+                 "BL      sub_FF829BF0\n"
+      //         "BL      sub_FF829AB0\n"    // start diskboot.bin
+                 "BL      sub_FF829DB0\n"
                  "BL      sub_FF81FAA0\n"
-                 "BL      sub_FF829B98\n"
-                 "BL      sub_FF8270C8\n"
-                 "BL      sub_FF829D04\n"
+                 "BL      sub_FF829C40\n"
+                 "BL      sub_FF827168\n"
+                 "BL      sub_FF829DB4\n"
                  "BL      CreateTask_spytask\n"    // +
-                 "BL      sub_FF8217B8\n"
-                 "BL      sub_FF8249EC\n"
-                 "BL      sub_FF829D1C\n"
+                 "BL      sub_FF821798\n"
+                 "BL      sub_FF824A14\n"
+                 "BL      sub_FF829DCC\n"
       //         "BL      nullsub_2\n"
                  "BL      sub_FF82062C\n"
-                 "BL      sub_FF829718\n"
+                 "BL      sub_FF8297BC\n"
                  "BL      sub_FF820C98\n"
                  "BL      sub_FF820548\n"
                  "BL      sub_FF81FAD4\n"
-                 "BL      sub_FF82A854\n"
+                 "BL      sub_FF82AA98\n"
                  "BL      sub_FF820520\n"
                  "LDMFD   SP!, {R4,LR}\n"
                  "B       sub_FF815490\n"
@@ -316,76 +316,76 @@ void __attribute__((naked,noinline)) task_Startup_my() {
 }
 
 
-void __attribute__((naked,noinline)) init_file_modules_task() {
+void __attribute__((naked,noinline)) init_file_modules_task() {  // ROM:FF8892BC
  asm volatile(
                  "STMFD   SP!, {R4-R6,LR}\n"
-                 "BL      sub_FF879F78\n"
+                 "BL      sub_FF87E46C\n"
                  "LDR     R5, =0x5006\n"
                  "MOVS    R4, R0\n"
                  "MOVNE   R1, #0\n"
                  "MOVNE   R0, R5\n"
-                 "BLNE    sub_FF87ECE8\n"
-                 "BL      sub_FF879FA4_my\n"           //---------->
+                 "BLNE    sub_FF8832D8\n"
+                 "BL      sub_FF87E498_my\n"           //---------->
                  "BL      core_spytask_can_start\n"      // CHDK: Set "it's-save-to-start"-Flag for spytask
                  "CMP     R4, #0\n"
                  "MOVEQ   R0, R5\n"
                  "LDMEQFD SP!, {R4-R6,LR}\n"
                  "MOVEQ   R1, #0\n"
-                 "BEQ     sub_FF87ECE8\n"
+                 "BEQ     sub_FF8832D8\n"
                  "LDMFD   SP!, {R4-R6,PC}\n"
  );
 }
 
-void __attribute__((naked,noinline)) sub_FF879FA4_my() {
+void __attribute__((naked,noinline)) sub_FF87E498_my() {
  asm volatile(
                  "STMFD   SP!, {R4,LR}\n"
-                 "BL      sub_FF85AB08_my\n"    //----------->
-           //    "BL      nullsub_66\n"
-                 "LDR     R4, =0x58CC\n"
+                 "BL      sub_FF85DEF4_my\n"    //----------->
+           //    "BL      nullsub_99\n"
+                 "LDR     R4, =0x5A50\n"
                  "LDR     R0, [R4,#4]\n"
                  "CMP     R0, #0\n"
-                 "BNE     loc_FF879FD8\n"
-                 "BL      sub_FF859FD0\n"
-                 "BL      sub_FF913798\n"
-                 "BL      sub_FF859FD0\n"
-                 "BL      sub_FF855EA4\n"
-                 "BL      sub_FF859ED0\n"
-                 "BL      sub_FF913864\n"
- "loc_FF879FD8:\n"
+                 "BNE     loc_FF87E4CC\n"
+                 "BL      sub_FF85D3BC\n"
+                 "BL      sub_FF925310\n"
+                 "BL      sub_FF85D3BC\n"
+                 "BL      sub_FF859290\n"
+                 "BL      sub_FF85D2BC\n"
+                 "BL      sub_FF9253DC\n"
+ "loc_FF87E4CC:\n"
                  "MOV     R0, #1\n"
                  "STR     R0, [R4]\n"
                  "LDMFD   SP!, {R4,PC}\n"
  );
 }
 
-void __attribute__((naked,noinline)) sub_FF85AB08_my() {
+void __attribute__((naked,noinline)) sub_FF85DEF4_my() {
  asm volatile(
                  "STMFD   SP!, {R4-R6,LR}\n"
                  "MOV     R6, #0\n"
                  "MOV     R0, R6\n"
-                 "BL      sub_FF85A5C8\n"
-                 "LDR     R4, =0x1A784\n"
+                 "BL      sub_FF85D9B4\n"
+                 "LDR     R4, =0x1B858\n"
                  "MOV     R5, #0\n"
                  "LDR     R0, [R4,#0x38]\n"
-                 "BL      sub_FF85B028\n"
+                 "BL      sub_FF85E414\n"
                  "CMP     R0, #0\n"
-                 "LDREQ   R0, =0x2A70\n"
+                 "LDREQ   R0, =0x2BD8\n"
                  "STREQ   R5, [R0,#0x10]\n"
                  "STREQ   R5, [R0,#0x14]\n"
                  "STREQ   R5, [R0,#0x18]\n"
                  "MOV     R0, R6\n"
-                 "BL      sub_FF85A608\n"
+                 "BL      sub_FF85D9F4\n"
                  "MOV     R0, R6\n"
-                 "BL      sub_FF85A944_my\n"     //--------->
+                 "BL      sub_FF85DD30_my\n"     //--------->
                  "MOV     R5, R0\n"
                  "MOV     R0, R6\n"
-                 "BL      sub_FF85A9B0\n"
+                 "BL      sub_FF85DD9C\n"
                  "LDR     R1, [R4,#0x3C]\n"
                  "AND     R2, R5, R0\n"
                  "CMP     R1, #0\n"
                  "MOV     R0, #0\n"
                  "MOVEQ   R0, #0x80000001\n"
-                 "BEQ     loc_FF85AB9C\n"
+                 "BEQ     loc_FF85DF88\n"
                  "LDR     R3, [R4,#0x2C]\n"
                  "CMP     R3, #2\n"
                  "MOVEQ   R0, #4\n"
@@ -397,16 +397,16 @@ void __attribute__((naked,noinline)) sub_FF85AB08_my() {
                  "ORREQ   R0, R0, #0x80000000\n"
                  "BICNE   R0, R0, #0x80000000\n"
                  "ORRNE   R0, R0, #2\n"
- "loc_FF85AB9C:\n"
+ "loc_FF85DF88:\n"
                  "STR     R0, [R4,#0x40]\n"
                  "LDMFD   SP!, {R4-R6,PC}\n"
  );
 }
 
-void __attribute__((naked,noinline)) sub_FF85A944_my() {
+void __attribute__((naked,noinline)) sub_FF85DD30_my() {
  asm volatile(
                  "STMFD   SP!, {R4-R6,LR}\n"
-                 "LDR     R5, =0x2A70\n"
+                 "LDR     R5, =0x2BD8\n"
                  "MOV     R6, R0\n"
                  "LDR     R0, [R5,#0x14]\n"
                  "CMP     R0, #0\n"
@@ -414,20 +414,20 @@ void __attribute__((naked,noinline)) sub_FF85A944_my() {
                  "LDMNEFD SP!, {R4-R6,PC}\n"
                  "MOV     R0, #0x17\n"
                  "MUL     R1, R0, R6\n"
-                 "LDR     R0, =0x1A784\n"
+                 "LDR     R0, =0x1B858\n"
                  "ADD     R4, R0, R1,LSL#2\n"
                  "LDR     R0, [R4,#0x38]\n"
                  "MOV     R1, R6\n"
-                 "BL      sub_FF85A6D4_my\n"  //-------------->
+                 "BL      sub_FF85DAC0_my\n"  //-------------->
                  "CMP     R0, #0\n"
                  "LDMEQFD SP!, {R4-R6,PC}\n"
                  "LDR     R0, [R4,#0x38]\n"
                  "MOV     R1, R6\n"
-                 "BL      sub_FF85A83C\n"
+                 "BL      sub_FF85DC28\n"
                  "CMP     R0, #0\n"
                  "LDMEQFD SP!, {R4-R6,PC}\n"
                  "MOV     R0, R6\n"
-                 "BL      sub_FF85A1D0\n"
+                 "BL      sub_FF85D5BC\n"
                  "CMP     R0, #0\n"
                  "MOVNE   R1, #1\n"
                  "STRNE   R1, [R5,#0x14]\n"
@@ -435,45 +435,45 @@ void __attribute__((naked,noinline)) sub_FF85A944_my() {
  );
 }
 
-void __attribute__((naked,noinline)) sub_FF85A6D4_my() {
+void __attribute__((naked,noinline)) sub_FF85DAC0_my() {
  asm volatile(
                  "STMFD   SP!, {R4-R8,LR}\n"
                  "MOV     R8, R0\n"
                  "MOV     R0, #0x17\n"
                  "MUL     R1, R0, R1\n"
-                 "LDR     R0, =0x1A784\n"
+                 "LDR     R0, =0x1B858\n"
                  "MOV     R6, #0\n"
                  "ADD     R7, R0, R1,LSL#2\n"
                  "LDR     R0, [R7,#0x3C]\n"
                  "MOV     R5, #0\n"
                  "CMP     R0, #6\n"
                  "ADDLS   PC, PC, R0,LSL#2\n"
-                 "B       loc_FF85A820\n"
- "loc_FF85A704:\n"
-                 "B       loc_FF85A738\n"
- "loc_FF85A708:\n"
-                 "B       loc_FF85A720\n"
- "loc_FF85A70C:\n"
-                 "B       loc_FF85A720\n"
- "loc_FF85A710:\n"
-                 "B       loc_FF85A720\n"
- "loc_FF85A714:\n"
-                 "B       loc_FF85A720\n"
- "loc_FF85A718:\n"
-                 "B       loc_FF85A818\n"
- "loc_FF85A71C:\n"
-                 "B       loc_FF85A720\n"
- "loc_FF85A720:\n"
+                 "B       loc_FF85DC0C\n"
+ "loc_FF85DAF0:\n"
+                 "B       loc_FF85DB24\n"
+ "loc_FF85DAF4:\n"
+                 "B       loc_FF85DB0C\n"
+ "loc_FF85DAF8:\n"
+                 "B       loc_FF85DB0C\n"
+ "loc_FF85DAFC:\n"
+                 "B       loc_FF85DB0C\n"
+ "loc_FF85DB00:\n"
+                 "B       loc_FF85DB0C\n"
+ "loc_FF85DB04:\n"
+                 "B       loc_FF85DC04\n"
+ "loc_FF85DB08:\n"
+                 "B       loc_FF85DB0C\n"
+ "loc_FF85DB0C:\n"
                  "MOV     R2, #0\n"
                  "MOV     R1, #0x200\n"
                  "MOV     R0, #2\n"
-                 "BL      sub_FF873F20\n"
+                 "BL      sub_FF8783D0\n"
                  "MOVS    R4, R0\n"
-                 "BNE     loc_FF85A740\n"
- "loc_FF85A738:\n"
+                 "BNE     loc_FF85DB2C\n"
+ "loc_FF85DB24:\n"
                  "MOV     R0, #0\n"
                  "LDMFD   SP!, {R4-R8,PC}\n"
- "loc_FF85A740:\n"
+ "loc_FF85DB2C:\n"
                  "LDR     R12, [R7,#0x4C]\n"
                  "MOV     R3, R4\n"
                  "MOV     R2, #1\n"
@@ -481,13 +481,13 @@ void __attribute__((naked,noinline)) sub_FF85A6D4_my() {
                  "MOV     R0, R8\n"
                  "BLX     R12\n"
                  "CMP     R0, #1\n"
-                 "BNE     loc_FF85A76C\n"
+                 "BNE     loc_FF85DB58\n"
                  "MOV     R0, #2\n"
-                 "BL      sub_FF87406C\n"
-                 "B       loc_FF85A738\n"
- "loc_FF85A76C:\n"
+                 "BL      sub_FF87851C\n"
+                 "B       loc_FF85DB24\n"
+ "loc_FF85DB58:\n"
                  "MOV     R0, R8\n"
-                 "BL      sub_FF92ADE8\n"
+                 "BL      sub_FF93E130\n"
 
 		 "MOV   R1, R4\n"           //  pointer to MBR in R1
 		 "BL    mbr_read_dryos\n"   //  total sectors count in R0 before and after call
@@ -545,9 +545,9 @@ void __attribute__((naked,noinline)) sub_FF85A6D4_my() {
                  "LDRB    R12, [LR,#0x1FE]\n"           // + First MBR signature byte (0x55), LR is original offset.
                  "LDRB    LR, [LR,#0x1FF]\n"            // + Last MBR signature byte (0xAA), LR is original offset.
                  "MOV     R4, #0\n"
-                 "BNE     loc_FF85A7F4\n"
+                 "BNE     loc_FF85DBE0\n"
                  "CMP     R0, R1\n"
-                 "BCC     loc_FF85A7F4\n"
+                 "BCC     loc_FF85DBE0\n"
                  "ADD     R2, R1, R3\n"
                  "CMP     R2, R0\n"
                  "CMPLS   R12, #0x55\n"
@@ -555,24 +555,24 @@ void __attribute__((naked,noinline)) sub_FF85A6D4_my() {
                  "MOVEQ   R6, R1\n"
                  "MOVEQ   R5, R3\n"
                  "MOVEQ   R4, #1\n"
- "loc_FF85A7F4:\n"
+ "loc_FF85DBE0:\n"
                  "MOV     R0, #2\n"
-                 "BL      sub_FF87406C\n"
+                 "BL      sub_FF87851C\n"
                  "CMP     R4, #0\n"
-                 "BNE     loc_FF85A82C\n"
+                 "BNE     loc_FF85DC18\n"
                  "MOV     R6, #0\n"
                  "MOV     R0, R8\n"
-                 "BL      sub_FF92ADE8\n"
+                 "BL      sub_FF93E130\n"
                  "MOV     R5, R0\n"
-                 "B       loc_FF85A82C\n"
- "loc_FF85A818:\n"
+                 "B       loc_FF85DC18\n"
+ "loc_FF85DC04:\n"
                  "MOV     R5, #0x40\n"
-                 "B       loc_FF85A82C\n"
- "loc_FF85A820:\n"
+                 "B       loc_FF85DC18\n"
+ "loc_FF85DC0C:\n"
                  "LDR     R1, =0x37A\n"
-                 "LDR     R0, =0xFF85A6C8\n"
+                 "LDR     R0, =0xFF85DAB4\n"
                  "BL      sub_FF81B1CC\n"
- "loc_FF85A82C:\n"
+ "loc_FF85DC18:\n"
                  "STR     R6, [R7,#0x44]!\n"
                  "MOV     R0, #1\n"
                  "STR     R5, [R7,#4]\n"
@@ -581,23 +581,23 @@ void __attribute__((naked,noinline)) sub_FF85A6D4_my() {
 }
 
 
-void __attribute__((naked,noinline)) JogDial_task_my() { 
+void __attribute__((naked,noinline)) JogDial_task_my() {   //FF84DAF0
  asm volatile(
                  "STMFD   SP!, {R3-R11,LR}\n"
-                 "BL      sub_FF84BA88\n"
+                 "BL      sub_FF84DCA0\n"
                  "LDR     R11, =0x80000B01\n"
-                 "LDR     R8, =0xFFB0AE38\n"
+                 "LDR     R8, =0xFFB3684C\n"
                  "LDR     R7, =0xC0240000\n"
-                 "LDR     R6, =0x25D8\n"
+                 "LDR     R6, =0x267C\n"
                  "MOV     R9, #1\n"
                  "MOV     R10, #0\n"
- "loc_FF84B8F8:\n"
+ "loc_FF84DB10:\n"
                  "LDR     R3, =0x1AE\n"
                  "LDR     R0, [R6,#0xC]\n"
-                 "LDR     R2, =0xFF84BB30\n"
+                 "LDR     R2, =0xFF84DD48\n"
                  "MOV     R1, #0\n"
-                 "BL      sub_FF827DF8\n"
-                 "MOV     R0, #40\n"
+                 "BL      sub_FF827E98\n"
+                 "MOV     R0, #0x28\n"
                  "BL      _SleepTask\n"
 
 //------------------  added code ---------------------
@@ -618,13 +618,13 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
                  "LDRSH   R2, [R6,#2]\n"
                  "SUB     R1, R0, R2\n"
                  "CMP     R1, #0\n"
-                 "BEQ     loc_FF84B9BC\n"
+                 "BEQ     loc_FF84DBD4\n"
                  "MOV     R5, R1\n"
                  "RSBLT   R5, R5, #0\n"
                  "MOVLE   R4, #0\n"
                  "MOVGT   R4, #1\n"
                  "CMP     R5, #0xFF\n"
-                 "BLS     loc_FF84B970\n"
+                 "BLS     loc_FF84DB88\n"
                  "CMP     R1, #0\n"
                  "RSBLE   R1, R2, #0xFF\n"
                  "ADDLE   R1, R1, #0x7F00\n"
@@ -635,35 +635,35 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
                  "ADD     R5, R0, #0x8000\n"
                  "ADD     R5, R5, #1\n"
                  "EOR     R4, R4, #1\n"
- "loc_FF84B970:\n"
+ "loc_FF84DB88:\n"
                  "LDR     R0, [R6,#0x14]\n"
                  "CMP     R0, #0\n"
-                 "BEQ     loc_FF84B9B4\n"
+                 "BEQ     loc_FF84DBCC\n"
                  "LDR     R0, [R6,#0x1C]\n"
                  "CMP     R0, #0\n"
-                 "BEQ     loc_FF84B99C\n"
+                 "BEQ     loc_FF84DBB4\n"
                  "LDR     R1, [R8,R4,LSL#2]\n"
                  "CMP     R1, R0\n"
-                 "BEQ     loc_FF84B9A4\n"
+                 "BEQ     loc_FF84DBBC\n"
                  "LDR     R0, =0xB01\n"
-                 "BL      sub_FF880BB8\n"
- "loc_FF84B99C:\n"
+                 "BL      sub_FF8851C8\n"
+ "loc_FF84DBB4:\n"
                  "MOV     R0, R11\n"
-                 "BL      sub_FF880BB8\n"
- "loc_FF84B9A4:\n"
+                 "BL      sub_FF8851C8\n"
+ "loc_FF84DBBC:\n"
                  "LDR     R0, [R8,R4,LSL#2]\n"
                  "MOV     R1, R5\n"
                  "STR     R0, [R6,#0x1C]\n"
-                 "BL      sub_FF880AE0\n"
- "loc_FF84B9B4:\n"
+                 "BL      sub_FF8850F0\n"
+ "loc_FF84DBCC:\n"
                  "LDRH    R0, [R6]\n"
                  "STRH    R0, [R6,#2]\n"
- "loc_FF84B9BC:\n"
+ "loc_FF84DBD4:\n"
                  "STR     R10, [R7,#0x100]\n"
                  "STR     R9, [R7,#0x108]\n"
                  "LDR     R0, [R6,#0x10]\n"
                  "CMP     R0, #0\n"
-                 "BLNE    _SleepTask\n"
-                 "B       loc_FF84B8F8\n"
+                 "BLNE    sub_FF827CF0\n"
+                 "B       loc_FF84DB10\n"
  );
 }

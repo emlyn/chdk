@@ -5,11 +5,21 @@
  *
  * Make sure stack is not used.
  */
-
+ #define LED_AF (void*)0xC02200B4	//LED_AF
+ #define DELAY 5000000
 
 void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_void, long length) {
 
         {
+		
+		volatile long *p = (void*)LED_AF;       // turned off later, so assumed to be power
+      
+        int counter;
+
+        // DEBUG: blink led
+        counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
+        counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
+
                 char *dst = dst_void;
                 const char *src = src_void;
 
@@ -32,7 +42,21 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
                 }
         }
 
-        asm volatile (
+        asm volatile (   //found at FF829920
+		
+  //               "STMFD   SP!, {R4,LR}\n"
+  //             "MOV     R4, R0\n"
+  //              "BL      sub_FF81F200\n"
+    //             "BL      sub_FF87E17C\n"
+      //           "BL      sub_FF85EC24\n"
+        //         "CMP     R4, #3\n"
+          //       "BLNE    sub_FF84E034\n"		
+		    //     "BL      sub_FF8206E8\n"
+		      //   "BL      sub_FF84A02C\n"
+	            // "MOV     R0, #3\n"
+	//	         "BL      sub_FF850B54\n"
+		//         "BL      sub_FF827A6C\n"
+		
                  "MRS     R0, CPSR\n"
                  "BIC     R0, R0, #0x3F\n"
                  "ORR     R0, R0, #0xD3\n"

@@ -25,7 +25,7 @@ void shutdown()
 	while(1);
 }
 
-#define LED_PR 0xC0220060
+#define LED_PR 0xC02200B4
 
 void debug_led(int state)
 {

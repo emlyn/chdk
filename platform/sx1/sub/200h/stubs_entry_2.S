@@ -1,0 +1,39 @@
+#include "stubs_asm.h"
+
+NHSTUB(AllocateUncacheableMemory, 0xFF82806C)
+NHSTUB(GetDrive_ClusterSize, 0xFF85E284)
+NHSTUB(GetDrive_TotalClusters, 0xFF85E2B8)
+NHSTUB(GetDrive_FreeClusters, 0xFF85E2EC)
+NHSTUB(SetPropertyCase, 0xFF87DAC4)
+NHSTUB(kbd_read_keys, 0xFF821AF4)
+NHSTUB(platformsub_kbd_fetch_data, 0xFF84D880)  
+NHSTUB(kbd_read_keys_r2, 0xFF84D130)
+NHSTUB(qsort, 0xFFAE3D50)   
+NHSTUB(strchr, 0xFF8A0820)
+NHSTUB(strrchr, 0xFF9FCED8)  
+NHSTUB(TurnOffBackLight, 0xFF893FC8)
+NHSTUB(vsprintf, 0xFF81CAE8)
+NHSTUB(VbattGet, 0xFF82046C)	
+NHSTUB(GetZoomLensCurrentPoint, 0xFF9548A8)
+NHSTUB(GetZoomLensCurrentPosition, 0xFFA820F8)
+NHSTUB(RefreshPhysicalScreen, 0xFF9FA6FC)
+NHSTUB(EnterToCompensationEVF, 0xFF825B44)
+NHSTUB(ExitFromCompensationEVF, 0xFF825BAC)
+NHSTUB(PT_PlaySound, 0xFF869110)
+NHSTUB(DoAFLock, 0xFF825898)
+NHSTUB(UnlockAF, 0xFF8258D0)
+NHSTUB(LEDDrive, 0xFF84CC34)
+NHSTUB(WriteSDCard, 0xFF93DD0C)
+NHSTUB(PostLogicalEventForNotPowerType, 0xFF88328C)
+NHSTUB(apex2us, 0xFF9FDBC8)
+
+// null sub
+
+NHSTUB(kbd_pwr_off, 0xFFC00958)
+NHSTUB(kbd_pwr_on, 0xFFC00958)
+NHSTUB(Mount_FileSystem, 0xFFC00958)
+NHSTUB(Unmount_FileSystem, 0xFFC00958)
+NHSTUB(SetZoomActuatorSpeedPercent, 0xFFC00958)
+NHSTUB(rewinddir, 0xFFC00958)
+
+

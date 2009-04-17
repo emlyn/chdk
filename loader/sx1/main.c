@@ -21,7 +21,7 @@ void __attribute__((noreturn)) my_restart()
     copy_and_restart((void*)MEMISOSTART, (char*)blob_chdk_core, blob_chdk_core_size);
 }
 
-#define LED_PR 0xC0220060
+#define LED_PR 0xC02200B4
 
 
 static void __attribute__((noreturn)) shutdown()
