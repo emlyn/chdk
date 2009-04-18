@@ -931,3 +931,11 @@ int  apex2us(int apex_tv){
  else return _apex2us(apex_tv);
 }
 #endif
+
+// TODO this belongs lib.c, but not all cameras include it
+// same as bitmap width for most cameras, override in platform/sub/lib.c as needed
+int __attribute__((weak)) vid_get_viewport_width() {
+	return vid_get_bitmap_screen_width();
+}
+
+

@@ -2,6 +2,7 @@
 #define GUI_DRAW_H
 //-------------------------------------------------------------------
 
+#if CAM_BITMAP_PALETTE==1
 #define COLOR_TRANSPARENT   0x00
 #define COLOR_WHITE         0x11
 #define COLOR_RED           0x22
@@ -17,6 +18,31 @@
 #define COLOR_SELECTED_BG   COLOR_RED
 #define COLOR_SELECTED_FG   COLOR_WHITE
 #define COLOR_ALT_BG        0xD4
+#define COLOR_SPLASH_RED    0x2E
+#define COLOR_SPLASH_PINK   0x21
+#define COLOR_SPLASH_GREY   0x1F
+#elif CAM_BITMAP_PALETTE==2
+#define COLOR_TRANSPARENT   0x00
+#define COLOR_WHITE         0xD3
+#define COLOR_RED           0x64
+#define COLOR_GREY          0x12
+#define COLOR_GREEN         0xC4
+#define COLOR_BLUE_LT       0x6A
+#define COLOR_BLUE          0x87
+#define COLOR_YELLOW        0x44
+#define COLOR_BLACK         0xFF
+//#define COLOR_BG            0x0F
+#define COLOR_BG            0x22 
+#define COLOR_FG            COLOR_WHITE
+#define COLOR_SELECTED_BG   COLOR_RED
+#define COLOR_SELECTED_FG   COLOR_WHITE
+#define COLOR_ALT_BG        0x22
+#define COLOR_SPLASH_RED    0x58
+#define COLOR_SPLASH_PINK   0x4C
+#define COLOR_SPLASH_GREY   0x16
+#else
+#error CAM_BITMAP_PALETTE not defined
+#endif
 
 #define FONT_WIDTH          8
 #define FONT_HEIGHT         16

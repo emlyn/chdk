@@ -76,7 +76,7 @@ void histogram_process()
         	if (img==NULL){
 	    	  img = vid_get_viewport_fb();
 		    }
-            viewport_size = vid_get_viewport_height() * screen_width;
+            viewport_size = vid_get_viewport_height() * vid_get_viewport_width();
             for (c=0; c<5; ++c) {
                 for (i=0; i<HISTO_WIDTH; ++i) {
                     histogram_proc[c][i]=0;

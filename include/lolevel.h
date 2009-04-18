@@ -229,4 +229,7 @@ extern void _UnlockAF(void);
 
 extern int _apex2us(int);
 
+extern void _ScreenLock();
+// known in CHDK as _RefreshPhysicalScreen
+//extern void _ScreenUnLock();
 #endif

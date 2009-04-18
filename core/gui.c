@@ -3006,8 +3006,15 @@ void gui_draw_splash(char* logo, int logo_size) {
       int my=0;
       int offset_x = (screen_width-150)>>1;
       int offset_y = ((screen_height-84)>>1) - 42;
-      const color color_lookup[8] = {0xFF, 0x2E, 0x22, 0x3D, 0x1F,  0x21, 0x00, 0x11};
-    
+//      const color color_lookup[8] = {0xFF, 0x2E, 0x22, 0x3D, 0x1F,  0x21, 0x00, 0x11};
+      const color color_lookup[8] = {COLOR_BLACK,
+	  								COLOR_SPLASH_RED/*0x2E redish*/,
+									COLOR_RED,
+									COLOR_GREY /*0x3D*/,
+									COLOR_SPLASH_GREY /*0x1F*/,
+									COLOR_SPLASH_PINK /*0x21 pinkish*/,
+									COLOR_TRANSPARENT /*0x00*/,
+									COLOR_WHITE /*0x11*/};
       for(pos=0; pos<logo_size; pos++){
           char data = logo[pos];
           color c = color_lookup[(data>>5) & 0x07];

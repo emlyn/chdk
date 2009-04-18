@@ -1214,6 +1214,21 @@ void shooting_bracketing(void){
 					}
   }
 
+// TODO sd990 hack for overrides
+// caller must save regs
+int captseq_hack_override_active() {
+ if (state_kbd_script_run)
+ 	if ( photo_param_put_off.tv96 || photo_param_put_off.sv96 )
+		return 1;
+ if(conf.override_disable==1)
+ 	return 0;
+ if(conf.iso_override_value && conf.iso_override_koef)
+ 	return 1;
+ if((conf.tv_enum_type || conf.tv_override_value) && conf.tv_override_koef)
+ 	return 1;
+ return 0;
+}
+
 void __attribute__((naked,noinline)) shooting_expo_param_override(void){
  asm volatile("STMFD   SP!, {R0-R12,LR}\n");
 

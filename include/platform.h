@@ -66,7 +66,9 @@ MODE_VIDEO_SUPER_MACRO  ,
 MODE_VIDEO_STITCH       ,
 MODE_VIDEO_MANUAL       ,
 MODE_SPORTS             ,
+MODE_QUICK			    ,
 MODE_SCN_SUNSET         ,
+MODE_SCN_UNDERWATER     ,
 };
 
 // this is nasty, but not as nasty as checking each of the flags all over the place
@@ -274,6 +276,7 @@ void *vid_get_viewport_fb_d();
 void *vid_get_viewport_live_fb();
 void vid_bitmap_refresh();
 long vid_get_viewport_height();
+int vid_get_viewport_width();
 
 /******************************************************************/
 

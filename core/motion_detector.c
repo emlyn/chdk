@@ -420,7 +420,7 @@ img += bufoff * 0x7E900;
 #endif
 
 	vp_h=vid_get_viewport_height();
-	vp_w=screen_width;
+	vp_w=vid_get_viewport_width();
 
 
 	x_step=vp_w/motion_detector->columns;

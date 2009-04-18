@@ -46,10 +46,13 @@ long vid_get_bitmap_screen_height()
 	return 240;
 }
 
-long vid_get_viewport_width()
+// default is same as bitmap
+/*
+int vid_get_viewport_width()
 {
 	return 480;
 }
+*/
 long vid_get_viewport_height()
 {
 	return 270;

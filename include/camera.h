@@ -59,6 +59,9 @@
     #define CAM_SENSOR_BITS_PER_PIXEL   10  // Bits per pixel. 10 is standard, 12 is supported except for curves
     #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
     #define CAM_BLACK_LEVEL             31
+
+    #define CAM_BITMAP_PALETTE          1 // which color set is used for this camera
+
 //----------------------------------------------------------
 // Overridden values for each camera
 //----------------------------------------------------------
@@ -1449,14 +1452,13 @@
 
     #undef  CAM_USE_ZOOM_FOR_MF
     #undef  CAM_HAS_ERASE_BUTTON
+    #define CAM_MULTIPART               1
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
     #define  CAM_HAS_MANUAL_FOCUS		1
     #define  CAM_HAS_USER_TV_MODES		1 //include M/P ? needed to make Tv bracketing work
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef CAM_CHDK_HAS_EXT_VIDEO_MENU
-    #define CAM_NEED_SCREENLOCK          1
-    #define CAM_NEED_VIEWPORT_WIDTH      1
     #undef CAM_UNCACHED_BIT  // shut up compiler
     #define CAM_UNCACHED_BIT    0x40000000
     #undef CAM_BITMAP_PALETTE
@@ -1466,9 +1468,7 @@
     #define CAM_BLACK_LEVEL             127
 //    #define CAM_HAS_JOGDIAL             1
 //    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
-//    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
-	// disabled until we get movie task running
-    #undef CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
 //    #define CAM_REMOTE 1
 //   #define CAM_SYNCH  1 
 	#undef CAM_SENSOR_BITS_PER_PIXEL
