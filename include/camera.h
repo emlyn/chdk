@@ -200,6 +200,37 @@
     #define DNG_EXT_FROM ".DPS"
 
 //----------------------------------------------------------
+#elif defined (CAMERA_a470)
+	#define CAM_PROPSET                 2
+	#define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              3152   // for 7 MP
+    #define CAM_RAW_ROWS                2340   // for 7 MP
+
+	#define DNG_SUPPORT                 1
+	#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+    #define CAM_EV_IN_VIDEO             1
+    // pattern
+    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
+    // color
+    #define CAM_COLORMATRIX1                               \
+      649324,  1000000,-233893, 1000000, -88521, 1000000,  \
+     -158955,  1000000, 593407, 1000000,  69775, 1000000,  \
+      -44551,  1000000, 136891, 1000000, 254362, 1000000   
+    
+    #define cam_CalibrationIlluminant1 1 // Daylight
+    // cropping
+    #define CAM_JPEG_WIDTH  2592
+    #define CAM_JPEG_HEIGHT 1944
+    #define CAM_ACTIVE_AREA_X1 6
+    #define CAM_ACTIVE_AREA_Y1 6
+    #define CAM_ACTIVE_AREA_X2 2618
+    #define CAM_ACTIVE_AREA_Y2 1962
+    // camera name
+    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+    //#define DNG_EXT_FROM ".DPS"	
+	
+//----------------------------------------------------------
 #elif defined (CAMERA_a530)
     #define CAM_PROPSET                 1
 

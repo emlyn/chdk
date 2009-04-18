@@ -1,0 +1,12 @@
+****************************************
+
+Camera depending notes: 
+
+- dryos camera
+
+beta port, see http://chdk.setepontos.com/index.php/topic,3368.msg31068.html#msg31068
+
+TODO:
+
+    * Add (super)long exposure time
+    * Camera colour profile etc (copypastad atm)
