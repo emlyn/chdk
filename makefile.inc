@@ -232,7 +232,7 @@ ifndef OSTYPE
     EXE = .exe
     SH = sh
     DEVNULL = NUL
-    SORT = $(dir $(shell which uniq.exe | sed s/\\\\/\\\//g))/sort.exe
+    SORT := $(dir $(shell which uniq.exe | sed s/\\\\/\\\//g))/sort.exe
   else
     ifeq ($(HOSTPLATFORM),Linux)
       OSTYPE = Linux

@@ -2300,7 +2300,7 @@ void gui_kbd_process()
             if (kbd_is_key_clicked(SHORTCUT_TOGGLE_RAW)) {
                 if (conf.debug_shortcut_action > 0) {
 #ifdef OPT_DEBUGGING
- gui_debug_shortcut(); 
+					gui_debug_shortcut(); 
 #endif
 }
 #if !CAM_HAS_ERASE_BUTTON && CAM_CAN_SD_OVERRIDE
@@ -2548,6 +2548,94 @@ void other_kbd_process(){
 #endif
 }
 
+void gui_draw_debug_vals_osd() {
+#ifdef OPT_DEBUGGING
+    if (debug_vals_show) {
+        //        long v=get_file_counter();
+        //	sprintf(osd_buf, "1:%03d-%04d  ", (v>>18)&0x3FF, (v>>4)&0x3FFF);
+        //	sprintf(osd_buf, "1:%d, %08X  ", xxxx, eeee);
+        /*
+        extern long physw_status[3];
+        sprintf(osd_buf, "1:%8x  ", physw_status[0]);
+        draw_txt_string(28, 10, osd_buf, conf.osd_color);
+
+        sprintf(osd_buf, "2:%8x  ", physw_status[1]);
+        draw_txt_string(28, 11, osd_buf, conf.osd_color);
+
+        sprintf(osd_buf, "3:%8x  ", physw_status[2]);
+        draw_txt_string(28, 12, osd_buf, conf.osd_color);
+
+        //      sprintf(osd_buf, "4:%8x  ", vid_get_viewport_fb_d());
+        */
+        sprintf(osd_buf, "u:%8x  ", get_usb_power(1));
+        draw_txt_string(28,  9, osd_buf, conf.osd_color);
+
+        sprintf(osd_buf, "1:%8x  ", (void*) (*(int*)conf.mem_view_addr_init));
+        draw_txt_string(28, 10, osd_buf, conf.osd_color);
+
+    extern volatile long focus_busy;
+        sprintf(osd_buf, "f:%8x  ", focus_busy);
+        draw_txt_string(28, 11, osd_buf, conf.osd_color);
+
+    extern volatile long zoom_busy;
+        sprintf(osd_buf, "z:%8x  ", zoom_busy);
+        draw_txt_string(28, 12, osd_buf, conf.osd_color);
+
+        // some cameras missing zoom_status
+        #if 0
+        sprintf(osd_buf, "t:%8x  ", zoom_status);
+        draw_txt_string(28, 13, osd_buf, conf.osd_color);
+        #endif
+
+    }
+    {
+        static char sbuf[100];
+        int r,i, p, len;
+        if (conf.debug_display == DEBUG_DISPLAY_PROPS){
+
+            for (i=0;i<10;i++){
+                r = 0;
+                p = debug_propcase_page*10+i;
+                get_property_case(p, &r, 4);
+                sprintf(sbuf, "%3d: %d              ", p, r);
+                sbuf[20]=0;
+                draw_string(64,16+16*i,sbuf, conf.osd_color);
+            }
+        }
+
+        if (conf.debug_display == DEBUG_DISPLAY_PARAMS){
+            extern long* FlashParamsTable[]; 
+            char s[30];
+            int count;
+
+            for (i=0;i<10;i++){
+                r = 0;
+                p = debug_propcase_page*10+i;
+                if (p>=get_flash_params_count()) {
+                    sprintf(sbuf, "%3d: This parameter does not exists", p);
+                } else  {
+                    len=FlashParamsTable[p][1]>>16;
+                    if ((len==1)||(len==2)||(len==4)){
+                        get_parameter_data(p, &r, len); 
+                        sprintf(sbuf, "%3d: %30d :%2d ", p, r,len);
+                    }
+                    else {
+                        if (len>=sizeof(s)) count=sizeof(s)-1; else count=len;
+                        get_parameter_data(p, &s, count);
+                        s[count]=0;
+                        sprintf(sbuf, "%3d: %30s :%2d ", p, s,len);
+                    }
+                }
+                draw_string(16,16+16*i,sbuf, conf.osd_color);
+            }
+        }
+    }
+
+    if(conf.debug_display == DEBUG_DISPLAY_TASKS) {
+            gui_debug_draw_tasklist();
+    }
+#endif
+}
 //-------------------------------------------------------------------
 //extern int xxxx, eeee;
 //-------------------------------------------------------------------
@@ -2562,6 +2650,9 @@ void gui_draw_osd() {
     int half_disp_press;
     int need_restore = 0;
     m = mode_get();
+
+// uncomment if you want debug values always on top
+//	gui_draw_debug_vals_osd();
 
 #if CAM_SWIVEL_SCREEN
     if (conf.flashlight && (m&MODE_SCREEN_OPENED) && (m&MODE_SCREEN_ROTATED) && (gui_mode==GUI_MODE_NONE /* || gui_mode==GUI_MODE_ALT */)) {
@@ -2718,92 +2809,8 @@ void gui_draw_osd() {
     if (movie_status==VIDEO_RECORD_IN_PROGRESS) gui_osd_draw_ev_video(get_ev_video_avail());
 #endif
 
-#ifdef OPT_DEBUGGING
-    if (debug_vals_show) {
-//        long v=get_file_counter();
-//	sprintf(osd_buf, "1:%03d-%04d  ", (v>>18)&0x3FF, (v>>4)&0x3FFF);
-//	sprintf(osd_buf, "1:%d, %08X  ", xxxx, eeee);
-/*
-extern long physw_status[3];
-	sprintf(osd_buf, "1:%8x  ", physw_status[0]);
-	draw_txt_string(28, 10, osd_buf, conf.osd_color);
+	gui_draw_debug_vals_osd();
 
-	sprintf(osd_buf, "2:%8x  ", physw_status[1]);
-	draw_txt_string(28, 11, osd_buf, conf.osd_color);
-
-	sprintf(osd_buf, "3:%8x  ", physw_status[2]);
-	draw_txt_string(28, 12, osd_buf, conf.osd_color);
-
-	//      sprintf(osd_buf, "4:%8x  ", vid_get_viewport_fb_d());
-*/
-	sprintf(osd_buf, "u:%8x  ", get_usb_power(1));
-	draw_txt_string(28,  9, osd_buf, conf.osd_color);
-
-	sprintf(osd_buf, "1:%8x  ", (void*) (*(int*)conf.mem_view_addr_init));
-	draw_txt_string(28, 10, osd_buf, conf.osd_color);
-
-extern volatile long focus_busy;
-	sprintf(osd_buf, "f:%8x  ", focus_busy);
-	draw_txt_string(28, 11, osd_buf, conf.osd_color);
-
-extern volatile long zoom_busy;
-	sprintf(osd_buf, "z:%8x  ", zoom_busy);
-	draw_txt_string(28, 12, osd_buf, conf.osd_color);
-
-// some cameras missing zoom_status
-#if 0
-	sprintf(osd_buf, "t:%8x  ", zoom_status);
-	draw_txt_string(28, 13, osd_buf, conf.osd_color);
-#endif
-
-    }
-
-
-   {
-	static char sbuf[100];
-    int r,i, p, len;
-    if (conf.debug_display == DEBUG_DISPLAY_PROPS){
-
-	for (i=0;i<10;i++){
-	    r = 0;
-	    p = debug_propcase_page*10+i;
-	    get_property_case(p, &r, 4);
-	    sprintf(sbuf, "%3d: %d              ", p, r);sbuf[20]=0;
-	    draw_string(64,16+16*i,sbuf, conf.osd_color);
-	}
-    }
-
-    if (conf.debug_display == DEBUG_DISPLAY_PARAMS){
-        extern long* FlashParamsTable[]; 
-	char s[30];
-	int count;
-
-	for (i=0;i<10;i++){
-	    r = 0;
-	    p = debug_propcase_page*10+i;
-	    if (p>=get_flash_params_count())  sprintf(sbuf, "%3d: This parameter does not exists", p);
-	    else   {
-             len=FlashParamsTable[p][1]>>16;
-             if ((len==1)||(len==2)||(len==4)){
-              get_parameter_data(p, &r, len); 
-	      sprintf(sbuf, "%3d: %30d :%2d ", p, r,len);
-	      }
-	     else {
-	      if (len>=sizeof(s)) count=sizeof(s)-1; else count=len;
-	      get_parameter_data(p, &s, count);
-	      s[count]=0;
-	      sprintf(sbuf, "%3d: %30s :%2d ", p, s,len);
-	     }
-	    }
-	    draw_string(16,16+16*i,sbuf, conf.osd_color);
-	}
-    }
-   }
-
-    if(conf.debug_display == DEBUG_DISPLAY_TASKS) {
-        gui_debug_draw_tasklist();
-    }
-#endif
     if (ubasic_error){
 	const char *msg;
         if (ubasic_error >= UBASIC_E_ENDMARK) {
