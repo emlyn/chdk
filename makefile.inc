@@ -327,6 +327,17 @@ ifdef OPT_DEBUGGING
 CFLAGS+=-DOPT_DEBUGGING
 endif
 
+ifdef OPT_WARNINGS
+     ifeq ($(GCC_VERSION_MAJOR),3)
+           CFLAGS+=-Wwrite-strings -Wsign-compare -Wunused -Wno-unused-parameter
+           HOSTCFLAGS+=-Wwrite-strings -Wsign-compare -Wunused -Wno-unused-parameter
+     endif
+     ifeq ($(GCC_VERSION_MAJOR),4)
+           CFLAGS+=-Wextra -fdiagnostics-show-option -Wno-missing-field-initializers -Wunused -Wno-unused-parameter
+           #HOSTCFLAGS+=-Wextra -fdiagnostics-show-option -Wno-missing-field-initializers -Wunused -Wno-unused-parameter
+     endif
+endif
+
 ##########################################################################
 
 default: all
