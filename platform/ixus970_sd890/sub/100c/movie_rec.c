@@ -152,7 +152,7 @@ void __attribute__((naked,noinline)) movie_record_task()
 
 void __attribute__((naked,noinline)) sub_FF859A9C_my()
 {
-	asm volatile (                                   	
+	asm volatile (
 		"STMFD   SP!, {R4-R9,LR}\n"
 		"SUB     SP, SP, #0x3C\n"
 		"MOV     R7, #0\n"
@@ -166,9 +166,7 @@ void __attribute__((naked,noinline)) sub_FF859A9C_my()
 		"STREQ   R8, [R5,#0x3C]\n"
 		"LDR     R0, [R5,#0xA4]\n"
 		"MOV     R6, #0\n"
-		//"BLX     R0\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R0\n" //expanded
+		"BLX     R0\n"
 		"LDR     R0, [R5,#0x3C]\n"
 		"CMP     R0, #4\n"
 		"BNE     loc_FF859BAC\n"
@@ -321,9 +319,7 @@ void __attribute__((naked,noinline)) sub_FF859A9C_my()
 		"loc_FF859CBC:\n"
 		"LDR     R1, [R5,#0x88]\n"
 		"MOV     R0, R4\n"
-		//"BLX     R1\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R1\n" //expanded
+		"BLX     R1\n"
 		"STR     R4, [R5,#0x74]\n"
 		"STR     R7, [R5,#0x34]\n"
 

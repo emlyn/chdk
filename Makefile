@@ -218,6 +218,7 @@ batch-zip: version
 	cp $(topdir)bin/$(VER)-ixus70_sd1000-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus70_sd1000-101a-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/$(VER)-ixus75_sd750-101a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus75_sd750-101b-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/$(VER)-ixus80_sd1100-101a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus80_sd1100-101b-$(BUILD_NUMBER).zip
+	cp $(topdir)bin/$(VER)-ixus970_sd890-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus970_sd890-100d-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/$(VER)-g9-100g-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g9-100f-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/$(VER)-g9-100i-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g9-100h-$(BUILD_NUMBER).zip
 	mv $(topdir)bin/$(VER)-sx1-200h-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx1-200h-$(BUILD_NUMBER)_BETA.zip
@@ -318,6 +319,8 @@ batch-zip-complete: version
 	cp $(topdir)bin/ixus75_sd750-101a-$(BUILD_NUMBER).zip $(topdir)bin/ixus75_sd750-101b-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/ixus80_sd1100-101a-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus80_sd1100-101b-$(BUILD_NUMBER)-full.zip
 	cp $(topdir)bin/ixus80_sd1100-101a-$(BUILD_NUMBER).zip $(topdir)bin/ixus80_sd1100-101b-$(BUILD_NUMBER).zip
+	cp $(topdir)bin/ixus970_sd890-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus970_sd890-100d-$(BUILD_NUMBER)-full.zip
+	cp $(topdir)bin/ixus970_sd890-100c-$(BUILD_NUMBER).zip $(topdir)bin/ixus970_sd890-100d-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/g9-100g-$(BUILD_NUMBER)-full.zip $(topdir)bin/g9-100f-$(BUILD_NUMBER)-full.zip
 	cp $(topdir)bin/g9-100g-$(BUILD_NUMBER).zip $(topdir)bin/g9-100f-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/g9-100i-$(BUILD_NUMBER)-full.zip $(topdir)bin/g9-100h-$(BUILD_NUMBER)-full.zip

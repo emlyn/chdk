@@ -493,9 +493,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"LDR     R2, [R0,#0x88]!\n"
 		"LDR     R1, [R0,#4]\n"
 		"MOV     R0, R1\n"
-		//"BLX     R2\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R2\n" //expanded
+		"BLX     R2\n"
 		"B       loc_FF8B6E50\n"
 
 		"loc_FF8B6918:\n"
@@ -519,9 +517,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"LDR     R1, [SP,#0x38-0x1C]\n"
 		"LDR     R0, [R1,#0x8C]\n"
 		"LDR     R1, [R1,#0x88]\n"
-		//"BLX     R1\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R1\n" //expanded
+		"BLX     R1\n"
 		"B       loc_FF8B6E50\n"
 
 		"loc_FF8B6968:\n"
@@ -585,9 +581,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"LDR     R3, [R0,#0x88]\n"
 		"LDR     R2, [R0,#0x8C]\n"
 		"ADD     R0, R0, #4\n"
-		//"BLX     R3\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R3\n" //expanded
+		"BLX     R3\n"
 		"LDR     R0, [SP,#0x38-0x1C]\n"
 		"BL      sub_FF8B7EA4\n" // LOCATION: ExpDrv.c:0
 		"LDR     R0, [SP,#0x38-0x1C]\n"
@@ -595,9 +589,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"LDR     R3, [R0,#0x90]\n"
 		"LDR     R2, [R0,#0x94]\n"
 		"ADD     R0, R0, #4\n"
-		//"BLX     R3\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R3\n" //expanded
+		"BLX     R3\n"
 		"B       loc_FF8B6D90\n"
 
 		"loc_FF8B6A58:\n"
@@ -619,9 +611,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"LDR     R12, [R0,#0xC]!\n"
 		"LDR     R3, [R0,#4]\n"
 		"MOV     R0, SP\n"
-		//"BLX     R12\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R12\n" //expanded
+		"BLX     R12\n"
 		"B       loc_FF8B6AE0\n"
 
 		"loc_FF8B6AA8:\n"
@@ -634,9 +624,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"MOV     R0, SP\n"
 		"MOV     R2, R4\n"
 		"MOV     R1, #1\n"
-		//"BLX     R12\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R12\n" //expanded
+		"BLX     R12\n"
 		"LDR     R0, [SP,#0x38-0x1C]\n"
 		"MOV     R2, SP\n"
 		"ADD     R1, SP, #0x38-0x28\n"
@@ -654,9 +642,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"LDR     R12, [R0,#0x88]\n"
 		"ADD     R0, R0, #4\n"
 		"MOV     R2, R4\n"
-		//"BLX     R12\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R12\n" //expanded
+		"BLX     R12\n"
 		"B       loc_FF8B6D90\n"
 
 		"loc_FF8B6B0C:\n"
@@ -675,9 +661,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"LDR     R3, [R0,#0x88]\n"
 		"LDR     R2, [R0,#0x8C]\n"
 		"ADD     R0, R0, #4\n"
-		//"BLX     R3\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R3\n" //expanded
+		"BLX     R3\n"
 		"LDR     R0, [SP,#0x38-0x1C]\n"
 		"BL      sub_FF8B4BA4\n" // LOCATION: ExpDrv.c:0
 		"B       loc_FF8B6D90\n"
@@ -931,9 +915,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"LDR     R3, [R0,#0x88]\n"
 		"LDR     R2, [R0,#0x8C]\n"
 		"ADD     R0, R0, #4\n"
-		//"BLX     R3\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R3\n" //expanded
+		"BLX     R3\n"
 		"CMP     R4, #1\n"
 		"BNE     loc_FF8B6DD8\n"
 

@@ -20,4 +20,5 @@ Other keys use the standard mapping for cameras without an erase button.
 
 
 IMPORTANT NOTICE:
+Firmware version 100d is as good as identical to 100c, which is copied for 100d.
 Development is done in the 100c tree!

@@ -450,9 +450,7 @@ void __attribute__((naked,noinline)) sub_FF84EB00_my()
 		"MOV     R2, #1\n"
 		"MOV     R1, #0\n"
 		"MOV     R0, R8\n"
-		//"BLX     R12\n"
-		"MOV     LR, PC\n" //expanded
-		"MOV     PC, R12\n" //expanded
+		"BLX     R12\n"
 		"CMP     R0, #1\n"
 		"BNE     loc_FF84EB98\n"
 		"MOV     R0, #3\n"
