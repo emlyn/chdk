@@ -10,7 +10,7 @@ extern long wrs_kernel_bss_end;
 
 // Forward declarations
 void CreateTask_spytask();
-
+void JogDial_task_my(void);
 void boot();
 
 void taskCreateHook(int *p) { 
@@ -19,6 +19,7 @@ void taskCreateHook(int *p) {
  if (p[0]==0xFF862148)  p[0]=(int)movie_record_task;
 // task_InitFileModules
  if (p[0]==0xFF881534)  p[0]=(int)init_file_modules_task;
+ if (p[0]==0xFF84A480)  p[0]=(int)JogDial_task_my;;
 }
 // ??? from sx10
 void taskCreateHook2(int *p) {
@@ -374,7 +375,8 @@ void __attribute__((naked,noinline)) sub_FF8218C8_my() {
 "                STR     R3, [SP]\n"
 //"                LDR     R3, =0xFF821894\n" // task_PhySw
 "                LDR     R3, =mykbd_task\n" // task_PhySw
-"                MOV     R2, #0x800\n"
+//"                MOV     R2, #0x800\n"
+"                MOV     R2, #0x2000\n" // stack size for new task_PhySw so we don't have to do stack switch
 "                MOV     R1, #0x17\n"
 "                LDR     R0, =0xFF821AD0\n" // "PhySw"
 "                BL      sub_FF827C80\n" // KernelCreateTask
@@ -653,6 +655,93 @@ void __attribute__((naked,noinline)) sub_FF858E84_my() {
 "                 LDMFD   SP!, {R4-R8,PC}\n"
   );
 }
+
+void __attribute__((naked,noinline)) JogDial_task_my() { 
+  asm volatile (
+"                STMFD   SP!, {R3-R11,LR}\n"
+"                BL      sub_FF84A630\n" //__JogDial_c__14 ; LOCATION: JogDial.c:14
+"                LDR     R11, =0x80000B01\n"
+"                LDR     R8, =0xFFAE872C\n"
+"                LDR     R7, =0xC0240000\n"
+"                LDR     R6, =0x2594\n"
+"                MOV     R9, #1\n"
+"                MOV     R10, #0\n"
+"loc_FF84A4A0:\n"
+"                LDR     R3, =0x1AE\n"
+"                LDR     R0, [R6,#0xC]\n"
+"                LDR     R2, =0xFF84A6D8\n" // ; "JogDial.c"
+"                MOV     R1, #0\n"
+"                BL      sub_FF827D68\n"  //  ; take semaphore or assert
+"                MOV     R0, #0x28\n"
+"                BL      sub_FF827BC0\n" // eventproc_export_SleepTask ; LOCATION: KerSys.c:0
+//------------------  added code ---------------------
+"labelA:\n"
+                "LDR     R0, =jogdial_stopped\n"
+                "LDR     R0, [R0]\n"
+                "CMP     R0, #1\n"
+                "BNE     labelB\n"
+                "MOV     R0, #40\n"
+                "BL      _SleepTask\n"
+                "B       labelA\n"
+"labelB:\n"
+//------------------  original code ------------------
+
+"                LDR     R0, [R7,#0x104]\n"
+"                MOV     R0, R0,ASR#16\n"
+"                STRH    R0, [R6]\n"
+"                LDRSH   R2, [R6,#2]\n"
+"                SUB     R1, R0, R2\n"
+"                CMP     R1, #0\n"
+"                BEQ     loc_FF84A564\n"
+"                MOV     R5, R1\n"
+"                RSBLT   R5, R5, #0\n"
+"                MOVLE   R4, #0\n"
+"                MOVGT   R4, #1\n"
+"                CMP     R5, #0xFF\n"
+"                BLS     loc_FF84A518\n"
+"                CMP     R1, #0\n"
+"                RSBLE   R1, R2, #0xFF\n"
+"                ADDLE   R1, R1, #0x7F00\n"
+"                ADDLE   R0, R1, R0\n"
+"                RSBGT   R0, R0, #0xFF\n"
+"                ADDGT   R0, R0, #0x7F00\n"
+"                ADDGT   R0, R0, R2\n"
+"                ADD     R5, R0, #0x8000\n"
+"                ADD     R5, R5, #1\n"
+"                EOR     R4, R4, #1\n"
+"loc_FF84A518:\n"
+"                LDR     R0, [R6,#0x14]\n"
+"                CMP     R0, #0\n"
+"                BEQ     loc_FF84A55C\n"
+"                LDR     R0, [R6,#0x1C]\n"
+"                CMP     R0, #0\n"
+"                BEQ     loc_FF84A544\n"
+"                LDR     R1, [R8,R4,LSL#2]\n"
+"                CMP     R1, R0\n"
+"                BEQ     loc_FF84A54C\n"
+"                LDR     R0, =0xB01\n"
+"                BL      sub_FF87D754\n"
+"loc_FF84A544:\n"
+"                MOV     R0, R11\n"
+"                BL      sub_FF87D754\n"
+"loc_FF84A54C:\n"
+"                LDR     R0, [R8,R4,LSL#2]\n"
+"                MOV     R1, R5\n"
+"                STR     R0, [R6,#0x1C]\n"
+"                BL      sub_FF87D69C\n"
+"loc_FF84A55C:\n"
+"                LDRH    R0, [R6]\n"
+"                STRH    R0, [R6,#2]\n"
+"loc_FF84A564:\n"
+"                STR     R10, [R7,#0x100]\n"
+"                STR     R9, [R7,#0x108]\n"
+"                LDR     R0, [R6,#0x10]\n"
+"                CMP     R0, #0\n"
+"                BLNE    sub_FF827BC0\n" // eventproc_export_SleepTask ; LOCATION: KerSys.c:0
+"                B       loc_FF84A4A0\n"
+  );
+}
+
 
 #if 0
 const unsigned ledlist[]={

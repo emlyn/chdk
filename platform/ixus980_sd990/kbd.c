@@ -26,15 +26,11 @@ static int shoot_counter=0;
 #define KEYS_MASK1 (0x00000000)
 #define KEYS_MASK2 (0x0FFF)
 
-
-#define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
 
 #define USB_MASK (0x40000)
 
-#ifndef MALLOCD_STACK
-static char kbd_stack[NEW_SS];
-#endif
+volatile int jogdial_stopped=0;
 
 void kbd_fetch_data(long*);
 
@@ -173,42 +169,11 @@ static void __attribute__((noinline)) mykbd_task_proceed()
     }
 }
 
+// no stack manipulation needed here, since we create the task directly
 void __attribute__((naked,noinline))
-mykbd_task(long ua, long ub, long uc, long ud, long ue, long uf)
+mykbd_task()
 {
-    /* WARNING
-     * Stack pointer manipulation performed here!
-     * This means (but not limited to):
-     *	function arguments destroyed;
-     *	function CAN NOT return properly;
-     *	MUST NOT call or use stack variables before stack
-     *	is setup properly;
-     *
-     */
-
-// this is silly, we create the task with createtask under dryos, just set it right to start with!
-    register int i;
-    register long *newstack;
-
-#ifndef MALLOCD_STACK
-    newstack = (void*)kbd_stack;
-#else
-    newstack = malloc(NEW_SS);
-#endif
-
-    for (i=0;i<NEW_SS/4;i++)
-	newstack[i]=0xdededede;
-
-    asm volatile (
-	"MOV	SP, %0"
-	:: "r"(((char*)newstack)+NEW_SS)
-	: "memory"
-    );
-
     mykbd_task_proceed();
-
-    /* function can be modified to restore SP here...
-     */
 
     _ExitTask();
 }
@@ -242,6 +207,7 @@ void my_kbd_read_keys()
 	physw_status[0] = kbd_new_state[0];
 	physw_status[1] = kbd_new_state[1];
 	physw_status[2] = kbd_new_state[2];
+        jogdial_stopped=0;
     } else {
 	// override keys
 	physw_status[0] = (kbd_new_state[0] & (~KEYS_MASK0)) |
@@ -252,6 +218,13 @@ void my_kbd_read_keys()
 
 	physw_status[2] = (kbd_new_state[2] & (~KEYS_MASK2)) |
 			  (kbd_mod_state[2] & KEYS_MASK2);
+	if ((jogdial_stopped==0) && !state_kbd_script_run){ 
+                jogdial_stopped=1;
+                get_jogdial_direction();
+        }
+	else if (jogdial_stopped && state_kbd_script_run)
+                jogdial_stopped=0; 
+
     }
 
     _kbd_read_keys_r2(physw_status);
@@ -397,6 +370,7 @@ long kbd_get_autoclicked_key() {
 	
 }
 
+#ifdef CAM_USE_ZOOM_FOR_MF
 long kbd_use_zoom_as_mf() {
     static long v;
     static long zoom_key_pressed = 0;
@@ -433,7 +407,7 @@ long kbd_use_zoom_as_mf() {
     }
     return 0;
 }
-
+#endif
 
 static KeyMap keymap[] = {
     /* tiny bug: key order matters. see kbd_get_pressed_key()

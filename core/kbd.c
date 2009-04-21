@@ -1300,10 +1300,11 @@ if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
           return 1;
         }
 /*-------------------- Alex scriptless remote additions end ---------------------*/
-
+#ifdef CAM_USE_ZOOM_FOR_MF
                 if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
                     return 1;
                 }
+#endif
                 if ((conf.fast_ev || conf.fast_movie_control || conf.fast_movie_quality_control) && kbd_use_up_down_left_right_as_fast_switch()) {
                     return 1;
                 }

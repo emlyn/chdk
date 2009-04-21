@@ -1466,7 +1466,7 @@
 
 	#undef CAM_BLACK_LEVEL
     #define CAM_BLACK_LEVEL             127
-//    #define CAM_HAS_JOGDIAL             1
+    #define CAM_HAS_JOGDIAL             1
 //    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
 //    #define CAM_REMOTE 1
