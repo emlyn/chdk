@@ -518,7 +518,7 @@ static CMenu clock_submenu = {0x34,LANG_MENU_OSD_CLOCK_PARAMS_TITLE, NULL, clock
 static CMenuItem video_submenu_items[] = {
 #if CAM_CHDK_HAS_EXT_VIDEO_MENU
 	  {0x23,LANG_MENU_VIDEO_MODE,              MENUITEM_ENUM,    (int*)gui_video_mode_enum}, 
-#if !VIDEO_QUALITY_ONLY
+#if !CAM_VIDEO_QUALITY_ONLY
       {0x5e,LANG_MENU_VIDEO_BITRATE,           MENUITEM_ENUM,    (int*)gui_video_bitrate_enum}, 
 #endif
       {0x60,LANG_MENU_VIDEO_QUALITY,           MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,  &conf.video_quality, MENU_MINMAX(1, 99)}, 
@@ -1483,7 +1483,7 @@ const char* gui_fast_ev_step(int change, int arg) {
     return modes[conf.fast_ev_step];
 }
 const char* gui_video_mode_enum(int change, int arg) {
-#if !VIDEO_QUALITY_ONLY
+#if !CAM_VIDEO_QUALITY_ONLY
     static const char* modes[]={ "Bitrate", "Quality"};
 #else
     static const char* modes[]={ "Default", "Quality"};

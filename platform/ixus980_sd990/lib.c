@@ -54,7 +54,7 @@ void ubasic_set_led(int led, int state, int bright) {
 // _LEDDrive(led_table[led%sizeof(led_table)], state<=1 ? !state : state);
 }
 
-// from sx10, TODO
+// from sx10
 void JogDial_CW(void){
  _PostLogicalEventForNotPowerType(0x874, 2);  // RotateJogDialRight
 }

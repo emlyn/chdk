@@ -1458,7 +1458,8 @@
     #define  CAM_HAS_MANUAL_FOCUS		1
     #define  CAM_HAS_USER_TV_MODES		1 //include M/P ? needed to make Tv bracketing work
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
-    #undef CAM_CHDK_HAS_EXT_VIDEO_MENU
+    #define CAM_CHDK_HAS_EXT_VIDEO_MENU 1
+    #undef  CAM_VIDEO_CONTROL
     #undef CAM_UNCACHED_BIT  // shut up compiler
     #define CAM_UNCACHED_BIT    0x40000000
     #undef CAM_BITMAP_PALETTE
@@ -1468,9 +1469,8 @@
     #define CAM_BLACK_LEVEL             127
     #define CAM_HAS_JOGDIAL             1
 //    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+    #define CAM_VIDEO_QUALITY_ONLY          1  
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
-//    #define CAM_REMOTE 1
-//   #define CAM_SYNCH  1 
 	#undef CAM_SENSOR_BITS_PER_PIXEL
     #define CAM_SENSOR_BITS_PER_PIXEL   12
 	#undef CAM_WHITE_LEVEL
@@ -1478,9 +1478,8 @@
 
     #define DNG_SUPPORT                 1
     // pattern
-//    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
-    // color TODO
+    // color preliminary
     #define CAM_COLORMATRIX1                               \
       837237, 1000000, -290137, 1000000, -128156, 1000000, \
       -127762, 1000000, 643909, 1000000,  52973,  1000000, \
@@ -1488,7 +1487,6 @@
     
     #define cam_CalibrationIlluminant1 1 // Daylight
     // cropping 
-	// TODO, capture the full frame for now
     #define CAM_JPEG_WIDTH  4416
     #define CAM_JPEG_HEIGHT 3312
     #define CAM_ACTIVE_AREA_X1 12
@@ -1703,7 +1701,7 @@
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
     #define CAM_HAS_VIDEO_BUTTON       1
-    #define VIDEO_QUALITY_ONLY          1  
+    #define CAM_VIDEO_QUALITY_ONLY          1  
     #define CAM_BRACKETING              1 
     #undef  CAM_VIDEO_CONTROL
     #define CAM_MULTIPART               1
@@ -1754,7 +1752,7 @@
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
     #define CAM_HAS_VIDEO_BUTTON       1
-    #define VIDEO_QUALITY_ONLY          1  
+    #define CAM_VIDEO_QUALITY_ONLY          1  
     #define CAM_BRACKETING              1 
     #undef  CAM_VIDEO_CONTROL
     #define CAM_MULTIPART               1
