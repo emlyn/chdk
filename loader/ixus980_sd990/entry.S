@@ -3,7 +3,7 @@
 // Turn OFF SD Card power
 // to support autostart
 //	LDR     R3, =0xC0220048
-	LDR     R3, =0xC0220018 // sd990: from sub_FFF1290
+	LDR     R3, =0xC0220018 // sd990: from sub_FFFF1390, also ref SdPower.c
 	MOV     R2, #0x44
 	STR     R2, [R3]
 

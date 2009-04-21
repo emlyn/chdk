@@ -38,7 +38,7 @@ void boot() { //#fs
     long i;
 
 
-    // enable caches and write buffer
+    // enable caches and write buffer... this is a carryover from old dryos ports, may not be useful
     asm volatile (
 	"MRC     p15, 0, R0,c1,c0\n"
 	"ORR     R0, R0, #0x1000\n"
@@ -52,20 +52,14 @@ void boot() { //#fs
 
     for(i=0;i<canon_bss_len/4;i++)
 	canon_bss_start[i]=0;
-    *(int*)0x1930=(int)taskCreateHook;
-//    *(int*)0x1934=(int)taskCreateHook2;
-// from sx10
-//    *(int*)0x1934=(int)taskCreateHook2;
-//    *(int*)(0x25BC+4)= (*(int*)0xC0220134)&1 ? 0x2000000 : 0x1000000; // replacement of sub_FF8218C8 for correct power-on.
 
-/*    asm volatile (
-	"MRC     p15, 0, R0,c1,c0\n"
-	"ORR     R0, R0, #0x1000\n"
-	"BIC     R0, R0, #4\n"
-	"ORR     R0, R0, #1\n"
-	"MCR     p15, 0, R0,c1,c0\n"
-    :::"r0");
-*/
+// see http://chdk.setepontos.com/index.php/topic,2972.msg30712.html#msg30712
+    *(int*)0x1930=(int)taskCreateHook;
+    *(int*)0x1934=(int)taskCreateHook2;
+
+	// similar to SX10 (but no +4 and values are >> 8) via sub_FF849EB0. 
+	// Search on 0x12345678 finds function called by this
+    *(int*)(0x2588)= (*(int*)0xC02200F8)&1 ? 0x200000 : 0x100000; // replacement of sub_FF8219D8 for correct power-on.
 
     // jump to init-sequence that follows the data-copy-routine 
     asm volatile ("B      sub_FF8101A0_my\n");
@@ -211,7 +205,7 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() {
 "loc_FF81C1DC:\n"
 "                B       loc_FF81C1DC\n"
 "loc_FF81C1E0:\n"
-"                BL      sub_FF8219D8\n"
+//"                BL      sub_FF8219D8\n" // removed for correct power-on on 'on/off' button.
 "                BL      sub_FF8219D4\n"
 "                BL      sub_FF827A38\n"
 "                LDR     R1, =0x3CE000\n"
@@ -258,7 +252,7 @@ void __attribute__((naked,noinline)) task_Startup_my() {
 "                 BL      sub_FF8218C8_my\n"// taskcreate_PhySw ->
 "                 BL      sub_FF824A80_my\n" // taskcreate_SsTask -> for shoot seq stuff
 "                 BL      sub_FF829C84\n"
-"                 BL      sub_FF81EEF8\n" // nullsub
+//"                 BL      sub_FF81EEF8\n" // nullsub
 "                 BL      sub_FF820724\n"
 "                 BL      sub_FF829684\n" // taskcreate_Bye
 "                 BL      sub_FF820DBC\n"
@@ -660,6 +654,7 @@ void __attribute__((naked,noinline)) sub_FF858E84_my() {
   );
 }
 
+#if 0
 const unsigned ledlist[]={
 	0xC0220134, // green
 	0xC0220130, // orange (right)
@@ -668,7 +663,6 @@ const unsigned ledlist[]={
 	0xC02200BC, // dp
 };
 // shamelessly stolen from s5 for debugging
-#if 0
 extern void msleep(int x);
 void __attribute__((noinline)) task_blinker() {
         int ledstate;
