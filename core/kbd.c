@@ -105,7 +105,7 @@ static int nTxtbl[]={0,2,4,6,8,10,12,14};
 static int nTxtbl[]={0,2,4,6,8,10,12,13};
 #endif
 // ------ add by Masuji SUTO (end)   --------------
-#if defined(CAMERA_sx100is)
+#if defined(CAMERA_sx100is) || defined(CAMERA_sx110is)
 #define ZSTEP_TABLE_SIZE 8
 static int nTxtbl[]={0,3,6,9,13,16,20,23};
 #endif

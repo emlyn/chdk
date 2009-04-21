@@ -1791,6 +1791,74 @@
  
      #define CAM_EXT_TV_RANGE            1
 //---------------------------------------------------------- 
+	//********
+	/////SX110
+	//********
+		
+#elif defined (CAMERA_sx110is)
+    #define CAM_PROPSET                 2
+    #define CAM_DRYOS                   1
+	  #define CAM_RAW_ROWPIX              3720  
+    #define CAM_RAW_ROWS                2772  
+    #undef CAM_SYNCH 
+    #define CAM_CAN_MUTE_MICROPHONE     1 
+//    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1 	//not needed???
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #define CAM_REAR_CURTAIN            1
+//    #define CAM_SWIVEL_SCREEN           1		//not needed???
+    #define CAM_ADJUSTABLE_ALT_BUTTON   1
+    #undef  CAM_CAN_SD_OVER_NOT_IN_MF
+    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
+//    #define CAM_HAS_VIDEO_BUTTON       1		//?
+//    #define VIDEO_QUALITY_ONLY          1  	//?
+//    #define CAM_BRACKETING              1 	//?
+    #undef  CAM_VIDEO_CONTROL					
+    #define CAM_MULTIPART               1
+    #define CAM_HAS_JOGDIAL             1
+    #undef  CAM_USE_ZOOM_FOR_MF
+    #undef  CAM_UNCACHED_BIT  // shut up compiler
+    #define CAM_UNCACHED_BIT    0x40000000
+  	#undef CAM_SENSOR_BITS_PER_PIXEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
+  	#undef CAM_WHITE_LEVEL
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+    #define DNG_SUPPORT                 1
+    // camera name
+    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+//JS: need to be adjusted
+//    #undef  CAM_SENSOR_BITS_PER_PIXEL
+//    #undef  CAM_WHITE_LEVEL
+//    #undef  CAM_BLACK_LEVEL
+//    #define CAM_BLACK_LEVEL             127		//JS?
+//    #define CAM_SENSOR_BITS_PER_PIXEL   10		//JS:?
+//		#define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+	
+
+    // pattern
+// js: need to be adjusted
+    
+    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
+    // color
+		#define CAM_COLORMATRIX1                               \
+      1413400, 1000000, -557600,  1000000, -152700,  1000000, \
+     -659100,  1000000, 1071900,  1000000,  127300,  1000000, \
+     -115800,  1000000, 292900,   1000000,  358100,  1000000
+    #define cam_CalibrationIlluminant1 1 // Daylight
+    // cropping
+// js: next 6 lines need to be adjusted
+    #define CAM_JPEG_WIDTH  3456 //js: ok
+    #define CAM_JPEG_HEIGHT 2592	//js: ok
+    #define CAM_ACTIVE_AREA_X1 0 //js: ?
+    #define CAM_ACTIVE_AREA_Y1 0 //js: ?
+    #define CAM_ACTIVE_AREA_X2 3720 //js: ?
+    #define CAM_ACTIVE_AREA_Y2 2772 //js:?
+    // camera name 
+    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+
+//    #define DNG_EXT_FROM ".CR2" //not needed?
+
+	
+//----------------------------------------------------------
 
 #else
     #error camera type not defined

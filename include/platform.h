@@ -69,6 +69,7 @@ MODE_SPORTS             ,
 MODE_QUICK			    ,
 MODE_SCN_SUNSET         ,
 MODE_SCN_UNDERWATER     ,
+MODE_EASY               ,
 };
 
 // this is nasty, but not as nasty as checking each of the flags all over the place
