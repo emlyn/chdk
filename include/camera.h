@@ -430,6 +430,7 @@
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
     #define DNG_EXT_FROM ".DPS"
+    #define CAM_EXT_TV_RANGE            1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a590)
@@ -1075,6 +1076,7 @@
 
     #define DNG_EXT_FROM ".DPS"
 
+    #define CAM_EXT_TV_RANGE            1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_ixus80_sd1100)
@@ -1586,6 +1588,7 @@
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
     #define CAM_HAS_VIDEO_BUTTON       1
+    #define CAM_EXT_TV_RANGE            1
     #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green

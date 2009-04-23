@@ -20,6 +20,7 @@ void dump_chdk();
 void taskCreateHook(int *p) { 
  p-=16;
  if (p[0]==0xFF862F10)  p[0]=(int)movie_record_task;
+ if (p[0]==0xFF8D3888)  p[0]=(int)exp_drv_task;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -144,6 +145,7 @@ void __attribute__((naked,noinline)) sub_FF81000C_my() {
 
 void __attribute__((naked,noinline)) sub_FF8101B8_my() {
      *(int*)0x1930=(int)taskCreateHook;
+     *(int*)0x1934=(int)taskCreateHook;
      asm volatile (
      "loc_FF8101B8:\n"
           "LDR     R0, =0xFF810230\n"
