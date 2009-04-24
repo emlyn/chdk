@@ -224,6 +224,8 @@ static void gui_osd_zebra_free() {
 // prepare zebra resources, or free them
 // returns 1 if zebra should be drawn
 static int gui_osd_zebra_init(int show) {
+	unsigned i;
+
     if(show) { 
         if (!buf) {
             timer = 0;
@@ -246,6 +248,10 @@ static int gui_osd_zebra_init(int show) {
 				) {
 				gui_osd_zebra_free();
 			}
+#if CAM_HAS_VARIABLE_ASPECT
+			else // in variable aspect, the borders would never be cleared
+				memset(buf,0,screen_buffer_size);
+#endif
         }
     }
     else {
@@ -354,6 +360,18 @@ int gui_osd_draw_zebra(int show) {
         COLOR_BLACK
     };
 	
+    unsigned bWide = 1; // if wide (16:9) or standard (4:3) aspect ratio (but 1 in cameras that only have 4:3)
+    unsigned aspOffset = 0; // offset to add to x-coord (or buffer address) when drawing zebra
+
+#if CAM_HAS_VARIABLE_ASPECT
+    if (shooting_get_prop(PROPCASE_ASPECT_RATIO) == 0) // standard requires x-shift to overlay drawing
+    {
+        bWide = 0;
+        //aspOffset = (screen_width - (screen_width * 12 / 16)) / 2; // = actual calculation, simplified below
+        aspOffset = screen_width / 8; // half of the difference in width between equal height 16:9 and 4:3 screens, = black bar width
+    }
+#endif
+	
     if (!gui_osd_zebra_init(show))
         return 0;
 
@@ -424,10 +442,14 @@ int gui_osd_draw_zebra(int show) {
         int step_x, step_v;
         over = 255-conf.zebra_over;
             if (conf.zebra_multichannel) {step_x=2; step_v=6;} else {step_x=1; step_v=3;}
-            for (s=0, y=1, v=0; y<=viewport_height; ++y) {
+            s = aspOffset;
+            for (y=1, v=0; y<=viewport_height; ++y) {
                 for (x=0; x<screen_width; x+=step_x, s+=step_x, v+=step_v) {
                     register int yy, uu, vv;
                     int sel;
+										
+                    if (!bWide && (x + aspOffset >= screen_width - aspOffset)) continue; // do not draw "outside screen" 
+										
                     yy = img_buf[v+1];
                     if (conf.zebra_multichannel) {
                         uu = (signed char)img_buf[v];

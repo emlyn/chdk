@@ -61,6 +61,8 @@
     #define CAM_BLACK_LEVEL             31
 
     #define CAM_BITMAP_PALETTE          1 // which color set is used for this camera
+		
+    #undef CAM_HAS_VARIABLE_ASPECT         // can switch between 16:9 and 4:3 
 
 //----------------------------------------------------------
 // Overridden values for each camera
@@ -1792,12 +1794,13 @@
     #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
     #define CAM_BLACK_LEVEL             127
  
-     #define CAM_EXT_TV_RANGE            1
+    #define CAM_EXT_TV_RANGE            1
+		 
+    #define CAM_HAS_VARIABLE_ASPECT 1 
 //---------------------------------------------------------- 
 	//********
 	/////SX110
 	//********
-		
 #elif defined (CAMERA_sx110is)
     #define CAM_PROPSET                 2
     #define CAM_DRYOS                   1
