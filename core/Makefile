@@ -78,7 +78,7 @@ main.elf: $(OBJS) $(topdir)platform/$(PLATFORM)/libplatform.a \
           $(topdir)lib/lua/liblua.a
 	@echo \-\> $@
 	$(CC) $(CFLAGS) -o $@ --start-group $^  $(LDLIBS) --end-group $(LDFLAGS) $(LDOPTS)
-	( $(NM) $@ | grep ' U ' > $@.syms ) && exit 1 || exit 0
+	( $(NM) $@ | grep ' U ' > $@.syms ) && echo "error: unresolved symbols in $@ (see $@.syms)" && exit 1 || exit 0
 
 	$(SIZE) $@ | tee $(topdir)size.txt
 	@printf " %s-%s (%s, #%s): MEMISOSIZE used: 0x%s\n" \
