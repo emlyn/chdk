@@ -70,6 +70,8 @@ MODE_QUICK			    ,
 MODE_SCN_SUNSET         ,
 MODE_SCN_UNDERWATER     ,
 MODE_EASY               ,
+MODE_SCN_DIGITAL_MACRO  ,
+MODE_SCN_STITCH         ,
 };
 
 // this is nasty, but not as nasty as checking each of the flags all over the place

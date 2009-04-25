@@ -1323,6 +1323,80 @@
     #define DNG_EXT_FROM ".CR2"
 
 //----------------------------------------------------------
+#elif defined (CAMERA_ixus870_sd880)
+
+    // Camera details
+    #define CAM_MAKE                    "Canon"
+    #define CAM_DRYOS                   1
+    #define CAM_PROPSET                 2
+
+    #define CAM_BITMAP_PALETTE          1
+    #define CAM_BRACKETING              1   // XXX 
+    #define CAM_CAN_SD_OVER_NOT_IN_MF   1   // XXX
+    #define CAM_CAN_SD_OVERRIDE         1   // XXX
+    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
+    #define CAM_EXT_TV_RANGE            1
+    #define CAM_HAS_IS                  1
+    #define CAM_HAS_JOGDIAL             1
+    #define CAM_HAS_ND_FILTER           1
+    #define CAM_HAS_ZOOM_LEVER          1
+    #define CAM_MULTIPART               1
+    #define CAM_REMOTE                  1   // XXX
+    #define CAM_SYNCH                   1   // XXX
+    #undef CAM_UNCACHED_BIT
+    #define CAM_UNCACHED_BIT            0x40000000  // 0xFF874198 (via ExMem.FreeCacheable
+    #define PARAM_CAMERA_NAME           4 // parameter number for GetParameterData
+    
+    #undef  CAM_AF_SCAN_DURING_VIDEO_RECORD // XXX 
+    #undef  CAM_CAN_MUTE_MICROPHONE         // XXX
+    #undef  CAM_HAS_ERASE_BUTTON
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES           // XXX
+    #undef  CAM_HAS_VIDEO_BUTTON            // XXX
+    #undef  CAM_EV_IN_VIDEO                 // XXX
+    #undef  CAM_REAR_CURTAIN 
+
+    #define CAM_JPEG_WIDTH              3648
+    #define CAM_JPEG_HEIGHT             2736
+    #define CAM_RAW_ROWPIX              3720
+    #define CAM_RAW_ROWS                2772
+    #define CAM_ACTIVE_AREA_X1          14       // XXX
+    #define CAM_ACTIVE_AREA_Y1          8        // XXX
+    #define CAM_ACTIVE_AREA_X2          3682     // XXX
+    #define CAM_ACTIVE_AREA_Y2          2764     // XXX
+    
+    #undef CAM_SENSOR_BITS_PER_PIXEL
+    #undef CAM_WHITE_LEVEL
+    #undef CAM_BLACK_LEVEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1) // XXX
+    #define CAM_BLACK_LEVEL             127 // XXX
+
+    #define cam_CFAPattern              0x02010100 // Red  Green  Green  Blue
+    #define CAM_COLORMATRIX1                               \
+      827547, 1000000, -290458, 1000000, -126086, 1000000, \
+     -12829,  1000000, 530507,  1000000, 50537,   1000000, \
+      5181,   1000000, 48183,   1000000, 245014,  1000000    // XXX
+    #define cam_CalibrationIlluminant1  1 // Daylight       XXX
+
+
+    // CHDK functionality
+    #define CAM_CHDK_HAS_EXT_VIDEO_MENU 1   // XXX
+    #define CAM_EMUL_KEYPRESS_DELAY     40
+    #define CAM_EMUL_KEYPRESS_DURATION  5
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #define DNG_SUPPORT                 1
+    
+    #undef  CAM_ADJUSTABLE_ALT_BUTTON
+    #undef  CAM_CONSOLE_LOG_ENABLED 
+    #undef  CAM_DRAW_EXPOSITION             // XXX
+    #undef  CAM_FEATURE_FEATHER             // XXX
+    #undef  CAM_USE_ZOOM_FOR_MF
+    #undef  CAM_VIDEO_CONTROL               // XXX
+
+
+//----------------------------------------------------------
 #elif defined (CAMERA_ixus950_sd850)
 
     #define CAM_EXT_TV_RANGE            1

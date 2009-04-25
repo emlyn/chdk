@@ -1,0 +1,9 @@
+Beta port of CHDK for the Canon IXUS 870 IS / Powershot SD880.
+
+Forum thread for this port:
+
+  http://chdk.setepontos.com/index.php/topic,3309.0.html
+
+Wikia page:
+
+  http://chdk.wikia.com/wiki/IXUS870IS
