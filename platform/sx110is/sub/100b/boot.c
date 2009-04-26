@@ -72,7 +72,7 @@ void boot() { //#fs
 
     long i;
 
-	// Code taken from VxWorks CHDK. Changes CPU speed?
+    // enable caches and write buffer... this is a carryover from old dryos ports, may not be useful
     asm volatile (
 	"MRC     p15, 0, R0,c1,c0\n"
 	"ORR     R0, R0, #0x1000\n"
@@ -87,7 +87,8 @@ void boot() { //#fs
     for(i=0;i<canon_bss_len/4;i++)
 	canon_bss_start[i]=0;
 
-    *(int*)(0x2478+0x4) = (*(int*)0xC02200B8)&1 ? 0x100000: 0x200000; // replacement of sub_FFC111A4	//from taskcreate_startup to sub_FFC111A4 and there to sub_FFC35CC4
+// done below
+//    *(int*)(0x2478+0x4) = (*(int*)0xC02200B8)&1 ? 0x100000: 0x200000; // replacement of sub_FFC111A4	//from taskcreate_startup to sub_FFC111A4 and there to sub_FFC35CC4
 	
     // jump to init-sequence that follows the data-copy-routine
     asm volatile ("B 	loc_FFC001A4_my\n");	// <---------------
@@ -98,8 +99,8 @@ void boot() { //#fs
 
 
 //JS 
-//function boot renamed to no_boot. Old/wrong code....
-
+//function boot renamed to no_boot. The original boot sequence doesn't work for some reasons... camera hangs
+#if 0
 void __attribute__((naked,noinline)) no_boot() {	//ROM:FFC0000C
     asm volatile (
 		"LDR 	R1, =0xC0410000\n"
@@ -197,7 +198,7 @@ void __attribute__((naked,noinline)) no_boot() {	//ROM:FFC0000C
 		);
 };
 //JSE
-
+#endif
 
 //JS
 void __attribute__((naked,noinline)) loc_FFC001A4_my() {

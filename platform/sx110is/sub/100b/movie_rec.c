@@ -3,13 +3,30 @@
 
 #include "conf.h"
 
-void change_video_tables(int a, int b){
+/*void change_video_tables(int a, int b){
 }
 
 
 void  set_quality(int *x){ // -17 highest; +12 lowest
  if (conf.video_mode) *x=12-((conf.video_quality-1)*(12+17)/(99-1));
 }
+
+*/
+int *video_quality = &conf.video_quality;
+int *video_mode    = &conf.video_mode;
+
+long def_table[24]={0x2000, 0x38D, 0x788, 0x5800, 0x9C5, 0x14B8, 0x10000, 0x1C6A, 0x3C45, 0x8000, 0xE35, 0x1E23,
+           0x1CCD, -0x2E1, -0x579, 0x4F33, -0x7EB, -0xF0C, 0xE666, -0x170A, -0x2BC6, 0x7333, -0xB85, -0x15E3};
+
+long table[24];
+
+void change_video_tables(int a, int b){
+ int i;
+ for (i=0;i<24;i++) table[i]=(def_table[i]*a)/b; 
+}
+
+long CompressionRateTable[]={0x60, 0x5D, 0x5A, 0x57, 0x54, 0x51, 0x4D, 0x48, 0x42, 0x3B, 0x32, 0x29, 0x22, 0x1D, 0x17, 0x14, 0x10, 0xE, 0xB, 9, 7, 6, 5, 4, 3, 2, 1};
+
 
 //JS
 void __attribute__((naked,noinline)) movie_record_task(){ 
@@ -81,7 +98,7 @@ void __attribute__((naked,noinline)) movie_record_task(){
 				
 		"loc_FFC4CD28:\n"		
 				
-				
+            "BL      unlock_optical_zoom\n" 		//  -----------> inserted
 			"BL 	sub_FFC4CA80\n"
 			"B 	loc_FFC4CD74\n"
 				
@@ -282,10 +299,13 @@ void __attribute__((naked,noinline)) sub_0xFFC4C788_my(){
 			"STR 	R0, [R5,#0x4C]\n"
 			"LDR 	R0, [SP,#0x58-0x1C]\n"
 			"MOV 	R2, #0\n"
-			"BL 	sub_FFD14CE8\n"
 
-            "LDR     R0, =0x52AC\n"  	// -<----	     // inserted
-            "BL 	set_quality\n"                 	 // inserted
+			"BL 	sub_FFD14CE8_my\n"
+			
+//			"BL 	sub_FFD14CE8\n"
+
+//            "LDR     R0, =0x52AC\n"  	// -<----	     // inserted
+//            "BL 	set_quality\n"                 	 // inserted
 			
 		"loc_FFC4C930:\n"		
 			"LDR 	R0, [R5,#0x50]\n"
@@ -320,3 +340,91 @@ void __attribute__((naked,noinline)) sub_0xFFC4C788_my(){
  );
 }
 
+void __attribute__((naked,noinline)) sub_FFD14CE8_my(){ 
+ asm volatile(
+	"STMFD 	SP!, {R4-R8,LR} \n"
+	"LDR 	R4, =0x8764 \n"
+	"LDR 	LR, [R4] \n"
+	"LDR 	R2, [R4,#8] \n"
+	"CMP 	LR, #0 \n"
+	"LDRNE 	R3, [R4,#0xC] \n"
+	"MOV 	R5, R2 \n"
+	"CMPNE 	R3, #1 \n"
+	"MOVEQ 	R2, #0 \n"
+	"STREQ 	R0, [R4] \n"
+	"STREQ 	R2, [R4,#0xC] \n"
+	"BEQ 	loc_FFD14DB4 \n"
+	"LDR 	R3, [R4,#4] \n"
+//	"LDR 	R7, =0xFFEB2548 \n"
+	"LDR 	R7, =table\n"			// -----> changed
+	"ADD 	R12, R3, R3,LSL#1 \n"
+	"LDR 	R3, [R7,R12,LSL#2] \n"
+	"ADD 	R6, R7, #0x30 \n"
+	"LDR 	R8, [R6,R12,LSL#2] \n"
+	"SUB 	R3, LR, R3 \n"
+	"CMP 	R3, #0 \n"
+	"SUB 	LR, LR, R8 \n"
+	"BLE 	loc_FFD14D70 \n"
+	"ADD 	R12, R7, R12,LSL#2 \n"
+	"LDR 	LR, [R12,#4] \n"
+	"CMP 	LR, R3 \n"
+	"ADDGE 	R2, R2, #1 \n"
+	"BGE 	loc_FFD14D64 \n"
+	"LDR 	R12, [R12,#8] \n"
+	"CMP 	R12, R3 \n"
+	"ADDLT 	R2, R2, #3 \n"
+	"ADDGE 	R2, R2, #2 \n"
+		
+"loc_FFD14D64:\n"		
+//	"CMP 	R2, #0x17 \n"
+//	"MOVGE 	R2, #0x16 \n"
+	"CMP     R2, #0x1A\n"   // ---------> changed
+	"MOVGE   R2, #0x19\n"   // ---------> changed
+	"B 	loc_FFD14DA4 \n"
+		
+"loc_FFD14D70:\n"		
+	"CMP 	LR, #0 \n"
+	"BGE 	loc_FFD14DA4 \n"
+	"ADD 	R3, R6, R12,LSL#2 \n"
+	"LDR 	R12, [R3,#4] \n"
+	"CMP 	R12, LR \n"
+	"SUBLE 	R2, R2, #1 \n"
+	"BLE 	loc_FFD14D9C \n"
+	"LDR 	R3, [R3,#8] \n"
+	"CMP 	R3, LR \n"
+	"SUBGT 	R2, R2, #3 \n"
+	"SUBLE 	R2, R2, #2 \n"
+		
+"loc_FFD14D9C:\n"		
+	"CMP 	R2, #0 \n"
+	"MOVLT 	R2, #0 \n"
+		
+"loc_FFD14DA4:\n"		
+		
+	"CMP 	R2, R5 \n"
+	"STRNE 	R2, [R4,#8] \n"
+	"MOVNE 	R2, #1 \n"
+	"STRNE 	R2, [R4,#0xC] \n"
+		
+"loc_FFD14DB4:\n"		
+//	"LDR 	R2, =0xFFEB24EC \n"			
+	"LDR 	R2, =CompressionRateTable\n"			//----------> changed
+	"LDR 	R3, [R4,#8] \n"
+	"LDR 	R2, [R2,R3,LSL#2] \n"
+
+                "LDR     R3, =video_mode\n"      // --------> inserted
+                "LDR     R3, [R3]\n"             // --------> inserted
+                "LDR     R3, [R3]\n"             // --------> inserted
+                "CMP     R3, #1\n"               // --------> inserted
+                "LDREQ   R3, =video_quality\n"   // --------> inserted    
+                "LDREQ   R3, [R3]\n"             // --------> inserted     
+                "LDREQ   R2, [R3]\n"             // --------> inserted     
+
+	"STR 	R2, [R1] \n"
+	"STR 	R0, [R4] \n"
+
+		"BL      mute_on_zoom\n"         // --------> inserted 
+
+	"LDMFD 	SP!, {R4-R8,PC} \n"
+ );
+} 

@@ -143,6 +143,8 @@ void __attribute__((naked,noinline)) capt_seq_task() {
 		"loc_FFC50484:\n"		
 				
 			"BL 	sub_FFC50C44\n"
+			"BL      shooting_expo_param_override\n"  // ---------------> inserted
+			
 			"B 	loc_FFC504BC\n"
 				
 		"loc_FFC5048C:\n"		
@@ -467,8 +469,8 @@ void __attribute__((naked,noinline)) sub_FFC4FD38_my(){ //
 			"BL 	sub_FFD1C114\n"
 			"MOV 	R0, R4\n"
 			"BL 	sub_FFD1B560_my\n"	//---------------> changed
-			"BL		capt_seq_hook_raw_here\n"  //	----------> added
 			"MOV 	R6, R0\n"
+			"BL		capt_seq_hook_raw_here\n"  //	----------> added
 			"BL 	sub_FFC52C9C\n"
 			"BL 	sub_FFC52CD8\n"
 			"MOV 	R2, R4\n"
