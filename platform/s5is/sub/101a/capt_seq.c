@@ -295,6 +295,9 @@ void __attribute__((naked,noinline)) sub_FF866D48_my() {
      "loc_FF866E0C:\n"                           // CODE XREF: CaptSeqTask+4Cj
           "@ jumptable FF866D94 entry 0\n"
           "BL      sub_FF95F190\n"
+
+          "BL      shooting_expo_param_override\n"  // +-----------> Override Canon stuff :)
+
           "BL      sub_FF864C5C\n"
           "LDR     R0, [R6,#0x24]\n"
           "CMP     R0, #0\n"
@@ -652,9 +655,6 @@ void __attribute((naked,noinline)) sub_FF866844_my() {
           "MOVNE   R1, #1\n"
           "BNE     sub_FF865098\n"
           "BL      sub_FF9733B8\n"
-
-          "BL      shooting_expo_param_override\n"  // +-----------> Override Canon stuff :)
-
           "BL      sub_FF8749E4\n"
           "STR     R0, [R4,#0x14]\n"
           "MOV     R0, R4\n"
