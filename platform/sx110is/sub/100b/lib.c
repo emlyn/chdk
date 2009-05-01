@@ -1,13 +1,7 @@
-
 #include "platform.h"
 
 char *hook_raw_image_addr()
 {
-/* SX10
-	return (char*) (*(int*)(0x55CC+0x18) ? 0x424F1948 : 0x40F65B18);
-end sx10 */
-
-
 //found 0x11A34C40 at 0xFFC3C948 and 0x10805040 at FFC7D80C
 // not for sure: 53A4 at 0xFFC51A60 and 0x53A4+0x18 at 0xFFC518D4
 	return (char*) (*(int*)(0x53A4+0x18) ? 0x11A34C40 : 0x10805040);	
@@ -15,26 +9,18 @@ end sx10 */
 
 long hook_raw_size()
 {
-   //      Found at ROM:FFE60B00
    //      ROM:FFE60BB4                 LDR     R1, =0xEC04F0
-   //      ROM:FFE60BB8                 ADR     R0, aCrawBuffSizeP ; "CRAW BUFF SIZE  %p"
-   //      ROM:FFE60BBC                 BL      sub_FFCE7000
-   
    return 0xEC04F0;
 }
 
 
 void *vid_get_viewport_live_fb()
 {
-//	return (void*)0;//0x10670ee0;  0=not 100% safe!
-	
-    void **fb=(void **)0x227C; //look at 0x10670ee0, no explanation for it, code from sx10
-    unsigned char buff = *((unsigned char*)0x20D0); // sx10: sub_FF839DD8, no explanation for it
-    if (buff == 0) buff = 2;  else buff--;    
+   void **fb=(void **)0x21a0; //ROM:FFC285D0 dword_FFC285D0  DCD 0x21A0, look also at ROM:FFC27FF0
+   unsigned char buff = *((unsigned char*)0x2014); //ROM:FFC285C8 dword_FFC285C8  DCD 0x2014    , look also at ROM:FFC27FA0
+    if (buff == 0) buff = 2;  else buff--;
     return fb[buff];
-	
 }
-
 
 void *vid_get_bitmap_fb()
 {

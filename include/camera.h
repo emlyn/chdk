@@ -1876,13 +1876,6 @@
 	/////SX110
 	//********
 #elif defined (CAMERA_sx110is)
-//????
-//    #define CAM_HAS_VIDEO_BUTTON       1		//?
-//    #define VIDEO_QUALITY_ONLY          1  	//?
-//    #define CAM_BRACKETING              1 	//?
-//    #define DNG_EXT_FROM ".CR2" //not needed?
-
-
 //needs to be adjusted START
 	#define CAM_COLORMATRIX1                               \
       1413400, 1000000, -557600,  1000000, -152700,  1000000, \
@@ -1906,8 +1899,6 @@
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1 
-	
-    #define CAM_SWIVEL_SCREEN           1
     #undef  CAM_VIDEO_CONTROL					
     #define CAM_MULTIPART               1
     #define CAM_HAS_JOGDIAL             1
@@ -1918,7 +1909,7 @@
     #define CAM_SENSOR_BITS_PER_PIXEL   12
   	#undef CAM_WHITE_LEVEL
     #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
-// black level set same as other 12 bit cams, unverified
+	// black level set same as other 12 bit cams, unverified
     #undef  CAM_BLACK_LEVEL
     #define CAM_BLACK_LEVEL             127		
     #define DNG_SUPPORT                 1
