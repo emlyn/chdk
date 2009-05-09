@@ -1062,21 +1062,30 @@ int shooting_get_subject_distance_override_koef()
 }
 
 void shooting_tv_bracketing(){
- short value, is_odd;
- int m=mode_get()&MODE_SHOOTING_MASK;
- if (bracketing.shoot_counter==0) { // first shoot
+  short value, is_odd;
+  int m=mode_get()&MODE_SHOOTING_MASK;
+  if (bracketing.shoot_counter==0) { // first shoot
     bracketing.shoot_counter=1;
-    #if defined (CAMERA_tx1)
-    bracketing.tv96=shooting_get_tv96();
-    #else
-    if (!(m==MODE_M || m==MODE_TV)) bracketing.tv96=shooting_get_tv96(); 
-    else bracketing.tv96=shooting_get_user_tv96();
-    #endif
+    // if Tv override is enabled... (this was adapted from function shooting_expo_param_override() )
+    if ( ((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef) && !(conf.override_disable==1) ) { 
+      // ...use Tv override value as seed for bracketing:
+      if (conf.tv_enum_type) 
+        bracketing.tv96 = 32*(conf.tv_override_value-18);
+      else 
+        bracketing.tv96 = shooting_get_tv96_from_shutter_speed(shooting_get_shutter_speed_override_value());
+    }
+    // Tv override is disabled, use camera's opinion of Tv for bracketing seed value.
+    else {
+      #if defined (CAMERA_tx1) // M mode is actually automatic on the tx1.
+      bracketing.tv96=shooting_get_tv96();
+      #else
+      if (!(m==MODE_M || m==MODE_TV)) bracketing.tv96=shooting_get_tv96(); 
+      else bracketing.tv96=shooting_get_user_tv96();
+      #endif
+    }
     bracketing.tv96_step=32*conf.tv_bracket_value;
- }
+  }
   // other shoots
-  // lublu belku
-  
    bracketing.shoot_counter++;   
    is_odd=(bracketing.shoot_counter&1);
    if ((!is_odd) || (conf.bracket_type>0)) bracketing.dtv96+=bracketing.tv96_step;
