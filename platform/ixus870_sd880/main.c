@@ -100,13 +100,12 @@ int get_zoom_x(int zp) {
 
 long get_vbatt_min()
 {
-	return 3205; // observed with osd:
-                     // 3320 -> blinking icon 3205
-                     // 3205 -> warning and power off
+	return 3265; // min seen: 3205 (warning + power off)
+                     // 3320 -> blinking icon
 }
 
 long get_vbatt_max()
 {
-	return 4065; // XXX max seen
+	return 4065; // max seen: 4065
 }
 

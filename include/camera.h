@@ -63,6 +63,7 @@
     #define CAM_BITMAP_PALETTE          1 // which color set is used for this camera
 		
     #undef CAM_HAS_VARIABLE_ASPECT         // can switch between 16:9 and 4:3 
+    #define DEFAULT_RAW_EXT             1  // extension to use for raw (see raw_exts in conf.c)
 
 //----------------------------------------------------------
 // Overridden values for each camera
@@ -1341,7 +1342,7 @@
     #define CAM_HAS_ND_FILTER           1
     #define CAM_HAS_ZOOM_LEVER          1
     #define CAM_MULTIPART               1
-    #define CAM_REMOTE                  1   // XXX
+    #define CAM_REMOTE                  1
     #define CAM_SYNCH                   1   // XXX
     #undef CAM_UNCACHED_BIT
     #define CAM_UNCACHED_BIT            0x40000000  // 0xFF874198 (via ExMem.FreeCacheable
@@ -1386,6 +1387,8 @@
     #define CAM_EMUL_KEYPRESS_DELAY     40
     #define CAM_EMUL_KEYPRESS_DURATION  5
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #undef  DEFAULT_RAW_EXT 
+    #define DEFAULT_RAW_EXT             2   // use .CR2 
     #define DNG_SUPPORT                 1
     
     #undef  CAM_ADJUSTABLE_ALT_BUTTON

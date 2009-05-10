@@ -112,7 +112,7 @@ void __attribute__((naked,noinline)) boot() {
                  "LDR     R1, [R2]\n"
                  "ORR     R1, R1, #1\n"
                  "STR     R1, [R2]\n"
-                 "LDR     R0, =0xFFB53358\n"
+                 "LDR     R0, =0xFFB53348\n"
                  "LDR     R1, =0x1900\n"
                  "LDR     R3, =0xFBE8\n"
  "loc_FF81013C:\n"
@@ -175,7 +175,7 @@ void __attribute__((naked,noinline)) sub_FF810F94_my() {
                  "SUB     SP, SP, #0x74\n"
                  "MOV     R0, SP\n"
                  "MOV     R1, #0x74\n"
-                 "BL      sub_FFAD1AD4\n"
+                 "BL      sub_FFAD1AC4\n"
                  "MOV     R0, #0x53000\n"
                  "STR     R0, [SP,#4]\n"
             //   "LDR     R0, =0xDE578\n"       // MEMISOSTART!!!
@@ -432,7 +432,7 @@ void __attribute__((naked,noinline)) sub_FF854CE8_my() {
                  "B       loc_FF854D4C\n"
  "loc_FF854D80:\n"
                  "MOV     R0, R8\n"
-                 "BL      sub_FF918C14\n"
+                 "BL      sub_FF918C10\n"
 
      // ------------------ added code ------------------
 
@@ -511,7 +511,7 @@ void __attribute__((naked,noinline)) sub_FF854CE8_my() {
                  "BNE     loc_FF854E40\n"
                  "MOV     R6, #0\n"
                  "MOV     R0, R8\n"
-                 "BL      sub_FF918C14\n"
+                 "BL      sub_FF918C10\n"
                  "MOV     R5, R0\n"
                  "B       loc_FF854E40\n"
  "loc_FF854E2C:\n"
@@ -536,7 +536,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
                  "STMFD   SP!, {R3-R11,LR}\n"
                  "BL      sub_FF8464E8\n"
                  "LDR     R11, =0x80000B01\n"
-                 "LDR     R8, =0xFFAD7080\n"
+                 "LDR     R8, =0xFFAD7070\n"
                  "LDR     R7, =0xC0240000\n"
                  "LDR     R6, =0x23A0\n"
                  "MOV     R9, #1\n"

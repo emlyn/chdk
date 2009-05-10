@@ -32,7 +32,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
                 }
         }
 
-        // from 0xFF829878 (sub_FF829848)
+        // from 0xFF82940C (sub_FF8293DC, via call to _sub_???__ADCScn.c__214)
         asm volatile (
                  "MRS     R0, CPSR\n"
                  "BIC     R0, R0, #0x3F\n"
@@ -80,8 +80,8 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
                  "BX      R0\n"
                  : : "r"(dst_void) : "memory","r0","r1","r2","r3","r4");
 
-                *((volatile long *) 0xC0223030) = 0x46;
-
         // needed in case call BX R0 "returns"? (note that LR is set, but to what?)
+
+        *((volatile long *) 0xC0223030) = 0x46;
         while(1);
 }

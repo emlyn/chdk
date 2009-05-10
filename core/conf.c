@@ -186,7 +186,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO( 34, conf.debug_shortcut_action,  CONF_DEF_VALUE, i:0, NULL), // backwards compatible
     CONF_INFO( 35, conf.raw_in_dir,             CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 36, conf.raw_prefix,             CONF_DEF_VALUE, i:RAW_PREFIX_CRW, NULL),
-    CONF_INFO( 37, conf.raw_ext,                CONF_DEF_VALUE, i:RAW_EXT_CRW, NULL),
+    CONF_INFO( 37, conf.raw_ext,                CONF_DEF_VALUE, i:DEFAULT_RAW_EXT, NULL),
     CONF_INFO( 38, conf.reader_file,            CONF_DEF_PTR,   ptr:"A/README.TXT", conf_change_script_file),
     CONF_INFO( 39, conf.reader_pos,             CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 40, conf.sokoban_level,          CONF_DEF_VALUE, i:0, NULL),
@@ -370,8 +370,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(206, conf.remote_zoom_enable,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(207, conf.zoom_timeout,           CONF_DEF_VALUE, i:5, NULL),
    	CONF_INFO(208, conf.start_sound,     CONF_DEF_VALUE, i:0, NULL),
-    CONF_INFO(209, conf.sub_batch_prefix,  CONF_DEF_VALUE, i:2, NULL), // SND_
-    CONF_INFO(210, conf.sub_batch_ext,  CONF_DEF_VALUE, i:1, NULL), // .CRW
+    CONF_INFO(209, conf.sub_batch_prefix,  CONF_DEF_VALUE, i:RAW_PREFIX_SND, NULL), // SND_
+    CONF_INFO(210, conf.sub_batch_ext,  CONF_DEF_VALUE, i:DEFAULT_RAW_EXT, NULL), // .CRW
     CONF_INFO(211, conf.sub_in_dark_value,  CONF_DEF_VALUE, i:30, NULL), 
     CONF_INFO(212, conf.sub_out_dark_value,  CONF_DEF_VALUE, i:0, NULL), 
    	CONF_INFO(213, conf.debug_display,     CONF_DEF_VALUE, i:0, NULL),
