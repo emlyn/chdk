@@ -433,7 +433,7 @@
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
     #define DNG_EXT_FROM ".DPS"
-    #define CAM_EXT_TV_RANGE            1
+    //#define CAM_EXT_TV_RANGE            1 // temporarily commented out because this breaks burst mode in 101a. 100e works fine if enabled.
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a590)
