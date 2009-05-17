@@ -1912,9 +1912,9 @@
     #define CAM_SENSOR_BITS_PER_PIXEL   12
   	#undef CAM_WHITE_LEVEL
     #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
-	// black level set same as other 12 bit cams, unverified
+	// black level set to 128 per reports on the forum
     #undef  CAM_BLACK_LEVEL
-    #define CAM_BLACK_LEVEL             127		
+    #define CAM_BLACK_LEVEL             128
     #define DNG_SUPPORT                 1
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
