@@ -684,7 +684,7 @@ void __attribute__((naked,noinline)) sub_ffd20ef4_my(){
                  "LDR     R0, [R3]\n"
                  "MOV     R1, #2\n"
                  "ADD     R2, R2, #8\n"
-                 "BL      sub_ffebcf48\n"
+                 "BL      sub_ffebcfbc\n"
                  "TST     R0, #1\n"
                  "BEQ     loc_ffd21004\n"
                  "MOV     R1, #0x4a0\n"
