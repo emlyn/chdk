@@ -1,6 +1,7 @@
 // fi2encdec v1.0
 
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>
@@ -21,35 +22,35 @@ char *_strlwr(char *moep) {
 
 // FI2 block record
 struct fi2_rec_s {
-	unsigned long	offset;		// Offset in data block
-	unsigned long	upklen;		// Real (unpacked) size of data block
-	unsigned long	len;		// Length of compressed and padded data block
-	unsigned long	addr;		// target address for data block
-	unsigned long	uf1;		// unknown flag 1
-	unsigned long	fmain;		// Main FW block flag
-	unsigned long	fboot;		// Bootloader block flag
-	unsigned long	uf2;		// unknown flag 2
+	uint32_t	offset;		// Offset in data block
+	uint32_t	upklen;		// Real (unpacked) size of data block
+	uint32_t	len;		// Length of compressed and padded data block
+	uint32_t	addr;		// target address for data block
+	uint32_t	uf1;		// unknown flag 1
+	uint32_t	fmain;		// Main FW block flag
+	uint32_t	fboot;		// Bootloader block flag
+	uint32_t	uf2;		// unknown flag 2
 } fi2_rec_s;
 
 // FI2 header (with size field)
 typedef struct fi2_header_s {
-	unsigned long	hlen_be;	// Header length in big endian
-	unsigned long	hwid;		// Hardware ID
-	unsigned long	unk1;		// unk1 field (0x02230000)
-	unsigned long	id;			// ID field   (0x01000000)
-	unsigned long	ch;			// Ch field   (0x00000000)
-	unsigned long	unk2;		// unk2 field (0x00000001)
-	unsigned long	nblk;		// number of blocks & records
-	unsigned long	datacs;		// checksum of encrypted data block
+	uint32_t	hlen_be;	// Header length in big endian
+	uint32_t	hwid;		// Hardware ID
+	uint32_t	unk1;		// unk1 field (0x02230000)
+	uint32_t	id;			// ID field   (0x01000000)
+	uint32_t	ch;			// Ch field   (0x00000000)
+	uint32_t	unk2;		// unk2 field (0x00000001)
+	uint32_t	nblk;		// number of blocks & records
+	uint32_t	datacs;		// checksum of encrypted data block
 } fi2_hdr_t, *pfi2_hdr_t; 
 
-static unsigned long read32_be( const void *src_buffer )
+static uint32_t read32_be( const void *src_buffer )
 {
 	unsigned char *b = (unsigned char *)src_buffer;
 	return (b[0]<<24) | (b[1] << 16) | (b[2] << 8) | b[3];
 }
 
-static void store32_be( void *dst_buffer, unsigned long value )
+static void store32_be( void *dst_buffer, uint32_t value )
 {
 	unsigned char *b = (unsigned char *)dst_buffer;
 	b[0] = ( value >> 24 ) & 0xFF;
@@ -58,7 +59,7 @@ static void store32_be( void *dst_buffer, unsigned long value )
 	b[3] = ( value >>  0 ) & 0xFF;
 }
 
-static unsigned long align128( unsigned long value )
+static uint32_t align128( uint32_t value )
 {
 	return ( (value + 16 - 1) & 0xFFFFFFF0ul );
 }
@@ -92,11 +93,11 @@ static int get_hexstring( void *dst, const char *str, int len )
 	return 0;
 }
 
-static int fi2enc( char *infname, char *outfname, unsigned long *key, unsigned long *iv , unsigned long pid)
+static int fi2enc( char *infname, char *outfname, uint32_t *key, uint32_t *iv , uint32_t pid)
 {
-	int i;
+	unsigned long i;
 	size_t hdrsize, flen;
-	unsigned long cs;
+	uint32_t cs;
 	FILE *fi, *fo;
 	fi2_hdr_t hdr;
 	struct fi2_rec_s  fi2rec;
@@ -135,7 +136,7 @@ static int fi2enc( char *infname, char *outfname, unsigned long *key, unsigned l
 	fseek( fi, 0, SEEK_SET );
 
 	if( flen <= 0 || flen > (256  << 20) ){				// file size sanity check (256MB max)
-		printf( "Data file %s have unacceptable file size (%d)\n", infname, flen );
+		printf( "Data file %s have unacceptable file size (%ld)\n", infname, (unsigned long) flen );
 		return -1;
 	}
 	upkbuf = (unsigned char*)malloc( flen );			// allocate buffer for data file
@@ -194,13 +195,13 @@ static int fi2enc( char *infname, char *outfname, unsigned long *key, unsigned l
 	}
 	// save header
 	if ( i != fwrite(buf, 1, i, fo ) ){
-		printf("\nError writing header to %s (%d bytes)\n", outfname, i);
+		printf("\nError writing header to %s (%ld bytes)\n", outfname, i);
 		return(-1);
 	}
 	free( buf );
 	// save data blocks
 		if (fi2rec.len != fwrite( pblk, 1, fi2rec.len, fo ) ){
-			printf("\nError writing data block to %s (%ld bytes)\n", outfname, fi2rec.len);
+			printf("\nError writing data block to %s (%d bytes)\n", outfname, fi2rec.len);
 			return(-1);
 		}
 		free( pblk );
@@ -211,12 +212,12 @@ static int fi2enc( char *infname, char *outfname, unsigned long *key, unsigned l
 int main( int argc, char **argv )
 {
 	int i;
-	unsigned long key_buf[4];
-	unsigned long iv_buf[4];
-	unsigned long *key = NULL;
-	unsigned long *iv = NULL;
+	uint32_t key_buf[4];
+	uint32_t iv_buf[4];
+	uint32_t *key = NULL;
+	uint32_t *iv = NULL;
 	char *fni = NULL, *fno = NULL;
-	unsigned long pid=0;
+	uint32_t pid=0;
 
 	// parse command line
 	for( i = 1; i < argc; i++){

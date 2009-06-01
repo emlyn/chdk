@@ -15,6 +15,7 @@ RESULTING FROM THE USE, MODIFICATION, OR
 REDISTRIBUTION OF THIS SOFTWARE.
 */
 
+#include <stdint.h>
 #include <string.h>
 #include <memory.h>
 
@@ -314,7 +315,7 @@ int i;
 // n.b. you can replace this with
 //      byte-wise xor if you wish.
 
-static void AddRoundKey (unsigned *state, unsigned *key)
+static void AddRoundKey (uint32_t *state, uint32_t *key)
 {
 int idx;
 
@@ -369,7 +370,7 @@ void aes128_encrypt_block (void *out_buffer, const void *inp_buffer, const unsig
 	unsigned round;
 
 	memcpy (state, in, Nb * 4);
-	AddRoundKey ((unsigned *)state, (unsigned *)expkey);
+	AddRoundKey ((uint32_t *)state, (uint32_t *)expkey);
 
 	for( round = 1; round < Nr + 1; round++ ) {
 		if( round < Nr )
@@ -377,7 +378,7 @@ void aes128_encrypt_block (void *out_buffer, const void *inp_buffer, const unsig
 		else
 			ShiftRows (state);
 
-		AddRoundKey ((unsigned *)state, (unsigned *)expkey + round * Nb);
+		AddRoundKey ((uint32_t *)state, (uint32_t *)expkey + round * Nb);
 	}
 
 	memcpy (out, state, sizeof(state));
@@ -392,12 +393,12 @@ void aes128_decrypt_block (void *out_buffer, const void *inp_buffer, const unsig
 
 	memcpy (state, in, sizeof(state));
 
-	AddRoundKey ((unsigned *)state, (unsigned *)expkey + Nr * Nb);
+	AddRoundKey ((uint32_t *)state, (uint32_t *)expkey + Nr * Nb);
 	InvShiftRows(state);
 
 	for( round = Nr; round--; )
 	{
-		AddRoundKey ((unsigned *)state, (unsigned *)expkey + round * Nb);
+		AddRoundKey ((uint32_t *)state, (uint32_t *)expkey + round * Nb);
 		if( round )
 			InvMixSubColumns (state);
 	} 
@@ -408,8 +409,8 @@ void aes128_decrypt_block (void *out_buffer, const void *inp_buffer, const unsig
 void aes128_cbc_encrypt( void *buffer, const unsigned char *expkey, const void *iv, int len )
 {
     int i;
-    unsigned long xorl[4];
-	unsigned long *bufl = (unsigned long *)buffer;
+    uint32_t xorl[4];
+	uint32_t *bufl = (uint32_t *)buffer;
 
 	memcpy( xorl, iv, 16 );
     while( len > 0 ){
@@ -424,9 +425,9 @@ void aes128_cbc_encrypt( void *buffer, const unsigned char *expkey, const void *
 void aes128_cbc_decrypt( void *buffer, const unsigned char *expkey, const void *iv, int len )
 {
     int i;
-    unsigned long xorl[4];
-    unsigned long tmpl[4];
-	unsigned long *bufl = (unsigned long *)buffer;
+    uint32_t xorl[4];
+    uint32_t tmpl[4];
+	uint32_t *bufl = (uint32_t *)buffer;
 
 	memcpy( xorl, iv, 16 );
     while( len > 0 ){
