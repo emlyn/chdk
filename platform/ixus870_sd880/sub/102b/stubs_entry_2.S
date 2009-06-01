@@ -34,6 +34,9 @@ NHSTUB(UnsetZoomForMovie,0xFF9607A0) // via aZoomcon_Unsetz (used ixus980 dump)
 NHSTUB(PutInNdFilter,0xFFA3AD28)   // function table TurnOnNdFilter (used ixus980)
 //NHSTUB(PutOutNdFilter,0xFFA9C20C)  // function table
 NHSTUB(PutOutNdFilter,0xFFA3AD4C)  // function table TurnOffNdFilter (used ixus980)
+NHSTUB(ScreenLock, 0xFF9B83D0)  // via aScreenlock
+NHSTUB(MakeAFScan,  0xFF933E54)  // via aSsprepareseqba (function with most uses)
+NHSTUB(ExpCtrlTool_StartContiAE, 0xFF830D00)  // via aStartcontiae
 
 
 // Corrections for uncertain entries in stubs_entry.S

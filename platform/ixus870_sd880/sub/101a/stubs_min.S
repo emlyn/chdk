@@ -12,3 +12,4 @@ DEF(zoom_status, 0xD570) // via aM_zoomstateD
 DEF(movie_status, 0x51A8 + 0x3C) // via first str after cmp in sub_FF...__MovieRecorder.c__0 (the one with call to ExMemMan.c__0)
 DEF(enabled_refresh_physical_screen, 0xB268+0x30) // via aScreenLock, after ldr of 0xB268
 DEF(playrec_mode, 0x5394+0x4) // @0xff865b40, via aShootseqapi_c (adrne/ldrne ~), between the ZoomCtrl and CameraLog above, the one below MOV R0, #1
+DEF(some_flag_for_af_scan, 0x9280) // second value above string "SsPrepareSeq.c" 

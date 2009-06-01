@@ -1331,10 +1331,11 @@
     #define CAM_DRYOS                   1
     #define CAM_PROPSET                 2
 
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_BITMAP_PALETTE          1
     #define CAM_BRACKETING              1   // XXX 
-    #define CAM_CAN_SD_OVER_NOT_IN_MF   1   // XXX
-    #define CAM_CAN_SD_OVERRIDE         1   // XXX
+    #define CAM_CAN_SD_OVER_NOT_IN_MF   1
+    #define CAM_CAN_SD_OVERRIDE         1
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
     #define CAM_EXT_TV_RANGE            1
     #define CAM_HAS_IS                  1
@@ -1348,7 +1349,6 @@
     #define CAM_UNCACHED_BIT            0x40000000  // 0xFF874198 (via ExMem.FreeCacheable
     #define PARAM_CAMERA_NAME           4 // parameter number for GetParameterData
     
-    #undef  CAM_AF_SCAN_DURING_VIDEO_RECORD // XXX 
     #undef  CAM_CAN_MUTE_MICROPHONE         // XXX
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM

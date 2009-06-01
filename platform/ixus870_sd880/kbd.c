@@ -36,7 +36,7 @@ extern void _platformsub_kbd_fetch_data(long*);
 // MOV  R3, #1                  R3 = 1
 // LDRB R2, [R1,#0x114]         R2 = a[0x114] = 0x51
 // LDRB R1, [R1,#0x114]         R1 = a[0x114] = 0x51
-// MOV  R2, R2,LSR#5            R2 = 0x51 >> 5 = 2
+// MOV  R2, R2,LSR#5            R2 = 0x51 >> 5 = 2 = SD_READONLY_REG
 // LDR  R0, [R0,R2,LSL#2]       R0 = R0[2] = b[2]
 // AND  R1, R1, #0x1F           R1 = 0x51 & 0x1F = 0x11
 // AND  R0, R0, R3,LSL R1       R0 = b[2] & (1 << 0x11)
@@ -44,6 +44,7 @@ extern void _platformsub_kbd_fetch_data(long*);
 // AND  R0, R0, #1              R0 = ((b[2] & (1 << 0x11)) >> 0x11) & 0x1
 // BX   LR                      return
 #define SD_READONLY_FLAG (0x20000)  // 1 << 0x11
+#define SD_READONLY_REG 2
 
 #define USB_MASK (0x40000)
 #define USB_REG 2               // idx in physw_status
@@ -70,8 +71,8 @@ static KeyMap keymap[] = {
 	{ 2, KEY_LEFT		, 0x00000010 },
 	{ 2, KEY_RIGHT		, 0x00000020 },
 	{ 2, KEY_SET		, 0x00000100 },
-	{ 2, KEY_ZOOM_IN	, 0x00000008 },
-	{ 2, KEY_ZOOM_OUT	, 0x00000004 },
+	{ 2, KEY_ZOOM_IN	, 0x00000004 },
+	{ 2, KEY_ZOOM_OUT	, 0x00000008 },
 	{ 2, KEY_MENU		, 0x00000400 },
 	{ 2, KEY_DISPLAY	, 0x00000200 },
 	{ 2, KEY_PRINT	 	, 0x00000800 },
@@ -306,7 +307,7 @@ void my_kbd_read_keys()
 	
 	_kbd_read_keys_r2(physw_status);
 
-	remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
+	remote_key = (physw_status[USB_REG] & USB_MASK)==USB_MASK;
 		if (remote_key) 
 			remote_count += 1;
 		else if (remote_count) {
@@ -314,9 +315,14 @@ void my_kbd_read_keys()
 			remote_count = 0;
 		}
 	if (conf.remote_enable) {
-		physw_status[2] = physw_status[2] & ~(SD_READONLY_FLAG | USB_MASK);
+#if USB_REG == SD_READONLY_REG
+		physw_status[USB_REG] = physw_status[USB_REG] & ~(SD_READONLY_FLAG | USB_MASK);
+#else
+		physw_status[USB_REG] = physw_status[USB_REG] & ~USB_MASK;
+		physw_status[SD_READONLY_REG] = physw_status[SD_READONLY_REG] & ~SD_READONLY_FLAG;
+#endif
 	} else {
-		physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
+		physw_status[SD_READONLY_REG] = physw_status[SD_READONLY_REG] & ~SD_READONLY_FLAG;
 	}
 
 }
