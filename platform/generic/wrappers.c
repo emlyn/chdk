@@ -940,4 +940,10 @@ int __attribute__((weak)) vid_get_viewport_width() {
 	return vid_get_bitmap_screen_width();
 }
 
+void __attribute__((weak)) vid_turn_off_updates()
+{
+}
 
+void __attribute__((weak)) vid_turn_on_updates()
+{
+}

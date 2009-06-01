@@ -280,6 +280,8 @@ void *vid_get_viewport_live_fb();
 void vid_bitmap_refresh();
 long vid_get_viewport_height();
 int vid_get_viewport_width();
+void vid_turn_off_updates();
+void vid_turn_on_updates();
 
 /******************************************************************/
 

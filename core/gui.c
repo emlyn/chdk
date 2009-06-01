@@ -2471,6 +2471,7 @@ void gui_kbd_enter()
         disable_shutdown();
     }
     gui_mode = GUI_MODE_ALT;
+    vid_turn_off_updates();
 
 	gui_user_menu_flag = 0;
 	if (conf.user_menu_enable == 2) {
@@ -2495,6 +2496,7 @@ void gui_kbd_leave()
         rbf_load_from_8x16(current_font);
     rbf_set_codepage(FONT_CP_WIN);
     enable_shutdown();
+    vid_turn_on_updates();
     gui_mode = GUI_MODE_NONE;
 }
 //------------------------------------------------------------------- 

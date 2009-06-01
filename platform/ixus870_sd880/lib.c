@@ -3,9 +3,22 @@
 
 void vid_bitmap_refresh()
 {
- extern int enabled_refresh_physical_screen;
- enabled_refresh_physical_screen=1;
- _RefreshPhysicalScreen(1);
+ extern int enabled_refresh_physical_screen; // screen lock counter
+ int old_val = enabled_refresh_physical_screen;
+ if ( old_val == 0 )
+ {
+   _ScreenLock(); // make sure code is called at least once
+ } else {
+   enabled_refresh_physical_screen=1; // forces actual redraw
+ }
+ _RefreshPhysicalScreen(1); // unlock/refresh
+
+ // restore original situation
+ if ( old_val > 0 )
+ {
+   _ScreenLock();
+   enabled_refresh_physical_screen = old_val;
+ }
 }
 
 
@@ -70,4 +83,14 @@ void JogDial_CW(void){
 
 void JogDial_CCW(void){
  _PostLogicalEventForNotPowerType(0x875, 2);  // RotateJogDialLeft
+}
+
+void vid_turn_off_updates()
+{
+  _ScreenLock();
+}
+
+void vid_turn_on_updates()
+{
+  _RefreshPhysicalScreen(1);
 }
