@@ -21,8 +21,8 @@ static int shoot_counter=0;
 #define DELAY_TIMEOUT 10000
 
 #define KEYS_MASK0 (0x00000000)
-#define KEYS_MASK1 (0xC0800000)
-#define KEYS_MASK2 (0x1FFF)
+#define KEYS_MASK1 (0x00000000)
+#define KEYS_MASK2 (0x153F)
 
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
@@ -440,7 +440,6 @@ static KeyMap keymap[] = {
 	{ 2, KEY_SHOOT_FULL	, 0x00000030 }, 
 	{ 2, KEY_SHOOT_HALF	, 0x00000010 },  
 	{ 2, KEY_MENU		, 0x00000400 }, 
-	{ 2, KEY_DISPLAY	, 0x00000111 }, 
 	{ 2, KEY_PRINT		, 0x00001000 }, //
 	{ 0, 0, 0 }
 };

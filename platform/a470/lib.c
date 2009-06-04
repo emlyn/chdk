@@ -17,7 +17,7 @@ void shutdown()
 }
 
 
-#define LED_PR 0xc0220080
+#define LED_PR 0xc022008C
 
 void debug_led(int state)
 {

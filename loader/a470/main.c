@@ -21,14 +21,12 @@ void __attribute__((noreturn)) my_restart()
     copy_and_restart((void*)MEMISOSTART, (char*)blob_chdk_core, blob_chdk_core_size);
 }
 
-#define LED_PR 0xc0220080
-//#define LED_PR 0xC02200D4
-
+#define LED_PR 0xc022008C
 
 static void __attribute__((noreturn)) shutdown()
 {
-    //volatile long *p = (void*)0xc02200a0;       // what does this LED? Powe
-    volatile long *p = (void*)LED_PR;       // turned off later, so assumed to be power
+    volatile long *p = (void*)0xc02200a0;     // http://chdk.setepontos.com/index.php/topic,3227.0.html - power switch?
+    //volatile long *p = (void*)LED_PR;
         
     asm(
          "MRS     R1, CPSR\n"
@@ -41,7 +39,6 @@ static void __attribute__((noreturn)) shutdown()
 
     while(1);
 }
-
 
 static void __attribute__((noreturn)) panic(int cnt)
 {

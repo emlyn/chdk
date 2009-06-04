@@ -15,6 +15,11 @@ NHSTUB(PT_PlaySound, 					0xFFC46C18)
 NHSTUB(UnsetZoomForMovie, 				0xFFD2F750)
 NHSTUB(PostLogicalEventForNotPowerType, 0xFFC5B0F4)
 NHSTUB(RefreshUSBMode, 					0xFFC27730)
+NHSTUB(TurnOnMic, 						0xFFC31634)
+NHSTUB(TurnOffMic, 						0xFFC31660)
+ 
+NHSTUB(PutInNdFilter, 					0xFFE271F0)
+NHSTUB(PutOutNdFilter, 					0xFFE27228)
 
 //NSTUB(AllocateMemory, 				0xFFDF1D70)
 //NSTUB(FreeMemory, 					0xFFDF1D68)
