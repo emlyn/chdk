@@ -51,7 +51,7 @@
     #undef  DNG_SUPPORT                 
     #undef  CAM_REAR_CURTAIN                // Camera do not have front/rear curtain flash sync in menu
     #undef  CAM_BRACKETING                // Cameras that have bracketing (focus & ev) in original firmware already, most likely s- & g-series (propcase for digic III not found yet!)
-    #undef  CAM_EXT_TV_RANGE             // CHDK can make exposure time lonher than 64s
+    #undef  CAM_EXT_TV_RANGE             // CHDK can make exposure time longer than 64s
 
     #define CAM_UNCACHED_BIT    0x10000000 // bit indicating the uncached memory
 
@@ -331,6 +331,8 @@
     // camera name
     #define PARAM_CAMERA_NAME 3 // parameter number for GetParameterData
     #define DNG_EXT_FROM ".DPS"
+
+    #define CAM_EXT_TV_RANGE            1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a550)

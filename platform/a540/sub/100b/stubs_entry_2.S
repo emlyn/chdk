@@ -30,3 +30,4 @@ NHSTUB(ExitFromCompensationEVF, 0xffd43b28)
 NHSTUB(SetAE_ShutterSpeed, 0xFFE9D1C4) 
 NHSTUB(DoAFLock, 0xffd41c64)
 NHSTUB(UnlockAF, 0xffd41ca8)
+NHSTUB(apex2us, 0xFFC9F288) // shutter.c from expdrvtask, similar to a570
