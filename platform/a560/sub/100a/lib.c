@@ -21,9 +21,18 @@ long hook_raw_size()
     return 0x8CAE10; 
 }
 
+// from http://chdk.setepontos.com/index.php/topic,405.225.html
 void *vid_get_viewport_live_fb()
 {
-    return (void*)0x0; 
+    void **fb=(void **)0x64F0;
+    unsigned char buff = *((unsigned char*)0x6500);
+    if (buff == 0) {
+        buff = 2;
+    }
+    else {
+        buff--;
+    }
+    return fb[buff];
 }
 
 void *vid_get_bitmap_fb()
