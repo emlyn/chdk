@@ -20,6 +20,7 @@ NHSTUB(TurnOffMic, 						0xFFC31660)
  
 NHSTUB(PutInNdFilter, 					0xFFE271F0)
 NHSTUB(PutOutNdFilter, 					0xFFE27228)
+NHSTUB(WriteSDCard,					0xFFCF9440)
 
 //NSTUB(AllocateMemory, 				0xFFDF1D70)
 //NSTUB(FreeMemory, 					0xFFDF1D68)
