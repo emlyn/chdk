@@ -18,6 +18,16 @@ void boot();
 #define DP (void*)0xC02200C4	// direct-print (blue)
 #define DELAY 2500000
 
+void taskCreateHook(int *p) {
+ p-=16;
+ if (p[0]==0xFFC973E4)  p[0]=(int)exp_drv_task;
+}
+
+void taskCreateHook2(int *p) { 
+ p-=16;
+ if (p[0]==0xFFC973E4)  p[0]=(int)exp_drv_task;
+}
+
 void boot() { //#fs
     long *canon_data_src = (void*)0xFFED0D74;
     long *canon_data_dst = (void*)0x1900;
@@ -51,6 +61,9 @@ void boot() { //#fs
 	"MCR     p15, 0, R0,c1,c0\n"
     :::"r0");
 */
+   *(int*)0x1930=(int)taskCreateHook;
+   *(int*)0x1934=(int)taskCreateHook2;
+
     // jump to init-sequence that follows the data-copy-routine 
     asm volatile ("B      sub_FFC001a4_my\n");
 }; //#fe

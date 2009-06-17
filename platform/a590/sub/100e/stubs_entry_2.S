@@ -107,5 +107,6 @@ NHSTUB(UnsetZoomForMovie,		0xFFD3A34C)
 NHSTUB(SetAE_ShutterSpeed,		0xFFE41C40)
 NHSTUB(DoAFLock, 0xffc15b04)
 NHSTUB(UnlockAF, 0xffc15c1c)
+NHSTUB(apex2us, 0xFFD7DD6C)
 
 

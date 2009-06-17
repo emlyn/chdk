@@ -491,6 +491,7 @@
 // camera name
 #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
+#define CAM_EXT_TV_RANGE            1
 
 //----------------------------------------------------------
 #elif defined (CAMERA_a610)
