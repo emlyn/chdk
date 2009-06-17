@@ -414,6 +414,8 @@
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
     #define DNG_EXT_FROM ".DPS"
     
+    #define CAM_EXT_TV_RANGE            1
+
 //----------------------------------------------------------
 #elif defined (CAMERA_a570)
     #define CAM_PROPSET                 2
