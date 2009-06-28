@@ -41,25 +41,26 @@ static struct {
 	int hackmode;
 	int canonmode;
 } modemap[] = {
-    { MODE_AUTO,               6  },
-    { MODE_P,                  1  },
-    { MODE_TV,                 3  },
-    { MODE_AV,                 2  },
-    { MODE_M,                  0  },
-    { MODE_PORTRAIT,           9  },
-    { MODE_NIGHT,              8  },
-    { MODE_LANDSCAPE,          7  },
-    { MODE_VIDEO_STD,          18 },
-    { MODE_STITCH,             5  },
-    { MODE_MY_COLORS,          4  },
-    { MODE_SCN_WATER,          13 },
-    { MODE_SCN_NIGHT,          15 },
-    { MODE_SCN_CHILD,          16 },
-    { MODE_SCN_PARTY,          14 },
-    { MODE_SCN_GRASS,          10 },
-    { MODE_SCN_SNOW,           11 },
-    { MODE_SCN_BEACH,          12 },
-    { MODE_SCN_FIREWORK,       17 }
+    { MODE_M,                  32772 }, // probably equivalent to P on other cams
+    { MODE_AUTO,               32768 },
+    { MODE_DIGITAL_MACRO,      33288 },
+    { MODE_PORTRAIT,           32781 },
+    { MODE_NIGHT_SNAPSHOT,     32779 }, // "night scene" on dial, different from "night snapshot" under "scene" below
+    { MODE_SCN_COLOR_ACCENT,   16920 }, // "color accent"
+    { MODE_SCN_COLOR_SWAP,     16921 }, // "color swap"
+    { MODE_SCN_KIDS_PETS,      16399 }, // "kids and pets"
+    { MODE_SCN_INDOOR,         16400 }, // "indoor"
+    { MODE_SCN_FOLIAGE,        16401 }, // "foliage"
+    { MODE_SCN_SNOW,           16402 }, // "snow"
+    { MODE_SCN_BEACH,          16403 }, // "beach"
+    { MODE_STITCH,             33290 },
+    { MODE_SCN_FIREWORK,       16404 }, // "fireworks"
+    { MODE_SCN_UNDERWATER,     16405 }, // "under water"
+    { MODE_VIDEO_STD,          2593  },
+    { MODE_VIDEO_SPEED,        2594  }, // "fast frame rate"
+    { MODE_VIDEO_COMPACT,      2595  }, // "compact"
+    { MODE_VIDEO_COLOR_ACCENT, 2591  }, // "color accent"
+    { MODE_VIDEO_COLOR_SWAP,   2592  }, // "color swap"
 };
 #define MODESCNT (sizeof(modemap)/sizeof(modemap[0]))
 
