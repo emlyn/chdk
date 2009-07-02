@@ -29,13 +29,13 @@ NHSTUB(WriteSDCard, 0xFF92AA44)
 NHSTUB(PostLogicalEventForNotPowerType, 0xFF87ED3C)
 NHSTUB(apex2us, 0xFF9E01C8)
 
-// null sub
-// What's up with 0xFFC00958? I added 0x30
+// null sub - point these at nullsub_1 as labelled in IDA
 
-NHSTUB(kbd_pwr_off, 0xFFC00988)
-NHSTUB(kbd_pwr_on, 0xFFC00988)
-NHSTUB(Mount_FileSystem, 0xFFC00988)
-NHSTUB(Unmount_FileSystem, 0xFFC00988)
-NHSTUB(SetZoomActuatorSpeedPercent, 0xFFC00988)
-NHSTUB(rewinddir, 0xFFC00988)
+NHSTUB(kbd_pwr_off, 0xFF81093C)
+NHSTUB(kbd_pwr_on, 0xFF81093C)
+NHSTUB(Mount_FileSystem, 0xFF81093C)
+NHSTUB(Unmount_FileSystem, 0xFF81093C)
+NHSTUB(SetZoomActuatorSpeedPercent, 0xFF81093C)
+NHSTUB(rewinddir, 0xFF81093C)
+
 
