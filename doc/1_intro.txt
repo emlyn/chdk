@@ -9,6 +9,8 @@ Index:
 
 	05 - GPL, License
 
+	06 - uBASIC copyright notice
+
 
 ************************************
 
