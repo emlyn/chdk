@@ -45,3 +45,4 @@ NHSTUB(ExitFromCompensationEVF, 0xffd5337c) // Stub not found. When found, remov
 NHSTUB(SetAE_ShutterSpeed, 0xFFEAC3E0) 
 NHSTUB(DoAFLock, 0xffd4fc44)
 NHSTUB(UnlockAF, 0xffd4fc90)
+NHSTUB(apex2us, 0xFFCA4BF8)

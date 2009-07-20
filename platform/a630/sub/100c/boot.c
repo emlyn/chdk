@@ -18,6 +18,15 @@ void __attribute__((naked,noinline)) h_usrInit();
 void __attribute__((naked,noinline)) h_usrKernelInit();
 void __attribute__((naked,noinline)) h_usrRoot();
 
+void taskCreateHook(int *p) {
+ p-=16;
+ if (p[0]==0xFFCFBDF8)  p[0]=(int)exp_drv_task;
+}
+
+void taskCreateHook2(int *p) { 
+ p-=16;
+ if (p[0]==0xFFCFBDF8)  p[0]=(int)exp_drv_task;
+}
 
 
 void boot()
@@ -50,6 +59,10 @@ void boot()
 	"ORR     R0, R0, #1\n"
 	"MCR     p15, 0, R0,c1,c0\n"
     :::"r0");
+
+   *(int*)0x1930=(int)taskCreateHook;
+   *(int*)0x1934=(int)taskCreateHook2;
+
 
     h_usrInit();
 }
