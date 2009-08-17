@@ -51,7 +51,7 @@ void boot()
 	// Captain Hook
 	*(int*)0x1930 = (int)taskCreateHook;
 
-	// jump to init-sequence that follows the data-copy-routine 
+	// jump to init-sequence that follows the data-copy-routine
 	asm volatile ("B  sub_FF8101A4_my\n");
 }
 
@@ -63,7 +63,7 @@ void __attribute__((naked,noinline)) sub_FF8101A4_my()
 		"LDR     R3, =0xFF810254\n"
 
 		"loc_FF8101B0:\n"
-		"CMP     R0, R3\n"          // load exception vector
+		"CMP     R0, R3\n" // load exception vector
 		"LDRCC   R2, [R0],#4\n"
 		"STRCC   R2, [R1],#4\n"
 		"BCC     loc_FF8101B0\n"
@@ -72,23 +72,23 @@ void __attribute__((naked,noinline)) sub_FF8101A4_my()
 		"LDR     R3, =0xFF810468\n"
 
 		"loc_FF8101CC:\n"
-		"CMP     R0, R3\n"          // copy IRQ handler to ITCM starting at 0x4b0, 532 bytes up to 0x6C4
+		"CMP     R0, R3\n" // copy IRQ handler to ITCM starting at 0x4b0, 532 bytes up to 0x6C4
 		"LDRCC   R2, [R0],#4\n"
 		"STRCC   R2, [R1],#4\n"
 		"BCC     loc_FF8101CC\n"
 		"MOV     R0, #0xD2\n"
-		"MSR     CPSR_cxsf, R0\n"   // set CPSR mode = IRQ, ints disabled
-		"MOV     SP, #0x1000\n"     // irq mode SP
+		"MSR     CPSR_cxsf, R0\n" // set CPSR mode = IRQ, ints disabled
+		"MOV     SP, #0x1000\n" // irq mode SP
 		"MOV     R0, #0xD3\n"
-		"MSR     CPSR_cxsf, R0\n"   // set CPSR mode = Super, ints disabled
-		"MOV     SP, #0x1000\n"     // super mode SP
+		"MSR     CPSR_cxsf, R0\n" // set CPSR mode = Super, ints disabled
+		"MOV     SP, #0x1000\n" // super mode SP
 		//"LDR     R0, loc_FF810210\n"
 		"LDR     R0, =0x6C4\n" // +
 		"LDR     R2, =0xEEEEEEEE\n"
 		"MOV     R3, #0x1000\n"
 
 		"loc_FF810200:\n"
-		"CMP     R0, R3\n"          // clear ITCM 0x6C4-end with EEEEEEEE
+		"CMP     R0, R3\n" // clear ITCM 0x6C4-end with EEEEEEEE
 		"STRCC   R2, [R0],#4\n"
 		"BCC     loc_FF810200\n"
 		"BL      sub_FF810FA0_my\n" //------------->
@@ -121,13 +121,9 @@ void __attribute__((naked,noinline)) sub_FF810FA0_my()
 		"STR     R0, [SP,#0x74-0x58]\n"
 		"LDR     R0, =0x19B\n"
 		"MOV     R1, #0x64\n"
-		//"STRD    R0, [SP,#0x74-0x54]\n"
-		"STR     R0, [SP,#0x74-0x54]\n" //expanded
-		"STR     R1, [SP,#0x74-0x50]\n" //expanded
+		"STRD    R0, [SP,#0x74-0x54]\n"
 		"MOV     R0, #0x78\n"
-		//"STRD    R0, [SP,#0x74-0x4C]\n"
-		"STR     R0, [SP,#0x74-0x4C]\n" //expanded
-		"STR     R1, [SP,#0x74-0x48]\n" //expanded
+		"STRD    R0, [SP,#0x74-0x4C]\n"
 		"MOV     R0, #0\n"
 		"STR     R0, [SP,#0x74-0x44]\n"
 		"STR     R0, [SP,#0x74-0x40]\n"
@@ -237,18 +233,11 @@ void __attribute__((naked,noinline)) task_Startup_my()
 		"BL      sub_FF829F20\n"
 		"BL      sub_FF82A0E8\n"
 		//"BL      sub_FF829FA8\n" // StartDiskBoot
-		);
-
-	CreateTask_spytask();
-
-	asm volatile (
+		"BL      CreateTask_spytask\n" // +
 		"BL      sub_FF82A29C\n"
 		"BL      sub_FF82A138\n"
 		"BL      sub_FF8277A8\n"
 		"BL      sub_FF82A2A0\n"
-		//Not needed due to taskCreateHook
-		//"BL      sub_FF821B00\n" // taskcreate_PhySw
-		//"BL      sub_FF824CB8\n" // task_ShootSeqTask
 		"BL      sub_FF821B00\n" // taskcreate_PhySw
 		"BL      sub_FF824CB8\n" // task_ShootSeqTask
 		"BL      sub_FF82A2B8\n"
@@ -550,9 +539,9 @@ void __attribute__((naked,noinline)) sub_FF84EB00_my()
 		// jumptable FF858EAC default entry
 		"LDR     R1, =0x374\n"
 		"LDR     R0, =0xFF858E78\n" // "Mounter.c"
-		"BL      _DebugAssert\n" // DebugAssert
+		"BL      _DebugAssert\n"
 
-		" loc_FF84EC58:\n"
+		"loc_FF84EC58:\n"
 		"STR     R6, [R7,#0x44]!\n"
 		"MOV     R0, #1\n"
 		"STR     R5, [R7,#4]\n"
@@ -576,7 +565,7 @@ void __attribute__((naked,noinline)) jogdial_task_my()
 		"loc_FF842A64:\n"
 		"LDR     R3, =0x1A1\n"
 		"LDR     R0, [R6,#0xC]\n"
-		"LDR     R2, =0xFF842C9C\n" // aJogdial_c  ; "JogDial.c"
+		"LDR     R2, =0xFF842C9C\n" // "JogDial.c"
 		"MOV     R1, #0\n"
 		"BL      sub_FF81BBD8\n"
 		//"MOV     R0, #40\n"

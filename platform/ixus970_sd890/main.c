@@ -95,7 +95,7 @@ int mode_get()
 {
 	int mode, i, t=0xFF;
 
-	mode  = (physw_status[1] & 0x08000000) ? MODE_PLAY : MODE_REC;
+	mode  = (physw_status[1] & 0x00010000) ? MODE_REC : MODE_PLAY;
 
 	_GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
 	for (i=0; i<MODESCNT; ++i) {

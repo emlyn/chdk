@@ -25,7 +25,7 @@ void __attribute__((naked,noinline)) capt_seq_task()
 		"TST     R0, #1\n"
 		"BEQ     loc_FF85E07C\n"
 		"LDR     R1, =0x48E\n"
-		"LDR     R0, =0xFF85DD14\n" // aSsshoottask_c ; "SsShootTask.c"
+		"LDR     R0, =0xFF85DD14\n" // "SsShootTask.c"
 		"BL      _DebugAssert\n"
 		"BL      sub_FF81BAA8\n" // ExitTask\n"
 		"LDMFD   SP!, {R3-R9,PC}\n"
@@ -187,7 +187,7 @@ void __attribute__((naked,noinline)) capt_seq_task()
 
 		"loc_FF85E198:\n"
 		// jumptable FF85E088 entry 6
-		"BL      sub_FF93C510\n"
+		"BL      sub_FF93C510\n" // LOCATION: SsPrepareSeq.c:0
 		"B       loc_FF85E1FC\n"
 
 		"loc_FF85E1A0:\n"
@@ -415,7 +415,7 @@ void __attribute__((naked,noinline)) sub_FF93DB30_my()
 		"BL      sub_FF86D008\n" // PT_GetPropertyCaseString_0
 		"TST     R0, #1\n"
 		"MOVNE   R1, #0x218\n"
-		"LDRNE   R0, =0xFF93DD04\n" // aSscaptureseq_c ; "SsCaptureSeq.c"
+		"LDRNE   R0, =0xFF93DD04\n" // "SsCaptureSeq.c"
 		"BLNE    _DebugAssert\n"
 		"LDR     R8, =0x19F70\n"
 		"LDR     R5, =0x19EBC\n"
@@ -426,16 +426,14 @@ void __attribute__((naked,noinline)) sub_FF93DB30_my()
 		"LDR     R2, =0x91A8\n"
 		"ADD     R3, R4, #0x8C\n"
 		"STRH    R0, [R4,#0x88]\n"
-		// "STRD    R2, [SP,#0x30+0x30]\n"
-		"STR     R2, [SP]\n" //expanded
-		"STR     R3, [SP,#4]\n" //expanded
+		"STRD    R2, [SP,#0x30-0x30]\n"
 		"MOV     R1, R0\n"
 		"LDRH    R0, [R5,#0x54]\n"
 		"LDRSH   R2, [R8,#0xC]\n"
 		"LDR     R3, =0x91A4\n"
 		"BL      sub_FF93EB8C\n" // LOCATION: NRTable.c:202
-		"BL      wait_until_remote_button_is_released\n"
-		"BL      capt_seq_hook_set_nr\n" // Intercept NR call
+		"BL      wait_until_remote_button_is_released\n" // +
+		"BL      capt_seq_hook_set_nr\n" // +
 		"BL      sub_FF93DBA4\n" // Continue in the original FW
 		);
 }
@@ -540,8 +538,8 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"LDR     R1, =0xD25\n"
 
 		"loc_FF8B69AC:\n"
-		"LDR     R0, =0xFF8B399C\n" // aExpdrv_c  ; "ExpDrv.c"
-		"BL      sub_FF81BCF0\n" // DebugAssert
+		"LDR     R0, =0xFF8B399C\n" // "ExpDrv.c"
+		"BL      _DebugAssert\n"
 		"B       loc_FF8B6954\n"
 
 		"loc_FF8B69B8:\n"
@@ -1057,8 +1055,8 @@ void __attribute__((naked,noinline)) sub_FF8B42DC_my()
 		"BL      sub_FF827A44\n" // LOCATION: KerFlag.c:0
 		"TST     R0, #1\n"
 		"LDRNE   R1, =0x532\n"
-		"LDRNE   R0, =0xFF8B399C\n" // aExpdrv_c  ; "ExpDrv.c"
-		"BLNE    sub_FF81BCF0\n" // DebugAssert
+		"LDRNE   R0, =0xFF8B399C\n" // "ExpDrv.c"
+		"BLNE    _DebugAssert\n"
 
 		"loc_FF8B43E8:\n"
 		"CMP     R5, #1\n"
@@ -1069,9 +1067,9 @@ void __attribute__((naked,noinline)) sub_FF8B42DC_my()
 		"BL      sub_FF827A44\n" // LOCATION: KerFlag.c:0
 		"TST     R0, #1\n"
 		"LDRNE   R1, =0x537\n"
-		"LDRNE   R0, =0xFF8B399C\n" // aExpdrv_c  ; "ExpDrv.c"
+		"LDRNE   R0, =0xFF8B399C\n" // "ExpDrv.c"
 		"LDMNEFD SP!, {R4-R8,LR}\n"
-		"BNE     sub_FF81BCF0\n" // DebugAssert
+		"BNE     _DebugAssert\n"
 		"LDMFD   SP!, {R4-R8,PC}\n"
 		);
 }
@@ -1085,15 +1083,15 @@ void __attribute__((naked,noinline)) sub_FF895968_my()
 		"LDR     R0, [R5,#4]\n"
 		"CMP     R0, #1\n"
 		"LDRNE   R1, =0x16D\n"
-		"LDRNE   R0, =0xFF895700\n" // aShutter_c  ; "Shutter.c"
-		"BLNE    sub_FF81BCF0\n" // DebugAssert
+		"LDRNE   R0, =0xFF895700\n" // "Shutter.c"
+		"BLNE    _DebugAssert\n"
 		"CMN     R4, #0xC00\n"
 		"LDREQSH R4, [R5,#2]\n"
 		"CMN     R4, #0xC00\n"
 		"LDREQ   R1, =0x173\n"
-		"LDREQ   R0, =0xFF895700\n" // aShutter_c  ; "Shutter.c"
+		"LDREQ   R0, =0xFF895700\n" // "Shutter.c"
 		"STRH    R4, [R5,#2]\n"
-		"BLEQ    sub_FF81BCF0\n" // DebugAssert
+		"BLEQ    _DebugAssert\n"
 		"MOV     R0, R4\n"
 		//"BL      sub_FF9B2824\n"
 		"BL      apex2us\n" // +
@@ -1104,8 +1102,8 @@ void __attribute__((naked,noinline)) sub_FF895968_my()
 		"TST     R0, #1\n"
 		"LDMNEFD SP!, {R4-R6,LR}\n"
 		"MOVNE   R1, #0x178\n"
-		"LDRNE   R0, =0xFF895700\n" // aShutter_c  ; "Shutter.c"
-		"BNE     sub_FF81BCF0\n" // DebugAssert
+		"LDRNE   R0, =0xFF895700\n" // "Shutter.c"
+		"BNE     _DebugAssert\n"
 		"LDMFD   SP!, {R4-R6,PC}\n"
 		);
 }

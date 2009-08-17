@@ -75,14 +75,14 @@ void wait_until_remote_button_is_released(void)
 	static long usb_physw[3];
 	if (conf.synch_enable && conf.ricoh_ca1_mode && conf.remote_enable && (!shooting_get_drive_mode()|| (shooting_get_drive_mode()==1) || ((shooting_get_drive_mode()==2) && state_shooting_progress != SHOOTING_PROGRESS_PROCESSING))) {
 		nMode=0;
-		usb_physw[2] = 0;                                             // makes sure USB bit is cleared.
+		usb_physw[2] = 0; // makes sure USB bit is cleared.
 		_kbd_read_keys_r2(usb_physw);
 		if((usb_physw[2] & USB_MASK)==USB_MASK) {
 			nMode=1;
 		}
 
 		if(conf.ricoh_ca1_mode && conf.remote_enable) {
-			if(shooting_get_drive_mode() ==1 && state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) {			//continuous-shooting mode
+			if(shooting_get_drive_mode() ==1 && state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) { //continuous-shooting mode
 				if(conf.bracket_type>2) {
 					if(shoot_counter<2) shutter_int=3;
 					shoot_counter--;
@@ -90,7 +90,7 @@ void wait_until_remote_button_is_released(void)
 					prev_usb_power=0;
 					nSW = 0;
 					do {     
-						usb_physw[2] = 0;                                             // makes sure USB bit is cleared.
+						usb_physw[2] = 0; // makes sure USB bit is cleared.
 						_kbd_read_keys_r2(usb_physw);
 						cur_usb_power = (usb_physw[2] & USB_MASK)==USB_MASK;
 						if(cur_usb_power) {
@@ -128,19 +128,19 @@ void wait_until_remote_button_is_released(void)
 						}
 					} while(nSW<20);
 				}
-			} else {		//nomal mode
+			} else { //nomal mode
 				shoot_counter=0;
 				if(conf.bracket_type>2) {
 					shoot_counter=(conf.bracket_type-2)*2;
 				}
 				do {
-					usb_physw[2] = 0;                                             // makes sure USB bit is cleared.
+					usb_physw[2] = 0; // makes sure USB bit is cleared.
 					_kbd_read_keys_r2(usb_physw);
 				} while(((((usb_physw[2] & USB_MASK)!=USB_MASK) && (nMode==0)) || (((usb_physw[2] & USB_MASK)==USB_MASK) && (nMode==1))) && ((int)get_tick_count()-tick < DELAY_TIMEOUT));
 			}
 		} else {
 			do {
-				usb_physw[2] = 0;                                             // makes sure USB bit is cleared.
+				usb_physw[2] = 0; // makes sure USB bit is cleared.
 				_kbd_read_keys_r2(usb_physw);
 			} while((usb_physw[2]&USB_MASK) &&  ((int)get_tick_count()-tick < DELAY_TIMEOUT));
 		}
@@ -180,7 +180,6 @@ void __attribute__((naked,noinline)) mykbd_task(long ua, long ub, long uc, long 
 	*
 	*/
 
-	// this is silly, we create the task with createtask under dryos, just set it right to start with!
 	register int i;
 	register long *newstack;
 
