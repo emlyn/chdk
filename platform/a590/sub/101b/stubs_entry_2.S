@@ -36,4 +36,4 @@ NSTUB(SetZoomActuatorSpeedPercent, 0xffc00948)
 NHSTUB(DoAFLock, 0xffc15b04)
 NHSTUB(UnlockAF, 0xffc15c1c)
 NHSTUB(apex2us, 0xFFD7DD6C)
-
+NHSTUB(WriteSDCard,0xFFD01548)
