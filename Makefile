@@ -172,6 +172,7 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus870_sd880   PLATFORMSUB=102b NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus950_sd850   PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub	
 	$(MAKE) -s --no-print-directory PLATFORM=ixus980_sd990   PLATFORMSUB=100e NO_INC_BUILD=1 firzipsub	
+	$(MAKE) -s --no-print-directory PLATFORM=ixus980_sd990   PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub	
 	$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100k NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100j NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus50_sd400    PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
@@ -238,6 +239,7 @@ batch-zip: version
 	mv $(topdir)bin/$(VER)-sx10-102b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx10-102b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-sx10-103a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx10-103a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus980_sd990-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus980_sd990-100e-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/$(VER)-ixus980_sd990-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus980_sd990-101b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus870_sd880-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus870_sd880-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus870_sd880-101a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus870_sd880-101a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus870_sd880-102b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus870_sd880-102b-$(BUILD_NUMBER)_BETA.zip
@@ -284,6 +286,7 @@ batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus870_sd880   PLATFORMSUB=102b NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus950_sd850   PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete	
 	$(MAKE) -s --no-print-directory PLATFORM=ixus980_sd990   PLATFORMSUB=100e NO_INC_BUILD=1 firzipsubcomplete	
+	$(MAKE) -s --no-print-directory PLATFORM=ixus980_sd990   PLATFORMSUB=101b NO_INC_BUILD=1 firzipsubcomplete	
 	$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100k NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100j NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus50_sd400    PLATFORMSUB=101a NO_INC_BUILD=1 firzipsubcomplete
@@ -367,6 +370,8 @@ batch-zip-complete: version
 	mv $(topdir)bin/sx10-103a-$(BUILD_NUMBER).zip $(topdir)bin/sx10-103a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER).zip $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER)-full_BETA.zip
+	mv $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER).zip $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus870_sd880-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus870_sd880-100e-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/ixus870_sd880-100e-$(BUILD_NUMBER).zip $(topdir)bin/ixus870_sd880-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus870_sd880-101a-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus870_sd880-101a-$(BUILD_NUMBER)-full_BETA.zip
@@ -418,6 +423,7 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=ixus870_sd880   PLATFORMSUB=102b NO_INC_BUILD=1 clean	
 	$(MAKE) -s --no-print-directory PLATFORM=ixus950_sd850   PLATFORMSUB=100c NO_INC_BUILD=1 clean	
 	$(MAKE) -s --no-print-directory PLATFORM=ixus980_sd990   PLATFORMSUB=100e NO_INC_BUILD=1 clean	
+	$(MAKE) -s --no-print-directory PLATFORM=ixus980_sd990   PLATFORMSUB=101b NO_INC_BUILD=1 clean	
 	$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100k NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus40_sd300    PLATFORMSUB=100j NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus50_sd400    PLATFORMSUB=101a NO_INC_BUILD=1 clean

@@ -21,15 +21,14 @@ original canon firmware. Hold it down to access the canon firmware function
 Other keys use the standard mapping for cameras without an erase button.
 
 Features known BROKEN or NOT supported:
-Zebra
-Edge overlay
-Custom curves
-video compression overrides
-Microphone mute/unmute
-Jogdial control from CHDK
-Many other things are untested.
+- Zebra
+- Edge overlay
+- Custom curves
+- Microphone mute/unmute
+- Many other things are untested.
 
 Other issues:
-Pressing the shutter quickly with overrides enabled may result in incorrect white
-balance. It may also cause issues if the flash is automatically triggered.
-
+- Pressing the shutter quickly with overrides enabled may result in incorrect white
+  balance. It may also cause issues if the flash is automatically triggered.
+- Intermittent raw. If you press the shutter quickly (or maybe some other factor), RAW/DNG
+  may not be saved.
