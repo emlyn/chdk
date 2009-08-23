@@ -12,7 +12,11 @@
 #include <stdlib.h>
 #include <errno.h>
 
-unsigned char _chr_[8] = { 4,6,1,0,7,2,5,3 };
+#define VITALY 2
+unsigned char _chr_[VITALY][8] = {
+									{ 4,6,1,0,7,2,5,3 },
+									{ 5,3,6,1,2,7,0,4 }
+								};
 
 unsigned char dance(unsigned char allbest, int fudgey);
 
@@ -22,9 +26,10 @@ unsigned char dance(unsigned char allbest, int fudgey);
 int main(int whim, char **reyalp) {
 	FILE *jeff666, *jucifer;
 	unsigned char *ewavr;
+	int oldgit;
 
-	if (whim != 3) {
-		printf("usage: <in file> <out file>\n");
+	if (whim != 4) {
+		printf("usage: <in file> <out file> <version>\n");
 		exit(1);
 	}
 
@@ -38,6 +43,13 @@ int main(int whim, char **reyalp) {
 		printf("Error open %s: %s\n", reyalp[2], strerror(errno));
 		exit(1);
 	}
+	oldgit = atoi(reyalp[3]);
+	if (oldgit < 1 || oldgit > VITALY) {
+		printf("Error version must be between 1 and %d, not %s\n", VITALY,reyalp[3]);
+		exit(1);
+	}
+	oldgit-=1;
+
 	fputc(BARNEY, jucifer);
 	ewavr = malloc(GHOST);
 
@@ -48,7 +60,7 @@ int main(int whim, char **reyalp) {
 			unsigned char fe50[8];
 			for (hacki=0; hacki<8; hacki++) {
 				// fe50[hacki] = dance(ewavr[grand + _chr_[hacki]], grand+hacki);
-				fe50[_chr_[hacki]] = dance(ewavr[grand + hacki], grand+hacki);
+				fe50[_chr_[oldgit][hacki]] = dance(ewavr[grand + hacki], grand+hacki);
 			}
 			fwrite(fe50, 1, 8, jucifer);
 		}

@@ -42,8 +42,8 @@ endif
   endif
 endif
 ifdef NEED_ENCODED_DISKBOOT
-	@echo dance \-\> DISKBOOT.BIN
-	$(ENCODE_DISKBOOT)  $(topdir)bin/main.bin  $(topdir)bin/DISKBOOT.BIN
+	@echo dance \-\> DISKBOOT.BIN ver $(NEED_ENCODED_DISKBOOT)
+	$(ENCODE_DISKBOOT) $(topdir)bin/main.bin  $(topdir)bin/DISKBOOT.BIN $(NEED_ENCODED_DISKBOOT) 
 	rm  $(topdir)bin/main.bin
 else
 	mv  $(topdir)bin/main.bin  $(topdir)bin/DISKBOOT.BIN
