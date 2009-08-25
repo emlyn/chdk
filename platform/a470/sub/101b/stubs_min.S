@@ -10,9 +10,9 @@ DEF(canon_menu_active,0x9014)		// 0x9010+4
 
 //-
 
-DEF(canon_shoot_menu_active,0x9768)   // 0x9768+1 ??BAD
+DEF(canon_shoot_menu_active,0x9718) // from http://chdk.setepontos.com/index.php/topic,3368.msg37738.html#msg37738
 
-DEF(recreview_hold, 0x9634) // ?? found in GetAEIntegralServiceMode_6
+DEF(recreview_hold, 0x95E4) // from http://chdk.setepontos.com/index.php/topic,3368.msg37738.html#msg37738
 
 DEF(movie_status, 0x5200)  // 0x51C8 + 0x38
 DEF(some_flag_for_af_scan, 0xCDEC) 

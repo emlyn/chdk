@@ -69,7 +69,7 @@ int shutter_int=0;
 static int nFirst=1;
 #endif
 
-#if defined(CAMERA_a450) || defined(CAMERA_ixus50_sd400) || defined(CAMERA_ixusizoom_sd30) || defined(CAMERA_ixus40_sd300) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_ixus60_sd600) || defined(CAMERA_ixus65_sd630) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus750_sd550) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus75_sd750)
+#if defined(CAMERA_a450) || defined(CAMERA_ixus50_sd400) || defined(CAMERA_ixusizoom_sd30) || defined(CAMERA_ixus40_sd300) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_ixus60_sd600) || defined(CAMERA_ixus65_sd630) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus750_sd550) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus75_sd750) || defined(CAMERA_a470)
 #define ZSTEP_TABLE_SIZE 7
 static int nTxtbl[]={0,1,2,3,4,5,6};
 #endif
@@ -84,7 +84,7 @@ static int nTxtbl[]={0,11,25,41,64,86,105,128};
 static int nTxtbl[]={0,18,43,55,76,93,113,124};
 #endif
 
-#if defined(CAMERA_a460) || defined(CAMERA_a470) || defined(CAMERA_a530) || defined (CAMERA_a540) || defined(CAMERA_a550) || defined(CAMERA_a560) || defined(CAMERA_a570) || defined(CAMERA_a590) ||defined(CAMERA_ixus860_sd870) || defined(CAMERA_ixus960_sd950) || defined(CAMERA_ixus80_sd1100) || defined(CAMERA_ixus970_sd890) || defined(CAMERA_ixus980_sd990)
+#if defined(CAMERA_a460) || defined(CAMERA_a530) || defined (CAMERA_a540) || defined(CAMERA_a550) || defined(CAMERA_a560) || defined(CAMERA_a570) || defined(CAMERA_a590) ||defined(CAMERA_ixus860_sd870) || defined(CAMERA_ixus960_sd950) || defined(CAMERA_ixus80_sd1100) || defined(CAMERA_ixus970_sd890) || defined(CAMERA_ixus980_sd990)
 #define ZSTEP_TABLE_SIZE 8
 static int nTxtbl[]={0,1,2,3,4,5,6,7};
 #endif

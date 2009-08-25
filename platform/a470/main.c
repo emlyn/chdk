@@ -56,7 +56,7 @@ static struct {
 #define MODESCNT (sizeof(modemap)/sizeof(modemap[0]))
 
 
-static const int fl_tbl[] = {5800, 6420, 7060, 7700, 8340, 9950, 11550, 13160, 14750, 17150, 19570, 22760, 26750, 30750, 34800};
+static const int fl_tbl[] ={6300, 8100, 9800, 12100, 14800, 17600, 21600};
 #define NUM_FL (sizeof(fl_tbl)/sizeof(fl_tbl[0]))
 #define CF_EFL 60345
 
