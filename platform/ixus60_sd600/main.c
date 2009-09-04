@@ -41,7 +41,7 @@ static struct {
 	int hackmode;
 	int canonmode;
 } modemap[] = {
-    { MODE_M,                  32772 }, // probably equivalent to P on other cams
+    { MODE_P,                  32772 }, // note, this is called Manual, but eqivalent to P on cameras with real manual
     { MODE_AUTO,               32768 },
     { MODE_DIGITAL_MACRO,      33288 },
     { MODE_PORTRAIT,           32781 },
