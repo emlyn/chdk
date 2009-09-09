@@ -773,6 +773,56 @@
 
     #define DNG_EXT_FROM ".CR2"
 
+//----------------------------------------------------------
+#elif defined (CAMERA_a2000)
+
+		////////////////////////////////
+		// Sure values
+		////////////////////////////////
+    #define CAM_MAKE                    "Canon"
+    #define CAM_PROPSET                 2
+    #define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              3720  
+    #define CAM_RAW_ROWS                2772  
+
+    #define CAM_JPEG_WIDTH  3648
+    #define CAM_JPEG_HEIGHT 2736
+    
+    #define DNG_SUPPORT                 1
+
+    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+
+    ////////////////////////////////
+    // Almost sure, sensor data taken from 
+    // ixus870_sd880 which should have same sensor..
+    ////////////////////////////////
+    #undef CAM_SENSOR_BITS_PER_PIXEL
+    #undef CAM_WHITE_LEVEL
+    #undef CAM_BLACK_LEVEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+    #define CAM_BLACK_LEVEL             127
+    
+    #define cam_CFAPattern              0x02010100 // Red  Green  Green  Blue
+    #define CAM_COLORMATRIX1                               \
+      827547, 1000000, -290458, 1000000, -126086, 1000000, \
+     -12829,  1000000, 530507,  1000000, 50537,   1000000, \
+      5181,   1000000, 48183,   1000000, 245014,  1000000 
+    #define cam_CalibrationIlluminant1  1 // Daylight
+
+		////////////////////////////////
+		// Unsure
+		////////////////////////////////
+//    #undef  CAM_UNCACHED_BIT
+//    #define CAM_UNCACHED_BIT    0x40000000
+
+    // cropping (from ixus870_sd880)
+    #define CAM_ACTIVE_AREA_X1          14
+    #define CAM_ACTIVE_AREA_Y1          8
+    #define CAM_ACTIVE_AREA_X2          3682
+    #define CAM_ACTIVE_AREA_Y2          2764
+
 //==========================================================
 // SD-Series (IXUS-Series)
 //==========================================================
