@@ -1,0 +1,7 @@
+****************************************
+
+Camera depending notes: 
+
+- a2000is uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+- DryOS Camera
+- beta port. more information in this thread: http://chdk.setepontos.com/index.php/topic,4141.30.html

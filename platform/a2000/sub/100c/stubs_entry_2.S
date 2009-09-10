@@ -66,7 +66,7 @@ NHSTUB(WriteToRom, 											0xFFD117F0)
 
 NHSTUB(GetSystemTime, 									0xffdf0aa8)
 
-NHSTUB(GetBatteryTemperature, 					0xffc33504)
+NHSTUB(GetBatteryTemperature, 					0xFFC33494) //found at 0xffc33504 but camera crashs if used, so point to GetCCDTemperature
 NHSTUB(GetCCDTemperature, 							0xFFC33494)
 NHSTUB(GetCurrentAvValue, 							0xffd0025c)
 NHSTUB(GetCurrentTargetDistance, 			  0xffcff354)

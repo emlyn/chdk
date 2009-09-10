@@ -39,10 +39,9 @@ static char kbd_stack[NEW_SS];
 #endif
 
 static KeyMap keymap[] = {
- //There used to be a note here about order being important
- //and to look at kbd_get_pressed_key for more info, there wasn't any
- //so to mess with my karma I removed note and changed order.
- //Sofar the universe is ok with it.
+    /* tiny bug: key order matters. see kbd_get_pressed_key()
+     * for example
+     */
 	{ 2, KEY_UP		, 0x00000010 }, 
 	{ 2, KEY_DOWN		, 0x00000020 }, 
 	{ 2, KEY_LEFT		, 0x00000080 }, 
@@ -52,8 +51,8 @@ static KeyMap keymap[] = {
 	{ 1, KEY_SHOOT_HALF	, 0x40000000 }, 
 	{ 2, KEY_ZOOM_IN	, 0x00000004 }, 
 	{ 2, KEY_ZOOM_OUT	, 0x00000008 }, 
-	{ 2, KEY_MENU		, 0x00000400 }, 
-	{ 2, KEY_DISPLAY	, 0x00000200 }, 
+	{ 2, KEY_MENU		  , 0x00000200 }, 
+	{ 2, KEY_DISPLAY	, 0x00000400 }, 
 	{ 2, KEY_PRINT		, 0x00000800 }, 
 	{ 1, KEY_ERASE		, 0x00800000 }, 
 	{ 0, 0, 0 }
