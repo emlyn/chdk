@@ -793,6 +793,9 @@
 
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define CAM_HAS_ND_FILTER           1
+
     ////////////////////////////////
     // Almost sure, sensor data taken from 
     // ixus870_sd880 which should have same sensor..

@@ -160,6 +160,7 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=a570 PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=a590 PLATFORMSUB=100e NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=a590 PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=a2000 PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	#$(MAKE) -s --no-print-directory PLATFORM=s80  PLATFORMSUB=100g NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus700_sd500   PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus700_sd500   PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
@@ -245,6 +246,7 @@ batch-zip: version
 	mv $(topdir)bin/$(VER)-ixus870_sd880-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus870_sd880-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus870_sd880-101a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus870_sd880-101a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus870_sd880-102b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus870_sd880-102b-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/$(VER)-a2000-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a2000-100c-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
@@ -276,6 +278,7 @@ batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=a570 PLATFORMSUB=101a NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=a590 PLATFORMSUB=100e NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=a590 PLATFORMSUB=101b NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=a2000 PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
 	#$(MAKE) -s --no-print-directory PLATFORM=s80  PLATFORMSUB=100g NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus700_sd500   PLATFORMSUB=101a NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus700_sd500   PLATFORMSUB=101b NO_INC_BUILD=1 firzipsubcomplete
@@ -383,6 +386,8 @@ batch-zip-complete: version
 	mv $(topdir)bin/ixus870_sd880-101a-$(BUILD_NUMBER).zip $(topdir)bin/ixus870_sd880-101a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus870_sd880-102b-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus870_sd880-102b-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/ixus870_sd880-102b-$(BUILD_NUMBER).zip $(topdir)bin/ixus870_sd880-102b-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/a2000-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/a2000-100c-$(BUILD_NUMBER)-full_BETA.zip
+	mv $(topdir)bin/a2000-100c-$(BUILD_NUMBER).zip $(topdir)bin/a2000-100c-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
@@ -416,6 +421,7 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=a570 PLATFORMSUB=101a NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=a590 PLATFORMSUB=100e NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=a590 PLATFORMSUB=101b NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=a2000 PLATFORMSUB=100c NO_INC_BUILD=1 clean
 	#$(MAKE) -s --no-print-directory PLATFORM=s80  PLATFORMSUB=100g NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus700_sd500   PLATFORMSUB=101a NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus700_sd500   PLATFORMSUB=101b NO_INC_BUILD=1 clean

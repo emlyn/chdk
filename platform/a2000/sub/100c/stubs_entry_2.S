@@ -166,6 +166,9 @@ NHSTUB(ExitFromCompensationEVF, 				0xFFC15030)
 
 NHSTUB(PostLEDMessage,									0xFFC30908) // Similar code in sx110
 
+NHSTUB(PutInNdFilter,										0xFFDED66C) // Look for two references to NdActuator_c at the same gap
+NHSTUB(PutOutNdFilter,									0xFFDED690) //
+
 // not found
 NHSTUB(SetZoomActuatorSpeedPercent,	0xFFC00940) // nullsub
 
