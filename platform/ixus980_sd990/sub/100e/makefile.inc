@@ -12,11 +12,8 @@ ROMBASEADDR=0xff810000
 PLFLAGS=-DMEMBASEADDR=$(MEMBASEADDR) -DMEMISOSTART=$(MEMISOSTART) -DMEMISOSIZE=$(MEMISOSIZE)
 PLFLAGS+=-DRESTARTSTART=$(RESTARTSTART)
 
+# type of diskboot encoding: undefined = none; 1 = original; 2 = sx200
 NEED_ENCODED_DISKBOOT=1
-
+# type of FI2 encoding
 KEYSYS=d4
-ifdef OPT_FI2
-include $(topdir)/platform/fi2.inc
-endif
-
 

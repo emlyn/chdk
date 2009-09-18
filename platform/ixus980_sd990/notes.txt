@@ -21,6 +21,7 @@ original canon firmware. Hold it down to access the canon firmware function
 Other keys use the standard mapping for cameras without an erase button.
 
 Features known BROKEN or NOT supported:
+- DNG extension over USB.
 - Zebra
 - Edge overlay
 - Custom curves
@@ -32,3 +33,4 @@ Other issues:
   balance. It may also cause issues if the flash is automatically triggered.
 - Intermittent raw. If you press the shutter quickly (or maybe some other factor), RAW/DNG
   may not be saved.
+- Due to the higher resolution of the bit, many parts of the CHDK display appear small.

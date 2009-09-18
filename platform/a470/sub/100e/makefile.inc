@@ -13,6 +13,3 @@ PLFLAGS+=-DRESTARTSTART=$(RESTARTSTART)
 
 NEED_ENCODED_DISKBOOT=1
 KEYSYS=d3enc
-ifdef OPT_FI2
-include  $(topdir)platform/fi2.inc
-endif

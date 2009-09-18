@@ -12,10 +12,11 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#define VITALY 2
+#define VITALY 3
 unsigned char _chr_[VITALY][8] = {
 									{ 4,6,1,0,7,2,5,3 },
-									{ 5,3,6,1,2,7,0,4 }
+									{ 5,3,6,1,2,7,0,4 },
+									{ 2,5,0,4,6,1,3,7 }
 								};
 
 unsigned char dance(unsigned char allbest, int fudgey);
