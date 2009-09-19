@@ -1,7 +1,5 @@
 #include "stubs_asm.h"
 
-#include "stubs_entry_ida.S"
-
 DEF(physw_run, 0x1FAC)
 DEF(physw_status, 0xE758)
 
