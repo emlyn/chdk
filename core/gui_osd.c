@@ -1028,7 +1028,7 @@ void gui_osd_draw_raw_info()
     {
     int x, m=(mode_get()&MODE_SHOOTING_MASK);
     static int b;
-    if ((!((movie_status > 1) && conf.save_raw_in_video   )) && (!(shooting_get_prop(PROPCASE_RESOLUTION)==5)) && (!((m==MODE_SPORTS) && conf.save_raw_in_sports)) && (!((m==MODE_AUTO) && conf.save_raw_in_auto)) && (!(conf.edge_overlay_enable && conf.save_raw_in_edgeoverlay)) && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)==1) && conf.save_raw_in_burst && !(m==MODE_SPORTS)))  && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)>=2) && conf.save_raw_in_timer)) && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) )
+    if ((!((movie_status > 1) && conf.save_raw_in_video   )) && (!(shooting_get_prop(PROPCASE_RESOLUTION)==5)) && (!((m==MODE_SPORTS) && conf.save_raw_in_sports)) && (!((m==MODE_AUTO) && conf.save_raw_in_auto)) && (!(conf.edge_overlay_enable && conf.save_raw_in_edgeoverlay)) && (!((shooting_get_drive_mode()==1) && conf.save_raw_in_burst && !(m==MODE_SPORTS)))  && (!((shooting_get_drive_mode()>=2) && conf.save_raw_in_timer)) && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) )
     { 
     if (conf.show_remaining_raw) 
         {

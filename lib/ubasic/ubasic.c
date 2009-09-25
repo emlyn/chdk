@@ -275,7 +275,7 @@ case TOKENIZER_IS_PRESSED:
    break;
   case TOKENIZER_GET_DRIVE_MODE:
     accept(TOKENIZER_GET_DRIVE_MODE);
-    r = shooting_get_prop(PROPCASE_DRIVE_MODE);
+    r = shooting_get_drive_mode();
    break;
   case TOKENIZER_GET_FOCUS_MODE:
     accept(TOKENIZER_GET_FOCUS_MODE);

@@ -582,7 +582,7 @@ static int luaCB_set_movie_status( lua_State* L )
 
 static int luaCB_get_drive_mode( lua_State* L )
 {
-  lua_pushnumber( L, shooting_get_prop(PROPCASE_DRIVE_MODE) );
+  lua_pushnumber( L, shooting_get_drive_mode() );
   return 1;
 }
 
