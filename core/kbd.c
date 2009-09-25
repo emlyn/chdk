@@ -115,6 +115,11 @@ static int nTxtbl[]={0,3,6,9,13,16,20,23};
 static int nTxtbl[]={0,1,2,3,4,5,6,7,8,9};
 #endif
 
+#if defined(CAMERA_sx200is)
+#define ZSTEP_TABLE_SIZE 8
+static int nTxtbl[]={0,10,51,66,81,99,120,125};
+#endif
+
 void kbd_sched_delay(long msec)
 {
     KBD_STACK_PUSH(msec);

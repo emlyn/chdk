@@ -222,6 +222,7 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=a470  PLATFORMSUB=101b NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=a470  PLATFORMSUB=102c NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=sx110is  PLATFORMSUB=100b NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=sx200is  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	@echo "**** All firmwares created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/$(VER)-a610-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a610-100d-$(BUILD_NUMBER).zip
@@ -235,12 +236,15 @@ batch-zip: version
 	cp $(topdir)bin/$(VER)-g9-100g-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g9-100f-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/$(VER)-g9-100i-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g9-100h-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/$(VER)-a470-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a470-101a-$(BUILD_NUMBER).zip
+	cp $(topdir)bin/$(VER)-sx200is-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx200is-100d-$(BUILD_NUMBER).zip
 	mv $(topdir)bin/$(VER)-sx1-200h-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx1-200h-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-sx1-201a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx1-201a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-sx10-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx10-100c-$(BUILD_NUMBER)_BETA.zip	
 	mv $(topdir)bin/$(VER)-sx10-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx10-101b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-sx10-102b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx10-102b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-sx10-103a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx10-103a-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/$(VER)-sx200-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx200is-100c-$(BUILD_NUMBER)_BETA.zip	
+	mv $(topdir)bin/$(VER)-sx200-100d-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx200is-100d-$(BUILD_NUMBER)_BETA.zip	
 	mv $(topdir)bin/$(VER)-ixus980_sd990-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus980_sd990-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus980_sd990-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus980_sd990-101b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus870_sd880-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus870_sd880-100e-$(BUILD_NUMBER)_BETA.zip
@@ -340,6 +344,7 @@ batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=a470  PLATFORMSUB=101b NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=a470  PLATFORMSUB=102c NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=sx110is  PLATFORMSUB=100b NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=sx200is  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
 	@echo "**** All zipfiles including firmwares and extra stuff created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/a610-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/a610-100d-$(BUILD_NUMBER)-full.zip
@@ -364,6 +369,8 @@ batch-zip-complete: version
 	cp $(topdir)bin/g9-100i-$(BUILD_NUMBER).zip $(topdir)bin/g9-100h-$(BUILD_NUMBER).zip
 	cp $(topdir)bin/a470-101b-$(BUILD_NUMBER)-full.zip $(topdir)bin/a470-101a-$(BUILD_NUMBER)-full.zip
 	cp $(topdir)bin/a470-101b-$(BUILD_NUMBER).zip $(topdir)bin/a470-101a-$(BUILD_NUMBER).zip
+	cp $(topdir)bin/sx200is-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx200is-100d-$(BUILD_NUMBER)-full.zip
+	cp $(topdir)bin/sx200is-100c-$(BUILD_NUMBER).zip $(topdir)bin/sx200is-100d-$(BUILD_NUMBER).zip
 	mv $(topdir)bin/sx1-200h-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx1-200h-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/sx1-200h-$(BUILD_NUMBER).zip $(topdir)bin/sx1-200h-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/sx1-201a-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx1-201a-$(BUILD_NUMBER)-full_BETA.zip
@@ -376,6 +383,10 @@ batch-zip-complete: version
 	mv $(topdir)bin/sx10-102b-$(BUILD_NUMBER).zip $(topdir)bin/sx10-102b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/sx10-103a-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx10-103a-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/sx10-103a-$(BUILD_NUMBER).zip $(topdir)bin/sx10-103a-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/sx200-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx200-100c-$(BUILD_NUMBER)-full_BETA.zip
+	mv $(topdir)bin/sx200-100c-$(BUILD_NUMBER).zip $(topdir)bin/sx200-100c-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/sx200-100d-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx200-100d-$(BUILD_NUMBER)-full_BETA.zip
+	mv $(topdir)bin/sx200-100d-$(BUILD_NUMBER).zip $(topdir)bin/sx200-100d-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER).zip $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER)-full_BETA.zip
@@ -479,5 +490,5 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=a470  PLATFORMSUB=101b NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=a470  PLATFORMSUB=102c NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=sx110is  PLATFORMSUB=100b NO_INC_BUILD=1 clean
-
+	$(MAKE) -s --no-print-directory PLATFORM=sx200is  PLATFORMSUB=100c NO_INC_BUILD=1 clean
 .PHONY: fir upload

@@ -40,6 +40,24 @@
 #define COLOR_SPLASH_RED    0x58
 #define COLOR_SPLASH_PINK   0x4C
 #define COLOR_SPLASH_GREY   0x16
+#elif CAM_BITMAP_PALETTE==3
+#define COLOR_TRANSPARENT   0x00
+#define COLOR_WHITE         0x11
+#define COLOR_RED           0x22
+#define COLOR_GREY          0x3F
+#define COLOR_GREEN         0x55
+#define COLOR_BLUE_LT       0xDD
+#define COLOR_BLUE          0xDF
+#define COLOR_YELLOW        0xEE
+#define COLOR_BLACK         0xFF
+#define COLOR_BG            0x44
+#define COLOR_FG            COLOR_WHITE
+#define COLOR_SELECTED_BG   COLOR_RED
+#define COLOR_SELECTED_FG   COLOR_WHITE
+#define COLOR_ALT_BG        0xD4
+#define COLOR_SPLASH_RED    0x2E
+#define COLOR_SPLASH_PINK   0x21
+#define COLOR_SPLASH_GREY   0x16
 #else
 #error CAM_BITMAP_PALETTE not defined
 #endif
@@ -84,6 +102,16 @@ extern void draw_circle(coord x, coord y, const unsigned int r, color cl);
 extern void draw_ellipse(coord xc, coord yc, unsigned int a, unsigned int b, color cl);
 extern void draw_filled_ellipse(coord xc, coord yc, unsigned int a, unsigned int b, color cl);
 
+
+#if CAM_USES_ASPECT_CORRECTION //nandoide sept-2009 
+void draw_set_aspect_xcorrection_proc(unsigned int (*xcorrection_proc)(unsigned int x));
+void draw_set_aspect_ycorrection_proc(unsigned int (*ycorrection_proc)(unsigned int y));
+unsigned int aspect_xcorrection_games_360(unsigned int x);
+unsigned int aspect_ycorrection_games_360(unsigned int y);
+void draw_set_environment(unsigned int (*xcorrection_proc)(unsigned int x), 
+                                       unsigned int (*ycorrection_proc)(unsigned int y),
+                                       int screenx, int screeny );
+#endif
 
 //-------------------------------------------------------------------
 #endif

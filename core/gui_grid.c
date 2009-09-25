@@ -81,15 +81,22 @@ static void process_element(const char *str, int n, grid_elem_type type) {
     }
 
     gptr = malloc(sizeof(struct gline));
+    
+   
     if (gptr) {
-        gptr->type=type;
+      gptr->type=type;
+      #if CAM_USES_ASPECT_CORRECTION //nandoide sep-2009
+        gptr->x0=ASPECT_GRID_XCORRECTION(nums[0]);  gptr->y0=ASPECT_GRID_YCORRECTION(nums[1]);
+        gptr->x1=ASPECT_GRID_XCORRECTION(nums[2]);  gptr->y1=ASPECT_GRID_YCORRECTION(nums[3]);
+      #else
         gptr->x0=nums[0];  gptr->y0=nums[1];
         gptr->x1=nums[2];  gptr->y1=nums[3];
-        gptr->clf=nums[4]; gptr->clb=nums[5];
-	if (!head) head=gptr;
-	if (top) top->next=gptr;
-        gptr->next=NULL;
-	top=gptr;
+      #endif
+      gptr->clf=nums[4]; gptr->clb=nums[5];
+      if (!head) head=gptr;
+      if (top) top->next=gptr;
+      gptr->next=NULL;
+      top=gptr;
     }
 }
 

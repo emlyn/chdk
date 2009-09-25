@@ -55,8 +55,16 @@ static int step;
 // Zebra draw, to limit RAM usage of zebra. Only these border areas are stored in RAM.
 // Only top and bottom are restored, not left&right.
 #define ZEBRA_CANONOSD_BORDER_RESTORE   1
-#define ZFIX_TOP    29
-#define ZFIX_BOTTOM 30
+
+#if defined (CAMERA_sx200is)
+  //there are no memory for that (the screen buffer is big): 960x270
+  //TODO use a buffer of screen dimensions
+  #define ZFIX_TOP    1
+  #define ZFIX_BOTTOM 1
+#else
+  #define ZFIX_TOP    29
+  #define ZFIX_BOTTOM 30
+#endif
 
 static unsigned char *img_buf, *scr_buf;
 #if ZEBRA_CANONOSD_BORDER_RESTORE
@@ -66,8 +74,10 @@ static unsigned char *cur_buf;
 #endif
 static int cur_buf_size;
 static int timer = 0;
-static char *buf = NULL;
-
+static unsigned char *buf = NULL;
+#if defined (CAMERA_sx200is)
+static int buffer_size;
+#endif
 
 static DOF_TYPE dof;
 static EXPO_TYPE expo;
@@ -229,7 +239,16 @@ static int gui_osd_zebra_init(int show) {
     if(show) { 
         if (!buf) {
             timer = 0;
-            buf = malloc(screen_buffer_size);
+            #if defined (CAMERA_sx200is) //nandoide sept-2009
+               buffer_size=screen_buffer_size-ZEBRA_HMARGIN0*screen_buffer_width;
+               buf = malloc(buffer_size);
+               //~ if (!buf) draw_txt_string(0, 14, "Warn: No space to allocate zebra buffer: restart camera", MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
+               if (!buf) buf=vid_get_bitmap_fb(); //without new buffer: directly into screen buffer: we got some flickering in OSD and histogram but it's usable 
+               //~ msleep(50);
+            #else
+               buf = malloc(screen_buffer_size);
+            #endif
+           
             scr_buf = vid_get_bitmap_fb();
 #if ZEBRA_CANONOSD_BORDER_RESTORE
             cur_buf_top = malloc(screen_buffer_width * ZFIX_TOP); 
@@ -265,7 +284,12 @@ static int gui_osd_zebra_init(int show) {
 
 //-------------------------------------------------------------------
 static void draw_pixel_buffered(unsigned int offset, color cl) {
-    buf[offset] = cl;
+   #if defined (CAMERA_sx200is)
+      if (offset < buffer_size)
+         buf[offset] = cl;
+   #else
+      buf[offset] = cl;
+   #endif
 }
 
 //-------------------------------------------------------------------
@@ -340,7 +364,172 @@ static void gui_osd_draw_zebra_osd() {
     }
 }
 
+// reyalp - TODO this SHOULD NOT BE CAMERA SPECIFIC. Should be generalized to work with all cameras
+// having a copy/paste/modified version for individual cameras will be a maintenance nightmare.
+#if defined (CAMERA_sx200is)
+//nandoide sept-2009 
+// viewport is 360x240 and screen buffer 960x270, we need to expand the x coordinate
+int gui_osd_draw_zebra(int show) {
+    unsigned int v, s, x, y, f, over;
+    color cl_under=conf.zebra_color>>8, cl_over=conf.zebra_color&0xFF;
+    static int need_restore=0;
+    int viewport_height;
+    int viewport_width; 
+    int mrec = ((mode_get()&MODE_MASK) == MODE_REC);
+    int zebra_drawn=0;
+    color cls[] = {
+        COLOR_TRANSPARENT,
+        (mrec)?0xDF:0xCC,
+        COLOR_GREEN,
+        (mrec)?COLOR_BLUE_LT:0x99,
+        COLOR_RED,
+        (mrec)?0x66:0xE2,
+        (mrec)?COLOR_YELLOW:0x66,
+        COLOR_BLACK
+    };
+	
+    if (!gui_osd_zebra_init(show))
+        return 0;
 
+    if(timer==0) {
+        draw_guard_pixel();
+        timer=1;
+        return 0;
+    }
+    if(timer==1) {
+        int ready;
+        static int n=0;
+        if (!mrec) ready=1;
+        else get_property_case(PROPCASE_SHOOTING, &ready, 4);
+        n=draw_guard_pixel(); // will be 0 in PLAY mode, should be 1 or 2 in REC mode.
+        if(!ready) return 0;
+    }
+    ++timer;
+    // Try to get the best viewport buffer. In playmode its the _d one, in
+    // record mode we try to get the fast live one first
+    if (!mrec) {
+        img_buf = vid_get_viewport_fb_d();
+    }
+    else {
+        img_buf = vid_get_viewport_live_fb();
+        if( !img_buf ) {
+            img_buf = vid_get_viewport_fb();
+        }
+    }
+    viewport_height = vid_get_viewport_height();
+    viewport_width = vid_get_viewport_width(); 
+    switch (conf.zebra_mode) {
+        case ZEBRA_MODE_ZEBRA_1:
+            f = 4;
+            break;
+        case ZEBRA_MODE_ZEBRA_2:
+            f = 8;
+            break;
+        case ZEBRA_MODE_SOLID:
+            f = 1; 
+            break;
+        case ZEBRA_MODE_BLINKED_1:
+            f = timer&1; 
+            break;
+        case ZEBRA_MODE_BLINKED_3:
+            f = timer&4; 
+            break;
+        case ZEBRA_MODE_BLINKED_2:
+        default:
+            f = timer&2; 
+            break;
+    }
+    // if not in no-zebra phase of blink mode zebra, draw zebra to buf[]
+    if (f) {
+        int step_x, step_v, sy, sx;
+        over = 255-conf.zebra_over;
+            if (conf.zebra_multichannel) {step_x=2; step_v=6;} else {step_x=1; step_v=3;}
+            for (y=0, v=0; y<viewport_height; ++y) {
+                sy=y*screen_buffer_width;
+                sx=0;
+                for (x=0; x<viewport_width; x+=step_x, sx+=step_x, v+=step_v) {
+                    register int yy, uu, vv;
+                    int sel;
+                    yy = img_buf[v+1];
+                    s=sy+sx*2;
+                    if (conf.zebra_multichannel) {
+                        uu = (signed char)img_buf[v];
+                        vv = (signed char)img_buf[v+2];
+                        sel=0;
+                        if (!((conf.zebra_mode == ZEBRA_MODE_ZEBRA_1 || conf.zebra_mode == ZEBRA_MODE_ZEBRA_2) && (y-x-timer)&f)) {
+                            if (((yy<<12) +           vv*5743 + 2048)>>12>over) sel  = 4; // R
+                            if (((yy<<12) - uu*1411 - vv*2925 + 2048)>>12>over) sel |= 2; // G
+                            if (((yy<<12) + uu*7258           + 2048)>>12>over) sel |= 1; // B
+                        }
+                        buf[s]=buf[s+1]=cls[sel];
+                        buf[s+2]=buf[s+3]=cls[sel];
+                    }
+                    else if (((conf.zebra_mode == ZEBRA_MODE_ZEBRA_1 || conf.zebra_mode == ZEBRA_MODE_ZEBRA_2) && (y-x-timer)&f)) buf[s]=buf[s+1]=COLOR_TRANSPARENT;
+                    else buf[s]=buf[s+1]=(yy>over)?cl_over:(yy<conf.zebra_under)?cl_under:COLOR_TRANSPARENT;
+                    if (buf[s] != COLOR_TRANSPARENT && !zebra_drawn) zebra_drawn = 1;
+#if ZEBRA_CANONOSD_BORDER_RESTORE                        
+                        if(get_cur_buf(s)!=COLOR_TRANSPARENT) buf[s]=get_cur_buf(s); 
+                        if(conf.zebra_multichannel && get_cur_buf(s+1)!=COLOR_TRANSPARENT) buf[s+1]=get_cur_buf(s+1); 
+#else
+                        if(cur_buf[s]!=COLOR_TRANSPARENT) buf[s]=cur_buf[s];
+                        if(conf.zebra_multichannel && cur_buf[s+1]!=COLOR_TRANSPARENT) buf[s+1]=cur_buf[s+1];
+#endif
+
+                    if (mrec) {
+                    }
+                }
+            }
+        if (!zebra_drawn) f=0;
+    }
+    // if blink mode is in no-zebra phase OR if there was no over/underexposed pixels to draw zebra on
+    if (!f) {
+        // if zebra was drawn during previous call of this function
+        if (need_restore) {
+            if (conf.zebra_restore_screen || conf.zebra_restore_osd) {
+                draw_restore();
+            } else {  // clear buf[] of zebra, only leave Canon OSD
+                if (mrec) { // REC mode
+//~ #if ZEBRA_CANONOSD_BORDER_RESTORE
+                    //~ // copy rescued Canon OSD to buf[] top/bottom parts and fill center with transparent color:
+                    //~ memcpy(buf, cur_buf_top, screen_buffer_width * ZFIX_TOP);
+                    //~ memcpy(buf + screen_buffer_size - screen_buffer_width * ZFIX_BOTTOM, cur_buf_bot, screen_buffer_width * ZFIX_BOTTOM);
+                    //~ for (s = screen_buffer_width*ZFIX_TOP; s < screen_buffer_size-screen_buffer_width*ZFIX_BOTTOM; s++) {
+                        //~ buf[s]=COLOR_TRANSPARENT;
+                    //~ }
+//~ #else
+                    //~ // copy from a complete Canon OSD rescue screen dump
+                    //~ memcpy(buf, cur_buf, screen_buffer_size); 
+//~ #endif
+                } else { // Not REC mode
+                    // No Canon OSD restore, fill buf[] with transparent color:
+                    memset(buf, COLOR_TRANSPARENT, buffer_size);
+                }
+                // draw CHDK osd and histogram to buf[] (if enabled in config)
+                gui_osd_draw_zebra_osd();
+                // copy buf[] to both display buffers
+                
+                if (buf!=scr_buf)
+                  memcpy(scr_buf, buf, buffer_size);
+                  memcpy(scr_buf+screen_buffer_size, buf, buffer_size);
+            }
+            need_restore=0;
+        }
+        return !(conf.zebra_restore_screen && conf.zebra_restore_osd);
+    // if zebra was drawn
+    } else {
+        // draw CHDK osd and histogram to buf[] over zebra (if enabled in config)            
+        gui_osd_draw_zebra_osd();
+        // copy buf[] to both display buffers   
+        if (buf!=scr_buf)
+            memcpy(scr_buf, buf, buffer_size);
+            memcpy(scr_buf+screen_buffer_size, buf, buffer_size);
+
+        need_restore=1;
+        return 1;
+    }
+    return 0;
+}
+#else
 //-------------------------------------------------------------------
 int gui_osd_draw_zebra(int show) {
     unsigned int v, s, x, y, f, over;
@@ -529,7 +718,7 @@ int gui_osd_draw_zebra(int show) {
     }
     return 0;
 }
-
+#endif
 //-------------------------------------------------------------------
 static void gui_osd_draw_blended_histo(coord x, coord y) {
     register unsigned int i, v, red, grn, blu, sel;

@@ -40,4 +40,5 @@ WARNING: this file is used gen_propset_lua.sh to generate propset.lua
 #define PROPCASE_METERING_MODE				155
 #define PROPCASE_WB_ADJ                               269 
 #define PROPCASE_ASPECT_RATIO          294
+#define PROPCASE_TIMER_MODE          223
 #endif

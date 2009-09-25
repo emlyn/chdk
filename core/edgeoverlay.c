@@ -29,7 +29,12 @@ static int inmem=0;
 // whole viewport size in bytes ??
 static int viewport_size = 0;
 // width in bytes of one viewport line ??
+
 static int viewport_width;// screenwidth * 3
+static int viewport_height;
+#if CAM_USES_ASPECT_CORRECTION
+static int viewportw; //nandoide , width of viewport (not necessarily equal to width of screen)
+#endif
 // flag to remember if current buffer is already saved, so hitting save won't
 // save it again
 static int is_saved = 0;
@@ -44,13 +49,22 @@ static int need_redraw = 0;
 void out_wait( const char* buf );
 
 void get_viewport_size( ) {
-	static int viewport_height;
-
+	
 	// since screen_height is used in the drawing downwards, we should use it
 	// here too to calculate the buffer we need...
-	viewport_height = screen_height;//vid_get_viewport_height();
-	viewport_width = screen_width * 3;
-	viewport_size = viewport_height * screen_width * 3;
+	
+   #if CAM_USES_ASPECT_CORRECTION//nandoide sept-2009 get the viewport dimensions, not the screen dimensions, on sx200is they aren't the same. 
+      #undef MARGIN //not need margins, we have edhe_hmargin.
+      #define MARGIN 0
+      viewport_height = vid_get_viewport_height()-EDGE_HMARGIN*2; //don't trace bottom lines: we don't have enough memory
+      viewportw= vid_get_viewport_width();
+      viewport_width = viewportw * 3;
+      viewport_size = viewport_height * viewport_width;
+   #else
+      viewport_height = screen_height;//vid_get_viewport_height();
+      viewport_width = screen_width * 3;
+      viewport_size = viewport_height * screen_width * 3;
+   #endif
 }
 
 void ensure_allocate_imagebuffer( ) { 
@@ -203,7 +217,7 @@ void edge_overlay(){
 	else
 	{
 		img = vid_get_viewport_fb_d();
-	}
+   }
 	get_viewport_size();
 	ensure_allocate_imagebuffer( );
 	if(imgbuf == 0) return; // ensure failed, make the best we can out of it
@@ -233,7 +247,7 @@ void edge_overlay(){
 		if ((kbd_is_key_pressed(KEY_SHOOT_HALF)||kbd_is_key_pressed(KEY_SHOOT_FULL)) && (conf.edge_overlay_lock!=1)) {
 			if (kbd_is_key_pressed(KEY_SHOOT_FULL) && !full_press) {
 				shotTaken = 1 - shotTaken;
-				memcpy(imgbuf,img,viewport_size);
+				memcpy(imgbuf,img+EDGE_HMARGIN*viewport_width,viewport_size); //nandoide added EDGE_HMARGIN for save memory needings if neccesary
 				ymin = CALCYMARGIN;
 				inmem = 1;
 				full_press = 1;
@@ -244,7 +258,7 @@ void edge_overlay(){
 			if(shotTaken) {
 				return;
 			}
-			memcpy(imgbuf,img,viewport_size);
+			memcpy(imgbuf,img+EDGE_HMARGIN*viewport_width,viewport_size); //nandoide added EDGE_HMARGIN for save memory needings if neccesary
 			ymin = CALCYMARGIN;
 			inmem = 1;
 			xoffset = 0;
@@ -255,16 +269,20 @@ void edge_overlay(){
 
 
 
-		if (inmem && (ymin < screen_height-CALCYMARGIN)) {
-			ymax = ymin + (screen_height - 2 * CALCYMARGIN) / NSTAGES;
-			if(ymax > screen_height - CALCYMARGIN) ymax = screen_height - CALCYMARGIN;
+		if (inmem && (ymin < viewport_height-CALCYMARGIN)) {
+			ymax = ymin + (viewport_height - 2 * CALCYMARGIN) / NSTAGES;
+			if(ymax > viewport_height - CALCYMARGIN) ymax = viewport_height - CALCYMARGIN;
 			for (y=ymin; y<ymax; y++) {
 				ptrh1 = imgbuf + y * viewport_width + 7;
 				ptrh2 = imgbuf + y * viewport_width - 5;
 				ptrv1 = imgbuf + (y + 1) * viewport_width + 1;
 				ptrv2 = imgbuf + (y - 1) * viewport_width + 1;
 				optr = imgbuf + y * viewport_width + 3;
+            #if CAM_USES_ASPECT_CORRECTION
+            for (x=12; x<(viewportw- 4) * 3; x+=6) {
+            #else
 				for (x=12; x<(screen_width- 4) * 3; x+=6) {
+            #endif
 					h = ptrh1[x] - ptrh2[x];
 					if(h  < 0) h = -h;
 					v = ptrv1[x] - ptrv2[x];
@@ -277,16 +295,16 @@ void edge_overlay(){
 					optr[x + 2] = h + v;
 				}
 			}
-			ymin += (screen_height - 2 * CALCYMARGIN) / NSTAGES;
+			ymin += (viewport_height - 2 * CALCYMARGIN) / NSTAGES;
 			return;
 		}
 
-		if(inmem &&(ymin >= screen_height-CALCYMARGIN) && 
+		if(inmem &&(ymin >= viewport_height-CALCYMARGIN) && 
 			((gui_get_mode() == GUI_MODE_NONE) || (gui_get_mode() == GUI_MODE_ALT))){
 
-				for (y=MARGIN; y<screen_height-MARGIN; y++) {
+				for (y=MARGIN; y<viewport_height-MARGIN; y++) {
 					y1 = y + yoffset;
-					if((y1 < CALCYMARGIN) || (y1 >= screen_height - CALCYMARGIN)) {
+					if((y1 < CALCYMARGIN) || (y1 >= viewport_height - CALCYMARGIN)) {
 						/*
 						for (x=MARGIN; x < screen_width - MARGIN; x+=2) {
 							draw_pixel(x, y, 0);
@@ -295,15 +313,23 @@ void edge_overlay(){
 						*/
 					}
 					else {
+                  #if CAM_USES_ASPECT_CORRECTION
+                  for (x=MARGIN; x < viewportw - MARGIN; x+=2) {
+                  #else
 						for (x=MARGIN; x < screen_width - MARGIN; x+=2) {
+                  #endif
 							x1 = x + xoffset;
 							// leave a margin normally, only write to it when a
 							// full redraw is requested
-							if((x1 < 12) || (x1 >= screen_width-13)) {
+                     #if CAM_USES_ASPECT_CORRECTION
+							if((x1 < 12) || (x1 >= viewportw-13)) {
+                     #else
+                     if((x1 < 12) || (x1 >= screen_width-13)) {
+                     #endif
 								if( need_redraw )
 								{
-									draw_pixel(x, y, 0);
-									draw_pixel(x+1, y, 0);
+									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x), y+EDGE_HMARGIN, 0);
+									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x+1), y+EDGE_HMARGIN, 0);
 								}
 							}
 							else {
@@ -314,20 +340,20 @@ void edge_overlay(){
 								// same as the overlay color
 								if(imgbuf[y1 * viewport_width + x1 * 3 + 3]  > thresh)
 								{
-									draw_pixel(x, y, conf.edge_overlay_color );
+									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x), y+EDGE_HMARGIN, conf.edge_overlay_color );
 								}
-								else if( need_redraw || (draw_get_pixel(x,y) == conf.edge_overlay_color) )
+								else if( need_redraw || (draw_get_pixel(ASPECT_VIEWPORT_XCORRECTION(x),y+EDGE_HMARGIN) == conf.edge_overlay_color) )
 								{
-									draw_pixel(x, y, 0);
+									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x), y+EDGE_HMARGIN, 0);
 								}
 
 								if(imgbuf[y1 * viewport_width + x1 * 3 + 5]  > thresh)
 								{
-									draw_pixel(x+1, y, conf.edge_overlay_color );
+									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x+1), y+EDGE_HMARGIN, conf.edge_overlay_color );
 								}
-								else if( need_redraw || (draw_get_pixel(x,y) == conf.edge_overlay_color) )
+								else if( need_redraw || (draw_get_pixel(ASPECT_VIEWPORT_XCORRECTION(x),y+EDGE_HMARGIN) == conf.edge_overlay_color) )
 								{
-									draw_pixel(x+1, y, 0);
+									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x+1), y+EDGE_HMARGIN, 0);
 								}
 							}
 						}

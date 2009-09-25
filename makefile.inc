@@ -30,6 +30,10 @@ PLATFORMSUB=100a
 #PLATFORM=sx110is
 #PLATFORMSUB=100b
 
+#PLATFORM=sx200is
+#PLATFORMSUB=100c
+# note, 100d compatible with 100c
+
 #PLATFORM=ixus50_sd400
 #PLATFORMSUB=101a
 
@@ -269,7 +273,9 @@ ifndef OSTYPE
     EXE = .exe
     SH = sh
     DEVNULL = NUL
-    SORT := $(dir $(shell which uniq.exe | sed s/\\\\/\\\//g))/sort.exe
+	OLDSEPARATOR = \\\\
+	NEWSEPARATOR = /
+	SORT := $(dir $(shell which uniq.exe | sed 's_$(OLDSEPARATOR)_$(NEWSEPARATOR)_g'))/sort.exe
   else
     ifeq ($(HOSTPLATFORM),Linux)
       OSTYPE = Linux

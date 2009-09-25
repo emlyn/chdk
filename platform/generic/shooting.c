@@ -725,6 +725,21 @@ if ((mode_get()&MODE_MASK) != MODE_PLAY){
 short shooting_get_drive_mode()
 {
     short m;
+// reyalp - this is related to http://chdk.setepontos.com/index.php/topic,3994.405.html
+// TODO
+#if defined (CAMERA_sx200is)
+   short n;
+   // unlike other cameras, sx200 does set PROPCASE_DRIVE_MODE when in custom timer mode
+   // SX 200 IS 0,1,2,3,4=Off, 2 Second, Custom, Face Detection
+   _GetPropertyCase(PROPCASE_TIMER_MODE, &n, sizeof(n));
+   // note we return this only in custom mode.
+   // Other cameras would return 3 if any timer mode is set (?) even if it doesn't do multiple exposures
+   // note that face detect does multiple exposure
+   if(n==3){
+      return n;
+   }
+#endif
+
     _GetPropertyCase(PROPCASE_DRIVE_MODE, &m, sizeof(m));
     return m;
 }

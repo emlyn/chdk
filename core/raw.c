@@ -145,7 +145,7 @@ int raw_savefile() {
     
     state_shooting_progress = SHOOTING_PROGRESS_PROCESSING;
 
-     if (conf.save_raw && (!(shooting_get_prop(PROPCASE_RESOLUTION)==5)) && (!((movie_status > 1) && conf.save_raw_in_video   )) && (!((m==MODE_SPORTS) && conf.save_raw_in_sports)) && (!((m==MODE_AUTO) && conf.save_raw_in_auto)) && (!(conf.edge_overlay_enable && conf.save_raw_in_edgeoverlay)) && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)==1) && conf.save_raw_in_burst && !(m==MODE_SPORTS))) && (!((shooting_get_prop(PROPCASE_DRIVE_MODE)>=2) && conf.save_raw_in_timer)) && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) ) {
+	if (conf.save_raw && (!(shooting_get_prop(PROPCASE_RESOLUTION)==5)) && (!((movie_status > 1) && conf.save_raw_in_video   )) && (!((m==MODE_SPORTS) && conf.save_raw_in_sports)) && (!((m==MODE_AUTO) && conf.save_raw_in_auto)) && (!(conf.edge_overlay_enable && conf.save_raw_in_edgeoverlay)) && (!((shooting_get_drive_mode()==1) && conf.save_raw_in_burst && !(m==MODE_SPORTS))) && (!((shooting_get_drive_mode()>=2) && conf.save_raw_in_timer)) && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) ) {
         long v;
 int timer; char txt[30];
 
@@ -158,7 +158,7 @@ int timer; char txt[30];
         mkdir(dir);
 
         sprintf(fn, "%s/", dir);
-        if(br_counter && conf.bracketing_add_raw_suffix && (shooting_get_prop(PROPCASE_DRIVE_MODE)!=0))
+		if(br_counter && conf.bracketing_add_raw_suffix && (shooting_get_drive_mode()!=0))
             sprintf(fn+strlen(fn), RAW_BRACKETING_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), br_counter,conf.dng_raw&&conf.raw_dng_ext ? ".DNG" : img_exts[conf.raw_ext]);
         else
             sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(),
