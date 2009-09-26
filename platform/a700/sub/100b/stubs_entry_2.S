@@ -29,3 +29,5 @@ NHSTUB(ExitFromCompensationEVF, 0xffd442ac)
 NHSTUB(SetAE_ShutterSpeed, 0xFFEA481C) 
 NHSTUB(DoAFLock, 0xffd423e8)
 NHSTUB(UnlockAF, 0xffd4242c)
+NHSTUB(PostLEDMessage, 0xFFC1CF80)
+
