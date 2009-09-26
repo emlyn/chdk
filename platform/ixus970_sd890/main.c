@@ -31,7 +31,8 @@ static struct {
 } modemap[] = {
 	{ MODE_AUTO,               32768 },
 	//
-	{ MODE_M,                  32772 },
+//	{ MODE_M,                  32772 },
+	{ MODE_P,                  32772 },
 	{ MODE_DIGITAL_MACRO,      33288 },
 	{ MODE_COLOR_ACCENT,       33307 },
 	{ MODE_SCN_COLOR_SWAP,     33308 },

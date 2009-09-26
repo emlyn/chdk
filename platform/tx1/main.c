@@ -73,7 +73,8 @@ static struct {
 	int canonmode;
 } modemap[] = {
     { MODE_AUTO,               32768 },
-    { MODE_M,                  32772 },
+//    { MODE_M,                  32772 },
+    { MODE_P,                  32772 },
     { MODE_SUPER_MACRO,        33289 },
     { MODE_COLOR_ACCENT,       33306 },
     { MODE_MY_COLORS,          33307 },

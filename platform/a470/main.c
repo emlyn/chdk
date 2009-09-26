@@ -31,7 +31,7 @@ static struct {
 	int canonmode;
 } modemap[] = {
     { MODE_AUTO,               32768 },
-    //{ MODE_P,                  32772 },
+    { MODE_P,                  32772 },
     //{ MODE_TV,                 32771 },
     //{ MODE_AV,                 32770 },
     //{ MODE_M,                  32772 },
