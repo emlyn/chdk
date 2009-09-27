@@ -564,7 +564,7 @@ void conf_restore() {
 
     conf_load_defaults();
 
-    if( stat(CONF_FILE,&st) != 0 && st.st_size < sizeof(int))
+    if( stat(CONF_FILE,&st) != 0 || st.st_size < sizeof(int))
         return;
 
     if(!(buf=umalloc(st.st_size)))
