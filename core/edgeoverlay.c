@@ -351,7 +351,7 @@ void edge_overlay(){
 								{
 									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x+1), y+EDGE_HMARGIN, conf.edge_overlay_color );
 								}
-								else if( need_redraw || (draw_get_pixel(ASPECT_VIEWPORT_XCORRECTION(x),y+EDGE_HMARGIN) == conf.edge_overlay_color) )
+								else if( need_redraw || (draw_get_pixel(ASPECT_VIEWPORT_XCORRECTION(x+1),y+EDGE_HMARGIN) == conf.edge_overlay_color) )
 								{
 									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x+1), y+EDGE_HMARGIN, 0);
 								}

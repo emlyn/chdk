@@ -6,24 +6,6 @@ const char * const new_sa = &_end;
 
 void JogDial_task_my(void);
 
-/*
-// debug use only
-void debug_blink() {
-	int i;        
-	*((volatile int *) 0xC0223030) = 0x46; // Turn on Print LED
-	for (i=0; i<80000; i++) // Wait a while
-		{
-     		asm volatile ( "nop\n" );
-		}
-	*((volatile int *) 0xC0223030) = 0x44; // Turn off LED
-	for (i=0; i<80000; i++) // Wait a while
-		{ 
-    		asm volatile ( "nop\n" );
-		}
-};
-*/
-
-
 void taskCreateHook(int *p) { 
  p-=17;
  if (p[0]==0xFF86327C)  p[0]=(int)capt_seq_task;
