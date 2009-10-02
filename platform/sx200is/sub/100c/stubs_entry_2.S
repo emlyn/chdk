@@ -40,7 +40,6 @@ NHSTUB(UnsetZoomForMovie, 0xFF969764)             // found via search for ZoomCo
 
 
 // found by tr1stan and validated
-NHSTUB(PT_PlaySound, 0xFF86046C)                  
 NHSTUB(platformsub_kbd_fetch_data, 0xFF848340)
 
 // not found so - pointed these at nullsub_1 as labelled in IDA

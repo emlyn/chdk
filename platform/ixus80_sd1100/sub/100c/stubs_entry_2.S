@@ -4,7 +4,6 @@ NHSTUB(dumpMemoryToFile, 0xffc141f4)
 NHSTUB(ExpCtrlTool_StartContiAE, 0xff832a98)
 NHSTUB(ExpCtrlTool_StopContiAE, 0xff832bdc)
 NHSTUB(PostLEDMessage, 0xff8420c0)
-NHSTUB(PT_PlaySound, 0xff85b064)
 
 // not found on other dryos cams here, so not in sig
 NHSTUB(OpLog_WriteToSD, 0xff86ab44)

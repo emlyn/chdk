@@ -12,7 +12,6 @@ NHSTUB(qsort, 0xFFA93DC0) // similar to qsort, near sscanf
 NHSTUB(UnsetZoomForMovie, 0xFF9689EC) // string "ZoomCon_UnsetZoomForMovie"
 NHSTUB(ScreenLock,0xFF9C7C40) // related to RefreshPysicalScreen/ScreenUnLock
 NHSTUB(ScreenUnLock,0xFF9C7C94) // AKA RefreshPhysicalScreen called from PT_LCD_BkColorDef, similar to sd1100
-NHSTUB(PT_PlaySound,0xFF863970) // search on PT_PlaySound
 NHSTUB(PutInNdFilter,0xFFA46ED0) // string TurnOnNdFilter
 NHSTUB(PutOutNdFilter,0xFFA46EF4) // string TurnOffNdFilter
 NHSTUB(DoAFLock,0xFF863A80) // PT_DoAFLock 

@@ -3654,6 +3654,22 @@ static FuncSig func_sig_time_2[] = {
 	/* 30/32 */
 };
 
+static FuncSig func_sig_PT_PlaySound_2[] = {
+	{   0, 0xe1510000, 0xfdffffff }, // cmp:7:0xE3510000
+	{   1, 0x059f13f4, 0xfdffffff }, // ldr:4:0x059F13F4
+	{   2, 0xe51f213c, 0xfdffffff }, // ldr:4:0xE51F213C
+	{   3, 0x05821014, 0xfdffffff }, // str:4:0x05821014
+	{   4, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000002
+	{   5, 0xe1100901, 0xfdffffff }, // tst:7:0xE3100901
+	{   6, 0x15821014, 0xfdffffff }, // str:4:0x15821014
+	{   7, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000000
+	{   8, 0xe5821010, 0xfdffffff }, // str:4:0xE5821010
+	{   9, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{  10, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFFF22
+	{ -1, -1, -1 },
+	/* 11/11 */
+};
+
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory_1 },
 	{ "AllocateMemory", func_sig_AllocateMemory_2 },
@@ -3706,6 +3722,7 @@ FuncsList func_list[] = {
 	{ "MoveZoomLensWithPoint", func_sig_MoveZoomLensWithPoint_1 },
 	{ "NewTaskShell", func_sig_NewTaskShell_1 },
 	{ "Open", func_sig_Open_1 },
+	{ "PT_PlaySound", func_sig_PT_PlaySound_2 },
 	{ "Read", func_sig_Read_1 },
 	{ "ReadFastDir", func_sig_ReadFastDir_1 },
 	{ "RefreshPhysicalScreen", func_sig_RefreshPhysicalScreen_1 },

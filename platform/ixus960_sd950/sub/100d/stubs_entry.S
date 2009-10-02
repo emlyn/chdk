@@ -52,6 +52,8 @@ NSTUB(MoveFocusLensToDistance, 0xff9ea6b8)
 NSTUB(MoveZoomLensWithPoint, 0xff92b12c)
 NSTUB(NewTaskShell, 0xff869278)
 NSTUB(Open, 0xff824fa0)
+// Best match: 54%
+NSTUB(PT_PlaySound, 0xff85985c)
 NSTUB(Read, 0xff81a378)
 NSTUB(ReadFastDir, 0xffa0a1bc)
 NSTUB(RefreshPhysicalScreen, 0xff9a0f54)

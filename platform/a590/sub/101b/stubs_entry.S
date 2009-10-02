@@ -62,6 +62,8 @@ NSTUB(MoveZoomLensWithPoint, 0xffdedfc8)
 // Best match: 62%
 NSTUB(NewTaskShell, 0xffc5d578)
 NSTUB(Open, 0xffc13b60)
+// Best match: 81%
+NSTUB(PT_PlaySound, 0xffc4c8b8)
 NSTUB(Read, 0xffc0a15c)
 NSTUB(ReadFastDir, 0xffdd96bc)
 // Best match: 62%

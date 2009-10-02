@@ -30,7 +30,6 @@ NHSTUB(ExpCtrlTool_StopContiAE, 0xFFC209D8)
 NHSTUB(GiveSemaphore, 0xFFC0B81C)
 NHSTUB(MakeAFScan, 0xFFD19824)	//differ from other cams
 NHSTUB(PostLEDMessage, 0xFFC357C8 ) //questionable, might be wrong...
-NHSTUB(PT_PlaySound, 0xFFC4D9AC) 
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFFC00940) //nullsub, there are things like SetZoomActuatorSpeedPPS in fw
 NHSTUB(TurnOffMic, 0xFFC36DD8)
 NHSTUB(TurnOnMic, 0xFFC36DAC)

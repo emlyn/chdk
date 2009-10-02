@@ -24,7 +24,6 @@ NHSTUB(WriteSDCard, 0xFF918854) // via _sub_FF85522C_Mounter.c__0, call after de
 NHSTUB(UnlockAF, 0xFF825610)  // via aAfUnlock
 NHSTUB(DoAFLock, 0xFF8255D8)  // via aAfLock
 NHSTUB(rewinddir,NULL_SUB)
-NHSTUB(PT_PlaySound, 0xFF85F28C) // via aMycamfunc_play, 2nd call after
 NHSTUB(SetZoomActuatorSpeedPercent,NULL_SUB)
 NHSTUB(Mount_FileSystem,NULL_SUB)
 NHSTUB(Unmount_FileSystem,NULL_SUB)

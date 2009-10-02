@@ -58,9 +58,9 @@ NHSTUB(ExitFromCompensationEVF,		0xFFC15FA4)
 //NSTUB(taskUnlock,			 0xFFC00948)
 
 // NULLSUBS
-NSTUB(Mount_FileSystem,			 0xFFC00948)
-NSTUB(Unmount_FileSystem,		 0xFFC00948)
-NSTUB(rewinddir,			 0xFFC00948)
+NHSTUB(Mount_FileSystem,			 0xFFC00948)
+NHSTUB(Unmount_FileSystem,		 0xFFC00948)
+NHSTUB(rewinddir,			 0xFFC00948)
 
 //NSTUB(CreatePhysicalVram,		 0xFFC00948)
 //NSTUB(CreateTaskStrict,			 0xFFC00948)
@@ -94,7 +94,6 @@ NHSTUB(GetFocusLensSubjectDistanceFromLens, 0xFFC00948)
 //NSTUB(taskSuspend,			 0xFFC00948)
 
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFFC00948)
-NHSTUB(PT_PlaySound, 0xFFC4C8B8)
 //NHSTUB(GetBatteryTemperature,	0xFFC377B4)
 //NHSTUB(GetOpticalTemperature,	0xFFC37824)
 //NHSTUB(GetCCDTemperature,		0xFFC37744)

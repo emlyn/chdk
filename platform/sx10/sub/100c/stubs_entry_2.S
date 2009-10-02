@@ -21,7 +21,6 @@ NHSTUB(GetZoomLensCurrentPosition, 0xFFA5B23C) //done -0x10 offset rather than t
 NHSTUB(RefreshPhysicalScreen, 0xFF9DF030) //done
 NHSTUB(EnterToCompensationEVF, 0xFF825B10)
 NHSTUB(ExitFromCompensationEVF, 0xFF825B54)
-NHSTUB(PT_PlaySound, 0xFF8659D4) //done
 NHSTUB(DoAFLock, 0xFF825864)
 NHSTUB(UnlockAF, 0xFF82589C)
 NHSTUB(LEDDrive, 0xFF84AB48)

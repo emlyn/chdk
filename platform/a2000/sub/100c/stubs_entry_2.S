@@ -156,7 +156,6 @@ NHSTUB(kbd_pwr_off,											0xFFC31418)
 NHSTUB(vsprintf,												0xFFC0D7F8)
 
 NHSTUB(RefreshPhysicalScreen,						0xFFD7AF58)
-NHSTUB(PT_PlaySound,										0xFFC488D4)
 NHSTUB(DoAFLock,												0xFFC14D9C)
 NHSTUB(UnlockAF,												0xFFC14DD4)
 NHSTUB(UnsetZoomForMovie,								0xFFD32AD8)

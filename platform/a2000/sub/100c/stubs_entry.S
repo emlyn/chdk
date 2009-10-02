@@ -66,6 +66,8 @@ NSTUB(MoveZoomLensWithPoint, 0xffded808)
 // Best match: 62%
 NSTUB(NewTaskShell, 0xffc58b54)
 NSTUB(Open, 0xffc1331c)
+// Best match: 72%
+NSTUB(PT_PlaySound, 0xffc488d4)
 NSTUB(Read, 0xffc0a138)
 NSTUB(ReadFastDir, 0xffddce7c)
 // ERROR: RefreshPhysicalScreen is not found!

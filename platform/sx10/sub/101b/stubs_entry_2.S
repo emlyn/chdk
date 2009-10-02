@@ -21,7 +21,6 @@ NHSTUB(GetZoomLensCurrentPosition, 0xFFA5B350)
 NHSTUB(RefreshPhysicalScreen, 0xFF9DF0E0)
 NHSTUB(EnterToCompensationEVF, 0xFF825B10)
 NHSTUB(ExitFromCompensationEVF, 0xFF825B54)
-NHSTUB(PT_PlaySound, 0xFF865A7C)
 NHSTUB(DoAFLock, 0xFF825864)
 NHSTUB(UnlockAF, 0xFF82589C)
 NHSTUB(LEDDrive, 0xFF84AB48) // XXX -- Recheck. Doesn't agree with IDA

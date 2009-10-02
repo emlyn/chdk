@@ -35,7 +35,6 @@ NHSTUB(KernelCreateTask,            0xFF81BAF0)
 NHSTUB(PTM_GetCurrentItem,          0xFF875DE8)
 NHSTUB(PutInNdFilter,               0xFFA838F8)
 NHSTUB(PutOutNdFilter,              0xFFA8392C)
-NHSTUB(PT_PlaySound,                0xFF85B240)
 
 //New
 NHSTUB(LEDDrive,                    0xFF84206C)

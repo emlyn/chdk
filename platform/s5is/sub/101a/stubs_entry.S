@@ -59,6 +59,8 @@ NSTUB(MoveFocusLensToDistance, 0xffa0d4e4)
 // ERROR: MoveZoomLensWithPoint is not found!
 // ERROR: NewTaskShell is not found!
 NSTUB(Open, 0xff825d64)
+// Best match: 54%
+NSTUB(PT_PlaySound, 0xff864244)
 NSTUB(Read, 0xff81a2c8)
 NSTUB(ReadFastDir, 0xffa279c8)
 // Best match: 85%

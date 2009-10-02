@@ -53,6 +53,7 @@ NSTUB(MoveFocusLensToDistance, 0xffdc0d2c)
 NSTUB(MoveZoomLensWithPoint, 0xffd0ee40)
 NSTUB(NewTaskShell, 0xffc5b710)
 NSTUB(Open, 0xffc15024)
+// ERROR: PT_PlaySound is not found!
 NSTUB(Read, 0xffc0a440)
 NSTUB(ReadFastDir, 0xffddc67c)
 NSTUB(RefreshPhysicalScreen, 0xffd79fa0)
