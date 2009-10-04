@@ -916,6 +916,15 @@ short shooting_get_ev_correction1()
     return evc1;
 }
 
+#if CAM_QUALITY_OVERRIDE
+void shooting_set_image_quality(int imq)
+{
+  if (imq != 3){
+    _SetPropertyCase(PROPCASE_QUALITY, &imq, sizeof(imq));
+  }
+}
+#endif
+
 int shooting_get_zoom() {
     return lens_get_zoom_point();
 }
@@ -1311,7 +1320,11 @@ else if ((conf.iso_override_value) && (conf.iso_override_koef) && !(conf.overrid
 
 
   shooting_set_flash_video_override(conf.flash_manual_override,conf.flash_video_override_power);
-
+#if CAM_QUALITY_OVERRIDE
+ // this doesn't really need to be set in the override hook. 
+ // should only need to be set once if the users doesn't change back, but doing it here ensures it is set
+ shooting_set_image_quality(conf.fast_image_quality);
+#endif
  asm volatile("LDMFD   SP!, {R0-R12,PC}\n");
 }
 

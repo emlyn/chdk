@@ -148,6 +148,7 @@ typedef struct {
     int flashlight;
     int fast_ev;
     int fast_ev_step;
+    int fast_image_quality;
     int fast_movie_control;
     int fast_movie_quality_control;
     int splash_show;

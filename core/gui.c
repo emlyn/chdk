@@ -202,6 +202,9 @@ static const char* gui_alt_mode_button_enum(int change, int arg);
 static const char* gui_alt_power_enum(int change, int arg);
 static const char* gui_video_mode_enum(int change, int arg);
 static const char* gui_fast_ev_step(int change, int arg);
+#if CAM_QUALITY_OVERRIDE
+static const char* gui_fast_image_quality(int change, int arg);
+#endif
 static const char* gui_video_bitrate_enum(int change, int arg);
 static const char* gui_tv_bracket_values_enum(int change, int arg);
 static const char* gui_av_bracket_values_enum(int change, int arg);
@@ -616,7 +619,9 @@ static CMenuItem operation_submenu_items[] = {
 #if CAM_HAS_VIDEO_BUTTON
     {0x5c, LANG_MENU_FLASH_VIDEO_OVERRIDE, MENUITEM_BOOL,   &conf.flash_video_override},
 #endif
-
+#if CAM_QUALITY_OVERRIDE
+    {0x5c,LANG_MENU_MISC_IMAGE_QUALITY,    MENUITEM_ENUM,    (int*)gui_fast_image_quality },
+#endif
     {0x51,LANG_MENU_BACK,                     MENUITEM_UP },
     {0}
 };
@@ -1481,6 +1486,18 @@ const char* gui_fast_ev_step(int change, int arg) {
         conf.fast_ev_step=0;
     return modes[conf.fast_ev_step];
 }
+#if CAM_QUALITY_OVERRIDE
+const char* gui_fast_image_quality(int change, int arg) {
+    static const char* modes[]={"sup.fine","fine","normal","off"};
+    conf.fast_image_quality+=change;
+    if (conf.fast_image_quality<0)
+        conf.fast_image_quality=(sizeof(modes)/sizeof(modes[0]))-1;
+    else if (conf.fast_image_quality>=(sizeof(modes)/sizeof(modes[0])))
+        conf.fast_image_quality=0;
+    return modes[conf.fast_image_quality];
+}
+#endif
+
 const char* gui_video_mode_enum(int change, int arg) {
 #if !CAM_VIDEO_QUALITY_ONLY
     static const char* modes[]={ "Bitrate", "Quality"};

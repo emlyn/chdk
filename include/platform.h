@@ -478,6 +478,8 @@ void TurnOffBackLight(void);
 void wait_until_remote_button_is_released(void);
 short shooting_get_ev_correction1();
 
+//image_quality_override
+void shooting_set_image_quality(int imq);
 
 int get_ev_video_avail(void);
 void set_ev_video_avail(int); 

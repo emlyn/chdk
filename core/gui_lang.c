@@ -574,7 +574,7 @@ static char* gui_lang_default = \
 "451 \"Reset files\"\n"
 "452 \"Restart Camera...\"\n"
 "453 \"Force manual flash\"\n"
-
+"454 \"Quality override\"\n"
 ;
 
 //-------------------------------------------------------------------

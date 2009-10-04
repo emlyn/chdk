@@ -89,7 +89,8 @@
     
     #define EDGE_HMARGIN 0  //define sup and inf screen margins on edge overlay without overlay.  Necessary to save memory buffer space. sx200is needs values other than 0
     // end of section by nandoid
-
+    
+    #undef CAM_QUALITY_OVERRIDE //camera may need shooting quality override (sx200is lacks SuperFine quality)
 //----------------------------------------------------------
 // Overridden values for each camera
 //----------------------------------------------------------
@@ -2140,6 +2141,7 @@
    #define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
       
    //end nandoide sept-2009
+   #define CAM_QUALITY_OVERRIDE 1
 //----------------------------------------------------------
 #else
     #error camera type not defined
