@@ -20,22 +20,13 @@ DEF(SwitchStatus, 0x0000E608)
 DEF(zoom_busy, 0x79C18)         // ZoomLens, 0xFFAA591C
 DEF(focus_busy, 0x79F34)        // FocusLensController, 0xFFAB58C8
 DEF(movie_compression, 0x6140)  // 0xFF956614
-DEF(zoom_status, 0x73D8)
+DEF(zoom_status, 0x73F4) // "_MoveOpticalToTele" sub_FF9AF964
 DEF(FlashParamsTable,0xFF9754E8)
 
-//DEF(canon_menu_active, 0x6CBC)
-//DEF(canon_shoot_menu_active, 0x6CBC)
+DEF(canon_menu_active, 0x81A0) // "ShutdownRecModeMenu" sub_FFA0B3C8
+DEF(canon_shoot_menu_active, 0x7541) // 7540+1 sub_FF9B88AC near DSITask
 //DEF(recreview_hold, 0x6CBC)
 
-//DEF(canon_menu_active, 0x6CBC)
-//DEF(canon_shoot_menu_active, 0x6CBC)
+DEF(recreview_hold, 0x76C80) // sub_FF9AA8D4 similar to sub_FF9A9DDC in 100a
 
 DEF(movie_status, 0x6EBBC)
-
-canon_menu_active_prev:
-	.word 0x10
-
-.globl canon_menu_active
-canon_menu_active:
- 	.word canon_menu_active_prev
-

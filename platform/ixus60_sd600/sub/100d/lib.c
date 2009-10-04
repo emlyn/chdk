@@ -1,21 +1,5 @@
 #include "platform.h"
 
-int recreview_hold = 0;
-char canon_shoot_menu_active = 0;
-
-// comments before addresses are hints from sd450 port
-
-void *hook_raw_fptr()
-{
-    return (void*)0;  // TODO, was 0x36A90
-}
-
-void *hook_raw_ret_addr()
-{
-    // BL      nullsub_100
-    return (void*)0xFF9B33A0;   // nullsub_100
-}
-
 char *hook_raw_image_addr()
 {
     // ( found on aA08x_crw)

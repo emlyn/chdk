@@ -3,7 +3,7 @@
 DEF(physw_status, 0xE298)
 DEF(physw_run, 0x1FB0)
 
-DEF(canon_menu_active,0x7F80)
+DEF(canon_menu_active,0x7F80) // StartRecModeMenu sub_FFDE4FAC
 DEF(canon_shoot_menu_active,0x74c1)
 
 DEF(recreview_hold, 0x6C878) 
