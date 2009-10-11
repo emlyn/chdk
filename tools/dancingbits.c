@@ -14,9 +14,9 @@
 
 #define VITALY 3
 unsigned char _chr_[VITALY][8] = {
-									{ 4,6,1,0,7,2,5,3 },
-									{ 5,3,6,1,2,7,0,4 },
-									{ 2,5,0,4,6,1,3,7 }
+									{ 4,6,1,0,7,2,5,3 }, // original flavor
+									{ 5,3,6,1,2,7,0,4 }, // nacho cheese sx200is, ixus100_sd780, ixu95_sd1200
+									{ 2,5,0,4,6,1,3,7 }  // mesquite bbq ixus200_sd980
 								};
 
 unsigned char dance(unsigned char allbest, int fudgey);
