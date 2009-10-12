@@ -227,6 +227,12 @@ static void lua_count_hook(lua_State *L, lua_Debug *ar)
     lua_yield( L, 0 );
 }
 
+void lua_script_reset(lua_State *L){
+    lua_close( L );
+    L = 0;
+    Lt = 0;
+}
+
 static int lua_script_start( char const* script )
 {
   L = lua_open();
@@ -237,9 +243,7 @@ static int lua_script_start( char const* script )
   lua_setfield( L, LUA_REGISTRYINDEX, "Lt" );
   if( luaL_loadstring( Lt, script ) != 0 ) {
     script_console_add_line( lua_tostring( Lt, -1 ) );
-    lua_close( L );
-    L = 0;
-    Lt = 0;
+    lua_script_reset( L );
     return 0;
   }
   lua_sethook(Lt, lua_count_hook, LUA_MASKCOUNT, 1000 );
@@ -315,9 +319,7 @@ void script_end()
 {
     script_print_screen_end();
     if( L ) {
-      lua_close( L );
-      L = 0;
-      Lt = 0;
+      lua_script_reset( L );
     }
     else {
       ubasic_end();
@@ -446,9 +448,14 @@ void process_script()
  		   Lres = lua_resume( Lt, top );
  
  		  if (Lres != LUA_YIELD && Lres != 0) {
- 		script_console_add_line( lua_tostring( Lt, -1 ) );
- 		wait_and_end();
- 		return;
+ 				script_console_add_line( lua_tostring( Lt, -1 ) );
+ 				if(conf.debug_lua_restart_on_error){
+					lua_script_reset( L );
+					script_start(0);
+				} else {
+					wait_and_end();
+				}
+ 				return;
  		  }
  
  		  if (Lres != LUA_YIELD) {

@@ -236,6 +236,7 @@ typedef struct {
 
     int debug_shortcut_action;  // 0=none, 1=dump, 2=page display
     int debug_display;          // 0=none, 1=props, 2=flash param, 3=tasks
+	int debug_lua_restart_on_error; // 0=no, 1=yes
 
     int script_startup;			// remote autostart
     int remote_enable;			// remote enable

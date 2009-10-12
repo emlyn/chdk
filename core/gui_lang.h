@@ -564,9 +564,10 @@
 #define LANG_MENU_RESTART_CAMERA         452
 #define LANG_MENU_FLASH_MANUAL_OVERRIDE        453
 #define LANG_MENU_MISC_IMAGE_QUALITY	454
+#define LANG_MENU_LUA_RESTART        455
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  454
+#define GUI_LANG_ITEMS                  455
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

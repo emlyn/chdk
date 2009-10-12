@@ -575,6 +575,7 @@ static char* gui_lang_default = \
 "452 \"Restart Camera...\"\n"
 "453 \"Force manual flash\"\n"
 "454 \"Quality override\"\n"
+"455 \"Restart Lua on error\"\n"
 ;
 
 //-------------------------------------------------------------------
