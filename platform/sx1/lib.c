@@ -29,7 +29,8 @@ void shutdown()
 
 void debug_led(int state)
 {
- *(int*)LED_PR=state ? 0x46 : 0x44;
+// disable for now, since this is reportedly the AF LED. Someone find the DP please
+// *(int*)LED_PR=state ? 0x46 : 0x44;
 }
 
 void ubasic_set_led(int led, int state, int bright) {
