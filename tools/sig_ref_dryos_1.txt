@@ -25,7 +25,7 @@ GetZoomLensCurrentPoint 0xFFD02FDC
 GetZoomLensCurrentPosition 0xFFD03B5C
 RefreshPhysicalScreen 0xFFD62184
 GetPropertyCase 0xFFC59c2c
-SetPropertyCase 0xFFC50CC8
+SetPropertyCase 0xFFC59B24
 VbattGet 0xFFC119A8
 kbd_read_keys 0xFFC130CC
 kbd_p1_f 0xFFC131D0

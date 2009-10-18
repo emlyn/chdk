@@ -116,7 +116,7 @@ NHSTUB(kbd_read_keys                          ,0xFF823990) // Called in kbd.c (o
 NHSTUB(kbd_p1_f                               ,0xFF823A6C) // is phySw_p1
 NHSTUB(kbd_p1_f_cont                          ,0xFF823A78) // after call to kbd_read_keys
 NHSTUB(kbd_p2_f                               ,0xFF82330C) // is phySw_p2
-NHSTUB(kbd_read_keys_r2                       ,0xFF84D4AC) // called from kbd_read_keys
+//NHSTUB(kbd_read_keys_r2                       ,0xFF84D4AC) // called from kbd_read_keys
 
 
 

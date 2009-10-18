@@ -63,10 +63,10 @@ signatures_vxworks.h: gensig$(EXE) gensigs.sh sig_ref_vxworks_1.txt sig_ref_vxwo
 	  touch signatures_vxworks.h ; \
 	fi
 
-signatures_dryos.h: gensig$(EXE) gensigs.sh sig_ref_dryos_1.txt sig_ref_dryos_1.bin sig_ref_dryos_2.txt sig_ref_dryos_2.bin
+signatures_dryos.h: gensig$(EXE) gensigs.sh sig_ref_dryos_1.txt sig_ref_dryos_1.bin sig_ref_dryos_2.txt sig_ref_dryos_2.bin sig_ref_dryos_3.txt sig_ref_dryos_3.bin
 	@echo \-\> $@
-	if [ -s sig_ref_dryos_1.bin ] && [ -s sig_ref_dryos_2.bin ] ; then \
-	  $(SH) ./gensigs.sh $(SORT) dryos "1 2" > signatures_dryos.h ; \
+	if [ -s sig_ref_dryos_1.bin ] && [ -s sig_ref_dryos_2.bin ] && [ -s sig_ref_dryos_3.bin ] ; then \
+	  $(SH) ./gensigs.sh $(SORT) dryos "1 2 3" > signatures_dryos.h ; \
 	else \
 	  echo CAUTION! \'signatures_dryos.h\' is not updated due to \'sig_ref_dryos_1.bin\` is empty! ; \
 	  touch signatures_dryos.h ; \
@@ -86,6 +86,9 @@ sig_ref_dryos_1.bin:
 
 sig_ref_dryos_2.bin:
 	touch sig_ref_dryos_2.bin
+
+sig_ref_dryos_3.bin:
+	touch sig_ref_dryos_3.bin
 
 finsig.o: finsig.c signatures_$(PLATFORMOS).h
 

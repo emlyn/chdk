@@ -65,7 +65,7 @@ NSTUB(SetAutoShutdownTime, 0xffc5d280)
 NSTUB(SetFileTimeStamp, 0xffc151fc)
 // Best match: 72%
 NSTUB(SetParameterData, 0xffd21810)
-NSTUB(SetPropertyCase, 0xffc51f68)
+NSTUB(SetPropertyCase, 0xffc5adc4)
 // Best match: 92%
 NSTUB(SleepTask, 0xffc19890)
 NSTUB(TakeSemaphore, 0xffc0b98c)
@@ -76,6 +76,7 @@ NSTUB(TurnOnBackLight, 0xffc69378)
 NSTUB(UIFS_WriteFirmInfoToFile, 0xffd57a68)
 NSTUB(UnlockMainPower, 0xffc5d160)
 NSTUB(UpdateMBROnFlash, 0xffc3fe4c)
+// ALT: NSTUB(UpdateMBROnFlash, 0xffc73a04) // 21/0
 NSTUB(VbattGet, 0xffc1189c)
 NSTUB(Write, 0xffc14fcc)
 NSTUB(_log, 0xffe4ba40)

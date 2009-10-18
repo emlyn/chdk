@@ -2,8 +2,7 @@
 #include "stubs_asm.h"
 
 NSTUB(AllocateMemory, 0xffa6954c)
-// Best match: 56%
-NSTUB(AllocateUncacheableMemory, 0xff827818)
+NSTUB(AllocateUncacheableMemory, 0xff82780c)
 NSTUB(Close, 0xff823cf0)
 NSTUB(CreateTask, 0xff81afac)
 NSTUB(DeleteFile_Fut, 0xff82359c)
@@ -35,7 +34,8 @@ NSTUB(GetCurrentAvValue, 0xff931328)
 // ERROR: GetDrive_TotalClusters is not found!
 // Best match: 62%
 NSTUB(GetFocusLensSubjectDistance, 0xffa6734c)
-// ERROR: GetOpticalTemperature is not found!
+// Best match: 96%
+NSTUB(GetOpticalTemperature, 0xff84b61c)
 // Best match: 96%
 NSTUB(GetParameterData, 0xff9632e0)
 // Best match: 86%
@@ -74,8 +74,8 @@ NSTUB(SetAutoShutdownTime, 0xff87bd54)
 NSTUB(SetFileTimeStamp, 0xff823fcc)
 // Best match: 96%
 NSTUB(SetParameterData, 0xff963250)
-// Best match: 84%
-NSTUB(SetPropertyCase, 0xff8606e0)
+// Best match: 86%
+NSTUB(SetPropertyCase, 0xff8741e0)
 // Best match: 92%
 NSTUB(SleepTask, 0xff827490)
 // Best match: 60%
@@ -87,9 +87,10 @@ NSTUB(TurnOnBackLight, 0xff88923c)
 NSTUB(UIFS_WriteFirmInfoToFile, 0xff94f9d8)
 // Best match: 93%
 NSTUB(UnlockMainPower, 0xff87bc34)
-// Best match: 57%
-NSTUB(UpdateMBROnFlash, 0xff85791c)
-// ERROR: VbattGet is not found!
+// Best match: 85%
+NSTUB(UpdateMBROnFlash, 0xff88fc60)
+// Best match: 85%
+NSTUB(VbattGet, 0xff820644)
 NSTUB(Write, 0xff823d9c)
 NSTUB(_log, 0xffafa3c0)
 NSTUB(_log10, 0xffaf904c)
@@ -103,12 +104,15 @@ NSTUB(free, 0xff813a3c)
 NSTUB(kbd_p1_f, 0xff821ea0)
 // Best match: 86%
 NSTUB(kbd_p1_f_cont, 0xff821eac)
-// ERROR: kbd_p2_f is not found!
+// Best match: 86%
+NSTUB(kbd_p2_f, 0xff821760)
 // ERROR: kbd_pwr_off is not found!
 // ERROR: kbd_pwr_on is not found!
-// ERROR: kbd_read_keys is not found!
+// Best match: 84%
+NSTUB(kbd_read_keys, 0xff821e24)
 // Best match: 78%
 NSTUB(kbd_read_keys_r2, 0xff847b20)
+// ALT: NSTUB(kbd_read_keys_r2, 0xff847b04) // 17/5
 NSTUB(lseek, 0xff823e30)
 NSTUB(malloc, 0xff813968)
 NSTUB(memcmp, 0xff81cc5c)
@@ -143,5 +147,5 @@ NSTUB(strrchr, 0xff88fca8)
 NSTUB(strtol, 0xff82d3f4)
 // Best match: 86%
 NSTUB(time, 0xff86e4e4)
-// ERROR: vsprintf is not found!
+NSTUB(vsprintf, 0xff81cba0)
 NSTUB(write, 0xff819b44)

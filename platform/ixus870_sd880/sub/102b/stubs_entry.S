@@ -2,8 +2,7 @@
 #include "stubs_asm.h"
 
 NSTUB(AllocateMemory, 0xffa3d8b8)
-// Best match: 56%
-NSTUB(AllocateUncacheableMemory, 0xff827b74)
+NSTUB(AllocateUncacheableMemory, 0xff827b68)
 NSTUB(Close, 0xff823af4)
 NSTUB(CreateTask, 0xff81aef4)
 NSTUB(DeleteFile_Fut, 0xff8233a0)
@@ -81,8 +80,8 @@ NSTUB(SetAutoShutdownTime, 0xff878f3c)
 NSTUB(SetFileTimeStamp, 0xff823dd0)
 // Best match: 96%
 NSTUB(SetParameterData, 0xff95a6e0)
-// Best match: 84%
-NSTUB(SetPropertyCase, 0xff85f79c)
+// Best match: 72%
+NSTUB(SetPropertyCase, 0xff8716a0)
 // Best match: 92%
 NSTUB(SleepTask, 0xff8277ec)
 // Best match: 60%
@@ -96,7 +95,8 @@ NSTUB(UIFS_WriteFirmInfoToFile, 0xff94b858)
 NSTUB(UnlockMainPower, 0xff878e1c)
 // Best match: 92%
 NSTUB(UpdateMBROnFlash, 0xff8552ec)
-// ERROR: VbattGet is not found!
+// Best match: 85%
+NSTUB(VbattGet, 0xff820570)
 NSTUB(Write, 0xff823ba0)
 NSTUB(_log, 0xffad3188)
 NSTUB(_log10, 0xffad1e14)
@@ -115,9 +115,10 @@ NSTUB(kbd_p2_f, 0xff8214b8)
 // Best match: 51%
 NSTUB(kbd_pwr_off, 0xff846260)
 // ERROR: kbd_pwr_on is not found!
-// ERROR: kbd_read_keys is not found!
-// Best match: 78%
-NSTUB(kbd_read_keys_r2, 0xff845dfc)
+// Best match: 76%
+NSTUB(kbd_read_keys, 0xff821ba4)
+// Best match: 81%
+NSTUB(kbd_read_keys_r2, 0xff845de0)
 NSTUB(lseek, 0xff823c34)
 NSTUB(malloc, 0xff8139a8)
 NSTUB(memcmp, 0xff81cbb4)
@@ -152,5 +153,5 @@ NSTUB(strrchr, 0xff89278c)
 NSTUB(strtol, 0xff82d8b0)
 // Best match: 83%
 NSTUB(time, 0xff86b83c)
-// ERROR: vsprintf is not found!
+NSTUB(vsprintf, 0xff81caf8)
 NSTUB(write, 0xff819aac)

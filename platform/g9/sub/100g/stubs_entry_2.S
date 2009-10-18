@@ -28,9 +28,7 @@ NHSTUB(GetZoomLensCurrentPoint,           0xFF93A290)
 NHSTUB(GetZoomLensCurrentPosition,        0xFFA3E658)
 NHSTUB(RefreshPhysicalScreen,		  0xFF9BDBE4) 
 NHSTUB(GetPropertyCase,			 0xFF86F768)    // PT_GetPropertyCaseString
-NHSTUB(SetPropertyCase,			 0xFF86F660)    // PT_SetPropertyCaseString
 NHSTUB(VbattGet,                          0xFF82199C)    
-NHSTUB(kbd_read_keys, 0xFF8230CC)       // will be replaced in kbd.c no was ff8230c4
 NHSTUB(kbd_p1_f, 0xFF8231C8)			// g9 ok
 NHSTUB(kbd_p1_f_cont, 0xff8231d4) 		//g9 ok
 NHSTUB(kbd_p2_f, 0xFF822A18)			// g9 ok

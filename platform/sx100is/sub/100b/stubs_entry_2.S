@@ -30,7 +30,7 @@ NHSTUB(GetZoomLensCurrentPosition,        0xFFD0E36C)
 //NHSTUB(GetPropertyCase,			 0xFFC5BC8C)    // PT_GetPropertyCaseString
 //NHSTUB(SetPropertyCase,			 0xFFC52D28)    // PT_SetPropertyCaseString
 //NHSTUB(VbattGet,                          0xFFC119CC)
-NHSTUB(kbd_read_keys, 0xFFC130F4)       // will be replaced in kbd.c   // !!!NOT CHECKED YET!!!
+//NHSTUB(kbd_read_keys, 0xFFC130F4)       // will be replaced in kbd.c   // !!!NOT CHECKED YET!!!
 //NHSTUB(kbd_p1_f, 0xFFC131F0)
 //NHSTUB(kbd_p1_f_cont, 0xFFC131FC)
 //NHSTUB(kbd_p2_f, 0xFFC12A40)

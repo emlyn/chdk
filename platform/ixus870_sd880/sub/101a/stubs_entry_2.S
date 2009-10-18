@@ -8,9 +8,9 @@ NHSTUB(EnterToCompensationEVF, 0xFF82582C)  // via aExpcompOn
 NHSTUB(ExitFromCompensationEVF, 0xFF825870)  // via aExpcompOff
 NHSTUB(RefreshPhysicalScreen, 0xFF9B8424)  // via aScreenunlock
 NHSTUB(TurnOffBackLight, 0xFF886078)  // via aTurnofbacklig
-NHSTUB(VbattGet, 0xFF820570)  // called by eventproc_export_VbattGet
+//NHSTUB(VbattGet, 0xFF820570)  // called by eventproc_export_VbattGet
 NHSTUB(kbd_pwr_on,NULL_SUB)
-NHSTUB(kbd_read_keys, 0xFF821BA4)  // first call in kbd_p1_f
+//NHSTUB(kbd_read_keys, 0xFF821BA4)  // first call in kbd_p1_f
 NHSTUB(strchr, 0xFF892790)  // search for "AND R2, R1, #0xFF" (E20120FF)
 NHSTUB(vsprintf, 0xFF81CAF8)  // via eventproc_export_CPrintf (call before aCprintfSizeOve)
 
@@ -40,7 +40,7 @@ NHSTUB(ExpCtrlTool_StartContiAE, 0xFF830D00)  // via aStartcontiae
 
 // Corrections for uncertain entries in stubs_entry.S
 
-NHSTUB(AllocateUncacheableMemory, 0xFF827B68)  // via task_UartLog, 2nd call
+//NHSTUB(AllocateUncacheableMemory, 0xFF827B68)  // via task_UartLog, 2nd call
 // NHSTUB(ExitTask, 0xff81b184)  // ok, eventproc_export_ExitTask
 // NHSTUB(FreeUncacheableMemory, 0xff827ba8)  // ok, via task_UartLog, call before the last one
 // NHSTUB(GetCurrentTargetDistance, 0xff927344)  // ok, _sub_???__FocusLensController.c__0
@@ -62,7 +62,7 @@ NHSTUB(GetZoomLensCurrentPoint, 0xFF92B9CC)  // function table
 // NHSTUB(RenameFile_Fut, 0xff82334c)  // ok, visual compare
 // NHSTUB(SetAutoShutdownTime, 0xff878f3c)  // ok, eventproc_export_SetAutoShutdownTime
 // NHSTUB(SetParameterData, 0xff95a6e0)  // ok, PTM_BackupUIProperty
-NHSTUB(SetPropertyCase, 0xff8716a0)  // PT_GetPropertyCaseString
+//NHSTUB(SetPropertyCase, 0xff8716a0)  // PT_GetPropertyCaseString
 // NHSTUB(SleepTask, 0xff8277ec)  // ok, eventproc_export_SleepTask
 // NHSTUB(TakeSemaphore, 0xff8274b4)  // ok, eventproc_export_TakeSemaphore
 // NHSTUB(TurnOnBackLight, 0xff886060)  // ok, via aTurnonbackligh
@@ -73,7 +73,7 @@ NHSTUB(SetPropertyCase, 0xff8716a0)  // PT_GetPropertyCaseString
 // NHSTUB(kbd_p1_f_cont, 0xff821cac)  // ok, kbd_p1_f+0xc
 // NHSTUB(kbd_p2_f, 0xff8214b8)  // ok, kbd_p2_f
 NHSTUB(kbd_pwr_off,NULL_SUB)
-NHSTUB(kbd_read_keys_r2, 0xff845de0)  // visual compare (auto generated address was slightly of)
+//NHSTUB(kbd_read_keys_r2, 0xff845de0)  // visual compare (auto generated address was slightly of)
 NHSTUB(qsort, 0xffa84fc8)  // search 01 00 50 E1 1E FF 2F 01
 // NHSTUB(rand, 0xff81ccbc)  // ok, visual compare (and via aRandsem)
 // NHSTUB(srand, 0xff81ccb0)  // ok, visual compare (and via aRandsem)

@@ -71,7 +71,7 @@ NSTUB(RenameFile_Fut, 0xff8254d8)
 NSTUB(SetAutoShutdownTime, 0xff877e88)
 NSTUB(SetFileTimeStamp, 0xff825fa0)
 // ERROR: SetParameterData is not found!
-NSTUB(SetPropertyCase, 0xff86b264)
+// ERROR: SetPropertyCase is not found!
 // Best match: 92%
 NSTUB(SleepTask, 0xff82ab58)
 NSTUB(TakeSemaphore, 0xff81b798)
@@ -83,6 +83,7 @@ NSTUB(TurnOnBackLight, 0xff888388)
 // Best match: 60%
 NSTUB(UnlockMainPower, 0xff877c84)
 NSTUB(UpdateMBROnFlash, 0xff856ad0)
+// ALT: NSTUB(UpdateMBROnFlash, 0xff8b3168) // 21/0
 // Best match: 78%
 NSTUB(VbattGet, 0xff82221c)
 NSTUB(Write, 0xff825d70)
@@ -103,8 +104,8 @@ NSTUB(kbd_p2_f, 0xff823244)
 // ERROR: kbd_pwr_off is not found!
 // ERROR: kbd_pwr_on is not found!
 // ERROR: kbd_read_keys is not found!
-// Best match: 56%
-NSTUB(kbd_read_keys_r2, 0xff84d474)
+// Best match: 77%
+NSTUB(kbd_read_keys_r2, 0xff84d3e4)
 NSTUB(lseek, 0xff825e04)
 NSTUB(malloc, 0xff813a2c)
 NSTUB(memcmp, 0xff81e664)

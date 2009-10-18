@@ -70,6 +70,7 @@ NSTUB(SetAutoShutdownTime, 0xff8754ac)
 NSTUB(SetFileTimeStamp, 0xff82406c)
 // Best match: 96%
 NSTUB(SetParameterData, 0xff95d814)
+// Best match: 65%
 NSTUB(SetPropertyCase, 0xff86ce8c)
 // Best match: 92%
 NSTUB(SleepTask, 0xff8283ec)
@@ -105,8 +106,8 @@ NSTUB(kbd_pwr_off, 0xff842968)
 NSTUB(kbd_pwr_on, 0xff842918)
 // Best match: 77%
 NSTUB(kbd_read_keys, 0xff821e38)
-// Best match: 78%
-NSTUB(kbd_read_keys_r2, 0xff8424ac)
+// Best match: 81%
+NSTUB(kbd_read_keys_r2, 0xff842490)
 NSTUB(lseek, 0xff823ed0)
 NSTUB(malloc, 0xff8139c4)
 NSTUB(memcmp, 0xff81d844)

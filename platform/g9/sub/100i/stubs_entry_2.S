@@ -1,6 +1,5 @@
 #include "stubs_asm.h"
 NHSTUB(ExitFromCompensationEVF, 0xFF8279F8)
-NHSTUB(kbd_read_keys, 0xFF8230CC)
 NHSTUB(kbd_read_keys_r2, 0xFF848DC8)
 NHSTUB(kbd_pwr_off, 0xFF810958) // nullsub
 NHSTUB(kbd_pwr_on, 0xFF810958) // nullsub

@@ -1,0 +1,27 @@
+0xff810000
+AllocateUncacheableMemory 0xFF8389D8
+free 0xFF814138
+GetDrive_ClusterSize 0xFF86BB04
+GetDrive_TotalClusters 0xFF86BB38
+GetDrive_FreeClusters 0xFF86BB64
+GetOpticalTemperature 0xFF85E320
+lseek 0xFF835524
+kbd_read_keys 0xFF8335A8
+kbd_read_keys_r2 0xFF85A83C
+kbd_p2_f 0xFF832ECC
+qsort 0xFF9FC560 13
+ReadFastDir 0xFFA7E1E4
+stat 0xFF835560
+strlen 0xFF81400C
+strcpy 0xFF82038C
+UpdateMBROnFlash 0xFF813F74
+Open 0xFF8353B0
+Close 0xFF835408
+Write 0xFF835498
+mkdir 0xFF83587C
+malloc 0xFF8140DC
+strcmp 0xFF8203A4
+opendir 0xFFA7E0B0
+closedir 0xFFA7E06C
+vsprintf 0xFF820350
+VbattGet 0xFF831E04 10

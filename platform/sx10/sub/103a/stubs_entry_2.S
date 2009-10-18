@@ -1,10 +1,10 @@
 #include "stubs_asm.h"
-NHSTUB(AllocateUncacheableMemory, 0xFF827FCC)
+//NHSTUB(AllocateUncacheableMemory, 0xFF827FCC)
 NHSTUB(GetDrive_ClusterSize, 0xFF85AE98)
 NHSTUB(GetDrive_TotalClusters, 0xFF85AECC)
 NHSTUB(GetDrive_FreeClusters, 0xFF85AF00)
-NHSTUB(SetPropertyCase, 0xFF879670)
-NHSTUB(kbd_read_keys, 0xFF821B14)
+//NHSTUB(SetPropertyCase, 0xFF879670)
+//NHSTUB(kbd_read_keys, 0xFF821B14)
 NHSTUB(platformsub_kbd_fetch_data, 0xFF84B660)
 NHSTUB(kbd_read_keys_r2, 0xFF84AF6C)
 NHSTUB(qsort, 0xFFAB829C)
@@ -13,7 +13,7 @@ NHSTUB(strrchr, 0xFF9DF4EC)
 
 
 NHSTUB(TurnOffBackLight, 0xFF88F32C)
-NHSTUB(vsprintf, 0xFF81CAE8)
+//NHSTUB(vsprintf, 0xFF81CAE8)
 NHSTUB(VbattGet, 0xFF82046C)
 NHSTUB(GetZoomLensCurrentPoint, 0xFF9411D0)
 NHSTUB(GetZoomLensCurrentPosition, 0xFFA5B364)

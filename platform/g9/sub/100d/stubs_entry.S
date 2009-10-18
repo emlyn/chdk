@@ -65,7 +65,7 @@ NSTUB(SetAutoShutdownTime, 0xff873264)
 NSTUB(SetFileTimeStamp, 0xff825808)
 // Best match: 72%
 NSTUB(SetParameterData, 0xff9567c8)
-NSTUB(SetPropertyCase, 0xff8661dc)
+NSTUB(SetPropertyCase, 0xff86f660)
 // Best match: 92%
 NSTUB(SleepTask, 0xff82a610)
 NSTUB(TakeSemaphore, 0xff81b98c)
@@ -76,6 +76,7 @@ NSTUB(TurnOnBackLight, 0xff87ff70)
 NSTUB(UIFS_WriteFirmInfoToFile, 0xff99c320)
 NSTUB(UnlockMainPower, 0xff873144)
 NSTUB(UpdateMBROnFlash, 0xff85251c)
+// ALT: NSTUB(UpdateMBROnFlash, 0xff895c58) // 21/0
 NSTUB(VbattGet, 0xff82199c)
 NSTUB(Write, 0xff8255d8)
 NSTUB(_log, 0xffabe644)
@@ -95,10 +96,11 @@ NSTUB(kbd_p2_f, 0xff822a18)
 // Best match: 55%
 NSTUB(kbd_pwr_off, 0xff84944c)
 // ERROR: kbd_pwr_on is not found!
-// Best match: 55%
-NSTUB(kbd_read_keys, 0xff8230c4)
+// Best match: 76%
+NSTUB(kbd_read_keys, 0xff8230cc)
 // Best match: 78%
 NSTUB(kbd_read_keys_r2, 0xff848de4)
+// ALT: NSTUB(kbd_read_keys_r2, 0xff848dc8) // 17/5
 NSTUB(lseek, 0xff82566c)
 NSTUB(malloc, 0xff8139dc)
 NSTUB(memcmp, 0xff81e834)

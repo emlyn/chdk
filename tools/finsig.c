@@ -33,6 +33,7 @@ typedef struct {
 
 int match_compare(const Match *p1, const Match *p2)
 {
+	/* NOTE: If a function has *more* matches, it will be prefered, even if it has a lower percent matches */
     if (p1->success > p2->success){
 	return -1;
     } else

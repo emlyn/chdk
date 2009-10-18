@@ -2,7 +2,7 @@
 
 //CORRECTIONS
 NHSTUB(strrchr,                     0xFF89423C)
-NHSTUB(kbd_read_keys_r2,            0xFF842494)
+//NHSTUB(kbd_read_keys_r2,            0xFF842494)
 
 //REQUIRED
 NHSTUB(DoAFLock,                    0xFF825B88)

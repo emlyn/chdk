@@ -1,10 +1,10 @@
 #include "stubs_asm.h"
 // not found correctly by finsig
-NHSTUB(AllocateUncacheableMemory, 0xFF827F3C) // add 0x40 to size then call malloc. sig_ref found 0xff827f48
-NHSTUB(kbd_read_keys_r2, 0xFF849F24) // similar to a720, but called at end of kbd_read_keys
+//NHSTUB(AllocateUncacheableMemory, 0xFF827F3C) // add 0x40 to size then call malloc. sig_ref found 0xff827f48
+//NHSTUB(kbd_read_keys_r2, 0xFF849F24) // similar to a720, but called at end of kbd_read_keys
 NHSTUB(GetDrive_FreeClusters, 0xFF8596B0) // similar to a720, based on calling functions
 NHSTUB(GetDrive_TotalClusters, 0xFF85967C) // similar to a720, callers and constants
-NHSTUB(SetPropertyCase, 0xFF876250) // from PT_SetPropertyCaseInt
+//NHSTUB(SetPropertyCase, 0xFF876250) // from PT_SetPropertyCaseInt
 NHSTUB(qsort, 0xFFA93DC0) // similar to qsort, near sscanf
 
 
@@ -25,12 +25,12 @@ NHSTUB(EnterToCompensationEVF,0xFF825B7C) // string "ExpComp On" NOTE old "SSAPI
 NHSTUB(ExitFromCompensationEVF,0xFF825BC0) // string "ExpComp Off"
 NHSTUB(RefreshPhysicalScreen,0xFF9C7C94) // called from PT_LCD_BkColorDef, similar to sd1100
 NHSTUB(TurnOffBackLight,0xFF88ACA0) // string
-NHSTUB(VbattGet,0xFF820560) // string, eventproc
+//NHSTUB(VbattGet,0xFF820560) // string, eventproc
 NHSTUB(kbd_pwr_on,0xFF81093C) // NULLSUB ... no corresponding call in kbd_read_keys ?
-NHSTUB(kbd_read_keys,0xFF821C24) // via 0xFF821D20 kbd_p1_f 
+//NHSTUB(kbd_read_keys,0xFF821C24) // via 0xFF821D20 kbd_p1_f 
 NHSTUB(kbd_pwr_off,0xFF81093C) // NULLSUB ... pwr_on doesn't exist, last function in readkeys looks more like kbd_read_keys_r2
 NHSTUB(strchr,0xFF897640) 
-NHSTUB(vsprintf,0xFF81CAE8) // via CPrintf
+//NHSTUB(vsprintf,0xFF81CAE8) // via CPrintf
 
 // These don't exist/aren't found in dryos
 NHSTUB(Mount_FileSystem,0xFF81093C) // NULLSUB

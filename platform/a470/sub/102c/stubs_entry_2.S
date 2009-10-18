@@ -1,6 +1,5 @@
 #include "stubs_asm.h"
 
-NHSTUB(kbd_read_keys,					0xFFC11C0C)
 NHSTUB(GetBatteryTemperature,			0xFFC3309C)
 NHSTUB(GetOpticalTemperature, 			0xffc3310C)
 NHSTUB(EnterToCompensationEVF, 			0XFFC15A90)

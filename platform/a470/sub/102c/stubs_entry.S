@@ -72,6 +72,7 @@ NSTUB(SetAutoShutdownTime, 0xffc5baf8)
 NSTUB(SetFileTimeStamp, 0xffc13e38)
 // Best match: 96%
 NSTUB(SetParameterData, 0xffd2a64c)
+// Best match: 65%
 NSTUB(SetPropertyCase, 0xffc57324)
 // Best match: 92%
 NSTUB(SleepTask, 0xffc17c9c)
@@ -106,7 +107,8 @@ NSTUB(kbd_p2_f, 0xffc11548)
 // Best match: 62%
 NSTUB(kbd_pwr_off, 0xffc30ff4)
 // ERROR: kbd_pwr_on is not found!
-// ERROR: kbd_read_keys is not found!
+// Best match: 76%
+NSTUB(kbd_read_keys, 0xffc11c0c)
 // Best match: 82%
 NSTUB(kbd_read_keys_r2, 0xffc30bec)
 NSTUB(lseek, 0xffc13c9c)

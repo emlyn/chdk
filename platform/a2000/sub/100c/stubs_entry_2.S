@@ -3,7 +3,6 @@
 NHSTUB(AllocateMemory, 									0xFFDF0A50)
 NHSTUB(FreeMemory, 											0xffdf0a48)
 
-NHSTUB(AllocateUncacheableMemory, 			0xFFC17174)
 NHSTUB(FreeUncacheableMemory, 					0xffc171b4)
 
 NHSTUB(strcpy, 													0xFFC0D834)
@@ -83,7 +82,6 @@ NHSTUB(GetParameterData, 								0xffd2d4ec)
 NHSTUB(SetParameterData, 								0xffd2d45c)
 
 NHSTUB(GetPropertyCase, 								0xFFC590AC)
-NHSTUB(SetPropertyCase, 								0xFFC58FA4)
 
 NHSTUB(GetZoomLensCurrentPoint, 				0xffd0349c)
 NHSTUB(GetZoomLensCurrentPosition, 			0xffdea9dc)
@@ -132,7 +130,6 @@ NHSTUB(open, 														0xffc09ea0)
 NHSTUB(opendir, 												0xffddcde8)
 NHSTUB(openfastdir, 										0xffddcde8)
 
-NHSTUB(qsort, 													0xFFE2CB98)
 NHSTUB(rand, 														0xffc0d9bc)
 
 NHSTUB(read, 														0xffc0a138)
@@ -151,9 +148,7 @@ NHSTUB(time, 														0xffc5327c)
 NHSTUB(write, 													0xffc0a198)
 
 
-NHSTUB(VbattGet,												0xFFC10314)
 NHSTUB(kbd_pwr_off,											0xFFC31418)
-NHSTUB(vsprintf,												0xFFC0D7F8)
 
 NHSTUB(RefreshPhysicalScreen,						0xFFD7AF58)
 NHSTUB(DoAFLock,												0xFFC14D9C)

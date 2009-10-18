@@ -6,20 +6,20 @@ NHSTUB(EnterToCompensationEVF, 0xFFC15318) // "ExpComp On"
 NHSTUB(ExitFromCompensationEVF, 0xFFC1535C) // "ExpComp Off"
 NHSTUB(RefreshPhysicalScreen, 0xFFD8FC00)	//function looks different from other fw, but might be the right one
 NHSTUB(TurnOffBackLight, 0xFFC6F9FC)	//found similar code as sx100 at this address 
-NHSTUB(VbattGet, 0xFFC10314)	//found similar code as sx100 at this address
+//NHSTUB(VbattGet, 0xFFC10314)	//found similar code as sx100 at this address
 NHSTUB(kbd_pwr_on, 0xFFC3642C)				// Hmm, function looks very different from other cams but it might be the right...
 NHSTUB(kbd_pwr_off, 0xFFC36444)				// Hmm, function looks very different from other cams but it might be the right...
 NHSTUB(strchr, 0xFFC74A0C)	//found similar code as sx100 at this address
-NHSTUB(vsprintf, 0xFFC0D7F8)	//found similar code as sx100 at this address
+//NHSTUB(vsprintf, 0xFFC0D7F8)	//found similar code as sx100 at this address
 
 // functions corrected (wrong in stubs_entry.S)
-NHSTUB(AllocateUncacheableMemory, 0xFFC17828) //wrong: 0xffc17834, correct: 0xFFC17828 
+//NHSTUB(AllocateUncacheableMemory, 0xFFC17828) //wrong: 0xffc17834, correct: 0xFFC17828 
 NHSTUB(ExecuteEventProcedure, 0xFFC5B5B8)
 NHSTUB(GetDrive_TotalClusters, 0xffc44e00)	//wrong: 0xffc44dcc, correct: 0xffc44e00, ALT address of GetDrive_TotalClusters
 NHSTUB(GetDrive_FreeClusters, 0xffc44e34)	//wrong: 0xffc44dcc, correct: 0xffc44e34
 NHSTUB(GetPropertyCase, 0xFFC5F2A0)
 NHSTUB(kbd_read_keys_r2, 0xFFC35D7C)
-NHSTUB(SetPropertyCase, 0xFFC5F198)
+//NHSTUB(SetPropertyCase, 0xFFC5F198)
 NHSTUB(strrchr, 0xFFD8FF2C) //wrong: 0xffc74a08, correct: 0xFFD8FF2C
 
 

@@ -13,7 +13,6 @@ GetDrive_TotalClusters 0xff84f108
 GetOpticalTemperature 0xff845284
 GetSystemTime 0xffa27044
 GetZoomLensCurrentPosition 0xffa1d084
-SetPropertyCase 0xff86cc80
 kbd_pwr_off 0xff842a88
 kbd_pwr_on 0xff842a38
 strrchr 0xff8920cc
