@@ -1,18 +1,5 @@
 #include "platform.h"
 
-int recreview_hold = 0;
-char canon_shoot_menu_active = 0;
-
-void *hook_raw_fptr()
-{
-    return (void*)0x36A90;
-}
-
-void *hook_raw_ret_addr()
-{
-    return (void*)0xFFCB4C5C;
-}
-
 char *hook_raw_image_addr()
 {
     return (char*)0x105B8AC0;
