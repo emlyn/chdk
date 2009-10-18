@@ -6,6 +6,7 @@ NHSTUB(GetDrive_FreeClusters, 0xFF8596B0) // similar to a720, based on calling f
 NHSTUB(GetDrive_TotalClusters, 0xFF85967C) // similar to a720, callers and constants
 //NHSTUB(SetPropertyCase, 0xFF876250) // from PT_SetPropertyCaseInt
 NHSTUB(qsort, 0xFFA93DC0) // similar to qsort, near sscanf
+NHSTUB(strrchr,0xFF9C7FC0) // via sub_FFCE786C, strings "ErrorResult = %lX(ReadFile:%s)" and "ImageHeaderParser.c"
 
 
 // not in sig_ref
