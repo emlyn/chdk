@@ -73,7 +73,6 @@ int mode_get() {
 }
 
 
-// from sx100
 //fl_tbl still the same as sx100
 static const int fl_tbl[] = {6000, 6700, 7300, 8200, 9100, 10300, 11500, 12800, 14400, 16100, 18100, 20100, 22400, 25200, 28100, 31500, 34900, 38900, 42500, 46600, 51100, 55900, 60000};
 #define NUM_FL (sizeof(fl_tbl)/sizeof(fl_tbl[0]))
@@ -97,10 +96,6 @@ int get_zoom_x(int zp) {
     else if (zp>NUM_FL-1) return fl_tbl[NUM_FL-1]*10/fl_tbl[0];
     else return fl_tbl[zp]*10/fl_tbl[0];
 }
-
-//end sx100
-
-
 
 long get_vbatt_min()
 {

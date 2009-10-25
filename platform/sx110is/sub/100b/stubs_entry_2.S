@@ -1,5 +1,6 @@
 #include "stubs_asm.h"
-NHSTUB(GetBatteryTemperature, 0xffc387ec)	//found at 0xffc3885c but camera crashs if used, so point to GetCCDTemperature
+//NHSTUB(GetBatteryTemperature, 0xffc3885c)	//Camera crashs if used. Function is implemented as specific code in CHDK.
+//NHSTUB(GetBatteryTemperature, 0xffc387ec)	//found at 0xffc3885c but camera crashs if used, so point to GetCCDTemperature here
 
 //functions not found in firmware
 NHSTUB(EnterToCompensationEVF, 0xFFC15318) // "ExpComp On"

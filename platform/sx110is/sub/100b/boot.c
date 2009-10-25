@@ -12,7 +12,6 @@
 #define LED_PWR	0xc02200D0
 
 #define DELAY 800000
-//#define DELAY 1000000
 
 void debug_my_blink()
 {
@@ -32,8 +31,6 @@ void debug_my_blink()
 	while (counter--) { asm("nop\n nop\n"); };
 	*p2= 0x44;
 }
-
-
 
 //js
 const char * const new_sa = &_end;
@@ -61,6 +58,16 @@ void CreateTask_spytask() {
 //jse
 
 //JS
+/* Boot method is still the old detour of original camera boot code as used since the first DryOS-ports...
+For some unknown reasons SX110 will not boot if CHDK starts with the original sequence at FFC0000C.
+If someone wants to check it: look at 
+"loc_FFC00154:\n"
+		"CMP 	R3, R1\n"
+		"STRCC 	R2, [R3],#4\n"
+		"BCC 	loc_FFC00154\n"
+
+		"B 	loc_FFC001A4_my\n"		// <------------------------------- changed
+*/
 void boot();
 
 void boot() { //#fs
@@ -94,111 +101,6 @@ void boot() { //#fs
     asm volatile ("B 	loc_FFC001A4_my\n");	// <---------------
 }; //#fe
 //JSE
-
-
-
-
-//JS 
-//function boot renamed to no_boot. The original boot sequence doesn't work for some reasons... camera hangs
-#if 0
-void __attribute__((naked,noinline)) no_boot() {	//ROM:FFC0000C
-    asm volatile (
-		"LDR 	R1, =0xC0410000\n"
-		"MOV 	R0, #0\n"
-		"STR 	R0, [R1]\n"
-		"MOV 	R1, #0x78\n"
-		"MCR 	p15, 0, R1,c1,c0\n"
-		"MOV 	R1, #0\n"
-		"MCR 	p15, 0, R1,c7,c10, 4\n"
-"loc_FFC00028:\n"
-		"MCR 	p15, 0, R1,c7,c5\n"
-		"MCR 	p15, 0, R1,c7,c6\n"
-		"MOV 	R0, #0x3D\n"
-		"MCR 	p15, 0, R0,c6,c0\n"
-		"MOV 	R0, #0xC000002F\n"
-		"MCR 	p15, 0, R0,c6,c1\n"
-		"MOV 	R0, #0x33\n"
-		"MCR 	p15, 0, R0,c6,c2\n"
-		"LDR 	R0, =0x10000033\n"
-		"MCR 	p15, 0, R0,c6,c3\n"
-		"MOV 	R0, #0x40000017\n"
-		"MCR 	p15, 0, R0,c6,c4\n"
-		"LDR 	R0, =(loc_FFC00028+3)\n"
-		"MCR 	p15, 0, R0,c6,c5\n"
-		"MOV 	R0, #0x34\n"
-		"MCR 	p15, 0, R0,c2,c0\n"
-		"MOV 	R0, #0x34\n"
-		"MCR 	p15, 0, R0,c2,c0, 1\n"
-		"MOV 	R0, #0x34\n"
-		"MCR 	p15, 0, R0,c3,c0\n"
-		"LDR 	R0, =0x3333330\n"
-		"MCR 	p15, 0, R0,c5,c0, 2\n"
-		"LDR 	R0, =0x3333330\n"
-		"MCR 	p15, 0, R0,c5,c0, 3\n"
-		"MRC 	p15, 0, R0,c1,c0\n"
-		"ORR 	R0, R0, #0x1000\n"
-		"ORR 	R0, R0, #4\n"
-		"ORR 	R0, R0, #1\n"
-		"MCR 	p15, 0, R0,c1,c0\n"
-		"MOV 	R1, #0x40000006\n"
-		"MCR 	p15, 0, R1,c9,c1\n"
-		"MOV 	R1, #6\n"
-		"MCR 	p15, 0, R1,c9,c1, 1\n"
-		"MRC 	p15, 0, R1,c1,c0\n"
-		"ORR 	R1, R1, #0x50000\n"
-		"MCR 	p15, 0, R1,c1,c0\n"
-		"LDR 	R2, =0xC0200000\n"
-		"MOV 	R1, #1\n"
-		"STR 	R1, [R2,#0x10C]\n"
-		"MOV 	R1, #0xFF\n"
-		"STR 	R1, [R2,#0xC]\n"
-		"STR 	R1, [R2,#0x1C]\n"
-		"STR 	R1, [R2,#0x2C]\n"
-		"STR 	R1, [R2,#0x3C]\n"
-		"STR 	R1, [R2,#0x4C]\n"
-		"STR 	R1, [R2,#0x5C]\n"
-		"STR 	R1, [R2,#0x6C]\n"
-		"STR 	R1, [R2,#0x7C]\n"
-		"STR 	R1, [R2,#0x8C]\n"
-		"STR 	R1, [R2,#0x9C]\n"
-		"STR 	R1, [R2,#0xAC]\n"
-		"STR 	R1, [R2,#0xBC]\n"
-		"STR 	R1, [R2,#0xCC]\n"
-		"STR 	R1, [R2,#0xDC]\n"
-		"STR 	R1, [R2,#0xEC]\n"
-		"STR 	R1, [R2,#0xFC]\n"
-		"LDR 	R1, =0xC0400008\n"
-		"LDR 	R2, =0x430005\n"
-		"STR 	R2, [R1]\n"
-		"MOV 	R1, #1\n"
-		"LDR 	R2, =0xC0243100\n"
-		"STR 	R2, [R1]\n"
-		"LDR 	R2, =0xC0242010\n"
-		"LDR 	R1, [R2]\n"
-		"ORR 	R1, R1, #1\n"
-		"STR 	R1, [R2]\n"
-
-		"LDR 	R0, =0xFFEFF5F8\n"
-		"LDR 	R1, =0x1900\n"
-		"LDR 	R3, =0xE6B4\n"
-"loc_FFC0013C:\n"
-		"CMP 	R1, R3\n"
-		"LDRCC 	R2, [R0],#4\n"
-		"STRCC 	R2, [R1],#4\n"
-		"BCC 	loc_FFC0013C\n"
-
-		"LDR 	R1, =0xA2728\n"
-		"MOV 	R2, #0\n"
-"loc_FFC00154:\n"
-		"CMP 	R3, R1\n"
-		"STRCC 	R2, [R3],#4\n"
-		"BCC 	loc_FFC00154\n"
-
-		"B 	loc_FFC001A4_my\n"		// <------------------------------- changed
-		);
-};
-//JSE
-#endif
 
 //JS
 void __attribute__((naked,noinline)) loc_FFC001A4_my() {

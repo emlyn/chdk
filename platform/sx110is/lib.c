@@ -13,8 +13,6 @@ void vid_bitmap_refresh()
  enabled_refresh_physical_screen=1;
  _RefreshPhysicalScreen(1);
 }
-
-
 void shutdown()
 {
 
@@ -23,7 +21,6 @@ ROM:FFC0CD8C                 LDR     R1, =0xC0220000
 ROM:FFC0CD90                 MOV     R0, #0x44
 ROM:FFC0CD94                 STR     R0, [R1,#0x54]
 ROM:FFC0CD98                 STR     R0, [R1,#0x4C]
-
 
 C0220000+54+4C=0xC02200A0
 

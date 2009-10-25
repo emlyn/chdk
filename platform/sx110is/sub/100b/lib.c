@@ -61,3 +61,17 @@ char *camera_jpeg_count_str()
 long vid_get_bitmap_buffer_width() { return 360; }
 
 long vid_get_bitmap_buffer_height() { return 240; }
+
+/*
+GetBatteryTemperature usually will get back temperature of battery compartment/batteries. GetBatteryTemperature is implemented in Canon's firmware for SX110is.
+Firmware entry point is identified (0xffc3885c) but function is not usable. Camera will crash if Canon's GetBatteryTemperature is called by CHDK.
+To avoid a crash Canon's GetBatteryTemperature must not called. As long CHDK general code do not distinguish between cameras that support or don't support GetBatteryTemperature, 
+this function will be implemented as specific CHDK-code. It returns always with -99 (which means -99° Celsius or -146° Fahrenheit).
+Original entry point in Canon's firmware is disabled (in stubs_entry.S).
+*/
+
+int _GetBatteryTemperature()
+{
+      return -99;
+}
+

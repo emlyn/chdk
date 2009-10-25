@@ -1976,17 +1976,14 @@
 	/////SX110
 	//********
 #elif defined (CAMERA_sx110is)
-//needs to be adjusted START
 	#define CAM_COLORMATRIX1                               \
-      1413400, 1000000, -557600,  1000000, -152700,  1000000, \
-     -659100,  1000000, 1071900,  1000000,  127300,  1000000, \
-     -115800,  1000000, 292900,   1000000,  358100,  1000000
-
-    #define CAM_ACTIVE_AREA_X1 0
-    #define CAM_ACTIVE_AREA_Y1 0
-    #define CAM_ACTIVE_AREA_X2 3720
+      530200, 1000000, -42600,  1000000, -33000,  1000000, \
+     -525400,  1000000, 1092700,  1000000,  223700,  1000000, \
+     -103700,  1000000, 117900,   1000000,  421600,  1000000
+    #define CAM_ACTIVE_AREA_X1 8
+    #define CAM_ACTIVE_AREA_Y1 14
+    #define CAM_ACTIVE_AREA_X2 3688
     #define CAM_ACTIVE_AREA_Y2 2772
-//END
 
     #define CAM_PROPSET                 2
     #define CAM_DRYOS                   1
