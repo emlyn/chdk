@@ -4,7 +4,7 @@ SKIPBUILDRULES=1
 
 include $(topdir)makefile.inc
 
-OBJS=pakwif.o finsig.o gensig.o dumpchk.o dancingbits.o
+OBJS=pakwif.o finsig.o gensig.o dumpchk.o dancingbits.o rawconvert.o
 
 ifdef OPT_FI2
   SUBDIRS=packfi2
@@ -38,6 +38,10 @@ dumpchk$(EXE): dumpchk.o
 	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
 
 dancingbits$(EXE): dancingbits.o
+	@echo $< \-\> $@
+	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
+
+rawconvert$(EXE): rawconvert.o
 	@echo $< \-\> $@
 	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
 
