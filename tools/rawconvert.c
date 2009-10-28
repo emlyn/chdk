@@ -2,14 +2,14 @@
 A small tools to convert CHDK 10 and 12 bit raws to 8 or 16 bit grayscale for inspection
 Can also covert to CHDK formats
 Usage:
-rawconv -<op> -w=<width> -h=<height> [-noshift] <infile> <outfile>\n");
+rawconvert -<op> -w=<width> -h=<height> [-noshift] <infile> <outfile>
 where <op> is XtoY with X and Y being the source and destination BPP
 by default
  converting to lower BPP discards the lower bits of the input value.
  converting to higher BPP shifts the input so the a max value input pixel will be a max value output pixel
 if -noshift is specified
  converting to a lower BPP discards the upper bits
- convertint to a higher BPP leaves the values unchanged
+ converting to a higher BPP leaves the values unchanged
 NOTE: 
  Host is assumed to be little endian!
  This is a debugging tool not an imaging tool.
