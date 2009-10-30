@@ -42,9 +42,9 @@ int get_flash_params_count(void){
 }
 
 void JogDial_CW(void){
- _PostLogicalEventForNotPowerType(0x874, 2);  // RotateJogDialRight
+ _PostLogicalEventForNotPowerType(0x874, 1);  // RotateJogDialRight, 1 - rotation count
 }
 
 void JogDial_CCW(void){
- _PostLogicalEventForNotPowerType(0x875, 2);  // RotateJogDialLeft
+ _PostLogicalEventForNotPowerType(0x875, 1);  // RotateJogDialLeft, 1 - rotation count
 }
