@@ -509,9 +509,14 @@
 // cropping
 #define CAM_JPEG_WIDTH  3264
 #define CAM_JPEG_HEIGHT 2448
-#define CAM_ACTIVE_AREA_X1 8
-#define CAM_ACTIVE_AREA_Y1 8
-#define CAM_ACTIVE_AREA_X2 3304
+#define CAM_ACTIVE_AREA_X1 12
+#define CAM_ACTIVE_AREA_Y1 10
+// note: the above contains some pixels which have valid data, 
+// but are not at the same levels as the rest of the frame
+// the values below crop the "different" looking pixels.
+//#define CAM_ACTIVE_AREA_X1 16
+//#define CAM_ACTIVE_AREA_Y1 18
+#define CAM_ACTIVE_AREA_X2 3300
 #define CAM_ACTIVE_AREA_Y2 2480
 
 // camera name
