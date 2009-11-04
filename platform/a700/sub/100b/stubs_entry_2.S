@@ -31,3 +31,4 @@ NHSTUB(DoAFLock, 0xffd423e8)
 NHSTUB(UnlockAF, 0xffd4242c)
 NHSTUB(PostLEDMessage, 0xFFC1CF80)
 
+NHSTUB(SetScriptMode,0xFFD56C2C) // by find_eventproc name @ 0xFFD80414

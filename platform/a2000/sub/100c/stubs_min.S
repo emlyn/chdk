@@ -41,3 +41,4 @@ DEF(playrec_mode, 0x5204+0x4)
 
 // Found at ROM:FFD7AAA8 and ROM:FFD7AF04
 DEF(enabled_refresh_physical_screen, 0xA478+0x30 )
+DEF(levent_table,0xFFE9AC78)

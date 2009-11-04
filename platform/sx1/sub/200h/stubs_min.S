@@ -39,6 +39,4 @@ DEF(enabled_refresh_physical_screen, 0xCABC+0x34)
 // Found @ several entries in "Zoom/Lens Section" ROM:FFAA4CEC
 DEF(zoom_status, 0xF2A0)
 
-
-
-
+DEF(levent_table,0xFFB89F4C)

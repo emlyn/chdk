@@ -497,6 +497,12 @@ void UnlockAF(void);
 void drv_self_hide(void);
 void drv_self_unhide(void);
 
+void  PostLogicalEventForNotPowerType(unsigned event, unsigned unk);
+void  PostLogicalEventToUI(unsigned event, unsigned unk);
+void  SetLogicalEventActive(unsigned event, unsigned state);
+void SetScriptMode(unsigned mode);
+void SetCurrentCaptureModeType(unsigned mode);
+
 #define started() debug_led(1)
 #define finished() debug_led(0)
 

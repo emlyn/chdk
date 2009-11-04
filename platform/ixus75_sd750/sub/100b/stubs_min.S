@@ -18,3 +18,4 @@ DEF(movie_status,0xBBC48)
 DEF(zoom_status, 0x26B8) // found near _MoveOpticalToTele, _StopOpticalZoom etc
 DEF(some_f_for_dng, 0x7214)
 DEF(second_ext_for_dng, 0x7238)
+DEF(levent_table,0xFFB3A9D8)

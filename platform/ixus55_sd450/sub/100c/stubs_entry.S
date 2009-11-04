@@ -55,6 +55,9 @@ NSTUB(MoveZoomLensWithPoint, 0xffa6eb6c)
 NSTUB(Open, 0xff86e298)
 // Best match: 96%
 NSTUB(PhySw_testgpio, 0xff827800)
+NSTUB(PostLogicalEventForNotPowerType, 0xff95b954)
+NSTUB(PostLogicalEventToUI, 0xff95b9e0)
+// ALT: NSTUB(PostLogicalEventToUI, 0xff95ba78) // 25/0
 NSTUB(ProtectFile, 0xff866ee0)
 // Best match: 92%
 NSTUB(PutInNdFilter, 0xffa88aa4)
@@ -72,6 +75,9 @@ NSTUB(Remove, 0xff86e2e0)
 NSTUB(RenameFile_Fut, 0xff8676f4)
 // Best match: 96%
 NSTUB(SetAutoShutdownTime, 0xff95f804)
+NSTUB(SetCurrentCaptureModeType, 0xff98c010)
+// Best match: 87%
+NSTUB(SetLogicalEventActive, 0xff95d9b0)
 NSTUB(SetParameterData, 0xff964368)
 NSTUB(SetPropertyCase, 0xff824360)
 NSTUB(SleepTask, 0xff82141c)

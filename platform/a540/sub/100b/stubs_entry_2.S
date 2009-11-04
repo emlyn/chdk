@@ -31,3 +31,6 @@ NHSTUB(SetAE_ShutterSpeed, 0xFFE9D1C4)
 NHSTUB(DoAFLock, 0xffd41c64)
 NHSTUB(UnlockAF, 0xffd41ca8)
 NHSTUB(apex2us, 0xFFC9F288) // shutter.c from expdrvtask, similar to a570
+//code identical to PostLogicalEventToUI
+//NHSTUB(PostEventShootSeqToUI,0xFFD54734)  // string
+NHSTUB(SetScriptMode,0xFFD56460) // by find_eventproc name @ 0xFFD7F194

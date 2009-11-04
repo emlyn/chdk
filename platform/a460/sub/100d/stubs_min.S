@@ -14,3 +14,5 @@ DEF(some_flag_for_af_scan, 0xCF88)
 DEF(zoom_status, 0x2658)
 DEF(some_f_for_dng, 0x6184)
 DEF(second_ext_for_dng, 0x61A8)
+DEF(levent_table,0xFFE9EC88)
+DEF(playrec_mode,0xD29C) // "SSAPI::MenuIn"

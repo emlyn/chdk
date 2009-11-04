@@ -63,3 +63,4 @@ NHSTUB(taskNameToId, 0xFF935A64)
 NHSTUB(DoAFLock, 0xffb09200)
 NHSTUB(UnlockAF, 0xffb09280)
 NHSTUB(apex2us,0xFF93CE88);
+NHSTUB(SetScriptMode,0xFFB43A00) // by find_eventproc name @ 0xFF81FB58

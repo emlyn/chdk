@@ -33,3 +33,4 @@ NHSTUB(ExitFromCompensationEVF, 0xffe6b17c)
 NHSTUB(SetAE_ShutterSpeed, 0xFFDE17AC)
 NHSTUB(DoAFLock, 0xffe6aec4)
 NHSTUB(UnlockAF, 0xffe6af44)
+NHSTUB(SetScriptMode,0xFFEA4154) // by find_eventproc name @ 0xFFC0F608

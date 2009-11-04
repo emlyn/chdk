@@ -38,3 +38,4 @@ NHSTUB(EnterToCompensationEVF, 0xffb26938)
 NHSTUB(ExitFromCompensationEVF, 0xffb269bc)
 NHSTUB(DoAFLock, 0xffb26590)
 NHSTUB(UnlockAF, 0xffb26610)
+NHSTUB(SetScriptMode,0xFFB61474) // by find_eventproc name @ 0xFF81FBD8

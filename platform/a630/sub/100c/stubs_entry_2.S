@@ -46,3 +46,4 @@ NHSTUB(SetAE_ShutterSpeed, 0xFFEAC3E0)
 NHSTUB(DoAFLock, 0xffd4fc44)
 NHSTUB(UnlockAF, 0xffd4fc90)
 NHSTUB(apex2us, 0xFFCA4BF8)
+NHSTUB(SetScriptMode,0xFFD65C40) // by find_eventproc name @ 0xFFD8C944

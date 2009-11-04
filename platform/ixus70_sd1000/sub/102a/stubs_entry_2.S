@@ -39,3 +39,4 @@ NHSTUB(ExitFromCompensationEVF, 0xffafabe4)
 NHSTUB(DoAFLock, 0xffafa7b8)
 NHSTUB(UnlockAF, 0xffafa838)
 NHSTUB(apex2us, 0xFF931648)
+NHSTUB(SetScriptMode,0xFFB34764) // by find_eventproc name @ 0xFF81FB08

@@ -19,7 +19,7 @@ NHSTUB(DoAFLock,0xFF863A80) // PT_DoAFLock
 NHSTUB(UnlockAF,0xFF863A90) // PT_UnlockAF 
 NHSTUB(WriteSDCard,0xFF9210A4) // similar to SX10, search on BOOTDISK and SCRIPT
 NHSTUB(LEDDrive,0xFF849B2C) // string LEDDrive
-NHSTUB(PostLogicalEventForNotPowerType,0xFF87B858) // string PostLogicalEventForNotPowerType
+NHSTUB(SetScriptMode,0xFF87D81C) // "SetScriptMode"
 
 // not found by finsig
 NHSTUB(EnterToCompensationEVF,0xFF825B7C) // string "ExpComp On" NOTE old "SSAPI::EnterToCompensationEVF" not found, but propcase 0xCF is used in both

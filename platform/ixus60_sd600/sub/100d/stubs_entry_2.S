@@ -52,3 +52,4 @@ NHSTUB(PT_PlaySound, 0xFF96A36C)
 NHSTUB(DoAFLock, 0xff95c3e0)
 NHSTUB(UnlockAF, 0xff95c424)
 //NHSTUB(WriteSDCard, 0xFF87E128) // sub_FF86E378
+NHSTUB(SetScriptMode,0xFF970C98) // by find_eventproc name @ 0xFF9999F8

@@ -934,6 +934,28 @@ int  apex2us(int apex_tv){
 #endif
 }
 
+void PostLogicalEventForNotPowerType(unsigned id, unsigned x) {
+	_PostLogicalEventForNotPowerType(id,x);
+}
+
+void PostLogicalEventToUI(unsigned id, unsigned x) {
+	_PostLogicalEventToUI(id,x);
+}
+
+void SetLogicalEventActive(unsigned id, unsigned state) {
+	_SetLogicalEventActive(id, state);
+}
+
+void SetScriptMode(unsigned mode) {
+	_SetScriptMode(mode);
+}
+
+#if 0
+void SetCurrentCaptureModeType(unsigned mode) {
+	_SetCurrentCaptureModeType(mode);
+}
+#endif
+
 // TODO this belongs lib.c, but not all cameras include it
 // same as bitmap width for most cameras, override in platform/sub/lib.c as needed
 int __attribute__((weak)) vid_get_viewport_width() {

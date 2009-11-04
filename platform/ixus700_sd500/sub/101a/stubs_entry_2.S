@@ -50,3 +50,4 @@ NHSTUB(MakeAFScan, 0xFF94EF7C)  //DoAFLock
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFF8F94B8)  
 NHSTUB(DoAFLock, 0xff94ef7c)
 NHSTUB(UnlockAF, 0xff94eff4)
+NHSTUB(SetScriptMode,0xFF966290) // by find_eventproc name @ 0xFF986B2C

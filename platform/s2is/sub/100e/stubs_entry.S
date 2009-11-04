@@ -58,6 +58,9 @@ NSTUB(MoveFocusLensToDistance, 0xffaa8eb0)
 // ERROR: MoveZoomLensWithPoint is not found!
 // ERROR: Open is not found!
 // ERROR: PhySw_testgpio is not found!
+NSTUB(PostLogicalEventForNotPowerType, 0xff980180)
+NSTUB(PostLogicalEventToUI, 0xff98020c)
+// ALT: NSTUB(PostLogicalEventToUI, 0xff9802a4) // 25/0
 NSTUB(ProtectFile, 0xff86f360)
 NSTUB(PutInNdFilter, 0xffaa6cd8)
 // ALT: NSTUB(PutInNdFilter, 0xffaa6d20) // 27/0
@@ -71,6 +74,10 @@ NSTUB(Remove, 0xff8d2934)
 NSTUB(RenameFile_Fut, 0xff86fb74)
 // Best match: 96%
 NSTUB(SetAutoShutdownTime, 0xff9833e8)
+// Best match: 73%
+NSTUB(SetCurrentCaptureModeType, 0xff9aed34)
+// Best match: 87%
+NSTUB(SetLogicalEventActive, 0xff981990)
 // Best match: 66%
 NSTUB(SetParameterData, 0xff987fdc)
 // ERROR: SetPropertyCase is not found!

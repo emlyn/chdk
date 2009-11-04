@@ -156,7 +156,17 @@ extern void exp_drv_task();
 
 void kbd_fetch_data(long *dst);
 
-extern long playrec_mode; //used on S-series only
+/*used to detect play or record mode without relying on physical switch positions
+ values:
+  0 = startup in play
+  1 = unknown, possibly play<->rec transition
+  2 = record mode
+  4 = canon menu in record mode
+  3 = play after being in record mode at least once
+  5 = transitioning between some record modes, such as movie
+ address can be found with strings "MenuIn", "MenuOut"
+*/
+extern long playrec_mode; 
 
 extern void *led_table;
 extern void _UniqueLedOn(void *addr, long brightness);
@@ -169,7 +179,28 @@ int _LEDDrive(int led, int action);
 extern long _LockMainPower();
 extern long _UnlockMainPower();
 extern void _SetAutoShutdownTime(int t);
+
+/*
+The following two functions post an event such as button press, switch change, cable connection change.
+event:
+  A number identifying the event. This number may vary between camera models. 
+  See levent.c and levent.h for methods to identify events by name.
+unk: 
+  Unknown value, usually 0 in canon code. Strings indicate it would be a pointer if set
+return value:
+  Unknown, possibly void.
+*/
 extern int  _PostLogicalEventForNotPowerType(int event, int unk);
+extern int  _PostLogicalEventToUI(int event, int unk);
+/*
+Used in the canon code to modify the generation or delivery of events. For example, Canon 
+mode override code sets 1 on the desired dial position, and zero on all others.
+event: as described above for PostLogicalEvent*
+state: if 1, the event will be generated/delivered as normal. If 0, the event is disabled/blocked.
+*/
+extern void _SetLogicalEventActive(unsigned event, unsigned state);
+/* Somehow related to the above. Normally 0, set to 1 for script mode */
+extern void _SetScriptMode(unsigned mode);
 
 
 /* math */
@@ -230,6 +261,7 @@ extern void _UnlockAF(void);
 extern int _apex2us(int);
 
 extern void _ScreenLock();
+extern void _SetCurrentCaptureModeType();
 // known in CHDK as _RefreshPhysicalScreen
 //extern void _ScreenUnLock();
 #endif

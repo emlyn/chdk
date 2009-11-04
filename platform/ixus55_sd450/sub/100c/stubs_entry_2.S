@@ -27,3 +27,4 @@ NHSTUB(PT_PlaySound, 0xFF9571CC)
 //NHSTUB(ExitFromCompensationEVF, 0xFFFFFFFF) // Stub not found. When found, remove dummy function from lib.c.
 NHSTUB(DoAFLock, 0xff94a1d0)
 NHSTUB(UnlockAF, 0xff94a210)
+NHSTUB(SetScriptMode,0xFF95DA14) // by find_eventproc name @ 0xFF982940

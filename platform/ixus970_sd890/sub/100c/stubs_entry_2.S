@@ -41,6 +41,7 @@ NHSTUB(LEDDrive,                    0xFF84206C)
 NHSTUB(WriteSDCard,                 0xFF9227E0)
 NHSTUB(PostLogicalEventForNotPowerType, 0xFF873274)
 NHSTUB(apex2us,                     0xFF9B2824)
+NHSTUB(SetScriptMode,               0xFF8751E4)
 
 //Nullsubs
 NHSTUB(Mount_FileSystem,            0xFF810948)

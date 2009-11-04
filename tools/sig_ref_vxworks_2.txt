@@ -41,3 +41,5 @@ PutInNdFilter 0xFFEB41D8
 PutOutNdFilter 0xFFEB4220
 TurnOnBackLight 0xffdbd720
 TurnOffBackLight 0xffdbd750
+PostLogicalEventToUI 0xFFD6CD44
+PostLogicalEventForNotPowerType 0xFFD6CCC8

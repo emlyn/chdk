@@ -29,3 +29,5 @@ DEF(recreview_hold, 0x76C08) // sub_FF9A9DDC similar to a540 sub_FFD8F458
 
 DEF(movie_status, 0x6EB44)
 
+DEF(levent_table,0xFF96B4FC)
+DEF(playrec_mode,=0x643C) // "MenuIn"

@@ -61,6 +61,9 @@ NSTUB(Open, 0xff87cb24)
 // Best match: 86%
 NSTUB(PhySw_testgpio, 0xff8295b0)
 // ALT: NSTUB(PhySw_testgpio, 0xff8295b0) // 25/4
+NSTUB(PostLogicalEventForNotPowerType, 0xff9b1988)
+NSTUB(PostLogicalEventToUI, 0xff9b1a04)
+// ALT: NSTUB(PostLogicalEventToUI, 0xff9b1a8c) // 21/0
 NSTUB(ProtectFile, 0xff875130)
 // Best match: 92%
 NSTUB(PutInNdFilter, 0xffb505d8)
@@ -73,6 +76,9 @@ NSTUB(RefreshPhysicalScreen, 0xff9ce31c)
 NSTUB(Remove, 0xff87cb6c)
 NSTUB(RenameFile_Fut, 0xff875964)
 NSTUB(SetAutoShutdownTime, 0xff9b5ffc)
+NSTUB(SetCurrentCaptureModeType, 0xff9e9e80)
+// Best match: 88%
+NSTUB(SetLogicalEventActive, 0xff9b3924)
 NSTUB(SetParameterData, 0xff9bbd28)
 NSTUB(SetPropertyCase, 0xff825784)
 NSTUB(SleepTask, 0xff8224a8)

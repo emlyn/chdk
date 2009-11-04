@@ -18,4 +18,5 @@ DEF(movie_status, 0x53b4) // 0x5368 + 0x4c // looks OK
 
 // ??
 // DEF(some_flag_for_af_scan, )
-// DEF(playrec_mode,)
+DEF(levent_table,0xFFACAC6C)
+DEF(playrec_mode,0x5534) // 0x5530+4 "MenuIn"

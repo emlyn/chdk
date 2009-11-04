@@ -13,3 +13,5 @@ DEF(some_flag_for_af_scan, 0x93E0) // search on "SsPrepareSeq.c", refs at FF93BF
 DEF(zoom_status, 0xD890) // sub_FFA599D4, search on ZoomCon_EnterCaptModeChange OK, NOTE may have more values than other cams ?
 DEF(some_f_for_dng, 0xDEAD) // TODO NOT FOUND!
 DEF(second_ext_for_dng, 0xDEAD) // TODO NOT FOUND!
+DEF(levent_table,0xFFB198E0)
+DEF(playrec_mode,0x5594) // 0x5590+4 "MenuIn"

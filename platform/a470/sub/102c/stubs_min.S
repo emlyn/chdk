@@ -15,3 +15,5 @@ DEF(movie_status, 0x5200)  // 0x51C8 + 0x38
 DEF(some_flag_for_af_scan, 0xCDEC) 
 DEF(zoom_status, 0xD7C4) 
 DEF(led_table, 0x22AC) //Found using LEDDrv.c
+DEF(levent_table,0xFFE73984)
+DEF(playrec_mode,0x536C+4)

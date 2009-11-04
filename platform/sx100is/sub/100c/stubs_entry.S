@@ -54,13 +54,19 @@ NSTUB(MoveZoomLensWithPoint, 0xffd0ee74)
 NSTUB(NewTaskShell, 0xffc5b744)
 NSTUB(Open, 0xffc15024)
 // ERROR: PT_PlaySound is not found!
+NSTUB(PostLogicalEventForNotPowerType, 0xffc5d6e4)
+NSTUB(PostLogicalEventToUI, 0xffc5d730)
 NSTUB(Read, 0xffc0a440)
 NSTUB(ReadFastDir, 0xffddc6b0)
 NSTUB(RefreshPhysicalScreen, 0xffd79fd4)
 NSTUB(Remove, 0xffc15094)
 NSTUB(RenameFile_Fut, 0xffc14860)
 NSTUB(SetAutoShutdownTime, 0xffc5f7bc)
+// Best match: 81%
+NSTUB(SetCurrentCaptureModeType, 0xffc66244)
 NSTUB(SetFileTimeStamp, 0xffc15328)
+// Best match: 78%
+NSTUB(SetLogicalEventActive, 0xffc5f480)
 NSTUB(SetParameterData, 0xffd2680c)
 NSTUB(SetPropertyCase, 0xffc5bbb8)
 // Best match: 92%

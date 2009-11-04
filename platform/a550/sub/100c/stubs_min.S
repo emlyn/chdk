@@ -15,3 +15,4 @@ DEF(zoom_status, 0x2650)
 DEF(some_f_for_dng, 0x60C8) 
 DEF(second_ext_for_dng, 0x60EC) // ".THM"
 
+DEF(levent_table,0xFFE9D378)

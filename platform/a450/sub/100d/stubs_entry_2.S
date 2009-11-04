@@ -33,3 +33,4 @@ NHSTUB(ExitFromCompensationEVF, 0xffe8b194) // Stub not found. When found, remov
 NHSTUB(SetAE_ShutterSpeed, 0xFFDE17BC)
 NHSTUB(DoAFLock, 0xffe6aedc)
 NHSTUB(UnlockAF, 0xffe6af5c)
+NHSTUB(SetScriptMode,0xFFEA416C) // by find_eventproc name @ 0xFFC0F608

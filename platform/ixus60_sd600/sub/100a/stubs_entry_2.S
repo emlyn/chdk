@@ -54,3 +54,4 @@ NHSTUB(DoAFLock, 0xff95b8e8)
 NHSTUB(UnlockAF, 0xff95b92c)
 
 //NHSTUB(WriteSDCard,0xFF87E128) // from sub_FF86E378
+NHSTUB(SetScriptMode,0xFF9701A0) // by find_eventproc name @ 0xFF998F00

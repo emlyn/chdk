@@ -52,3 +52,5 @@ NHSTUB(nullsub_37,                  0xFF810948)
 NHSTUB(unknown_libname_80,          0xFF810948)
 NHSTUB(unknown_libname_96,          0xFF810948)
 NHSTUB(j_unknown_libname_73,        0xFF810948)
+
+NHSTUB(SetScriptMode,        0xFF8751E4) // "SetScriptMode"

@@ -114,3 +114,7 @@ NHSTUB(ExitFromCompensationEVF, 0xff93e220)
 NHSTUB(DoAFLock, 0xff93e07c)
 NHSTUB(UnlockAF, 0xff93e0dc)
 
+NHSTUB(SetScriptMode,0xFF955C24) //  "EvntTbl_SetScriptMode"
+NHSTUB(SetCurrentCaptureModeType,0xFFAAAED0) // NOT FOUND, NULLSUB
+NHSTUB(SetLogicalEventActive,0xFFAAAED0) // NOT FOUND, NULLSUB
+

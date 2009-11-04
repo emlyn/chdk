@@ -34,3 +34,4 @@ NHSTUB(PT_PlaySound, 0xFFD4074C)
 NHSTUB(SetAE_ShutterSpeed, 0xFFE76A00)
 NHSTUB(DoAFLock, 0xffd33094)
 NHSTUB(UnlockAF, 0xffd330d4)
+NHSTUB(SetScriptMode,0xFFD46FE4) // by find_eventproc name @ 0xFFD6D3DC

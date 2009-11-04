@@ -42,3 +42,4 @@ DEF(zoom_status, 0xF2A0)
 
 
 
+DEF(levent_table,0xFFB89F60)

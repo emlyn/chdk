@@ -182,3 +182,4 @@ NHSTUB(PT_PlaySound, 0xFFC52FA0)
 NHSTUB(DoAFLock, 0xffc16f5c)
 NHSTUB(UnlockAF, 0xffc16fc8)
 NHSTUB(WriteSDCard, 0xFFCFF4E8)
+NHSTUB(SetScriptMode, 0xFFC5F49C) // "SetScriptMode"

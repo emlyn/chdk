@@ -69,6 +69,10 @@ NSTUB(NewTaskShell, 0xff879220)
 NSTUB(Open, 0xff823a3c)
 // Best match: 90%
 NSTUB(PT_PlaySound, 0xff865a7c)
+// Best match: 86%
+NSTUB(PostLogicalEventForNotPowerType, 0xff87ed3c)
+// Best match: 92%
+NSTUB(PostLogicalEventToUI, 0xff87ed88)
 NSTUB(Read, 0xff819a4c)
 NSTUB(ReadFastDir, 0xffa491c4)
 // ERROR: RefreshPhysicalScreen is not found!
@@ -77,7 +81,11 @@ NSTUB(Remove, 0xff823aac)
 NSTUB(RenameFile_Fut, 0xff8232bc)
 // Best match: 93%
 NSTUB(SetAutoShutdownTime, 0xff881084)
+// Best match: 81%
+NSTUB(SetCurrentCaptureModeType, 0xff888754)
 NSTUB(SetFileTimeStamp, 0xff823d40)
+// Best match: 64%
+NSTUB(SetLogicalEventActive, 0xff880cd0)
 // Best match: 68%
 NSTUB(SetParameterData, 0xff9753b0)
 // Best match: 72%

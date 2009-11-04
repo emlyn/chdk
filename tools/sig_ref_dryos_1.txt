@@ -99,3 +99,7 @@ MakeDirectory_Fut 0xFFC14908 28
 SetFileTimeStamp 0xFFC15308 20
 TurnOnBackLight 0xffc676dc
 TurnOffBackLight 0xffc676f4
+SetLogicalEventActive 0xFFC5BCD0 20
+PostLogicalEventToUI 0xFFC5B69C
+PostLogicalEventForNotPowerType 0xFFC5B650
+SetCurrentCaptureModeType 0xFFC6214C 15

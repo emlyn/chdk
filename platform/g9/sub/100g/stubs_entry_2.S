@@ -200,4 +200,5 @@ NSTUB(PutOutNdFilter, 0xFFA0C588)
 NHSTUB(WriteSDCard, 0xFF928CF4)
 NHSTUB(DoAFLock, 0xff8275cc)
 NHSTUB(UnlockAF, 0xff827638)
+NHSTUB(SetScriptMode, 0xFF872F78) // "SetScriptMode"
 

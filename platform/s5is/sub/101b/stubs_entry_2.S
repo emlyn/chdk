@@ -188,3 +188,4 @@ NHSTUB(ExitFromCompensationEVF, 0xff82809c)
 NHSTUB(DoAFLock, 0xff827bc8)
 NHSTUB(UnlockAF, 0xff827c34)
 NHSTUB(apex2us, 0xFF9CAE4C)
+NHSTUB(SetScriptMode, 0xFF877B3C) // "SetScriptMode"

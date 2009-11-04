@@ -27,3 +27,4 @@ NHSTUB(GetCurrentMachineTime, 0xFF81F2D4)
 NHSTUB(GiveSemaphore, 0xFF8222B0)
 NHSTUB(DoAFLock, 0xff948b74)
 NHSTUB(UnlockAF, 0xff948bb4)
+NHSTUB(SetScriptMode,0xFF95C208) // by find_eventproc name @ 0xFF981054

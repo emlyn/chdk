@@ -61,6 +61,8 @@ NSTUB(MoveFocusLensToDistance, 0xffa0d4e4)
 NSTUB(Open, 0xff825d64)
 // Best match: 54%
 NSTUB(PT_PlaySound, 0xff864244)
+NSTUB(PostLogicalEventForNotPowerType, 0xff87617c)
+NSTUB(PostLogicalEventToUI, 0xff8761c8)
 NSTUB(Read, 0xff81a2c8)
 NSTUB(ReadFastDir, 0xffa279c8)
 // Best match: 85%
@@ -69,7 +71,10 @@ NSTUB(Remove, 0xff825dd4)
 NSTUB(RenameFile_Fut, 0xff8255a0)
 // Best match: 61%
 NSTUB(SetAutoShutdownTime, 0xff877f50)
+// Best match: 81%
+NSTUB(SetCurrentCaptureModeType, 0xff87f94c)
 NSTUB(SetFileTimeStamp, 0xff826068)
+NSTUB(SetLogicalEventActive, 0xff877bb4)
 // ERROR: SetParameterData is not found!
 // ERROR: SetPropertyCase is not found!
 // Best match: 92%

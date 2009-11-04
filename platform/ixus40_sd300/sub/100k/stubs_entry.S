@@ -57,6 +57,10 @@ NSTUB(MoveZoomLensWithPoint, 0xffa52078)
 // ALT: NSTUB(MoveZoomLensWithPoint, 0xffa52078) // 13/12
 // ERROR: Open is not found!
 // ERROR: PhySw_testgpio is not found!
+// Best match: 95%
+NSTUB(PostLogicalEventForNotPowerType, 0xff953a4c)
+NSTUB(PostLogicalEventToUI, 0xff953ad8)
+// ALT: NSTUB(PostLogicalEventToUI, 0xff953b70) // 25/0
 NSTUB(ProtectFile, 0xff8691bc)
 // Best match: 92%
 NSTUB(PutInNdFilter, 0xffa693e0)
@@ -75,6 +79,9 @@ NSTUB(RefreshPhysicalScreen, 0xff96c550)
 NSTUB(Remove, 0xff8c0700)
 NSTUB(RenameFile_Fut, 0xff869934)
 // ERROR: SetAutoShutdownTime is not found!
+// ERROR: SetCurrentCaptureModeType is not found!
+// Best match: 62%
+NSTUB(SetLogicalEventActive, 0xff955bbc)
 // ERROR: SetParameterData is not found!
 // ERROR: SetPropertyCase is not found!
 NSTUB(SleepTask, 0xff8235e4)

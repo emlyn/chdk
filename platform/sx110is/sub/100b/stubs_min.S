@@ -13,3 +13,4 @@ DEF(movie_status, 0x5240+0x38)		//ROM:FFC4C120 and ROM:FFC4C788 (compare ROM:FF8
 DEF(enabled_refresh_physical_screen, 0xAA2C+0x30 )	//found at ROM:FFD8F750 and ROM:FFD8FBAC
 DEF(playrec_mode, 0x5408+0x4)	//found at ROM:FFC545B4 and ROM:FFC542A4 (?????)
 DEF(some_flag_for_af_scan, 0x8C78 )	//found at ROM:FFD19814
+DEF(levent_table,0xFFEB9C50)

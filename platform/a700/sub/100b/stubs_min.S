@@ -15,3 +15,5 @@ DEF(parameter_for_af_scan, 0x6EAB0)
 DEF(zoom_status, 0x7318)
 DEF(some_f_for_dng, 0x8898)
 DEF(second_ext_for_dng, 0x88BC)
+DEF(levent_table,0xFFD51F94)
+DEF(playrec_mode,0x6394) // "MenuIn"

@@ -16,3 +16,5 @@ DEF(movie_status, 0x7386C)
 
 
 DEF(physw_run, 0x1FCC)
+DEF(levent_table,0xFF9595D4)
+DEF(playrec_mode,0x6FE8) // "MenuIn"

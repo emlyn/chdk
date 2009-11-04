@@ -12,3 +12,5 @@ DEF(recreview_hold, 0x2590)
 DEF(movie_status, 0x91D54)  
 DEF(some_flag_for_af_scan, 0xCF88)
 DEF(zoom_status, 0x2658)
+DEF(levent_table,0xFFE9ECA0)
+DEF(playrec_mode,0xD29C) // SSAPI::MenuIn, SSAPI::MenuOut

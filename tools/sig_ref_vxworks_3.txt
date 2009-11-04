@@ -11,3 +11,4 @@ Fflush_Fut 0xFFE424D8
 MakeDirectory_Fut 0xFFE421E0
 RenameFile_Fut 0xFFE42084
 Remove 0xFFE46B78
+SetLogicalEventActive 0xFFEDE6B0 22

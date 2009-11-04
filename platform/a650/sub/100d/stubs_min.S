@@ -20,3 +20,5 @@ DEF(some_flag_for_af_scan, 0x11040)
 DEF(zoom_status, 0x11174)
 DEF(some_f_for_dng, 0xC058)
 DEF(second_ext_for_dng, 0xC078)
+DEF(levent_table,0xFFE6F8B0)
+DEF(playrec_mode,0x56E4) // "MenuIn" 0x56E0+4

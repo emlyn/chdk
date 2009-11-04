@@ -35,3 +35,5 @@ NHSTUB(Unmount_FileSystem, 0xFF81093C)
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF81093C)
 NHSTUB(rewinddir, 0xFF81093C)
 
+NHSTUB(SetScriptMode, 0xFF885290)
+

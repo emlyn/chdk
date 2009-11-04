@@ -38,6 +38,7 @@
 #include "../../include/ubasic.h"
 #include "../../include/platform.h"
 #include "../../include/script.h"
+#include "../../include/levent.h"
 #include <string.h>
 #include <fcntl.h>
 #include <io.h>
@@ -46,6 +47,7 @@
 #include "platform.h"
 #include "script.h"
 #include "camera.h"
+#include "levent.h"
 #endif
 //#include "platform.h"
 #include "tokenizer.h"
@@ -2094,6 +2096,20 @@ static void shot_histo_enable_statement()
     accept_cr();
 }
 
+static void set_record_statement()
+{
+    int to;
+    accept(TOKENIZER_SET_RECORD);
+    to = expr();
+    if(to) {
+        levent_set_record();
+    }
+    else {
+        levent_set_play();
+    }
+    accept_cr();
+}
+
 
 static void
 statement(void)
@@ -2403,6 +2419,10 @@ statement(void)
 
   case TOKENIZER_SHOT_HISTO_ENABLE:
     shot_histo_enable_statement();
+    break;
+
+  case TOKENIZER_SET_RECORD:
+    set_record_statement();
     break;
 
   default:

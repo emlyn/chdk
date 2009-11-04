@@ -19,6 +19,7 @@ NHSTUB(TurnOffMic, 						0xFFC311C4)
 NHSTUB(WriteSDCard,						0xFFCF8A00) 
 NHSTUB(PutInNdFilter, 					0xFFE267B4)
 NHSTUB(PutOutNdFilter, 					0xFFE267EC)
+NHSTUB(SetScriptMode, 					0xFFC5B354) // string
 
 //NSTUB(AllocateMemory, 				0xFFDF1D70)
 //NSTUB(FreeMemory, 					0xFFDF1D68)
@@ -47,3 +48,4 @@ NSTUB(SetZoomActuatorSpeedPercent, 0xffc00948)
 //NHSTUB(OpLog_WriteToSD, 			0xFFC5B878)
 //NSTUB(open, 						0xFFC09EC4)
 //NSTUB(close, 						0xFFC09F74)
+

@@ -30,3 +30,5 @@ DEF(recreview_hold, 0x76E50) // sub_FF9ACFC8
 
 DEF(some_f_for_dng, 0x8CBC)
 DEF(second_ext_for_dng, 0x8CE0)
+DEF(levent_table,0xFF96C760)
+DEF(playrec_mode,0x6484)

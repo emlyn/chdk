@@ -27,6 +27,8 @@ NHSTUB(Unmount_FileSystem, do_nothing)
 NHSTUB(Mount_FileSystem, do_nothing)
 NHSTUB(taskUnlock, do_nothing)
 NHSTUB(taskLock, do_nothing)
+
 NHSTUB(DoAFLock, 0xff825c4c)
 NHSTUB(UnlockAF, 0xff825c90)
 NHSTUB(apex2us, 0xFF9AC134)
+NHSTUB(SetScriptMode, 0xFF873680) // "SetScriptMode"

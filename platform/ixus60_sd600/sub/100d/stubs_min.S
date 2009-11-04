@@ -30,3 +30,5 @@ DEF(canon_shoot_menu_active, 0x7541) // 7540+1 sub_FF9B88AC near DSITask
 DEF(recreview_hold, 0x76C80) // sub_FF9AA8D4 similar to sub_FF9A9DDC in 100a
 
 DEF(movie_status, 0x6EBBC)
+DEF(levent_table,0xFF96BFF4)
+DEF(playrec_mode,0x6448) // "MenuIn"

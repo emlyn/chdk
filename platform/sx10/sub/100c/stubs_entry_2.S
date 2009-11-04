@@ -27,6 +27,7 @@ NHSTUB(LEDDrive, 0xFF84AB48)
 NHSTUB(WriteSDCard, 0xFF92A99C) //done
 NHSTUB(PostLogicalEventForNotPowerType, 0xFF87EC94) //done
 NHSTUB(apex2us, 0xFF9E0118) //done -0x10 diff rather that -0x8
+NHSTUB(SetScriptMode, 0xFF880C78) // "SetScriptMode"
 
 // null sub - point these at nullsub_1 as labelled in IDA
 
@@ -36,6 +37,4 @@ NHSTUB(Mount_FileSystem, 0xFF81093C)
 NHSTUB(Unmount_FileSystem, 0xFF81093C)
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF81093C)
 NHSTUB(rewinddir, 0xFF81093C)
-
-
 

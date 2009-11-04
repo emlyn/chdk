@@ -19,3 +19,5 @@ DEF(zoom_status, 0x11E48)
 DEF(movie_status, 0x5524)  // 0x54E8+0x3C
 DEF(some_f_for_dng, 0xC720)
 DEF(second_ext_for_dng, 0xC740)
+DEF(levent_table,0xFFAB3444)
+DEF(playrec_mode,0x56D0) // "SSAPI:MenuIn" 0x56CC+4

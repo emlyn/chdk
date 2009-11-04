@@ -43,3 +43,4 @@ NHSTUB(GetZoomLensCurrentPoint, 0xFF92B9C8)  // function table
 NHSTUB(kbd_pwr_off,NULL_SUB)
 NHSTUB(qsort, 0xffa84fb8)  // search 01 00 50 E1 1E FF 2F 01
 NHSTUB(strrchr, 0xff9b874C)  // via memset (strrchr is above it)
+NHSTUB(SetScriptMode, 0xFF878C68)  // "SetScriptMode"

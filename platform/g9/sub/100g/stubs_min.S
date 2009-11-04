@@ -14,3 +14,4 @@ DEF(recreview_hold, 0xF050) // 0xEFA0+0xB0		//OK
 DEF(movie_status, 0x5714)  // 0x56D8 + 0x3C		//OK
 DEF(some_flag_for_af_scan, 0x1253C)				//OK
 DEF(zoom_status, 0x1264C)						//OK
+DEF(levent_table,0xFFAE01AC)

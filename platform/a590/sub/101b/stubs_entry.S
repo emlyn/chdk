@@ -64,6 +64,8 @@ NSTUB(NewTaskShell, 0xffc5d578)
 NSTUB(Open, 0xffc13b60)
 // Best match: 81%
 NSTUB(PT_PlaySound, 0xffc4c8b8)
+NSTUB(PostLogicalEventForNotPowerType, 0xffc6178c)
+NSTUB(PostLogicalEventToUI, 0xffc617d8)
 NSTUB(Read, 0xffc0a15c)
 NSTUB(ReadFastDir, 0xffdd96bc)
 // Best match: 62%
@@ -73,7 +75,11 @@ NSTUB(Remove, 0xffc13bd0)
 NSTUB(RenameFile_Fut, 0xffc133e0)
 // Best match: 93%
 NSTUB(SetAutoShutdownTime, 0xffc62190)
+// Best match: 90%
+NSTUB(SetCurrentCaptureModeType, 0xffc68210)
 NSTUB(SetFileTimeStamp, 0xffc13e64)
+// Best match: 64%
+NSTUB(SetLogicalEventActive, 0xffc61eb8)
 // Best match: 96%
 NSTUB(SetParameterData, 0xffd35228)
 // Best match: 65%

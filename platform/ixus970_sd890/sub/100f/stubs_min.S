@@ -16,3 +16,4 @@ DEF(zoom_status, 0xD4A4)                  // @ FFA40200
 
 DEF(some_f_for_dng, 0xDEAD)          // ??? TODO NOT FOUND!
 DEF(second_ext_for_dng, 0xDEAD)      // ??? TODO NOT FOUND!
+DEF(levent_table,0xFFAD4084)

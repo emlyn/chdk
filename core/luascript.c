@@ -12,6 +12,7 @@
 #include "stdlib.h"
 #include "raw.h"
 #include "raw_merge.h"
+#include "levent.h"
 
 #ifdef OPT_CURVES
 #include "curves.h"
@@ -881,6 +882,195 @@ static int luaCB_set_backlight( lua_State* L )
   return 0;
 }
 
+// get the string or number passed in index and return it as an event id
+static unsigned levent_id_from_lua_arg( lua_State* L, int index)
+{
+  unsigned event_id;
+  if (lua_type(L, index) == LUA_TSTRING) {
+    const char *ev_name = lua_tostring(L, index);
+  	event_id = levent_id_for_name(ev_name);
+    if (event_id == 0) {
+        return luaL_error( L, "bad event name '%s'", ev_name );
+    }
+  }
+  // could check here if it is in the table, but even valid ones can crash
+  // so we avoid searching the table if given a number
+  else if (lua_type(L,index) == LUA_TNUMBER){
+  	event_id = lua_tonumber(L,index);
+  }
+  else {
+    return luaL_error( L, "expected event name or id" );
+  }
+  return event_id;
+}
+
+/*
+  get a value where boolean or 0/!0 are accepted for on/off.
+  normal lua toboolean will convert 0 to true, but ubasic and c users 
+  will expect 0 to be off
+  intentional HACK: numbers greater than 1 are returned as is
+*/
+static unsigned on_off_value_from_lua_arg( lua_State* L, int index)
+{
+  if( lua_isboolean(L,index) ) {
+  	return lua_toboolean(L,index);
+  }
+  else {
+  	return luaL_checknumber(L,index); 
+  }
+}
+
+/*
+  return the index of an event, given it's name or event id
+*/
+static unsigned levent_index_from_id_lua_arg( lua_State* L, int index )
+{
+  if (lua_type(L, index) == LUA_TSTRING) {
+  	return levent_index_for_name(lua_tostring(L, index));
+  }
+  else if (lua_type(L,index) == LUA_TNUMBER){
+  	return levent_index_for_id(lua_tonumber(L,index));
+  }
+  else {
+    return luaL_error( L, "expected string or number" );
+  }
+}
+
+/*
+  name,id,param = get_levent_def(event)
+  event is an event id (number) or name (string)
+  returns nil if event is not found
+*/
+static int luaCB_get_levent_def( lua_State* L )
+{
+  unsigned event_index = levent_index_from_id_lua_arg(L,1);
+  if (event_index == LEVENT_INVALID_INDEX) {
+    lua_pushnil(L);
+    return 1;
+  }
+  lua_pushstring(L, levent_table[event_index].name);
+  lua_pushnumber(L, levent_table[event_index].id);
+  lua_pushnumber(L, levent_table[event_index].param);
+  return 3;
+}
+
+/*
+  index=get_levent_index(event)
+  event is an event id (number) or name (string)
+  returns index or nil if not found
+*/
+static int luaCB_get_levent_index( lua_State* L )
+{
+  unsigned event_index = levent_index_from_id_lua_arg(L,1);
+  if (event_index == LEVENT_INVALID_INDEX) {
+    lua_pushnil(L);
+  }
+  else {
+    lua_pushnumber(L, event_index);
+  }
+  return 1;
+}
+
+/*
+  name,id,param = get_levent_def_by_index(event_index)
+  event_index is number index into the event table
+  returns nil if event is not found
+*/
+static int luaCB_get_levent_def_by_index( lua_State* L )
+{
+  unsigned i = luaL_checknumber(L,1);
+  if(i >= levent_count()) {
+  	lua_pushnil(L);
+    return 1;
+  }
+  lua_pushstring(L, levent_table[i].name);
+  lua_pushnumber(L, levent_table[i].id);
+  lua_pushnumber(L, levent_table[i].param);
+  return 3;
+}
+
+/*
+  post_levent_*(event[,unk])
+  post the event with PostLogicalEventToUI or PostLogicaEventForNotPowerType
+  This sends the event. The difference between functions isn't clear.
+  event is an event id (number) or name (string).
+  unk is an optional number whose meaning is unknown, defaults to zero. 
+    Based on code, other values would probably be a pointer.
+	This is NOT the 3rd item in the event table.
+*/
+static int luaCB_post_levent_to_ui( lua_State* L )
+{
+  unsigned event_id,arg;
+
+  event_id = levent_id_from_lua_arg(L,1);
+  arg = luaL_optnumber(L, 2, 0);
+  PostLogicalEventToUI(event_id,arg);
+  return 0;
+}
+
+static int luaCB_post_levent_for_npt( lua_State* L )
+{
+  unsigned event_id,arg;
+
+  event_id = levent_id_from_lua_arg(L,1);
+  arg = luaL_optnumber(L, 2, 0);
+  PostLogicalEventForNotPowerType(event_id,arg);
+  return 0;
+}
+
+/*
+  set_levent_active(event,state)
+  event is an event id (number) or name (string)
+  state is a numeric or boolean state. true or non zero numbers turn on zero, false or nil turn off
+  exact meaning is unknown, but it has something to do with the delivery of the specified event.
+*/
+static int luaCB_set_levent_active( lua_State* L )
+{
+  unsigned event_id;
+  unsigned state;
+
+  event_id = levent_id_from_lua_arg(L,1);
+  state = on_off_value_from_lua_arg(L,2);
+  SetLogicalEventActive(event_id,state);
+  return 0;
+}
+
+/*
+  set_levent_script_mode(state)
+  state is numeric or boolean state. true or non zero numbers turn on zero, false or nil turn off
+  exact meaning is unknown, but it has something to do with the behavior of events and/or SetLogicalEventActive.
+*/
+static int luaCB_set_levent_script_mode( lua_State* L )
+{
+  SetScriptMode(on_off_value_from_lua_arg(L,1));
+  return 0;
+}
+
+#if 0
+static int luaCB_set_capture_mode_type( lua_State* L )
+{
+  unsigned i = luaL_checknumber(L,1);
+  // TODO check against modemap as valid mode!
+  SetCurrentCaptureModeType(i);
+  return 0;
+}
+#endif
+
+/* 
+  set_record(state)
+  if state is 0 (or false) the camera is set to play mode. If 1 or true, the camera is set to record mode.
+*/
+static int luaCB_set_record( lua_State* L )
+{
+  if(on_off_value_from_lua_arg(L,1)) {
+    levent_set_record();
+  }
+  else {
+    levent_set_play();
+  }
+  return 0;
+}
+
 void register_lua_funcs( lua_State* L )
 {
 #define FUNC( X )			\
@@ -1020,4 +1210,17 @@ void register_lua_funcs( lua_State* L )
 #ifdef OPT_CURVES
    FUNC(set_curve_state);
 #endif
+// get levent definition by name or id, nil if not found
+   FUNC(get_levent_def);
+// get levent definition by index, nil if out of range
+   FUNC(get_levent_def_by_index);
+// get levent index from name or ID
+   FUNC(get_levent_index);
+   FUNC(post_levent_to_ui);
+   FUNC(post_levent_for_npt);
+   FUNC(set_levent_active);
+   FUNC(set_levent_script_mode);
+//   FUNC(set_capture_mode_type);
+
+   FUNC(set_record);
 }

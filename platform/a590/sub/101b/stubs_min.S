@@ -14,3 +14,5 @@ DEF(movie_status, 0x53c8)  // 0x5390 + 0x38 OK
 DEF(some_flag_for_af_scan, 0xBD3C) // found FFD16E94, follows call to _sub_FFC53124__SsFaceCtrl_c__247 like a720
 DEF(zoom_status, 0xBFBC)   // found at 0xFFE000B8
 DEF(led_table, 0x242C)
+DEF(levent_table,0xFFE8DE14)
+DEF(playrec_mode,0x5534+4)

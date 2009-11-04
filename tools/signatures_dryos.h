@@ -3029,6 +3029,109 @@ static FuncSig func_sig_TurnOffBackLight_1[] = {
 	/* 24/32 */
 };
 
+static FuncSig func_sig_SetLogicalEventActive_1[] = {
+	{   1, 0xe59f40c8, 0xfdffffff }, // ldr:4:0xE59F40C8
+	{   2, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   4, 0xe1a06001, 0xfdffffff }, // mov:6:0xE1A06001
+	{   5, 0xe1500026, 0xfdffffff }, // cmp:7:0xE3500026
+	{   6, 0x01a01e1b, 0xfdffffff }, // mov:6:0x03A01E1B
+	{   7, 0x008f00b8, 0xfdffffff }, // add:6:0x028F00B8
+	{   8, 0x0b000000, 0xff000000 }, // b, bl:3:0x0BFEC0E8
+	{   9, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB00001A
+	{  13, 0x00801001, 0xfdffffff }, // add:6:0x02801001
+	{  15, 0xe59f1094, 0xfdffffff }, // ldr:4:0xE59F1094
+	{  16, 0xe5815180, 0xfdffffff }, // str:4:0xE7815180
+	{  17, 0xe0810180, 0xfdffffff }, // add:6:0xE0810180
+	{  18, 0xe5806004, 0xfdffffff }, // str:4:0xE5806004
+	{ -1, -1, -1 },
+	/* 14/20 */
+};
+
+static FuncSig func_sig_PostLogicalEventToUI_1[] = {
+	{   1, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   2, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{   3, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{   4, 0xe1a03001, 0xfdffffff }, // mov:6:0xE1A03001
+	{   5, 0xe58d0004, 0xfdffffff }, // str:4:0xE58D0004
+	{   6, 0xe58d1000, 0xfdffffff }, // str:4:0xE58D1000
+	{   7, 0xe08f1f75, 0xfdffffff }, // add:6:0xE28F1F75
+	{   8, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{   9, 0xe1a02005, 0xfdffffff }, // mov:6:0xE1A02005
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFF1FE
+	{  11, 0xe08d0004, 0xfdffffff }, // add:6:0xE28D0004
+	{  12, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFEF905
+	{  13, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  14, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFFD1
+	{  15, 0xe1a03000, 0xfdffffff }, // mov:6:0xE1A03000
+	{  16, 0xe59d1004, 0xfdffffff }, // ldr:4:0xE59D1004
+	{  17, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  18, 0xe1a02004, 0xfdffffff }, // mov:6:0xE1A02004
+	{  19, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCB2
+	{  22, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{  23, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{  24, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{  25, 0xe1a03001, 0xfdffffff }, // mov:6:0xE1A03001
+	{  26, 0xe58d0004, 0xfdffffff }, // str:4:0xE58D0004
+	{  27, 0xe58d1000, 0xfdffffff }, // str:4:0xE58D1000
+	{  28, 0xe08f1f69, 0xfdffffff }, // add:6:0xE28F1F69
+	{  29, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  30, 0xe1a02005, 0xfdffffff }, // mov:6:0xE1A02005
+	{  31, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFF1E9
+	{ -1, -1, -1 },
+	/* 29/32 */
+};
+
+static FuncSig func_sig_PostLogicalEventForNotPowerType_1[] = {
+	{   1, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   2, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{   3, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{   4, 0xe1a03001, 0xfdffffff }, // mov:6:0xE1A03001
+	{   5, 0xe58d0004, 0xfdffffff }, // str:4:0xE58D0004
+	{   6, 0xe58d1000, 0xfdffffff }, // str:4:0xE58D1000
+	{   7, 0xe08f1e1f, 0xfdffffff }, // add:6:0xE28F1E1F
+	{   8, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{   9, 0xe1a02005, 0xfdffffff }, // mov:6:0xE1A02005
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFF211
+	{  11, 0xe08d0004, 0xfdffffff }, // add:6:0xE28D0004
+	{  12, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFEF918
+	{  13, 0xe59d1004, 0xfdffffff }, // ldr:4:0xE59D1004
+	{  14, 0xe1a03002, 0xfdffffff }, // mov:6:0xE3A03002
+	{  15, 0xe1a02004, 0xfdffffff }, // mov:6:0xE1A02004
+	{  16, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  17, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCC7
+	{  20, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{  21, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{  22, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{  23, 0xe1a03001, 0xfdffffff }, // mov:6:0xE1A03001
+	{  24, 0xe58d0004, 0xfdffffff }, // str:4:0xE58D0004
+	{  25, 0xe58d1000, 0xfdffffff }, // str:4:0xE58D1000
+	{  26, 0xe08f1f75, 0xfdffffff }, // add:6:0xE28F1F75
+	{  27, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  28, 0xe1a02005, 0xfdffffff }, // mov:6:0xE1A02005
+	{  29, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFF1FE
+	{  30, 0xe08d0004, 0xfdffffff }, // add:6:0xE28D0004
+	{  31, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFEF905
+	{ -1, -1, -1 },
+	/* 29/32 */
+};
+
+static FuncSig func_sig_SetCurrentCaptureModeType_1[] = {
+	{   1, 0xe51f4d08, 0xfdffffff }, // ldr:4:0xE51F4D08
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFEE96B
+	{   4, 0xe040c902, 0xfdffffff }, // sub:6:0xE240C902
+	{   5, 0xe05cc002, 0xfdffffff }, // sub:6:0xE25CC002
+	{   6, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000003
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFEE967
+	{   8, 0xe040c902, 0xfdffffff }, // sub:6:0xE240C902
+	{   9, 0xe05cc020, 0xfdffffff }, // sub:6:0xE25CC020
+	{  11, 0xe1a00002, 0xfdffffff }, // mov:6:0xE3A00002
+	{  12, 0xe584005c, 0xfdffffff }, // str:4:0xE584005C
+	{  14, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFFC9E
+	{ -1, -1, -1 },
+	/* 11/15 */
+};
+
 static FuncSig func_sig_AllocateMemory_2[] = {
 	{   0, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
 	{   1, 0xea000000, 0xff000000 }, // b, bl:3:0xEAF80561
@@ -3637,6 +3740,73 @@ static FuncSig func_sig_PT_PlaySound_2[] = {
 	{  10, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFFF22
 	{ -1, -1, -1 },
 	/* 11/11 */
+};
+
+static FuncSig func_sig_PostLogicalEventToUI_2[] = {
+	{   1, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   2, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{   3, 0xe1a05001, 0xfdffffff }, // mov:6:0xE1A05001
+	{   4, 0xe1a03001, 0xfdffffff }, // mov:6:0xE1A03001
+	{   5, 0xe58d0004, 0xfdffffff }, // str:4:0xE58D0004
+	{   6, 0xe58d1000, 0xfdffffff }, // str:4:0xE58D1000
+	{   7, 0xe08f1f7e, 0xfdffffff }, // add:6:0xE28F1F7E
+	{   8, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{   9, 0xe1a02004, 0xfdffffff }, // mov:6:0xE1A02004
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFDC74
+	{  11, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  12, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFF2C
+	{  13, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{  14, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000004
+	{  15, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  16, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB039A24
+	{  17, 0xe1a01005, 0xfdffffff }, // mov:6:0xE1A01005
+	{  18, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000159
+	{  20, 0xe08d0004, 0xfdffffff }, // add:6:0xE28D0004
+	{  21, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFED649
+	{  22, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  23, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFFC8
+	{  24, 0xe1a03000, 0xfdffffff }, // mov:6:0xE1A03000
+	{  25, 0xe59d1004, 0xfdffffff }, // ldr:4:0xE59D1004
+	{  26, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  27, 0xe1a02005, 0xfdffffff }, // mov:6:0xE1A02005
+	{  28, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCA2
+	{  31, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{ -1, -1, -1 },
+	/* 28/32 */
+};
+
+static FuncSig func_sig_PostLogicalEventForNotPowerType_2[] = {
+	{   1, 0xe1a05000, 0xfdffffff }, // mov:6:0xE1A05000
+	{   2, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{   3, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{   4, 0xe1a03001, 0xfdffffff }, // mov:6:0xE1A03001
+	{   5, 0xe58d0004, 0xfdffffff }, // str:4:0xE58D0004
+	{   6, 0xe58d1000, 0xfdffffff }, // str:4:0xE58D1000
+	{   7, 0xe08f1f85, 0xfdffffff }, // add:6:0xE28F1F85
+	{   8, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{   9, 0xe1a02005, 0xfdffffff }, // mov:6:0xE1A02005
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFDC87
+	{  11, 0xe08d0004, 0xfdffffff }, // add:6:0xE28D0004
+	{  12, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFED665
+	{  13, 0xe59d1004, 0xfdffffff }, // ldr:4:0xE59D1004
+	{  14, 0xe1a03002, 0xfdffffff }, // mov:6:0xE3A03002
+	{  15, 0xe1a02004, 0xfdffffff }, // mov:6:0xE1A02004
+	{  16, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  17, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFCC0
+	{  20, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  21, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{  22, 0xe1a05001, 0xfdffffff }, // mov:6:0xE1A05001
+	{  23, 0xe1a03001, 0xfdffffff }, // mov:6:0xE1A03001
+	{  24, 0xe58d0004, 0xfdffffff }, // str:4:0xE58D0004
+	{  25, 0xe58d1000, 0xfdffffff }, // str:4:0xE58D1000
+	{  26, 0xe08f1f7e, 0xfdffffff }, // add:6:0xE28F1F7E
+	{  27, 0xe1a00020, 0xfdffffff }, // mov:6:0xE3A00020
+	{  28, 0xe1a02004, 0xfdffffff }, // mov:6:0xE1A02004
+	{  29, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFDC74
+	{  30, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  31, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFF2C
+	{ -1, -1, -1 },
+	/* 29/32 */
 };
 
 static FuncSig func_sig_AllocateUncacheableMemory_3[] = {
@@ -4448,6 +4618,10 @@ FuncsList func_list[] = {
 	{ "Open", func_sig_Open_1 },
 	{ "Open", func_sig_Open_3 },
 	{ "PT_PlaySound", func_sig_PT_PlaySound_2 },
+	{ "PostLogicalEventForNotPowerType", func_sig_PostLogicalEventForNotPowerType_1 },
+	{ "PostLogicalEventForNotPowerType", func_sig_PostLogicalEventForNotPowerType_2 },
+	{ "PostLogicalEventToUI", func_sig_PostLogicalEventToUI_1 },
+	{ "PostLogicalEventToUI", func_sig_PostLogicalEventToUI_2 },
 	{ "Read", func_sig_Read_1 },
 	{ "ReadFastDir", func_sig_ReadFastDir_1 },
 	{ "ReadFastDir", func_sig_ReadFastDir_3 },
@@ -4455,7 +4629,9 @@ FuncsList func_list[] = {
 	{ "Remove", func_sig_Remove_1 },
 	{ "RenameFile_Fut", func_sig_RenameFile_Fut_1 },
 	{ "SetAutoShutdownTime", func_sig_SetAutoShutdownTime_1 },
+	{ "SetCurrentCaptureModeType", func_sig_SetCurrentCaptureModeType_1 },
 	{ "SetFileTimeStamp", func_sig_SetFileTimeStamp_1 },
+	{ "SetLogicalEventActive", func_sig_SetLogicalEventActive_1 },
 	{ "SetParameterData", func_sig_SetParameterData_1 },
 	{ "SetPropertyCase", func_sig_SetPropertyCase_1 },
 	{ "SleepTask", func_sig_SleepTask_1 },

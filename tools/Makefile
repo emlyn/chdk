@@ -4,13 +4,16 @@ SKIPBUILDRULES=1
 
 include $(topdir)makefile.inc
 
-OBJS=pakwif.o finsig.o gensig.o dumpchk.o dancingbits.o rawconvert.o
+OBJS=pakwif.o finsig.o gensig.o dumpchk.o dancingbits.o rawconvert.o dumputil.o find_levent.o find_eventproc.o
 
 ifdef OPT_FI2
   SUBDIRS=packfi2
 endif
 
-all: pakwif$(EXE) finsig$(EXE) dancingbits$(EXE)
+all: pakwif$(EXE) finsig$(EXE) dancingbits$(EXE) 
+
+# not needed by batch builds, not built by default
+extras: rawconvert$(EXE) find_levent$(EXE) find_eventproc$(EXE) dumpchk$(EXE)
 
 %.o: %.c
 	@echo $< \-\> $@
@@ -43,6 +46,14 @@ dancingbits$(EXE): dancingbits.o
 
 rawconvert$(EXE): rawconvert.o
 	@echo $< \-\> $@
+	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
+
+find_levent$(EXE): find_levent.o dumputil.o
+	@echo $^ \-\> $@
+	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
+
+find_eventproc$(EXE): find_eventproc.o dumputil.o
+	@echo $^ \-\> $@
 	$(HOSTCC) $(HOSTCFLAGS) -o $@ $^
 
 clean:

@@ -22,3 +22,4 @@ DEF(some_flag_for_af_scan, 0x6AF8)	       //found at FF93BCF0   ??????
 DEF(led_table, 0x24AC + 0x04)              // found at FF847374
 
 
+DEF(levent_table,0xFFB399F0)

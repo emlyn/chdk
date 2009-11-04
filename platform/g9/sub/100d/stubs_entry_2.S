@@ -206,3 +206,4 @@ NSTUB(PutInNdFilter, 0xFFA0C4E0)
 NSTUB(PutOutNdFilter, 0xFFA0C518)
 NHSTUB(DoAFLock, 0xff8275cc)
 NHSTUB(UnlockAF, 0xff827638)
+NHSTUB(SetScriptMode, 0xFF872F78) // "SetScriptMode"
