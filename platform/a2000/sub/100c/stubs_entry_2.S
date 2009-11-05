@@ -130,6 +130,7 @@ NHSTUB(open, 														0xffc09ea0)
 NHSTUB(opendir, 												0xffddcde8)
 NHSTUB(openfastdir, 										0xffddcde8)
 
+NHSTUB(qsort, 													0xFFE2CB98)
 NHSTUB(rand, 														0xffc0d9bc)
 
 NHSTUB(read, 														0xffc0a138)
