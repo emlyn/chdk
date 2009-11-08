@@ -327,7 +327,7 @@ void __attribute__((naked,noinline)) sub_FF8620C4_my(){
                  "BL      sub_FF935A84\n"
                  "BL      sub_FF936540\n"
                  "MOV     R0, R4\n"
-                 "BL      sub_FF935BC8\n"             //----------->
+                 "BL      sub_FF935BC8_my\n"             //----------->
                  "MOV     R5, R0\n"
                  "BL      capt_seq_hook_raw_here\n"      // +
                  "B       loc_FF862184\n"

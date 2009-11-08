@@ -247,9 +247,6 @@ batch-zip: version
 	mv $(topdir)bin/$(VER)-sx200is-100d-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx200is-100d-$(BUILD_NUMBER)_BETA.zip	
 	mv $(topdir)bin/$(VER)-ixus980_sd990-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus980_sd990-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus980_sd990-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus980_sd990-101b-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-ixus870_sd880-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus870_sd880-100e-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-ixus870_sd880-101a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus870_sd880-101a-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-ixus870_sd880-102b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus870_sd880-102b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-a2000-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a2000-100c-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
@@ -391,12 +388,6 @@ batch-zip-complete: version
 	mv $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER).zip $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER).zip $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/ixus870_sd880-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus870_sd880-100e-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/ixus870_sd880-100e-$(BUILD_NUMBER).zip $(topdir)bin/ixus870_sd880-100e-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/ixus870_sd880-101a-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus870_sd880-101a-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/ixus870_sd880-101a-$(BUILD_NUMBER).zip $(topdir)bin/ixus870_sd880-101a-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/ixus870_sd880-102b-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus870_sd880-102b-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/ixus870_sd880-102b-$(BUILD_NUMBER).zip $(topdir)bin/ixus870_sd880-102b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/a2000-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/a2000-100c-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/a2000-100c-$(BUILD_NUMBER).zip $(topdir)bin/a2000-100c-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
