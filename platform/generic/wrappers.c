@@ -131,6 +131,7 @@ void lens_set_zoom_point(long newpt)
     if (newpt==0) zoom_status=ZOOM_OPTICAL_MIN;
     else if (newpt >= zoom_points) zoom_status=ZOOM_OPTICAL_MAX;
     else zoom_status=ZOOM_OPTICAL_MEDIUM; 
+    _SetPropertyCase(PROPCASE_OPTICAL_ZOOM_POSITION, &newpt, sizeof(newpt));
 }
 
 void lens_set_zoom_speed(long newspd)

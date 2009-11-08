@@ -42,4 +42,5 @@ WARNING: this file is used gen_propset_lua.sh to generate propset.lua
 #define PROPCASE_FLASH_SYNC_CURTAIN			20
 #define PROPCASE_METERING_MODE				9
 #define PROPCASE_WB_ADJ                               100
+#define PROPCASE_OPTICAL_ZOOM_POSITION        99 // tested a540, sd400
 #endif
