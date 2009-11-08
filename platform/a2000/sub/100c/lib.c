@@ -44,18 +44,6 @@ void *vid_get_viewport_fb_d()
 }
 
 
-void *hook_raw_fptr()
-{
-	// found at ROM:FFE46CBC
-	return 0xEC04F0;
-}
-
-void *hook_raw_ret_addr()
-{
-	return (void*)0; // What does this do? Doesn't seem to be called
-}
-
-
 long vid_get_bitmap_screen_width()
 {
 	return 360;

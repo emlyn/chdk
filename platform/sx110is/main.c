@@ -59,9 +59,9 @@ static struct {
 int mode_get() {
 	int mode, i, t=0xFF;
 	
-        mode  = (playrec_mode==2 || playrec_mode==5)?MODE_REC:MODE_PLAY;
-		mode |= (physw_status[1] & 0x01000000)?0:MODE_SCREEN_OPENED;
-		mode |= (physw_status[1] & 0x00080000)?0:MODE_SCREEN_ROTATED;
+	mode  = (playrec_mode==2 || playrec_mode==4 || playrec_mode==5)?MODE_REC:MODE_PLAY;
+	mode |= (physw_status[1] & 0x01000000)?0:MODE_SCREEN_OPENED;
+	mode |= (physw_status[1] & 0x00080000)?0:MODE_SCREEN_ROTATED;
 	
 	_GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
 	for (i=0; i<MODESCNT; ++i) {

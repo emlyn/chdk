@@ -239,10 +239,6 @@ batch-zip: version
 	cp $(topdir)bin/$(VER)-sx200is-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx200is-100d-$(BUILD_NUMBER).zip
 	mv $(topdir)bin/$(VER)-sx1-200h-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx1-200h-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-sx1-201a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx1-201a-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-sx10-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx10-100c-$(BUILD_NUMBER)_BETA.zip	
-	mv $(topdir)bin/$(VER)-sx10-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx10-101b-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-sx10-102b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx10-102b-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-sx10-103a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx10-103a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-sx200is-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx200is-100c-$(BUILD_NUMBER)_BETA.zip	
 	mv $(topdir)bin/$(VER)-sx200is-100d-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx200is-100d-$(BUILD_NUMBER)_BETA.zip	
 	mv $(topdir)bin/$(VER)-ixus980_sd990-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus980_sd990-100e-$(BUILD_NUMBER)_BETA.zip
@@ -372,14 +368,6 @@ batch-zip-complete: version
 	mv $(topdir)bin/sx1-200h-$(BUILD_NUMBER).zip $(topdir)bin/sx1-200h-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/sx1-201a-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx1-201a-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/sx1-201a-$(BUILD_NUMBER).zip $(topdir)bin/sx1-201a-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/sx10-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx10-100c-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx10-100c-$(BUILD_NUMBER).zip $(topdir)bin/sx10-100c-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/sx10-101b-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx10-101b-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx10-101b-$(BUILD_NUMBER).zip $(topdir)bin/sx10-101b-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/sx10-102b-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx10-102b-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx10-102b-$(BUILD_NUMBER).zip $(topdir)bin/sx10-102b-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/sx10-103a-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx10-103a-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx10-103a-$(BUILD_NUMBER).zip $(topdir)bin/sx10-103a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/sx200is-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx200is-100c-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/sx200is-100c-$(BUILD_NUMBER).zip $(topdir)bin/sx200is-100c-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/sx200is-100d-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx200is-100d-$(BUILD_NUMBER)-full_BETA.zip
