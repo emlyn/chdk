@@ -59,7 +59,8 @@ void *vid_get_viewport_fb()
 // Histo etc. when in play mode maybe ?
 void *vid_get_viewport_fb_d() 
 {
-	return (void*)(*(int*)(0x2950+0x50));                  // found at FF858A84 and FF859398 (0x58 at FF8594F0)
+//	return (void*)(*(int*)(0x2950+0x50));                  // found at FF858A84 and FF859398 (0x58 at FF8594F0)
+	return (void*)(*(int*)(0x2950+0x58));                  // suggested by ADamb
 }
 
 
