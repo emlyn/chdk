@@ -13,8 +13,9 @@ NHSTUB(ExpCtrlTool_StartContiAE,	0xFFC21F10)
 //NSTUB(GetAEIntegralServiceMode_0,	0xFFC1A9C4)
 //NSTUB(IsFactoryMode,				0xFFC38838)
 //NSTUB(PhySw_testgpio,				0xFFC356EC)
+NHSTUB(LEDDrive,	    		0xFFC34CE0)
+
 // NOT found, using NULLSUB
-NHSTUB(PostLEDMessage,	    		0xFFC00948)
 //NSTUB(taskcreate_AudioTsk,			0xFFC3591C)
 //NSTUB(TurnOnBackLight,				0xFFC6C558)
 //NSTUB(TurnOffBackLight,			0xFFC6C570)

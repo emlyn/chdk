@@ -8,9 +8,7 @@ NHSTUB(kbd_pwr_off,		0xFFC356C8)
 //NHSTUB(MakeBootDisk,		0xFFDF24E4)
 //NHSTUB(MakeScriptDisk,		0xFFDF24F8)
 
-// incorrect, using nullsub for now
-//NHSTUB(PostLEDMessage,	    0xFFC34B78)
-NHSTUB(PostLEDMessage,	    0xFFC00948)
+NHSTUB(LEDDrive,	    		0xFFC34CE0)
 
 //NHSTUB(TurnOnAFLamp,		0xFFDB9BAC)
 
