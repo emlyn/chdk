@@ -2031,7 +2031,6 @@
 
     #define CAM_PROPSET                 2
     #define CAM_DRYOS                   1
-    #define  CAM_SWIVEL_SCREEN          1
     #define CAM_RAW_ROWPIX              4080 // from calcs see 100C lib.c 
     #define CAM_RAW_ROWS                3048 //  "     "    "    "    "  
     
