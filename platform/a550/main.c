@@ -74,10 +74,14 @@ int mode_get()
 {
 	int mode, i, t=0xFF;
 
-	_GetPropertyCase(219, &t, 4);
-	//mode = (playrec_mode==1 || playrec_mode==2) ? MODE_REC : MODE_PLAY;	// a560																					
-	mode = (physw_status[1] & 0x00000040) ? MODE_REC : MODE_PLAY; //eb5ccdc0 ( 110111000000 ):eb5cc980 ( 100110000000 )
-	mode |= (t == 270) ? MODE_SCREEN_ROTATED : 0;
+	//_GetPropertyCase(219, &t, 4);
+// play/rec without override
+//	mode = (physw_status[1] & 0x00000040) ? MODE_REC : MODE_PLAY; //eb5ccdc0 ( 110111000000 ):eb5cc980 ( 100110000000 )
+
+    mode = (playrec_mode==2 || playrec_mode==4 || playrec_mode==5)?MODE_REC:MODE_PLAY;
+
+	// wtf ? angle sensor != rotated screen
+	//mode |= (t == 270) ? MODE_SCREEN_ROTATED : 0;
 	//mode |= (physw_status[2] & 0x00008000)?0:MODE_SCREEN_OPENED;
 	//mode |= (physw_status[2] & 0x00004000)?0:MODE_SCREEN_ROTATED;
 

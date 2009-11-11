@@ -73,9 +73,8 @@ int mode_get() {
 
     mode = (playrec_mode==2 || playrec_mode==4 || playrec_mode==5)?MODE_REC:MODE_PLAY;
 
+// play/rec without override
 //    mode  = (physw_status[1] & 0x00000400)?MODE_REC:MODE_PLAY;
-  //  mode |= (physw_status[2] & 0x00008000)?0:MODE_SCREEN_OPENED;
-  //  mode |= (physw_status[2] & 0x00004000)?0:MODE_SCREEN_ROTATED;
     
     _GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
     for (i=0; i<MODESCNT; ++i) {

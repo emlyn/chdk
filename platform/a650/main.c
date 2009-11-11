@@ -84,7 +84,11 @@ int get_zoom_x(int zp) {
 int mode_get() {
     int mode, i, t=0xFF;
 
-    mode  = (physw_status[1] & 0x02000000)?MODE_PLAY:MODE_REC;
+// play/rec without override
+//    mode  = (physw_status[1] & 0x02000000)?MODE_PLAY:MODE_REC;
+
+    mode = (playrec_mode==2 || playrec_mode==4 || playrec_mode==5)?MODE_REC:MODE_PLAY;
+
     mode |= (physw_status[0] & 0x04000000)?0:MODE_SCREEN_OPENED;
     mode |= (physw_status[0] & 0x08000000)?0:MODE_SCREEN_ROTATED;
 

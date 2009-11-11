@@ -206,8 +206,12 @@ static struct {
 
 int mode_get() {
     int mode, i, t=0xFF;
+// play/rec without override
     mode  = (physw_status[0]&0x0F)==0x0B ?  MODE_PLAY : MODE_REC;
-    t=0xFF;
+
+// not found
+//    mode = (playrec_mode==2 || playrec_mode==4 || playrec_mode==5)?MODE_REC:MODE_PLAY;
+
     _GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
     for (i=0; i<MODESCNT; ++i) {
 	if (modemap[i].canonmode == t) {

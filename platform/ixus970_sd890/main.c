@@ -96,7 +96,10 @@ int mode_get()
 {
 	int mode, i, t=0xFF;
 
-	mode  = (physw_status[1] & 0x00010000) ? MODE_REC : MODE_PLAY;
+// play/rec without override ? This camera has play button, so not clear
+//	mode  = (physw_status[1] & 0x00010000) ? MODE_REC : MODE_PLAY;
+
+    mode = (playrec_mode==2 || playrec_mode==4 || playrec_mode==5)?MODE_REC:MODE_PLAY;
 
 	_GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
 	for (i=0; i<MODESCNT; ++i) {

@@ -58,13 +58,15 @@ static struct {
 int mode_get() {
 	int mode, i, t=0xFF;
 	
-	volatile int *physw_mmio = (int *) 0xC0220200; // I don't know where else I can find this...
-	
-	mode  = (physw_mmio[1] & 0x00010000)?MODE_REC:MODE_PLAY;
+//	volatile int *physw_mmio = (int *) 0xC0220200; // I don't know where else I can find this...
+//	mode  = (physw_mmio[1] & 0x00010000)?MODE_REC:MODE_PLAY;
+
+    mode = (playrec_mode==2 || playrec_mode==4 || playrec_mode==5)?MODE_REC:MODE_PLAY;
+
 	mode |= (physw_status[1] & 0x00000100)?0:MODE_SCREEN_OPENED;
 	mode |= (physw_status[1] & 0x00000200)?0:MODE_SCREEN_ROTATED;
 	
-	_GetPropertyCase(49, &t, 4);
+	_GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
 	for (i=0; i<MODESCNT; ++i) {
 		if (modemap[i].canonmode == t) {
 			return (mode | (modemap[i].hackmode & MODE_SHOOTING_MASK));

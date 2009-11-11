@@ -159,7 +159,7 @@ void kbd_fetch_data(long *dst);
 /*used to detect play or record mode without relying on physical switch positions
  values:
   0 = startup in play
-  1 = unknown, possibly play<->rec transition
+  1 = unknown, appears to happen in first play<->rec transition
   2 = record mode
   4 = canon menu in record mode
   3 = play after being in record mode at least once
@@ -186,7 +186,7 @@ event:
   A number identifying the event. This number may vary between camera models. 
   See levent.c and levent.h for methods to identify events by name.
 unk: 
-  Unknown value, usually 0 in canon code. Strings indicate it would be a pointer if set
+  Unknown value, usually 0 in canon code. For jogdial messages, this is number of clicks.
 return value:
   Unknown, possibly void.
 */

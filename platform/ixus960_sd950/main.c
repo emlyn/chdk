@@ -68,18 +68,23 @@ else if (zp>NUM_FL-1) return fl_tbl[NUM_FL-1]*10/fl_tbl[0];
 else return fl_tbl[zp]*10/fl_tbl[0];
 }
 int mode_get() {
-int mode, i, t=0xFF;
-mode  = (physw_status[1] & 0x08000000)?MODE_PLAY:MODE_REC;
-mode  = (physw_status[0] & 0x00000040)?MODE_REC:MODE_PLAY;
- 
-_GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
-for (i=0; i<MODESCNT; ++i) {
-if (modemap[i].canonmode == t) {
-return (mode | (modemap[i].hackmode & MODE_SHOOTING_MASK));
+	int mode, i, t=0xFF;
+// why two ?
+/*
+	mode  = (physw_status[1] & 0x08000000)?MODE_PLAY:MODE_REC;
+	mode  = (physw_status[0] & 0x00000040)?MODE_REC:MODE_PLAY;
+*/
+    mode = (playrec_mode==2 || playrec_mode==4 || playrec_mode==5)?MODE_REC:MODE_PLAY;
+	 
+	_GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
+	for (i=0; i<MODESCNT; ++i) {
+		if (modemap[i].canonmode == t) {
+			return (mode | (modemap[i].hackmode & MODE_SHOOTING_MASK));
+		}
+	}
+	return (mode);
 }
-}
-return (mode);
-}
+
 long get_vbatt_min()
 {
 return 3500;

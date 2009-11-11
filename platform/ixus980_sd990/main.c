@@ -99,6 +99,7 @@ int mode_get() {
     int mode, i, t=0xFF;
 
 	mode  = (playrec_mode==2 || playrec_mode == 4 || playrec_mode==5)?MODE_REC:MODE_PLAY;
+// camera has play button, not sure what this was checking
 //    mode  = (physw_status[0] & 0x00200000)?MODE_REC:MODE_PLAY;
 
     _GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);

@@ -61,7 +61,11 @@ static struct {
 int mode_get() {
     int mode, i, t=0xFF;
 
-    mode  = (physw_status[2] & 0x00002000)?MODE_REC:MODE_PLAY;
+// play/rec without override
+//    mode  = (physw_status[2] & 0x00002000)?MODE_REC:MODE_PLAY;
+
+    mode = (playrec_mode==2 || playrec_mode==4 || playrec_mode==5)?MODE_REC:MODE_PLAY;
+
     mode |= (physw_status[2] & 0x00008000)?0:MODE_SCREEN_OPENED;
     mode |= (physw_status[2] & 0x00004000)?0:MODE_SCREEN_ROTATED;
     
