@@ -951,11 +951,9 @@ void SetScriptMode(unsigned mode) {
 	_SetScriptMode(mode);
 }
 
-#if 0
 void SetCurrentCaptureModeType(unsigned mode) {
 	_SetCurrentCaptureModeType(mode);
 }
-#endif
 
 // TODO this belongs lib.c, but not all cameras include it
 // same as bitmap width for most cameras, override in platform/sub/lib.c as needed

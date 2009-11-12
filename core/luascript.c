@@ -1046,15 +1046,19 @@ static int luaCB_set_levent_script_mode( lua_State* L )
   return 0;
 }
 
-#if 0
-static int luaCB_set_capture_mode_type( lua_State* L )
+/* TODO warning this interface may change!
+  set_capture_mode(modenum)
+  where modenum is a valid PROPCASE_SHOOTING_MODE value for the current camera
+*/
+static int luaCB_set_capture_mode( lua_State* L )
 {
-  unsigned i = luaL_checknumber(L,1);
-  // TODO check against modemap as valid mode!
-  SetCurrentCaptureModeType(i);
+  int modenum = luaL_checknumber(L,1);
+  // if the value as negative, assume it is a mistakenly sign extended PROPCASE_SHOOTING_MODE value
+  if(modenum < 0) 
+    modenum &= 0xFFFF;
+  SetCurrentCaptureModeType((unsigned)modenum);
   return 0;
 }
-#endif
 
 /* 
   set_record(state)
@@ -1220,7 +1224,7 @@ void register_lua_funcs( lua_State* L )
    FUNC(post_levent_for_npt);
    FUNC(set_levent_active);
    FUNC(set_levent_script_mode);
-//   FUNC(set_capture_mode_type);
+   FUNC(set_capture_mode);
 
    FUNC(set_record);
 }
