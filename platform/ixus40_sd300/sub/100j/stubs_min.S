@@ -20,3 +20,4 @@ DEF(recreview_hold, 0x117A8) //WRONG
 
 
 DEF(levent_table,0xFF9514F0)
+DEF(playrec_mode,0x598C) // "MenuIn"

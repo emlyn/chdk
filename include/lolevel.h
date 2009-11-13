@@ -157,14 +157,19 @@ extern void exp_drv_task();
 void kbd_fetch_data(long *dst);
 
 /*used to detect play or record mode without relying on physical switch positions
- values:
+ values on most cameras:
   0 = startup in play
   1 = unknown, appears to happen in first play<->rec transition
   2 = record mode
   4 = canon menu in record mode
   3 = play after being in record mode at least once
   5 = transitioning between some record modes, such as movie
- address can be found with strings "MenuIn", "MenuOut"
+ values on very old vxworks cameras (ixus50_sd400, ixus700_sd500, s2is)
+  0 = startup in play
+  1 = rec
+  2 = play
+  3 = maybe transition ?
+ address in all cases can be found with strings "MenuIn", "MenuOut"
 */
 extern long playrec_mode; 
 

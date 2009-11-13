@@ -203,10 +203,11 @@ static struct {
 
 int mode_get() {
     int mode, i, t=0xFF;
-    //mode  = (physw_status[0]&0x0F)==0x0C ?  MODE_PLAY : MODE_REC;
-	mode  = (physw_status[0]&0x07)==0x01 ?  MODE_PLAY : MODE_REC;
-	//mode  = (physw_status[1] & 0x2)?MODE_REC:MODE_PLAY; 
-    t=0xFF;
+	// play/rec without overrides
+	// mode  = (physw_status[0]&0x07)==0x01 ?  MODE_PLAY : MODE_REC;
+
+    mode = (playrec_mode==1)?MODE_REC:MODE_PLAY;
+
     _GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
     for (i=0; i<MODESCNT; ++i) {
 	if (modemap[i].canonmode == t) {

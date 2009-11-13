@@ -1,6 +1,5 @@
 #include "stubs_asm.h"
 
-//DEF(physw_status, 0xFB20)
 DEF(physw_status, 0xFBB0) // from wrap_kbd_p1_f + 0x10 OK!
 DEF(led_table, 0xFDC8) // In aLedcon Data section OK!
 
@@ -13,3 +12,4 @@ DEF(recreview_hold, 0x73CF0) // OK!
 DEF(zoom_status, 0x6804)
 DEF(movie_status, 0x6F95C)
 DEF(levent_table,0xFF96C7A4)
+DEF(playrec_mode,0x56EC)

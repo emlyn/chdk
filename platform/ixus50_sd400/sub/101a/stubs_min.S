@@ -13,3 +13,4 @@ DEF(recreview_hold, 0x73CF0)
 DEF(zoom_status, 0x6804)
 DEF(movie_status, 0x6F95C)
 DEF(levent_table,0xFF96C750)
+DEF(playrec_mode,0x56EC) // "MenuIn"
