@@ -19,11 +19,13 @@ void taskCreateHook(int *p) {
  if (p[0]==0xFF861210)  p[0]=(int)capt_seq_task;
  if (p[0]==0xFF85D4C0)  p[0]=(int)movie_record_task;
  if (p[0]==0xFF877284)  p[0]=(int)init_file_modules_task;
+ if (p[0]==0xFF8B8B90)  p[0]=(int)exp_drv_task;
 }
 
 void taskCreateHook2(int *p) { 
  p-=16;
  if (p[0]==0xFF877284)  p[0]=(int)init_file_modules_task;
+ if (p[0]==0xFF8B8B90)  p[0]=(int)exp_drv_task;
 }
 
 void boot() { 

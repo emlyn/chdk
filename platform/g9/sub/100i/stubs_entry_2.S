@@ -20,3 +20,4 @@ NHSTUB(PutInNdFilter, 0xFFA0C578)
 NHSTUB(PutOutNdFilter, 0xFFA0C5B0)
 NHSTUB(WriteSDCard, 0xFF928D00)
 NHSTUB(SetScriptMode, 0xFF872F78) // "SetScriptMode"
+NHSTUB(apex2us, 0xFF9BF0C4) // from sub_FF897408 via exp_drv_task

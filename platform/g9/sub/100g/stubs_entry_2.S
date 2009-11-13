@@ -201,4 +201,4 @@ NHSTUB(WriteSDCard, 0xFF928CF4)
 NHSTUB(DoAFLock, 0xff8275cc)
 NHSTUB(UnlockAF, 0xff827638)
 NHSTUB(SetScriptMode, 0xFF872F78) // "SetScriptMode"
-
+NHSTUB(apex2us, 0xFF9BF09C) // from exp_drv_task

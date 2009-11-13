@@ -15,6 +15,21 @@ extern long wrs_kernel_bss_end;
 void CreateTask_PhySw();
 void CreateTask_spytask();
 
+void taskCreateHook(int *p) { 
+ p-=16;
+// TODO can save some memory by hooking other tasks this way
+// if (p[0]==0x)  p[0]=(int)capt_seq_task;
+// if (p[0]==0x)  p[0]=(int)movie_record_task;
+// if (p[0]==0x)  p[0]=(int)init_file_modules_task;
+ if (p[0]==0xFF8B8B90)  p[0]=(int)exp_drv_task;
+}
+
+void taskCreateHook2(int *p) { 
+ p-=16;
+// if (p[0]==0x)  p[0]=(int)init_file_modules_task;
+ if (p[0]==0xFF8B8B90)  p[0]=(int)exp_drv_task;
+}
+
 /*
 void CreateTask_blinker(); 
 void task_blinker();
@@ -90,7 +105,7 @@ void boot() { //#fs
     long i;
 
 
-    // Code taken from VxWorks CHDK. Changes CPU speed?
+    // Code taken from VxWorks CHDK. turns caches on
     asm volatile (
 	"MRC     p15, 0, R0,c1,c0\n"
 	"ORR     R0, R0, #0x1000\n"
@@ -116,6 +131,9 @@ void boot() { //#fs
 	"MCR     p15, 0, R0,c1,c0\n"
     :::"r0");
 */
+
+    *(int*)0x1930=(int)taskCreateHook; 
+    *(int*)0x1934=(int)taskCreateHook2; 
 
     // jump to init-sequence that follows the data-copy-routine 
 

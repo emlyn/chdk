@@ -147,6 +147,7 @@
 //	#define CAM_CONSOLE_LOG_ENABLED     1
     #define CAM_BRACKETING              1
     #define CAM_MULTIPART               1
+    #define CAM_EXT_TV_RANGE            1
 //==========================================================
 // A-series
 //==========================================================

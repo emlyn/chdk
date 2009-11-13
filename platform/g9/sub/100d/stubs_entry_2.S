@@ -207,3 +207,4 @@ NSTUB(PutOutNdFilter, 0xFFA0C518)
 NHSTUB(DoAFLock, 0xff8275cc)
 NHSTUB(UnlockAF, 0xff827638)
 NHSTUB(SetScriptMode, 0xFF872F78) // "SetScriptMode"
+NHSTUB(apex2us, 0xFF9BF02C) // from sub_FF897408 via exp_drv_task
