@@ -85,6 +85,7 @@ static EXPO_TYPE expo;
 #define OSD_STATE    0
 #define OSD_MISC     1
 
+unsigned char clip8(signed short x){ if (x<0) x=0; else if (x>255) x=255; return x; }
 
 //-------------------------------------------------------------------
 void gui_osd_init() {
@@ -457,9 +458,9 @@ int gui_osd_draw_zebra(int show) {
                         vv = (signed char)img_buf[v+2];
                         sel=0;
                         if (!((conf.zebra_mode == ZEBRA_MODE_ZEBRA_1 || conf.zebra_mode == ZEBRA_MODE_ZEBRA_2) && (y-x-timer)&f)) {
-                            if (((yy<<12) +           vv*5743 + 2048)>>12>over) sel  = 4; // R
-                            if (((yy<<12) - uu*1411 - vv*2925 + 2048)>>12>over) sel |= 2; // G
-                            if (((yy<<12) + uu*7258           + 2048)>>12>over) sel |= 1; // B
+                            if (clip8(((yy<<12) +           vv*5743 + 2048)>>12)>over) sel  = 4; // R
+                            if (clip8(((yy<<12) - uu*1411 - vv*2925 + 2048)>>12)>over) sel |= 2; // G
+                            if (clip8(((yy<<12) + uu*7258           + 2048)>>12)>over) sel |= 1; // B
                         }
                         buf[s]=buf[s+1]=cls[sel];
                         buf[s+2]=buf[s+3]=cls[sel];
@@ -645,9 +646,9 @@ int gui_osd_draw_zebra(int show) {
                         vv = (signed char)img_buf[v+2];
                         sel=0;
                         if (!((conf.zebra_mode == ZEBRA_MODE_ZEBRA_1 || conf.zebra_mode == ZEBRA_MODE_ZEBRA_2) && (y-x-timer)&f)) {
-                            if (((yy<<12) +           vv*5743 + 2048)>>12>over) sel  = 4; // R
-                            if (((yy<<12) - uu*1411 - vv*2925 + 2048)>>12>over) sel |= 2; // G
-                            if (((yy<<12) + uu*7258           + 2048)>>12>over) sel |= 1; // B
+                            if (clip8(((yy<<12) +           vv*5743 + 2048)>>12)>over) sel  = 4; // R
+                            if (clip8(((yy<<12) - uu*1411 - vv*2925 + 2048)>>12)>over) sel |= 2; // G
+                            if (clip8(((yy<<12) + uu*7258           + 2048)>>12)>over) sel |= 1; // B
                         }
                         buf[s]=buf[s+1]=cls[sel];
                     }

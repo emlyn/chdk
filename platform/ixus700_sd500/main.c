@@ -186,7 +186,9 @@ static struct {
 	int hackmode;
 	int canonmode;
 } modemap[] = {
+    { MODE_DIGITAL_MACRO,       0 },
     { MODE_P,                   1 },
+    { MODE_NIGHT,               2 }, // 1-15s
     { MODE_AUTO,                3 },
     { MODE_MY_COLORS,           4 },
     { MODE_PORTRAIT,            5 },
