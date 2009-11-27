@@ -6,7 +6,7 @@ NHSTUB(ExitTask, 0xFF81BD80)
 NHSTUB(AllocateMemory, 0xFFA47C58)
 NHSTUB(ExecuteEventProcedure                  ,0xFF81C1A8)
 NHSTUB(FreeMemory                             ,0xFFA47C44)
-NHSTUB(GetCurrentTargetDistance               ,0xff934bec) 
+//NHSTUB(GetCurrentTargetDistance               ,0xff934bec) 
 NHSTUB(GetSystemTime                          ,0xFFA47D60)
 NHSTUB(ints_disable                           ,0xFF810578) // used IRQdisable was FFC00578
 NHSTUB(ints_enable                            ,0xFF8105A0) // used IRQenable was FFC005A0
@@ -23,7 +23,7 @@ NHSTUB(strcpy                                 ,0xFF81E778)
 NHSTUB(strlen                                 ,0xff81e810)	//0xFF816098
 NHSTUB(TakeSemaphore                          ,0xFF81B98C)
 NHSTUB(vsprintf, 0xff81e6f8)    // first sub called in FADBGPrintf 
-NHSTUB(GetFocusLensSubjectDistance,	 0xff93604c)    // returns 0. What's wrong? 
+//NHSTUB(GetFocusLensSubjectDistance,	 0xff93604c)    // returns 0. What's wrong? 
 NHSTUB(GetZoomLensCurrentPoint,           0xFF93A220) 
 NHSTUB(GetZoomLensCurrentPosition,        0xFFA3E5E8)
 NHSTUB(RefreshPhysicalScreen,		  0xFF9BDB74) 
@@ -177,7 +177,7 @@ NSTUB(CreateTaskStrict,			 0xFF810958)
 NSTUB(DisableDispatch,			 0xFF810958)  
 NSTUB(DisplayImagePhysicalScreen,	 0xFF810958)  
 NSTUB(EnableDispatch,			 0xFF810958)  
-NSTUB(GetFocusLensSubjectDistanceFromLens, 0xFF810958) // GetFocusLensSubjectDistance  FF9360BC  GetFocusLensLoadSubjectDistance  FF9360E8 used was FFC00958
+//NSTUB(GetFocusLensSubjectDistanceFromLens, 0xFF810958) // GetFocusLensSubjectDistance  FF9360BC  GetFocusLensLoadSubjectDistance  FF9360E8 used was FFC00958
 NSTUB(MakeDirectory,			 0xFF810958) 
 NSTUB(PhySw_testgpio,			 0xFF810958)  
 NSTUB(ProtectFile,			 0xFF810958)  

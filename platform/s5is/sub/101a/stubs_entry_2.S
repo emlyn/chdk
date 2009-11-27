@@ -8,7 +8,7 @@ NHSTUB(AllocateMemory                         ,0xFFA41170)
 // Look over all these again, some point to a B sub_.... so that's unnecessary.
 NHSTUB(ExecuteEventProcedure                  ,0xFF81BF64)
 NHSTUB(FreeMemory                             ,0xFFA4115C)
-NHSTUB(GetCurrentTargetDistance               ,0xFF95126C)
+//NHSTUB(GetCurrentTargetDistance               ,0xFF95126C)
 NHSTUB(GetSystemTime                          ,0xFFA4126C)
 NHSTUB(ints_disable                           ,0xFF81058C) // Actually identified as IRQdisable by signatures
 NHSTUB(ints_enable                            ,0xFF8105B4) // Actually identified as IRQenable by signatures
@@ -25,7 +25,7 @@ NHSTUB(strcpy                                 ,0xFF81E670)
 NHSTUB(strlen                                 ,0xFF81E708)
 NHSTUB(TakeSemaphore                          ,0xFF81B860)
 NHSTUB(vsprintf                               ,0xFF81E5F0)    // first sub called in FADBGPrintf
-NHSTUB(GetFocusLensSubjectDistance            ,0xFF95250C)    // returns 0. What's wrong?
+//NHSTUB(GetFocusLensSubjectDistance            ,0xFF95250C)    // returns 0. What's wrong?
 NHSTUB(GetZoomLensCurrentPoint                ,0xFF957D84)
 NHSTUB(GetZoomLensCurrentPosition             ,0xFF957D88)
 NHSTUB(RefreshPhysicalScreen                  ,0xFF8B2E58)

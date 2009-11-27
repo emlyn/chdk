@@ -68,13 +68,13 @@ NHSTUB(GetSystemTime, 									0xffdf0aa8)
 NHSTUB(GetBatteryTemperature, 					0xFFC33494) //found at 0xffc33504 but camera crashs if used, so point to GetCCDTemperature
 NHSTUB(GetCCDTemperature, 							0xFFC33494)
 NHSTUB(GetCurrentAvValue, 							0xffd0025c)
-NHSTUB(GetCurrentTargetDistance, 			  0xffcff354)
+//NHSTUB(GetCurrentTargetDistance, 			  0xffcff354)
 
 NHSTUB(GetDrive_ClusterSize, 						0xffc3fc24)
 NHSTUB(GetDrive_FreeClusters, 					0xFFC3FC8C)
 NHSTUB(GetDrive_TotalClusters, 					0xFFC3FC58)
 
-NHSTUB(GetFocusLensSubjectDistance, 		0xffded04c)
+//NHSTUB(GetFocusLensSubjectDistance, 		0xffded04c)
 NHSTUB(MoveFocusLensToDistance, 				0xffe4135c)
 NHSTUB(GetOpticalTemperature, 					0xffc33574)
 
