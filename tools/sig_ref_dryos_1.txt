@@ -5,7 +5,6 @@ ExitTask 0xFFC0BE50
 AllocateMemory 0xFFDD7DF4
 ExecuteEventProcedure 0xFFC0C278
 FreeMemory 0xFFDD7DE0
-GetCurrentTargetDistance 0xFFCFDB3C
 GetSystemTime 0xFFDD7EFC
 memcmp 0xFFC0E8F0
 memcpy 0xFFC71BF4
@@ -20,7 +19,6 @@ strcpy 0xFFC0E834
 strlen 0xFFC0E8CC
 TakeSemaphore 0xFFC0BA5C
 vsprintf 0xFFC0E7B4
-GetFocusLensSubjectDistance 0xFFCFEF9C
 GetZoomLensCurrentPoint 0xFFD02FDC
 GetZoomLensCurrentPosition 0xFFD03B5C
 RefreshPhysicalScreen 0xFFD62184
@@ -103,3 +101,5 @@ SetLogicalEventActive 0xFFC5BCD0 20
 PostLogicalEventToUI 0xFFC5B69C
 PostLogicalEventForNotPowerType 0xFFC5B650
 SetCurrentCaptureModeType 0xFFC6214C 15
+GetFocusLensSubjectDistance 0xFFCFDB3C
+GetFocusLensSubjectDistanceFromLens 0xFFCFDE48 22

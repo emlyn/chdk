@@ -300,7 +300,7 @@ long lens_get_zoom_point();
 void lens_set_zoom_point(long newpt);
 void lens_set_zoom_speed(long newspd); //for S-series
 long lens_get_focus_pos();
-long lens_get_focus_pos_from_lense();
+long lens_get_focus_pos_from_lens();
 void lens_set_focus_pos(long newpos);
 long lens_get_target_distance();
 

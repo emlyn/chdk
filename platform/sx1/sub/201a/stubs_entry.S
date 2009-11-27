@@ -26,8 +26,6 @@ NSTUB(GetBatteryTemperature, 0xff850b00)
 NSTUB(GetCCDTemperature, 0xff850a90)
 // Best match: 88%
 NSTUB(GetCurrentAvValue, 0xff94f5d4)
-// Best match: 64%
-NSTUB(GetCurrentTargetDistance, 0xff94da5c)
 // Best match: 55%
 NSTUB(GetDrive_ClusterSize, 0xff85e284)
 // ALT: NSTUB(GetDrive_ClusterSize, 0xff85e2b8) // 15/12
@@ -40,8 +38,10 @@ NSTUB(GetDrive_FreeClusters, 0xff85e284)
 NSTUB(GetDrive_TotalClusters, 0xff85e284)
 // ALT: NSTUB(GetDrive_TotalClusters, 0xff85e2b8) // 15/12
 // ALT: NSTUB(GetDrive_TotalClusters, 0xff85e2ec) // 15/12
-// Best match: 56%
-NSTUB(GetFocusLensSubjectDistance, 0xffa8c1d0)
+// Best match: 64%
+NSTUB(GetFocusLensSubjectDistance, 0xff94da5c)
+// Best match: 77%
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xff94dd68)
 // Best match: 96%
 NSTUB(GetOpticalTemperature, 0xff850b70)
 // Best match: 66%

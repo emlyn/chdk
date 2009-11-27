@@ -172,36 +172,6 @@ static FuncSig func_sig_FreeMemory_1[] = {
 	/* 19/32 */
 };
 
-static FuncSig func_sig_GetCurrentTargetDistance_1[] = {
-	{   0, 0xe51f0a94, 0xfdffffff }, // ldr:4:0xE51F0A94
-	{   2, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
-	{   3, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
-	{   4, 0x059f0388, 0xfdffffff }, // ldr:4:0x059F0388
-	{   5, 0x01a01fdb, 0xfdffffff }, // mov:6:0x03A01FDB
-	{   6, 0x0b000000, 0xff000000 }, // b, bl:3:0x0BFC394F
-	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB0331BC
-	{   9, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFFFDC
-	{  10, 0xe51f0abc, 0xfdffffff }, // ldr:4:0xE51F0ABC
-	{  12, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
-	{  13, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
-	{  14, 0x059f13d4, 0xfdffffff }, // ldr:4:0x059F13D4
-	{  15, 0x059f035c, 0xfdffffff }, // ldr:4:0x059F035C
-	{  16, 0x0b000000, 0xff000000 }, // b, bl:3:0x0BFC3945
-	{  17, 0xe1a02000, 0xfdffffff }, // mov:6:0xE3A02000
-	{  18, 0xe1a0100d, 0xfdffffff }, // mov:6:0xE1A0100D
-	{  19, 0xe08d0004, 0xfdffffff }, // add:6:0xE28D0004
-	{  20, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB001685
-	{  21, 0xe1a01000, 0xfdffffff }, // mov:6:0xE1A01000
-	{  24, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB032FE0
-	{  26, 0xe51f0afc, 0xfdffffff }, // ldr:4:0xE51F0AFC
-	{  28, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
-	{  29, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
-	{  30, 0x059f1398, 0xfdffffff }, // ldr:4:0x059F1398
-	{  31, 0x059f031c, 0xfdffffff }, // ldr:4:0x059F031C
-	{ -1, -1, -1 },
-	/* 25/32 */
-};
-
 static FuncSig func_sig_GetSystemTime_1[] = {
 	{   1, 0xe1a0000d, 0xfdffffff }, // mov:6:0xE1A0000D
 	{   2, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBF906F7
@@ -625,27 +595,6 @@ static FuncSig func_sig_vsprintf_1[] = {
 	{  31, 0xe49df014, 0xfdffffff }, // ldr:4:0xE49DF014
 	{ -1, -1, -1 },
 	/* 27/32 */
-};
-
-static FuncSig func_sig_GetFocusLensSubjectDistance_1[] = {
-	{   1, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFAE5
-	{   2, 0xe1a01000, 0xfdffffff }, // mov:6:0xE1A01000
-	{   3, 0xe08f006c, 0xfdffffff }, // add:6:0xE28F006C
-	{   4, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFC0987
-	{   5, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
-	{   7, 0xe1a0001e, 0xfdffffff }, // mov:6:0xE3A0001E
-	{   9, 0xe1a00010, 0xfdffffff }, // mov:6:0xE3A00010
-	{  12, 0xe5904000, 0xfdffffff }, // ldr:4:0xE5904000
-	{  13, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFCF2D3
-	{  14, 0xe1a0100d, 0xfdffffff }, // mov:6:0xE1A0100D
-	{  15, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFCF065
-	{  16, 0xe59d0000, 0xfdffffff }, // ldr:4:0xE59D0000
-	{  17, 0xe0800084, 0xfdffffff }, // add:6:0xE0800084
-	{  23, 0x00006425, 0xfdffffff }, // and:6:0x00006425
-	{  27, 0x00642520, 0xfdffffff }, // rsb:6:0x00642520
-	{  31, 0x00642520, 0xfdffffff }, // rsb:6:0x00642520
-	{ -1, -1, -1 },
-	/* 16/32 */
 };
 
 static FuncSig func_sig_GetZoomLensCurrentPoint_1[] = {
@@ -3132,6 +3081,60 @@ static FuncSig func_sig_SetCurrentCaptureModeType_1[] = {
 	/* 11/15 */
 };
 
+static FuncSig func_sig_GetFocusLensSubjectDistance_1[] = {
+	{   0, 0xe51f0a94, 0xfdffffff }, // ldr:4:0xE51F0A94
+	{   2, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
+	{   3, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{   4, 0x059f0388, 0xfdffffff }, // ldr:4:0x059F0388
+	{   5, 0x01a01fdb, 0xfdffffff }, // mov:6:0x03A01FDB
+	{   6, 0x0b000000, 0xff000000 }, // b, bl:3:0x0BFC394F
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB0331BC
+	{   9, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFFFDC
+	{  10, 0xe51f0abc, 0xfdffffff }, // ldr:4:0xE51F0ABC
+	{  12, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
+	{  13, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{  14, 0x059f13d4, 0xfdffffff }, // ldr:4:0x059F13D4
+	{  15, 0x059f035c, 0xfdffffff }, // ldr:4:0x059F035C
+	{  16, 0x0b000000, 0xff000000 }, // b, bl:3:0x0BFC3945
+	{  17, 0xe1a02000, 0xfdffffff }, // mov:6:0xE3A02000
+	{  18, 0xe1a0100d, 0xfdffffff }, // mov:6:0xE1A0100D
+	{  19, 0xe08d0004, 0xfdffffff }, // add:6:0xE28D0004
+	{  20, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB001685
+	{  21, 0xe1a01000, 0xfdffffff }, // mov:6:0xE1A01000
+	{  24, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB032FE0
+	{  26, 0xe51f0afc, 0xfdffffff }, // ldr:4:0xE51F0AFC
+	{  28, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
+	{  29, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{  30, 0x059f1398, 0xfdffffff }, // ldr:4:0x059F1398
+	{  31, 0x059f031c, 0xfdffffff }, // ldr:4:0x059F031C
+	{ -1, -1, -1 },
+	/* 25/32 */
+};
+
+static FuncSig func_sig_GetFocusLensSubjectDistanceFromLens_1[] = {
+	{   1, 0xe51f5da4, 0xfdffffff }, // ldr:4:0xE51F5DA4
+	{   2, 0xe5950000, 0xfdffffff }, // ldr:4:0xE5950000
+	{   3, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{   4, 0x059f1128, 0xfdffffff }, // ldr:4:0x059F1128
+	{   5, 0x004f0edd, 0xfdffffff }, // sub:6:0x024F0EDD
+	{   6, 0x0b000000, 0xff000000 }, // b, bl:3:0x0BFC388C
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFF34
+	{   8, 0xe040ccff, 0xfdffffff }, // sub:6:0xE240CCFF
+	{   9, 0xe05cc0ff, 0xfdffffff }, // sub:6:0xE25CC0FF
+	{  10, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  11, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A00000B
+	{  12, 0xe1a02000, 0xfdffffff }, // mov:6:0xE3A02000
+	{  13, 0xe1a0100d, 0xfdffffff }, // mov:6:0xE1A0100D
+	{  14, 0xe08d0004, 0xfdffffff }, // add:6:0xE28D0004
+	{  15, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB0015C7
+	{  17, 0xe5950034, 0xfdffffff }, // ldr:4:0xE5950034
+	{  18, 0xe0800081, 0xfdffffff }, // add:6:0xE0800081
+	{  19, 0xe0800c01, 0xfdffffff }, // add:6:0xE2800C01
+	{  21, 0xe0440000, 0xfdffffff }, // sub:6:0xE0440000
+	{ -1, -1, -1 },
+	/* 19/22 */
+};
+
 static FuncSig func_sig_AllocateMemory_2[] = {
 	{   0, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
 	{   1, 0xea000000, 0xff000000 }, // b, bl:3:0xEAF80561
@@ -4558,6 +4561,29 @@ static FuncSig func_sig_VbattGet_3[] = {
 	/* 7/10 */
 };
 
+static FuncSig func_sig_GetFocusLensSubjectDistanceFromLens_3[] = {
+	{   1, 0xe59f5618, 0xfdffffff }, // ldr:4:0xE59F5618
+	{   2, 0xe5950000, 0xfdffffff }, // ldr:4:0xE5950000
+	{   3, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{   4, 0x059f1624, 0xfdffffff }, // ldr:4:0x059F1624
+	{   5, 0x051f0290, 0xfdffffff }, // ldr:4:0x051F0290
+	{   6, 0x0b000000, 0xff000000 }, // b, bl:3:0x0BFB6DE1
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEE5
+	{   9, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  10, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000008
+	{  11, 0xe1a02000, 0xfdffffff }, // mov:6:0xE3A02000
+	{  12, 0xe1a0100d, 0xfdffffff }, // mov:6:0xE1A0100D
+	{  13, 0xe08d0004, 0xfdffffff }, // add:6:0xE28D0004
+	{  14, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB001191
+	{  16, 0xe595002c, 0xfdffffff }, // ldr:4:0xE595002C
+	{  17, 0xe0800101, 0xfdffffff }, // add:6:0xE0800101
+	{  18, 0xe59003a8, 0xfdffffff }, // ldr:4:0xE59003A8
+	{  19, 0xe0444000, 0xfdffffff }, // sub:6:0xE0444000
+	{  20, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{ -1, -1, -1 },
+	/* 18/22 */
+};
+
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory_1 },
 	{ "AllocateMemory", func_sig_AllocateMemory_2 },
@@ -4587,7 +4613,6 @@ FuncsList func_list[] = {
 	{ "GetCCDTemperature", func_sig_GetCCDTemperature_2 },
 	{ "GetCurrentAvValue", func_sig_GetCurrentAvValue_1 },
 	{ "GetCurrentAvValue", func_sig_GetCurrentAvValue_2 },
-	{ "GetCurrentTargetDistance", func_sig_GetCurrentTargetDistance_1 },
 	{ "GetDrive_ClusterSize", func_sig_GetDrive_ClusterSize_1 },
 	{ "GetDrive_ClusterSize", func_sig_GetDrive_ClusterSize_2 },
 	{ "GetDrive_ClusterSize", func_sig_GetDrive_ClusterSize_3 },
@@ -4598,6 +4623,8 @@ FuncsList func_list[] = {
 	{ "GetDrive_TotalClusters", func_sig_GetDrive_TotalClusters_2 },
 	{ "GetDrive_TotalClusters", func_sig_GetDrive_TotalClusters_3 },
 	{ "GetFocusLensSubjectDistance", func_sig_GetFocusLensSubjectDistance_1 },
+	{ "GetFocusLensSubjectDistanceFromLens", func_sig_GetFocusLensSubjectDistanceFromLens_1 },
+	{ "GetFocusLensSubjectDistanceFromLens", func_sig_GetFocusLensSubjectDistanceFromLens_3 },
 	{ "GetOpticalTemperature", func_sig_GetOpticalTemperature_2 },
 	{ "GetOpticalTemperature", func_sig_GetOpticalTemperature_3 },
 	{ "GetParameterData", func_sig_GetParameterData_1 },

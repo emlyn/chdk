@@ -968,3 +968,13 @@ void __attribute__((weak)) vid_turn_off_updates()
 void __attribute__((weak)) vid_turn_on_updates()
 {
 }
+
+// use _GetFocusLensSubjectDistance for this on dryos, vx functions are basically equivlent
+// not used in CHDK currently for either OS
+#ifdef CAM_DRYOS
+long __attribute__((weak)) _GetCurrentTargetDistance()
+{
+	return _GetFocusLensSubjectDistance();
+}
+#endif
+

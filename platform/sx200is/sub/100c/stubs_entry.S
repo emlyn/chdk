@@ -28,12 +28,12 @@ NSTUB(GetBatteryTemperature, 0xff84b5a8)
 NSTUB(GetCCDTemperature, 0xff84b534)
 // Best match: 88%
 NSTUB(GetCurrentAvValue, 0xff931328)
-// ERROR: GetCurrentTargetDistance is not found!
 // ERROR: GetDrive_ClusterSize is not found!
 // ERROR: GetDrive_FreeClusters is not found!
 // ERROR: GetDrive_TotalClusters is not found!
-// Best match: 62%
-NSTUB(GetFocusLensSubjectDistance, 0xffa6734c)
+// ERROR: GetFocusLensSubjectDistance is not found!
+// Best match: 77%
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xff92fbc0)
 // Best match: 96%
 NSTUB(GetOpticalTemperature, 0xff84b61c)
 // Best match: 96%

@@ -33,13 +33,13 @@ NSTUB(GetBatteryTemperature, 0xff850564)
 NSTUB(GetCCDTemperature, 0xff8504f4)
 // Best match: 62%
 NSTUB(GetCurrentAvValue, 0xff952d94)
-// Best match: 64%
-NSTUB(GetCurrentTargetDistance, 0xff9511a4)
 NSTUB(GetDrive_ClusterSize, 0xff856d08)
 NSTUB(GetDrive_FreeClusters, 0xff856da8)
 NSTUB(GetDrive_TotalClusters, 0xff856d3c)
-// Best match: 62%
-NSTUB(GetFocusLensSubjectDistance, 0xff952460)
+// Best match: 64%
+NSTUB(GetFocusLensSubjectDistance, 0xff9511a4)
+// Best match: 73%
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xff9514a0)
 // Best match: 96%
 NSTUB(GetOpticalTemperature, 0xff8505d4)
 // ERROR: GetParameterData is not found!

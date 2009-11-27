@@ -413,7 +413,7 @@ int shooting_get_exif_subject_dist()
 
 int shooting_get_lens_to_focal_plane_width()
 {
-	return (int)(lens_get_focus_pos()-lens_get_focus_pos_from_lense());
+	return (int)(lens_get_focus_pos()-lens_get_focus_pos_from_lens());
 }
 
 int shooting_get_hyperfocal_distance_()
