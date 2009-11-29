@@ -214,17 +214,15 @@ static struct {
     { MODE_PORTRAIT,            6 },
     { MODE_NIGHT,               8 },
     { MODE_LANDSCAPE,           7 },
-    { MODE_VIDEO_STD,           16  },
-    { MODE_STITCH,              0xFF },
+    { MODE_VIDEO_STD,           16 },
+    { MODE_STITCH,              15 },
     { MODE_MY_COLORS,           4 },
     { MODE_SCN_NIGHT,           14 },
-    { MODE_SCN_CHILD,           0xFF },
-    { MODE_SCN_PARTY,           13 },
-    { MODE_SCN_GRASS,           9 },
+    { MODE_SCN_INDOOR,          13 },
+    { MODE_SCN_FOLIAGE,         9 },
     { MODE_SCN_SNOW,            10 },
     { MODE_SCN_BEACH,           11 },
     { MODE_SCN_FIREWORK,        12 }, 
-    { MODE_SCN_COLOR_ACCENT,    0xFF } 
 };
 #define MODESCNT (sizeof(modemap)/sizeof(modemap[0]))
 
