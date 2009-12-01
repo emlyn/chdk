@@ -11,7 +11,7 @@ all: libubasic.a
 libubasic.a: $(OBJS)
 
 check:
-	gcc -g -Wall -DTEST -DCAMERA_a610 -o ubasic_test$(EXE) *.c
+	gcc -g -Wall -DUBASIC_TEST -DCAMERA_$(PLATFORM) -DPLATFORMID=$(PLATFORMID) -o ubasic_test$(EXE) *.c
 
 clean:
 	rm -f $(OBJS) libubasic.a ubasic_test$(EXE)

@@ -34,29 +34,33 @@
 #define DEBUG_PRINTF(...)
 #endif
 
-#ifdef TEST
+#ifdef UBASIC_TEST
 #include "../../include/ubasic.h"
 #include "../../include/platform.h"
 #include "../../include/script.h"
+#include "../../include/shot_histogram.h"
 #include "../../include/levent.h"
 #include <string.h>
+#include <time.h>
 #include <fcntl.h>
 #include <io.h>
+#include <stdlib.h> /* rand,srand */
 #else
 #include "ubasic.h"
 #include "platform.h"
 #include "script.h"
 #include "camera.h"
+#include "shot_histogram.h"
+#include "stdlib.h"
 #include "levent.h"
 #endif
-//#include "platform.h"
 #include "tokenizer.h"
-#include "shot_histogram.h"
+
+
 #include "../../include/conf.h"
 
 #include "camera_functions.h"
 
-#include "stdlib.h" /* exit() */
 
 #define INCLUDE_OLD_GET__SYNTAX
 
@@ -243,7 +247,11 @@ case TOKENIZER_SCRIPT_AUTOSTARTED:
     break;
 case TOKENIZER_GET_SCRIPT_AUTOSTART:
     accept(TOKENIZER_GET_SCRIPT_AUTOSTART);
+#ifdef UBASIC_TEST
+	r = 0;
+#else
     r = conf.script_startup;
+#endif
     break;
 case TOKENIZER_GET_USB_POWER:
     accept(TOKENIZER_GET_USB_POWER);
@@ -466,22 +474,27 @@ case TOKENIZER_IS_PRESSED:
 			r = 0;
   }
     break;
-  case TOKENIZER_GET_TIME:
+  case TOKENIZER_GET_TIME: {
     accept(TOKENIZER_GET_TIME);
-	  unsigned long t2 = time(NULL);
-	  int time = expr();
-	  static struct tm *ttm;
-	  ttm = localtime(&t2);
-  if (time==0) r = ttm->tm_sec;
-  else if (time==1) r = ttm->tm_min;
-  else if (time==2) r = ttm->tm_hour;
-  else if (time==3) r = ttm->tm_mday;
-  else if (time==4) r = ttm->tm_mon+1;
-  else if (time==5) r = 1900+ttm->tm_year;
- break;
+    unsigned long t2 = time(NULL);
+    int tmode = expr();
+    static struct tm *ttm;
+    ttm = localtime(&t2);
+    if (tmode==0) r = ttm->tm_sec;
+    else if (tmode==1) r = ttm->tm_min;
+    else if (tmode==2) r = ttm->tm_hour;
+    else if (tmode==3) r = ttm->tm_mday;
+    else if (tmode==4) r = ttm->tm_mon+1;
+    else if (tmode==5) r = 1900+ttm->tm_year;
+    break;
+ }
  case TOKENIZER_GET_RAW:
     accept(TOKENIZER_GET_RAW);
+#ifdef UBASIC_TEST
+	r = 1;
+#else
     r = conf.save_raw;     
+#endif
     break;
   default:
     r = varfactor();
@@ -1868,8 +1881,10 @@ static void set_autostart_statement()
     int to;
     accept(TOKENIZER_SET_SCRIPT_AUTOSTART);
     to = expr();
+#ifndef UBASIC_TEST
 	if (to >= 0 && to <= 2) conf.script_startup=to;
 	conf_save();
+#endif
     accept_cr();
 }
 static void exit_alt_statement()

@@ -1,9 +1,12 @@
-#ifdef TEST
+#ifdef UBASIC_TEST
 
 #include <stdio.h>
 
 static int tv=0, av=0, zoom=0, focus=0, iso=0, raw=0, raw_nr=0,autostart=0; 
-
+int movie_status=0;
+int shot_histogram_enabled=0;
+int state_kbd_script_run=1;
+int zoom_points = 3;
 #define MODE_REC                0x0100
 
 void ubasic_camera_press(const char *s)
@@ -134,14 +137,17 @@ void script_console_clear() {
 }
 int md_detect_motion(void)
 {
+    printf("*** md_detect_motion ***\n");
 	return 0;
 }
 int md_get_cell_diff(int column, int row)
 {
+    printf("*** md_get_sell_diff %d %d ***\n", column, row);
 	return 0;
 }
 int md_init_motion_detector()
 {
+    printf("*** md_init_motion_detector ***\n");
 	return 0;
 }
 void ubasic_camera_set_nr(to) 
@@ -152,6 +158,7 @@ void ubasic_camera_set_nr(to)
 
 int ubasic_camera_get_nr(to) 
 {
+    printf("*** get raw nr ***\n");
 	return raw_nr;
 };
 
@@ -412,10 +419,108 @@ void shooting_set_user_tv96(short v)
     printf("*** shooting_set_user_tv96 %d ***\n", v);
 }
 
+int get_exposure_counter(void)
+{
+    printf("*** get_exposure_counter ***\n");
+	return 123;
+}
 
 
+int ubasic_camera_is_pressed(const char *v) 
+{
+    printf("*** ubasic_camera_is_pressed %s ***\n", v);
+	return 0;
+}
 
 
+int shot_histogram_get_range(int from, int to)
+{
+    printf("*** shot_histogram_get_range %d,%d ***\n", from,to);
+	return 100;
+}
+
+void script_print_screen_statement(int v)
+{
+    printf("*** script_print_screensatement %d ***\n", v);
+}
+
+int get_tick_count(void)
+{
+    printf("*** get_tick_count ***\n");
+	// what should it return ?
+	return 10;
+}
+
+short shooting_get_drive_mode()
+{
+    printf("*** shooting_get_drive_mode ***\n");
+	// what should it return ?
+	return 10;
+}
+
+int shot_histogram_isenabled()
+{
+    printf("*** shot_histogram_isenabled ***\n");
+	return shot_histogram_enabled;
+}
+
+int get_ccd_temp() 
+{
+    printf("*** get_ccd_temp ***\n");
+	return 69;
+}
+int get_optical_temp()
+{
+    printf("*** get_optical_temp ***\n");
+	return 69;
+}
+
+int get_battery_temp()
+{
+    printf("*** get_battery_temp ***\n");
+	return 69;
+}
+
+void play_sound()
+{
+    printf("*** play_sound ***\n");
+}	
+
+void TurnOnBackLight()
+{
+    printf("*** TurOnBackLight ***\n");
+}
+
+void TurnOffBackLight()
+{
+    printf("*** TurnOffBackLight ***\n");
+}
+
+void DoAFLock()
+{
+    printf("*** DoAFLock ***\n");
+}
+
+void UnlockAF()
+{
+    printf("*** UnlockAF ***\n");
+}
+
+int shot_histogram_set(int x)
+{
+    printf("*** shot_histogram_set ***\n");
+	return 1;
+}
+
+void levent_set_record()
+{
+    printf("*** levent_set_record ***\n");
+}
+
+void levent_set_play()
+{
+    printf("*** levent_set_play ***\n");
+}
 
 
 #endif

@@ -34,7 +34,7 @@
 #define DEBUG_PRINTF(...)
 #endif
 
-#ifdef TEST
+#ifdef UBASIC_TEST
 #include <string.h>
 #include <ctype.h>
 #endif
