@@ -12,67 +12,8 @@
 
 #define MODE_SHOOTING_MASK      0x00FF
 
-enum {
-MODE_AUTO               =1,
-MODE_P                  ,
-MODE_TV                 ,
-MODE_AV                 ,
-MODE_M                  ,
-MODE_PORTRAIT           ,
-MODE_NIGHT              ,
-MODE_LANDSCAPE          ,
-MODE_VIDEO_STD          ,
-MODE_VIDEO_SPEED        ,
-MODE_VIDEO_COMPACT      ,
-MODE_VIDEO_MY_COLORS    ,
-MODE_VIDEO_COLOR_ACCENT ,
-MODE_VIDEO_COLOR_SWAP   ,
-MODE_STITCH             ,
-MODE_MY_COLORS          ,
-MODE_SCN_WATER          ,
-MODE_SCN_NIGHT          ,
-MODE_SCN_CHILD          ,
-MODE_SCN_PARTY          ,
-MODE_SCN_GRASS          ,
-MODE_SCN_SNOW           ,
-MODE_SCN_BEACH          ,
-MODE_SCN_FIREWORK       ,
-MODE_SCN_COLOR_ACCENT   ,
-MODE_SCN_COLOR_SWAP     ,
-MODE_VIDEO_HIRES        ,
-MODE_SCN_AQUARIUM       ,
-MODE_COLOR_ACCENT       ,
-MODE_SCN_NIGHT1         ,
-MODE_SCN_ISO_3200       ,
-MODE_SCN_SPORT          ,
-MODE_SCN_KIDS_PETS      ,
-MODE_INDOOR             ,
-MODE_KIDS_PETS          ,
-MODE_NIGHT_SNAPSHOT     ,
-MODE_DIGITAL_MACRO      ,
-MODE_SCN_FOLIAGE        ,
-MODE_VIDEO_TIME_LAPSE   ,
-MODE_SCN_INDOOR         ,
-MODE_SCN_PORTRAIT       ,
-MODE_SUPER_MACRO        ,
-MODE_VIDEO_PORTRAIT     ,
-MODE_VIDEO_NIGHT        ,
-MODE_VIDEO_INDOOR       ,
-MODE_VIDEO_FOLIAGE      ,
-MODE_VIDEO_SNOW         ,
-MODE_VIDEO_BEACH        ,
-MODE_VIDEO_AQUARIUM     ,
-MODE_VIDEO_SUPER_MACRO  ,
-MODE_VIDEO_STITCH       ,
-MODE_VIDEO_MANUAL       ,
-MODE_SPORTS             ,
-MODE_QUICK			    ,
-MODE_SCN_SUNSET         ,
-MODE_SCN_UNDERWATER     ,
-MODE_EASY               ,
-MODE_SCN_DIGITAL_MACRO  ,
-MODE_SCN_STITCH         ,
-};
+/* capture mode constants. These are in their own header for easier sed processing*/
+#include "modelist.h"
 
 // this is nasty, but not as nasty as checking each of the flags all over the place
 #define MODE_IS_VIDEO(m)   (((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_STD || \
@@ -92,6 +33,7 @@ MODE_SCN_STITCH         ,
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_SUPER_MACRO || \
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_STITCH || \
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_MANUAL)
+/* propcase ID constants. These are in their own header files for easier sed processing */
 #if CAM_PROPSET == 2     // most digic3 cameras
  #include "propset2.h"
 #elif CAM_PROPSET == 1   // most digic2 cameras
@@ -136,6 +78,11 @@ MODE_SCN_STITCH         ,
 #define ZOOM_DIGITAL_IN          11
 #define ZOOM_DIGITAL_OUT         12
 #define ZOOM_DIGITAL_REACHED_MAX 13
+
+typedef struct {
+	int hackmode; // platform independent mode values from MODE_xxx enum
+	int canonmode; // PROPCASE_SHOOTING_MODE value
+} CapturemodeMap;
 
 typedef struct {
     short id; // hacks id
@@ -411,9 +358,36 @@ void shooting_tv_bracketing();
 void shooting_av_bracketing();
 void shooting_iso_bracketing();
 /******************************************************************/
+// capture mode functions
+// return a CHDK mode enum for a PROPCASE_SHOOTING_MODE value, or 0 if not found
+int shooting_mode_canon2chdk(int canonmode);
+// return a PROPCASE_SHOOTING_MODE value for a CHDK mode enum value, or -1 if not found. 0 is a valid mode on some cameras.
+int shooting_mode_chdk2canon(int hackmode);
+// set capture mode from CHDK mode, returns 0 if mode not found or not in rec, otherwise 1
+int shooting_set_mode_chdk(int mode);
+// set capture mode from PROPCASE_SHOOTING_MODE value. return 0 if not in rec or mode is -1, otherwise 1
+int shooting_set_mode_canon(int mode);
+
+// returns 0 if in play, nonzero if rec
+int rec_mode_active(void); 
+
+// not used. Right now this is just to preserve code from earlier version of mode_get()
+// in case we want to check play/rec switch state in the future.
+// WARNING: it isn't known if all variants of this check the switch state or some other bit.
+// should return 0 is switch is in play position, non-zero otherwise
+//int rec_switch_state(void);
+
+// swivel screen state.
+#ifdef CAM_SWIVEL_SCREEN
+// 0 not open, non-zero open
+int screen_opened(void);
+// 0 not rotated, non-zero rotated
+int screen_rotated(void);
+#endif
+
+/******************************************************************/
 void clear_values();
 /******************************************************************/
-
 
 int mode_get();
 
@@ -501,7 +475,6 @@ void  PostLogicalEventForNotPowerType(unsigned event, unsigned unk);
 void  PostLogicalEventToUI(unsigned event, unsigned unk);
 void  SetLogicalEventActive(unsigned event, unsigned state);
 void SetScriptMode(unsigned mode);
-void SetCurrentCaptureModeType(unsigned mode);
 
 #define started() debug_led(1)
 #define finished() debug_led(0)

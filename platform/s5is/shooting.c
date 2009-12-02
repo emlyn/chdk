@@ -83,6 +83,29 @@ const ISOTable iso_table[] = {
 	{  7, 3200, "3200", -1},
 };          
 
+static const CapturemodeMap modemap[] = {
+	{ MODE_AUTO,               32768  },
+	{ MODE_P,                  32772  },
+	{ MODE_TV,                 32771  },
+	{ MODE_AV,                 32770  },
+	{ MODE_M,                  32769  },
+	{ MODE_PORTRAIT,           32781  },
+	{ MODE_NIGHT_SNAPSHOT,     32779  }, // not MODE_NIGHT? I changed it, camera says snapshot
+	{ MODE_LANDSCAPE,          32780  },
+	{ MODE_VIDEO_STD,          2594   },
+//	{ MODE_VIDEO_RECORDING,    3618   },
+	{ MODE_STITCH,             33290  },
+	{ MODE_MY_COLORS,          16923  }, // Is this SCN mode? (=color override)
+	{ MODE_SCN_NIGHT,          16398  },
+	{ MODE_SCN_INDOOR,         16401  },
+	{ MODE_SCN_FOLIAGE,        16402  },
+	{ MODE_SCN_SNOW,           16403  },
+	{ MODE_SCN_BEACH,          16404  },
+	{ MODE_SCN_FIREWORK,       16405  },
+	{ MODE_SCN_AQUARIUM,       16407  },
+	{ MODE_SCN_COLOR_ACCENT,   16922  }
+};
+
 #include "../generic/shooting.c"
 
 // dof_tbl copied from A720/A650, probably wrong though it doesn't look like it's used anywhere.

@@ -522,5 +522,29 @@ void levent_set_play()
     printf("*** levent_set_play ***\n");
 }
 
+int set_capture_mode(int x)
+{
+    printf("*** set_capture_mode %d ***\n",x);
+	return 1;
+}
 
+int shooting_set_mode_chdk(int x)
+{
+    printf("*** set_capture_mode_canon %d ***\n",x);
+	return 1;
+}
+
+int shooting_set_mode_canon(int x)
+{
+    printf("*** set_capture_mode_canon %d ***\n",x);
+	return 1;
+}
+
+int shooting_mode_chdk2canon(int chdkmode)
+{
+    printf("*** shooting_mode_chdk2canon %d ***\n",chdkmode);
+	if(chdkmode < 1 || chdkmode > 50)
+		return 0;
+	return 1;
+}
 #endif

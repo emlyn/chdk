@@ -476,17 +476,17 @@ case TOKENIZER_IS_PRESSED:
     break;
   case TOKENIZER_GET_TIME: {
     accept(TOKENIZER_GET_TIME);
-    unsigned long t2 = time(NULL);
+	  unsigned long t2 = time(NULL);
     int tmode = expr();
-    static struct tm *ttm;
-    ttm = localtime(&t2);
+	  static struct tm *ttm;
+	  ttm = localtime(&t2);
     if (tmode==0) r = ttm->tm_sec;
     else if (tmode==1) r = ttm->tm_min;
     else if (tmode==2) r = ttm->tm_hour;
     else if (tmode==3) r = ttm->tm_mday;
     else if (tmode==4) r = ttm->tm_mon+1;
     else if (tmode==5) r = 1900+ttm->tm_year;
-    break;
+ break;
  }
  case TOKENIZER_GET_RAW:
     accept(TOKENIZER_GET_RAW);
@@ -496,6 +496,26 @@ case TOKENIZER_IS_PRESSED:
     r = conf.save_raw;     
 #endif
     break;
+ // get CHDK capture mode value, or 0 if in playback or unknown (broken modemap)
+ // NOTE: different from get_mode, since this returns the actual value
+ case TOKENIZER_GET_CAPTURE_MODE:
+    accept(TOKENIZER_GET_CAPTURE_MODE);
+    r = mode_get();
+    if ( (r&MODE_MASK) == MODE_REC) 
+        r &= MODE_SHOOTING_MASK;
+    else
+        r = 0;
+    break;
+ // check if CHDK capture mode exists in modemap of this camera
+ case TOKENIZER_IS_CAPTURE_MODE_VALID: {
+    accept(TOKENIZER_IS_CAPTURE_MODE_VALID);
+    int modenum = expr();
+    if (shooting_mode_chdk2canon(modenum) == -1)
+        r = 0;
+    else
+        r = 1;
+    break;
+  }
   default:
     r = varfactor();
     break;
@@ -1895,6 +1915,28 @@ static void exit_alt_statement()
     exit_alt(to);
     accept_cr();
 }
+
+static void set_capture_mode_canon_statement()
+{
+    int to;
+    accept(TOKENIZER_SET_CAPTURE_MODE_CANON);
+    to = expr();
+    // if the value as negative, assume it is a mistakenly sign extended PROPCASE_SHOOTING_MODE value
+    if( to < 0) 
+        to &= 0xFFFF;
+    shooting_set_mode_canon(to);
+    accept_cr();
+}
+
+static void set_capture_mode_statement()
+{
+    int to;
+    accept(TOKENIZER_SET_CAPTURE_MODE);
+    to = expr();
+    shooting_set_mode_chdk(to);
+    accept_cr();
+}
+
 /*---------------------------------------------------------------------------*/
 
 static void wait_click_statement()
@@ -2439,6 +2481,15 @@ statement(void)
   case TOKENIZER_SET_RECORD:
     set_record_statement();
     break;
+
+  case TOKENIZER_SET_CAPTURE_MODE:
+    set_capture_mode_statement();
+    break;
+
+  case TOKENIZER_SET_CAPTURE_MODE_CANON:
+    set_capture_mode_canon_statement();
+    break;
+
 
   default:
     DEBUG_PRINTF("ubasic.c: statement(): not implemented %d\n", token);

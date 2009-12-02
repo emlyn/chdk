@@ -79,6 +79,35 @@ const ISOTable iso_table[] = {
 	{  7, 3200, "3200", -1},
 };          
 
+static const CapturemodeMap modemap[] = {
+	{ MODE_AUTO,               32768  },
+	{ MODE_P,                  32772  },
+	{ MODE_TV,                 32771  },
+	{ MODE_AV,                 32770  },
+	{ MODE_M,                  32769  },
+	{ MODE_PORTRAIT,           32781  },
+	{ MODE_NIGHT_SNAPSHOT,     32779  }, 
+	{ MODE_LANDSCAPE,          32780  },
+	// TODO are dupes a problem ? 
+	//Order matters for CHDK->canon mapping, first one should be what we can set
+	{ MODE_VIDEO_STD,          2597   }, // video standby
+	{ MODE_VIDEO_STD,          3622   }, // video in progress
+	{ MODE_STITCH,             33290  },
+	{ MODE_SPORTS,             33287  },
+
+	{ MODE_SCN_NIGHT,          16398  },
+	{ MODE_SCN_INDOOR,         16401  },
+	{ MODE_SCN_SUNSET,         16402  },
+	{ MODE_SCN_FOLIAGE,        16403  },
+	{ MODE_SCN_SNOW,           16404  },
+	{ MODE_SCN_BEACH,          16405  },
+	{ MODE_SCN_FIREWORK,       16406  },
+	{ MODE_SCN_AQUARIUM,       16408  },
+	{ MODE_SCN_ISO_3200,       16413  },
+	{ MODE_SCN_COLOR_ACCENT,   16923  },
+    { MODE_SCN_COLOR_SWAP,     16924  }
+};
+
 #include "../generic/shooting.c"
 
 long get_file_next_counter() {

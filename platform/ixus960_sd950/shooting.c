@@ -70,6 +70,31 @@ const ISOTable iso_table[] = {
 {  5,  800,  "800", -1},
 {  6, 1600, "1600", -1},
 };          
+
+static const CapturemodeMap modemap[] = {
+	{ MODE_AUTO,               32768 }, 
+	{ MODE_P,                  32772 },
+	{ MODE_DIGITAL_MACRO,      33288 },
+	{ MODE_PORTRAIT,           16397 },
+	{ MODE_NIGHT_SNAPSHOT,     16395 },
+	{ MODE_COLOR_ACCENT,       33306 }, 
+	{ MODE_MY_COLORS,          33307 },
+	{ MODE_SCN_KIDS_PETS,      16400 }, 
+	{ MODE_SCN_INDOOR,         16401 }, 
+	{ MODE_SCN_FOLIAGE,        16402 }, 
+	{ MODE_SCN_SNOW,           16403 },
+	{ MODE_SCN_BEACH,          16404 },
+	{ MODE_SCN_FIREWORK,       16405 },
+	{ MODE_SCN_AQUARIUM,       16407 },
+	{ MODE_SCN_WATER,          16406 },
+	{ MODE_VIDEO_STD,          2597  },
+	{ MODE_VIDEO_COMPACT,      2599  },
+	{ MODE_VIDEO_COLOR_ACCENT, 2595  },
+	{ MODE_VIDEO_MY_COLORS,    2596  },
+	{ MODE_VIDEO_TIME_LAPSE,   2601  },
+	{ MODE_STITCH,             33290 },
+};
+
 #include "../generic/shooting.c"
 long get_file_next_counter() {
 return get_file_counter();

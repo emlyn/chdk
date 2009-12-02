@@ -28,48 +28,6 @@ void startup()
     boot();
 }
 
-static struct {
-	int hackmode;
-	int canonmode;
-} modemap[] = {
-  { MODE_VIDEO_STD,          2600  },  //Verified
-  { MODE_VIDEO_COMPACT,      2602  },  //Verified
-  { MODE_SCN_AQUARIUM,       16408 },  //Verified
-  { MODE_SCN_SNOW,           16404 },  //Verified
-  { MODE_SCN_FOLIAGE,        16403 },  //verified
-  { MODE_SCN_SUNSET,         16402 },  //verified
-  { MODE_SCN_NIGHT,          16398 },  //verified
-  { MODE_SCN_ISO_3200,       16413 },  //verified
-  { MODE_SCN_FIREWORK,       16406 },  //verified
-  { MODE_SCN_BEACH,          16405 },  //verified
-  { MODE_INDOOR,             32785 },  //verified
-  { MODE_KIDS_PETS,          32784 },  //verified
-  { MODE_NIGHT_SNAPSHOT,     32779 },  //verified
-  { MODE_LANDSCAPE,          32780 },  //verified
-  { MODE_PORTRAIT,           32781 },  //verified
-  { MODE_AUTO,               32768 },  //verified
-  { MODE_P,                  32772 },  //verified
-  { MODE_TV,                 32771 },  //verified
-  { MODE_AV,                 32770 },  //verified
-  { MODE_M,                  32769 },  //verified
-  { MODE_EASY,               33311 }   //verified
-};
-#define MODESCNT (sizeof(modemap)/sizeof(modemap[0]))
-
-int mode_get() {
-	int mode, i, t=0xFF;
-	
-	mode  = (playrec_mode==2 || playrec_mode==4 || playrec_mode==5)?MODE_REC:MODE_PLAY;
-	
-	_GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
-	for (i=0; i<MODESCNT; ++i) {
-		if (modemap[i].canonmode == t) {
-			return (mode | (modemap[i].hackmode & MODE_SHOOTING_MASK));
-		}
-	}
-	return (mode);
-}
-
 
 //fl_tbl still the same as sx100
 static const int fl_tbl[] = {6000, 6700, 7300, 8200, 9100, 10300, 11500, 12800, 14400, 16100, 18100, 20100, 22400, 25200, 28100, 31500, 34900, 38900, 42500, 46600, 51100, 55900, 60000};

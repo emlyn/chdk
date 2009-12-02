@@ -103,6 +103,7 @@ static const struct keyword_token keywords[] = {
   {"get_av96",                TOKENIZER_GET_AV96},
   {"get_av",                  TOKENIZER_GET_USER_AV_ID}, //FOR COMPATIBILITY
   {"get_bv96",                TOKENIZER_GET_BV96},
+  {"get_capture_mode",        TOKENIZER_GET_CAPTURE_MODE},
   {"get_display_mode",        TOKENIZER_GET_DISPLAY_MODE},
   {"get_day_seconds",         TOKENIZER_GET_DAY_SECONDS},
   {"get_disk_size",           TOKENIZER_GET_DISK_SIZE},
@@ -151,6 +152,8 @@ static const struct keyword_token keywords[] = {
   {"set_av96",                TOKENIZER_SET_AV96},
   {"set_av",                  TOKENIZER_SET_USER_AV_BY_ID}, //FOR COMPATIBILITY
   {"set_backlight",           TOKENIZER_SET_BACKLIGHT},
+  {"set_capture_mode_canon",  TOKENIZER_SET_CAPTURE_MODE_CANON},
+  {"set_capture_mode",        TOKENIZER_SET_CAPTURE_MODE},
   {"set_focus",               TOKENIZER_SET_FOCUS},
   {"set_iso_mode",            TOKENIZER_SET_ISO_MODE},
   {"set_iso_real",            TOKENIZER_SET_ISO_REAL},
@@ -213,6 +216,7 @@ static const struct keyword_token keywords[] = {
   {"get_histo_range",         TOKENIZER_GET_HISTO_RANGE},
    {"shot_histo_enable",       TOKENIZER_SHOT_HISTO_ENABLE},
    {"set_aflock",            TOKENIZER_SET_AFLOCK},
+  {"is_capture_mode_valid",  TOKENIZER_IS_CAPTURE_MODE_VALID},
   
   {"end",                     TOKENIZER_END},
 

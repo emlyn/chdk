@@ -2,7 +2,8 @@
 #define PROPSET1_H
 /* 
 constants for propset 1, most digic2 camera
-WARNING: this file is used gen_propset_lua.sh to generate propset.lua
+WARNING:
+ The build uses tools/gen_propset_lua.sed to generate propset1.lua from this file
 */
 #define PROPCASE_DRIVE_MODE    				6
 #define PROPCASE_FOCUS_MODE    				12

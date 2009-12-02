@@ -80,6 +80,18 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+static const CapturemodeMap modemap[] = {
+    { MODE_P,                   0 },
+    { MODE_DIGITAL_MACRO,       2 },
+    { MODE_MY_COLORS,           3 },
+    { MODE_STITCH,              4 }, 
+    { MODE_AUTO,                5 },
+    { MODE_PORTRAIT,            6 },
+    { MODE_SCN_SNOW,            8 },
+    { MODE_SCN_NIGHT,          12 },
+    { MODE_VIDEO_STD,          15 }
+};
+
 #include "../generic/shooting.c"
 
 long get_file_next_counter() {

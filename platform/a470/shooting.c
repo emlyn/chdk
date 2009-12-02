@@ -83,6 +83,23 @@ const ISOTable iso_table[] = {
     {  6, 1600, "1600", -1},
 };          
 
+static const CapturemodeMap modemap[] = {
+    { MODE_AUTO,               32768 },
+    { MODE_P,                  32772 },
+    { MODE_VIDEO_STD,          2599  },
+    { MODE_VIDEO_COMPACT,      2601  },
+    { MODE_SCN_AQUARIUM,       16408 },  
+    { MODE_SCN_NIGHT,          16402 },  //Sunset??
+    { MODE_SCN_GRASS,          16403 },   
+    { MODE_SCN_SNOW,           16404 },  
+    { MODE_SCN_BEACH,          16405 },  
+    { MODE_SCN_FIREWORK,       16406 }, 
+	{ MODE_PORTRAIT,           16397 },	
+    { MODE_INDOOR,             16401 },
+    { MODE_KIDS_PETS,          16400 },	
+    { MODE_NIGHT_SNAPSHOT,     16395 },
+};
+
 #include "../generic/shooting.c"
 
 const int dof_tbl[] = {5800, 6420, 7060, 7700, 8340, 9950, 11550, 13160, 14750, 17150, 19570, 22760, 26750, 30750, 34800};

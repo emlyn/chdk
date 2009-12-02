@@ -80,6 +80,32 @@ const ISOTable iso_table[] = {
     {  6, 1600, "1600", -1},
 };          
 
+static const CapturemodeMap modemap[] = {
+    { MODE_AUTO,               32768 }, // PROPCASE 49
+    { MODE_P,                  32772 }, //
+	{ MODE_TV,                  32771 },//
+	{ MODE_AV,                  32770 },//
+	{ MODE_M,                  32769 },	//
+	{ MODE_VIDEO_STD,          2597  },
+    { MODE_VIDEO_COMPACT,      2599  },
+	{ MODE_INDOOR,              32785 },	//
+	{ MODE_SCN_KIDS_PETS, 		32784 },	//
+	{ MODE_PORTRAIT,           32781 },
+    { MODE_NIGHT_SNAPSHOT,     32779 },
+	{ MODE_LANDSCAPE,     	32780 },
+    { MODE_DIGITAL_MACRO,      33288 },//??
+    { MODE_COLOR_ACCENT,       33306 }, //  { MODE_SCN_COLOR_ACCENT,   33306 },
+    { MODE_MY_COLORS,          33307 },
+    { MODE_SCN_KIDS_PETS,      16400 }, //  { MODE_SCN_CHILD,          16400 },
+    { MODE_SCN_INDOOR,         16401 }, //  { MODE_SCN_PARTY,          16401 },
+    { MODE_SCN_FOLIAGE,        16403 }, //  { MODE_SCN_GRASS,          16402 },
+    { MODE_SCN_SNOW,           16404 },
+    { MODE_SCN_BEACH,          16405 },
+    { MODE_SCN_FIREWORK,       16406 },
+    { MODE_SCN_AQUARIUM,       16408 },
+    { MODE_SCN_WATER,          16402 },
+};
+
 #include "../generic/shooting.c"
 
 const int dof_tbl[] = {5800, 6420, 7060, 7700, 8340, 9950, 11550, 13160, 14750, 17150, 19570, 22760, 26750, 30750, 34800};

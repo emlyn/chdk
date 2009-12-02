@@ -201,46 +201,11 @@ int get_zoom_x(int zp)
 	}
 
 
-static struct
-	{
-	int hackmode;
-	int canonmode;
-	}
-	modemap[] =
-	{
-    { MODE_P,                   1 },
-    { MODE_AUTO,                3 },
-    { MODE_MY_COLORS,           4 },
-    { MODE_PORTRAIT,            5 },
-    { MODE_SCN_GRASS,           6 },
-    { MODE_SCN_SNOW,            7 },
-    { MODE_SCN_BEACH,           8 },
-    { MODE_SCN_FIREWORK,        9 }, 
-    { MODE_SCN_WATER,          10 },
-    { MODE_SCN_PARTY,          11 },
-    { MODE_SCN_CHILD,          12 },
-    { MODE_SCN_NIGHT,          13 },
-    { MODE_STITCH,             14 },
-    { MODE_VIDEO_STD,          15 }
-	};
-
-#define MODESCNT (sizeof(modemap)/sizeof(modemap[0]))
-
-int mode_get() 
-	{
-    int mode, i, t=0xFF;
-    mode  = (physw_status[0]&0x03)==0x01 ?  MODE_PLAY : MODE_REC;
-    t=0xFF;
-    _GetPropertyCase(0, &t, 4);
-    for (i=0; i<MODESCNT; ++i)
-		{
-		if (modemap[i].canonmode == t)
-			{
-			return (mode | (modemap[i].hackmode & MODE_SHOOTING_MASK));
-			}
-		}
-    return (mode);
-	}
+// TODO this may not work with play/rec override
+// playrec_mode not verified
+int rec_mode_active(void) {
+    return ((physw_status[0]&0x03)==0x01) ? 0 : 1;
+}
 
 #if 0
   //CAM_CONSOLE_LOG_ENABLED

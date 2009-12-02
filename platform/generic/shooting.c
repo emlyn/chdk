@@ -24,6 +24,8 @@
 #define ISO_MAX (iso_table[ISO_SIZE-1].id)
 #define ISO_MIN_VALUE (iso_table[1-iso_table[0].id].prop_id)
 
+static const unsigned MODESCNT=(sizeof(modemap)/sizeof(modemap[0]));
+
 /*define PROPCASE_CONT_MODE_SHOOT_COUNT 		218*/
 static short iso_market_base=0;
 //static short iso_base=0;
@@ -1381,3 +1383,60 @@ void set_ev_video(int x){
 }
 
 #endif
+
+int shooting_mode_canon2chdk(int canonmode) {
+	int i;
+	for (i=0; i < MODESCNT; i++) {
+		if (modemap[i].canonmode == canonmode) 
+			return modemap[i].hackmode;
+	}
+	return 0;
+}
+
+int shooting_mode_chdk2canon(int hackmode) {
+	int i;
+	for (i=0; i < MODESCNT; i++) {
+		if (modemap[i].hackmode == hackmode) 
+			return modemap[i].canonmode;
+	}
+	return -1; // 0 is a valid mode on old cameras!
+}
+
+int shooting_set_mode_chdk(int mode) {
+	int canonmode = shooting_mode_chdk2canon(mode);
+	if (canonmode == -1 || !rec_mode_active())
+		return 0;
+	_SetCurrentCaptureModeType(canonmode);
+	// TODO since mode seems to be fully set when this returns,
+	// we could check if it worked
+	return 1;
+}
+
+int shooting_set_mode_canon(int canonmode) {
+	if(canonmode == -1 || !rec_mode_active())
+		return 0;
+	_SetCurrentCaptureModeType(canonmode);
+	return 1;
+}
+
+// override in platform/<cam>/main.c if playrec_mode is not found or different
+int __attribute__((weak)) rec_mode_active(void) {
+    return (playrec_mode==2 || playrec_mode==4 || playrec_mode==5);
+}
+
+// currently nothing needs to override this, so not weak
+int /*__attribute__((weak))*/ mode_get(void) {
+    int mode, t=0xFF;
+
+    mode = (rec_mode_active())?MODE_REC:MODE_PLAY;
+
+#ifdef CAM_SWIVEL_SCREEN
+    mode |= (screen_opened())?MODE_SCREEN_OPENED:0;
+    mode |= (screen_rotated())?MODE_SCREEN_ROTATED:0;
+#endif
+
+    _GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
+	mode |= shooting_mode_canon2chdk(t);
+
+    return (mode);
+}

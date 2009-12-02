@@ -1046,23 +1046,54 @@ static int luaCB_set_levent_script_mode( lua_State* L )
   return 0;
 }
 
-/* TODO warning this interface may change!
-  set_capture_mode(modenum)
-  where modenum is a valid PROPCASE_SHOOTING_MODE value for the current camera
+/* 
+  result=set_capture_mode_canon(value)
+  where value is a valid PROPCASE_SHOOTING_MODE value for the current camera
+  result is true if the camera is in rec mode
 */
-static int luaCB_set_capture_mode( lua_State* L )
+static int luaCB_set_capture_mode_canon( lua_State* L )
 {
   int modenum = luaL_checknumber(L,1);
   // if the value as negative, assume it is a mistakenly sign extended PROPCASE_SHOOTING_MODE value
   if(modenum < 0) 
     modenum &= 0xFFFF;
-  SetCurrentCaptureModeType((unsigned)modenum);
-  return 0;
+  lua_pushboolean( L, shooting_set_mode_canon(modenum) );
+  return 1;
+}
+
+/*
+ result=set_capture_mode(modenum)
+ where modenum is a valid CHDK modemap value
+ result is true if modenum is a valid modemap value, otherwise false
+*/
+static int luaCB_set_capture_mode( lua_State* L )
+{
+  int modenum = luaL_checknumber(L,1);
+  lua_pushboolean( L, shooting_set_mode_chdk(modenum) );
+  return 1;
+}
+
+/*
+ result=is_capture_mode_valid(modenum)
+ where modenum is a valid CHDK modemap value
+ result is true if modenum is a valid modemap value, otherwise false
+*/
+static int luaCB_is_capture_mode_valid( lua_State* L )
+{
+  int modenum = luaL_checknumber(L,1);
+  lua_pushboolean( L, shooting_mode_chdk2canon(modenum) != -1 );
+  return 1;
 }
 
 /* 
   set_record(state)
   if state is 0 (or false) the camera is set to play mode. If 1 or true, the camera is set to record mode.
+  NOTE: this only begins the mode change. Script should wait until get_mode() reflects the change,
+  before doing anything that requires the new mode. e.g.
+  set_record(true)
+  while not get_mode() do
+  	sleep(10)
+  end
 */
 static int luaCB_set_record( lua_State* L )
 {
@@ -1224,7 +1255,10 @@ void register_lua_funcs( lua_State* L )
    FUNC(post_levent_for_npt);
    FUNC(set_levent_active);
    FUNC(set_levent_script_mode);
+
    FUNC(set_capture_mode);
+   FUNC(set_capture_mode_canon);
+   FUNC(is_capture_mode_valid);
 
    FUNC(set_record);
 }

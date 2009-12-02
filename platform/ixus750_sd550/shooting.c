@@ -80,6 +80,23 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+static const CapturemodeMap modemap[] = {
+    { MODE_DIGITAL_MACRO,	2 },
+    { MODE_MY_COLORS,           3 },
+    { MODE_STITCH,             	4 },
+    { MODE_AUTO,                5 },
+    { MODE_SCN_PORTRAIT,        6 },
+    { MODE_SCN_FOLIAGE,         7 },
+    { MODE_SCN_SNOW,            8 },
+    { MODE_SCN_BEACH,           9 },
+    { MODE_SCN_WATER,          10 },
+    { MODE_SCN_INDOOR,         11 },
+    { MODE_SCN_NIGHT,          12 },
+    { MODE_SCN_CHILD,          13 },
+    { MODE_SCN_FIREWORK,       14 }, 
+    { MODE_VIDEO_STD,          15 }
+};
+
 #include "../generic/shooting.c"
 
 long get_file_next_counter() {

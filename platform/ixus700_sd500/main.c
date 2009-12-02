@@ -182,43 +182,13 @@ int get_zoom_x(int zp) {
 }
 
 
-static struct {
-	int hackmode;
-	int canonmode;
-} modemap[] = {
-    { MODE_DIGITAL_MACRO,       0 },
-    { MODE_P,                   1 },
-    { MODE_NIGHT,               2 }, // 1-15s
-    { MODE_AUTO,                3 },
-    { MODE_MY_COLORS,           4 },
-    { MODE_PORTRAIT,            5 },
-    { MODE_SCN_GRASS,           6 },
-    { MODE_SCN_SNOW,            7 },
-    { MODE_SCN_BEACH,           8 },
-    { MODE_SCN_FIREWORK,        9 }, 
-    { MODE_SCN_WATER,          10 },
-    { MODE_SCN_PARTY,          11 },
-    { MODE_SCN_CHILD,          12 },
-    { MODE_SCN_NIGHT,          13 },
-    { MODE_STITCH,             14 },
-    { MODE_VIDEO_STD,          15 }
-};
-
-#define MODESCNT (sizeof(modemap)/sizeof(modemap[0]))
-
-int mode_get() {
-    int mode, i, t=0xFF;
-// play/rec without override
+#if 0
+int rec_switch_state(void) {
 //    mode  = (physw_status[0]&0x0F)==0x0B ?  MODE_PLAY : MODE_REC;
+	return (physw_status[0]&0x0F)!=0x0B;
+}
+#endif
 
-// note: different from later cams
-    mode = (playrec_mode==1)?MODE_REC:MODE_PLAY;
-
-    _GetPropertyCase(PROPCASE_SHOOTING_MODE, &t, 4);
-    for (i=0; i<MODESCNT; ++i) {
-	if (modemap[i].canonmode == t) {
-	    return (mode | (modemap[i].hackmode & MODE_SHOOTING_MASK));
-	}
-    }
-    return (mode);
+int rec_mode_active(void) {
+    return (playrec_mode==1);
 }
