@@ -846,17 +846,15 @@
       5181,   1000000, 48183,   1000000, 245014,  1000000 
     #define cam_CalibrationIlluminant1  1 // Daylight
 
-		////////////////////////////////
-		// Unsure
-		////////////////////////////////
-//    #undef  CAM_UNCACHED_BIT
-//    #define CAM_UNCACHED_BIT    0x40000000
-
     // cropping (from ixus870_sd880)
     #define CAM_ACTIVE_AREA_X1          14
     #define CAM_ACTIVE_AREA_Y1          8
     #define CAM_ACTIVE_AREA_X2          3682
     #define CAM_ACTIVE_AREA_Y2          2764
+
+    #undef  CAM_HAS_MANUAL_FOCUS
+// for the purposes of CHDK, the FACE button is treated as the erase button
+//    #undef  CAM_HAS_ERASE_BUTTON
 
 //==========================================================
 // SD-Series (IXUS-Series)

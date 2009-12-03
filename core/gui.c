@@ -106,6 +106,9 @@ int script_params_has_changed=0;
 //Alt mode & Manual mode  
  #define SHORTCUT_SET_INFINITY        KEY_UP
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
+ #ifndef CAM_HAS_MANUAL_FOCUS
+ 	#define SHORTCUT_MF_TOGGLE           KEY_DISPLAY
+ #endif
 #endif
 
 
