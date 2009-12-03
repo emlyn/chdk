@@ -265,47 +265,49 @@ void script_start( int autostart )
     int i;
 
     shot_histogram_set(0);
-    if (autostart) auto_started = 1; else auto_started = 0;
+    if (autostart)
+        auto_started = 1;
+    else
+        auto_started = 0;
+
     delay_target_ticks = 0;
     kbd_int_stack_ptr = 0;
     kbd_last_clicked = 0;
+
     /*if (!autostart)*/ kbd_key_release_all();
 
     script_console_clear();
     script_print_screen_init();
 
-			if (conf.script_param_save)
-				{
+    if (conf.script_param_save) {
         save_params_values(0);
-      }
+    }
     if( autostart )
-      script_console_add_line("***Autostart***");
+        script_console_add_line("***Autostart***");
     else
-      script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
+        script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
 
     if( is_lua() ) {
-      
-      if( !lua_script_start(state_ubasic_script) ) {
-    script_print_screen_end();
-    wait_and_end();
-    return;
-      }
-      for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
-    if( script_params[i][0] ) {
-    char var = 'a'+i;
-    lua_pushlstring( L, &var, 1 );
-    lua_pushnumber( L, conf.ubasic_vars[i] );
-    lua_settable( L, LUA_GLOBALSINDEX );
-    }
-      }
-      state_lua_kbd_first_call_to_resume = 1;
-    }
-    else {
-      ubasic_init(state_ubasic_script);
+        if( !lua_script_start(state_ubasic_script) ) {
+            script_print_screen_end();
+            wait_and_end();
+            return;
+        }
+        for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
+            if( script_params[i][0] ) {
+                char var = 'a'+i;
+                lua_pushlstring( L, &var, 1 );
+                lua_pushnumber( L, conf.ubasic_vars[i] );
+                lua_settable( L, LUA_GLOBALSINDEX );
+            }
+        }
+        state_lua_kbd_first_call_to_resume = 1;
+    } else { // ubasic
+        ubasic_init(state_ubasic_script);
 
-      for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
-        ubasic_set_variable(i, conf.ubasic_vars[i]);
-      }
+        for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
+            ubasic_set_variable(i, conf.ubasic_vars[i]);
+        }
     }
 
     state_kbd_script_run = 1;
@@ -341,135 +343,128 @@ void process_script()
 
     // process stack operations
     if (kbd_int_stack_ptr){
-	switch (KBD_STACK_PREV(1)){
-
-	case SCRIPT_MOTION_DETECTOR:
-			if(md_detect_motion()==0){
-				kbd_int_stack_ptr-=1;
- 				if (L)
- 				{
- 					  // We need to recover the motion detector's
- 					  // result from ubasic variable 0 and push
- 					  // it onto the thread's stack. -- AUJ
- 					  lua_pushnumber( Lt, ubasic_get_variable(0) );
- 				}
-			}
-			return;
-
-	case SCRIPT_PRESS:
-	    kbd_key_press(KBD_STACK_PREV(2));
-	    kbd_int_stack_ptr-=2; // pop op.
-	    return;
-	case SCRIPT_RELEASE:
-	    kbd_key_release(KBD_STACK_PREV(2));
-	    kbd_int_stack_ptr-=2; // pop op.
-	    return;
-	case SCRIPT_SLEEP:
-	    t = get_tick_count();
-	    // FIXME take care if overflow occurs
-	    if (delay_target_ticks == 0){
-		/* setup timer */
-		delay_target_ticks = t+KBD_STACK_PREV(2);
-	    } else {
-		if (delay_target_ticks <= t){
-		    delay_target_ticks = 0;
-		    kbd_int_stack_ptr-=2; // pop sleep op.
-		}
-	    }
-	    return;
-	case SCRIPT_PR_WAIT_SAVE:
-	    state_shooting_progress = SHOOTING_PROGRESS_NONE;
-	    state_expos_recalculated = 0;
-	    histogram_stop();
-
-	    kbd_int_stack_ptr-=1; // pop op.
-	    return;
-	case SCRIPT_WAIT_SAVE:{
-	    if (state_shooting_progress == SHOOTING_PROGRESS_DONE)
-		kbd_int_stack_ptr-=1; // pop op.
-	    return;
-	}
-	case SCRIPT_WAIT_FLASH:{
-	    if (shooting_is_flash_ready())
-		kbd_int_stack_ptr-=1; // pop op.
-	    return;
-	}
-	case SCRIPT_WAIT_EXPHIST:{
-	    if (state_expos_recalculated) {
-		kbd_int_stack_ptr-=1; // pop op.
-		state_expos_under = under_exposed;
-		state_expos_over = over_exposed;
-	    }
-	    return;
-	}
-	case SCRIPT_PR_WAIT_EXPHIST: {
-	    if (shooting_in_progress() || mvideo) {
-		state_expos_recalculated = 0;
-		histogram_restart();
-		kbd_int_stack_ptr-=1; // pop op.
-	    }
-	    return;
-	}
-        case SCRIPT_WAIT_CLICK: {
-            t = get_tick_count();
-	    if (delay_target_ticks == 0){
-		/* setup timer */
-		delay_target_ticks = t+((KBD_STACK_PREV(2))?KBD_STACK_PREV(2):86400000);
-	    } else {
-                kbd_last_clicked = kbd_get_clicked_key();
-                if (kbd_last_clicked || delay_target_ticks <= t) {
-                    if (!kbd_last_clicked) 
-                        kbd_last_clicked=0xFFFF;
-        	    delay_target_ticks = 0;
-                    kbd_int_stack_ptr-=2; // pop op.
+        switch (KBD_STACK_PREV(1)) {
+            case SCRIPT_MOTION_DETECTOR:
+                if(md_detect_motion()==0) {
+                    kbd_int_stack_ptr-=1;
+                    if (L)
+                    {
+                           // We need to recover the motion detector's
+                           // result from ubasic variable 0 and push
+                           // it onto the thread's stack. -- AUJ
+                           lua_pushnumber( Lt, ubasic_get_variable(0) );
+                    }
                 }
-	    }
-	    return;
-	}
-	default:
-	    /*finished();*/
-	    script_end();
-	}
+                return;
+            case SCRIPT_PRESS:
+                kbd_key_press(KBD_STACK_PREV(2));
+                kbd_int_stack_ptr-=2; // pop op.
+                return;
+            case SCRIPT_RELEASE:
+                kbd_key_release(KBD_STACK_PREV(2));
+                kbd_int_stack_ptr-=2; // pop op.
+                return;
+            case SCRIPT_SLEEP:
+                t = get_tick_count();
+                // FIXME take care if overflow occurs
+                if (delay_target_ticks == 0){
+                    /* setup timer */
+                    delay_target_ticks = t+KBD_STACK_PREV(2);
+                } else {
+                    if (delay_target_ticks <= t){
+                        delay_target_ticks = 0;
+                        kbd_int_stack_ptr-=2; // pop sleep op.
+                    }
+                }
+                return;
+            case SCRIPT_PR_WAIT_SAVE:
+                state_shooting_progress = SHOOTING_PROGRESS_NONE;
+                state_expos_recalculated = 0;
+                histogram_stop();
+
+                kbd_int_stack_ptr-=1; // pop op.
+                return;
+            case SCRIPT_WAIT_SAVE:{
+                if (state_shooting_progress == SHOOTING_PROGRESS_DONE)
+                    kbd_int_stack_ptr-=1; // pop op.
+                return;
+            }
+            case SCRIPT_WAIT_FLASH:{
+                if (shooting_is_flash_ready())
+                    kbd_int_stack_ptr-=1; // pop op.
+                return;
+            }
+            case SCRIPT_WAIT_EXPHIST:{
+                if (state_expos_recalculated) {
+                    kbd_int_stack_ptr-=1; // pop op.
+                    state_expos_under = under_exposed;
+                    state_expos_over = over_exposed;
+                }
+                return;
+            }
+            case SCRIPT_PR_WAIT_EXPHIST: {
+                if (shooting_in_progress() || mvideo) {
+                    state_expos_recalculated = 0;
+                    histogram_restart();
+                    kbd_int_stack_ptr-=1; // pop op.
+                }
+                return;
+            }
+            case SCRIPT_WAIT_CLICK: {
+                t = get_tick_count();
+                if (delay_target_ticks == 0){
+                    /* setup timer */
+                    delay_target_ticks = t+((KBD_STACK_PREV(2))?KBD_STACK_PREV(2):86400000);
+                } else {
+                    kbd_last_clicked = kbd_get_clicked_key();
+                    if (kbd_last_clicked || delay_target_ticks <= t) {
+                        if (!kbd_last_clicked) 
+                            kbd_last_clicked=0xFFFF;
+                        delay_target_ticks = 0;
+                        kbd_int_stack_ptr-=2; // pop op.
+                    }
+                }
+                return;
+            }
+            default:
+                /*finished();*/
+                script_end();
+        }
     }
 
- 	if (state_kbd_script_run != 3)
- 	{
- 		if( L ) {
- 			int top;
- 			if (state_lua_kbd_first_call_to_resume)
- 			{
- 				state_lua_kbd_first_call_to_resume = 0;
- 				top = 0;
- 			}
- 			else
- 			{
- 				top = lua_gettop(Lt);
- 			}
- 		   Lres = lua_resume( Lt, top );
- 
- 		  if (Lres != LUA_YIELD && Lres != 0) {
- 				script_console_add_line( lua_tostring( Lt, -1 ) );
- 				if(conf.debug_lua_restart_on_error){
-					lua_script_reset( L );
-					script_start(0);
-				} else {
-					wait_and_end();
-				}
- 				return;
- 		  }
- 
- 		  if (Lres != LUA_YIELD) {
- 			script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
- 		script_end();
- 		  }    
- 		} 
- 		else {
- 		  ubasic_run();
- 		  if (ubasic_finished()) {
- 		script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
- 		script_end();
- 		  }    
- 	}
+    if (state_kbd_script_run != 3) {
+        if( L ) {
+            int top;
+            if (state_lua_kbd_first_call_to_resume) {
+                state_lua_kbd_first_call_to_resume = 0;
+                top = 0;
+            } else {
+                top = lua_gettop(Lt);
+            }
+            Lres = lua_resume( Lt, top );
+
+            if (Lres != LUA_YIELD && Lres != 0) {
+                script_console_add_line( lua_tostring( Lt, -1 ) );
+                if(conf.debug_lua_restart_on_error){
+                    lua_script_reset( L );
+                    script_start(0);
+                } else {
+                    wait_and_end();
+                }
+                return;
+            }
+
+            if (Lres != LUA_YIELD) {
+                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
+                script_end();
+            }    
+        } else {
+            ubasic_run();
+            if (ubasic_finished()) {
+                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
+                script_end();
+            }    
+        }
     }
 }
 
@@ -477,9 +472,9 @@ void ubasic_camera_press(const char *s)
 {
     long k = keyid_by_name(s);
     if (k > 0) {
-	kbd_sched_press(k);
+        kbd_sched_press(k);
     } else {
-	ubasic_error = 3;
+        ubasic_error = 3;
     }
 }
 
@@ -487,9 +482,9 @@ void ubasic_camera_release(const char *s)
 {
     long k = keyid_by_name(s);
     if (k > 0) {
-	kbd_sched_release(k);
+        kbd_sched_release(k);
     } else {
-	ubasic_error = 3;
+        ubasic_error = 3;
     }
 }
 
@@ -497,9 +492,9 @@ void ubasic_camera_click(const char *s)
 {
     long k = keyid_by_name(s);
     if (k > 0) {
-	kbd_sched_click(k);
+        kbd_sched_click(k);
     } else {
-	ubasic_error = 3;
+        ubasic_error = 3;
     }
 }
 
@@ -512,10 +507,10 @@ int ubasic_camera_is_pressed(const char *s)
 {
     long k = keyid_by_name(s);
     if (k==0xFF) return get_usb_power(1);
-	if (k > 0) {
+        if (k > 0) {
         return (kbd_is_key_pressed(k));
     } else {
-	ubasic_error = 3;
+        ubasic_error = 3;
     }
     return 0;
 }
@@ -524,10 +519,10 @@ int ubasic_camera_is_clicked(const char *s)
 {
     long k = keyid_by_name(s);
     if (k==0xFF) return get_usb_power(1);
-	if (k > 0) {
+        if (k > 0) {
         return (kbd_last_clicked == k);
     } else {
-	ubasic_error = 3;
+        ubasic_error = 3;
     }
     return 0;
 }
@@ -544,16 +539,16 @@ void ubasic_camera_shoot()
 // remote autostart
 void script_autostart()
 {
-	kbd_blocked = 1;
-	gui_kbd_enter();
-	script_console_clear(); 
-	script_console_add_line("***Autostart***"); //lang_str(LANG_CONSOLE_TEXT_STARTED));
-	script_start( 1 );
+    kbd_blocked = 1;
+    gui_kbd_enter();
+    script_console_clear(); 
+    script_console_add_line("***Autostart***"); //lang_str(LANG_CONSOLE_TEXT_STARTED));
+    script_start( 1 );
 }
 void exit_alt()
 {
-	    kbd_blocked = 0;
-	    gui_kbd_leave();
+    kbd_blocked = 0;
+    gui_kbd_leave();
 }
 
 // ------ add by Masuji SUTO (start) --------------
@@ -570,765 +565,805 @@ static int remoteHalfShutter=0, remoteFullShutter=0, remoteShooting=0, remoteCli
 #define REMOTE_MAX_CLICK_LENGTH	50
 /*-------------------- Alex scriptless remote additions end ---------------------*/
 
+/* 
+    main kb processing
+    this monster needs to be broken up and documented, remote stuff should go in it's own functions
+*/
 long kbd_process()
 {
 /* Alternative keyboard mode stated/exited by pressing print key.
  * While running Alt. mode shoot key will start a script execution.
  */
-static int nCER=0;
+    static int nCER=0;
 // ------ modif by Masuji SUTO (start) --------------
 
-unsigned int mmode;
-unsigned int nCrzpos,i;
-unsigned int drmode = 0;
+    unsigned int mmode;
+    unsigned int nCrzpos,i;
+    unsigned int drmode = 0;
 
-   if(conf.ricoh_ca1_mode && conf.remote_enable)
-  {
-	drmode = shooting_get_drive_mode();
-	mmode = mode_get();
-	mplay = (mmode&MODE_MASK)==MODE_PLAY;
-//	mvideo= ((mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_STD || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_SPEED || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_COMPACT ||(mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_MY_COLORS || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_ACCENT);
-	mvideo=MODE_IS_VIDEO(mmode);
-  }
-       // deals with alt-mode switch and delay emulation
-        if (key_pressed)
-        {
-                if (kbd_is_key_pressed(conf.alt_mode_button) ||
-                        ((key_pressed >= CAM_EMUL_KEYPRESS_DELAY) && 
-                         (key_pressed < CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION)))
-                {
-                        if (key_pressed <= CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION) 
-                                key_pressed++;
-                        if (key_pressed == CAM_EMUL_KEYPRESS_DELAY) 
-                                kbd_key_press(conf.alt_mode_button);
-                        else if (key_pressed == +CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION) 
-                                kbd_key_release(conf.alt_mode_button);
-                        return 1;
-                } else 
-                if (kbd_get_pressed_key() == 0)
-                {
-                        if (key_pressed != 100 && (key_pressed < CAM_EMUL_KEYPRESS_DELAY))
-                        {
-                                kbd_blocked = 1-kbd_blocked;
-                                if (kbd_blocked) gui_kbd_enter(); else gui_kbd_leave();
-                        }
-                        key_pressed = 0;
-                        return 1;
-                }
-                return 1;
+    if(conf.ricoh_ca1_mode && conf.remote_enable) {
+        drmode = shooting_get_drive_mode();
+        mmode = mode_get();
+        mplay = (mmode&MODE_MASK)==MODE_PLAY;
+//      mvideo= ((mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_STD || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_SPEED || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_COMPACT ||(mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_MY_COLORS || (mmode&MODE_SHOOTING_MASK)==MODE_VIDEO_COLOR_ACCENT);
+        mvideo=MODE_IS_VIDEO(mmode);
+    }
+    // deals with alt-mode switch and delay emulation
+    if (key_pressed) {
+        if (kbd_is_key_pressed(conf.alt_mode_button)
+                || ((key_pressed >= CAM_EMUL_KEYPRESS_DELAY)
+                && (key_pressed < CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION))) {
+            if (key_pressed <= CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION) 
+                key_pressed++;
+            if (key_pressed == CAM_EMUL_KEYPRESS_DELAY) 
+                kbd_key_press(conf.alt_mode_button);
+            else if (key_pressed == +CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION) 
+                kbd_key_release(conf.alt_mode_button);
+            return 1;
+        } else if (kbd_get_pressed_key() == 0) {
+            if (key_pressed != 100 && (key_pressed < CAM_EMUL_KEYPRESS_DELAY)) {
+                kbd_blocked = 1-kbd_blocked;
+                if (kbd_blocked) 
+                    gui_kbd_enter();
+                else
+                    gui_kbd_leave();
+            }
+            key_pressed = 0;
+            return 1;
         }
+        return 1;
+    }
        
-       // auto iso shift
-        if (kbd_is_key_pressed(KEY_SHOOT_HALF) && kbd_is_key_pressed(conf.alt_mode_button)) return 0;
-        
-        if (kbd_is_key_pressed(conf.alt_mode_button))
-        {
-                if (conf.ricoh_ca1_mode && conf.remote_enable) conf.synch_enable=1;
-                key_pressed = 1;
-                kbd_key_release_all();          
-                return 1;
-        }
+    // auto iso shift
+    if (kbd_is_key_pressed(KEY_SHOOT_HALF) && kbd_is_key_pressed(conf.alt_mode_button)) 
+        return 0;
 
-        // deals with the rest
-        if (kbd_blocked && nRmt==0)
-        {
+    if (kbd_is_key_pressed(conf.alt_mode_button)) {
+        if (conf.ricoh_ca1_mode && conf.remote_enable)
+            conf.synch_enable=1;
+        key_pressed = 1;
+        kbd_key_release_all();          
+        return 1;
+    }
+
+    // deals with the rest
+    if (kbd_blocked && nRmt==0) {
 /*------------------- Alex scriptless remote additions start --------------------*/
         if (remoteShooting) {
-
-          if (remoteHalfShutter) {
-            if (get_usb_power(1)) {
-              if (remoteClickTimer < REMOTE_MAX_CLICK_LENGTH) {
-                remoteHalfShutter=0;
-                remoteFullShutter=1;
-                kbd_key_press(KEY_SHOOT_FULL);
-              }
-              return 1;
-            } else {
-              --remoteClickTimer;
-              if ( remoteClickTimer == 0 ) {
-                kbd_key_release_all();
-                remoteHalfShutter=0;
-                remoteShooting=0;
-                kbd_blocked=0;
-                return 0;
-              }
+            if (remoteHalfShutter) {
+                if (get_usb_power(1)) {
+                    if (remoteClickTimer < REMOTE_MAX_CLICK_LENGTH) {
+                        remoteHalfShutter=0;
+                        remoteFullShutter=1;
+                        kbd_key_press(KEY_SHOOT_FULL);
+                    }
+                    return 1;
+                } else {
+                    --remoteClickTimer;
+                    if ( remoteClickTimer == 0 ) {
+                        kbd_key_release_all();
+                        remoteHalfShutter=0;
+                        remoteShooting=0;
+                        kbd_blocked=0;
+                        return 0;
+                    }
+                }
             }
-          }
 
-          if (remoteFullShutter) {
-            if (get_usb_power(1)) {
-              return 1;
-            } else {
-              kbd_key_release_all();
-              remoteFullShutter=0;
-              remoteShooting=0;
-              kbd_blocked=0;
-              return 0;
+            if (remoteFullShutter) {
+                if (get_usb_power(1)) {
+                    return 1;
+                } else {
+                    kbd_key_release_all();
+                    remoteFullShutter=0;
+                    remoteShooting=0;
+                    kbd_blocked=0;
+                    return 0;
+                }
             }
-          }
-
         }
 /*-------------------- Alex scriptless remote additions end ---------------------*/
-                if (kbd_is_key_pressed(KEY_SHOOT_FULL))
-                {
-                        key_pressed = 100;
-                        if (!state_kbd_script_run)
-                        {
-                                script_start(0);
-                        } else if (state_kbd_script_run == 2 || state_kbd_script_run == 3)
-                        {
-                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
-                                script_end();
-                        } else if (L)
-                        {
-                            state_kbd_script_run = 2;
-                            lua_getglobal(Lt, "restore");
-                            if (lua_isfunction(Lt, -1))
-                                {
-                                if (lua_pcall( Lt, 0, 0, 0 ))
-                                {
-                                    script_console_add_line( lua_tostring( Lt, -1 ) );
-                                }
-                            }
-                            script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
-                            script_end();
-                        }
-                        else
-                        {
-                            state_kbd_script_run = 2;
-                            if (jump_label("restore") == 0)
-                            {
-                                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
-                                script_end();
-                            }
-                        }
+        if (kbd_is_key_pressed(KEY_SHOOT_FULL)) {
+            key_pressed = 100;
+            if (!state_kbd_script_run) {
+                script_start(0);
+            } else if (state_kbd_script_run == 2 || state_kbd_script_run == 3) {
+                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
+                script_end();
+            } else if (L) {
+                state_kbd_script_run = 2;
+                lua_getglobal(Lt, "restore");
+                if (lua_isfunction(Lt, -1)) {
+                    if (lua_pcall( Lt, 0, 0, 0 )) {
+                        script_console_add_line( lua_tostring( Lt, -1 ) );
+                    }
                 }
+                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
+                script_end();
+            } else {
+                state_kbd_script_run = 2;
+                if (jump_label("restore") == 0) {
+                    script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
+                    script_end();
+                }
+            }
+        }
 
-                if (state_kbd_script_run) 
-                        process_script(); else
-                        gui_kbd_process();
-        } else
-        {
-
+        if (state_kbd_script_run) 
+            process_script();
+        else
+            gui_kbd_process();
+    } else {
 #ifndef SYNCHABLE_REMOTE_NOT_ENABLED
-if(conf.ricoh_ca1_mode && conf.remote_enable)
-{
-
+        if(conf.ricoh_ca1_mode && conf.remote_enable) {
 // ------ add by Masuji SUTO (start) --------------
-if(nWt>0) {nWt--;return 1;}
+            if(nWt>0) {
+                nWt--;
+                return 1;
+            }
 #if defined(CAMERA_ixus960)
-if(nFirst==1){
-    if(nSW==0){
-        nSW=1;
-        nWt=10;
-        kbd_key_release_all();
-        kbd_key_press(KEY_SHOOT_HALF); 
-        soft_half_press = 1;
-        set_key_press(1);
-        return 1;
-    }
-    else if(nSW==1){
-        nSW=2;
-        nWt=10;
-        kbd_key_release(KEY_SHOOT_HALF); 
-        soft_half_press = 0;
-        set_key_press(1);
-        return 1;
-    }
-    else if(nSW==2){
-        set_key_press(0);
-        nWt=10;
-        nSW=0;
-        nFirst=0;
-        return 1;
-    }
-}
-#endif
-if (kbd_is_key_pressed(KEY_SHOOT_FULL)) conf.synch_enable=0;
-	if (kbd_is_key_pressed(KEY_SHOOT_HALF) && nTxzoom>0) {
-		nCount2=0;
-		nTxzoom=0;
-		nReczoom=0;
-		nTxvideo=0;
-		debug_led(0);
-		}
-	if (mplay && (kbd_is_key_pressed(KEY_LEFT) || kbd_is_key_pressed(KEY_RIGHT))){
-		nPlyname=KEY_LEFT;
-		if(kbd_is_key_pressed(KEY_RIGHT)) nPlyname=KEY_RIGHT;
-		}
-	if (kbd_is_key_pressed(KEY_VIDEO)){
-		nCount2=0;
-		nTxzoom=0;
-		nReczoom=0;
-		nTxvideo++;
-		if(nTxvideo<50){
-			kbd_key_release_all();
-			debug_led(1);
-			}
-		else {
-			debug_led(0);
-			return 0;
-			}
-		return 1;
-		}
-	else if(nTxvideo>49) nTxvideo=0;
-	if (kbd_is_key_pressed(KEY_ZOOM_IN) || kbd_is_key_pressed(KEY_ZOOM_OUT)){
-		nCount2=0;
-		nTxvideo=0;
-		if(kbd_is_key_pressed(KEY_ZOOM_IN)) {
-			if(nTxzname==KEY_ZOOM_IN) nTxzoom++;
-			else nTxzoom=1;
-			nTxzname=KEY_ZOOM_IN;
-			}
-		else {
-			if(nTxzname==KEY_ZOOM_OUT) nTxzoom++;
-			else nTxzoom=1;
-			nTxzname=KEY_ZOOM_OUT;
-			}
-		if(nTxzoom<50){
-			kbd_key_release_all();
-			debug_led(1);
-			}
-		else {
-			debug_led(0);
-			return 0;
-			}
-		return 1;
-		}
-	if(!get_usb_power(1) && nSW<100 && nCount==0 && nTxzoom>0) {
-		nCount2++;
-		if(nCount2>conf.zoom_timeout*100){
-			if(nTxzoom>0){
-				nTxzoom=0;
-				nReczoom=0;
-				debug_led(0);
-				}
-			nCount2=0;
-			}
-		return 1;
-		}
-	if(get_usb_power(1) && nSW<100 && nCount==0) {nCount2=0;kbd_key_release_all();conf.synch_enable=1;}
+            if(nFirst==1) {
+                if(nSW==0) {
+                    nSW=1;
+                    nWt=10;
+                    kbd_key_release_all();
+                    kbd_key_press(KEY_SHOOT_HALF); 
+                    soft_half_press = 1;
+                    set_key_press(1);
+                    return 1;
+                } else if(nSW==1) {
+                    nSW=2;
+                    nWt=10;
+                    kbd_key_release(KEY_SHOOT_HALF); 
+                    soft_half_press = 0;
+                    set_key_press(1);
+                    return 1;
+                } else if(nSW==2) {
+                    set_key_press(0);
+                    nWt=10;
+                    nSW=0;
+                    nFirst=0;
+                    return 1;
+                }
+            }
+#endif // CAMERA_ixus960
+            if (kbd_is_key_pressed(KEY_SHOOT_FULL))
+                conf.synch_enable=0;
+            if (kbd_is_key_pressed(KEY_SHOOT_HALF) && nTxzoom>0) {
+                nCount2=0;
+                nTxzoom=0;
+                nReczoom=0;
+                nTxvideo=0;
+                debug_led(0);
+            }
+            if (mplay && (kbd_is_key_pressed(KEY_LEFT) || kbd_is_key_pressed(KEY_RIGHT))) {
+                nPlyname=KEY_LEFT;
+                if(kbd_is_key_pressed(KEY_RIGHT))
+                    nPlyname=KEY_RIGHT;
+            }
+            if (kbd_is_key_pressed(KEY_VIDEO)) {
+                nCount2=0;
+                nTxzoom=0;
+                nReczoom=0;
+                nTxvideo++;
+                if(nTxvideo<50) {
+                    kbd_key_release_all();
+                    debug_led(1);
+                } else {
+                    debug_led(0);
+                    return 0;
+                }
+                return 1;
+            }
+            else if(nTxvideo>49)
+                nTxvideo=0;
+            if (kbd_is_key_pressed(KEY_ZOOM_IN) || kbd_is_key_pressed(KEY_ZOOM_OUT)) {
+                nCount2=0;
+                nTxvideo=0;
+                if(kbd_is_key_pressed(KEY_ZOOM_IN)) {
+                    if(nTxzname==KEY_ZOOM_IN)
+                        nTxzoom++;
+                    else
+                        nTxzoom=1;
+                    nTxzname=KEY_ZOOM_IN;
+                } else {
+                    if(nTxzname==KEY_ZOOM_OUT)
+                        nTxzoom++;
+                    else
+                        nTxzoom=1;
+                    nTxzname=KEY_ZOOM_OUT;
+                }
+                if(nTxzoom<50) {
+                    kbd_key_release_all();
+                    debug_led(1);
+                } else {
+                    debug_led(0);
+                    return 0;
+                }
+                return 1;
+            }
+            if(!get_usb_power(1) && nSW<100 && nCount==0 && nTxzoom>0) {
+                nCount2++;
+                if(nCount2>conf.zoom_timeout*100) {
+                    if(nTxzoom>0) {
+                        nTxzoom=0;
+                        nReczoom=0;
+                        debug_led(0);
+                    }
+                    nCount2=0;
+                }
+                return 1;
+            }
+            if(get_usb_power(1) && nSW<100 && nCount==0) {
+                nCount2=0;
+                kbd_key_release_all();
+                conf.synch_enable=1;
+            }
+            if(get_usb_power(1) && nSW<100 && nCount==0) {
+                kbd_key_release_all();
+                conf.synch_enable=1;
+            }
+            if(get_usb_power(1) && nSW<100 && nCount<6) {
+                nCount++;
+                return 1;
+            }
+            if(nCount>0 && nSW<100) {
+                if(mplay) {
+                    if(get_usb_power(1))
+                        return 1;
+                    kbd_key_release_all();
+                    kbd_key_press(nPlyname);
+                    set_key_press(1);
+                    nCount=0;
+                    nCa=2;
+                    nSW=101;
+                    nWt=5;
+                    return 1;
+                }
+                if(nTxvideo>49)
+                    nTxvideo=0;
+                if(nCount<5)
+                    nCa=1;                //for Richo remote switch CA-1
+                else
+                    nCa=2;                                //for hand made remote switch
 
-	
-	if(get_usb_power(1) && nSW<100 && nCount==0) {kbd_key_release_all();conf.synch_enable=1;}
-	if(get_usb_power(1) && nSW<100 && nCount<6){
-		nCount++;
-		return 1;
-		}
-	if(nCount>0 && nSW<100){
-		if(mplay) {
-			if(get_usb_power(1)) return 1;
-			kbd_key_release_all();
-			kbd_key_press(nPlyname);
-			set_key_press(1);
-			nCount=0;
-			nCa=2;
-			nSW=101;
-			nWt=5;
-			return 1;
-			}
-		if(nTxvideo>49) nTxvideo=0;
-		if(nCount<5) nCa=1;		//for Richo remote switch CA-1
-		else nCa=2;				//for hand made remote switch
-		nCount=0;
-//		debug_led(1);
-		nSW=109;
-		}
+                nCount=0;
+//              debug_led(1);
+                nSW=109;
+            }
 
 // -------------------------------------------------------------  hand made switch  --------------
 
-	if(nCa==2){
-     		if(nSW==101){
-			kbd_key_release_all();
-			set_key_press(0);
-			nWt=50;
-			nSW=0;
-			nCa=0;
-			return 1;
-			}                                       
-		if(nSW==109){
-		//	nSW=110;
-			nCER=0;
-			if(nTxzoom>0 && conf.remote_zoom_enable){
-				if(nTxzoom<100){
-					nIntzpos=lens_get_zoom_point();
-					for(i=0;i<ZSTEP_TABLE_SIZE;i++){
-						if(nIntzpos<=nTxtbl[i]){
-							if(i>0){
-								if(abs(nTxtbl[i]-nIntzpos)<=abs(nTxtbl[i-1]-nIntzpos)) nTxtblcr=i;
-								else nTxtblcr=i-1;
-								}
-							else nTxtblcr=i;
-							i=ZSTEP_TABLE_SIZE;
-							}
-						}
-					if(nTxzname==KEY_ZOOM_IN){
-						nTxtblcr++;
-						if(nTxtblcr>(ZSTEP_TABLE_SIZE-1)) nTxtblcr=(ZSTEP_TABLE_SIZE-1);
-						}
-					else{
-						nTxtblcr--;
-						if(nTxtblcr<0) nTxtblcr=0;
-						}
-					nSW=108;
-					return 1;
-					}
-				nTxzoom=0;
-				nReczoom=0;
-				}
-			if(nTxvideo>0 && conf.remote_zoom_enable) {nSW=121;return 1;}
-                                    nSW=110;
-			nWt=2;
-			kbd_key_release_all();
-			kbd_key_press(KEY_SHOOT_HALF); 
-		//	key_pressed = 1;
-		//	kbd_blocked = 1;
-		//	nRmt=1;
-                  soft_half_press = 1;
-                  set_key_press(1);
-			return 1;
-			}
-			if(nTxzoom>0 && nSW==108 && conf.remote_zoom_enable){
-				nCrzpos=lens_get_zoom_point();
-				if(nIntzpos!=nCrzpos) {nReczoom=0;}
-				if(nIntzpos==nCrzpos && nCER>50){
-					if(!get_usb_power(1)){
-						kbd_key_release_all();
-						set_key_press(0);
-						nTxzoom=1;
-						nSW=0;
-						nCount=0;
-						nWt=10;
-						nReczoom=1;
-						return 1;
-						}
-					}
-				if(nReczoom==0 && ((nTxzname==KEY_ZOOM_IN && nCrzpos>=nTxtbl[nTxtblcr]) || (nTxzname==KEY_ZOOM_OUT && nCrzpos<=nTxtbl[nTxtblcr]))){
-					if(get_usb_power(1)){
-						i=1;
-						if(nTxzname==KEY_ZOOM_IN){
-							nTxtblcr++;
-							if(nTxtblcr>(ZSTEP_TABLE_SIZE-1)){
-                            nTxtblcr=(ZSTEP_TABLE_SIZE-1);
-                            nTxzname=KEY_ZOOM_OUT;
+            if(nCa==2) {
+                if(nSW==101) {
+                    kbd_key_release_all();
+                    set_key_press(0);
+                    nWt=50;
+                    nSW=0;
+                    nCa=0;
+                    return 1;
+                }                                       
+                if(nSW==109) {
+//                  nSW=110;
+                    nCER=0;
+                    if(nTxzoom>0 && conf.remote_zoom_enable) {
+                        if(nTxzoom<100) {
+                            nIntzpos=lens_get_zoom_point();
+                            for(i=0;i<ZSTEP_TABLE_SIZE;i++) {
+                                if(nIntzpos<=nTxtbl[i]) {
+                                    if(i>0) {
+                                        if(abs(nTxtbl[i]-nIntzpos)<=abs(nTxtbl[i-1]-nIntzpos))
+                                            nTxtblcr=i;
+                                        else
+                                            nTxtblcr=i-1;
+                                    }
+                                    else nTxtblcr=i;
+                                    i=ZSTEP_TABLE_SIZE;
+                                }
                             }
-							}
-						else{
-							nTxtblcr--;
-							if(nTxtblcr<0){
-                            nTxtblcr=0;
-                            nTxzname=KEY_ZOOM_IN;
+                            if(nTxzname==KEY_ZOOM_IN) {
+                                nTxtblcr++;
+                                if(nTxtblcr>(ZSTEP_TABLE_SIZE-1))
+                                    nTxtblcr=(ZSTEP_TABLE_SIZE-1);
+                            } else {
+                                nTxtblcr--;
+                                if(nTxtblcr<0)
+                                    nTxtblcr=0;
                             }
-							}
-						if(i==1) return 1;
-						}
-					kbd_key_release_all();
-					set_key_press(0);
-					nTxzoom=1;
-	//				lens_set_zoom_speed(25);
-					nSW=120;
-					nWt=5;
-					return 1;
-					}
-				kbd_key_release_all();
-				kbd_key_press(nTxzname); 
-				set_key_press(1);
-				nCER++;
-				return 1;
-				}
-				
-		if(nTxvideo>0 && nSW==121){
-			if(!get_usb_power(1)) {
-				nWt=10;
-				kbd_key_press(KEY_VIDEO);
-				set_key_press(1);
-				nSW=122;
-				}
-			return 1;
-			}
-		if(nTxvideo>0 && nSW==122){
-			nWt=10;
-			kbd_key_release(KEY_VIDEO);
-			set_key_press(1);
-			nSW=123;
-			return 1;
-			}
-		if(nTxvideo>0 && nSW==123){
-			set_key_press(0);
-			nWt=50;
-			nSW=0;
-			nCa=0;
-			nTxvideo=0;
-			debug_led(0);
-			return 1;
-			}
+                            nSW=108;
+                            return 1;
+                        }
+                        nTxzoom=0;
+                        nReczoom=0;
+                    }
+                    if(nTxvideo>0 && conf.remote_zoom_enable) {
+                        nSW=121;
+                        return 1;
+                    }
+                    nSW=110;
+                    nWt=2;
+                    kbd_key_release_all();
+                    kbd_key_press(KEY_SHOOT_HALF); 
+//                  key_pressed = 1;
+//                  kbd_blocked = 1;
+//                  nRmt=1;
+                    soft_half_press = 1;
+                    set_key_press(1);
+                    return 1;
+                }
+                if(nTxzoom>0 && nSW==108 && conf.remote_zoom_enable) {
+                    nCrzpos=lens_get_zoom_point();
+                    if(nIntzpos!=nCrzpos) {
+                        nReczoom=0;
+                    }
+                    if(nIntzpos==nCrzpos && nCER>50) {
+                        if(!get_usb_power(1)) {
+                            kbd_key_release_all();
+                            set_key_press(0);
+                            nTxzoom=1;
+                            nSW=0;
+                            nCount=0;
+                            nWt=10;
+                            nReczoom=1;
+                            return 1;
+                        }
+                    }
+                    if(nReczoom==0 && ((nTxzname==KEY_ZOOM_IN && nCrzpos>=nTxtbl[nTxtblcr]) 
+                            || (nTxzname==KEY_ZOOM_OUT && nCrzpos<=nTxtbl[nTxtblcr]))) {
+                        if(get_usb_power(1)) {
+                            i=1;
+                            if(nTxzname==KEY_ZOOM_IN) {
+                                nTxtblcr++;
+                                if(nTxtblcr>(ZSTEP_TABLE_SIZE-1)) {
+                                    nTxtblcr=(ZSTEP_TABLE_SIZE-1);
+                                    nTxzname=KEY_ZOOM_OUT;
+                                }
+                            } else {
+                                nTxtblcr--;
+                                if(nTxtblcr<0){
+                                    nTxtblcr=0;
+                                    nTxzname=KEY_ZOOM_IN;
+                                }
+                            }
+                            if(i==1)
+                                return 1;
+                        }
+                        kbd_key_release_all();
+                        set_key_press(0);
+                        nTxzoom=1;
+//                      lens_set_zoom_speed(25);
+                        nSW=120;
+                        nWt=5;
+                        return 1;
+                    }
+                    kbd_key_release_all();
+                    kbd_key_press(nTxzname); 
+                    set_key_press(1);
+                    nCER++;
+                    return 1;
+                }
 
-		if(nSW==110){
-			if (shooting_in_progress() || mvideo || nCER>100) {
-				state_expos_recalculated = 0;
-				histogram_restart();
-				nCER=0;
-				nSW=111;
-			    }
-			else {nCER++;return 1;}
-			}
-		if(nSW==111){
-			if (state_expos_recalculated || nCER>100) {
-				state_expos_under = under_exposed;
-				state_expos_over = over_exposed;
-				nCER=0;
-				nSW=112;
+                if(nTxvideo>0 && nSW==121) {
+                    if(!get_usb_power(1)) {
+                        nWt=10;
+                        kbd_key_press(KEY_VIDEO);
+                        set_key_press(1);
+                        nSW=122;
+                    }
+                    return 1;
+                }
+                if(nTxvideo>0 && nSW==122) {
+                    nWt=10;
+                    kbd_key_release(KEY_VIDEO);
+                    set_key_press(1);
+                    nSW=123;
+                    return 1;
+                }
+                if(nTxvideo>0 && nSW==123) {
+                    set_key_press(0);
+                    nWt=50;
+                    nSW=0;
+                    nCa=0;
+                    nTxvideo=0;
+                    debug_led(0);
+                    return 1;
+                }
+
+                if(nSW==110) {
+                    if (shooting_in_progress() || mvideo || nCER>100) {
+                        state_expos_recalculated = 0;
+                        histogram_restart();
+                        nCER=0;
+                        nSW=111;
+                    } else {
+                        nCER++;return 1;
+                    }
+                }
+                if(nSW==111) {
+                    if (state_expos_recalculated || nCER>100) {
+                        state_expos_under = under_exposed;
+                        state_expos_over = over_exposed;
+                        nCER=0;
+                        nSW=112;
                         //presynch();
-			    }
-			else {nCER++;return 1;}
-			}
-		if(nSW==112){
-		    if (shooting_is_flash_ready() || nCER>10){
-				nCER=0;
-				nSW=113;
-			    }
-			else {nCER++;return 1;}
-			}
-		if(nSW==113){
-			if(get_usb_power(1) && !mvideo) nSW=114;
-			else if(!get_usb_power(1) && mvideo) nSW=114;
-			else return 1;
-			}
-		if(nTxzoom>0 && nSW==120 && conf.remote_zoom_enable){
-			nCrzpos=lens_get_zoom_point();
-			if((nTxzname==KEY_ZOOM_IN && nCrzpos<=nTxtbl[nTxtblcr]) || (nTxzname==KEY_ZOOM_OUT && nCrzpos>=nTxtbl[nTxtblcr])){
-				kbd_key_release_all();
-				set_key_press(0);
-				nTxzoom=1;
-				lens_set_zoom_speed(100);
-				nSW=0;
-				nCount=0;
-				nWt=10;
-				return 1;
-				}
-			lens_set_zoom_speed(5);
-			kbd_key_release_all();
-			if(nTxzname==KEY_ZOOM_IN) kbd_key_press(KEY_ZOOM_OUT); 
-			else kbd_key_press(KEY_ZOOM_IN); 
-			set_key_press(1);
-			return 1;
-			}
+                    } else {
+                        nCER++;
+                        return 1;
+                    }
+                }
+                if(nSW==112) {
+                    if (shooting_is_flash_ready() || nCER>10) {
+                        nCER=0;
+                        nSW=113;
+                    } else {
+                        nCER++;
+                        return 1;
+                    }
+                }
+                if(nSW==113) {
+                    if(get_usb_power(1) && !mvideo)
+                        nSW=114;
+                    else if(!get_usb_power(1) && mvideo)
+                        nSW=114;
+                    else
+                        return 1;
+                }
+                if(nTxzoom>0 && nSW==120 && conf.remote_zoom_enable) {
+                    nCrzpos=lens_get_zoom_point();
+                    if((nTxzname==KEY_ZOOM_IN && nCrzpos<=nTxtbl[nTxtblcr]) 
+                            || (nTxzname==KEY_ZOOM_OUT && nCrzpos>=nTxtbl[nTxtblcr])) {
+                        kbd_key_release_all();
+                        set_key_press(0);
+                        nTxzoom=1;
+                        lens_set_zoom_speed(100);
+                        nSW=0;
+                        nCount=0;
+                        nWt=10;
+                        return 1;
+                    }
+                    lens_set_zoom_speed(5);
+                    kbd_key_release_all();
+                    if(nTxzname==KEY_ZOOM_IN)
+                        kbd_key_press(KEY_ZOOM_OUT); 
+                    else
+                        kbd_key_press(KEY_ZOOM_IN); 
+                    set_key_press(1);
+                    return 1;
+                }
 
-		if(nSW==114){
-			nSW=115;
-			nWt=2;
-                  shutter_int=0;
-			kbd_key_press(KEY_SHOOT_FULL); 
-                                    set_key_press(1);
-		//	kbd_blocked = 1;
-		//	nRmt=1;
-			nCount=0;
-			return 1;
-			}
-		if(nSW==115){
-	//		debug_led(0);
-			if(drmode==1 && shutter_int==0){
-				return 1;
-				}
-			nSW=116;
-			nWt=2;
-			kbd_key_release(KEY_SHOOT_FULL); 
-                                    set_key_press(1);
-                                    soft_half_press = 0;
-		//	kbd_blocked = 1;
-		//	nRmt=1;
-			return 1;
-			}
-		if(!get_usb_power(1) && nSW==116) {
-                                    set_key_press(0);
-		//	kbd_blocked = 0;
-		//	key_pressed = 0;
-			nWt=50;
-			nSW=0;
-		//	nRmt=0;
-			nCa=0;
-                  //postsynch();
-			return 1;
-			}
-		}
+                if(nSW==114) {
+                    nSW=115;
+                    nWt=2;
+                    shutter_int=0;
+                    kbd_key_press(KEY_SHOOT_FULL); 
+                    set_key_press(1);
+//                  kbd_blocked = 1;
+//                  nRmt=1;
+                    nCount=0;
+                    return 1;
+                }
+                if(nSW==115) {
+//                  debug_led(0);
+                    if(drmode==1 && shutter_int==0) {
+                        return 1;
+                    }
+                    nSW=116;
+                    nWt=2;
+                    kbd_key_release(KEY_SHOOT_FULL); 
+                    set_key_press(1);
+                    soft_half_press = 0;
+//                  kbd_blocked = 1;
+//                  nRmt=1;
+                    return 1;
+                }
+                if(!get_usb_power(1) && nSW==116) {
+                    set_key_press(0);
+//                  kbd_blocked = 0;
+//                  key_pressed = 0;
+                    nWt=50;
+                    nSW=0;
+//                  nRmt=0;
+                    nCa=0;
+                    //postsynch();
+                    return 1;
+                }
+            }
 
 // -------------------------------------------------------------  Ricoh remote switch CA-1 --------------
-	if(nCa==1){
-		if(get_usb_power(1) && nSW>108 && nSW<120){
-			nCount++;
-			}
-		if(nSW==109){
-		//	nSW=110;
-			nCER=0;
-			if(nTxzoom>0 && conf.remote_zoom_enable){
-				if(nTxzoom<100){
-					nIntzpos=lens_get_zoom_point();
-					for(i=0;i<ZSTEP_TABLE_SIZE;i++){
-						if(nIntzpos<=nTxtbl[i]){
-							if(i>0){
-								if(abs(nTxtbl[i]-nIntzpos)<=abs(nTxtbl[i-1]-nIntzpos)) nTxtblcr=i;
-								else nTxtblcr=i-1;
-								}
-							else nTxtblcr=i;
-							i=ZSTEP_TABLE_SIZE;
-							}
-						}
-					if(nTxzname==KEY_ZOOM_IN){
-						nTxtblcr++;
-						if(nTxtblcr>(ZSTEP_TABLE_SIZE-1)) nTxtblcr=(ZSTEP_TABLE_SIZE-1);
-						}
-					else{
-						nTxtblcr--;
-						if(nTxtblcr<0) nTxtblcr=0;
-						}
-					nSW=113;
-					return 1;
-					}
-				nTxzoom=0;
-				nReczoom=0;
-				}
-			if(nTxvideo>0 && conf.remote_zoom_enable) {nSW=121;return 1;}
-                  nSW=110;
-			nWt=2;
-			kbd_key_release_all();
-			kbd_key_press(KEY_SHOOT_HALF); 
-//			debug_led(1);
-                                    soft_half_press = 1;
-                                    set_key_press(1);
-		//	key_pressed = 1;
-		//	kbd_blocked = 1;
-		//	nRmt=1;
-			return 1;
-			}
-		if(nTxvideo>0 && nSW==121){
-			if(get_usb_power(1)) {
-				nWt=10;
-				kbd_key_press(KEY_VIDEO);
-				set_key_press(1);
-				nSW=122;
-				}
-			return 1;
-			}
-		if(nTxvideo>0 && nSW==122){
-			nWt=10;
-			kbd_key_release(KEY_VIDEO);
-			set_key_press(1);
-			nSW=123;
-			return 1;
-			}
-		if(nTxvideo>0 && nSW==123){
-			set_key_press(0);
-			nWt=100;
-			nCount=0;
-			nSW=0;
-			nCa=0;
-			nTxvideo=0;
-			debug_led(0);
-			return 1;
-			}
+            if(nCa==1) {
+                if(get_usb_power(1) && nSW>108 && nSW<120) {
+                    nCount++;
+                }
+                if(nSW==109) {
+//                  nSW=110;
+                    nCER=0;
+                    if(nTxzoom>0 && conf.remote_zoom_enable) {
+                        if(nTxzoom<100) {
+                            nIntzpos=lens_get_zoom_point();
+                            for(i=0;i<ZSTEP_TABLE_SIZE;i++) {
+                                if(nIntzpos<=nTxtbl[i]) {
+                                    if(i>0) {
+                                        if(abs(nTxtbl[i]-nIntzpos)<=abs(nTxtbl[i-1]-nIntzpos))
+                                            nTxtblcr=i;
+                                        else
+                                            nTxtblcr=i-1;
+                                    }
+                                    else
+                                        nTxtblcr=i;
+                                    i=ZSTEP_TABLE_SIZE;
+                                }
+                            }
+                            if(nTxzname==KEY_ZOOM_IN) {
+                                nTxtblcr++;
+                                if(nTxtblcr>(ZSTEP_TABLE_SIZE-1))
+                                    nTxtblcr=(ZSTEP_TABLE_SIZE-1);
+                            }
+                            else {
+                                nTxtblcr--;
+                                if(nTxtblcr<0)
+                                    nTxtblcr=0;
+                            }
+                            nSW=113;
+                            return 1;
+                        }
+                        nTxzoom=0;
+                        nReczoom=0;
+                    }
+                    if(nTxvideo>0 && conf.remote_zoom_enable) {
+                        nSW=121;
+                        return 1;
+                    }
+                    nSW=110;
+                    nWt=2;
+                    kbd_key_release_all();
+                    kbd_key_press(KEY_SHOOT_HALF); 
+//                  debug_led(1);
+                    soft_half_press = 1;
+                    set_key_press(1);
+//                  key_pressed = 1;
+//                  kbd_blocked = 1;
+//                  nRmt=1;
+                    return 1;
+                }
+                if(nTxvideo>0 && nSW==121) {
+                    if(get_usb_power(1)) {
+                        nWt=10;
+                        kbd_key_press(KEY_VIDEO);
+                        set_key_press(1);
+                        nSW=122;
+                    }
+                    return 1;
+                }
+                if(nTxvideo>0 && nSW==122) {
+                    nWt=10;
+                    kbd_key_release(KEY_VIDEO);
+                    set_key_press(1);
+                    nSW=123;
+                    return 1;
+                }
+                if(nTxvideo>0 && nSW==123) {
+                    set_key_press(0);
+                    nWt=100;
+                    nCount=0;
+                    nSW=0;
+                    nCa=0;
+                    nTxvideo=0;
+                    debug_led(0);
+                    return 1;
+                }
 
-		if(nSW==110){
-			if (shooting_in_progress() || mvideo || nCER>100) {
-//				debug_led(0);
-				state_expos_recalculated = 0;
-				histogram_restart();
-				nCER=0;
-				nSW=111;
-			    }
-			else {nCER++;return 1;}
-			}
-		if(nSW==111){
-			if (state_expos_recalculated || nCER>100) {
-				state_expos_under = under_exposed;
-				state_expos_over = over_exposed;
-				nCER=0;
-				nSW=112;
+                if(nSW==110) {
+                    if (shooting_in_progress() || mvideo || nCER>100) {
+//                      debug_led(0);
+                        state_expos_recalculated = 0;
+                        histogram_restart();
+                        nCER=0;
+                        nSW=111;
+                    } else {
+                        nCER++;
+                        return 1;
+                    }
+                }
+                if(nSW==111) {
+                    if (state_expos_recalculated || nCER>100) {
+                        state_expos_under = under_exposed;
+                        state_expos_over = over_exposed;
+                        nCER=0;
+                        nSW=112;
                         //presynch();
-			    }
-			else {nCER++;return 1;}
-			}
-		if(nSW==112){
-		    if (shooting_is_flash_ready() || nCER>10){
-				nCER=0;
-				nSW=113;
-			    }
-			else {nCER++;return 1;}
-			}
-		if(nTxzoom>0 && nSW==114 && conf.remote_zoom_enable){
-			nCrzpos=lens_get_zoom_point();
-			if(nIntzpos!=nCrzpos) {nReczoom=0;}
-			if(nIntzpos==nCrzpos && nCER>50){
-				if(nCount>0){
-					kbd_key_release_all();
-					set_key_press(0);
-					nTxzoom=1;
-					nSW=0;
-					nCount=0;
-					nWt=10;
-					nReczoom=1;
-					return 1;
-					}
-				}
-			if(nReczoom==0 && ((nTxzname==KEY_ZOOM_IN && nCrzpos>=nTxtbl[nTxtblcr]) || (nTxzname==KEY_ZOOM_OUT && nCrzpos<=nTxtbl[nTxtblcr]))){
-				if(nCount==0){
-					i=1;
-					if(nTxzname==KEY_ZOOM_IN){
-						nTxtblcr++;
-						if(nTxtblcr>(ZSTEP_TABLE_SIZE-1)){
-                        nTxtblcr=(ZSTEP_TABLE_SIZE-1);
-                        nTxzname=KEY_ZOOM_OUT;
+                    } else {
+                        nCER++;
+                        return 1;
+                    }
+                }
+                if(nSW==112) {
+                    if (shooting_is_flash_ready() || nCER>10) {
+                        nCER=0;
+                        nSW=113;
+                    } else {
+                        nCER++;
+                        return 1;
+                    }
+                }
+                if(nTxzoom>0 && nSW==114 && conf.remote_zoom_enable) {
+                    nCrzpos=lens_get_zoom_point();
+                    if(nIntzpos!=nCrzpos) {
+                        nReczoom=0;
+                    }
+                    if(nIntzpos==nCrzpos && nCER>50) {
+                        if(nCount>0) {
+                            kbd_key_release_all();
+                            set_key_press(0);
+                            nTxzoom=1;
+                            nSW=0;
+                            nCount=0;
+                            nWt=10;
+                            nReczoom=1;
+                            return 1;
                         }
-						}
-					else{
-						nTxtblcr--;
-						if(nTxtblcr<0){
-                        nTxtblcr=0;
-                        nTxzname=KEY_ZOOM_IN;
+                    }
+                    if(nReczoom==0 && ((nTxzname==KEY_ZOOM_IN && nCrzpos>=nTxtbl[nTxtblcr]) 
+                                || (nTxzname==KEY_ZOOM_OUT && nCrzpos<=nTxtbl[nTxtblcr]))) {
+                        if(nCount==0) {
+                            i=1;
+                            if(nTxzname==KEY_ZOOM_IN){
+                                nTxtblcr++;
+                                if(nTxtblcr>(ZSTEP_TABLE_SIZE-1)){
+                                    nTxtblcr=(ZSTEP_TABLE_SIZE-1);
+                                    nTxzname=KEY_ZOOM_OUT;
+                                }
+                            } else {
+                                nTxtblcr--;
+                                if(nTxtblcr<0) {
+                                    nTxtblcr=0;
+                                    nTxzname=KEY_ZOOM_IN;
+                                }
+                            }
+                            if(i==1)
+                                return 1;
                         }
-						}
-					if(i==1) return 1;
-					}
-				kbd_key_release_all();
-				set_key_press(0);
-				nTxzoom=1;
-//				lens_set_zoom_speed(25);
-				nSW=115;
-				nWt=5;
-				return 1;
-				}
-			kbd_key_release_all();
-			kbd_key_press(nTxzname); 
-			set_key_press(1);
-			nCER++;
-			return 1;
-			}
-		if(nTxzoom>0 && nSW==115 && conf.remote_zoom_enable){
-			if(nCount==0) return 1;
-			nCrzpos=lens_get_zoom_point();
-			if((nTxzname==KEY_ZOOM_IN && nCrzpos<=nTxtbl[nTxtblcr]) || (nTxzname==KEY_ZOOM_OUT && nCrzpos>=nTxtbl[nTxtblcr])){
-				kbd_key_release_all();
-				set_key_press(0);
-				nTxzoom=1;
-				lens_set_zoom_speed(100);
-				nSW=0;
-				nCount=0;
-				nWt=10;
-				return 1;
-				}
-			lens_set_zoom_speed(5);
-			kbd_key_release_all();
-			if(nTxzname==KEY_ZOOM_IN) kbd_key_press(KEY_ZOOM_OUT); 
-			else kbd_key_press(KEY_ZOOM_IN); 
-			set_key_press(1);
-			return 1;
-			}
+                        kbd_key_release_all();
+                        set_key_press(0);
+                        nTxzoom=1;
+//                      lens_set_zoom_speed(25);
+                        nSW=115;
+                        nWt=5;
+                        return 1;
+                    }
+                    kbd_key_release_all();
+                    kbd_key_press(nTxzname); 
+                    set_key_press(1);
+                    nCER++;
+                    return 1;
+                }
+                if(nTxzoom>0 && nSW==115 && conf.remote_zoom_enable) {
+                    if(nCount==0)
+                        return 1;
+                    nCrzpos=lens_get_zoom_point();
+                    if((nTxzname==KEY_ZOOM_IN && nCrzpos<=nTxtbl[nTxtblcr])
+                            || (nTxzname==KEY_ZOOM_OUT && nCrzpos>=nTxtbl[nTxtblcr])) {
+                        kbd_key_release_all();
+                        set_key_press(0);
+                        nTxzoom=1;
+                        lens_set_zoom_speed(100);
+                        nSW=0;
+                        nCount=0;
+                        nWt=10;
+                        return 1;
+                    }
+                    lens_set_zoom_speed(5);
+                    kbd_key_release_all();
+                    if(nTxzname==KEY_ZOOM_IN)
+                        kbd_key_press(KEY_ZOOM_OUT); 
+                    else
+                        kbd_key_press(KEY_ZOOM_IN); 
+                    set_key_press(1);
+                    return 1;
+                }
 
-
-		if(get_usb_power(1)){
-			return 1;
-			}
-		if(nCount>0 && nSW==113){
-			if(nCount<9){
-				if(nTxzoom>0 && conf.remote_zoom_enable){
-					kbd_key_release_all();
-					set_key_press(0);
-					nTxzoom=0;
-					nReczoom=0;
-					nSW=0;
-					nCa=0;
-					nCount=0;
-					nWt=10;
-//					lens_set_zoom_speed(100);
-					debug_led(0);
-					return 1;
-					}
-				nSW=125;
-				nWt=10;
-				kbd_key_release(KEY_SHOOT_HALF); 
-	                                    soft_half_press = 0;
-                                        set_key_press(1);
-			//	kbd_blocked = 1;
-			//	nRmt=1;
-				nCount=0;
-				return 1;
-				}
-			else{
-				if(nTxzoom>0 && conf.remote_zoom_enable){
-					nCount=0;
-					nSW=114;
-					return 1;
-					}
-				nSW=124;
-				nWt=2;
+                if(get_usb_power(1)) {
+                    return 1;
+                }
+                if(nCount>0 && nSW==113) {
+                    if(nCount<9) {
+                        if(nTxzoom>0 && conf.remote_zoom_enable) {
+                            kbd_key_release_all();
+                            set_key_press(0);
+                            nTxzoom=0;
+                            nReczoom=0;
+                            nSW=0;
+                            nCa=0;
+                            nCount=0;
+                            nWt=10;
+//                          lens_set_zoom_speed(100);
+                            debug_led(0);
+                            return 1;
+                        }
+                        nSW=125;
+                        nWt=10;
+                        kbd_key_release(KEY_SHOOT_HALF); 
+                        soft_half_press = 0;
+                        set_key_press(1);
+//                      kbd_blocked = 1;
+//                      nRmt=1;
+                        nCount=0;
+                        return 1;
+                    } else {
+                        if(nTxzoom>0 && conf.remote_zoom_enable) {
+                            nCount=0;
+                            nSW=114;
+                            return 1;
+                        }
+                        nSW=124;
+                        nWt=2;
                         shutter_int=0;
-//				debug_led(0);
-				kbd_key_press(KEY_SHOOT_FULL); 
-                                                set_key_press(1);
-			//	kbd_blocked = 1;
-			//	nRmt=1;
-				nCount=0;
-				return 1;
-				}
-			}
-		if(nSW==124){
-	//		debug_led(0);
-			if(drmode==1 && shutter_int==0){
-				return 1;
-				}
-			nSW=125;
-			nWt=2;
-			kbd_key_release(KEY_SHOOT_FULL);
-                  soft_half_press = 0;
-                  set_key_press(1);
-		//	kbd_blocked = 1;
-		//	nRmt=1;
-			return 1;
-			}
-		if(!get_usb_power(1) && nSW==125) {
-                                    set_key_press(0);
-		//	kbd_blocked = 0;
-		//	key_pressed = 0;
-			nWt=50;
-			nSW=0;
-		//	nRmt=0;
-			nCa=0;
-                  //postsynch();
-			return 1;
-			}
-		}
-
+//                      debug_led(0);
+                        kbd_key_press(KEY_SHOOT_FULL); 
+                        set_key_press(1);
+//                      kbd_blocked = 1;
+//                      nRmt=1;
+                        nCount=0;
+                        return 1;
+                    }
+                }
+                if(nSW==124) {
+//                  debug_led(0);
+                    if(drmode==1 && shutter_int==0) {
+                        return 1;
+                    }
+                    nSW=125;
+                    nWt=2;
+                    kbd_key_release(KEY_SHOOT_FULL);
+                    soft_half_press = 0;
+                    set_key_press(1);
+//                  kbd_blocked = 1;
+//                  nRmt=1;
+                    return 1;
+                }
+                if(!get_usb_power(1) && nSW==125) {
+                    set_key_press(0);
+//                  kbd_blocked = 0;
+//                  key_pressed = 0;
+                    nWt=50;
+                    nSW=0;
+//                  nRmt=0;
+                    nCa=0;
+                    //postsynch();
+                    return 1;
+                }
+            }
 // ------ add by Masuji SUTO (end)   --------------
-
-} // ricoh_ca1_mode
-#endif
+        } // ricoh_ca1_mode
+#endif // ifndef SYNCHABLE_REMOTE_NOT_ENABLED
 /*------------------- Alex scriptless remote additions start --------------------*/
         if (conf.remote_enable && !conf.ricoh_ca1_mode && key_pressed != 2 && get_usb_power(1)) {
-          remoteShooting = 1;
-          kbd_blocked = 1;
-          kbd_key_release_all();
-          remoteClickTimer = REMOTE_MAX_CLICK_LENGTH;
-          if (shooting_get_focus_mode()) {
-            remoteFullShutter = 1;
-            kbd_key_press(KEY_SHOOT_FULL);
-          } else {
-            remoteHalfShutter = 1;
-            kbd_key_press(KEY_SHOOT_HALF);
-          }
-          return 1;
+            remoteShooting = 1;
+            kbd_blocked = 1;
+            kbd_key_release_all();
+            remoteClickTimer = REMOTE_MAX_CLICK_LENGTH;
+            if (shooting_get_focus_mode()) {
+                remoteFullShutter = 1;
+                kbd_key_press(KEY_SHOOT_FULL);
+            } else {
+                remoteHalfShutter = 1;
+                kbd_key_press(KEY_SHOOT_HALF);
+            }
+            return 1;
         }
 /*-------------------- Alex scriptless remote additions end ---------------------*/
 #ifdef CAM_USE_ZOOM_FOR_MF
-                if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
-                    return 1;
-                }
-#endif
-                if ((conf.fast_ev || conf.fast_movie_control || conf.fast_movie_quality_control) && kbd_use_up_down_left_right_as_fast_switch()) {
-                    return 1;
-                }
-                other_kbd_process(); // processed other keys in not <alt> mode 
+        if (conf.use_zoom_mf && kbd_use_zoom_as_mf()) {
+            return 1;
         }
+#endif // ifdef CAM_USE_ZOOM_FOR_MF
+        if ((conf.fast_ev || conf.fast_movie_control || conf.fast_movie_quality_control) 
+                && kbd_use_up_down_left_right_as_fast_switch()) {
+            return 1;
+        }
+        other_kbd_process(); // processed other keys in not <alt> mode 
+    }
 
-        return kbd_blocked;
+    return kbd_blocked;
 }
 
 static const struct Keynames {
