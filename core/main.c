@@ -49,6 +49,7 @@ void dump_memory()
 #else
 	    write(fd, (void*)0, 0x1900);
 #endif
+// TODO actual memory size is larger than 32 MB on many cameras!
 	    write(fd, (void*)0x1900, 32*1024*1024-0x1900);
 	    close(fd);
 	}

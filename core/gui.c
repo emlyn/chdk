@@ -377,9 +377,9 @@ static CMenu reader_submenu = {0x37,LANG_MENU_READ_TITLE, NULL, reader_submenu_i
 #ifdef OPT_DEBUGGING
 static CMenuItem debug_submenu_items[] = {
     {0x5c,LANG_MENU_DEBUG_DISPLAY,           MENUITEM_ENUM,          (int*)gui_debug_display_enum },
-    {0x2a,LANG_MENU_DEBUG_PROPCASE_PAGE,     MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,   &debug_propcase_page, MENU_MINMAX(0, 128) },
+    {0x2a,LANG_MENU_DEBUG_PROPCASE_PAGE,     MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,   &conf.debug_propcase_page, MENU_MINMAX(0, 128) },
     {0x2a,LANG_MENU_DEBUG_TASKLIST_START,    MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX,   &debug_tasklist_start, MENU_MINMAX(0, 63) },
-    {0x5c,LANG_MENU_DEBUG_SHOW_MISC_VALS,    MENUITEM_BOOL,          &debug_vals_show },
+    {0x5c,LANG_MENU_DEBUG_SHOW_MISC_VALS,    MENUITEM_BOOL,          &conf.debug_misc_vals_show },
     {0x2a,LANG_MENU_DEBUG_MEMORY_BROWSER,    MENUITEM_PROC,          (int*)gui_draw_debug },
     {0x2a,LANG_MENU_DEBUG_BENCHMARK,         MENUITEM_PROC,          (int*)gui_draw_bench },
     {0x5c,LANG_MENU_DEBUG_SHORTCUT_ACTION,   MENUITEM_ENUM,          (int*)gui_debug_shortcut_enum },
@@ -1961,9 +1961,9 @@ static void gui_debug_shortcut(void) {
                     debug_tasklist_start = 0;
             }
             else if (conf.debug_display == DEBUG_DISPLAY_PROPS || conf.debug_display == DEBUG_DISPLAY_PARAMS) {
-                debug_propcase_page += debug_display_direction*1;
-                if(debug_propcase_page > 128 || debug_propcase_page < 0) 
-                    debug_propcase_page = 0;
+                conf.debug_propcase_page += debug_display_direction*1;
+                if(conf.debug_propcase_page > 128 || conf.debug_propcase_page < 0) 
+                    conf.debug_propcase_page = 0;
             }
         break;
         case 3:
@@ -2578,7 +2578,7 @@ void other_kbd_process(){
 
 void gui_draw_debug_vals_osd() {
 #ifdef OPT_DEBUGGING
-    if (debug_vals_show) {
+    if (conf.debug_misc_vals_show) {
         //        long v=get_file_counter();
         //	sprintf(osd_buf, "1:%03d-%04d  ", (v>>18)&0x3FF, (v>>4)&0x3FFF);
         //	sprintf(osd_buf, "1:%d, %08X  ", xxxx, eeee);
@@ -2623,7 +2623,7 @@ void gui_draw_debug_vals_osd() {
 
             for (i=0;i<10;i++){
                 r = 0;
-                p = debug_propcase_page*10+i;
+                p = conf.debug_propcase_page*10+i;
                 get_property_case(p, &r, 4);
                 sprintf(sbuf, "%3d: %d              ", p, r);
                 sbuf[20]=0;
@@ -2638,7 +2638,7 @@ void gui_draw_debug_vals_osd() {
 
             for (i=0;i<10;i++){
                 r = 0;
-                p = debug_propcase_page*10+i;
+                p = conf.debug_propcase_page*10+i;
                 if (p>=get_flash_params_count()) {
                     sprintf(sbuf, "%3d: This parameter does not exists", p);
                 } else  {

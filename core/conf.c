@@ -44,12 +44,6 @@ int state_expos_under;
 int state_expos_over;
 int auto_started;
 
-int state_debug1;
-int debug_propcase_show;
-int debug_propcase_page;
-int debug_vals_show;
-int debug_pardata_show;
-
 // reyalp: putting these in conf, since the conf values are lookups for them
 // prefixes and extentions available for raw images (index with conf.raw_prefix etc)
 const char* img_prefixes[NUM_IMG_PREFIXES]={ "IMG_", "CRW_", "SND_" /*, "AUT_", "ETC_","SDR_", "MVI_", "MRK_"*/};
@@ -400,6 +394,8 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(236, conf.flash_manual_override,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(237, conf.fast_image_quality,     CONF_DEF_VALUE, i:3, NULL),
 	CONF_INFO(238, conf.debug_lua_restart_on_error,     CONF_DEF_VALUE, i:0, NULL),
+	CONF_INFO(239, conf.debug_propcase_page,     CONF_DEF_VALUE, i:0, NULL),
+	CONF_INFO(240, conf.debug_misc_vals_show,     CONF_DEF_VALUE, i:0, NULL),
     };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

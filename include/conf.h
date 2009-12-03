@@ -236,7 +236,9 @@ typedef struct {
 
     int debug_shortcut_action;  // 0=none, 1=dump, 2=page display
     int debug_display;          // 0=none, 1=props, 2=flash param, 3=tasks
+    int debug_propcase_page;     // save propcase page
 	int debug_lua_restart_on_error; // 0=no, 1=yes
+	int debug_misc_vals_show; // 0=no, 1=yes
 
     int script_startup;			// remote autostart
     int remote_enable;			// remote enable
@@ -300,11 +302,6 @@ extern int state_expos_recalculated;
 extern int state_expos_under;
 extern int state_expos_over;
 
-extern int state_debug1;
-extern int debug_propcase_show;
-extern int debug_propcase_page;
-extern int debug_vals_show;
-extern int debug_pardata_show;
 extern void script_autostart();				// remote autostart
 extern void conf_save();
 extern void conf_restore();
