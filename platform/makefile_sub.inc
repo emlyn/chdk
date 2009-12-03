@@ -41,6 +41,7 @@ endif
 
 stubs_entry.S: $(TARGET_PRIMARY) $(topdir)tools/signatures_$(PLATFORMOS).h $(topdir)tools/finsig$(EXE)
 	@echo \-\> $@
+ifdef OPT_GEN_STUBS
 	rm -f stubs_entry.S.err
 	if [ -s $(TARGET_PRIMARY) ] ; then \
 	  $(topdir)tools/finsig $(TARGET_PRIMARY) $(ROMBASEADDR) > stubs_entry.S ; \
@@ -62,6 +63,10 @@ stubs_entry.S: $(TARGET_PRIMARY) $(topdir)tools/signatures_$(PLATFORMOS).h $(top
 	  fi ; \
 	  rm -f stubs_not_found_names.err ; \
 	fi
+else
+	echo CAUTION! \'stubs_entry.S\' updating is turned off! ; \
+	touch stubs_entry.S
+endif
 
 $(TARGET_PRIMARY):
 	touch $(TARGET_PRIMARY)

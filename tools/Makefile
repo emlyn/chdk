@@ -71,21 +71,31 @@ distclean: clean
 
 signatures_vxworks.h: gensig$(EXE) gensigs.sh sig_ref_vxworks_1.txt sig_ref_vxworks_1.bin sig_ref_vxworks_2.txt sig_ref_vxworks_2.bin sig_ref_vxworks_3.txt sig_ref_vxworks_3.bin
 	@echo \-\> $@
+ifdef OPT_GEN_SIGS
 	if [ -s sig_ref_vxworks_1.bin ] && [ -s sig_ref_vxworks_2.bin ] && [ -s sig_ref_vxworks_3.bin ] ; then \
 	  $(SH) ./gensigs.sh $(SORT) vxworks "1 2 3" > signatures_vxworks.h ; \
 	else \
 	  echo CAUTION! \'signatures_vxworks.h\' is not updated due to \'sig_ref_vxworks_1.bin\` or \'sig_ref_vxworks_2.bin\` or \'sig_ref_vxworks_3.bin\` is empty! ; \
 	  touch signatures_vxworks.h ; \
 	fi
+else
+	echo CAUTION! Signature generation is turned off! ; \
+	touch signatures_vxworks.h
+endif
 
 signatures_dryos.h: gensig$(EXE) gensigs.sh sig_ref_dryos_1.txt sig_ref_dryos_1.bin sig_ref_dryos_2.txt sig_ref_dryos_2.bin sig_ref_dryos_3.txt sig_ref_dryos_3.bin
 	@echo \-\> $@
+ifdef OPT_GEN_SIGS
 	if [ -s sig_ref_dryos_1.bin ] && [ -s sig_ref_dryos_2.bin ] && [ -s sig_ref_dryos_3.bin ] ; then \
 	  $(SH) ./gensigs.sh $(SORT) dryos "1 2 3" > signatures_dryos.h ; \
 	else \
 	  echo CAUTION! \'signatures_dryos.h\' is not updated due to \'sig_ref_dryos_1.bin\` is empty! ; \
 	  touch signatures_dryos.h ; \
 	fi
+else
+	echo CAUTION! Signature generation is turned off! ; \
+	touch signatures_dryos.h
+endif
 
 sig_ref_vxworks_1.bin:
 	touch sig_ref_vxworks_1.bin

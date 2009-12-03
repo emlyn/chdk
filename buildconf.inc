@@ -16,6 +16,10 @@ OPT_LUA_STRLIB=1
 #OPT_FI2=1
 # if enabled, compiler will produce a lot of warnings, maybe not always correct ones, see http://chdk.setepontos.com/index.php/topic,2509.msg32191.html#msg32191
 #OPT_WARNINGS=1
+# If enabled (and reference binaries are present in /tools), compiler will generate function signatures
+OPT_GEN_SIGS=1
+# If enabled (and firmware binaries are present) compiler will update "stubs_entry.S"
+OPT_GEN_STUBS=1
 # Shall ubasic be compiled into build? not done yet
 #!OPT_UBASIC=1
 # Shall lua support be compiled into build? not done yet
