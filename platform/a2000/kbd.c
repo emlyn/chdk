@@ -54,7 +54,7 @@ static KeyMap keymap[] = {
 	{ 2, KEY_MENU		  , 0x00000200 }, 
 	{ 2, KEY_DISPLAY	, 0x00000400 }, 
 	{ 2, KEY_PRINT		, 0x00000800 }, 
-	{ 1, KEY_ERASE		, 0x00800000 }, 
+	{ 1, KEY_ERASE		, 0x00800000 },  // NOTE actually FACE, came does not have erase button
 	{ 0, 0, 0 }
 };
 
