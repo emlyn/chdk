@@ -75,6 +75,7 @@ const ISOTable iso_table[] = {
     {  5,  800,  "800", -1},
 };          
 
+// canon mode list @FFD588D4 in 100b
 static const CapturemodeMap modemap[] = {
     { MODE_M,                  32769 },
     { MODE_AV,                 32770 },

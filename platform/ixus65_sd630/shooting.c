@@ -75,26 +75,47 @@ const ISOTable iso_table[] = {
     {  5,  800,  "800", -1},
 };          
 
+/*
+canon modemap @FF973AD4 in 100a
+according to http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=224&modelid=12956#ModelTechSpecsAct
+Shooting Modes
+    Auto, Camera M, Portrait, 
+    Special Scene
+        Foliage, Snow, Beach, Fireworks, Underwater, Indoor,
+        Kids & Pets, Color Accent, Color Swap,
+    Night Snapshot, Digital Macro, My Colors, Stitch Assist, Movie
+
+Movie: 640 x 480 / 320 x 240 (30 fps/15 fps) available up to 1GB or 1 hour for each file size, 320 x 240 (1 min. at 60 fps), 160 x 120 (3 min. at 15 fps)
+*/
+/* names below mostly guessed from a540 and ixus60_sd600 */
 static const CapturemodeMap modemap[] = {
-    { MODE_AUTO,               6  },
-    { MODE_P,                  1  },
-    { MODE_TV,                 3  },
-    { MODE_AV,                 2  },
-    { MODE_M,                  0  },
-    { MODE_PORTRAIT,           9  },
-    { MODE_NIGHT,              8  },
-    { MODE_LANDSCAPE,          7  },
-    { MODE_VIDEO_STD,          18 },
-    { MODE_STITCH,             5  },
-    { MODE_MY_COLORS,          4  },
-    { MODE_SCN_WATER,          13 },
-    { MODE_SCN_NIGHT,          15 },
-    { MODE_SCN_CHILD,          16 },
-    { MODE_SCN_PARTY,          14 },
-    { MODE_SCN_GRASS,          10 },
-    { MODE_SCN_SNOW,           11 },
-    { MODE_SCN_BEACH,          12 },
-    { MODE_SCN_FIREWORK,       17 }
+    // common, should be OK
+    { MODE_P,                  32772 }, // may be called manual, but effectively P
+    { MODE_AUTO,               32768 },
+    { MODE_PORTRAIT,           32781 },
+    { MODE_STITCH,             33290 },
+
+    // the following match a540 and ixus60
+    { MODE_SCN_KIDS_PETS,      16399 }, // "kids and pets"
+    { MODE_SCN_INDOOR,         16400 }, // "indoor"
+    { MODE_SCN_FOLIAGE,        16401 }, // "foliage"
+    { MODE_SCN_SNOW,           16402 }, // "snow"
+    { MODE_SCN_BEACH,          16403 }, // "beach"
+    { MODE_SCN_FIREWORK,       16404 }, // "fireworks"
+    { MODE_SCN_UNDERWATER,     16405 }, // "under water"
+    { MODE_SCN_COLOR_ACCENT,   16920 }, // "color accent"
+    { MODE_SCN_COLOR_SWAP,     16921 }, // "color swap"
+
+    { MODE_DIGITAL_MACRO,      33288 }, // ixus60
+    { MODE_NIGHT_SNAPSHOT,     32779 }, // ixus60
+    { MODE_MY_COLORS,          32774 }, // by elimination: should be "my colors" ?
+
+    // match a540 and ixus60
+    { MODE_VIDEO_STD,          2593  }, //
+    { MODE_VIDEO_SPEED,        2594  }, // "fast frame rate"
+    { MODE_VIDEO_COMPACT,      2595  }, // "compact"
+    { MODE_VIDEO_COLOR_ACCENT, 2591  }, // "color accent"
+    { MODE_VIDEO_COLOR_SWAP,   2592  }, // "color swap"
 };
 
 #include "../generic/shooting.c"

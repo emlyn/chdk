@@ -75,6 +75,22 @@ const ISOTable iso_table[] = {
     {  5,  800,  "800", -1},
 };          
 
+/*
+canon mode list @FF972614 in 100a
+modemap mostly verified in svn rev 780
+canon info
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=224&modelid=12913
+
+Shooting Modes
+    Auto, Camera M, Portrait, 
+    Special Scene 
+        Foliage, Snow, Beach, Fireworks, Underwater, Indoor,
+        Kids & Pets, Color Accent, Color Swap,
+    Night Snapshot, Digital Macro, My Colors, Stitch Assist, Movie
+Vide resolutions
+    640 x 480 / 320 x 240 (30 fps/15 fps) available up to 1GB or 1 hour for each file size, 
+    320 x 240 (1 min. at 60 fps), 160 x 120 (3 min. at 15 fps
+*/
 static const CapturemodeMap modemap[] = {
     { MODE_P,                  32772 }, // note, this is called Manual, but eqivalent to P on cameras with real manual
     { MODE_AUTO,               32768 },
@@ -89,6 +105,7 @@ static const CapturemodeMap modemap[] = {
     { MODE_SCN_SNOW,           16402 }, // "snow"
     { MODE_SCN_BEACH,          16403 }, // "beach"
     { MODE_STITCH,             33290 },
+    { MODE_MY_COLORS,          32774 }, // NOTE: guessed, wasn't in original mode map, is in canon list
     { MODE_SCN_FIREWORK,       16404 }, // "fireworks"
     { MODE_SCN_UNDERWATER,     16405 }, // "under water"
     { MODE_VIDEO_STD,          2593  },

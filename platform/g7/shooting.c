@@ -100,10 +100,14 @@ static const CapturemodeMap modemap[] = {
     { MODE_SCN_BEACH,          16403 },
     { MODE_SCN_FIREWORK,       16404 },
     { MODE_SCN_ISO_3200,       16411 },
+// these two look like SCN modes
     { MODE_PORTRAIT,           16397 },
     { MODE_LANDSCAPE,          16396 },
     { MODE_SCN_SPORT,          16903 },
     { MODE_SCN_COLOR_ACCENT,   16921 }
+// from canon mode list in 100e dump @FF9B62B0
+//    { ???,          8222 },
+//    { ???,   8223 }
 };
 
 #include "../generic/shooting.c"

@@ -75,26 +75,48 @@ const ISOTable iso_table[] = {
     {  5,  800,  "800", -1},
 };          
 
+/* 
+ valid modes from 100c dump @FFD682D0, names guessed from a540, g7, 
+from
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=221&modelid=14108
+Shooting Modes
+    Auto; Creative: P, Av, Tv, M, C; Image: Portrait, Landscape, Night Scene, 
+    Special Scene
+        Foliage, Snow, Beach, Fireworks, Underwater, Indoor, Kids & Pets,
+        Night Snapshot, Color Accent, Color Swap,
+    Stitch Assist, Movie
+Video resolutions
+    640 x 480 / 320 x 240 (30 fps/15 fps) available up to 1GB or 1 hour for each file size,
+    160 x 120 (3 min. at 15 fps)
+*/
 static const CapturemodeMap modemap[] = {
-    { MODE_AUTO,               6  },
-    { MODE_P,                  1  },
-    { MODE_TV,                 3  },
-    { MODE_AV,                 2  },
-    { MODE_M,                  0  },
-    { MODE_PORTRAIT,           9  },
-    { MODE_NIGHT,              8  },
-    { MODE_LANDSCAPE,          7  },
-    { MODE_VIDEO_STD,          18 },
-    { MODE_STITCH,             5  },
-    { MODE_MY_COLORS,          4  },
-    { MODE_SCN_WATER,          13 },
-    { MODE_SCN_NIGHT,          15 },
-    { MODE_SCN_CHILD,          16 },
-    { MODE_SCN_PARTY,          14 },
-    { MODE_SCN_GRASS,          10 },
-    { MODE_SCN_SNOW,           11 },
-    { MODE_SCN_BEACH,          12 },
-    { MODE_SCN_FIREWORK,       17 }
+    // above are common on most cameras except very old vxworks that use 0-n, should be OK
+    { MODE_M,                  32769 },
+    { MODE_AV,                 32770 },
+    { MODE_TV,                 32771 },
+    { MODE_P,                  32772 },
+    { MODE_AUTO,               32768 },
+    { MODE_PORTRAIT,           32781 },
+    { MODE_LANDSCAPE,          32780 },
+    { MODE_STITCH,             33290 },
+    { MODE_NIGHT,              32782 }, // s3is a540 "night scene" on dial, different from "night snapshot" under "scene" below
+    // the following are suspect, but probably fairly similar scene modes
+    { MODE_SCN_NIGHT,          16395 }, // a540 "night snapshot" g7 SCN_NIGHT
+    { MODE_SCN_KIDS_PETS,      16399 }, // a540 "kids and pets" g7 SCN_CHILD
+    { MODE_SCN_INDOOR,         16400 }, // a540 "indoor" g7 SCN_PARTY
+    { MODE_SCN_FOLIAGE,        16401 }, // a540 "foliage" g7 SCN_GRASS
+    { MODE_SCN_SNOW,           16402 }, // a540, g7 "snow" 
+    { MODE_SCN_BEACH,          16403 }, // a540, g7 "beach"
+    { MODE_SCN_FIREWORK,       16404 }, // a540, g7 "fireworks"
+    { MODE_SCN_UNDERWATER,     16405 }, // a540 "under water"
+    // the following are very suspect
+    { MODE_MY_COLORS,          16922 }, // g7 MODE_MY_COLORS
+    { MODE_SCN_COLOR_ACCENT,   16921 }, // a540 MODE_SCN_COLOR_SWAP, g7 MODE_SCN_COLOR_ACCENT
+    { MODE_VIDEO_COLOR_ACCENT,  2594 }, // a540 MODE_VIDEO_SPEED, g7 MODE_VIDEO_COLOR_ACCENT
+    { MODE_VIDEO_MY_COLORS,     2595 }, // a540 MODE_VIDEO_COMPACT, g7 MODE_VIDEO_MY_COLORS
+    { MODE_VIDEO_STD,           2596 }, // g7 MODE_VIDEO_STD
+    { MODE_VIDEO_COMPACT,       2598 }, // g7 MODE_VIDEO_COMPACT
+//    { ???,      8221  }, // in canon list, C maybe ?
 };
 
 #include "../generic/shooting.c"
