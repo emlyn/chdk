@@ -124,8 +124,18 @@ const char *ubasic_errstrings[UBASIC_E_ENDMARK] =
     "Unk stmt",
     "Unk key",
     "Unk label",
-    "Stack ful",
+    "gosub: Stack ful",
     "bad return",
+    "if: Stack ful",
+    "bad endif",
+    "select: Stack ful",
+    "bad end_select",
+    "for: Stack ful",
+    "bad next",
+    "do: Stack ful",
+    "bad until",
+    "while: Stack ful",
+    "bad wend",
     "Unk err" 
 };
 
@@ -141,7 +151,7 @@ void
 ubasic_init(const char *program)
 {
   program_ptr = program;
-  for_stack_ptr = gosub_stack_ptr = while_stack_ptr = do_stack_ptr = if_stack_ptr = 0;
+  for_stack_ptr = gosub_stack_ptr = while_stack_ptr = do_stack_ptr = if_stack_ptr = select_stack_ptr = 0;
   tokenizer_init(program);
   ended = 0;
   ubasic_error = UBASIC_E_NONE;
@@ -249,7 +259,7 @@ case TOKENIZER_GET_SCRIPT_AUTOSTART:
     accept(TOKENIZER_GET_SCRIPT_AUTOSTART);
 #ifdef UBASIC_TEST
 	r = 0;
-#else
+#else	
     r = conf.script_startup;
 #endif
     break;
@@ -476,10 +486,10 @@ case TOKENIZER_IS_PRESSED:
     break;
   case TOKENIZER_GET_TIME: {
     accept(TOKENIZER_GET_TIME);
-	  unsigned long t2 = time(NULL);
+	 unsigned long t2 = time(NULL);
     int tmode = expr();
-	  static struct tm *ttm;
-	  ttm = localtime(&t2);
+     static struct tm *ttm;
+     ttm = localtime(&t2);
     if (tmode==0) r = ttm->tm_sec;
     else if (tmode==1) r = ttm->tm_min;
     else if (tmode==2) r = ttm->tm_hour;
@@ -492,9 +502,9 @@ case TOKENIZER_IS_PRESSED:
     accept(TOKENIZER_GET_RAW);
 #ifdef UBASIC_TEST
 	r = 1;
-#else
-    r = conf.save_raw;     
-#endif
+#else	
+    r = conf.save_raw;
+#endif    
     break;
  // get CHDK capture mode value, or 0 if in playback or unknown (broken modemap)
  // NOTE: different from get_mode, since this returns the actual value
@@ -763,109 +773,201 @@ print_statement(void)
   accept_cr();
 }
 /*---------------------------------------------------------------------------*/
+/* IF-STATEMENT                                                              */
+
+static void
+endif_statement(void)
+{
+  if(if_stack_ptr > 0) {
+    accept(TOKENIZER_ENDIF);
+    accept(TOKENIZER_CR);
+    if_stack_ptr--;
+  } else {
+    DEBUG_PRINTF("ubasic.c: endif_statement(): endif without if-statement\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_UNMATCHED_IF;
+  }
+}
+/*---------------------------------------------------------------------------*/
 static void
 if_statement(void)
 {
-  int r, else_cntr,endif_cntr;
+  int r, else_cntr,endif_cntr,f_nt,f_sl;
   
   accept(TOKENIZER_IF);
-
-  r = relation(); /*relation(); */
- // printf("if_statement: relation %d\n", r);
+  DEBUG_PRINTF("if_statement: get_relation\n");
+  r = relation();
+  DEBUG_PRINTF("if_statement: relation %d\n", r);
   accept(TOKENIZER_THEN);
-  if (tokenizer_token() == TOKENIZER_CR) {  
-	if(if_stack_ptr < MAX_IF_STACK_DEPTH) {
-	 if_stack[if_stack_ptr] = r;
-	 if_stack_ptr++;
-	}
-	  accept(TOKENIZER_CR);
-	  if(r) {
-	  	return;
-	  }
-	  else {
-	  	else_cntr=endif_cntr=0;
-		  tokenizer_next();        
-		while(((tokenizer_token() != TOKENIZER_ELSE &&  tokenizer_token() != TOKENIZER_ENDIF) 
-		       || else_cntr || endif_cntr) && tokenizer_token() != TOKENIZER_ENDOFINPUT){
-		  if( tokenizer_token() == TOKENIZER_IF) {else_cntr+=1;endif_cntr+=1;}		    
-		  if( tokenizer_token() == TOKENIZER_ELSE) {
-			  else_cntr--;		  
-		  }
-		  if( tokenizer_token() == TOKENIZER_ENDIF)  {
-		    endif_cntr--;
-            if (endif_cntr != else_cntr) else_cntr--;
-		  }    
-		  tokenizer_next();                                                         
-		 }
-	    if(tokenizer_token() == TOKENIZER_ELSE) {
-	    	return;
-		}
-	  }                                                  
-	  accept(TOKENIZER_ENDIF);
-	  accept(TOKENIZER_CR);  	              
-          if(if_stack_ptr > 0) {
-    	     if_stack_ptr--;
+  if (ended) {
+    return;
+  }
+
+  if (tokenizer_token() == TOKENIZER_CR) {
+    // CR after then -> multiline IF-Statement
+    if(if_stack_ptr < MAX_IF_STACK_DEPTH) {
+      if_stack[if_stack_ptr] = r;
+      if_stack_ptr++;
+    } else {
+      DEBUG_PRINTF("if_statement: IF-stack depth exceeded\n");
+      ended = 1;
+      ubasic_error = UBASIC_E_IF_STACK_EXHAUSTED;
+      return;
+    }
+    DEBUG_PRINTF("if_statement: stack_ptr %d\n", if_stack_ptr);
+    accept(TOKENIZER_CR);
+    if(r) {
+      DEBUG_PRINTF("if_statement: result true\n");
+      return;
+    }else {
+      DEBUG_PRINTF("if_statement: result false\n");
+      
+      else_cntr=endif_cntr=0; // number of else/endif possible in current nesting
+      f_nt=f_sl=0; // f_nt nested then ?, f_fs flag single line
+
+      while(((tokenizer_token() != TOKENIZER_ELSE &&  tokenizer_token() != TOKENIZER_ENDIF) 
+           || else_cntr || endif_cntr) && tokenizer_token() != TOKENIZER_ENDOFINPUT){
+        f_nt=0;
+        // nested if
+        if( tokenizer_token() == TOKENIZER_IF) {
+          else_cntr+=1;
+          endif_cntr+=1;
+          f_sl=0;
+          DEBUG_PRINTF("IF: line %d, token %d, else %d, end %d\n", tokenizer_line_number(),tokenizer_token(),else_cntr,endif_cntr);
+        }
+        if( tokenizer_token() == TOKENIZER_THEN) {
+          f_nt=1;
+          tokenizer_next();
+          DEBUG_PRINTF("THEN: line %d, token %d, else %d, end %d\n", tokenizer_line_number(),tokenizer_token(),else_cntr,endif_cntr);
+          if (tokenizer_token() != TOKENIZER_CR) {
+            f_sl=1;
           }
+          DEBUG_PRINTF("THEN_SL: line %d, token %d, else %d, end %d\n", tokenizer_line_number(),tokenizer_token(),else_cntr,endif_cntr);
+        }
+        if(tokenizer_token() == TOKENIZER_ELSE) {
+          else_cntr--;
+          DEBUG_PRINTF("ELSE: line %d, token %d, else %d, end %d\n", tokenizer_line_number(),tokenizer_token(),else_cntr,endif_cntr);
+          if (else_cntr<0) { 
+            DEBUG_PRINTF("ubasic.c: if_statement(): else without if-statement\n");
+            ended = 1;
+            ubasic_error = UBASIC_E_UNMATCHED_IF;
+            return;
+          }
+        }
+        if(!f_sl && (tokenizer_token() == TOKENIZER_ENDIF)) {
+          endif_cntr--;
+          if (endif_cntr != else_cntr)
+            else_cntr--;
+          DEBUG_PRINTF("ENDIF: line %d, token %d, else %d, end %d\n", tokenizer_line_number(),tokenizer_token(),else_cntr,endif_cntr);
+        } else {
+          if (f_sl && (tokenizer_token() == TOKENIZER_CR))  {
+            f_sl=0;
+            endif_cntr--;
+            if (endif_cntr != else_cntr)
+              else_cntr--;
+            DEBUG_PRINTF("ENDIF_SL: line %d, token %d, else %d, end %d\n", tokenizer_line_number(),tokenizer_token(),else_cntr,endif_cntr);
+          } else {
+            if (tokenizer_token()==TOKENIZER_ENDIF){
+              DEBUG_PRINTF("ubasic.c: if_statement(): endif in singleline if-statement\n");
+              ended = 1;
+              ubasic_error = UBASIC_E_PARSE;
+              return;
+            }
+          }
+        }
+        if (!f_nt) {
+          tokenizer_next();
+        }
+      }
+      if(tokenizer_token() == TOKENIZER_ELSE) {
+        return;
+      }
+    }      
+    endif_statement();
   }else {
-	  if(r) {
-	    statement();
-	  } else {
-	    do {
-	      tokenizer_next();
-	    } while(tokenizer_token() != TOKENIZER_ELSE &&
-		    tokenizer_token() != TOKENIZER_CR &&
-		    tokenizer_token() != TOKENIZER_ENDOFINPUT);
-	    if(tokenizer_token() == TOKENIZER_ELSE) {
-	      tokenizer_next();
-	      statement();
-	    } else if(tokenizer_token() == TOKENIZER_CR) {
-	      tokenizer_next();
-	    }
-	  }
+  // Singleline IF-Statement
+    if(r) {
+      statement();
+    } else {
+      do {
+        tokenizer_next();
+      } while(tokenizer_token() != TOKENIZER_ELSE &&
+        tokenizer_token() != TOKENIZER_CR &&
+        tokenizer_token() != TOKENIZER_ENDOFINPUT);
+      if(tokenizer_token() == TOKENIZER_ELSE) {
+        accept(TOKENIZER_ELSE); 
+        statement();
+      } else {
+        accept(TOKENIZER_CR);
+      }
+    }
   }
 }
 /*---------------------------------------------------------------------------*/
 static void
 else_statement(void)
 {
-  int r=0, endif_cntr;
+  int r=0, endif_cntr, f_nt;
   
   accept(TOKENIZER_ELSE);
-
   if(if_stack_ptr > 0) {
     r = if_stack[if_stack_ptr-1];
   }
- // printf("if_statement: relation %d\n", r);
-  if (tokenizer_token() == TOKENIZER_CR) {  
-	  accept(TOKENIZER_CR);
-	  if(!r) {
-	  	return;
-	  }
-	  else {                                      
-	  	endif_cntr=0;
-		tokenizer_next();        
-		while(((tokenizer_token() != TOKENIZER_ENDIF ) 
-		       || endif_cntr) && tokenizer_token() != TOKENIZER_ENDOFINPUT){
-		  if( tokenizer_token() == TOKENIZER_IF) {endif_cntr+=1;}		    
-		  if( tokenizer_token() == TOKENIZER_ENDIF)  {
-		    endif_cntr--;
-		  }    
-		  tokenizer_next();                                                         
-		 }
-	  }                                                  
-//	  accept(TOKENIZER_ENDIF);
-//	  accept(TOKENIZER_CR);  	              
+  else{
+    DEBUG_PRINTF("ubasic.c: else_statement(): else without if-statement\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_PARSE;
+    return;
   }
-}
-/*---------------------------------------------------------------------------*/
-static void
-endif_statement(void)
-{
-	accept(TOKENIZER_ENDIF);
-	accept(TOKENIZER_CR);  	              
-    if(if_stack_ptr > 0) {
-    	if_stack_ptr--;
+  DEBUG_PRINTF("else_statement: relation %d\n", r);
+  
+  if (tokenizer_token() == TOKENIZER_CR) {
+    accept(TOKENIZER_CR);
+    if(!r) {
+      DEBUG_PRINTF("else_statement: result true\n");
+      return;
+    } else {
+      DEBUG_PRINTF("else_statement: result false\n");
+      endif_cntr=0;
+      while(((tokenizer_token() != TOKENIZER_ENDIF ) 
+           || endif_cntr) && tokenizer_token() != TOKENIZER_ENDOFINPUT){
+        f_nt=0;
+        if( tokenizer_token() == TOKENIZER_IF) {
+          endif_cntr+=1;
+        }
+        if( tokenizer_token() == TOKENIZER_THEN) {
+          tokenizer_next();
+          // then followed by CR -> multi line
+          if (tokenizer_token() == TOKENIZER_CR) {
+            f_nt=1;
+          } else { // single line
+            endif_cntr--;
+            while(tokenizer_token() != TOKENIZER_ENDIF && tokenizer_token() != TOKENIZER_CR 
+                 && tokenizer_token() != TOKENIZER_ENDOFINPUT){
+              tokenizer_next();
+            }
+            if (tokenizer_token()==TOKENIZER_ENDIF){
+              DEBUG_PRINTF("ubasic.c: else_statement(): endif in singleline if-statement\n");
+              ended = 1;
+              ubasic_error = UBASIC_E_PARSE;
+              return;
+            }
+          }
+        }
+        if( tokenizer_token() == TOKENIZER_ENDIF)  {
+          endif_cntr--;
+        }
+        if (!f_nt) {
+          tokenizer_next();
+        }
+      }
     }
+    endif_statement();
+  }else{
+    DEBUG_PRINTF("ubasic.c: else_statement(): CR after ELSE expected\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_PARSE;
+  }
 }
 /*---------------------------------------------------------------------------*/
 
@@ -880,7 +982,7 @@ dec_select_stack(void)
   } else {
     DEBUG_PRINTF("select_statement: SELECT-Stack fail\n");
     ended = 1;
-    ubasic_error = UBASIC_E_UNKNOWN_ERROR;  //besser neuer Fehler UBASIC_E_SELECT_STACK_EXHAUSTED,
+    ubasic_error = UBASIC_E_UNMATCHED_END_SELECT;
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -894,7 +996,7 @@ end_select_statement(void)
   } else {
     DEBUG_PRINTF("ubasic.c: end_select_statement(): end_select without select-statement\n");
     ended = 1;
-    ubasic_error = UBASIC_E_PARSE;
+    ubasic_error = UBASIC_E_UNMATCHED_END_SELECT;
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -984,7 +1086,7 @@ case_statement(void)
   } else {
     DEBUG_PRINTF("case_statement: SELECT-Stack fail\n");
     ended = 1;
-    ubasic_error = UBASIC_E_UNKNOWN_ERROR;  //besser neuer Fehler UBASIC_E_SELECT_STACK_EXHAUSTED,
+    ubasic_error = UBASIC_E_UNMATCHED_END_SELECT;
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -1037,7 +1139,7 @@ case_else_statement(void)
   } else {
     DEBUG_PRINTF("case_else_statement: SELECT-Stack fault\n");
     ended = 1;
-    ubasic_error = UBASIC_E_UNKNOWN_ERROR;  //besser neuer Fehler UBASIC_E_SELECT_STACK_EXHAUSTED,
+    ubasic_error = UBASIC_E_UNMATCHED_END_SELECT;
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -1068,7 +1170,7 @@ select_statement(void)
   } else {
     DEBUG_PRINTF("select_statement: SELECT-stack depth exceeded\n");
     ended = 1;
-    ubasic_error = UBASIC_E_UNKNOWN_ERROR;  //besser neuer Fehler UBASIC_E_SELECT_STACK_EXHAUSTED,
+    ubasic_error = UBASIC_E_SELECT_STACK_EXHAUSTED;
   }
 }
 /* SELECT-STATEMENT END                                                      */
@@ -1168,7 +1270,8 @@ next_statement(void)
     }
   } else {
     DEBUG_PRINTF("next_statement: non-matching next (expected %d, found %d)\n", for_stack[for_stack_ptr - 1].for_variable, var);
-    accept(TOKENIZER_CR);
+    ended = 1;
+    ubasic_error = UBASIC_E_UNMATCHED_NEXT;
   }
 
 }
@@ -1204,6 +1307,8 @@ for_statement(void)
     for_stack_ptr++;
   } else {
     DEBUG_PRINTF("for_statement: for stack depth exceeded\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_FOR_STACK_EXHAUSTED;
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -1215,6 +1320,10 @@ do_statement(void)
   if(do_stack_ptr < MAX_DO_STACK_DEPTH) {
      do_stack[do_stack_ptr] = tokenizer_line_number();
      do_stack_ptr++;
+  } else {
+    DEBUG_PRINTF("do_statement: do stack depth exceeded\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_DO_STACK_EXHAUSTED;
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -1225,16 +1334,18 @@ until_statement(void)
   
   accept(TOKENIZER_UNTIL);
   r = relation();
-  if(!r) {
-    if(do_stack_ptr > 0) {
+  if(do_stack_ptr > 0) {
+    if(!r) {
       jump_line(do_stack[do_stack_ptr-1]);
+    } else {
+      do_stack_ptr--;
+  	  accept_cr();
     }
+  } else {
+    DEBUG_PRINTF("until_statement: unmatched until\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_UNMATCHED_UNTIL;
   }
-  else {
-    do_stack_ptr--;
-  	accept_cr();
-  }
-
 }
 /*---------------------------------------------------------------------------*/
 static void
@@ -1248,24 +1359,35 @@ while_statement(void)
       while_stack[while_stack_ptr] = tokenizer_line_number();
       while_stack_ptr++;
     }
+  } else {
+    DEBUG_PRINTF("while_statement: while stack depth exceeded\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_WHILE_STACK_EXHAUSTED;
+    return;
   }
+
   r = relation();
-  if(!r) {
-  	while_cntr=0;
-    while((tokenizer_token() != TOKENIZER_WEND  || while_cntr ) && 
-	    tokenizer_token() != TOKENIZER_ENDOFINPUT){   
-	    if (tokenizer_token() == TOKENIZER_WHILE) while_cntr+=1;
-	    if (tokenizer_token() == TOKENIZER_WEND) while_cntr-=1;           
-	  tokenizer_next();
-	}  
-    while_stack_ptr--;
+  if(while_stack_ptr > 0) {
+    if(!r) {
+    	while_cntr=0;
+      while((tokenizer_token() != TOKENIZER_WEND  || while_cntr ) && 
+	      tokenizer_token() != TOKENIZER_ENDOFINPUT){   
+	      if (tokenizer_token() == TOKENIZER_WHILE) while_cntr+=1;
+	      if (tokenizer_token() == TOKENIZER_WEND) while_cntr-=1;           
+	      tokenizer_next();
+	    }  
+      while_stack_ptr--;
     
-    accept(TOKENIZER_WEND);
-    accept(TOKENIZER_CR);  	
+      accept(TOKENIZER_WEND);
+      accept(TOKENIZER_CR);  	
+    } else {
+  	  accept_cr();        
+    }
+  } else {
+    DEBUG_PRINTF("while_statement: unmatched wend\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_UNMATCHED_WEND;
   }
-  else  {
-  	accept_cr();        
-  } 
 }
 /*---------------------------------------------------------------------------*/
 static void
@@ -1274,9 +1396,10 @@ wend_statement(void)
   accept(TOKENIZER_WEND);
   if(while_stack_ptr > 0) {
     jump_line(while_stack[while_stack_ptr-1]);
-  }
-  else {
-  	accept_cr();
+  } else {
+    DEBUG_PRINTF("wend_statement: unmatched wend\n");
+    ended = 1;
+    ubasic_error = UBASIC_E_UNMATCHED_WEND;
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -2576,10 +2699,3 @@ void
 ubasic_end() {
 }
 /*---------------------------------------------------------------------------*/
-
-
-
-
-
-
-

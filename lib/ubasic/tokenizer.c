@@ -37,6 +37,7 @@
 #ifdef UBASIC_TEST
 #include <string.h>
 #include <ctype.h>
+#include <stdio.h>
 #endif
 
 #include "tokenizer.h"
