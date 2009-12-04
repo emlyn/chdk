@@ -78,51 +78,50 @@ const ISOTable iso_table[] = {
 canon list @FFD5912C in 100b
 from http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=221&modelid=12944
 Shooting Modes
-    Auto; Creative: P, Av, Tv, M; Image: Portrait, Landscape, Night Scene, Special Scene (Foliage, Snow, Beach, Fireworks, Indoor, Kids & Pets, Night Snapshot, Color Accent, Color Swap), My Colors, Stitch Assist, Movie
+    Auto; Creative: P, Av, Tv, M; Image: Portrait, Landscape, Night Scene,
+    Special Scene 
+        Foliage, Snow, Beach, Fireworks, Indoor, Kids & Pets, Night Snapshot, Color Accent, Color Swap
+    My Colors, Stitch Assist, Movie
 
 Video resolutions
 640 x 480 / 320 x 240 (30 fps/15 fps) available up to 1GB or 1 hour for each file size,
 320 x 240 (1 min. at 60 fps), 160 x 120 (3 min. at 15 fps)
+
+Canon implies there should be a My Colors mode, but all the modes in the list are accounted for.
 */
 static const CapturemodeMap modemap[] = {
     // common modes, probably OK
-    { MODE_AUTO,               32768 },
-    { MODE_P,                  32772 },
-    { MODE_TV,                 32771 },
-    { MODE_AV,                 32770 },
     { MODE_M,                  32769 },
-    { MODE_PORTRAIT,           32781 },
-    { MODE_NIGHT,              32782 },
-    { MODE_LANDSCAPE,          32780 },
+    { MODE_P,                  32772 },
+    { MODE_AV,                 32770 },
+    { MODE_TV,                 32771 },
     { MODE_STITCH,             33290 },
-//    { MODE_VIDEO_STD,          2596  }, // NOT in canon list!
-//    { MODE_VIDEO_SPEED,        2597  }, ""
-//    { MODE_VIDEO_COMPACT,      2598  }, ""
-//    { ???,    2595  }, was MODE_VIDEO_MY_COLORS
-//    { ???, 2594  }, was MODE_VIDEO_COLOR_ACCENT
-//    { ???, 2591  }, in canon list, not original map
-//    { ???, 2592  }, in canon list, not original map
-//    { ???, 2593  }, in canon list, not original map
-// the video mode numbers in the canon list and video modes in canon description match a540, so I'm using those values. NOT VERIFIED!
-    { MODE_VIDEO_STD,          2593  },
-    { MODE_VIDEO_SPEED,        2594  },
-    { MODE_VIDEO_COMPACT,      2595  },
-    { MODE_VIDEO_COLOR_ACCENT, 2591  },
-    { MODE_VIDEO_COLOR_SWAP,   2592  },
+    { MODE_AUTO,               32768 },
+    { MODE_LANDSCAPE,          32780 },
+    { MODE_NIGHT,              32782 },
+    { MODE_PORTRAIT,           32781 },
 //    { MODE_MY_COLORS,          16922 }, // NOT in canon list!
 //    { MODE_SCN_WATER,          16405 }, // NOT in canon list!
-    { MODE_SCN_NIGHT,          16395 },
-    { MODE_SCN_CHILD,          16399 },
-    { MODE_SCN_PARTY,          16400 },
+// using these from a540, NOT VERIFIED!
+    { MODE_SCN_COLOR_ACCENT,   16920 }, // "color accent".
+    { MODE_SCN_COLOR_SWAP,     16921 }, // a540 "color swap", was MODE_SCN_COLOR_ACCENT (like a710)
     { MODE_SCN_GRASS,          16401 },
     { MODE_SCN_SNOW,           16402 },
     { MODE_SCN_BEACH,          16403 },
+    { MODE_SCN_PARTY,          16400 },
+    { MODE_SCN_NIGHT,          16395 },
+    { MODE_SCN_CHILD,          16399 },
     { MODE_SCN_FIREWORK,       16404 },
-//    { ???,   16921 } ??? was MODE_SCN_COLOR_ACCENT
-//    { ???,   16920 } ??? 
-// using these from a540, NOT VERIFIED!
-    { MODE_SCN_COLOR_ACCENT,   16920 }, // "color accent"
-    { MODE_SCN_COLOR_SWAP,     16921 }, // "color swap"
+//    { MODE_VIDEO_STD,          2596  }, // NOT in canon list!
+//    { MODE_VIDEO_SPEED,        2597  }, ""
+//    { MODE_VIDEO_COMPACT,      2598  }, ""
+// video mode numbers in the canon list and video modes in canon description
+// match a540, so I'm using those values. NOT VERIFIED!
+    { MODE_VIDEO_COLOR_ACCENT, 2591  },
+    { MODE_VIDEO_COLOR_SWAP,   2592  },
+    { MODE_VIDEO_STD,          2593  },
+    { MODE_VIDEO_SPEED,        2594  }, // was MODE_VIDEO_COLOR_ACCENT
+    { MODE_VIDEO_COMPACT,      2595  }, // was MODE_VIDEO_MY_COLORS
 };
 
 #include "../generic/shooting.c"

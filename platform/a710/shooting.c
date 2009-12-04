@@ -75,31 +75,45 @@ const ISOTable iso_table[] = {
     {  5,  800,  "800", -1},
 };          
 
+/*
+canon mode list @FFD711A8 in 100a
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=221&modelid=14117#ModelTechSpecsAct
+Shooting Modes
+    Auto; Creative: P, Av, Tv, M; Image: Portrait, Landscape, Night Scene,
+    Special Scene 
+        Foliage, Snow, Beach, Fireworks, Underwater, Indoor, Kids & Pets,
+        Night Snapshot, Color Accent, Color Swap
+    Stitch Assist, Movie
+
+Video resolutions
+640 x 480 / 320 x 240 (30 fps/15 fps) available up to 1GB or 1 hour for each file size, 320 x 240 (1 min. at 60 fps),
+160 x 120 (3 min. at 15 fps)
+*/
 static const CapturemodeMap modemap[] = {
-    { MODE_AUTO,               32768 },
-    { MODE_P,                  32772 },
-    { MODE_TV,                 32771 },
-    { MODE_AV,                 32770 },
     { MODE_M,                  32769 },
-    { MODE_PORTRAIT,           32781 },
-    { MODE_NIGHT,              32782 },
-    { MODE_LANDSCAPE,          32780 },
-    { MODE_VIDEO_STD,          2596  },
-    { MODE_VIDEO_SPEED,        2597  },
-    { MODE_VIDEO_COMPACT,      2598  },
-    { MODE_VIDEO_MY_COLORS,    2595  },
-    { MODE_VIDEO_COLOR_ACCENT, 2594  },
+    { MODE_P,                  32772 },
+    { MODE_AV,                 32770 },
+    { MODE_TV,                 32771 },
     { MODE_STITCH,             33290 },
-    { MODE_MY_COLORS,          16922 },
-    { MODE_SCN_WATER,          16405 },
-    { MODE_SCN_NIGHT,          16395 },
-    { MODE_SCN_CHILD,          16399 },
-    { MODE_SCN_PARTY,          16400 },
+    { MODE_AUTO,               32768 },
+    { MODE_LANDSCAPE,          32780 },
+    { MODE_NIGHT,              32782 },
+    { MODE_PORTRAIT,           32781 },
+    { MODE_SCN_COLOR_ACCENT,   16921 },
+    { MODE_MY_COLORS,          16922 }, // according to canon, there is no "my colors" SCN_COLOR_SWAP ?
     { MODE_SCN_GRASS,          16401 },
     { MODE_SCN_SNOW,           16402 },
     { MODE_SCN_BEACH,          16403 },
+    { MODE_SCN_WATER,          16405 },
+    { MODE_SCN_PARTY,          16400 },
+    { MODE_SCN_NIGHT,          16395 },
+    { MODE_SCN_CHILD,          16399 },
     { MODE_SCN_FIREWORK,       16404 },
-    { MODE_SCN_COLOR_ACCENT,   16921 }
+    { MODE_VIDEO_COLOR_ACCENT, 2594  },
+    { MODE_VIDEO_MY_COLORS,    2595  },
+    { MODE_VIDEO_STD,          2596  },
+    { MODE_VIDEO_SPEED,        2597  },
+    { MODE_VIDEO_COMPACT,      2598  },
 };
 
 #include "../generic/shooting.c"
