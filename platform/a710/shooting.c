@@ -100,7 +100,7 @@ static const CapturemodeMap modemap[] = {
     { MODE_NIGHT,              32782 },
     { MODE_PORTRAIT,           32781 },
     { MODE_SCN_COLOR_ACCENT,   16921 },
-    { MODE_MY_COLORS,          16922 }, // according to canon, there is no "my colors" SCN_COLOR_SWAP ?
+    { MODE_SCN_COLOR_SWAP,     16922 },
     { MODE_SCN_GRASS,          16401 },
     { MODE_SCN_SNOW,           16402 },
     { MODE_SCN_BEACH,          16403 },
@@ -110,7 +110,7 @@ static const CapturemodeMap modemap[] = {
     { MODE_SCN_CHILD,          16399 },
     { MODE_SCN_FIREWORK,       16404 },
     { MODE_VIDEO_COLOR_ACCENT, 2594  },
-    { MODE_VIDEO_MY_COLORS,    2595  },
+    { MODE_VIDEO_COLOR_SWAP,   2595  },
     { MODE_VIDEO_STD,          2596  },
     { MODE_VIDEO_SPEED,        2597  },
     { MODE_VIDEO_COMPACT,      2598  },
