@@ -80,30 +80,48 @@ const ISOTable iso_table[] = {
     {  6, 1600, "1600", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=221&modelid=16336	
+Shooting Modes
+	Auto, Easy, P, Av, Tv, M, Portrait, Landscape,
+	Special Scene 
+		Foliage, Snow, Beach, Sunset, Fireworks, Night Scene, Aquarium
+	Indoor, Kids & Pets, Night Snapshot, Movie <- yes, these are dial, not scene!
+video resolutions
+640 x 480 (20 fps/20 fps LP), 320 x 240 (30 fps) available up to 4GB or 60 minutes,
+160 x 120 (3 minutes at 15 fps) 
+canon mode list @FFEAED68 in 100e
+*/
+// PROPCASE 49, verified by whim in http://chdk.setepontos.com/index.php/topic,3228.msg44199.html#msg44199
 static const CapturemodeMap modemap[] = {
-    { MODE_AUTO,               32768 }, // PROPCASE 49
-    { MODE_P,                  32772 }, //
-	{ MODE_TV,                  32771 },//
-	{ MODE_AV,                  32770 },//
-	{ MODE_M,                  32769 },	//
-	{ MODE_VIDEO_STD,          2597  },
-    { MODE_VIDEO_COMPACT,      2599  },
-	{ MODE_INDOOR,              32785 },	//
-	{ MODE_SCN_KIDS_PETS, 		32784 },	//
+// common modes
+	{ MODE_M,                  32769 },
+	{ MODE_TV,                 32771 },
+	{ MODE_AV,                 32770 },
+    { MODE_P,                  32772 },
+    { MODE_AUTO,               32768 },
 	{ MODE_PORTRAIT,           32781 },
+	{ MODE_INDOOR,             32785 },
+	
+	{ MODE_KIDS_PETS,          32784 },
+	{ MODE_LANDSCAPE,          32780 },
     { MODE_NIGHT_SNAPSHOT,     32779 },
-	{ MODE_LANDSCAPE,     	32780 },
-    { MODE_DIGITAL_MACRO,      33288 },//??
-    { MODE_COLOR_ACCENT,       33306 }, //  { MODE_SCN_COLOR_ACCENT,   33306 },
-    { MODE_MY_COLORS,          33307 },
-    { MODE_SCN_KIDS_PETS,      16400 }, //  { MODE_SCN_CHILD,          16400 },
-    { MODE_SCN_INDOOR,         16401 }, //  { MODE_SCN_PARTY,          16401 },
-    { MODE_SCN_FOLIAGE,        16403 }, //  { MODE_SCN_GRASS,          16402 },
+    { MODE_SCN_NIGHT,          16398 },
+    { MODE_SCN_SUNSET,         16402 },
+    { MODE_SCN_FOLIAGE,        16403 },
     { MODE_SCN_SNOW,           16404 },
     { MODE_SCN_BEACH,          16405 },
-    { MODE_SCN_FIREWORK,       16406 },
+//    { ???,                   32791 },
     { MODE_SCN_AQUARIUM,       16408 },
-    { MODE_SCN_WATER,          16402 },
+    { MODE_SCN_FIREWORK,       16406 },
+    { MODE_VIDEO_STD,          2599  },
+    { MODE_VIDEO_COMPACT,       2601  },
+    { MODE_EASY,                33311 },
+// not in canon list, but set OK 
+// 33306
+//  2597 (note, this was listed as VIDEO_STD in the old mode map, but that is actually 2599 per whims test.)
+// 33288
+//
 };
 
 #include "../generic/shooting.c"

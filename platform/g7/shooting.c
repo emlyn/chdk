@@ -76,6 +76,19 @@ const ISOTable iso_table[] = {
     {  6, 1600, "1600", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=222&modelid=14321
+
+Shooting Modes
+	Auto, P, Av, Tv, M, C1, C2,
+	Special Scene 
+		Portrait, Landscape, Night Scene, Sports, Foliage, Snow, Beach, Fireworks, Aquarium
+		Underwater, ISO 3200, Indoor, Kids & Pets, Night Snapshot, Color Accent, Color Swap
+	Stitch Assist, Movie
+
+video resolutions
+1,024 x 768 (15 fps), 640 x 480 / 320 x 240 (30 fps/15 fps) available up to 4GB, 160 x 120 (3 min. at 15 fps)
+*/
 static const CapturemodeMap modemap[] = {
     { MODE_AUTO,               32768 },
     { MODE_P,                  32772 },
@@ -88,7 +101,7 @@ static const CapturemodeMap modemap[] = {
     { MODE_VIDEO_MY_COLORS,    2595  },
     { MODE_VIDEO_COLOR_ACCENT, 2594  },
     { MODE_STITCH,             33290 },
-    { MODE_MY_COLORS,      16922 },
+    { MODE_MY_COLORS,          16922 },
     { MODE_SCN_WATER,          16405 },
     { MODE_SCN_AQUARIUM,       16406 },
     { MODE_SCN_NIGHT,          16395 },
