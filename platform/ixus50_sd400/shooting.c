@@ -80,9 +80,22 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=224&modelid=11158#ModelTechSpecsAct
+Shooting Modes
+	Still Images: Auto, Manual, 
+	Scene Modes
+		(Digital Macro, Portrait, Night Snapshot, Kids & Pets, Indoor, Underwater),
+	My Colors, Stitch Assist;
+	Movies: Standard, Fast Frame Rate, Compact, My Colors. 
+Movie resolutions: 640x480, 320x240, 160x120
+canon modelist @FF972440 in 101a
+*/
+
 static const CapturemodeMap modemap[] = {
     { MODE_DIGITAL_MACRO,       0 },
     { MODE_P,                   1 },
+//  { ???,                2 }, // long shutter 
     { MODE_AUTO,                3 },
     { MODE_MY_COLORS,           4 },
     { MODE_PORTRAIT,            5 },

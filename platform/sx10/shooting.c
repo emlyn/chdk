@@ -79,6 +79,17 @@ const ISOTable iso_table[] = {
 	{  7, 3200, "3200", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=225&modelid=17630#ModelTechSpecsAct
+Shooting Modes
+	Auto, P, Av, Tv, M, C, Portrait, Landscape, Sports, 
+	Special Scene 
+		(Foliage, Snow, Beach, Sunset, Fireworks, Aquarium, Night Scene, Indoor,
+		ISO 3200, Color Accent, Color Swap),
+	Super Macro, Night Snapshot, Stitch Assist, Movie
+video res
+640 x 480 (30 fps/30 fps LP), 320 x 240 (30 fps) available up to 4GB or 60 minutes
+*/
 static const CapturemodeMap modemap[] = {
 	{ MODE_AUTO,               32768  },
 	{ MODE_P,                  32772  },
@@ -90,7 +101,7 @@ static const CapturemodeMap modemap[] = {
 	{ MODE_LANDSCAPE,          32780  },
 	// TODO dupe, order matters
 	{ MODE_VIDEO_STD,          2597   }, // video standby
-	{ MODE_VIDEO_STD,          3622   }, // video in progress
+	{ MODE_VIDEO_STD,          3622   }, // video in progress (not clear this belongs here)
 	{ MODE_STITCH,             33290  },
 	{ MODE_SPORTS,             33287  },
 
@@ -105,6 +116,12 @@ static const CapturemodeMap modemap[] = {
 	{ MODE_SCN_ISO_3200,       16413  },
 	{ MODE_SCN_COLOR_ACCENT,   16923  },
 	{ MODE_SCN_COLOR_SWAP,     16924  }
+//	{ MODE_SUPER_MACRO,     ???  }, // maybe it doesn't get it's own mode value ?
+/* this sets C mode 
+(saved custom settings for M, P etc.) Resulting PROPCASE_SHOOTING_MODE is whatever mode
+is saved in C, not this value. Need to figure out how to interface this with script
+*/
+//	{ MODE_C1,     8225  }, 
 };
 
 #include "../generic/shooting.c"

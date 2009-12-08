@@ -76,6 +76,17 @@ const ISOTable iso_table[] = {
     {  5,  800,  "800", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=223&modelid=13077#ModelTechSpecsAct
+Shooting Modes
+    Auto; Creative: P, Av, Tv, M, C; Image: Portrait, Landscape, Night Scene, Sports, 
+    Special Scene 
+        Foliage, Snow, Beach, Fireworks, Indoor, Night Snapshot, Color Accent, Color Swap
+    My Colors, Stitch Assist, Movie
+video resolutions
+640 x 480 (30 fps/15 fps) / 320 x 240 (60 fps/30 fps/15 fps) available up to 1GB or 1 hour for each file size
+canon mode list @FF98F378 in 100a
+*/
 static const CapturemodeMap modemap[] = {
     { MODE_AUTO,                32768 },
     { MODE_P,                   32772 },

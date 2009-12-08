@@ -111,16 +111,17 @@ static const CapturemodeMap modemap[] = {
     { MODE_SCN_FOLIAGE,        16403 },
     { MODE_SCN_SNOW,           16404 },
     { MODE_SCN_BEACH,          16405 },
-//    { ???,                   32791 },
+//    { ???,                   32791 }, in canon mode list, has underwater icon ?
     { MODE_SCN_AQUARIUM,       16408 },
     { MODE_SCN_FIREWORK,       16406 },
-    { MODE_VIDEO_STD,          2599  },
-    { MODE_VIDEO_COMPACT,       2601  },
-    { MODE_EASY,                33311 },
+    { MODE_VIDEO_STD,           2599 },
+    { MODE_VIDEO_COMPACT,       2601 },
+    { MODE_EASY,               33311 },
 // not in canon list, but set OK 
-// 33306
-//  2597 (note, this was listed as VIDEO_STD in the old mode map, but that is actually 2599 per whims test.)
-// 33288
+// 33306 ?
+//  2597 note: this was listed as VIDEO_STD in the old mode map,
+//       but that is actually 2599 per whims test. Sets compact mode.
+// 33288 macro/digital macro ?
 //
 };
 

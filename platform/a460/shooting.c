@@ -78,10 +78,26 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=221&modelid=14825#ModelTechSpecsAct
+
+Shooting Modes
+    Auto, Camera M, Special Scene
+        (Portrait, Foliage, Snow, Beach, Fireworks, Indoor, Kids & Pets, Night Snapshot)
+    Super Macro, Movie
+video resolutions
+640 x 480 (10 fps) / 320 x 240 (30 fps) available up to 1GB or 1 hour for each file size,
+160 x 120 (3 min. at 15 fps) 
+
+canon mode list FFEAB860 in 100d
+*/
 static const CapturemodeMap modemap[] = {
+//    { ???,               32774 },  long shutter 
+    { MODE_SUPER_MACRO,         33289 },
+//    { ???,               33290 }, stitch on many others
     { MODE_AUTO,               32768 },
     { MODE_P,                  32772 },
-    { MODE_PORTRAIT,           16397 },
+    { MODE_SCN_PORTRAIT,       16397 },
     { MODE_VIDEO_STD,          2597  },
     { MODE_VIDEO_COMPACT,      2599  },
     { MODE_SCN_NIGHT,          16395 },
@@ -90,7 +106,7 @@ static const CapturemodeMap modemap[] = {
     { MODE_SCN_GRASS,          16402 },
     { MODE_SCN_SNOW,           16403 },
     { MODE_SCN_BEACH,          16404 },
-    { MODE_SCN_FIREWORK,       16405 }//,
+    { MODE_SCN_FIREWORK,       16405 },
 };
 
 #include "../generic/shooting.c"

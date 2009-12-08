@@ -108,7 +108,7 @@ static const CapturemodeMap modemap[] = {
 
     { MODE_DIGITAL_MACRO,      33288 }, // ixus60
     { MODE_NIGHT_SNAPSHOT,     32779 }, // ixus60
-    { MODE_MY_COLORS,          32774 }, // by elimination: should be "my colors" ?
+//    { ???,          32774 }, // should be long shutter
 
     // match a540 and ixus60
     { MODE_VIDEO_STD,          2593  }, //

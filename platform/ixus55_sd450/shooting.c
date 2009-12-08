@@ -82,6 +82,7 @@ const ISOTable iso_table[] = {
 
 static const CapturemodeMap modemap[] = {
     { MODE_P,                   0 },
+//    { ???,       1 }, // assumed long shutter 
     { MODE_DIGITAL_MACRO,       2 },
     { MODE_MY_COLORS,           3 },
     { MODE_STITCH,              4 }, 

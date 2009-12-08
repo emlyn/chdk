@@ -79,6 +79,17 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+/*
+Shooting Modes
+	Auto; Creative: P, Av, Tv, M, C; Image: Portrait, Landscape, Night Scene,
+	Special Scene 
+		(Foliage, Snow, Beach, Fireworks, Underwater, Indoor, Kids & Pets, Night Snapshot)
+	My Colors, Stitch Assist, Movie
+video resolutions
+640 x 480/320 x 240 (30 fps/15 fps), 320 x 240 (1 min. at 60 fps), 160 x 120 (3 min. at 15 fps)
+
+canon mode list @FFD4A024 in 100f
+*/
 static const CapturemodeMap modemap[] = {
     { MODE_AUTO,               6  },
     { MODE_P,                  1  },
@@ -88,17 +99,25 @@ static const CapturemodeMap modemap[] = {
     { MODE_PORTRAIT,           9  },
     { MODE_NIGHT,              8  },
     { MODE_LANDSCAPE,          7  },
-    { MODE_VIDEO_STD,          18 },
+    { MODE_VIDEO_STD,          18 }, // note, not in canon modelist, possibly 0x10012 ?
     { MODE_STITCH,             5  },
     { MODE_MY_COLORS,          4  },
-    { MODE_SCN_WATER,          13 },
+    { MODE_SCN_UNDERWATER,     13 },
     { MODE_SCN_NIGHT,          15 },
-    { MODE_SCN_CHILD,          16 },
-    { MODE_SCN_PARTY,          14 },
-    { MODE_SCN_GRASS,          10 },
+    { MODE_SCN_CHILD,          16 }, // kids&pets
+    { MODE_SCN_PARTY,          14 }, // indoor
+    { MODE_SCN_GRASS,          10 }, // foliage
     { MODE_SCN_SNOW,           11 },
     { MODE_SCN_BEACH,          12 },
     { MODE_SCN_FIREWORK,       17 }
+/*
+in canon mode list
+ROM:FFD4A06C                 DCD 0x10012
+ROM:FFD4A070                 DCD 0x10013
+ROM:FFD4A074                 DCD 0x10014
+ROM:FFD4A078                 DCD 0x10015
+ROM:FFD4A07C                 DCD 0x20016
+*/
 };
 
 #include "../generic/shooting.c"

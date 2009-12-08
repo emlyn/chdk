@@ -79,24 +79,40 @@ const ISOTable iso_table[] = {
     {  6, 1600, "1600", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=224&modelid=15655#ModelTechSpecsAct
+
+Shooting Modes
+	Auto, Camera M,
+	Special Scene
+		(Portrait, Foliage, Snow, Beach, Fireworks, Aquarium, Underwater, Indoor
+		Kids & Pets, Night Snapshot),
+	Color Accent, Color Swap, Digital Macro, Stitch Assist, Movie
+video
+640 x 480 (30 fps/30 fps LP), 320 x 240 (30 fps) available up to 4GB or 60 minutes, 640 x 480 (2 hours at 0.5 fps/1 fps),
+160 x 120 (3 min. at 15 fps)
+
+canon mode list @FFACFEF8 in 100c
+*/
+// PROPCACE 49
 static const CapturemodeMap modemap[] = {
-    { MODE_AUTO,               32768 }, // PROPCACE 49
+//    { ???,               32774 }, // "long shutter" in canon list
+    { MODE_AUTO,               32768 }, 
     { MODE_P,                  32772 },
     { MODE_DIGITAL_MACRO,      33288 },
-    { MODE_PORTRAIT,           16397 },
-    { MODE_NIGHT_SNAPSHOT,     16395 },
-    { MODE_COLOR_ACCENT,       33306 }, //  { MODE_SCN_COLOR_ACCENT,   33306 },
+    { MODE_SCN_PORTRAIT,       16397 },
+    { MODE_NIGHT_SNAPSHOT,     16395 }, // actually SCN, named SCN_NIGHT on other cams
+    { MODE_COLOR_ACCENT,       33306 },
     { MODE_MY_COLORS,          33307 },
-    { MODE_SCN_KIDS_PETS,      16400 }, //  { MODE_SCN_CHILD,          16400 },
-    { MODE_SCN_INDOOR,         16401 }, //  { MODE_SCN_PARTY,          16401 },
-    { MODE_SCN_FOLIAGE,        16402 }, //  { MODE_SCN_GRASS,          16402 },
+    { MODE_SCN_KIDS_PETS,      16400 },
+    { MODE_SCN_INDOOR,         16401 },
+    { MODE_SCN_FOLIAGE,        16402 },
     { MODE_SCN_SNOW,           16403 },
     { MODE_SCN_BEACH,          16404 },
     { MODE_SCN_FIREWORK,       16405 },
     { MODE_SCN_AQUARIUM,       16407 },
-    { MODE_SCN_WATER,          16406 },
+    { MODE_SCN_UNDERWATER,     16406 },
     { MODE_VIDEO_STD,          2597  },
-//    { MODE_VIDEO_SPEED,        2598  },
     { MODE_VIDEO_COMPACT,      2599  },
     { MODE_VIDEO_COLOR_ACCENT, 2595  },
     { MODE_VIDEO_MY_COLORS,    2596  },
