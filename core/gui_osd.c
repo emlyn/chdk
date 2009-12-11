@@ -174,13 +174,13 @@ static void gui_osd_draw_single_histo(int hist, coord x, coord y, int small) {
 
     switch (hist) {
         case HISTO_R: 
-            cl=COLOR_RED; 
+            cl=((mode_get()&MODE_MASK) == MODE_REC)?COLOR_HISTO_R:COLOR_HISTO_R_PLAY;
             break;
         case HISTO_G: 
-            cl=COLOR_GREEN; 
+            cl=((mode_get()&MODE_MASK) == MODE_REC)?COLOR_HISTO_G:COLOR_HISTO_G_PLAY;
             break;
-        case HISTO_B: 
-            cl=((mode_get()&MODE_MASK) == MODE_REC)?0xDF:0xCC; 
+        case HISTO_B:
+            cl=((mode_get()&MODE_MASK) == MODE_REC)?COLOR_HISTO_B:COLOR_HISTO_B_PLAY;
             break;
         case HISTO_RGB:
         case HISTO_Y:
@@ -380,12 +380,12 @@ int gui_osd_draw_zebra(int show) {
     int zebra_drawn=0;
     color cls[] = {
         COLOR_TRANSPARENT,
-        (mrec)?0xDF:0xCC,
-        COLOR_GREEN,
-        (mrec)?COLOR_BLUE_LT:0x99,
-        COLOR_RED,
-        (mrec)?0x66:0xE2,
-        (mrec)?COLOR_YELLOW:0x66,
+        (mrec)?COLOR_HISTO_B:COLOR_HISTO_B_PLAY,
+        (mrec)?COLOR_HISTO_G:COLOR_HISTO_G_PLAY,
+        (mrec)?COLOR_HISTO_BG:COLOR_HISTO_BG_PLAY,
+        (mrec)?COLOR_HISTO_R:COLOR_HISTO_R_PLAY,
+        (mrec)?COLOR_HISTO_RB:COLOR_HISTO_RB_PLAY,
+        (mrec)?COLOR_HISTO_RG:COLOR_HISTO_RG_PLAY,
         COLOR_BLACK
     };
 	
@@ -541,12 +541,12 @@ int gui_osd_draw_zebra(int show) {
     int zebra_drawn=0;
     color cls[] = {
         COLOR_TRANSPARENT,
-        (mrec)?0xDF:0xCC,
-        COLOR_GREEN,
-        (mrec)?COLOR_BLUE_LT:0x99,
-        COLOR_RED,
-        (mrec)?0x66:0xE2,
-        (mrec)?COLOR_YELLOW:0x66,
+        (mrec)?COLOR_HISTO_B:COLOR_HISTO_B_PLAY,
+        (mrec)?COLOR_HISTO_G:COLOR_HISTO_G_PLAY,
+        (mrec)?COLOR_HISTO_BG:COLOR_HISTO_BG_PLAY,
+        (mrec)?COLOR_HISTO_R:COLOR_HISTO_R_PLAY,
+        (mrec)?COLOR_HISTO_RB:COLOR_HISTO_RB_PLAY,
+        (mrec)?COLOR_HISTO_RG:COLOR_HISTO_RG_PLAY,
         COLOR_BLACK
     };
 	
@@ -726,12 +726,12 @@ static void gui_osd_draw_blended_histo(coord x, coord y) {
     int m = ((mode_get()&MODE_MASK) == MODE_REC);
     color cls[] = {
         conf.histo_color>>8,
-        (m)?0xDF:0xCC,
-        COLOR_GREEN,
-        (m)?COLOR_BLUE_LT:0x99,
-        COLOR_RED,
-        (m)?0x66:0xE2,
-        (m)?COLOR_YELLOW:0x66,
+        (m)?COLOR_HISTO_B:COLOR_HISTO_B_PLAY,
+        (m)?COLOR_HISTO_G:COLOR_HISTO_G_PLAY,
+        (m)?COLOR_HISTO_BG:COLOR_HISTO_BG_PLAY,
+        (m)?COLOR_HISTO_R:COLOR_HISTO_R_PLAY,
+        (m)?COLOR_HISTO_RB:COLOR_HISTO_RB_PLAY,
+        (m)?COLOR_HISTO_RG:COLOR_HISTO_RG_PLAY,
         COLOR_WHITE
     };
 

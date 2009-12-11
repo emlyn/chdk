@@ -2053,18 +2053,18 @@
     // color
     //need fixing *****************************************************
     #define CAM_COLORMATRIX1                               \
-      827547, 1000000, -290458, 1000000, -126086, 1000000, \
-     -12829,  1000000, 530507,  1000000, 50537,   1000000, \
-      5181,   1000000, 48183,   1000000, 245014,  1000000
+      14134, 1000000, -5576, 1000000, -1527, 1000000, \
+     -1991,  1000000, 10719,  1000000, 1273,   1000000, \
+      -1158,   1000000, 1929,   1000000, 3581,  1000000
 
-    #define cam_CalibrationIlluminant1 1 // Daylight
+    #define cam_CalibrationIlluminant1 17 // Standard Light A
     // cropping
     #define CAM_JPEG_WIDTH  4000
     #define CAM_JPEG_HEIGHT 3000
-    #define CAM_ACTIVE_AREA_X1 6
-    #define CAM_ACTIVE_AREA_Y1 12
-    #define CAM_ACTIVE_AREA_X2 4080
-    #define CAM_ACTIVE_AREA_Y2 3048
+    #define CAM_ACTIVE_AREA_X1 52
+    #define CAM_ACTIVE_AREA_Y1 14
+    #define CAM_ACTIVE_AREA_X2 4052
+    #define CAM_ACTIVE_AREA_Y2 3014
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
     #undef  CAM_SENSOR_BITS_PER_PIXEL
