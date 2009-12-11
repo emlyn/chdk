@@ -80,19 +80,33 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=224&modelid=10599#ModelTechSpecsAct
+
+Shooting Modes
+	Auto, Manual, 
+	Scene Modes
+		(Digital Macro, Portrait, Night Snapshot, Kids & Pets, Indoor, Underwater),
+	Stitch Assist, Movies
+Movie: 640 x 480, 320 x 240 or 160 x 120
+canon mode list ???
+
+NOTE: mode override is not implemented on this camera
+*/
 static const CapturemodeMap modemap[] = {
     { MODE_P,                   1 },
+    { MODE_LONG_SHUTTER,        2 }, // guessed
     { MODE_AUTO,                3 },
     { MODE_MY_COLORS,           4 },
-    { MODE_PORTRAIT,            5 },
-    { MODE_SCN_GRASS,           6 },
+    { MODE_SCN_PORTRAIT,        5 },
+    { MODE_SCN_FOLIAGE,         6 },
     { MODE_SCN_SNOW,            7 },
     { MODE_SCN_BEACH,           8 },
     { MODE_SCN_FIREWORK,        9 }, 
-    { MODE_SCN_WATER,          10 },
-    { MODE_SCN_PARTY,          11 },
-    { MODE_SCN_CHILD,          12 },
-    { MODE_SCN_NIGHT,          13 },
+    { MODE_SCN_UNDERWATER,     10 },
+    { MODE_SCN_INDOOR,         11 },
+    { MODE_SCN_KIDS_PETS,      12 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 13 },
     { MODE_STITCH,             14 },
     { MODE_VIDEO_STD,          15 }
 };

@@ -83,19 +83,38 @@ const ISOTable iso_table[] = {
     {  5,  800,  "800", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=224&modelid=13019#ModelTechSpecsAct
+
+Shooting Modes
+    Auto, Camera M,
+    Special Scene
+        (Portrait, Foliage, Snow, Beach, Fireworks, Underwater, Indoor,
+        Kids & Pets, Night Snapshot, Color Accent, Color Swap),
+    Digital Macro, My Colors, Stitch Assist, Movie
+Movie: 640 x 480 / 320 x 240 (30 fps/15 fps) available up to 1GB or 1 hour for each file size,
+    320 x 240 (1 min. at 60 fps), 160 x 120 (3 min. at 15 fps)
+canon mode list FF972360 in 100b
+*/
 static const CapturemodeMap modemap[] = {
-   { MODE_AUTO,               32768 },
+    { MODE_LONG_SHUTTER,       32774 }, // guessed!
+    { MODE_AUTO,               32768 },
     { MODE_P,                  32772 },
     { MODE_DIGITAL_MACRO,      33288 }, 
     { MODE_VIDEO_STD,          2593  },
+// remaining video modes missing, guessed, based on a540
+    { MODE_VIDEO_COLOR_ACCENT, 2591  },
+    { MODE_VIDEO_COLOR_SWAP,   2592  },
+    { MODE_VIDEO_SPEED,        2594  },
+    { MODE_VIDEO_COMPACT,      2595  },
     { MODE_STITCH,             33290 },
-    { MODE_MY_COLORS,          16921 },
-    { MODE_SCN_WATER,          16405 },
-    { MODE_SCN_NIGHT,          16395 },
-    { MODE_PORTRAIT,           16397 },
-    { MODE_SCN_CHILD,          16399 },
-    { MODE_SCN_PARTY,          16400 },
-    { MODE_LANDSCAPE,          16401 },
+    { MODE_SCN_COLOR_SWAP,     16921 }, // was MY_COLORS
+    { MODE_SCN_UNDERWATER,     16405 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 16395 },
+    { MODE_SCN_PORTRAIT,       16397 },
+    { MODE_SCN_KIDS_PETS,      16399 },
+    { MODE_SCN_INDOOR,         16400 },
+    { MODE_SCN_FOLIAGE,        16401 }, // was MODE_LANDSCAPE, but not not in canon list
     { MODE_SCN_SNOW,           16402 },
     { MODE_SCN_BEACH,          16403 },
     { MODE_SCN_FIREWORK,       16404 },

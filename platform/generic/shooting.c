@@ -747,6 +747,7 @@ short shooting_get_drive_mode()
     return m;
 }
 
+// TODO this should probably use MODE_IS_VIDEO
 short shooting_can_focus()
 {
 #if !CAM_CAN_SD_OVER_NOT_IN_MF && CAM_CAN_SD_OVERRIDE
@@ -769,7 +770,8 @@ short shooting_can_focus()
   return mode_video;
 #elif defined (CAMERA_ixus800_sd700)                				   
  int m=mode_get()&MODE_SHOOTING_MASK;
-  return (shooting_get_zoom()<8) && (m!=MODE_AUTO) && (m!=MODE_SCN_WATER);
+// TODO whats the reason for this ?!?
+  return (shooting_get_zoom()<8) && (m!=MODE_AUTO) && (m!=MODE_SCN_UNDERWATER);
 #else 
   return 1;  
 #endif 			  
@@ -987,6 +989,7 @@ void shooting_set_autoiso(int iso_mode) {
 			return;
 	}
 	int m=mode_get()&MODE_SHOOTING_MASK;
+	// TODO also long shutter ?
 	if (m==MODE_M || m==MODE_TV || m==MODE_STITCH) return; //Only operate outside of M and Tv
 	static const short shutter[]={0, 8, 15, 30, 60, 125, 250, 500, 1000};
 	float current_shutter = shooting_get_shutter_speed_from_tv96(shooting_get_tv96());
@@ -1103,12 +1106,8 @@ void shooting_tv_bracketing(){
     }
     // Tv override is disabled, use camera's opinion of Tv for bracketing seed value.
     else {
-      #if defined (CAMERA_tx1) // M mode is actually automatic on the tx1.
-      bracketing.tv96=shooting_get_tv96();
-      #else
-      if (!(m==MODE_M || m==MODE_TV)) bracketing.tv96=shooting_get_tv96(); 
+      if (!(m==MODE_M || m==MODE_TV || m==MODE_LONG_SHUTTER)) bracketing.tv96=shooting_get_tv96(); 
       else bracketing.tv96=shooting_get_user_tv96();
-      #endif
     }
     bracketing.tv96_step=32*conf.tv_bracket_value;
   }

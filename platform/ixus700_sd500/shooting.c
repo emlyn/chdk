@@ -80,21 +80,35 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+/*
+canon mode list FF967C0C in 100a
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=224&modelid=11157#ModelTechSpecsAct
+
+Shooting Modes
+	Still Images: Auto, Manual,
+	Scene Modes
+		(Digital Macro, Portrait, Night Snapshot, Kids & Pets, Indoor,
+		Underwater),
+	My Colors, Stitch Assist;
+	Movies:
+		Standard, Fast Frame Rate, Compact, My Colors. 
+Movie: 640x480, 320x240, 160x120
+*/
 static const CapturemodeMap modemap[] = {
-    { MODE_DIGITAL_MACRO,       0 },
+    { MODE_SCN_DIGITAL_MACRO,   0 },
     { MODE_P,                   1 },
-    { MODE_NIGHT,               2 }, // 1-15s
+    { MODE_LONG_SHUTTER,        2 }, // 1-15s
     { MODE_AUTO,                3 },
     { MODE_MY_COLORS,           4 },
-    { MODE_PORTRAIT,            5 },
-    { MODE_SCN_GRASS,           6 },
+    { MODE_SCN_PORTRAIT,        5 },
+    { MODE_SCN_FOLIAGE,         6 },
     { MODE_SCN_SNOW,            7 },
     { MODE_SCN_BEACH,           8 },
     { MODE_SCN_FIREWORK,        9 }, 
-    { MODE_SCN_WATER,          10 },
-    { MODE_SCN_PARTY,          11 },
-    { MODE_SCN_CHILD,          12 },
-    { MODE_SCN_NIGHT,          13 },
+    { MODE_SCN_UNDERWATER,     10 },
+    { MODE_SCN_INDOOR,         11 },
+    { MODE_SCN_KIDS_PETS,      12 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 13 },
     { MODE_STITCH,             14 },
     { MODE_VIDEO_STD,          15 }
 };

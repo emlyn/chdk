@@ -79,23 +79,35 @@ const ISOTable iso_table[] = {
     {  6, 1600, "1600", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=221&modelid=14824#ModelTechSpecsAct
+Shooting Modes
+    Auto, Camera M, Portrait, Landscape,
+    Special Scene
+        (Night Scene, Foliage, Snow, Beach, Fireworks)
+    Indoor, Kids & Pets, Night Snapshot, Movie
+Movie: 640 x 480 / 320 x 240 (30 fps/15 fps)available up to 1GB or 1 hour for each file size,
+    320 x 240 (1 min. at 60 fps), 160 x 120 (3 min. at 15 fps) 
+canon mode list FFEA9F04 in 100c
+*/
 static const CapturemodeMap modemap[] = {
-		{ MODE_AUTO, 32768 },
-		{ MODE_P, 32772 },
-		{ MODE_VIDEO_STD, 2597 },
-		{ MODE_VIDEO_SPEED, 2598 },
-		{ MODE_VIDEO_COMPACT, 2599 },
-		{ MODE_SCN_AQUARIUM, 16407 },
-		{ MODE_SCN_NIGHT, 16398 },
-		{ MODE_SCN_GRASS, 16402 },
-		{ MODE_SCN_SNOW, 16403 },
-		{ MODE_SCN_BEACH, 16404 },
-		{ MODE_SCN_FIREWORK, 16405 },
-		{ MODE_INDOOR, 32785 },
-		{ MODE_KIDS_PETS, 32784 },
-		{ MODE_NIGHT_SNAPSHOT, 32779 },
-		{ MODE_LANDSCAPE, 32780 },
-		{ MODE_PORTRAIT, 32781 }, 
+    { MODE_LONG_SHUTTER,        32774 }, // guessed
+    { MODE_AUTO,                32768 },
+    { MODE_P,                   32772 },
+    { MODE_VIDEO_STD,           2597  },
+    { MODE_VIDEO_SPEED,         2598  },
+    { MODE_VIDEO_COMPACT,       2599  },
+//    { MODE_SCN_AQUARIUM,        16407 }, not in canon list
+    { MODE_SCN_NIGHT_SCENE,     16398 },
+    { MODE_SCN_FOLIAGE,         16402 },
+    { MODE_SCN_SNOW,            16403 },
+    { MODE_SCN_BEACH,           16404 },
+    { MODE_SCN_FIREWORK,        16405 },
+    { MODE_INDOOR,              32785 },
+    { MODE_KIDS_PETS,           32784 },
+    { MODE_NIGHT_SNAPSHOT,      32779 },
+    { MODE_LANDSCAPE,           32780 },
+    { MODE_PORTRAIT,            32781 }, 
 };
 
 #include "../generic/shooting.c"

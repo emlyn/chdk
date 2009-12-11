@@ -75,7 +75,18 @@ const ISOTable iso_table[] = {
     {  5,  800,  "800", -1},
 };          
 
-// canon mode list @FFD588D4 in 100b
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=221&modelid=12942
+Shooting Modes
+    Auto; Creative: P, Av, Tv, M; Image: Portrait, Landscape, Night Scene,
+    Special Scene 
+        (Foliage, Snow, Beach, Fireworks, Underwater, Indoor, Kids & Pets,
+        Night Snapshot, Color Accent, Color Swap),
+    My Colors, Stitch Assist, Movie
+Movie: 640 x 480 / 320 x 240 (30 fps/15 fps) available up to 1GB or 1 hour for each file size,
+    320 x 240 (1 min. at 60 fps), 160 x 120 (3 min. at 15 fps)
+canon mode list FFD588D4 in 100b
+*/
 static const CapturemodeMap modemap[] = {
     { MODE_M,                  32769 },
     { MODE_AV,                 32770 },
@@ -84,9 +95,9 @@ static const CapturemodeMap modemap[] = {
     { MODE_AUTO,               32768 },
     { MODE_PORTRAIT,           32781 },
     { MODE_LANDSCAPE,          32780 },
-    { MODE_NIGHT,              32782 }, // "night scene" on dial, different from "night snapshot" under "scene" below
+    { MODE_NIGHT_SCENE,        32782 }, // "night scene" on dial, different from "night snapshot" under "scene" below
     { MODE_STITCH,             33290 },
-    { MODE_SCN_NIGHT,          16395 }, // "night snapshot"
+    { MODE_SCN_NIGHT_SNAPSHOT, 16395 }, // "night snapshot"
     { MODE_SCN_KIDS_PETS,      16399 }, // "kids and pets"
     { MODE_SCN_INDOOR,         16400 }, // "indoor"
     { MODE_SCN_FOLIAGE,        16401 }, // "foliage"

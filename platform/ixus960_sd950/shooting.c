@@ -71,26 +71,44 @@ const ISOTable iso_table[] = {
 {  6, 1600, "1600", -1},
 };          
 
+/*
+Shooting Modes
+    Auto, Camera M,
+    Special Scene
+        (Portrait, Foliage, Snow, Beach, Fireworks, Aquarium, Underwater,
+        ISO 3200, Indoor, Kids & Pets, Night Snapshot),
+    Color Accent, Color Swap, Digital Macro, Stitch Assist, Movie
+
+Movie: 1024 x 768 (15 fps), 640 x 480 (30 fps/30 fps LP), 
+    320 x 240 (30 fps) available up to 4GB or 60 minutes, 
+    640 x 480 (2 hours at 0.5 fps/1 fps), 160 x 120 (3 min. at 15 fps)
+
+canon mode list FFAD6DDC in 100d 
+*/
+
 static const CapturemodeMap modemap[] = {
-	{ MODE_AUTO,               32768 }, 
+	{ MODE_LONG_SHUTTER,       32774 }, // guessed
+	{ MODE_AUTO,               32768 },
 	{ MODE_P,                  32772 },
 	{ MODE_DIGITAL_MACRO,      33288 },
-	{ MODE_PORTRAIT,           16397 },
-	{ MODE_NIGHT_SNAPSHOT,     16395 },
-	{ MODE_COLOR_ACCENT,       33306 }, 
-	{ MODE_MY_COLORS,          33307 },
-	{ MODE_SCN_KIDS_PETS,      16400 }, 
-	{ MODE_SCN_INDOOR,         16401 }, 
-	{ MODE_SCN_FOLIAGE,        16402 }, 
+	{ MODE_SCN_PORTRAIT,       16397 },
+	{ MODE_SCN_NIGHT_SNAPSHOT, 16395 },
+	{ MODE_COLOR_ACCENT,       33306 },
+	{ MODE_COLOR_SWAP,         33307 }, // was MY_COLORS
+	{ MODE_SCN_KIDS_PETS,      16400 },
+	{ MODE_SCN_INDOOR,         16401 },
+	{ MODE_SCN_FOLIAGE,        16402 },
 	{ MODE_SCN_SNOW,           16403 },
 	{ MODE_SCN_BEACH,          16404 },
 	{ MODE_SCN_FIREWORK,       16405 },
 	{ MODE_SCN_AQUARIUM,       16407 },
-	{ MODE_SCN_WATER,          16406 },
+	{ MODE_SCN_UNDERWATER,     16406 },
+	{ MODE_SCN_ISO_3200,       16412 }, // guessed
 	{ MODE_VIDEO_STD,          2597  },
 	{ MODE_VIDEO_COMPACT,      2599  },
 	{ MODE_VIDEO_COLOR_ACCENT, 2595  },
 	{ MODE_VIDEO_MY_COLORS,    2596  },
+	{ MODE_VIDEO_HIRES,        2600  }, // guessed, number in canon list
 	{ MODE_VIDEO_TIME_LAPSE,   2601  },
 	{ MODE_STITCH,             33290 },
 };

@@ -97,16 +97,16 @@ static const CapturemodeMap modemap[] = {
     { MODE_AV,                 2  },
     { MODE_M,                  0  },
     { MODE_PORTRAIT,           9  },
-    { MODE_NIGHT,              8  },
+    { MODE_NIGHT_SCENE,        8  },
     { MODE_LANDSCAPE,          7  },
     { MODE_VIDEO_STD,          18 }, // note, not in canon modelist, possibly 0x10012 ?
     { MODE_STITCH,             5  },
     { MODE_MY_COLORS,          4  },
     { MODE_SCN_UNDERWATER,     13 },
-    { MODE_SCN_NIGHT,          15 },
-    { MODE_SCN_CHILD,          16 }, // kids&pets
-    { MODE_SCN_PARTY,          14 }, // indoor
-    { MODE_SCN_GRASS,          10 }, // foliage
+    { MODE_SCN_NIGHT_SNAPSHOT, 15 },
+    { MODE_SCN_KIDS_PETS,      16 },
+    { MODE_SCN_INDOOR,         14 },
+    { MODE_SCN_FOLIAGE,        10 },
     { MODE_SCN_SNOW,           11 },
     { MODE_SCN_BEACH,          12 },
     { MODE_SCN_FIREWORK,       17 }
@@ -116,7 +116,7 @@ ROM:FFD4A06C                 DCD 0x10012
 ROM:FFD4A070                 DCD 0x10013
 ROM:FFD4A074                 DCD 0x10014
 ROM:FFD4A078                 DCD 0x10015
-ROM:FFD4A07C                 DCD 0x20016
+ROM:FFD4A07C                 DCD 0x20016  // C ?
 */
 };
 

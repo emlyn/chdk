@@ -79,6 +79,16 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=221&modelid=11998#ModelTechSpecsAct
+Shooting Modes
+	Auto; Creative: P, Av, Tv, M, C; Image: Portrait, Landscape, Night Scene,
+	Special Scene
+		(Foliage, Snow, Beach, Fireworks, Underwater, Indoor, Kids & Pets, Night Snapshot),
+	My Colors, Stitch Assist, Movie
+Movie: 640 x 480/320 x 240 (30 fps/15 fps), 320 x 240 (1 min. at 60 fps), 160 x 120 (3 min. at 15 fps)
+canon mode list FFD49168 in 100e
+*/
 static const CapturemodeMap modemap[] = {
     { MODE_AUTO,               6  },
     { MODE_P,                  1  },
@@ -86,16 +96,16 @@ static const CapturemodeMap modemap[] = {
     { MODE_AV,                 2  },
     { MODE_M,                  0  },
     { MODE_PORTRAIT,           9  },
-    { MODE_NIGHT,              8  },
+    { MODE_NIGHT_SCENE,        8  },
     { MODE_LANDSCAPE,          7  },
-    { MODE_VIDEO_STD,          18 },
+    { MODE_VIDEO_STD,          18 }, // note, not in canon list, has 0x10012 etc like a620
     { MODE_STITCH,             5  },
     { MODE_MY_COLORS,          4  },
-    { MODE_SCN_WATER,          13 },
-    { MODE_SCN_NIGHT,          15 },
-    { MODE_SCN_CHILD,          16 },
-    { MODE_SCN_PARTY,          14 },
-    { MODE_SCN_GRASS,          10 },
+    { MODE_SCN_UNDERWATER,     13 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 15 },
+    { MODE_SCN_KIDS_PETS,      16 },
+    { MODE_SCN_INDOOR,         14 },
+    { MODE_SCN_FOLIAGE,        10 },
     { MODE_SCN_SNOW,           11 },
     { MODE_SCN_BEACH,          12 },
     { MODE_SCN_FIREWORK,       17 }

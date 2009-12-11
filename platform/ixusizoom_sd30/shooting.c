@@ -73,6 +73,19 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=224&modelid=11774#ModelTechSpecsAct
+Shooting Modes
+	Auto; Manual, Portrait, Landscape, Night Snapshot,
+	Special Scene
+		(Foliage, Snow, Beach, Fireworks, Underwater, Indoor, Kids & Pets),
+	Macro, My Colors, Stitch Assist, Movie
+video resolutions
+640 x 480/320 x 240 (10 fps/20 fps) available up to 1GB, 160 x 120 (3 min. at 15 fps)
+canon mode list FF95E37C in 100g
+*/
+// TODO this is completely wrong, camera has no M, Tv, Av. Should have "long shutter"
+// valid mode 0-15, 0x10010-0x1012
 static const CapturemodeMap modemap[] = {
     { MODE_AUTO,               6  },
     { MODE_P,                  1  },
@@ -80,20 +93,21 @@ static const CapturemodeMap modemap[] = {
     { MODE_AV,                 2  },
     { MODE_M,                  0  },
     { MODE_PORTRAIT,           9  },
-    { MODE_NIGHT,              8  },
+    { MODE_NIGHT_SCENE,        8  },
     { MODE_LANDSCAPE,          7  },
     { MODE_VIDEO_STD,          18 },
     { MODE_STITCH,             5  },
     { MODE_MY_COLORS,          4  },
-    { MODE_SCN_WATER,          13 },
-    { MODE_SCN_NIGHT,          15 },
-    { MODE_SCN_CHILD,          16 },
-    { MODE_SCN_PARTY,          14 },
-    { MODE_SCN_GRASS,          10 },
+    { MODE_SCN_UNDERWATER,     13 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 15 },
+    { MODE_SCN_KIDS_PETS,      16 },
+    { MODE_SCN_INDOOR,         14 },
+    { MODE_SCN_FOLIAGE,        10 },
     { MODE_SCN_SNOW,           11 },
     { MODE_SCN_BEACH,          12 },
     { MODE_SCN_FIREWORK,       17 }
 };
+
 
 #include "../generic/shooting.c"
 

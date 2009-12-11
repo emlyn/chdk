@@ -98,7 +98,7 @@ static const CapturemodeMap modemap[] = {
     { MODE_STITCH,             33290 },
     { MODE_AUTO,               32768 },
     { MODE_LANDSCAPE,          32780 },
-    { MODE_NIGHT,              32782 }, // s3is a540 "night scene" on dial, different from "night snapshot" under "scene" below
+    { MODE_NIGHT_SCENE,        32782 }, // s3is a540 "night scene" on dial, different from "night snapshot" under "scene" below
     { MODE_PORTRAIT,           32781 },
     // following by reference to forum, canon manual and other known correct cameras
     { MODE_SCN_COLOR_SWAP,     16922 },
@@ -108,14 +108,14 @@ static const CapturemodeMap modemap[] = {
     { MODE_SCN_BEACH,          16403 },
     { MODE_SCN_INDOOR,         16400 },
     { MODE_SCN_UNDERWATER,     16405 },
-    { MODE_SCN_NIGHT,          16395 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 16395 },
     { MODE_SCN_KIDS_PETS,      16399 },
     { MODE_SCN_FIREWORK,       16404 },
     { MODE_VIDEO_COLOR_ACCENT,  2594 },
     { MODE_VIDEO_COLOR_SWAP,    2595 },
     { MODE_VIDEO_STD,           2596 },
     { MODE_VIDEO_COMPACT,       2598 },
-//    { ???,      8221  }, // in canon list, C maybe ?
+//    { ???,      8221  }, // in canon list, probably C 
 };
 
 #include "../generic/shooting.c"

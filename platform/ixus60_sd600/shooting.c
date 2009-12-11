@@ -105,7 +105,7 @@ static const CapturemodeMap modemap[] = {
     { MODE_SCN_SNOW,           16402 }, // "snow"
     { MODE_SCN_BEACH,          16403 }, // "beach"
     { MODE_STITCH,             33290 },
-//    { ???,          32774 }, // assumed long shutter
+    { MODE_LONG_SHUTTER,       32774 }, // guessed
     { MODE_SCN_FIREWORK,       16404 }, // "fireworks"
     { MODE_SCN_UNDERWATER,     16405 }, // "under water"
     { MODE_VIDEO_STD,          2593  },

@@ -90,15 +90,27 @@ const ISOTable iso_table[] = {
     {  6,  1600,  "1600", -1},
 };          
 
+/*
+Shooting Modes
+    Auto, Camera M,
+    Special Scene
+        (Portrait, Foliage, Snow, Beach, Fireworks, Aquarium, Underwater,
+        Indoor, Kids & Pets, Night Snapshot, Creative Light Effect),
+    Color Accent, Color Swap, Digital Macro, Stitch Assist, Movie
+Movie: 640 x 480 / 320 x 240 (30 fps/15 fps) available up to 4GB or 60 minutes per clip, 
+    640 x 480 (2 hours at 0.5 fps/1 fps), 320 x 240 (1 min. at 60 fps), 160 x 120 (3 min. at 15 fps)
+
+canon mode list FFB4B564 in 100c
+*/
 static const CapturemodeMap modemap[] = {
+    { MODE_LONG_SHUTTER,       32774 }, // guessed
     { MODE_AUTO,               32768 },
-//    { MODE_M,                  32772 }, // real manual mode absent here...
     { MODE_P,                  32772 },
     { MODE_DIGITAL_MACRO,      33288 },
-    { MODE_PORTRAIT,           16397 }, // in this cam, it is scene->"portrait"
+    { MODE_SCN_PORTRAIT,       16397 },
     { MODE_COLOR_ACCENT,       33306 },
-    { MODE_MY_COLORS,          33307 }, // "color swap"
-    { MODE_SCN_NIGHT,          16395 },
+    { MODE_COLOR_SWAP,         33307 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 16395 },
     { MODE_SCN_KIDS_PETS,      16400 },
     { MODE_SCN_INDOOR,         16401 },
     { MODE_SCN_FOLIAGE,        16402 },
@@ -106,13 +118,14 @@ static const CapturemodeMap modemap[] = {
     { MODE_SCN_BEACH,          16404 },
     { MODE_SCN_FIREWORK,       16405 },
     { MODE_SCN_AQUARIUM,       16407 },
-    { MODE_SCN_WATER,          16406 },
-// scene "creative effects",  16911
+    { MODE_SCN_UNDERWATER,     16406 },
+// scene "creative light effects",  16911
+    { MODE_SCN_CREATIVE_EFFECT,16911 },
     { MODE_VIDEO_STD,          2597  },
     { MODE_VIDEO_SPEED,        2598  }, // "fast frame rate"
     { MODE_VIDEO_COMPACT,      2599  },
     { MODE_VIDEO_COLOR_ACCENT, 2595  },
-    { MODE_VIDEO_MY_COLORS,    2596  }, // "color swap"
+    { MODE_VIDEO_COLOR_SWAP,   2596  },
     { MODE_VIDEO_TIME_LAPSE,   2601  },
     { MODE_STITCH,             33290 },
 };

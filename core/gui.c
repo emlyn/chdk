@@ -2671,7 +2671,7 @@ void gui_draw_debug_vals_osd() {
 //extern int xxxx, eeee;
 //-------------------------------------------------------------------
 void gui_draw_osd() {
-    unsigned int m, n = 0, mode_photo, mode_video;
+    unsigned int m, /*n = 0,*/ mode_photo, mode_video;
     coord x;
 #if CAM_SWIVEL_SCREEN
     static int flashlight = 0;

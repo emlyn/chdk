@@ -81,7 +81,7 @@ http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=223&mo
 Shooting Modes
     Auto; Creative: P, Av, Tv, M, C; Image: Portrait, Landscape, Night Scene, Sports, 
     Special Scene 
-        Foliage, Snow, Beach, Fireworks, Indoor, Night Snapshot, Color Accent, Color Swap
+        (Foliage, Snow, Beach, Fireworks, Indoor, Night Snapshot, Color Accent, Color Swap)
     My Colors, Stitch Assist, Movie
 video resolutions
 640 x 480 (30 fps/15 fps) / 320 x 240 (60 fps/30 fps/15 fps) available up to 1GB or 1 hour for each file size
@@ -94,15 +94,15 @@ static const CapturemodeMap modemap[] = {
     { MODE_AV,                  32770 },
     { MODE_M,                   32769 },
     { MODE_PORTRAIT,            32781 },
-    { MODE_NIGHT,               32782 },
+    { MODE_NIGHT_SCENE,         32782 },
     { MODE_LANDSCAPE,           32780 },
     { MODE_VIDEO_STD,           2590  },
     { MODE_STITCH,              33290 },
-    { MODE_MY_COLORS,           16921 },
-    { MODE_SCN_NIGHT,           16395 },
-    { MODE_SPORTS,		          32775 },
-    { MODE_SCN_PARTY,           16400 },
-    { MODE_SCN_GRASS,           16401 },
+    { MODE_SCN_COLOR_SWAP,      16921 }, // was MY_COLORS
+    { MODE_SCN_NIGHT_SNAPSHOT,  16395 },
+    { MODE_SPORTS,		        32775 },
+    { MODE_SCN_INDOOR,          16400 },
+    { MODE_SCN_FOLIAGE,         16401 },
     { MODE_SCN_SNOW,            16402 },
     { MODE_SCN_BEACH,           16403 },
     { MODE_SCN_FIREWORK,        16404 }, 

@@ -128,18 +128,30 @@ const ISOTable iso_table[] = {
 	{  7, 3200, "3200", -1}
 };
 
-static const CapturemodeMap modemap[] = {
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=224&modelid=16719
 
+Shooting Modes
+	Auto, Camera M,
+    Special Scene
+        (Portrait, Foliage, Snow, Beach, Sunset, Fireworks, Aquarium, ISO 3200,
+        Indoor, Kids & Pets, Night Snapshot),
+    Color Accent, Color Swap, Digital Macro, Stitch Assist, Movie
+Movie: 640 x 480 (30 fps/30 fps LP), 320 x 240 (30 fps) available up to 4GB or 60 minutes,
+    640 x 480 (up to 2 hours at 0.5 fps/1 fps), 160 x 120 (up to 3 min. at 15 fps)
+
+canon mode list FFAF9460 in 100b
+*/
+static const CapturemodeMap modemap[] = {
+	{ MODE_LONG_SHUTTER,       32774 }, // guessed
 	{ MODE_AUTO,               32768 },
-	//
-//	{ MODE_M,                  32772 },
 	{ MODE_P,                  32772 },
 	{ MODE_DIGITAL_MACRO,      33288 },
 	{ MODE_COLOR_ACCENT,       33307 },
-	{ MODE_SCN_COLOR_SWAP,     33308 },
+	{ MODE_COLOR_SWAP,         33308 },
 	{ MODE_STITCH,             33290 },
 	//
-	{ MODE_NIGHT_SNAPSHOT,     16395 },
+	{ MODE_SCN_NIGHT_SNAPSHOT, 16395 },
 	{ MODE_SCN_KIDS_PETS,      16400 },
 	{ MODE_SCN_INDOOR,         16401 },
 	{ MODE_SCN_SUNSET,         16402 },
@@ -149,7 +161,7 @@ static const CapturemodeMap modemap[] = {
 	{ MODE_SCN_FIREWORK,       16406 },
 	{ MODE_SCN_AQUARIUM,       16408 },
 	{ MODE_SCN_ISO_3200,       16413 },
-	{ MODE_PORTRAIT,           16397 },
+	{ MODE_SCN_PORTRAIT,       16397 },
 	//
 	{ MODE_VIDEO_STD,          2599  },
 	{ MODE_VIDEO_COMPACT,      2601  },

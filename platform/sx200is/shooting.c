@@ -76,14 +76,27 @@ const ISOTable iso_table[] = {
 	{  6, 1600, "1600", -1},
 	{  7, 3200, "3200", -1},
 };    
-      
+
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=225&modelid=18329#ModelTechSpecsAct
+Shooting Modes
+    Auto, P, Av, Tv, M, Portrait, Landscape,
+    Special Scene
+        (Foliage, Snow, Beach, Sunset, Fireworks, Aquarium, Night Scene,
+        ISO 3200, Color Accent, Color Swap, Stitch Assist),
+    Super Macro, Indoor, Kids & Pets, Night Snapshot, Movie
+Movie: High Definition: 1280 x 720 (30 fps); 
+    Standard Definition: 640 x 480 (30 fps), 320 x 240 (30 fps)
+
+canon mode list FFB6D0A4 in 100c
+*/
 static const CapturemodeMap modemap[] = {
 	{ MODE_AUTO,               32768  },
 	{ MODE_P,                  32772  },
 	{ MODE_TV,                 32771  },
 	{ MODE_AV,                 32770  },
 	{ MODE_M,                  32769  },
-	{ MODE_EASY,               33311  },
+	{ MODE_EASY,               33311  }, // not mentioned in web specs, but in manual and mode list
 	{ MODE_PORTRAIT,           32781  },
 	{ MODE_NIGHT_SNAPSHOT,     32779  }, 
 	{ MODE_LANDSCAPE,          32780  },
@@ -94,7 +107,7 @@ static const CapturemodeMap modemap[] = {
 	{ MODE_INDOOR,             32785  },
 
 	{ MODE_SCN_SUNSET,         16402  },
-	{ MODE_SCN_NIGHT,          16398  },
+	{ MODE_SCN_NIGHT_SCENE,    16398  },
 	{ MODE_SCN_FIREWORK,       16406  },
 	{ MODE_SCN_BEACH,          16405  },
 	{ MODE_SCN_AQUARIUM,       16408  },

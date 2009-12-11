@@ -96,12 +96,12 @@ canon mode list @FFACFEF8 in 100c
 */
 // PROPCACE 49
 static const CapturemodeMap modemap[] = {
-//    { ???,               32774 }, // "long shutter" in canon list
+    { MODE_LONG_SHUTTER,       32774 },
     { MODE_AUTO,               32768 }, 
     { MODE_P,                  32772 },
     { MODE_DIGITAL_MACRO,      33288 },
     { MODE_SCN_PORTRAIT,       16397 },
-    { MODE_NIGHT_SNAPSHOT,     16395 }, // actually SCN, named SCN_NIGHT on other cams
+    { MODE_SCN_NIGHT_SNAPSHOT, 16395 },
     { MODE_COLOR_ACCENT,       33306 },
     { MODE_MY_COLORS,          33307 },
     { MODE_SCN_KIDS_PETS,      16400 },

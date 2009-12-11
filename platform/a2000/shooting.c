@@ -103,28 +103,37 @@ const ISOTable iso_table[] = {
     {  6, 1600, "1600", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=221&modelid=17482#ModelTechSpecsAct
+Shooting Modes
+	Auto, Easy, P, Portrait, Landscape, 
+	Special Scene
+		(Night Scene, Foliage, Snow, Beach, Sunset, Fireworks, Aquarium, ISO 3200),
+	Indoor, Kids & Pets, Night Snapshot, Movie
+
+Movie: 640 x 480 (30 fps/30 fps LP), 320 x 240 (30 fps) available up to 4GB or 60 minutes per clip, 160 x 120 (15 fps) up to 3 minutes per clip
+canon mode list FFEB9B10 in 100c
+*/
 static const CapturemodeMap modemap[] = {
-  { MODE_VIDEO_STD,          2600  },  //Verified ok
-  { MODE_VIDEO_COMPACT,      2602  },  //Verified
-  { MODE_SCN_AQUARIUM,       16408 },  //Verified
-  { MODE_SCN_SNOW,           16404 },  //Verified
-  { MODE_SCN_FOLIAGE,        16403 },  //verified
-  { MODE_SCN_SUNSET,         16402 },  //verified
-  { MODE_SCN_NIGHT,          16398 },  //verified ok
-  { MODE_SCN_ISO_3200,       16413 },  //verified
-  { MODE_SCN_FIREWORK,       16406 },  //verified
-  { MODE_SCN_BEACH,          16405 },  //verified
-  { MODE_INDOOR,             32785 },  //verified ok
-  { MODE_KIDS_PETS,          32784 },  //verified ok
-  { MODE_NIGHT_SNAPSHOT,     32779 },  //verified ok
-  { MODE_LANDSCAPE,          32780 },  //verified ok
-  { MODE_PORTRAIT,           32781 },  //verified ok
-  { MODE_AUTO,               32768 },  //verified ok
-  { MODE_P,                  32772 },  //verified ok
-  { MODE_TV,                 32771 },  //verified
-  { MODE_AV,                 32770 },  //verified
-  { MODE_M,                  32769 },  //verified
-  { MODE_EASY,               33311 }   //verified ok
+  { MODE_LONG_SHUTTER,       32774 },  // not verified
+  { MODE_VIDEO_STD,          2600  },
+  { MODE_VIDEO_COMPACT,      2602  },
+  { MODE_SCN_AQUARIUM,       16408 },
+  { MODE_SCN_SNOW,           16404 },
+  { MODE_SCN_FOLIAGE,        16403 },
+  { MODE_SCN_SUNSET,         16402 },
+  { MODE_SCN_NIGHT_SCENE,    16398 },
+  { MODE_SCN_ISO_3200,       16413 },
+  { MODE_SCN_FIREWORK,       16406 },
+  { MODE_SCN_BEACH,          16405 },
+  { MODE_INDOOR,             32785 },
+  { MODE_KIDS_PETS,          32784 },
+  { MODE_NIGHT_SNAPSHOT,     32779 },
+  { MODE_LANDSCAPE,          32780 },
+  { MODE_PORTRAIT,           32781 },
+  { MODE_AUTO,               32768 },
+  { MODE_P,                  32772 },
+  { MODE_EASY,               33311 } 
 };
 
 #include "../generic/shooting.c"

@@ -79,6 +79,19 @@ const ISOTable iso_table[] = {
 	{  7, 3200, "3200", -1},
 };          
 
+/*
+Shooting Modes
+    Auto, P, Av, Tv, M, C, Portrait, Landscape, Sports,
+    Special Scene
+        (Foliage, Snow, Beach, Sunset, Fireworks, Aquarium, Night Scene,
+        Indoor, ISO 3200, Color Accent, Color Swap, Long Shutter),
+    Super Macro, Night Snapshot, Stitch Assist, Movie
+Movie: High Definition: 1920 x 1080 (30 fps);
+    Standard Definition: 640 x 480 (30 fps), 320 x 240 (30 fps),
+    available up to 4GB or 29 min. 59 sec.  (HD)/60 min. (SD) per clip
+
+canon mode list FFBBB0CC in 200h
+*/
 static const CapturemodeMap modemap[] = {
 	{ MODE_AUTO,               32768  },
 	{ MODE_P,                  32772  },
@@ -95,7 +108,7 @@ static const CapturemodeMap modemap[] = {
 	{ MODE_STITCH,             33290  },
 	{ MODE_SPORTS,             33287  },
 
-	{ MODE_SCN_NIGHT,          16398  },
+	{ MODE_SCN_NIGHT_SCENE,    16398  },
 	{ MODE_SCN_INDOOR,         16401  },
 	{ MODE_SCN_SUNSET,         16402  },
 	{ MODE_SCN_FOLIAGE,        16403  },
@@ -105,7 +118,9 @@ static const CapturemodeMap modemap[] = {
 	{ MODE_SCN_AQUARIUM,       16408  },
 	{ MODE_SCN_ISO_3200,       16413  },
 	{ MODE_SCN_COLOR_ACCENT,   16923  },
-    { MODE_SCN_COLOR_SWAP,     16924  }
+    { MODE_SCN_COLOR_SWAP,     16924  },
+    { MODE_SCN_LONG_SHUTTER,   16390  }, // guesed, by elimination ??? how is this different from manual ?
+//    { MODE_C1,  8225 } // guesed
 };
 
 #include "../generic/shooting.c"

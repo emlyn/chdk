@@ -92,12 +92,24 @@ const ISOTable iso_table[] = {
 // TODO setting the DP button as a shortcut to movie in canon menu
 // gives a value of (current mode)+1024 while movie is recording, unless
 // already in movie mode
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=224&modelid=17627
+Shooting Modes
+    Auto, Program, Manual, Quick,
+    Special Scene
+        (Portrait, Foliage, Snow, Beach, Sunset, Fireworks, Aquarium,
+        Underwater, ISO 3200, Indoor, Kids & Pets, Night Snapshot,
+        Color Accent, Color Swap, Digital Macro, Stitch Assist),
+    Movie
+Movie: 640 x 480 (30 fps), 320 x 240 (30 fps) available up to 4GB or 60 minutes per clip
+canon mode list FFB49820 in 100e
+*/
 static const CapturemodeMap modemap[] = {
     { MODE_AUTO,               32768 }, 
-    { MODE_M,                  32769 },
+    { MODE_M,                  32769 }, // unlike most other ixus/sd, this has a real M mode
     { MODE_P,                  32772 },
-    { MODE_PORTRAIT,           16397 },
-    { MODE_NIGHT_SNAPSHOT,     16395 },
+    { MODE_SCN_PORTRAIT,       16397 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 16395 },
     { MODE_SCN_KIDS_PETS,      16400 },
     { MODE_SCN_INDOOR,         16401 },
     { MODE_SCN_SUNSET,         16402 },
@@ -108,10 +120,10 @@ static const CapturemodeMap modemap[] = {
     { MODE_SCN_UNDERWATER,     16407 },
     { MODE_SCN_AQUARIUM,       16408 },
     { MODE_SCN_ISO_3200,       16413 },
-    { MODE_DIGITAL_MACRO,      33288 }, // SCN
+    { MODE_SCN_DIGITAL_MACRO,  33288 }, // this is under the SCN menu
     { MODE_SCN_COLOR_ACCENT,   16923 },
     { MODE_SCN_COLOR_SWAP,     16924 },
-    { MODE_STITCH,             16906 }, // SCN, either direction
+    { MODE_SCN_STITCH,         16906 }, // SCN, either direction
     { MODE_QUICK,              33312 },
 
     { MODE_VIDEO_STD,          2600  },

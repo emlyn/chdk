@@ -85,28 +85,49 @@ const ISOTable iso_table[] = {
     {  6, 1600, "1600", -1},
 };
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=224&modelid=16347
+Shooting Modes
+	Auto, Camera M, Portrait,
+	Special Scene 
+		(Foliage, Snow, Beach, Sunset, Fireworks, Aquarium, Underwater,
+		Indoor, Kids & Pets)
+	Night Snapshot, Color Accent, Color Swap, Digital Macro, Stitch Assist, Movie
+
+Movie: 640 x 480 (30 fps/30 fps LP), 320 x 240 (30 fps) available up to 4GB or 60 minutes,
+    640 x 480 (up to 2 hours at 0.5 fps/1 fps), 160 x 120 (up to 3 min. at 15 fps)
+
+canon mode list FFAEDE90 in 100c
+*/
+// PROPCACE 49
 static const CapturemodeMap modemap[] = {
-    { MODE_AUTO,               32768 }, // PROPCACE 49
+    { MODE_LONG_SHUTTER,       32774 }, // guessed
+    { MODE_AUTO,               32768 }, 
     { MODE_P,                  32772 },
     { MODE_DIGITAL_MACRO,      33288 },
-    { MODE_PORTRAIT,           16397 },
-    { MODE_NIGHT_SNAPSHOT,     16395 },
-    { MODE_COLOR_ACCENT,       33306 }, //  { MODE_SCN_COLOR_ACCENT,   33306 },
-    { MODE_MY_COLORS,          33307 },
-    { MODE_SCN_KIDS_PETS,      16400 }, //  { MODE_SCN_CHILD,          16400 },
-    { MODE_SCN_INDOOR,         16401 }, //  { MODE_SCN_PARTY,          16401 },
-    { MODE_SCN_FOLIAGE,        16402 }, //  { MODE_SCN_GRASS,          16402 },
+    { MODE_PORTRAIT,           32781 }, // guessed
+//    { MODE_PORTRAIT,           16397 }, // ??? not SCN according to canon, not in canon list
+    { MODE_NIGHT_SNAPSHOT,     32779 }, // guessed
+//    { MODE_NIGHT_SNAPSHOT,     16395 }, // ??? not SCN according to canon, not in canon list
+//    { MODE_COLOR_ACCENT,       33306 }, not in canon list
+    { MODE_COLOR_ACCENT,       33307 }, // was MY_COLORS
+    { MODE_COLOR_SWAP,         33308 }, // guessed
+    { MODE_SCN_KIDS_PETS,      16400 },
+    { MODE_SCN_INDOOR,         16401 },
+    { MODE_SCN_FOLIAGE,        16402 },
     { MODE_SCN_SNOW,           16403 },
     { MODE_SCN_BEACH,          16404 },
     { MODE_SCN_FIREWORK,       16405 },
     { MODE_SCN_AQUARIUM,       16407 },
-    { MODE_SCN_WATER,          16406 },
+    { MODE_SCN_UNDERWATER,     16406 },
+    { MODE_SCN_SUNSET,         16408 }, // guessed, in canon list
     { MODE_VIDEO_STD,          2597  },
-//    { MODE_VIDEO_SPEED,        2598  },
+//    { ???,        2598  }, in canon list
     { MODE_VIDEO_COMPACT,      2599  },
-    { MODE_VIDEO_COLOR_ACCENT, 2595  },
-    { MODE_VIDEO_MY_COLORS,    2596  },
+//    { MODE_VIDEO_COLOR_ACCENT, 2595  }, // not in canon list
+//    { MODE_VIDEO_MY_COLORS,   2596  }, // not in canon list
     { MODE_VIDEO_TIME_LAPSE,   2601  },
+//    { ???,   2603  }, // unknown, in canon list
     { MODE_STITCH,             33290 },
 };
 

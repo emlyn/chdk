@@ -108,14 +108,14 @@ static const CapturemodeMap modemap[] = {
 
     { MODE_DIGITAL_MACRO,      33288 }, // ixus60
     { MODE_NIGHT_SNAPSHOT,     32779 }, // ixus60
-//    { ???,          32774 }, // should be long shutter
+    { MODE_LONG_SHUTTER,       32774 }, // guessed
 
-    // match a540 and ixus60
-    { MODE_VIDEO_STD,          2593  }, //
-    { MODE_VIDEO_SPEED,        2594  }, // "fast frame rate"
-    { MODE_VIDEO_COMPACT,      2595  }, // "compact"
-    { MODE_VIDEO_COLOR_ACCENT, 2591  }, // "color accent"
-    { MODE_VIDEO_COLOR_SWAP,   2592  }, // "color swap"
+    // guessed, match a540 and ixus60
+    { MODE_VIDEO_STD,          2593  },
+    { MODE_VIDEO_SPEED,        2594  },
+    { MODE_VIDEO_COMPACT,      2595  },
+    { MODE_VIDEO_COLOR_ACCENT, 2591  },
+    { MODE_VIDEO_COLOR_SWAP,   2592  },
 };
 
 #include "../generic/shooting.c"

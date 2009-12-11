@@ -74,6 +74,17 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=223&modelid=11368
+
+Shooting Modes
+	Auto; Creative zone: P, Av, Tv, M, C; Image zone: Portrait, Landscape, Night Scene,
+	Special Scene
+		(Foliage, Snow, Beach, Fireworks, Indoor, Night Snapshot),
+	Stitch Assist, Movie, My Colors
+Movie: 640 x 480 (VGA Fine/VGA), 320 x 240 (QVGA)
+canon mode list FF983777 in 100e
+*/
 static const CapturemodeMap modemap[] = {
     { MODE_AUTO,                5 },
     { MODE_P,                   1 },
@@ -81,17 +92,17 @@ static const CapturemodeMap modemap[] = {
     { MODE_AV,                  2 },
     { MODE_M,                   0 },
     { MODE_PORTRAIT,            6 },
-    { MODE_NIGHT,               8 },
+    { MODE_NIGHT_SCENE,         8 },
     { MODE_LANDSCAPE,           7 },
-    { MODE_VIDEO_STD,           16 },
-    { MODE_STITCH,              15 },
+    { MODE_VIDEO_STD,          16 },
+    { MODE_STITCH,             15 },
     { MODE_MY_COLORS,           4 },
-    { MODE_SCN_NIGHT,           14 },
-    { MODE_SCN_INDOOR,          13 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 14 },
+    { MODE_SCN_INDOOR,         13 },
     { MODE_SCN_FOLIAGE,         9 },
-    { MODE_SCN_SNOW,            10 },
-    { MODE_SCN_BEACH,           11 },
-    { MODE_SCN_FIREWORK,        12 }, 
+    { MODE_SCN_SNOW,           10 },
+    { MODE_SCN_BEACH,          11 },
+    { MODE_SCN_FIREWORK,       12 }, 
 };
 
 #include "../generic/shooting.c"

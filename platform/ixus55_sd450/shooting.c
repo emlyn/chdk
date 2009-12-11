@@ -80,16 +80,28 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=224&modelid=11939#ModelTechSpecsAct
+Shooting Modes
+	Auto; Manual,
+	Special Scene
+		(Portrait, Night Snapshot, Foliage, Snow, Beach, Fireworks,
+		Underwater, Indoor, Kids & Pets),
+	Digital Macro, My Colors, Stitch Assist, Movie
+Movie: 640 x 480/320 x 240 (30 fps/15 fps), 320 x 240 (1 min. at 60 fps), 160 x 120 (3 min. at 15 fps)
+canon mode list FF95FC68 in 100b
+*/
 static const CapturemodeMap modemap[] = {
     { MODE_P,                   0 },
-//    { ???,       1 }, // assumed long shutter 
+    { MODE_LONG_SHUTTER,        1 }, // guessed long shutter 
     { MODE_DIGITAL_MACRO,       2 },
     { MODE_MY_COLORS,           3 },
     { MODE_STITCH,              4 }, 
     { MODE_AUTO,                5 },
-    { MODE_PORTRAIT,            6 },
+    { MODE_SCN_PORTRAIT,        6 },
     { MODE_SCN_SNOW,            8 },
-    { MODE_SCN_NIGHT,          12 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 12 },
+// TODO missing Foliage, Beach, Fireworks, Underwater, indoor, Kids+pets
     { MODE_VIDEO_STD,          15 }
 };
 

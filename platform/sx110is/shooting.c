@@ -78,6 +78,20 @@ const ISOTable iso_table[] = {
 	{  7, 3200, "3200", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=225&modelid=17480#ModelTechSpecsAct
+Shooting Modes
+    Auto, P, Av, Tv, M, Easy, Portrait, Landscape,
+    Special Scene
+        (Foliage, Snow, Beach, Sunset, Fireworks, Aquarium, Night Scene,
+        ISO 3200),
+    Indoor, Kids & Pets, Night Snapshot, Movie
+Movie: 640 x 480 (30 fps/30 fps LP),
+320 x 240 (30 fps) available up to 4GB or 60 minutes per clip,
+160 x 120 (15fps) up to 3 minutes per clip
+
+canon mode list FFEDD5F4 in 100b
+*/
 static const CapturemodeMap modemap[] = {
   { MODE_VIDEO_STD,          2600  },  //Verified
   { MODE_VIDEO_COMPACT,      2602  },  //Verified
@@ -85,7 +99,7 @@ static const CapturemodeMap modemap[] = {
   { MODE_SCN_SNOW,           16404 },  //Verified
   { MODE_SCN_FOLIAGE,        16403 },  //verified
   { MODE_SCN_SUNSET,         16402 },  //verified
-  { MODE_SCN_NIGHT,          16398 },  //verified
+  { MODE_SCN_NIGHT_SCENE,    16398 },  //verified
   { MODE_SCN_ISO_3200,       16413 },  //verified
   { MODE_SCN_FIREWORK,       16406 },  //verified
   { MODE_SCN_BEACH,          16405 },  //verified

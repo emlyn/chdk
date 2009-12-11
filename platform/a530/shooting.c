@@ -82,22 +82,39 @@ const ISOTable iso_table[] = {
 //    {  6, 1600, "1600", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=221&modelid=12914
+Shooting Modes
+    Auto; Creative: P, M; Image: Portrait, Landscape, Night Scene,
+    Special Scene
+        (Foliage, Snow, Beach, Fireworks, Indoor, Kids & Pets, Night Snapshot,
+         Color Accent, Color Swap),
+    My Colors, Stitch Assist, Movie
+Movie: 640 x 480 (10 fps) / 320 x 240 (20 fps) available up to 1GB or 1 hour for each file size,
+160 x 120 (3 min. at 15 fps)
+canon mode list FFD47FC4 in 100a
+*/
 static const CapturemodeMap modemap[] = {
     { MODE_AUTO,               32768 },
     { MODE_P,                  32772 },
-    { MODE_M,                  32769 },
-    { MODE_VIDEO_STD,          2593  },//2597
-    { MODE_VIDEO_COMPACT,      2595  },//2599
-    { MODE_SCN_NIGHT,          16395 }, //16398
-    { MODE_SCN_GRASS,          16401 },//16402
-    { MODE_SCN_SNOW,           16402 },//16403
-    { MODE_SCN_BEACH,          16403 },//16404
-    { MODE_SCN_FIREWORK,       16404 }, //16405
-    { MODE_INDOOR,             16400 },//32785
-    { MODE_KIDS_PETS,          16399 },	//32784
-    { MODE_NIGHT_SNAPSHOT,     32782 }, //32779
+    { MODE_M,                  32769 }, // NOTE this camera does not have an adjustable iris, but does have manual shutter
+    { MODE_VIDEO_COLOR_ACCENT, 2591  }, // guessed a540
+    { MODE_VIDEO_COLOR_SWAP,   2592  }, // guessed a540
+    { MODE_VIDEO_STD,          2593  },
+    { MODE_VIDEO_COMPACT,      2595  },
+    { MODE_SCN_NIGHT_SNAPSHOT, 16395 },
+    { MODE_SCN_COLOR_ACCENT,   16920 }, // guessed a540
+    { MODE_SCN_COLOR_SWAP,     16921 }, // guessed a540
+    { MODE_SCN_FOLIAGE,        16401 },
+    { MODE_SCN_SNOW,           16402 },
+    { MODE_SCN_BEACH,          16403 },
+    { MODE_SCN_FIREWORK,       16404 },
+    { MODE_SCN_INDOOR,         16400 },
+    { MODE_SCN_KIDS_PETS,      16399 },
+    { MODE_NIGHT_SCENE,        32782 },
     { MODE_LANDSCAPE,          32780 },	
     { MODE_PORTRAIT,           32781 },
+    { MODE_STITCH,             33290 }, // guessed common
 };
 
 #include "../generic/shooting.c"

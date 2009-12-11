@@ -106,7 +106,7 @@ static const CapturemodeMap modemap[] = {
 	{ MODE_KIDS_PETS,          32784 },
 	{ MODE_LANDSCAPE,          32780 },
     { MODE_NIGHT_SNAPSHOT,     32779 },
-    { MODE_SCN_NIGHT,          16398 },
+    { MODE_SCN_NIGHT_SCENE,    16398 },
     { MODE_SCN_SUNSET,         16402 },
     { MODE_SCN_FOLIAGE,        16403 },
     { MODE_SCN_SNOW,           16404 },

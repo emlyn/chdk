@@ -76,19 +76,35 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+/*
+from a460, no page for a450, manual indicates same modes
+Shooting Modes
+    Auto, Camera M,
+    Special Scene
+        (Portrait, Foliage, Snow, Beach, Fireworks, Indoor, Kids & Pets,
+        Night Snapshot),
+    Super Macro, Movie
+Movie: 640 x 480 (10 fps) / 320 x 240 (30 fps) available up to 1GB or 1 hour for each file size,
+160 x 120 (3 min. at 15 fps) 
+
+canon mode list FFEAB878 in 100d
+*/
 static const CapturemodeMap modemap[] = {
+    { MODE_LONG_SHUTTER,       32774 }, // confirmed on a460
     { MODE_AUTO,               32768 },
     { MODE_P,                  32772 },
-    { MODE_PORTRAIT,           16397 },
+    { MODE_SUPER_MACRO,        33289 }, // in canon list, confirmed on a460
+//    { MODE_STITCH,               33290 }, // reported as functional stitch assist in forum, not in official specs
+    { MODE_SCN_PORTRAIT,       16397 },
     { MODE_VIDEO_STD,          2597  },
     { MODE_VIDEO_COMPACT,      2599  },
-    { MODE_SCN_NIGHT,          16395 },
-    { MODE_SCN_CHILD,          16400 },
-    { MODE_SCN_PARTY,          16401 },
-    { MODE_SCN_GRASS,          16402 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 16395 },
+    { MODE_SCN_KIDS_PETS,      16400 },
+    { MODE_SCN_INDOOR,         16401 },
+    { MODE_SCN_FOLIAGE,        16402 },
     { MODE_SCN_SNOW,           16403 },
     { MODE_SCN_BEACH,          16404 },
-    { MODE_SCN_FIREWORK,       16405 }//,
+    { MODE_SCN_FIREWORK,       16405 },
 };
 #include "../generic/shooting.c"
 

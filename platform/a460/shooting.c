@@ -92,18 +92,18 @@ video resolutions
 canon mode list FFEAB860 in 100d
 */
 static const CapturemodeMap modemap[] = {
-//    { ???,               32774 },  long shutter 
-    { MODE_SUPER_MACRO,         33289 },
-//    { ???,               33290 }, stitch on many others
+    { MODE_LONG_SHUTTER,       32774 },
+    { MODE_SUPER_MACRO,        33289 },
+//    { MODE_STITCH,               33290 }, // reported as functional stitch assist in forum, not in official specs
     { MODE_AUTO,               32768 },
     { MODE_P,                  32772 },
     { MODE_SCN_PORTRAIT,       16397 },
     { MODE_VIDEO_STD,          2597  },
     { MODE_VIDEO_COMPACT,      2599  },
-    { MODE_SCN_NIGHT,          16395 },
-    { MODE_SCN_CHILD,          16400 },
-    { MODE_SCN_PARTY,          16401 },
-    { MODE_SCN_GRASS,          16402 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 16395 },
+    { MODE_SCN_KIDS_PETS,      16400 },
+    { MODE_SCN_INDOOR,         16401 },
+    { MODE_SCN_FOLIAGE,        16402 },
     { MODE_SCN_SNOW,           16403 },
     { MODE_SCN_BEACH,          16404 },
     { MODE_SCN_FIREWORK,       16405 },

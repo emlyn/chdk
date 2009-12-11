@@ -89,6 +89,8 @@ Shooting Modes
 	Super Macro, Night Snapshot, Stitch Assist, Movie
 video res
 640 x 480 (30 fps/30 fps LP), 320 x 240 (30 fps) available up to 4GB or 60 minutes
+
+canon mode list FFB74378 in 100c
 */
 static const CapturemodeMap modemap[] = {
 	{ MODE_AUTO,               32768  },
@@ -105,7 +107,7 @@ static const CapturemodeMap modemap[] = {
 	{ MODE_STITCH,             33290  },
 	{ MODE_SPORTS,             33287  },
 
-	{ MODE_SCN_NIGHT,          16398  },
+	{ MODE_SCN_NIGHT_SCENE,    16398  },
 	{ MODE_SCN_INDOOR,         16401  },
 	{ MODE_SCN_SUNSET,         16402  },
 	{ MODE_SCN_FOLIAGE,        16403  },
@@ -121,7 +123,7 @@ static const CapturemodeMap modemap[] = {
 (saved custom settings for M, P etc.) Resulting PROPCASE_SHOOTING_MODE is whatever mode
 is saved in C, not this value. Need to figure out how to interface this with script
 */
-//	{ MODE_C1,     8225  }, 
+//	{ MODE_C1,     8225  },
 };
 
 #include "../generic/shooting.c"

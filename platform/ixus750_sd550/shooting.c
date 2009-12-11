@@ -80,8 +80,22 @@ const ISOTable iso_table[] = {
     {  4,  400,  "400", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&tabact=ModelTechSpecsTabAct&fcategoryid=224&modelid=12466
+Shooting Modes
+    Auto; Manual,
+    Special Scene
+        (Portrait, Foliage, Snow, Beach, Fireworks, Underwater, Indoor,
+        Kids & Pets, Night Snapshot),
+    Digital Macro, My Colors, Stitch Assist, Movie
+Movie: 640 x 480/320 x 240 (30 fps/15 fps) available up to 1GB, 
+    320 x 240 (1 min. at 60 fps), 160 x 120 (3 min. at 15 fps)
+canon mode list FF960434 in 100f
+*/
 static const CapturemodeMap modemap[] = {
-    { MODE_DIGITAL_MACRO,	2 },
+    { MODE_P,                   0 }, // guessed!
+    { MODE_LONG_SHUTTER,        1 }, // guessed!
+    { MODE_DIGITAL_MACRO,       2 },
     { MODE_MY_COLORS,           3 },
     { MODE_STITCH,             	4 },
     { MODE_AUTO,                5 },
@@ -89,10 +103,10 @@ static const CapturemodeMap modemap[] = {
     { MODE_SCN_FOLIAGE,         7 },
     { MODE_SCN_SNOW,            8 },
     { MODE_SCN_BEACH,           9 },
-    { MODE_SCN_WATER,          10 },
+    { MODE_SCN_UNDERWATER,     10 },
     { MODE_SCN_INDOOR,         11 },
-    { MODE_SCN_NIGHT,          12 },
-    { MODE_SCN_CHILD,          13 },
+    { MODE_SCN_NIGHT_SNAPSHOT, 12 },
+    { MODE_SCN_KIDS_PETS,      13 },
     { MODE_SCN_FIREWORK,       14 }, 
     { MODE_VIDEO_STD,          15 }
 };

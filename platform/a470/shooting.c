@@ -83,21 +83,37 @@ const ISOTable iso_table[] = {
     {  6, 1600, "1600", -1},
 };          
 
+/*
+http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=221&modelid=16338#ModelTechSpecsAct
+
+Shooting Modes
+    Auto, Camera M, 
+    Special Scene 
+        (Portrait, Foliage, Snow, Beach, Sunset, Fireworks, Aquarium, 
+        Indoor, Kids & Pets, Night Snapshot),
+    Super Macro, Movie
+
+Movie: 640 x 480 (20 fps/20 fps LP), 320 x 240 (30 fps) available up to 4GB or 60 minutes,
+    160 x 120 (up to 3 minutes at 15 fps)
+canon mode list FFE8FAB4 in 100e
+*/
 static const CapturemodeMap modemap[] = {
+    { MODE_LONG_SHUTTER,       32774 }, // guessed
     { MODE_AUTO,               32768 },
     { MODE_P,                  32772 },
+    { MODE_SUPER_MACRO,        33289 }, // guessed
     { MODE_VIDEO_STD,          2599  },
     { MODE_VIDEO_COMPACT,      2601  },
     { MODE_SCN_AQUARIUM,       16408 },  
-    { MODE_SCN_NIGHT,          16402 },  //Sunset??
-    { MODE_SCN_GRASS,          16403 },   
+    { MODE_SCN_SUNSET,         16402 },  // was NIGHT, but night snapshot is below
+    { MODE_SCN_FOLIAGE,        16403 },
     { MODE_SCN_SNOW,           16404 },  
     { MODE_SCN_BEACH,          16405 },  
     { MODE_SCN_FIREWORK,       16406 }, 
-	{ MODE_PORTRAIT,           16397 },	
-    { MODE_INDOOR,             16401 },
-    { MODE_KIDS_PETS,          16400 },	
-    { MODE_NIGHT_SNAPSHOT,     16395 },
+	{ MODE_SCN_PORTRAIT,       16397 },	
+    { MODE_SCN_INDOOR,         16401 },
+    { MODE_SCN_KIDS_PETS,      16400 },	
+    { MODE_SCN_NIGHT_SNAPSHOT, 16395 },
 };
 
 #include "../generic/shooting.c"
