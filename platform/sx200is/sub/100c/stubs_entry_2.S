@@ -35,7 +35,7 @@ NHSTUB(GiveSemaphore, 0xFF827228)
 NHSTUB(eventproc_export_PostLogicalEventToUI, 0xff879a54)
 NHSTUB(eventproc_export_SleepTask, 0xff827490)
 NHSTUB(eventproc_export_ExitTask, 0xff81b23c)
-NHSTUB(MakeAFScan, 0xFF93B4B8)	              //different from other cams but simular to SX110
+NHSTUB(MakeAFScan, 0xFF93B538)                    // different from other cams but simular to SX100 and SX110
 NHSTUB(PostLEDMessage, 0xFF847470 )               //questionable, might be wrong... simular to SX110
 NHSTUB(UnsetZoomForMovie, 0xFF969764)             // found via search for ZoomCon_UnsetZoomForMovie string
 NHSTUB(SetScriptMode, 0xFF87BA80)             // "SetScriptMode"

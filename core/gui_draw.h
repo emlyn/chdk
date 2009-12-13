@@ -79,7 +79,7 @@
 #define COLOR_FG            COLOR_WHITE
 #define COLOR_SELECTED_BG   COLOR_RED
 #define COLOR_SELECTED_FG   COLOR_WHITE
-#define COLOR_ALT_BG        0xF9
+#define COLOR_ALT_BG        COLOR_GREY
 #define COLOR_SPLASH_RED    0x29
 #define COLOR_SPLASH_PINK   0x1E
 #define COLOR_SPLASH_GREY   0x16

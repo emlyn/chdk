@@ -22,3 +22,19 @@ Optical Zoom - To use Optical Zoom during Video record :-
 
 Note that sound recording is always enabled in Video Record mode.
 
+AF in Video mode
+  To enable set "AF Key" (Set or Shutter) in the CHDK menu,
+  during video recording press the AF Key to make a single AF scan.
+
+
+Shortcut Keys
+ In Alt mode
+ TOGGLE RAW                DISPLAY Key
+ In Half press shoot Mode  
+ TOGGLE HISTO              DOWN Key
+ TOGGLE ZEBRA              MENU Key
+ TOGGLE OSD                RIGHT Key
+ TOGGLE DISABLE OVERRIDES  LEFT Key
+
+
+

@@ -39,7 +39,7 @@ long hook_raw_size()
 void *vid_get_viewport_live_fb()
 {
     void **fb=(void **)0x2180;                               // 0x2150 or 0x2180 (suggested by ADamb)
-    unsigned char buff = *((unsigned char*)0xF1D8);          // found at FF838090
+    unsigned char buff = *((unsigned char*)0x1FD8);          // found at FF838090
     if (buff == 0) buff = 2;  else buff--;    
     return fb[buff];
 }

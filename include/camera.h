@@ -2142,6 +2142,7 @@
       
    //end nandoide sept-2009
    #define CAM_QUALITY_OVERRIDE 1
+   #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
 //----------------------------------------------------------
 #else
     #error camera type not defined
