@@ -794,63 +794,6 @@ long __attribute__((weak)) get_jogdial_direction(void){
  return 0;
 }
 
-void reverse_bytes_order(char* start, int count){
-// note, we will go to count rounded up to the nearest 32
-asm volatile(
-	"ldr	r2, =0xFF00FF\n"	// r2 = mask
-	"add	r1, r0, r1\n"		// r1 = start + count
-"LOOP:\n"
-	"ldm	r0, {R4-R11}\n"		// load 8 words
-	
-	// out = ((in>>8) & 0xFF00FF) | ((in&0xFF00FF) << 8);
-	"mov	r3, r4, lsr #8\n"	// r3 = in >> 8
-	"and	r3, r3, r2\n"		// r3 &= 0xFF00FF
-	"and	r4, r4, r2\n"		// r4 = in & 0xFF00FF
-	"orr	r4, r3, r4, asl #8\n" // out = r3 | (r4 << 8)
-
-	"mov	r3, r5, lsr #8\n"
-	"and	r3, r3, r2\n"
-	"and	r5, r5, r2\n"
-	"orr	r5, r3, r5, asl #8\n"
-
-	"mov	r3, r6, lsr #8\n"
-	"and	r3, r3, r2\n"
-	"and	r6, r6, r2\n"
-	"orr	r6, r3, r6, asl #8\n"
-
-	"mov	r3, r7, lsr #8\n"
-	"and	r3, r3, r2\n"
-	"and	r7, r7, r2\n"
-	"orr	r7, r3, r7, asl #8\n"
-
-	"mov	r3, r8, lsr #8\n"
-	"and	r3, r3, r2\n"
-	"and	r8, r8, r2\n"
-	"orr	r8, r3, r8, asl #8\n"
-
-	"mov	r3, r9, lsr #8\n"
-	"and	r3, r3, r2\n"
-	"and	r9, r9, r2\n"
-	"orr	r9, r3, r9, asl #8\n"
-
-	"mov	r3, r10, lsr #8\n"
-	"and	r3, r3, r2\n"
-	"and	r10, r10, r2\n"
-	"orr	r10, r3, r10, asl #8\n"
-
-	"mov	r3, r11, lsr #8\n"
-	"and	r3, r3, r2\n"
-	"and	r11, r11, r2\n"
-	"orr	r11, r3, r11, asl #8\n"
-
-	"stmia	r0!, {r4-r11}\n"	// store and increment
-
-	"cmp	r0, r1\n"
-	"bcc	LOOP\n"
-	:::"r0","r1","r2","r3","r4","r5","r6","r7","r8","r9","r10","r11"
- );
-}
-
 #if defined (DNG_EXT_FROM)
 
 #define DNG_EXT_TO ".DNG"

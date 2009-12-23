@@ -724,29 +724,78 @@ static int luaCB_get_time( lua_State* L )
   return 1;
 }
 
+/*
+  val=peek(address[,size])
+  return the value found at address in memory, or nil if address or size is invalid
+  size is optional 1=byte 2=halfword 4=word. defaults is 4
+*/
 static int luaCB_peek( lua_State* L )
 {
-  int addr = (luaL_checknumber(L,1));
-  // must be alligned
-  if (addr & 0x3) {
-  	lua_pushnil(L);
-  }
-  else {
-    lua_pushnumber( L, *(unsigned *)(addr) );
+  unsigned addr = luaL_checknumber(L,1);
+  unsigned size = luaL_optnumber(L, 2, 4);
+  switch(size) {
+    case 1: 
+      lua_pushnumber( L, *(unsigned char *)(addr) );
+    break;
+    case 2:
+      if (addr & 0x1) {
+        lua_pushnil(L);
+      }
+      else {
+        lua_pushnumber( L, *(unsigned short *)(addr) );
+      }
+    break;
+    case 4:
+      if (addr & 0x3) {
+        lua_pushnil(L);
+      }
+      else {
+        lua_pushnumber( L, *(unsigned *)(addr) );
+      }
+    break;
+    default:
+      lua_pushnil(L);
+
   }
   return 1;
 }
 
+/*
+  status=poke(address,value[,size])
+  writes value to address in memory
+  size is optional 1=byte 2=halfword 4=word. defaults is 4
+  returns true, or nil if address or size is invalid
+*/
 static int luaCB_poke( lua_State* L )
 {
-  int addr = (luaL_checknumber(L,1));
-  int val = (luaL_checknumber(L,2));
-  if (addr & 0x3) {
-  	lua_pushnil(L);
+  unsigned addr = luaL_checknumber(L,1);
+  unsigned val = luaL_checknumber(L,2);
+  unsigned size = luaL_optnumber(L, 3, 4);
+  int status = 0;
+  switch(size) {
+    case 1: 
+        *(unsigned char *)(addr) = (unsigned char)val;
+        lua_pushboolean(L,1);
+        status=1;
+    break;
+    case 2:
+      if (!(addr & 0x1)) {
+        *(unsigned short *)(addr) = (unsigned short)val;
+        status=1;
+      }
+    break;
+    case 4:
+      if (!(addr & 0x3)) {
+        *(unsigned *)(addr) = val;
+        status=1;
+      }
+    break;
+  }
+  if(status) {
+    lua_pushboolean(L,1);
   }
   else {
-    *(unsigned *)(addr) = val;
-    lua_pushboolean(L,1);
+    lua_pushnil(L);
   }
   return 1;
 }
@@ -1106,6 +1155,132 @@ static int luaCB_set_record( lua_State* L )
   return 0;
 }
 
+/*
+pack the lua args into a buffer to pass to the native code calling functions 
+currently only handles strings/numbers
+start is the stack index of the first arg
+*/
+#ifdef OPT_LUA_CALL_NATIVE
+static int pack_native_args( lua_State* L, unsigned start, unsigned *argbuf)
+{
+  unsigned i;
+  unsigned end = lua_gettop(L);
+
+  for(i = start; i <= end; i++,argbuf++) {
+    if (lua_type(L, i) == LUA_TSTRING) {
+        *argbuf=(unsigned)lua_tostring( L, i);
+    }
+    else if (lua_type(L, i) == LUA_TNUMBER) {
+        *argbuf=lua_tonumber( L, i);
+    }
+    else {
+      return 0;
+    }
+  }
+  return 1;
+}
+
+/*
+Native function call interface. Can be used to call canon eventprocs or arbitrary
+pointers.
+
+NOTE: this is preliminary, interface may change in later versions!
+All arguments must be strings or numbers.
+If the function expects to modify it's arguments via a pointer,
+then you must provide a number that is a valid pointer. 
+
+You can use the "AllocateMemory" eventproc to obtain buffers.
+
+If the function tries to write to a string passed from lua, Bad Things may happen.
+
+This is potentially dangerous, functions exist which can destroy the onboard firmware.
+*/
+
+/*
+result=call_func_ptr(ptr,...)
+ptr: address of a valid ARM or Thumb function, which uses the normal C calling convention.
+result: R0 value after the call returns
+NOTE:
+lua does not correctly handle hex constants which would represent a negative number.
+You must use the signed decimal value instead.
+*/
+static int luaCB_call_func_ptr( lua_State* L)
+{
+  unsigned *argbuf=NULL;
+  unsigned i;
+  unsigned n_args = lua_gettop(L)-1;
+  void *fptr;
+
+  fptr=(void *)luaL_checknumber( L, 1 );
+
+  if (n_args) {
+    argbuf=malloc(n_args * 4);
+    if(!argbuf) {
+      return luaL_error( L, "malloc fail" );
+    }
+    if(!pack_native_args(L, 2, argbuf)) {
+      free(argbuf);
+      return luaL_error( L, "expected string or number" );
+    }
+  }
+  
+  lua_pushnumber( L, call_func_ptr(fptr, argbuf, n_args) );
+  free(argbuf);
+  return 1;
+}
+
+/* 
+Call an event procedure
+
+result=call_event_proc("EventprocName",...)
+result is the value returned by ExecuteEventProcedure, which is -1 if the eventproc is not found, 
+or the eventproc return value (which could also be -1)
+NOTE:
+Many eventprocs are not registered by default, but can be loaded by calling another event proc
+Some useful ones are
+SystemEventInit
+	includes AllocateMemory, FreeMemory, sprintf, memcpy, Fut functions, log ...
+UI_RegistDebugEventProc
+	includes capture mode functions, PTM_ functions and much more 
+RegisterProductTestEvent
+	includes PT_ functions
+
+Others:
+RegisterShootSeqEvent
+RegisterNRTableEvent
+*/
+
+// grab from lowlevel
+extern unsigned _ExecuteEventProcedure(const char *name,...);
+static int luaCB_call_event_proc( lua_State* L )
+{
+  const char *evpname;
+  unsigned *argbuf;
+  unsigned i;
+  unsigned n_args = lua_gettop(L);
+
+  evpname=luaL_checkstring( L, 1 );
+
+  argbuf=malloc(n_args * 4);
+  if (!argbuf) {
+    return luaL_error( L, "malloc fail" );
+  }
+
+  // event proc name is first arg
+  *argbuf = (unsigned)evpname;
+  
+  if(!pack_native_args(L,2,argbuf+1)) {
+    free(argbuf);
+    return luaL_error( L, "expected string or number" );
+  }
+  
+  lua_pushnumber( L, call_func_ptr(_ExecuteEventProcedure,argbuf,n_args) );
+  free(argbuf);
+  return 1;
+}
+
+#endif // OPT_LUA_CALL_NATIVE
+
 void register_lua_funcs( lua_State* L )
 {
 #define FUNC( X )			\
@@ -1261,4 +1436,9 @@ void register_lua_funcs( lua_State* L )
    FUNC(is_capture_mode_valid);
 
    FUNC(set_record);
+
+#ifdef OPT_LUA_CALL_NATIVE
+   FUNC(call_event_proc);
+   FUNC(call_func_ptr);
+#endif
 }

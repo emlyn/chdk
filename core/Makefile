@@ -52,6 +52,10 @@ endif
 ifdef OPT_MD_DEBUG
 CFLAGS+=-DOPT_MD_DEBUG
 endif 
+ifdef OPT_LUA_CALL_NATIVE
+CFLAGS+=-DOPT_LUA_CALL_NATIVE
+endif 
+
 OBJS=entry.o nothumb.o main.o gui_draw.o gui_menu.o gui_palette.o gui_mbox.o \
      gui_fselect.o gui.o kbd.o conf.o \
      histogram.o gui_batt.o gui_space.o gui_osd.o script.o raw.o \
@@ -75,7 +79,8 @@ main.elf: $(OBJS) $(topdir)platform/$(PLATFORM)/libplatform.a \
           $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/libplatformsub.a \
           $(topdir)lib/font/libfont.a $(topdir)lib/math/libmath.a \
           $(topdir)lib/ubasic/libubasic.a $(topdir)lib/lang/liblang.a \
-          $(topdir)lib/lua/liblua.a
+          $(topdir)lib/lua/liblua.a \
+          $(topdir)lib/armutil/libarmutil.a
 	@echo \-\> $@
 	$(CC) $(CFLAGS) -o $@ --start-group $^  $(LDLIBS) --end-group $(LDFLAGS) $(LDOPTS)
 	( $(NM) $@ | grep ' U ' > $@.syms ) && echo "error: unresolved symbols in $@ (see $@.syms)" && exit 1 || exit 0

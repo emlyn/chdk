@@ -476,6 +476,12 @@ void  PostLogicalEventToUI(unsigned event, unsigned unk);
 void  SetLogicalEventActive(unsigned event, unsigned state);
 void SetScriptMode(unsigned mode);
 
+/*
+ call C function with argument list created at runtime.
+ See lib/armutil/callfunc.S for documentation
+*/
+unsigned call_func_ptr(void *func, const unsigned *args, unsigned n_args);
+
 #define started() debug_led(1)
 #define finished() debug_led(0)
 

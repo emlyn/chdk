@@ -267,6 +267,7 @@ extern int _apex2us(int);
 
 extern void _ScreenLock();
 extern void _SetCurrentCaptureModeType();
+extern unsigned _ExecuteEventProcedure(const char *name,...);
 // known in CHDK as _RefreshPhysicalScreen
 //extern void _ScreenUnLock();
 #endif
