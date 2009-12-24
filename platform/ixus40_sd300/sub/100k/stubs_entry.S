@@ -176,6 +176,7 @@ NSTUB(strpbrk, 0xffabc7c8)
 NSTUB(strrchr, 0xffabc804)
 // ALT: NSTUB(strrchr, 0xffabc804) // 8/0
 NSTUB(strtol, 0xffabbf58)
+NSTUB(strtoul, 0xffabc100)
 NSTUB(taskCreateHookAdd, 0xffac8a40)
 NSTUB(taskDeleteHookAdd, 0xffac897c)
 // Best match: 82%

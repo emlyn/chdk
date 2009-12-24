@@ -85,12 +85,10 @@ end
 --[[
  example of writing machine code and executing it
  Note may crash without proper cache control
- must use signed values because lua currently doesn't
- handle hex constants that would be negative
 --]]
 test_func_1_ops={
-   -476053381, --0xe3a0007b mov	r0, #123	; 0x7b
-   -516948194, --0xe12fff1e bx	lr
+   0xe3a0007b, -- mov	r0, #123	; 0x7b
+   0xe12fff1e, -- bx	lr
 }
 
 function func_to_buf(opcodes,buf)

@@ -135,3 +135,4 @@ SetLogicalEventActive 0xFFD46F7C 23
 PostLogicalEventToUI 0xFFD44F90
 PostLogicalEventForNotPowerType 0xFFD44F04
 SetCurrentCaptureModeType 0xFFD76E1C 16
+strtoul 0xFFEB5814

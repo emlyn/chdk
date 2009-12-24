@@ -3135,6 +3135,36 @@ static FuncSig func_sig_GetFocusLensSubjectDistanceFromLens_1[] = {
 	/* 19/22 */
 };
 
+static FuncSig func_sig_strtolx_1[] = {
+	{   1, 0xe1b09001, 0xfdffffff }, // mov:6:0xE1B09001
+	{   2, 0xe1a0b000, 0xfdffffff }, // mov:6:0xE1A0B000
+	{   3, 0xe59f11f8, 0xfdffffff }, // ldr:4:0xE59F11F8
+	{   4, 0xe04dd004, 0xfdffffff }, // sub:6:0xE24DD004
+	{   5, 0xe1a0400b, 0xfdffffff }, // mov:6:0xE1A0400B
+	{   6, 0xe1a0a001, 0xfdffffff }, // mov:6:0xE3A0A001
+	{   7, 0xe1a08000, 0xfdffffff }, // mov:6:0xE3A08000
+	{   8, 0xe1a06002, 0xfdffffff }, // mov:6:0xE1A06002
+	{   9, 0xe1a05000, 0xfdffffff }, // mov:6:0xE3A05000
+	{  10, 0x1589b000, 0xfdffffff }, // str:4:0x1589B000
+	{  13, 0xe1100040, 0xfdffffff }, // tst:7:0xE3100040
+	{  14, 0x10844001, 0xfdffffff }, // add:6:0x12844001
+	{  15, 0x1a000000, 0xff000000 }, // b, bl:3:0x1AFFFFFA
+	{  17, 0xe150002d, 0xfdffffff }, // cmp:7:0xE350002D
+	{  19, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000001
+	{  20, 0xe150002b, 0xfdffffff }, // cmp:7:0xE350002B
+	{  21, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000000
+	{  22, 0xe0844001, 0xfdffffff }, // add:6:0xE2844001
+	{  23, 0xe1560000, 0xfdffffff }, // cmp:7:0xE3560000
+	{  24, 0xe58d4000, 0xfdffffff }, // str:4:0xE58D4000
+	{  25, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A00000E
+	{  27, 0xe1500030, 0xfdffffff }, // cmp:7:0xE3500030
+	{  28, 0x11a0600a, 0xfdffffff }, // mov:6:0x13A0600A
+	{  29, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000025
+	{  31, 0xe1500078, 0xfdffffff }, // cmp:7:0xE3500078
+	{ -1, -1, -1 },
+	/* 25/32 */
+};
+
 static FuncSig func_sig_AllocateMemory_2[] = {
 	{   0, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
 	{   1, 0xea000000, 0xff000000 }, // b, bl:3:0xEAF80561
@@ -4734,6 +4764,7 @@ FuncsList func_list[] = {
 	{ "strrchr", func_sig_strrchr_1 },
 	{ "strrchr", func_sig_strrchr_2 },
 	{ "strtol", func_sig_strtol_1 },
+	{ "strtolx", func_sig_strtolx_1 },
 	{ "time", func_sig_time_1 },
 	{ "time", func_sig_time_2 },
 	{ "vsprintf", func_sig_vsprintf_1 },

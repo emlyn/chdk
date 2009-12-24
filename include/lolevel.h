@@ -110,6 +110,10 @@ extern char *_strrchr(const char *s, int c);
 extern char *_strpbrk(const char *s, const char *accept);
 
 extern long _strtol(const char *nptr, char **endptr, int base);
+extern unsigned long _strtoul(const char *nptr, char **endptr, int base);
+// DRYOS: this function is called by strtol (mode=1) and strtoul (mode=0)
+// easier to match with sig finder
+extern long _strtolx(const char *nptr, char **endptr, int base, int mode); 
 
 extern int _tolower(int c);
 extern int _toupper(int c);

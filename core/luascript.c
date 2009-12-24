@@ -1200,9 +1200,6 @@ This is potentially dangerous, functions exist which can destroy the onboard fir
 result=call_func_ptr(ptr,...)
 ptr: address of a valid ARM or Thumb function, which uses the normal C calling convention.
 result: R0 value after the call returns
-NOTE:
-lua does not correctly handle hex constants which would represent a negative number.
-You must use the signed decimal value instead.
 */
 static int luaCB_call_func_ptr( lua_State* L)
 {

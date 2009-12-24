@@ -338,6 +338,14 @@ long strtol(const char *nptr, char **endptr, int base) {
     return _strtol(nptr, endptr, base);
 }
 
+unsigned long strtoul(const char *nptr, char **endptr, int base) {
+#if CAM_DRYOS
+    return (unsigned long)_strtolx(nptr, endptr, base, 0);
+#else
+    return _strtoul(nptr, endptr, base);
+#endif
+}
+
 char *strpbrk(const char *s, const char *accept) {
 #if !CAM_DRYOS
     return _strpbrk(s, accept);

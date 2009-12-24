@@ -141,6 +141,7 @@ NSTUB(strpbrk, 0xffeb6264)
 NSTUB(strrchr, 0xffeb62a0)
 // ALT: NSTUB(strrchr, 0xffeb62a0) // 8/0
 NSTUB(strtol, 0xffeb59f4)
+NSTUB(strtoul, 0xffeb5b9c)
 NSTUB(taskCreateHookAdd, 0xffec28a4)
 NSTUB(taskDeleteHookAdd, 0xffec27e0)
 NSTUB(taskIdListGet, 0xffecce68)

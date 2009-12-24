@@ -162,6 +162,7 @@ NSTUB(strncpy, 0xff82db14)
 // Best match: 80%
 NSTUB(strrchr, 0xff89b918)
 NSTUB(strtol, 0xff82dd4c)
+NSTUB(strtolx, 0xff82db50)
 // Best match: 83%
 NSTUB(time, 0xff873764)
 NSTUB(vsprintf, 0xff81cae8)

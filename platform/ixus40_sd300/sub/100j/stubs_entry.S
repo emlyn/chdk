@@ -265,6 +265,8 @@ NSTUB(strrchr, 0xffabc7dc)
 // ALT: NSTUB(strrchr, 0xfff5088c) // 8/0
 NSTUB(strtol, 0xffabbf30)
 // ALT: NSTUB(strtol, 0xfff4ffe0) // 26/0
+NSTUB(strtoul, 0xffabc0d8)
+// ALT: NSTUB(strtoul, 0xfff50188) // 26/0
 NSTUB(taskCreateHookAdd, 0xffac8a18)
 // ALT: NSTUB(taskCreateHookAdd, 0xfff5df1c) // 29/0
 NSTUB(taskDeleteHookAdd, 0xffac8954)

@@ -100,6 +100,7 @@ extern char *strrchr(const char *s, int c);
 extern char *strpbrk(const char *s, const char *accept);
 
 extern long strtol(const char *nptr, char **endptr, int base);
+extern unsigned long strtoul(const char *nptr, char **endptr, int base);
 #define atoi(n) strtol((n),NULL,0)
 
 extern int tolower(int c);

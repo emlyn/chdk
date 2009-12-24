@@ -3621,6 +3621,37 @@ static FuncSig func_sig_SetCurrentCaptureModeType_1[] = {
 	/* 15/16 */
 };
 
+static FuncSig func_sig_strtoul_1[] = {
+	{   0, 0xe04dd004, 0xfdffffff }, // sub:6:0xE24DD004
+	{   2, 0xe58d1024, 0xfdffffff }, // str:4:0xE58D1024
+	{   3, 0xe59f6168, 0xfdffffff }, // ldr:4:0xE59F6168
+	{   4, 0xe1a04000, 0xfdffffff }, // mov:6:0xE3A04000
+	{   5, 0xe1a07000, 0xfdffffff }, // mov:6:0xE1A07000
+	{   6, 0xe1a05002, 0xfdffffff }, // mov:6:0xE1A05002
+	{   7, 0xe5966000, 0xfdffffff }, // ldr:4:0xE5966000
+	{   8, 0xe1a09000, 0xfdffffff }, // mov:6:0xE1A09000
+	{  11, 0xe1130028, 0xfdffffff }, // tst:7:0xE3130028
+	{  12, 0x1a000000, 0xff000000 }, // b, bl:3:0x1AFFFFFB
+	{  13, 0xe15b002d, 0xfdffffff }, // cmp:7:0xE35B002D
+	{  14, 0x01a04001, 0xfdffffff }, // mov:6:0x03A04001
+	{  15, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000000
+	{  16, 0xe15b002b, 0xfdffffff }, // cmp:7:0xE35B002B
+	{  18, 0xe1520000, 0xfdffffff }, // cmp:7:0xE3520000
+	{  19, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000001
+	{  20, 0xe1520010, 0xfdffffff }, // cmp:7:0xE3520010
+	{  21, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000008
+	{  22, 0xe15b0030, 0xfdffffff }, // cmp:7:0xE35B0030
+	{  23, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000006
+	{  25, 0xe1500078, 0xfdffffff }, // cmp:7:0xE3500078
+	{  26, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000000
+	{  27, 0xe1500058, 0xfdffffff }, // cmp:7:0xE3500058
+	{  29, 0x00899002, 0xfdffffff }, // add:6:0x02899002
+	{  30, 0x01a05010, 0xfdffffff }, // mov:6:0x03A05010
+	{  31, 0xe1550000, 0xfdffffff }, // cmp:7:0xE3550000
+	{ -1, -1, -1 },
+	/* 26/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   1, 0xe59f6030, 0xfdffffff }, // ldr:4:0xE59F6030
 	{   2, 0xe5965000, 0xfdffffff }, // ldr:4:0xE5965000
@@ -5508,6 +5539,7 @@ FuncsList func_list[] = {
 	{ "strrchr", func_sig_strrchr_1 },
 	{ "strrchr", func_sig_strrchr_2 },
 	{ "strtol", func_sig_strtol_1 },
+	{ "strtoul", func_sig_strtoul_1 },
 	{ "taskCreateHookAdd", func_sig_taskCreateHookAdd_1 },
 	{ "taskDeleteHookAdd", func_sig_taskDeleteHookAdd_1 },
 	{ "taskIdListGet", func_sig_taskIdListGet_1 },
