@@ -1,0 +1,26 @@
+General info:
+Digic III, dryos, propset 2
+10 MP 1/2.3 CCD type, 12 bits/pixel
+Video is h264 NOT mjpeg
+ND filter only, NO iris
+
+Booting:
+Encoded diskboot required, FI2 "firm update" supported.
+With diskboot camera will always boot in play mode. Press halfshoot to switch to record.
+With FI2, you must boot in play mode in order to access the firm update menu.
+FI2 is encoded with the same parameters as SX10. (digic IV)
+
+Display:
+-
+
+Buttons:
+Direct print button is the ALT button. This can be assigned a function in the
+original canon firmware. Hold it down to access the canon firmware function
+Other keys use the standard mapping for cameras without an erase button.
+
+Features known BROKEN or NOT supported:
+-
+
+Other issues:
+- Intermittent raw. If you press the shutter quickly (or maybe some other factor), RAW/DNG
+  may not be saved.

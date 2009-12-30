@@ -1680,6 +1680,54 @@
 
 //    #define DNG_EXT_FROM ".CR2"
 
+//----------------------------------------------------------
+ #elif defined (CAMERA_ixus90_sd790)
+    #define CAM_PROPSET                 2
+    #define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              3720
+    #define CAM_RAW_ROWS                2772
+
+    #undef CAM_USE_ZOOM_FOR_MF
+    #undef CAM_HAS_ERASE_BUTTON
+    #define CAM_MULTIPART               1
+    #undef CAM_HAS_IRIS_DIAPHRAGM
+    #undef CAM_HAS_MANUAL_FOCUS
+    #undef CAM_CHDK_HAS_EXT_VIDEO_MENU
+
+    #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_USER_TV_MODES
+	  #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+    #define CAM_HAS_JOGDIAL             1
+
+    #define DNG_SUPPORT                 1
+    // pattern
+    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
+    // color
+    #define CAM_COLORMATRIX1                               \
+      650591, 1000000, -199585, 1000000, -123118, 1000000, \
+     -69617,  1000000, 583926,  1000000,  34354,  1000000, \
+     -19113,  1000000, 82163,   1000000, 210786,  1000000
+    #define cam_CalibrationIlluminant1 1 // Daylight
+
+    // cropping 
+    #define CAM_JPEG_WIDTH  3648
+    #define CAM_JPEG_HEIGHT 2736
+    #define CAM_ACTIVE_AREA_X1 6
+    #define CAM_ACTIVE_AREA_Y1 12
+    #define CAM_ACTIVE_AREA_X2 3690
+    #define CAM_ACTIVE_AREA_Y2 2772
+
+    // camera name
+    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+    #undef  CAM_SENSOR_BITS_PER_PIXEL
+    #undef  CAM_WHITE_LEVEL
+    #undef  CAM_BLACK_LEVEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+    #define CAM_BLACK_LEVEL             127
+
 //==========================================================
 // S-Series
 //==========================================================
