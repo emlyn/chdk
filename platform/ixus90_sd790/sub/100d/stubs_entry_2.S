@@ -1,9 +1,13 @@
 #include "stubs_asm.h"
 
 // Corrections
+// ??
 NHSTUB(GetSystemTime,           0xFF85BC6C)
-NHSTUB(kbd_read_keys_r2,        0xFF8426E0)
-NHSTUB(EnterToCompensationEVF,  0xFF825F48)
+// found in stubs_entry.S anyway 
+//NHSTUB(kbd_read_keys_r2,        0xFF8426E0)
+//NHSTUB(EnterToCompensationEVF,  0xFF825F48)
+// seems to be a better fit and is found in stubs_entry.S anyway 
+//NHSTUB(EnterToCompensationEVF,  0xFF825E94)
 
 // Normal Stubs_entry_2.S
 NHSTUB(StartCameraLog,          0xFF824470)
