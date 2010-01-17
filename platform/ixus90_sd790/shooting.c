@@ -86,13 +86,14 @@ static struct {
    int hackmode;
    int canonmode;
 } modemap[] = {
-    { MODE_AUTO,               32768 }, // PROPCACE 49
+    { MODE_AUTO,               32768 }, // PROPCASE 49
     { MODE_P,                  32772 },
     { MODE_DIGITAL_MACRO,      33288 },
     { MODE_PORTRAIT,           16397 },
     { MODE_COLOR_ACCENT,       33307 }, 
     { MODE_COLOR_SWAP,         33308 },
     { MODE_STITCH,             33290 },
+    { MODE_LONG_SHUTTER,       32774 },
 
     { MODE_NIGHT_SNAPSHOT,     16395 },
     { MODE_SCN_KIDS_PETS,      16400 }, 

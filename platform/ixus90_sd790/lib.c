@@ -48,18 +48,23 @@ void debug_led_c(int color, int state)
 //  fe50 10-Aug-2008
 void ubasic_set_led(int led, int state, int bright)
 {
-/*	// "brigth" not implemented
+	// "brigth" not implemented
 	// YELLOW not available
 	// TIMER -> LED_AF
-	int leds[] = {0x134,0x138,0,0x130,0xd4,0x3030,0x3030};  //  green | yellow | not used | orange | blue | af beam | timer
-	if(led < 4 || led > 10 || led == 6) return; //  return on invalid params;  no extra TIMER LED (is same as AF)
-	volatile long *p=(void*)LED_PR + leds[led-4];
+	int leds[] = {0x134,0x130,0x134,0x130,0xd4,0x3030,0x3030};  //  green=4 | (yellow) | (not used) | orange | blue | af beam | timer
+//	if(led < 4 || led > 10 || led == 6)  //  map to valid params;  no extra TIMER LED (is same as AF)
+	volatile long *p=(void*)0xc0220000 + leds[(led-4)%sizeof(leds)];
 	if (state)
 		p[0]=0x46;
 	else
 		p[0]=0x44;
-*/
 }
+
+//void ubasic_set_led(int led, int state, int bright)
+//{
+//	static char led_table[5]={4,5,7,8,9};
+//	_LEDDrive(led_table[led%sizeof(led_table)], state<=1 ? !state : state);
+//}
 
 void JogDial_CW(void)
 {

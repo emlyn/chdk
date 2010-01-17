@@ -1,8 +1,7 @@
 #include "stubs_asm.h"
 
 // Corrections
-// ??
-NHSTUB(GetSystemTime,           0xFF85BC6C)
+//NHSTUB(GetSystemTime,           0xFF85BC6C)
 // found in stubs_entry.S anyway 
 //NHSTUB(kbd_read_keys_r2,        0xFF8426E0)
 //NHSTUB(EnterToCompensationEVF,  0xFF825F48)
@@ -58,9 +57,11 @@ NHSTUB(taskcreate_WdtReset,     0xFF86BED0)
 NHSTUB(UnsetZoomForMovie,       0xFF962C8C)
 
 // New
+//NHSTUB(LEDDrive,                0xFF8422B8)
 NHSTUB(WriteSDCard,             0xFF922A68)
 NHSTUB(DoAFLock,                0xFF825B98)
 NHSTUB(UnlockAF,                0xFF825BDC)
+NHSTUB(apex2us,                 0xFF9B19C0)
 
 // Nullsubs
 NHSTUB(taskLock,                0xFF810948)
@@ -70,11 +71,11 @@ NHSTUB(Unmount_FileSystem,      0xFF810948)
 NHSTUB(rewinddir,               0xFF810948)
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF810948)
 NHSTUB(utime,                  0xFF810948)
-NHSTUB(nullsub_96,              0xFF810948)
-NHSTUB(nullsub_37,              0xFF810948)
-NHSTUB(nullsub_35,              0xFF810948)
-NHSTUB(unknown_libname_80,      0xFF810948)
-NHSTUB(unknown_libname_96,      0xFF810948)
-NHSTUB(j_unknown_libname_73,    0xFF810948)
+//NHSTUB(nullsub_96,              0xFF810948)
+//NHSTUB(nullsub_37,              0xFF810948)
+//NHSTUB(nullsub_35,              0xFF810948)
+//NHSTUB(unknown_libname_80,      0xFF810948)
+//NHSTUB(unknown_libname_96,      0xFF810948)
+//NHSTUB(j_unknown_libname_73,    0xFF810948)
 
 NHSTUB(SetScriptMode,           0xFF875438) // "SetScriptMode"

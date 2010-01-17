@@ -1577,7 +1577,7 @@
     #define DNG_EXT_FROM ".CR2"
 
 //----------------------------------------------------------
- #elif defined (CAMERA_ixus970_sd890)
+#elif defined (CAMERA_ixus970_sd890)
     #define CAM_PROPSET                 2
     #define CAM_DRYOS                   1
 
@@ -1681,7 +1681,7 @@
 //    #define DNG_EXT_FROM ".CR2"
 
 //----------------------------------------------------------
- #elif defined (CAMERA_ixus90_sd790)
+#elif defined (CAMERA_ixus90_sd790)
     #define CAM_PROPSET                 2
     #define CAM_DRYOS                   1
 
@@ -1699,15 +1699,17 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
 	 #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
     #define CAM_HAS_JOGDIAL             1
+    #undef CAM_VIDEO_CONTROL
+    #define CAM_EXT_TV_RANGE            1          // CHDK can make exposure time longer than 64s
 
     #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
     #define CAM_COLORMATRIX1                               \
-      650591, 1000000, -199585, 1000000, -123118, 1000000, \
-     -69617,  1000000, 583926,  1000000,  34354,  1000000, \
-     -19113,  1000000, 82163,   1000000, 210786,  1000000
+      827547, 1000000, -290458, 1000000, -126086, 1000000, \
+     -12829,  1000000, 530507,  1000000, 50537,   1000000, \
+      5181,   1000000, 48183,   1000000, 245014,  1000000
     #define cam_CalibrationIlluminant1 1 // Daylight
 
     // cropping 
