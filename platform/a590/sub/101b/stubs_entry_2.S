@@ -21,7 +21,7 @@ NHSTUB(LEDDrive,	    		0xFFC34CE0)
 //NSTUB(TurnOffBackLight,			0xFFC6C570)
 //NSTUB(unknown_libname_80, 			0xFFC668B0)
 //NSTUB(unknown_libname_96, 			0xFFC6C77C)
-NHSTUB(MakeAFScan, 					0xFFC00948)
+NHSTUB(MakeAFScan, 					0xFFDEEA08)       // was 0xFFC00948 (nullsub_1) OldGit 20-Jan-2010
 //NHSTUB(OpLog_WriteToSD, 			0xFFC5B878)
 //NSTUB(open, 						0xFFC09EC4)
 //NSTUB(close, 						0xFFC09F74)

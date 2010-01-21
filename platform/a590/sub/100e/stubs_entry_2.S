@@ -95,7 +95,7 @@ NHSTUB(SetZoomActuatorSpeedPercent, 0xFFC00948)
 //NHSTUB(GetBatteryTemperature,	0xFFC377B4)
 //NHSTUB(GetOpticalTemperature,	0xFFC37824)
 //NHSTUB(GetCCDTemperature,		0xFFC37744)
-NHSTUB(MakeAFScan,		0xFFC00948)
+NHSTUB(MakeAFScan, 			    0xFFDEEA0C)       // was 0xFFC00948 (nullsub_1) OldGit 20-Jan-2010
 //NHSTUB(utime, 0xFFC00948)
 NHSTUB(ExpCtrlTool_StopContiAE,		0xFFC22054)
 NHSTUB(ExpCtrlTool_StartContiAE,	0xFFC21F10)
