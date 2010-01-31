@@ -43,6 +43,12 @@ static int shoot_counter=0;
 #define USB_REG 2
 #endif
 
+#if defined(CAMERA_g11)
+#define USB_MASK 0x100000
+#define USB_REG 2
+#endif
+
+
 long get_mmio(void)
 {
 long x;	

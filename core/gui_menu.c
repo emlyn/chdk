@@ -56,7 +56,11 @@ void gui_menu_init(CMenu *menu_ptr) {
     }
     
     num_lines = screen_height/rbf_font_height()-1;
+#if defined (CAMERA_g11)
+    w = screen_width-10-10;
+#else
     w = screen_width-30-30;
+#endif
     x = (screen_width-w)>>1;
     len_bool = rbf_str_width("\x95");
     len_int = rbf_str_width("99999");
@@ -668,8 +672,11 @@ void gui_menu_draw() {
             case MENUITEM_SEPARATOR:
                 if (lang_str(curr_menu->menu[imenu].text)[0]) {
                     j = rbf_str_width(lang_str(curr_menu->menu[imenu].text));
-                    xx+=(w-j-len_space*2)>>1;
-
+#if defined (CAMERA_g11)
+		xx+=((int)w-j-len_space*2)>>1;
+#else
+		xx+=(w-j-len_space*2)>>1;
+#endif
                     (conf.menu_symbol_enable)?rbf_draw_char(x, yy, ' ', cl_symbol):rbf_draw_char(x, yy, ' ', cl);
                     draw_filled_rect(x+len_space, yy, xx-1, yy+rbf_font_height()/2-1, MAKE_COLOR(cl>>8, cl>>8));
                     draw_line(x+len_space, yy+rbf_font_height()/2, xx-1, yy+rbf_font_height()/2, cl);

@@ -730,7 +730,7 @@ short shooting_get_drive_mode()
     short m;
 // reyalp - this is related to http://chdk.setepontos.com/index.php/topic,3994.405.html
 // TODO
-#if defined (CAMERA_sx200is)
+#if defined (CAMERA_sx200is) || defined (CAMERA_g11)
    short n;
    // unlike other cameras, sx200 does set PROPCASE_DRIVE_MODE when in custom timer mode
    // SX 200 IS 0,1,2,3,4=Off, 2 Second, Custom, Face Detection

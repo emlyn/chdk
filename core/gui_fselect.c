@@ -119,8 +119,14 @@ static void gui_fselect_read_dir(const char* dir) {
     int    i;
 
     gui_fselect_free_data();
-
+#ifdef CAM_DRYOS_2_3_R39
+	if(dir[0]=='A' && dir[1]==0)
+		d = opendir("A/");
+	else
+		d = opendir(dir);
+#else
     d = opendir(dir);
+#endif
     if (d) {
         de = readdir(d);
         while (de) {

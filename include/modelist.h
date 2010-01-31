@@ -94,5 +94,6 @@ MODE_EASY               ,
 MODE_SCN_DIGITAL_MACRO  ,
 MODE_SCN_STITCH         ,
 MODE_SCN_LONG_SHUTTER   , // only known on sx1
+MODE_LOWLIGHT           , // g11
 };
 #endif

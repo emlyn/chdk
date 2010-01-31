@@ -83,7 +83,6 @@ void remount_filesystem()
     _Mount_FileSystem();
 }
 
-
 void mark_filesystem_bootable()
 {
     _UpdateMBROnFlash(0, 0x40, "BOOTDISK");
@@ -208,6 +207,9 @@ long t;
 }*/
 int open (const char *name, int flags, int mode )
 {
+#ifdef CAM_DRYOS_2_3_R39
+    if(name[0]!='A')return -1;
+#endif
     return _Open(name, flags, mode);
 }
 int close (int fd)
@@ -407,15 +409,23 @@ int utime(char *file, void *newTimes) {
 #if !CAM_DRYOS
   return _utime(file, newTimes);
 #else
- int fd;
  int res=0;
+ int fd;
  fd = _open(file, 0, 0);
- if (fd>=0) {
-  res=_SetFileTimeStamp(fd, ((int*)newTimes)[0] , ((int*)newTimes)[1]);
-  _close(fd);
- }
- // return value compatibe with utime: ok=0 fail=-1
- return (res)?0:-1;
+
+#ifdef CAM_DRYOS_2_3_R39
+   if (fd>=0) {
+       _close(fd);
+       res=_SetFileTimeStamp(file, ((int*)newTimes)[0] , ((int*)newTimes)[1]);
+   }
+#else
+     if (fd>=0) {
+      res=_SetFileTimeStamp(fd, ((int*)newTimes)[0] , ((int*)newTimes)[1]);
+      _close(fd);
+     }
+     // return value compatibe with utime: ok=0 fail=-1
+#endif
+  return (res)?0:-1;
 #endif
 }
 

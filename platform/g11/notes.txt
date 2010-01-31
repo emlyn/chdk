@@ -1,0 +1,11 @@
+****************************************
+
+Camera depending notes:
+
+- manual loading (with "firmware update" from the Canon menu) DOES NOT work yet
+- G11 uses (new) Propset 3 of properties
+- G11 uses new color palette 
+- dryos with changed behaviour to previous dryos versions (stat() funtion, max. path lenght, etc.)
+- G11 has an ND Filter AND real iris diaphragm. ND Filter feature in camera.h is disabled, because
+  camera asserts if ND-Filter state is changed via CHDK.
+- 100j and 100k are the same, development is done in the 100j tree

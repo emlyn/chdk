@@ -49,28 +49,41 @@ struct	stat
 #define O_TRUNC         0x200
 #define O_CREAT         0x100
 
+#ifndef CAM_DRYOS_2_3_R39
 struct	stat
     {
     unsigned long	st_dev;		//?
-    unsigned long	st_ino;		//?	
-    unsigned short	st_mode;	//?	
-    short		st_nlink;	//?	
-    short		st_uid;		//?	
-    short		st_gid;		//?	
-    unsigned long	st_atime;	//?	
-    unsigned long	st_mtime;	//?	
-    unsigned long	st_ctime;	//?	
-    unsigned long	st_size;	
+    unsigned long	st_ino;		//?
+    unsigned short	st_mode;	//?
+    short		st_nlink;	//?
+    short		st_uid;		//?
+    short		st_gid;		//?
+    unsigned long	st_atime;	//?
+    unsigned long	st_mtime;	//?
+    unsigned long	st_ctime;	//?
+    unsigned long	st_size;
     long		st_blksize;	//?
     long		st_blocks;	//?
     unsigned char	st_attrib;
-    int			reserved1;	//	
+    int			reserved1;	//
     int			reserved2;	//
     int			reserved3;	//
     int			reserved4;	//
     int			reserved5;	//
     int			reserved6;	//
 };
+
+#else
+struct	stat
+    {
+    unsigned long	st_unknown_1;
+    unsigned long	st_attrib;
+    unsigned long	st_size;
+    unsigned long	st_ctime;
+    unsigned long	st_mtime;
+    unsigned long	st_unknown_2;
+};
+#endif//CAM_DRYOS_2_3_R39
 
 #endif
 

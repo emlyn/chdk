@@ -15,7 +15,7 @@
 #define SCRIPT_CONSOLE_Y            (14-SCRIPT_CONSOLE_NUM_LINES)
 
 //-------------------------------------------------------------------
-const char *state_ubasic_script;
+const char *state_ubasic_script=NULL; //ERR99
 char cfg_name[100] = "\0";
 char cfg_set_name[100] = "\0";
 

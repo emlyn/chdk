@@ -34,7 +34,9 @@
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_STITCH || \
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_MANUAL)
 /* propcase ID constants. These are in their own header files for easier sed processing */
-#if CAM_PROPSET == 2     // most digic3 cameras
+#if CAM_PROPSET == 3 
+ #include "propset3.h"
+#elif CAM_PROPSET == 2     // most digic3 cameras
  #include "propset2.h"
 #elif CAM_PROPSET == 1   // most digic2 cameras
  #include "propset1.h"
@@ -481,6 +483,7 @@ void SetScriptMode(unsigned mode);
  See lib/armutil/callfunc.S for documentation
 */
 unsigned call_func_ptr(void *func, const unsigned *args, unsigned n_args);
+
 
 #define started() debug_led(1)
 #define finished() debug_led(0)
