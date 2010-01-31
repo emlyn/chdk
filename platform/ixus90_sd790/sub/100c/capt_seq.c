@@ -2,7 +2,8 @@
 #include "platform.h"
 #include "core.h"
 
-static long *nrflag = (long*)0x9F90;
+// @ FF93D898
+static long *nrflag = (long*)0x91AC;
 
 #include "../../../generic/capt_seq.c"
 
@@ -31,14 +32,13 @@ void __attribute__((naked,noinline)) sub_FF93D820_my(){
         "LDR     R2, =0x91B0\n"
         "ADD     R3, R4, #0x8C\n"
         "STRH    R0, [R4,#0x88]\n"
-        // "STRD    R2, [SP,#0x30-0x30]\n"
-        "STR     R2, [SP]\n"  //+
-        "STR     R3, [SP,#4]\n"  //+
+        "STRD    R2, [SP,#0x30-0x30]\n"
         "MOV     R1, R0\n"
         "LDRH    R0, [R5,#0x54]\n"
         "LDRSH   R2, [R8,#0xC]\n"
         "LDR     R3, =0x91AC\n"
         "BL      sub_FF93E880\n"
+        "BL      wait_until_remote_button_is_released\n" // +
         "BL      capt_seq_hook_set_nr\n"
         "BL       sub_FF93D894\n"
  );
