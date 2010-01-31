@@ -106,7 +106,7 @@ void __attribute__((naked,noinline)) sub_FF810FA0_my() { //#fs
         "SUB     SP, SP, #0x74\n"
         "MOV     R0, SP\n"
         "MOV     R1, #0x74\n"
-        "BL      sub_FFAACA58\n"
+        "BL      sub_FFAACA5C\n"
         "MOV     R0, #0x53000\n"
         "STR     R0, [SP,#0x74-0x70]\n"
         //"LDR     R0, =0xCBC48\n"
@@ -125,9 +125,13 @@ void __attribute__((naked,noinline)) sub_FF810FA0_my() { //#fs
         "STR     R0, [SP,#0x74-0x58]\n"
         "LDR     R0, =0x19B\n"
         "MOV     R1, #0x64\n"
-        "STRD    R0, [SP,#0x74-0x54]\n"
+        //"STRD    R0, [SP,#0x74-0x54]\n"
+        "STR     R0, [SP,#0x74-0x54]\n"
+        "STR     R1, [SP,#0x74-0x50]\n"
         "MOV     R0, #0x78\n"
-        "STRD    R0, [SP,#0x74-0x4C]\n"
+        //"STRD    R0, [SP,#0x74-0x4C]\n"
+        "STR     R0, [SP,#0x74-0x4C]\n"
+        "STR     R1, [SP,#0x74-0x48]\n"
         "MOV     R0, #0\n"
         "STR     R0, [SP,#0x74-0x44]\n"
         "STR     R0, [SP,#0x74-0x40]\n"
@@ -199,7 +203,7 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() { //#fs
         "LDR     R0, [R4,#0xFC]\n"
         "TST     R0, #1\n"
         "MOVEQ   R0, #0x12C\n"
-        "BLEQ    _SleepTask\n"
+        "BLEQ    sub_FF828400\n"
         "BL      sub_FF821BFC\n"
         "CMP     R0, #0\n"
         "BNE     loc_FF81CCFC\n"
@@ -223,7 +227,7 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() { //#fs
         "MOV     R2, #0\n"
         "MOV     R1, #0x19\n"
         "LDR     R0, =0xFF81CD44\n"   // ; "Startup"\n"
-        "BL      _CreateTask\n"
+        "BL      sub_FF81B818\n"
         "MOV     R0, #0\n"
         //"LDMFD   SP!, {R3-R5,PC}\n"
         "LDMFD   SP!, {ip, pc}\n"
@@ -269,7 +273,6 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
 		"LDMFD   SP!, {R4,PC}\n"
         );
 }; //#fe
-
 
 void CreateTask_spytask() { //#fs 
     _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
@@ -405,6 +408,8 @@ void __attribute__((naked,noinline)) sub_FF84EFB0_my() { //#fs
         );
 }; //#fe
 
+
+
 void __attribute__((naked,noinline)) sub_FF84ED40_my() { //#fs  ; Partition t
         asm volatile (
         "STMFD   SP!, {R4-R8,LR}\n"
@@ -420,37 +425,51 @@ void __attribute__((naked,noinline)) sub_FF84ED40_my() { //#fs  ; Partition t
         "ADDLS   PC, PC, R0,LSL#2\n"
         "B       loc_FF84EE8C\n"
  
+
 "loc_FF84ED70:\n" //                            ; CODE XREF: sub_FF84ED40+28j
         "B       loc_FF84EDA4\n"
  
+
 "loc_FF84ED74:\n" //                            ; CODE XREF: sub_FF84ED40+28j
         "B       loc_FF84ED8C\n"
  
+
 "loc_FF84ED78:\n" //                            ; CODE XREF: sub_FF84ED40+28j
         "B       loc_FF84ED8C\n"
  
+
 "loc_FF84ED7C:\n" //                            ; CODE XREF: sub_FF84ED40+28j
         "B       loc_FF84ED8C\n"
  
+
 "loc_FF84ED80:\n" //                            ; CODE XREF: sub_FF84ED40+28j
         "B       loc_FF84ED8C\n"
  
+
 "loc_FF84ED84:\n" //                            ; CODE XREF: sub_FF84ED40+28j
         "B       loc_FF84EE84\n"
  
+
 "loc_FF84ED88:\n" //                            ; CODE XREF: sub_FF84ED40+28j
         "B       loc_FF84ED8C\n"
+
 "loc_FF84ED8C:\n" //                            ; CODE XREF: sub_FF84ED40+28j
+
+
         "MOV     R2, #0\n"
         "MOV     R1, #0x200\n"
         "MOV     R0, #3\n"
         "BL      sub_FF867C94\n"
         "MOVS    R4, R0\n"
         "BNE     loc_FF84EDAC\n"
+
 "loc_FF84EDA4:\n" //                            ; CODE XREF: sub_FF84ED40+28j
+
+
         "MOV     R0, #0\n"
         "LDMFD   SP!, {R4-R8,PC}\n"
  
+
 "loc_FF84EDAC:\n" //                            ; CODE XREF: sub_FF84ED40+60j
         "LDR     R12, [R7,#0x4C]\n"
         "MOV     R3, R4\n"
@@ -466,12 +485,14 @@ void __attribute__((naked,noinline)) sub_FF84ED40_my() { //#fs  ; Partition t
         "BL      sub_FF867DD4\n"
         "B       loc_FF84EDA4\n"
  
+
 "loc_FF84EDD8:\n" //                            ; CODE XREF: sub_FF84ED40+88j
         "MOV     R0, R8\n"
         "BL      sub_FF922E24\n"
         
 		  "MOV   R1, R4\n"           //  pointer to MBR in R1
 		  "BL    mbr_read_dryos\n"   //  total sectors count in R0 before and after call
+
         // Start of DataGhost's FAT32 autodetection code
         // Policy: If there is a partition which has type W95 FAT32, use the first one of those for image storage
         // According to the code below, we can use R1, R2, R3 and R12.
@@ -521,8 +542,10 @@ void __attribute__((naked,noinline)) sub_FF84ED40_my() { //#fs  ; Partition t
         "LDRB    R12, [R4,#0x1CA]\n"
         "ORR     R3, R3, R12\n"
         //"LDRB    R12, [R4,#0x1FE]\n"
+
 	"LDRB    R12, [LR,#0x1FE]\n"
 	"LDRB    LR, [LR,#0x1FF]\n"
+
         "MOV     R4, #0\n"
         "BNE     loc_FF84EE60\n"
         "CMP     R0, R1\n"
@@ -534,7 +557,9 @@ void __attribute__((naked,noinline)) sub_FF84ED40_my() { //#fs  ; Partition t
         "MOVEQ   R6, R1\n"
         "MOVEQ   R5, R3\n"
         "MOVEQ   R4, #1\n"
+
 "loc_FF84EE60:\n" //                            ; CODE XREF: sub_FF84ED40+F8j
+
         "MOV     R0, #3\n"
         "BL      sub_FF867DD4\n"
         "CMP     R4, #0\n"
@@ -545,21 +570,31 @@ void __attribute__((naked,noinline)) sub_FF84ED40_my() { //#fs  ; Partition t
         "MOV     R5, R0\n"
         "B       loc_FF84EE98\n"
  
+
 "loc_FF84EE84:\n" //                            ; CODE XREF: sub_FF84ED40+28j
+
+
         "MOV     R5, #0x40\n"
         "B       loc_FF84EE98\n"
  
+
 "loc_FF84EE8C:\n" //                            ; CODE XREF: sub_FF84ED40+28j
+
+
         "MOV     R1, #0x374\n"
         "LDR     R0, =0xFF84ED34\n" // aMounter_c  ; "Mounter.c"\n"
         "BL      _DebugAssert\n"
+
 "loc_FF84EE98:\n" //                            ; CODE XREF: sub_FF84ED40+12Cj
+
         "STR     R6, [R7,#0x44]!\n"
         "MOV     R0, #1\n"
         "STR     R5, [R7,#4]\n"
         "LDMFD   SP!, {R4-R8,PC}\n"
+
 	);
 }; //#fe
+
 // Extracted method: sub_FF842A44 + 240
 // Extracted method: sub_FF842C84
 void __attribute__((naked,noinline)) jogdial_task_my()
@@ -568,11 +603,12 @@ void __attribute__((naked,noinline)) jogdial_task_my()
 		"STMFD   SP!, {R3-R11,LR}\n"
 		"BL      sub_FF842e34\n" // LOCATION: JogDial.c:14
 		"LDR     R11, =0x80000B01\n"
-		"LDR     R8, =0xffab07cc\n"		// HL
+		"LDR     R8, =0xffab07d0\n"		// HL
 		"LDR     R7, =0xC0240000\n"		// HL
 		"LDR     R6, =0x22A0\n"				// HL
 		"MOV     R9, #1\n"
 		"MOV     R10, #0\n"
+
 		"loc_FF842CA4:\n"
 		"LDR     R3, =0x1A1\n"			// HL
 		"LDR     R0, [R6,#0xC]\n"
@@ -582,6 +618,7 @@ void __attribute__((naked,noinline)) jogdial_task_my()
 		//"MOV     R0, #40\n"
 		"MOV     R0, #40\n" // +
 		"BL      _SleepTask\n" // LOCATION: KerSys.c:0
+
 		//------------------  added code ---------------------
 		"labelA:\n"
 		"LDR     R0, =jogdial_stopped\n"
@@ -593,6 +630,7 @@ void __attribute__((naked,noinline)) jogdial_task_my()
 		"B       labelA\n"
 		"labelB:\n"
 		//------------------  original code ------------------
+
 		"LDR     R0, [R7,#0x104]\n"
 		"MOV     R0, R0,ASR#16\n"
 		"STRH    R0, [R6]\n"
@@ -616,6 +654,7 @@ void __attribute__((naked,noinline)) jogdial_task_my()
 		"ADD     R5, R0, #0x8000\n"
 		"ADD     R5, R5, #1\n"
 		"EOR     R4, R4, #1\n"
+
 		"loc_FF842D1C:\n"
 		"LDR     R0, [R6,#0x14]\n"
 		"CMP     R0, #0\n"
@@ -628,17 +667,21 @@ void __attribute__((naked,noinline)) jogdial_task_my()
 		"BEQ     loc_FF842D50\n"
 		"LDR     R0, =0xB01\n"
 		"BL      sub_FF875370\n"
+
 		"loc_FF842D48:\n"
 		"MOV     R0, R11\n"
 		"BL      sub_FF875370\n"
+
 		"loc_FF842D50:\n"
 		"LDR     R0, [R8,R4,LSL#2]\n"
 		"MOV     R1, R5\n"
 		"STR     R0, [R6,#0x1C]\n"
 		"BL      sub_FF8752b8\n"
+
 		"loc_FF842D60:\n"
 		"LDRH    R0, [R6]\n"
 		"STRH    R0, [R6,#2]\n"
+
 		"loc_FF842D68:\n"
 		"STR     R10, [R7,#0x100]\n"
 		"STR     R9, [R7,#0x108]\n"

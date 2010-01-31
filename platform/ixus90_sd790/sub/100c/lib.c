@@ -22,7 +22,6 @@ long hook_raw_size()
 
 void *vid_get_viewport_live_fb()
 {
-	// @ FF8C6004
 	void **fb=(void **)0x7424;
     unsigned char buff = *((unsigned char*)0x72A0);
     if (buff == 0) buff = 2;  else buff--;
@@ -31,7 +30,6 @@ void *vid_get_viewport_live_fb()
 
 void *vid_get_bitmap_fb()       
 {
-	// @ FF8EAF4C
     return (void*)0x10361000; // ixus90
 }
 

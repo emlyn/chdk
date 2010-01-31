@@ -2,8 +2,7 @@
 
 long lens_get_focus_pos()
 {
-    //return _GetFocusLensSubjectDistance();    // returns plaintext, calls GetCurrentTargetDistance to get value
-    return _GetCurrentTargetDistance(); 
+    return _GetFocusLensSubjectDistance(); 
 }
 
 long lens_get_focus_pos_from_lens()

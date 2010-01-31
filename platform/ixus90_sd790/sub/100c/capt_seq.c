@@ -2,8 +2,7 @@
 #include "platform.h"
 #include "core.h"
 
-// @ FF93D898
-static long *nrflag = (long*)0x91AC;
+static long *nrflag = (long*)0x9F90;
 
 #include "../../../generic/capt_seq.c"
 
@@ -16,7 +15,7 @@ void __attribute__((naked,noinline)) sub_FF93D820_my(){
         "MVN     R1, #0\n" //0xFFFFFFFF\n"
         "BL      sub_FF827B50\n"
         "MOV     R2, #4\n"
-        "ADD     R1, SP, #0x30-0x28\n"
+		"ADD     R1, SP, #0x30-0x28\n"
         "MOV     R0, #0x8A\n"
         "BL      sub_FF86D25C\n"
         "TST     R0, #1\n"
@@ -28,19 +27,20 @@ void __attribute__((naked,noinline)) sub_FF93D820_my(){
         "LDRSH   R1, [R8,#0xE]\n"
         "LDR     R0, [R5,#0x7C]\n"
         "BL      sub_FF8F3DC8\n"
-        "BL      _GetCCDTemperature\n"
+        "BL      sub_FF845570\n" // GetCCDTemperature\n"
         "LDR     R2, =0x91B0\n"
         "ADD     R3, R4, #0x8C\n"
         "STRH    R0, [R4,#0x88]\n"
-        "STRD    R2, [SP,#0x30-0x30]\n"
+        // "STRD    R2, [SP,#0x30-0x30]\n"
+        "STR     R2, [SP]\n"  //+
+        "STR     R3, [SP,#4]\n"  //+
         "MOV     R1, R0\n"
         "LDRH    R0, [R5,#0x54]\n"
         "LDRSH   R2, [R8,#0xC]\n"
         "LDR     R3, =0x91AC\n"
         "BL      sub_FF93E880\n"
-        "BL      wait_until_remote_button_is_released\n" // +
         "BL      capt_seq_hook_set_nr\n"
-        "BL      sub_FF93D894\n"
+        "BL       sub_FF93D894\n"
  );
 }
 
@@ -81,6 +81,7 @@ void __attribute__((naked,noinline)) sub_FF85E634_my() //#fs
 		"BL      capt_seq_hook_raw_here\n" // +
         "MOV     R5, R0\n"
         "B       loc_FF85E6C4\n"
+
 
 "loc_FF85E6B4:\n" //                               ; CODE XREF: sub_FF85E634+38j
         "LDR     R0, =0x54E0\n"
@@ -124,8 +125,9 @@ void __attribute__((naked,noinline)) capt_seq_task() //#fs
         "LDR     R1, =0x48E\n"
         "LDR     R0, =0xFF85DF88\n" // ; "SsShootTask.c"\n"
         "BL      _DebugAssert\n"
-        "BL      _ExitTask\n" 
+        "BL      sub_FF81BAA8\n" // ExitTask\n"
         "LDMFD   SP!, {R3-R9,PC}\n"
+
 
 "loc_FF85E2F0:\n" //                               ; CODE XREF: task_CaptSeqTask+28j
         "LDR     R0, [SP,#0x20-0x20]\n"
@@ -134,89 +136,118 @@ void __attribute__((naked,noinline)) capt_seq_task() //#fs
         "ADDLS   PC, PC, R1,LSL#2\n"
         "B       loc_FF85E510\n"
 
+
 "loc_FF85E304:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E374\n"
+
 
 "loc_FF85E308:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E3DC\n"
 
+
 "loc_FF85E30C:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E3E4\n"
+
 
 "loc_FF85E310:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E3FC\n"
 
+
 "loc_FF85E314:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E3F0\n"
+
 
 "loc_FF85E318:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E404\n"
 
+
 "loc_FF85E31C:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E40C\n"
+
 
 "loc_FF85E320:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E414\n"
 
+
 "loc_FF85E324:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E46C\n"
+
 
 "loc_FF85E328:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E478\n"
 
+
 "loc_FF85E32C:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E480\n"
+
 
 "loc_FF85E330:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E488\n"
 
+
 "loc_FF85E334:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E490\n"
+
 
 "loc_FF85E338:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E498\n"
 
+
 "loc_FF85E33C:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E4A0\n"
+
 
 "loc_FF85E340:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E4A8\n"
 
+
 "loc_FF85E344:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E4B0\n"
+
 
 "loc_FF85E348:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E4BC\n"
 
+
 "loc_FF85E34C:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E4C4\n"
+
 
 "loc_FF85E350:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E4CC\n"
 
+
 "loc_FF85E354:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E4D4\n"
+
 
 "loc_FF85E358:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E4E0\n"
 
+
 "loc_FF85E35C:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E4E8\n"
+
 
 "loc_FF85E360:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E4F0\n"
 
+
 "loc_FF85E364:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E4F8\n"
+
 
 "loc_FF85E368:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E500\n"
 
+
 "loc_FF85E36C:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E508\n"
 
+
 "loc_FF85E370:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "B       loc_FF85E51C\n"
+
 
 "loc_FF85E374:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
         "BL      sub_FF93C168\n"
@@ -250,19 +281,24 @@ void __attribute__((naked,noinline)) capt_seq_task() //#fs
         "STRNE   R9, [R5,#4]\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E3DC:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
 
 		//"BL      sub_FF85E634\n"
         "BL      sub_FF85E634_my\n" //_my
         "B       loc_FF85E3F4\n"
 
+
 "loc_FF85E3E4:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "MOV     R0, #1\n"
         "BL      sub_FF93C310\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E3F0:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93BE00\n"
 
@@ -271,22 +307,30 @@ void __attribute__((naked,noinline)) capt_seq_task() //#fs
         "STR     R7, [R6,#0x24]\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E3FC:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93C134\n"
         "B       loc_FF85E3F4\n"
 
+
 "loc_FF85E404:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93C13C\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E40C:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93C230\n"
         "B       loc_FF85E470\n"
 
+
 "loc_FF85E414:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "LDR     R4, [R0,#0xC]\n"
         "BL      sub_FF93C144\n"
@@ -313,7 +357,9 @@ void __attribute__((naked,noinline)) capt_seq_task() //#fs
         "BL      sub_FF85C98C\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E46C:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93C290\n"
 
@@ -321,105 +367,144 @@ void __attribute__((naked,noinline)) capt_seq_task() //#fs
         "BL      sub_FF85C438\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E478:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93C134\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E480:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93CBC4\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E488:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93CDAC\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E490:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93CE3C\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E498:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93CEF0\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E4A0:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93D0E8\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E4A8:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93D138\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E4B0:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "MOV     R0, #0\n"
         "BL      sub_FF93D1BC\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E4BC:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93D30C\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E4C4:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93D3A0\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E4CC:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93D468\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E4D4:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93C434\n"
         "BL      sub_FF824C48\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E4E0:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93CFAC\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E4E8:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93D018\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E4F0:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93F24C\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E4F8:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93F268\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E500:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93F278\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E508:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "BL      sub_FF93F2A4\n"
         "B       loc_FF85E51C\n"
 
+
 "loc_FF85E510:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "LDR     R1, =0x58E\n"
         "LDR     R0, =0xFF85DF88\n"
         "BL      _DebugAssert\n"
 
 "loc_FF85E51C:\n" //                               ; CODE XREF: task_CaptSeqTask+4Cj
+
 
         "LDR     R0, [SP,#0x20-0x20]\n"
         "LDR     R1, [R0,#4]\n"
@@ -480,7 +565,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"LDR     R0, [R7,#0x1C]\n"
 		"MOV     R1, #1\n"
 		"BL      sub_FF827B1C\n"
-		"BL      _ExitTask\n"
+		"BL      sub_FF81BAA8\n" // eventproc_export_ExitTask
 		"ADD     SP, SP, #0x20\n"
 		"LDMFD   SP!, {R4-R8,PC}\n"
 
@@ -925,15 +1010,15 @@ void __attribute__((naked,noinline)) exp_drv_task()
 		"SUB     R4, R0, #8\n"
 		"LDR     R0, =0x3E12C\n"
 		"ADD     R1, SP, #0x38-0x28\n"
-		"BL      sub_FFAAC7FC\n"
+		"BL      sub_FFAAC800\n"
 		"LDR     R0, =0x3E138\n"
 		"MOV     R2, #0xC\n"
 		"ADD     R1, SP, #0x38-0x28\n"
-		"BL      sub_FFAAC7FC\n"
+		"BL      sub_FFAAC800\n"
 		"LDR     R0, =0x3E144\n"
 		"MOV     R2, #0xC\n"
 		"MOV     R1, R4\n"
-		"BL      sub_FFAAC7FC\n"
+		"BL      sub_FFAAC800\n"
 		"B       loc_FF8B706C\n"
 
 		"loc_FF8B6FF4:\n"

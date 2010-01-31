@@ -178,10 +178,10 @@ void __attribute__((naked,noinline)) sub_FF859D10_my()
 		"LDR     R0, [R5,#0x4C]\n"
 		"MUL     R0, R1, R0\n"
 		"MOV     R1, #0x3E8\n"
-		"BL      sub_FFAACB94\n"
+		"BL      sub_FFAACB98\n"
 		"MOV     R1, R0\n"
 		"LDR     R0, [R5,#0x54]\n"
-		"BL      sub_FFAACB94\n"
+		"BL      sub_FFAACB98\n"
 		"CMP     R1, #0\n"
 		"BNE     loc_FF859DA8\n"
 
@@ -266,7 +266,7 @@ void __attribute__((naked,noinline)) sub_FF859D10_my()
 		"BL      sub_FF8F00E8\n"
 		"LDR     R0, [R5,#0x14]\n"
 		"MOV     R1, #0x3E8\n"
-		"BL      _TakeSemaphore\n"
+		"BL      sub_FF81B6AC\n" // eventproc_export_TakeSemaphore
 		"CMP     R0, #9\n"
 		"BNE     loc_FF859EA8\n"
 		"BL      sub_FF939224\n"
@@ -306,7 +306,7 @@ void __attribute__((naked,noinline)) sub_FF859D10_my()
 		"LDR     R1, [R5,#0x7C]\n"
 		"MUL     R0, R1, R0\n"
 		"LDR     R1, [R5,#0x78]\n"
-		"BL      sub_FFAACB94\n"
+		"BL      sub_FFAACB98\n"
 		"MOV     R4, R0\n"
 		"BL      sub_FF93925C\n"
 		"LDR     R1, [R5,#0x74]\n"
@@ -345,7 +345,7 @@ void __attribute__((naked,noinline)) sub_FF936E5C_my()
 		"STREQ   R2, [R4,#0xC]\n"
 		"BEQ     loc_FF936F28\n"
 		"LDR     R3, [R4,#4]\n"
-		//"LDR     R7, =0xffac9a88\n"
+		//"LDR     R7, =0xffac9a8c\n"
 		"LDR     R7, =table\n" // +
 		"ADD     R12, R3, R3,LSL#1\n"
 		"LDR     R3, [R7,R12,LSL#2]\n"
@@ -396,7 +396,7 @@ void __attribute__((naked,noinline)) sub_FF936E5C_my()
 		"STRNE   R2, [R4,#0xC]\n"
 
 		"loc_FF936F28:\n"
-		//"LDR     R2, =0Xffac9a2c\n"
+		//"LDR     R2, =0Xffac9a30\n"
 		"LDR     R2, =CompressionRateTable\n" // +
 		"LDR     R3, [R4,#8]\n"
 		"LDR     R2, [R2,R3,LSL#2]\n"

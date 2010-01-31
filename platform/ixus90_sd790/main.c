@@ -28,9 +28,9 @@ void startup()
 }
 
 // Ixus 90 focal length range is 6.2 - 18.6 mm, 35-105 in 35-mm equivalent.
-// So, CF_EFL = 35/6.2*10000=56451 or 105/18.6*10000=56451.
+// So, CF_EFL = 35/6.2*10000=56452 or 105/18.6*10000=56452.
 static const int fl_tbl[] = {6200, 7230, 8295, 9681, 11614, 14303, 18600};
-#define CF_EFL 56451
+#define CF_EFL 56452
 #define NUM_FL (sizeof(fl_tbl)/sizeof(fl_tbl[0]))
 
 const int zoom_points = NUM_FL;
