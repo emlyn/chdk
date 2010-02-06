@@ -334,7 +334,7 @@ void script_end()
     }
 	md_close_motion_detector();
 	shot_histogram_set(0);
-    if (conf.alt_prevent_shutdown != ALT_PREVENT_SHUTDOWN_NO) {
+    if ((conf.alt_prevent_shutdown != ALT_PREVENT_SHUTDOWN_NO) && (gui_get_mode()==GUI_MODE_ALT)) {
         disable_shutdown();
     }
     kbd_key_release_all();
