@@ -889,10 +889,23 @@ void drv_self_unhide(){
 
 int  apex2us(int apex_tv){
 #if CAM_EXT_TV_RANGE
- if (apex_tv<-576) return 1000000.0*pow(2.0, -apex_tv/96.0);
- else return _apex2us(apex_tv);
+/*
+ Extended Tv, by barberofcivil, http://chdk.setepontos.com/index.php/topic,4392.0.html
+ Explanation by reyalP:
+ In every port, the original shutter overrides (as opposed to super long exposure) worked by
+ setting the propcase values at some point after auto-exposure has happened (except in manual
+ modes, where the manual control propcases may be used instead). The Canon code previously took
+ these values unchanged for short exposures. In newer cameras, like on the SX10 / SD980, the value
+ is changed, apparently some time after it has been retrieved from the propcase. We know this is
+ the case, because the propcase value itself doesn't get clamped to the allowed range (if it did,
+ barberofcivil's code wouldn't work).
+*/
+	short tv;
+	tv = shooting_get_tv96();
+	if (tv<-576 || tv!=apex_tv) return 1000000.0*pow(2.0, -tv/96.0);
+	else return _apex2us(apex_tv);
 #else
- return 0;
+	return 0;
 #endif
 }
 

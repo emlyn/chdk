@@ -1112,7 +1112,7 @@ const char* gui_histo_layout_enum(int change, int arg) {
 
 //-------------------------------------------------------------------
 const char* gui_font_enum(int change, int arg) {
-    static const char* fonts[]={ "Win1250", "Win1251", "Win1252", "Win1254", "Win1257"};
+    static const char* fonts[]={ "Win1250", "Win1251", "Win1252", "Win1253", "Win1254", "Win1257"};
 
     conf.font_cp+=change;
     if (conf.font_cp<0)
