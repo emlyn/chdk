@@ -1,0 +1,13 @@
+*** General info:
+Digic IV, dryos, propset 2
+12 MP 1/2.3 CCD type, 12 bits/pixel
+Video is h264 NOT mjpeg
+ND filter only, NO iris
+
+
+*** Features known BROKEN or NOT supported:
+- ZEBRA is not working yet (13-Mar-2010)
+-
+
+*** Other issues:
+- 

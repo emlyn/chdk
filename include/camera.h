@@ -1681,6 +1681,158 @@
 //    #define DNG_EXT_FROM ".CR2"
 
 //----------------------------------------------------------
+#elif defined (CAMERA_ixus100_sd780)
+
+    #define CAM_RAW_ROWPIX              4000	// Number of pixels in RAW row // 14.7 MP 12bpp
+    #define CAM_RAW_ROWS                3000	// Number of rows in RAW
+    #define CAM_DRYOS                   1		// Camera is DryOS-based
+    #define CAM_PROPSET                 2		// Camera's properties group (the generation)  //SD780 Verify
+
+    #undef  CAM_SWIVEL_SCREEN					// Camera has rotated LCD screen
+    #undef  CAM_USE_ZOOM_FOR_MF					// Zoom lever can be used for manual focus adjustments
+    #undef  CAM_ADJUSTABLE_ALT_BUTTON			// ALT-button can be set from menu
+    #undef CAM_REMOTE							// Camera supports USB-remote
+    #undef CAM_SYNCH							// Camera supports SDM precision synch
+
+    #define CAM_MULTIPART               1		// Camera supports SD-card multipartitioning
+    #define CAM_HAS_ZOOM_LEVER          1		// Camera has dedicated zoom buttons
+    #undef  CAM_DRAW_EXPOSITION					// Output expo-pair on screen (for cameras which (sometimes) don't do that)  //SD780 Verify what is this?
+    #undef  CAM_HAS_ERASE_BUTTON				// Camera has dedicated erase button
+    #undef  CAM_HAS_IRIS_DIAPHRAGM				// Camera has real diaphragm mechanism
+
+    #define CAM_HAS_ND_FILTER           1		// Camera has build-in ND filter
+
+//    #define CAM_CAN_SD_OVER_NOT_IN_MF   1		// Camera allows subject distance (focus) override when not in manual focus mode
+//    #define CAM_CAN_SD_OVERRIDE         1		// Camera allows to do subject distance override
+
+    #undef  CAM_HAS_MANUAL_FOCUS				// Camera has manual focus mode
+    #define  CAM_HAS_USER_TV_MODES        1		// Camera has tv-priority or manual modes with ability to set tv value //include M/P ? needed to make Tv bracketing work
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU    1		// On some cameras Canon shoot menu has additional functionality and useful in this case to see CHDK OSD in this mode
+    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1	// Camera can unlock optical zoom in video (if it is locked)
+
+//    #undef  CAM_FEATURE_FEATHER					// Cameras with "feather" or touch wheel.
+
+    #define CAM_HAS_IS                    1		// Camera has image stabilizer
+    #undef CAM_HAS_JOGDIAL						// Camera has a "jog dial"
+
+//    #undef  CAM_CONSOLE_LOG_ENABLED         // Development: internal camera stdout -> A/stdout.txt
+//    #define CAM_CONSOLE_LOG_ENABLED     1
+
+    #define CAM_CHDK_HAS_EXT_VIDEO_MENU 1			// In CHDK for this camera realized adjustable video compression
+
+//    #undef  CAM_CAN_MUTE_MICROPHONE         // Camera has function to mute microphone
+//    #define CAM_EMUL_KEYPRESS_DELAY     40  // Delay to interpret <alt>-button press as longpress
+//    #define CAM_EMUL_KEYPRESS_DURATION  5   // Length of keypress emulation
+//    #undef  CAM_AF_SCAN_DURING_VIDEO_RECORD // CHDK can make single AF scan during video record
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+
+//    #undef  CAM_HAS_VIDEO_BUTTON            // Camera can take stills in video mode, and vice versa
+//    #undef  CAM_EV_IN_VIDEO                 // CHDK can change exposure in video mode
+//    #define CAM_VIDEO_CONTROL      1		// pause / unpause video recordings
+    #undef  CAM_VIDEO_CONTROL
+    #define CAM_VIDEO_QUALITY_ONLY          1
+///hmmmmmm
+//  #define ZOOM_OVERRIDE               0	// Shall zoom-override be used? default 0 becoz not implemented right now
+
+    #define DNG_SUPPORT                 1
+
+//    #undef  CAM_REAR_CURTAIN				// Camera do not have front/rear curtain flash sync in menu
+//    #undef  CAM_BRACKETING				// Cameras that have bracketing (focus & ev) in original firmware already, most likely s- & g-series (propcase for digic III not found yet!)
+    #define CAM_EXT_TV_RANGE			1
+// CHDK can make exposure time longer than 64s
+
+    #undef CAM_UNCACHED_BIT  // shut up compiler
+    #define CAM_UNCACHED_BIT    0x40000000		// bit indicating the uncached memory
+
+    #define CAM_MAKE                    "Canon"
+
+    #undef CAM_SENSOR_BITS_PER_PIXEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12		// Bits per pixel. 10 is standard, 12 is supported except for curves
+    #undef CAM_WHITE_LEVEL
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+    #undef CAM_BLACK_LEVEL
+    #define CAM_BLACK_LEVEL             127
+    #undef CAM_BITMAP_PALETTE
+    #define CAM_BITMAP_PALETTE    2				// which color set is used for this camera
+//    #undef CAM_HAS_VARIABLE_ASPECT         // can switch between 16:9 and 4:3
+//    #define DEFAULT_RAW_EXT             1  // extension to use for raw (see raw_exts in conf.c)
+//    // by nandoide sept-2009
+//    //zebra adjust buffer height: show use at sx200is: needed for save memory space
+#undef ZEBRA_HMARGIN0
+    #define ZEBRA_HMARGIN0  70
+//
+//    //aspect corrections
+//#undef CAM_USES_ASPECT_CORRECTION
+//   #define CAM_USES_ASPECT_CORRECTION   1   //if true, camera uses a modified graphics primitives to draw with exact display aspect-ratio.
+//                                                                   // Could slow the graphics output (but not perceived on sx200is), but adds rectangle drawing optimizations to compensate.
+//                                                                   // To extend to other cameras see sx200is camera.h comments in  and comments on core gui_draw.c
+//#undef CAM_USES_ASPECT_YCORRECTION
+//#define CAM_USES_ASPECT_YCORRECTION   0
+
+//   #undef GAMES_SCREEN_WIDTH
+//   #undef GAMES_SCREEN_HEIGHT
+//   #define GAMES_SCREEN_WIDTH 720
+ //  #define GAMES_SCREEN_HEIGHT 240
+//    #undef ASPECT_XCORRECTION
+//    #define ASPECT_XCORRECTION(x)  ( ( ((x)<<3) + (x) )  >>2 )   //correction x*screen_buffer_width/screen_width = x*720/320 = x*9/4 = (x<<3 + x)>>2
+//~ #undef ASPECT_YCORRECTION
+//~ #define ASPECT_YCORRECTION(y)  ( (y) ) //none
+
+//grids
+// not used ?
+//    #define GRIDX 360
+//    #define GRIDY 240
+//    #undef ASPECT_GRID_XCORRECTION
+//    #define ASPECT_GRID_XCORRECTION(x)  ( ((x)<<3)/9  )  //grids are designed on a 360x240 basis and screen is 320x240, we need x*320/360=x*8/9
+//    #undef ASPECT_GRID_YCORRECTION
+//    #define ASPECT_GRID_YCORRECTION(y)  ( (y) )       //y correction for grids  made on a 360x240 As the buffer is 720x240 we have no correction here.
+//    //menu, alt (default)
+//    #define ASPECT_XCORRECTION(x)  ( ((x)<<1) )  //see comments on 200is
+//    #define ASPECT_YCORRECTION(y)  ( (y) )         //no correction the same for coordinate y. I think there are no cameras actually needing both corrections.
+//    //viewport, defaults used if there is no aspect correction
+////    #define ASPECT_VIEWPORT_XCORRECTION(x) ( ((x)<<1) ) // see comments on 200is
+//    #define ASPECT_VIEWPORT_XCORRECTION(x) ( (x) ) // see comments on 200is
+//    #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) )       //no correction
+//    //grid - not used unless aspect correction is enabled, define as needed
+////    #define ASPECT_GRID_XCORRECTION(x) ( (x) )
+////    #define ASPECT_GRID_YCORRECTION(y) ( (y) )
+//
+//
+//    #define EDGE_HMARGIN 0  //define sup and inf screen margins on edge overlay without overlay.  Necessary to save memory buffer space. sx200is needs values other than 0
+//    // end of section by nandoid
+//
+//    #undef CAM_QUALITY_OVERRIDE //camera may need shooting quality override (sx200is lacks SuperFine quality)
+//   #undef ASPECT_GAMES_XCORRECTION
+   // 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer wirh another resolution
+   // used by gui.c that configures the draw environment (trhough new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
+   // other modes in perfect aspect ratio 4/3: slightly better visualization: file menus more readable, ...
+//   #define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )
+//   #undef ASPECT_GAMES_YCORRECTION
+//   #define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
+#define CAM_QUALITY_OVERRIDE 1
+
+// pattern
+#define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
+// color preliminary
+    #define CAM_COLORMATRIX1                               \
+      837237, 1000000, -290137, 1000000, -128156, 1000000, \
+      -127762, 1000000, 643909, 1000000,  52973,  1000000, \
+      4446,  1000000, 88354,   1000000,  224246, 1000000
+
+    #define cam_CalibrationIlluminant1 1 // Daylight
+// cropping
+    #define CAM_JPEG_WIDTH  4000
+    #define CAM_JPEG_HEIGHT 3000
+    #define CAM_ACTIVE_AREA_X1 12
+    #define CAM_ACTIVE_AREA_Y1 12
+    #define CAM_ACTIVE_AREA_X2 4444
+    #define CAM_ACTIVE_AREA_Y2 3324
+// camera name
+    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData sd990: OK
+
+//    #define DNG_EXT_FROM ".CR2"
+//----------------------------------------------------------
+
 #elif defined (CAMERA_ixus90_sd790)
     #define CAM_PROPSET                 2
     #define CAM_DRYOS                   1

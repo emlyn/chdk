@@ -227,6 +227,7 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus90_sd790  PLATFORMSUB=100d NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100f NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100j NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus100_sd780  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	@echo "**** All firmwares created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/$(VER)-a610-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a610-100d-$(BUILD_NUMBER).zip
@@ -257,6 +258,7 @@ batch-zip: version
 	mv $(topdir)bin/$(VER)-g11-100f-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g11-100f-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-g11-100j-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g11-100j-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-g11-100k-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g11-100k-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/$(VER)-ixus100_sd780-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus100_sd780-100c-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
@@ -355,6 +357,7 @@ batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus90_sd790  PLATFORMSUB=100d NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100f NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100j NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=ixus100_sd780  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
 	@echo "**** All zipfiles including firmwares and extra stuff created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/a610-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/a610-100d-$(BUILD_NUMBER)-full.zip
@@ -413,6 +416,8 @@ batch-zip-complete: version
 	mv $(topdir)bin/g11-100j-$(BUILD_NUMBER).zip $(topdir)bin/g11-100j-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/g11-100k-$(BUILD_NUMBER)-full.zip $(topdir)bin/g11-100k-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/g11-100k-$(BUILD_NUMBER).zip $(topdir)bin/g11-100k-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/ixus100_sd780-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus100_sd780-100c-$(BUILD_NUMBER)-full_BETA.zip
+	mv $(topdir)bin/ixus100_sd780-100c-$(BUILD_NUMBER).zip $(topdir)bin/ixus100_sd780-100c-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
@@ -509,4 +514,5 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=ixus90_sd790  PLATFORMSUB=100d NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100f NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100j NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus100_sd780  PLATFORMSUB=100c NO_INC_BUILD=1 clean
 	.PHONY: fir upload
