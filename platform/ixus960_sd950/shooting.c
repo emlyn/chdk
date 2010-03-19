@@ -131,4 +131,4 @@ n = get_file_next_counter();
 n = (n>>18)&0x3FF;
 return n;
 }
-int circle_of_confusion = 5;
+int circle_of_confusion = 6;

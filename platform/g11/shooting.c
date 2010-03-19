@@ -145,7 +145,7 @@ long get_target_dir_num() {
     return n;
 }
 
-int circle_of_confusion = 5;
+int circle_of_confusion = 7;
 
 // swivel screen state.
 #ifdef CAM_SWIVEL_SCREEN

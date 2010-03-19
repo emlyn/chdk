@@ -234,7 +234,7 @@ static int math_randomseed (lua_State *L) {
 
 
 static const luaL_Reg mathlib[] = {
-//  {"abs",   math_abs},
+  {"abs",   math_abs},
 //  {"acos",  math_acos},
 //  {"asin",  math_asin},
 //  {"atan2", math_atan2},

@@ -141,7 +141,7 @@ long get_target_dir_num() {
     return n;
 }
 
-int circle_of_confusion = 6;
+int circle_of_confusion = 5;
 
 void change_video_tables(int a, int b)
 {
