@@ -383,18 +383,6 @@ void my_kbd_read_keys()
 //		 char aStr2[64];
 //		 sprintf(aStr2,"[ x = %d ]",*(long*)(aVar+0x40));
 //		 draw_txt_string(15, 10, aStr2, conf.osd_color);
-
-		unsigned long *buff = ((unsigned long*)0x1960);
-		char aStr2[64];
-		sprintf(aStr2,"[ %d = 0x%08x ]",buff,*buff);
-		draw_txt_string(15, 11, aStr2, conf.osd_color);
-		sprintf(aStr2,"[ %d = 0x%08x ]",buff+4,*(buff+4));
-		draw_txt_string(15, 10, aStr2, conf.osd_color);
-		sprintf(aStr2,"[ %d = 0x%08x ]",buff+8,*(buff+8));
-		draw_txt_string(15, 9, aStr2, conf.osd_color);
-
-
-
 	}
 
 //		 sprintf(aStr2,"[ y = %d ]",*(long*)(aVar-0x40));
@@ -450,10 +438,6 @@ void my_kbd_read_keys()
     	iL++;
     }
 	}*/
-
-
-
-
 
 
 //	if (kbd_get_pressed_key() == KEY_DOWN) {
