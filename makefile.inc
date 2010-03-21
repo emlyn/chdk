@@ -248,10 +248,13 @@ PLATFORMSUB=100a
 #PLATFORMSUB=100d
 
 #PLATFORM=g11 
-#PLATFORMSUB=100f 
+#PLATFORMSUB=100f
 
 #PLATFORM=g11 
-#PLATFORMSUB=100j 
+#PLATFORMSUB=100j
+
+#PLATFORM=g11 
+#PLATFORMSUB=100l
 
 MEMISOSIZE="(&_end-&_start)"
 # override this on the command line or in buildconf to use PRIMARY.BIN from a different tree
