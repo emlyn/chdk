@@ -2563,7 +2563,11 @@ void other_kbd_process(){
   #if CAM_HAS_ERASE_BUTTON
   if (kbd_is_key_clicked(KEY_ERASE)){ 
   #else
+  #if !defined (CAMERA_a480)
   if (kbd_is_key_clicked(KEY_DISPLAY)){ 
+  #else
+  if (kbd_is_key_clicked(KEY_MENU)){ 
+  #endif
   #endif
    set_ev_video_avail(!get_ev_video_avail()); 
   }

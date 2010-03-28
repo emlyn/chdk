@@ -273,6 +273,59 @@
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
     //#define DNG_EXT_FROM ".DPS"	
+//----------------------------------------------------------
+
+#elif defined (CAMERA_a480)
+    #define CAM_PROPSET                 2
+    #define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              3720   
+    #define CAM_RAW_ROWS                2772   
+
+    #undef  CAM_USE_ZOOM_FOR_MF
+    #undef  CAM_HAS_ERASE_BUTTON
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #undef  CAM_HAS_IS
+    #define CAM_MULTIPART               1
+    #undef  CAM_VIDEO_CONTROL
+    #define CAM_REAR_CURTAIN            1
+    #undef  DEFAULT_RAW_EXT 
+    #define DEFAULT_RAW_EXT             2   // use .CR2 
+    #define CAM_EXT_TV_RANGE            1
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+    #define CAM_CAN_MUTE_MICROPHONE     1
+    #define CAM_EV_IN_VIDEO             1
+
+    #define DNG_SUPPORT                 1
+    // pattern
+    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
+    // color
+
+    #define CAM_COLORMATRIX1                               \
+      827547, 1000000, -290458, 1000000, -126086, 1000000, \
+     -12829,  1000000, 530507,  1000000, 50537,   1000000, \
+      5181,   1000000, 48183,   1000000, 245014,  1000000
+
+    #define cam_CalibrationIlluminant1 1 // Daylight
+    // cropping
+    #define CAM_JPEG_WIDTH  3648
+    #define CAM_JPEG_HEIGHT 2736
+    #define CAM_ACTIVE_AREA_X1 6
+    #define CAM_ACTIVE_AREA_Y1 12
+    #define CAM_ACTIVE_AREA_X2 3690
+    #define CAM_ACTIVE_AREA_Y2 2772
+
+    // camera name
+    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+    #undef  CAM_SENSOR_BITS_PER_PIXEL
+    #undef  CAM_WHITE_LEVEL
+    #undef  CAM_BLACK_LEVEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+    #define CAM_BLACK_LEVEL             127
 	
 //----------------------------------------------------------
 #elif defined (CAMERA_a530)

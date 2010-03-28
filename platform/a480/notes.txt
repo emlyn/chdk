@@ -1,0 +1,3 @@
+1) press "mode" key shortly for enter/exit <alt mode>, press "mode" key longer for original function
+2) press playback (>) key in CHDK menus as disp/erase button
+3) press "menu" key during video recording for Ev correction
