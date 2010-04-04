@@ -36,7 +36,7 @@ void debug_led(int state)
 }
 
 void ubasic_set_led(int led, int state, int bright) {
- static char led_table[5]={7,9};
+ static char led_table[]={7,9};
  _LEDDrive(led_table[led%sizeof(led_table)], state<=1 ? !state : state);
 }
 
