@@ -52,7 +52,7 @@ void __attribute__((naked,noinline)) movie_record_task(){
 "loc_FF938328:\n"
                  "B       loc_FF93832C\n"
 "loc_FF93832C:\n"
-                 "LDR     R0, =0xFF937FC\n"
+                 "LDR     R0, =0xFF937FCC\n"
                  "STR     R6, [R4,#0x34]\n"
                  "STR     R0, [R4,#0x9C]\n"
                  "LDR     R0, =0xFF9375EC\n"

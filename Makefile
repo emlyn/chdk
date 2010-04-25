@@ -249,8 +249,8 @@ batch-zip: version
 	cp $(topdir)bin/$(VER)-g11-100j-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g11-100k-$(BUILD_NUMBER).zip
 	mv $(topdir)bin/$(VER)-sx1-200h-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx1-200h-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-sx1-201a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx1-201a-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-sx200is-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx200is-100c-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-sx200is-100d-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx200is-100d-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/$(VER)-sx200is-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx200is-100c-$(BUILD_NUMBER).zip
+	mv $(topdir)bin/$(VER)-sx200is-100d-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx200is-100d-$(BUILD_NUMBER).zip
 	mv $(topdir)bin/$(VER)-ixus980_sd990-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus980_sd990-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus980_sd990-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus980_sd990-101b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-a2000-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a2000-100c-$(BUILD_NUMBER)_BETA.zip
@@ -399,10 +399,10 @@ batch-zip-complete: version
 	mv $(topdir)bin/sx1-200h-$(BUILD_NUMBER).zip $(topdir)bin/sx1-200h-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/sx1-201a-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx1-201a-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/sx1-201a-$(BUILD_NUMBER).zip $(topdir)bin/sx1-201a-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/sx200is-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx200is-100c-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx200is-100c-$(BUILD_NUMBER).zip $(topdir)bin/sx200is-100c-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/sx200is-100d-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx200is-100d-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx200is-100d-$(BUILD_NUMBER).zip $(topdir)bin/sx200is-100d-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/sx200is-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx200is-100c-$(BUILD_NUMBER)-full.zip
+	mv $(topdir)bin/sx200is-100c-$(BUILD_NUMBER).zip $(topdir)bin/sx200is-100c-$(BUILD_NUMBER).zip
+	mv $(topdir)bin/sx200is-100d-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx200is-100d-$(BUILD_NUMBER)-full.zip
+	mv $(topdir)bin/sx200is-100d-$(BUILD_NUMBER).zip $(topdir)bin/sx200is-100d-$(BUILD_NUMBER).zip
 	mv $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER).zip $(topdir)bin/ixus980_sd990-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus980_sd990-101b-$(BUILD_NUMBER)-full_BETA.zip

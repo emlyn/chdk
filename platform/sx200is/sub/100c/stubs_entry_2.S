@@ -26,7 +26,7 @@ NHSTUB(GetFocusLensSubjectDistance, 0xFF92F7E4)
 NHSTUB(PostLogicalEventForNotPowerType, 0xFF879A08)
 NHSTUB(LEDDrive, 0xFF847614)
 NHSTUB(apex2us, 0xFF9D8170)
-NHSTUB(WriteSDCard, 0xFF920CA4)
+NHSTUB(WriteSDCard, 0xFF920E8C)                   // was 0xFF920CA4
 NHSTUB(UnlockAF, 0xFF825644)
 NHSTUB(DoAFLock, 0xFF82560C)
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFF8303C0)
