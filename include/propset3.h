@@ -39,7 +39,7 @@ WARNING:
 #define PROPCASE_BRACKET_MODE                         29
 #define PROPCASE_FLASH_SYNC_CURTAIN			64
 #define PROPCASE_METERING_MODE				155
-#define PROPCASE_WB_ADJ                               270
+#define PROPCASE_WB_ADJ                               271
 #define PROPCASE_ASPECT_RATIO          294
 #define PROPCASE_TIMER_MODE          225
 #define PROPCASE_OPTICAL_ZOOM_POSITION        197

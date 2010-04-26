@@ -56,7 +56,7 @@ void gui_menu_init(CMenu *menu_ptr) {
     }
     
     num_lines = screen_height/rbf_font_height()-1;
-#if defined (CAMERA_g11)
+#if defined (CAMERA_g11) || defined (CAMERA_s90)
     w = screen_width-10-10;
 #else
     w = screen_width-30-30;
@@ -672,7 +672,7 @@ void gui_menu_draw() {
             case MENUITEM_SEPARATOR:
                 if (lang_str(curr_menu->menu[imenu].text)[0]) {
                     j = rbf_str_width(lang_str(curr_menu->menu[imenu].text));
-#if defined (CAMERA_g11)
+#if defined (CAMERA_g11) || defined (CAMERA_s90)
 		xx+=((int)w-j-len_space*2)>>1;
 #else
 		xx+=(w-j-len_space*2)>>1;

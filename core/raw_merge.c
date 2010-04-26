@@ -7,7 +7,11 @@
 #include "gui_lang.h"
 #include "lang.h"
 #include "conf.h"
-#define TEMP_FILE        "raw16.tmp"
+#ifdef CAM_DRYOS_2_3_R39
+  #define TEMP_FILE        "A/raw16.tmp"
+#else
+  #define TEMP_FILE        "raw16.tmp"
+#endif
 #define TEMP_FILE_NAME   "A/raw16.tmp"
 #define TEMP_FILE_NAME_1 "A/raw16_1.tmp"
 

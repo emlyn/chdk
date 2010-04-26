@@ -95,5 +95,6 @@ MODE_SCN_DIGITAL_MACRO  ,
 MODE_SCN_STITCH         ,
 MODE_SCN_LONG_SHUTTER   , // only known on sx1
 MODE_LOWLIGHT           , // g11
+MODE_SCN_NOSTALGIC      , // s90
 };
 #endif

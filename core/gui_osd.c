@@ -56,7 +56,7 @@ static int step;
 // Only top and bottom are restored, not left&right.
 #define ZEBRA_CANONOSD_BORDER_RESTORE   1
 
-#if defined (CAMERA_sx200is) || defined(CAMERA_g11) || defined (CAMERA_ixus100_sd780)
+#if defined (CAMERA_sx200is) || defined(CAMERA_g11) || defined (CAMERA_ixus100_sd780) || defined (CAMERA_s90)
   //there are no memory for that (the screen buffer is big): 960x270
   //TODO use a buffer of screen dimensions
   #define ZFIX_TOP    1
@@ -75,7 +75,7 @@ static unsigned char *cur_buf;
 static int cur_buf_size;
 static int timer = 0;
 static unsigned char *buf = NULL;
-#if defined (CAMERA_sx200is) || defined(CAMERA_g11) || defined (CAMERA_ixus100_sd780)
+#if defined (CAMERA_sx200is) || defined(CAMERA_g11) || defined (CAMERA_ixus100_sd780) || defined (CAMERA_s90)
 static int buffer_size;
 #endif
 
@@ -240,7 +240,7 @@ static int gui_osd_zebra_init(int show) {
     if(show) { 
         if (!buf) {
             timer = 0;
-            #if defined (CAMERA_sx200is) || defined (CAMERA_g11) || defined (CAMERA_ixus100_sd780) //nandoide sept-2009
+            #if defined (CAMERA_sx200is) || defined (CAMERA_g11) || defined (CAMERA_ixus100_sd780) || defined (CAMERA_s90) //nandoide sept-2009
                buffer_size=screen_buffer_size-ZEBRA_HMARGIN0*screen_buffer_width;
                buf = malloc(buffer_size);
                //~ if (!buf) draw_txt_string(0, 14, "Warn: No space to allocate zebra buffer: restart camera", MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
@@ -254,7 +254,7 @@ static int gui_osd_zebra_init(int show) {
 #if ZEBRA_CANONOSD_BORDER_RESTORE
             cur_buf_top = malloc(screen_buffer_width * ZFIX_TOP); 
             cur_buf_bot = malloc(screen_buffer_width * ZFIX_BOTTOM); 
-#if defined (CAMERA_g11)		
+#if defined (CAMERA_g11) || defined (CAMERA_s90)		
             if (cur_buf_top) memset(cur_buf_top,0,screen_buffer_width * ZFIX_TOP);
             if (cur_buf_bot) memset(cur_buf_bot,0,screen_buffer_width * ZFIX_BOTTOM);
 #endif
@@ -371,7 +371,7 @@ static void gui_osd_draw_zebra_osd() {
 
 // reyalp - TODO this SHOULD NOT BE CAMERA SPECIFIC. Should be generalized to work with all cameras
 // having a copy/paste/modified version for individual cameras will be a maintenance nightmare.
-#if defined (CAMERA_sx200is) || defined (CAMERA_g11) || defined (CAMERA_ixus100_sd780)
+#if defined (CAMERA_sx200is) || defined (CAMERA_g11) || defined (CAMERA_ixus100_sd780) || defined (CAMERA_s90)
 //nandoide sept-2009 
 // viewport is 360x240 and screen buffer 960x270, we need to expand the x coordinate
 int gui_osd_draw_zebra(int show) {
