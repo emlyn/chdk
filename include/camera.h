@@ -2430,6 +2430,7 @@
 	#define CAM_QUALITY_OVERRIDE 1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_HAS_JOGDIAL             1
+	#undef CAM_HAS_ERASE_BUTTON
     #undef  CAM_CONSOLE_LOG_ENABLED         // Development: internal camera stdout -> A/stdout.txt
     #define CAM_BRACKETING              1
     #define CAM_MULTIPART               1
