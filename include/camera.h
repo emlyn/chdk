@@ -79,13 +79,8 @@
     #define ASPECT_XCORRECTION(x)  ( ((x)<<1) )  //see comments on 200is 
     #define ASPECT_YCORRECTION(y)  ( (y) )         //no correction the same for coordinate y. I think there are no cameras actually needing both corrections.
     //viewport, defaults used if there is no aspect correction
-//    #define ASPECT_VIEWPORT_XCORRECTION(x) ( ((x)<<1) ) // see comments on 200is 
     #define ASPECT_VIEWPORT_XCORRECTION(x) ( (x) ) // see comments on 200is 
     #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) )       //no correction
-    //grid - not used unless aspect correction is enabled, define as needed
-//    #define ASPECT_GRID_XCORRECTION(x) ( (x) ) 
-//    #define ASPECT_GRID_YCORRECTION(y) ( (y) ) 
-    
     
     #define EDGE_HMARGIN 0  //define sup and inf screen margins on edge overlay without overlay.  Necessary to save memory buffer space. sx200is needs values other than 0
     // end of section by nandoid
@@ -2218,14 +2213,12 @@
     #define CAM_RAW_ROWPIX              4080 // from calcs see 100C lib.c 
     #define CAM_RAW_ROWS                3048 //  "     "    "    "    "  
     
-  //  #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
-  //  #define CAM_HAS_VIDEO_BUTTON       1
+
     #define CAM_VIDEO_QUALITY_ONLY          1  
-// reyalp - from the manual, i guess no native bracketing 
-//    #define CAM_BRACKETING              1 
+
     #undef  CAM_VIDEO_CONTROL
     #define CAM_MULTIPART               1
     #define CAM_HAS_JOGDIAL             1
@@ -2277,29 +2270,16 @@
 // values need to be better documented
 	// reyalp - I guess these are bitmap ?
     //default mappings
-//    #define BUFFERX 720 // not used ?
-//    #define BUFFERY 240 // not used ?
-// why have these when we already have vid_get_bitmap_screen_* which just return these ?!? 
-//    #define SCREENX 320
-//    #define SCREENY 240
     #undef ASPECT_XCORRECTION
     #define ASPECT_XCORRECTION(x)  ( ( ((x)<<3) + (x) )  >>2 )   //correction x*screen_buffer_width/screen_width = x*720/320 = x*9/4 = (x<<3 + x)>>2
-    //~ #undef ASPECT_YCORRECTION
-    //~ #define ASPECT_YCORRECTION(y)  ( (y) ) //none 
     
     //grids
-// not used ?
-//    #define GRIDX 360
-//    #define GRIDY 240
     #undef ASPECT_GRID_XCORRECTION
     #define ASPECT_GRID_XCORRECTION(x)  ( ((x)<<3)/9  )  //grids are designed on a 360x240 basis and screen is 320x240, we need x*320/360=x*8/9
     #undef ASPECT_GRID_YCORRECTION
     #define ASPECT_GRID_YCORRECTION(y)  ( (y) )       //y correction for grids  made on a 360x240 As the buffer is 720x240 we have no correction here.
     
     //viewport
-// not used ?
-//    #define VIEWPORTX 360
-//    #define VIEWPORTY 240
     #undef ASPECT_VIEWPORT_XCORRECTION 
     #define ASPECT_VIEWPORT_XCORRECTION(x) ASPECT_GRID_XCORRECTION(x) //viewport is 360x240 and screen 320x240, we need x*320/360=x*8/9, equal than grids, used by edgeoverlay
     #undef ASPECT_VIEWPORT_YCORRECTION 
@@ -2308,7 +2288,6 @@
     #define EDGE_HMARGIN 20
     
     //games mappings
-	// renamed GAMES_SCREEN_WIDTH / GAMES_SCREEN_HEIGHT
    #undef GAMES_SCREEN_WIDTH
    #undef GAMES_SCREEN_HEIGHT
    #define GAMES_SCREEN_WIDTH 360
