@@ -540,9 +540,7 @@
 
 #define CAM_USE_ZOOM_FOR_MF         1
 
-// cannot mute during video-zoom through CHDK, it can mute in general firmware settings (non CHDK)
-#undef  CAM_CAN_MUTE_MICROPHONE            // Camera has no function to mute microphone
-
+#define CAM_CAN_MUTE_MICROPHONE     1
 #define CAM_HAS_IRIS_DIAPHRAGM      1
 #undef  CAM_HAS_ND_FILTER
 

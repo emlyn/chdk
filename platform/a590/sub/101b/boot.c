@@ -21,11 +21,13 @@ void boot();
 void taskCreateHook(int *p) { 
  p-=16;
  if (p[0]==0xFFC973E4)  p[0]=(int)exp_drv_task;
+ if (p[0]==0xFFC4BBBC)  p[0]=(int)movie_record_task;
 }
 
 void taskCreateHook2(int *p) { 
  p-=16;
  if (p[0]==0xFFC973E4)  p[0]=(int)exp_drv_task;
+ if (p[0]==0xFFC4BBBC)  p[0]=(int)movie_record_task;
 }
 
 void boot() { //#fs
@@ -1041,8 +1043,7 @@ void __attribute__((naked,noinline)) sub_FFC64678_my() { //#fs
 "loc_FFC648A4:\n"
                 "MOV     R0, R6\n"
 "                LDMFD   SP!, {R4-R8,LR}\n"
-				"BL      sub_FFC64338\n" // branch for movie support (why not enabled ?)
-//				"BL      sub_FFC64338_my\n"
+				"BL      sub_FFC64338\n" // branch for movie support
 "loc_FFC648B0:\n"
                 "LDR     R12, =0x10B0\n"
 "                CMP     R6, R12\n"
