@@ -45,6 +45,7 @@ NHSTUB(EdidDump,0xFF841BE8)
 NHSTUB(drvInfo,0xFF81E33C);
 NHSTUB(blah,0xFF8462F8);
 NHSTUB(open2,0xFF823C70);
+NHSTUB(strrchr,0xFF99F3CC)
 
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFF82FF40) //"StartContiAE"
 NHSTUB(ExpCtrlTool_StopContiAE, 0xFF830084)  //"StopContiAE"
