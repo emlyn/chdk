@@ -1,8 +1,9 @@
 /*
 A small tools to convert CHDK 10 and 12 bit raws to 8 or 16 bit grayscale for inspection
 Can also covert to CHDK formats
+
 Usage:
-rawconvert -<op> -w=<width> -h=<height> [-noshift] <infile> <outfile>
+rawconvert -<op> -w=<width> -h=<height> [-noshift] [-pgm] <infile> <outfile>
 where <op> is XtoY with X and Y being the source and destination BPP
 by default
  converting to lower BPP discards the lower bits of the input value.
@@ -10,9 +11,26 @@ by default
 if -noshift is specified
  converting to a lower BPP discards the upper bits
  converting to a higher BPP leaves the values unchanged
-NOTE: 
+
+ NOTES: 
  Host is assumed to be little endian!
  This is a debugging tool not an imaging tool.
+ 
+LINKS:
+CHDK wikia article: 	http://chdk.wikia.com/wiki/CHDK_Tools#rawconvert.c
+
+REVISIONS:
+1. Initial release. Author: reyalP (28-Oct-2009)
+    CHDK trunk SVN changeset #823 --> http://tools.assembla.com/chdk/changeset/823
+    Forum link: http://chdk.setepontos.com/index.php/topic,2509.msg42402.html#msg42402
+
+2. Portable Gray Map support added by cppasm (21-May-2010)
+    Forum link: http://chdk.setepontos.com/index.php/topic,5207.msg50599.html#msg50599
+    Changes:
+	 Added support PGM (portable graymap) file format
+     8 and 16 bits per pixel supported, but 16 bit is supported by limited subset of viewers so it's better to use 8 bit PGM
+     PGM output is enabled with -pgm option, and you must specify .PGM extension to output file.
+     example:  rawconvert.exe -10to8 -pgm -w=2672 -h=1968 CRW_0005.RAW IMG_0005.PGM
 */
 #include <stdio.h>
 #include <stdint.h>
@@ -143,6 +161,19 @@ void set_16_pixel(uint8_t *buf, unsigned row_bytes, unsigned x, unsigned y, unsi
 	((uint16_t *)buf)[(row_bytes/2)*y + x] = (uint16_t)value;
 }
 
+void swap_bytes(unsigned char *src, unsigned char *dst, size_t size)
+{
+    unsigned char c1, c2;
+	while(size>1)
+	{
+		c1=*src++;
+		c2=*src++;
+		*dst++=c2;
+		*dst++=c1;
+		size-=2;
+	}
+}
+
 #define OP_DEF(X,Y) {#X "to" #Y, X, Y, get_##X##_pixel, set_##Y##_pixel},
 op_def_t op_defs[]={
 	OP_DEF(8,10)
@@ -174,7 +205,7 @@ const op_def_t *find_op(const char *name)
 void usage()
 {
 	unsigned i;
-	fprintf(stderr,"Usage: -<op> -w=<width> -h=<height> [-noshift] <infile> <outfile>\n");
+	fprintf(stderr,"Usage: -<op> -w=<width> -h=<height> [-pgm] [-noshift] <infile> <outfile>\n");
 	fprintf(stderr," op one of:");
 	for( i=0; i < NUM_OP_DEFS; i++) {
 		fprintf(stderr," %s",op_defs[i].name);
@@ -199,6 +230,7 @@ int main(int argc, char**argv)
 	unsigned osize;
 
 	unsigned pixel_shift=1;
+	unsigned pgm_format=0;
 	int bpp_diff;
 
 	struct stat st;
@@ -216,6 +248,9 @@ int main(int argc, char**argv)
 		}
 		else if ( strcmp(argv[i],"-noshift") == 0 ) {
 			pixel_shift=0;
+		}
+		else if( strcmp(argv[i],"-pgm") == 0 ) {
+			pgm_format=1;
 		}
 		else if ( argv[i][0]=='-' ) {
 			if( !(op = find_op(argv[i]+1))) {
@@ -263,6 +298,10 @@ int main(int argc, char**argv)
 	}
 	if((width*op->obpp)%8 != 0) {
 		fprintf(stderr,"WARNING: width %u not an integral number of bytes at %u bpp\n",width,op->obpp);
+	}
+	if(pgm_format && op->obpp!=8 && op->obpp!=16) {
+		fprintf(stderr,"WARNING: Portable Gray Map (PGM) format supports only 8 or 16 bpp.\n");
+		pgm_format=0;
 	}
 
 	in_data=malloc(st.st_size);
@@ -320,8 +359,12 @@ int main(int argc, char**argv)
 
 	fp=fopen(oname,"wb");
 	assert(fp);
-
-	fwrite(out_data,1,osize,fp);
+	if(pgm_format)
+	{
+		fprintf(fp, "P5\n%d\n%d\n%d\n", width, height, (1 << op->obpp)-1);
+		if(op->obpp==16) swap_bytes(out_data, out_data, osize);
+	}
+	fwrite(out_data, 1, osize, fp);
 	fclose(fp);
 
 	free(in_data);
