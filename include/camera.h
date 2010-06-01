@@ -902,6 +902,99 @@
 // for the purposes of CHDK, the FACE button is treated as the erase button
 //    #undef  CAM_HAS_ERASE_BUTTON
 
+#elif defined (CAMERA_d10)
+    #define CAM_PROPSET                 2
+    #define CAM_DRYOS                   1
+
+    #define CAM_RAW_ROWPIX              4104		// 12 MP 12bpp
+    #define CAM_RAW_ROWS                3048		// from " CrwAddress %lx, CrwSize H %ld V %ld\r"
+
+    #undef  CAM_HAS_ERASE_BUTTON
+    #undef  CAM_USE_ZOOM_FOR_MF
+// TODO
+//    #define CAM_MULTIPART               1
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define CAM_HAS_ND_FILTER           1
+
+// TODO 
+    #undef CAM_REMOTE
+    #undef CAM_SYNCH
+
+    #define CAM_HAS_ZOOM_LEVER          1 // note, has zoom in/out buttons, not lever
+
+// TODO 
+    #undef CAM_CHDK_HAS_EXT_VIDEO_MENU   // In CHDK for this camera realized adjustable video compression
+// TODO
+//    #define CAM_CAN_SD_OVER_NOT_IN_MF   1			// Camera allows subject distance (focus) override when not in manual focus mode
+//    #define CAM_CAN_SD_OVERRIDE         1			// Camera allows to do subject distance override
+
+    #define CAM_HAS_MANUAL_FOCUS		1
+// long shutter is acutally user TV
+    #undef 	CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU            1
+//    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1
+ //   #define CAM_AF_SCAN_DURING_VIDEO_RECORD       1
+//    #define CAM_CHDK_HAS_EXT_VIDEO_MENU           1
+
+    #define CAM_HAS_IS                  1
+    #undef CAM_HAS_JOGDIAL
+
+    #undef  CAM_VIDEO_CONTROL
+    #define CAM_VIDEO_QUALITY_ONLY      1
+// TODO
+//    #define DNG_SUPPORT                 1
+
+//    #define CAM_EXT_TV_RANGE            1
+
+    #undef CAM_UNCACHED_BIT
+    #define CAM_UNCACHED_BIT            0x40000000
+
+    #undef CAM_BITMAP_PALETTE
+// OK looks similar to ixus100 based on forum posts
+    #define CAM_BITMAP_PALETTE          5
+
+// TODO all zebra stuff
+//    #undef ZEBRA_HMARGIN0
+//    #define ZEBRA_HMARGIN0              150			//zebra adjust buffer height: show use at sx200is: needed for save memory space
+
+//    #define CAM_QUALITY_OVERRIDE 1
+    #undef CAM_SENSOR_BITS_PER_PIXEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
+    #undef CAM_WHITE_LEVEL
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+    #undef CAM_BLACK_LEVEL
+    #define CAM_BLACK_LEVEL             127
+
+	//all DNG stuff TODO, copied from ixus 100. Ixus960 may be closer, same sesnor res
+    // pattern
+    //RealRom:FFA99FB4                    ADR     R0, aObRG1G2BLdLdLd ; "\n  OB : (R, G1, G2, B) = (%ld, %ld, %ld"...
+    #define cam_CFAPattern              0x02010100		// Red  Green  Green  Blue
+
+    // color preliminary (see DNG4PS2 wiki)
+    #define CAM_COLORMATRIX1                               \
+      661840,  1000000, -185671, 1000000, -97110,  1000000, \
+      -83661,  1000000, 578860, 1000000,   32308,  1000000, \
+      -8681,    1000000, 70356,   1000000, 207341, 1000000
+
+    //Here is an alternate CAM_COLORMATRIX1 - Current one is nice for me but hey I'm no colour expert.
+    //XYZ -> Camera matrix:
+    //0.459395 -0.129083 -0.068085
+    //-0.055837 0.400827 0.020378
+    //-0.004622 0.048662 0.139970
+
+    #define cam_CalibrationIlluminant1  17			// Standard Light A
+
+	// cropping
+    #define CAM_JPEG_WIDTH              4000
+    #define CAM_JPEG_HEIGHT             3000
+    #define CAM_ACTIVE_AREA_X1          40
+    #define CAM_ACTIVE_AREA_Y1          24
+    #define CAM_ACTIVE_AREA_X2          4056
+    #define CAM_ACTIVE_AREA_Y2          3040
+
+    // camera name OK
+    #define PARAM_CAMERA_NAME           4			// parameter number for GetParameterData
+
 //==========================================================
 // SD-Series (IXUS-Series)
 //==========================================================

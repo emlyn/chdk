@@ -1,0 +1,6 @@
+Power shot D10
+This is a non-functional ALPHA port
+
+Digic IV
+propset 2
+No iris, only ND filter
