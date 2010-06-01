@@ -857,7 +857,6 @@
 		////////////////////////////////
 		// Sure values
 		////////////////////////////////
-    #define CAM_MAKE                    "Canon"
     #define CAM_PROPSET                 2
     #define CAM_DRYOS                   1
 
@@ -1567,7 +1566,6 @@
 #elif defined (CAMERA_ixus870_sd880)
 
     // Camera details
-    #define CAM_MAKE                    "Canon"
     #define CAM_DRYOS                   1
     #define CAM_PROPSET                 2
 
@@ -1859,8 +1857,6 @@
 
     #undef CAM_UNCACHED_BIT
     #define CAM_UNCACHED_BIT            0x40000000
-
-    #define CAM_MAKE                    "Canon"
 
     #undef CAM_BITMAP_PALETTE
     #define CAM_BITMAP_PALETTE          5
