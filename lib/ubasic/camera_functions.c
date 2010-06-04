@@ -132,6 +132,18 @@ void script_console_add_line(const char *str) {
     printf(">>> %s\n", str);
 }
 
+void script_console_set_layout(int x1, int y1, int x2, int y2) {
+    printf(">>> set console layout to %d %d %d %d\n", x1,y1,x2,y2);
+}
+
+void script_console_set_autoredraw(int value) {
+    printf(">>> set console auto_redraw to %d\n", x1);
+}
+
+void script_console_redraw() {
+    printf("*** console redraw ***\n");
+}
+
 void script_console_clear() {
     printf("*** clear console ***\n");
 }

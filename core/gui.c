@@ -2162,7 +2162,7 @@ void gui_redraw()
                 if (show_script_console) {
                     --show_script_console;
                     md_draw_grid();
-                    script_console_draw();
+                    script_console_draw(auto_redraw);
                 }
             }
             break;

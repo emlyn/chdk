@@ -361,6 +361,8 @@ case TOKENIZER_IS_PRESSED:
     r = 2;
     #elif CAM_PROPSET == 3
     r = 3;
+    #elif CAM_PROPSET == 3
+    r = 3;
     #endif
    break;
   case TOKENIZER_GET_TV96:
@@ -1464,7 +1466,32 @@ shoot_statement(void)
   DEBUG_PRINTF("End of shoot\n");
   accept_cr();
 }
-
+/*---------------------------------------------------------------------------*/
+static void set_console_layout(void)
+{
+  int x1,y1,x2,y2;
+  accept(TOKENIZER_SET_CONSOLE_LAYOUT);
+  x1 = expr();
+  y1 = expr();
+  x2 = expr();
+  y2 = expr();
+  script_console_set_layout(x1,y1,x2,y2);
+  accept_cr();
+}
+/*---------------------------------------------------------------------------*/
+static void set_console_autoredraw(void)
+{
+  accept(TOKENIZER_SET_CONSOLE_AUTOREDRAW);
+  script_console_set_autoredraw(expr());
+  accept_cr();
+}
+/*---------------------------------------------------------------------------*/
+static void console_redraw(void)
+{
+  accept(TOKENIZER_CONSOLE_REDRAW);
+  script_console_redraw();
+  accept_cr();
+}
 /*---------------------------------------------------------------------------*/
 
 #ifdef INCLUDE_OLD_GET__SYNTAX

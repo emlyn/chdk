@@ -66,6 +66,23 @@ static int luaCB_cls( lua_State* L )
   return 0;
 }
 
+static int luaCB_set_console_layout( lua_State* L )
+{
+  script_console_set_layout(luaL_checknumber( L, 1 ),luaL_checknumber( L, 2 ),luaL_checknumber( L, 3 ),luaL_checknumber( L, 4 ));
+  return 0;
+}
+
+static int luaCB_set_console_autoredraw( lua_State* L )
+{
+  script_console_set_autoredraw(luaL_checknumber( L, 1 ));
+  return 0;
+}
+
+static int luaCB_console_redraw( lua_State* L )
+{
+  script_console_redraw();
+  return 0;
+}
 static int luaCB_get_av96( lua_State* L )
 {
   lua_pushnumber( L, shooting_get_av96() );
@@ -1287,6 +1304,9 @@ void register_lua_funcs( lua_State* L )
   FUNC(shoot);
   FUNC(sleep);
   FUNC(cls);
+  FUNC(set_console_layout);
+  FUNC(set_console_autoredraw);
+  FUNC(console_redraw);
 
   lua_pushlightuserdata( L, kbd_sched_click );
   lua_pushcclosure( L, luaCB_keyfunc, 1 );

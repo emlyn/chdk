@@ -97,6 +97,9 @@ static const struct keyword_token keywords[] = {
   {"release",                 TOKENIZER_RELEASE},
   //{"shot",                    TOKENIZER_SHOOT}, // for compatibility
   {"shoot",                   TOKENIZER_SHOOT},
+  {"set_console_layout",      TOKENIZER_SET_CONSOLE_LAYOUT},
+  {"set_console_autoredraw",  TOKENIZER_SET_CONSOLE_AUTOREDRAW},
+  {"console_redraw",          TOKENIZER_CONSOLE_REDRAW},
   {"sleep",                   TOKENIZER_SLEEP}, 
 
   /* WARNING due to tokenizer limitation longest match must be first */
