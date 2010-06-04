@@ -256,6 +256,9 @@ PLATFORMSUB=100a
 #PLATFORM=g11 
 #PLATFORMSUB=100l
 
+#PLATFORM=sx20
+#PLATFORMSUB=102b
+
 MEMISOSIZE="(&_end-&_start)"
 # override this on the command line or in buildconf to use PRIMARY.BIN from a different tree
 # should be an absolute path

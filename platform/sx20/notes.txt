@@ -1,0 +1,19 @@
+****************************************
+Camera depending notes: 
+* DryOS Camera
+---
+
+
+****************************************
+Development notes:
+note from camera.h:
+// the SX20 has a very small amount of free ram once CHDK is loaded - probably due to the large display buffers in use
+// The RAM is so low that edge detection and zebra crash the device
+// unloading the games from this build free's 14k of ram allowing zebra and edge to
+// work normally and the random crashes to go away
+#undef OPT_GAME_REVERSI
+#undef OPT_GAME_SOKOBAN
+#undef OPT_GAME_CONNECT4
+#undef OPT_GAME_MASTERMIND
+#undef OPT_CALENDAR
+---
