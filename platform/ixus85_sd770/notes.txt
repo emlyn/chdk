@@ -1,0 +1,18 @@
+General info:
+Digic III, dryos, propset 2
+10mp raw 3720*2772 12 bits/pixel
+ND filter only, NO iris
+
+Display:
+Live view is 360x240 
+
+Buttons:
+Direct print button is the ALT button. This can be assigned a function in the
+original canon firmware. Hold it down to access the canon firmware function
+Other keys use the standard mapping for cameras without an erase button.
+
+
+
+
+IMPORTANT NOTICE:
+Based entirely on ixus970 100b.
