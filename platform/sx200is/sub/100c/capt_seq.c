@@ -455,7 +455,7 @@ void __attribute__((naked,noinline)) sub_FF93D2A0_my(){ //
                  "LDR     R5, =0x6AF4\n"
                 //"CMP     R2, #0\n"                     // removed to allow AV bracketing 
                 //"BEQ     loc_FF93D324\n"               // in Custom Timer and Continuous Modes
-                 "BL      sub_FF93D2C4\n"                // continue function in firmware
+                 "B       sub_FF93D2C4\n"                // continue function in firmware
  );
 }
 
