@@ -181,7 +181,7 @@ void __attribute__((naked,noinline)) capt_seq_task() {
                  "BL      sub_FF874478\n"
                  "STR     R0, [R5,#0x18]\n"
                  "MOV     R0, R5\n"
-                 "BL      sub_FF93D2A0_my\n"       // ----------------->
+                 "BL      sub_FF93D2A0\n"
                  "MOV     R0, R5\n"
                  "BL      sub_FF93D690\n"
                  "MOV     R8, R0\n"
@@ -404,7 +404,7 @@ void __attribute__((naked,noinline)) sub_FF862C18_my(){ //
                  "MOV     R0, R4\n"
                  "BL      sub_FF862BA0\n"
                  "MOV     R0, R4\n"
-                 "BL      sub_FF93D2A0_my\n"                  //----------->
+                 "BL      sub_FF93D2A0\n"
                  "BL      sub_FF93DE00\n"
                  "MOV     R0, R4\n"
                  "BL      sub_FF93D388_my\n"                  //----------->
@@ -440,22 +440,6 @@ void __attribute__((naked,noinline)) sub_FF862C18_my(){ //
                  "BEQ     sub_FF8640F4\n"
 "locret_FF862E18:\n"
                  "LDMFD   SP!, {R3-R9,PC}\n"
- );
-}
-
-// Note that the other calls (in the firmware) to this sub do not require overriding.
-void __attribute__((naked,noinline)) sub_FF93D2A0_my(){ // 
- asm volatile(
-                 "STMFD   SP!, {R3-R7,LR}\n"
-                 "LDR     R4, =0x1550C\n"
-                 "LDR     R1, [R0,#8]\n"
-                 "LDR     R2, [R4]\n"
-                 "LDR     R7, =0x420A\n"
-                 "LDR     R6, =0x15448\n"
-                 "LDR     R5, =0x6AF4\n"
-                //"CMP     R2, #0\n"                     // removed to allow AV bracketing 
-                //"BEQ     loc_FF93D324\n"               // in Custom Timer and Continuous Modes
-                 "B       sub_FF93D2C4\n"                // continue function in firmware
  );
 }
 
