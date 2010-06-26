@@ -1,1 +1,38 @@
-Напишите что-нибудь здесь.
+General info:
+==============
+Digic IV, dryos, propset 2 (there may be digic IV specific stuff, but nothing found so far)
+10mp sensor, 12 bits/pixel
+Video is h264 NOT mjpeg
+Real iris, no ND filter
+Multi partition support
+
+Booting:
+=========
+Both manual & automated loading are supported
+With diskboot camera will always boot in play mode; press halfshoot to switch to record,
+ or hold the power button for ~1s to power on in record mode.
+With FI2, you must boot in play mode in order to access the firm update menu.
+
+Buttons:
+=========
+Direct print button is the ALT button. This can be assigned a function in the
+ original canon firmware. Hold it down to access the canon firmware function
+The DISP key don't switch off the display; in the Canon menu the sleep functin can be
+ registered to the print button.
+The ALT button can be set to FLASH from the CHDK menu for better handling.
+Other keys use the standard mapping for cameras with an erase button.
+
+Notes:
+=======
+ISO3200 mode:
+ Uses only a part of the RAW buffer, RAW files are not usable in this mode.
+ Gives very fast (up to ~ 5 fps) frame rate, but with reduced image size (1600x1200,
+ interpolated) and much noise (high ISO)
+Force flash:
+ Works fine, also with ISO3200 mode, up to 3-4 fps with lowest flash level are possible
+Long filenames:
+ As all of the DryOS based cameras, the SX10 uses short filenames (8.3 "DOS" style), using
+ long filenames may not work in some conditions, e.g. with the bracketing prefix setting or
+ from scripts.
+
+-=(26-Jun-2010)=-

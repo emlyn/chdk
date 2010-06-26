@@ -28,7 +28,7 @@ void startup()
 
 static const int fl_tbl[] = {6200, 7230, 8295, 9681, 11614, 14303, 18600};
 #define NUM_FL (sizeof(fl_tbl)/sizeof(fl_tbl[0]))
-#define CF_EFL 56451
+#define CF_EFL 56460
 
 const int zoom_points = NUM_FL;
 
