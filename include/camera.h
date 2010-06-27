@@ -932,7 +932,7 @@
 //    #define CAM_CAN_SD_OVERRIDE         1			// Camera allows to do subject distance override
 
     #define CAM_HAS_MANUAL_FOCUS		1
-// long shutter is acutally user TV
+// long shutter is acutally user TV, may work ?
     #undef 	CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU            1
 //    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1
@@ -944,8 +944,8 @@
 
     #undef  CAM_VIDEO_CONTROL
     #define CAM_VIDEO_QUALITY_ONLY      1
-// TODO
-//    #define DNG_SUPPORT                 1
+
+    #define DNG_SUPPORT                 1
 
 //    #define CAM_EXT_TV_RANGE            1
 
@@ -968,32 +968,24 @@
     #undef CAM_BLACK_LEVEL
     #define CAM_BLACK_LEVEL             127
 
-	//all DNG stuff TODO, copied from ixus 100. Ixus960 may be closer, same sesnor res
-    // pattern
-    //RealRom:FFA99FB4                    ADR     R0, aObRG1G2BLdLdLd ; "\n  OB : (R, G1, G2, B) = (%ld, %ld, %ld"...
-    #define cam_CFAPattern              0x02010100		// Red  Green  Green  Blue
+	#define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green 
 
-    // color preliminary (see DNG4PS2 wiki)
+    // TODO copied from ixus 100
     #define CAM_COLORMATRIX1                               \
       661840,  1000000, -185671, 1000000, -97110,  1000000, \
       -83661,  1000000, 578860, 1000000,   32308,  1000000, \
       -8681,    1000000, 70356,   1000000, 207341, 1000000
 
-    //Here is an alternate CAM_COLORMATRIX1 - Current one is nice for me but hey I'm no colour expert.
-    //XYZ -> Camera matrix:
-    //0.459395 -0.129083 -0.068085
-    //-0.055837 0.400827 0.020378
-    //-0.004622 0.048662 0.139970
-
+    // TODO copied from ixus 100
     #define cam_CalibrationIlluminant1  17			// Standard Light A
 
-	// cropping
+	// cropping OK
     #define CAM_JPEG_WIDTH              4000
     #define CAM_JPEG_HEIGHT             3000
-    #define CAM_ACTIVE_AREA_X1          40
-    #define CAM_ACTIVE_AREA_Y1          24
-    #define CAM_ACTIVE_AREA_X2          4056
-    #define CAM_ACTIVE_AREA_Y2          3040
+    #define CAM_ACTIVE_AREA_X1          0 // some data all the way to left, normal 8 ?
+    #define CAM_ACTIVE_AREA_Y1          10
+    #define CAM_ACTIVE_AREA_X2          4072 // or 4024 
+    #define CAM_ACTIVE_AREA_Y2          3040 // or 3041 or 3020
 
     // camera name OK
     #define PARAM_CAMERA_NAME           4			// parameter number for GetParameterData

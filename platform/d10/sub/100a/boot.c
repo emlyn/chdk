@@ -11,12 +11,13 @@ extern long wrs_kernel_bss_end;
 // Forward declarations
 void CreateTask_spytask();
 void boot();
+void task_CaptSeqTask_my();
 
 void taskCreateHook(int *p) { 
  p-=17;
  if (p[0]==0xFF87B84C)  p[0]=(int)init_file_modules_task;
+ if (p[0]==0xFF860F34)  p[0]=(int)task_CaptSeqTask_my;
  /*
-// if (p[0]==0x)  p[0]=(int)capt_seq_task;
  if (p[0]==0x)  p[0]=(int)movie_record_task;
  */
 }

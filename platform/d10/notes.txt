@@ -1,6 +1,45 @@
 Power shot D10
-This is a non-functional ALPHA port
+Camera information
 
 Digic IV
 propset 2
 No iris, only ND filter
+
+This is a semi-functional ALPHA build
+
+Not implemented/Not Working
+- movie_rec: meaning all movie related functions
+- zebra
+- dark frame subtraction control. Don't try to use this, it will break horribly.
+- USB remote support
+- multi partition support
+
+Working/completed
+- loader/* done
+- spytask: gui, menus etc
+- kbd task: key input, script execution, write lock override
+- initial work for all stubs_entry and stubs_min done, but there are probably some mistakes.
+- most files in platform other than capt_seq and movie_rec, including mode map, fl_tbl etc.
+- Tv bracketing in continuous mode
+- histogram
+
+Scripts tested successfully
+- llibtst.lua 
+- setmode.lua batch mode, including play/rec change
+- tstcallf.lua
+- romlog.lua
+- badpixel.lua
+
+Known issues:
+- Continuous shooting with raw enabled crashes
+- DNG is not calibrated, matrix is copied from ixus 100
+- CHDK OSD disappears frequently.
+- If you press the shutter quickly without waiting for focus, raw is not saved.
+- Overrides probably don't work with quick press either
+- DNG has dark borders. This is intentional, the active area covers all pixels that have any data, but there are large areas which have data but are distinct from the normal jpeg area.
+
+Untested:
+- motion detection
+- most shooting overrides and equivalent script commands
+- pretty much everything else ;)
+

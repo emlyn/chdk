@@ -55,15 +55,14 @@ long vid_get_bitmap_screen_height()
     return 240;
 }
 
-// TODO 
-long vid_get_viewport_height()
-{
-    return 240;
-}
-
 int vid_get_viewport_width()
 {
 	return 360;
+}
+
+long vid_get_viewport_height()
+{
+    return 240;
 }
 
 char *camera_jpeg_count_str()
