@@ -498,37 +498,38 @@
 //----------------------------------------------------------
 
 #elif defined (CAMERA_a570)
-    #define CAM_PROPSET                 2
+	#define CAM_PROPSET                 2
 
-    #define CAM_RAW_ROWPIX              3152   // for 7 MP
-    #define CAM_RAW_ROWS                2340   // for 7 MP
-    #define CAM_MULTIPART               1
-    #define CAM_CAN_MUTE_MICROPHONE     1
-    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
-    #define CAM_EV_IN_VIDEO             1
-    #define DNG_SUPPORT                 1
-    #define CAM_REAR_CURTAIN            1
-    // pattern
-    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
-    // color
-    #define CAM_COLORMATRIX1                               \
-      528283,  1000000,-144259, 1000000, -85966, 1000000,  \
-     -202789,  1000000, 736563, 1000000,  73008, 1000000,  \
-     -27130,   1000000, 107702, 1000000, 264543, 1000000
+	#define CAM_RAW_ROWPIX              3152	// for 7 MP
+	#define CAM_RAW_ROWS                2340	// for 7 MP
+	#define CAM_MULTIPART               1
+	#define CAM_CAN_MUTE_MICROPHONE     1
+	#define CAM_ADJUSTABLE_ALT_BUTTON   1
+	#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+	#define CAM_EV_IN_VIDEO             1
+	#define DNG_SUPPORT                 1
+	#define CAM_REAR_CURTAIN            1
+	// pattern
+	#define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
+	// color
+	#define CAM_COLORMATRIX1                            \
+    528283, 1000000,-144259, 1000000, -85966, 1000000,  \
+    -202789, 1000000, 736563, 1000000, 73008, 1000000,  \
+    -27130,  1000000, 107702, 1000000, 264543, 1000000
 
-    #define cam_CalibrationIlluminant1 1 // Daylight
-    // cropping
-    #define CAM_JPEG_WIDTH  3072
-    #define CAM_JPEG_HEIGHT 2304
-    #define CAM_ACTIVE_AREA_X1 38
-    #define CAM_ACTIVE_AREA_Y1 14
-    #define CAM_ACTIVE_AREA_X2 3146
-    #define CAM_ACTIVE_AREA_Y2 2338
-    // camera name
-    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+	#define cam_CalibrationIlluminant1 1 // Daylight
+	// cropping
+	#define CAM_JPEG_WIDTH  3072
+	#define CAM_JPEG_HEIGHT 2304
+	#define CAM_ACTIVE_AREA_X1 38
+	#define CAM_ACTIVE_AREA_Y1 14
+	#define CAM_ACTIVE_AREA_X2 3146
+	#define CAM_ACTIVE_AREA_Y2 2338
+	// camera name
+	#define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
-    #define DNG_EXT_FROM ".DPS"
-    #define CAM_EXT_TV_RANGE            1
+	#define DNG_EXT_FROM ".DPS"
+	#define CAM_EXT_TV_RANGE            1
 //----------------------------------------------------------
 
 #elif defined (CAMERA_a590)
