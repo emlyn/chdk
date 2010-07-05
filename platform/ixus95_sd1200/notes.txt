@@ -1,0 +1,36 @@
+General info:
+Digic IV, dryos, propset 2 (there may be digic IV specific stuff, but nothing found so far)
+//14.7mp raw 4480*3348 12 bits/pixel
+//Video is h264 NOT mjpeg
+//ND filter only, NO iris
+
+Booting:
+Encoded diskboot required, FI2 "firm update" supported.
+With diskboot camera will always boot in play mode. Press halfshoot to switch to record.
+With FI2, you must boot in play mode in order to access the firm update menu.
+FI2 is encoded with the same parameters as SX10. (digic IV)
+
+Display:
+//Live view is 360x240 
+//Bitmap buffer is 720x240
+//Bitmap color palette is different from other cameras. 
+
+Buttons:
+//Direct print button is the ALT button. This can be assigned a function in the
+//original canon firmware. Hold it down to access the canon firmware function
+//Other keys use the standard mapping for cameras without an erase button.
+
+Features known BROKEN or NOT supported:
+All
+Zebra
+Edge overlay
+Custom curves
+video compression overrides
+Microphone mute/unmute
+Jogdial control from CHDK
+Many other things are untested.
+
+Other issues:
+//Pressing the shutter quickly with overrides enabled may result in incorrect white
+//balance. It may also cause issues if the flash is automatically triggered.
+
