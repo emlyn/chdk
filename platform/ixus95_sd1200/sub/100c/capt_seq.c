@@ -227,8 +227,21 @@ void __attribute__((naked,noinline)) task_CaptSeqTask_my() {
 // START OF PASTE
 "jumptable_entry_0:\n"                      // CODE XREF: task_CaptSeqTask+4Cj
 // jumptable FFC4A02C entry 0               // LOCATION: SsPrepareSeq.c:0
-"                BL      sub_FFC4A8B8\n"
+"                BL      sub_FFC4A8B8\n"		// _sub_FFC4A8B8__SsPrepareSeq.c__0
+
+"    STMFD   SP!, {R1-R12,LR}\n"
+"    BL      captseq_hack_override_active\n" // returns 1 if tv or sv override in effect
+"    LDMFD   SP!, {R1-R12,LR}\n"
+"    STR     R0,[SP,#-4]!\n" // push return value
+"    BL      shooting_expo_param_override\n" // saves all regs
+
 "                BL      sub_FFC47F08\n"
+
+"    LDR     R0,[SP],#4\n" // pop override hack
+"    CMP     R0, #1\n"
+"    MOVEQ   R0, #0\n"
+"    STREQ   R0, [R4,#0x24]\n"  // fixes overrides behavior at short shutter press
+
 "                LDR     R0, [R4,#0x24]\n"
 "                CMP     R0, #0\n"
 "                BEQ     jumptable_entry_29\n"
