@@ -12,7 +12,6 @@ Not implemented/Not Working
 - zebra
 - dark frame subtraction control. Don't try to use this, it will break horribly.
 - USB remote support
-- multi partition support
 
 Working/completed
 - loader/* done
@@ -22,6 +21,8 @@ Working/completed
 - most files in platform other than capt_seq and movie_rec, including mode map, fl_tbl etc.
 - Tv bracketing in continuous mode
 - histogram
+- multi partition support
+- motion detection
 
 Scripts tested successfully
 - llibtst.lua 
@@ -29,6 +30,7 @@ Scripts tested successfully
 - tstcallf.lua
 - romlog.lua
 - badpixel.lua
+- mdfb digic 3
 
 Known issues:
 - Continuous shooting with raw enabled crashes
@@ -39,7 +41,6 @@ Known issues:
 - DNG has dark borders. This is intentional, the active area covers all pixels that have any data, but there are large areas which have data but are distinct from the normal jpeg area.
 
 Untested:
-- motion detection
 - most shooting overrides and equivalent script commands
 - pretty much everything else ;)
 

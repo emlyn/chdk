@@ -915,8 +915,7 @@
 
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_USE_ZOOM_FOR_MF
-// TODO
-//    #define CAM_MULTIPART               1
+    #define CAM_MULTIPART               1
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
 
