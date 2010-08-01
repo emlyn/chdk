@@ -355,7 +355,7 @@ long kbd_get_clicked_key()
 	int i;
 	for (i=0;keymap[i].hackkey;i++){
 	if (((kbd_prev_state[keymap[i].grp] & keymap[i].canonkey) != 0) &&
-		(kbd_new_state[keymap[i].grp] & keymap[i].canonkey) == 0)){
+		((kbd_new_state[keymap[i].grp] & keymap[i].canonkey) == 0)){
 		return keymap[i].hackkey;
 		}
 	}
