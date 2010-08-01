@@ -240,6 +240,7 @@ void my_kbd_read_keys()
 	physw_status[0] = kbd_new_state[0];
 	physw_status[1] = kbd_new_state[1];
 	physw_status[2] = kbd_new_state[2];
+	physw_status[1] |= alt_mode_key_mask;
     } else {
 	// override keys
 	physw_status[0] = (kbd_new_state[0] & (~KEYS_MASK0)) |
@@ -340,25 +341,25 @@ long kbd_is_key_clicked(long key)
 
 long kbd_get_pressed_key()
 {
-    int i;
-    for (i=0;keymap[i].hackkey;i++){
+	int i;
+	for (i=0;keymap[i].hackkey;i++){
 	if ((kbd_new_state[keymap[i].grp] & keymap[i].canonkey) == 0){
-	    return keymap[i].hackkey;
+		return keymap[i].hackkey;
 	}
-    }
-    return 0;
+	}
+	return 0;
 }
 
 long kbd_get_clicked_key()
 {
-    int i;
-    for (i=0;keymap[i].hackkey;i++){
+	int i;
+	for (i=0;keymap[i].hackkey;i++){
 	if (((kbd_prev_state[keymap[i].grp] & keymap[i].canonkey) != 0) &&
-	    ((kbd_new_state[keymap[i].grp] & keymap[i].canonkey) == 0)){
-	    return keymap[i].hackkey;
+		(kbd_new_state[keymap[i].grp] & keymap[i].canonkey) == 0)){
+		return keymap[i].hackkey;
+		}
 	}
-    }
-    return 0;
+	return 0;
 }
 
 void kbd_reset_autoclicked_key() {
@@ -390,8 +391,6 @@ long kbd_get_autoclicked_key() {
             return 0;
         }
     }
-	
-	
 }
 
 long kbd_use_zoom_as_mf() {
@@ -433,15 +432,15 @@ long kbd_use_zoom_as_mf() {
 
 
 static KeyMap keymap[] = {
-    /* tiny bug: key order matters. see kbd_get_pressed_key()
-     * for example
-     */
-	{ 2, KEY_UP		, 0x00000010 }, 
+	/* tiny bug: key order matters. see kbd_get_pressed_key()
+	* for example
+	*/
+	{ 2, KEY_UP			, 0x00000010 }, 
 	{ 2, KEY_DOWN		, 0x00000020 }, 
 	{ 2, KEY_LEFT		, 0x00000080 }, 
 	{ 2, KEY_RIGHT		, 0x00000040 }, 
 	{ 2, KEY_SET		, 0x00000100 }, 
-	{ 1, KEY_SHOOT_FULL	, 0xC0000000 },
+	{ 1, KEY_SHOOT_FULL	, 0xC0000000 }, 
 	{ 1, KEY_SHOOT_HALF	, 0x40000000 }, 
 	{ 2, KEY_ZOOM_IN	, 0x00000004 }, 
 	{ 2, KEY_ZOOM_OUT	, 0x00000008 }, 
@@ -450,18 +449,27 @@ static KeyMap keymap[] = {
 	{ 2, KEY_PRINT		, 0x00000800 }, 
 	{ 1, KEY_ERASE		, 0x00800000 }, 
 	{ 0, 0, 0 }
-
 };
-
 
 
 void kbd_fetch_data(long *dst)
 {
-    volatile long *mmio0 = (void*)0xc0220200;
-    volatile long *mmio1 = (void*)0xc0220204;
-    volatile long *mmio2 = (void*)0xc0220208;
+	volatile long *mmio0 = (void*)0xc0220200;
+	volatile long *mmio1 = (void*)0xc0220204;
+	volatile long *mmio2 = (void*)0xc0220208;
 
-    dst[0] = *mmio0;
-    dst[1] = *mmio1;
-    dst[2] = *mmio2 & 0xffff;
+	dst[0] = *mmio0;
+	dst[1] = *mmio1;
+	dst[2] = *mmio2 & 0xffff;
+}
+
+void kbd_set_alt_mode_key_mask(long key)
+{
+	int i;
+	for (i=0; keymap[i].hackkey; ++i) {
+		if (keymap[i].hackkey == key) {
+			alt_mode_key_mask = keymap[i].canonkey;
+			return;
+		}
+	}
 }

@@ -533,6 +533,7 @@
 //----------------------------------------------------------
 
 #elif defined (CAMERA_a590)
+#define CAM_ADJUSTABLE_ALT_BUTTON   1
 #define CAM_PROPSET                 2
 #define CAM_DRYOS                   1
 
