@@ -18,6 +18,7 @@ static KeyMap keymap[];
 static long last_kbd_key = 0;
 static int usb_power=0;
 static int remote_key, remote_count;
+static long alt_mode_key_mask = 0x00000800;
 static int shoot_counter=0;
 #define DELAY_TIMEOUT 10000
 
@@ -239,6 +240,7 @@ void my_kbd_read_keys()
 	physw_status[0] = kbd_new_state[0];
 	physw_status[1] = kbd_new_state[1];
 	physw_status[2] = kbd_new_state[2];
+	physw_status[1] |= alt_mode_key_mask;
     } else {
 	// override keys
 	physw_status[0] = (kbd_new_state[0] & (~KEYS_MASK0)) |
@@ -462,4 +464,16 @@ void kbd_fetch_data(long *dst)
     dst[0] = *mmio0;
     dst[1] = *mmio1;
     dst[2] = *mmio2 & 0xffff;
+}
+
+
+void kbd_set_alt_mode_key_mask(long key)
+{
+	int i;
+	for (i=0; keymap[i].hackkey; ++i) {
+		if (keymap[i].hackkey == key) {
+			alt_mode_key_mask = keymap[i].canonkey;
+			return;
+		}
+	}
 }
