@@ -223,7 +223,7 @@ static int luaCB_get_user_tv_id( lua_State* L )
 
 static int luaCB_get_user_tv96( lua_State* L )
 {
-  lua_pushnumber( L, shooting_get_user_tv_id() );
+  lua_pushnumber( L, shooting_get_user_tv96() );
   return 1;
 }
 
