@@ -11,9 +11,12 @@ FI2KEY=
 FI2IV =
 endif
 
-
 ifeq ($(KEYSYS), d4)
 FI2KEY=
 FI2IV =
 endif
 
+ifeq ($(KEYSYS), d4a)
+FI2KEY=
+FI2IV =
+endif
