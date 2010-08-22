@@ -31,6 +31,4 @@ Features known BROKEN or NOT supported:
 Other issues:
 - Pressing the shutter quickly with overrides enabled may result in incorrect white
   balance. It may also cause issues if the flash is automatically triggered.
-- Intermittent raw. If you press the shutter quickly (or maybe some other factor), RAW/DNG
-  may not be saved.
 - Due to the higher resolution of the bit, many parts of the CHDK display appear small.
