@@ -88,7 +88,6 @@ void __attribute__((naked,noinline)) sub_FF8662E0_my() {
 "                BL      sub_FF93E76C\n" // SsShootLib.c:32768
 "                MOV     R0, R4\n"
 "                BL      sub_FF93DDF4_my\n" // SsCaptureSeq.c:0 nr setup
-"                BL      capt_seq_hook_raw_here\n"  
 "                MOV     R5, R0\n"
 "                B       loc_FF8663A0\n"
 "loc_FF866390:\n"
@@ -97,6 +96,7 @@ void __attribute__((naked,noinline)) sub_FF8662E0_my() {
 "                CMP     R0, #0\n"
 "                MOVNE   R5, #0x1D\n"
 "loc_FF8663A0:\n"
+"                BL      capt_seq_hook_raw_here\n"  
 "                BL      sub_FF8686F0\n"
 "                BL      sub_FF868738\n"
 "                BL      sub_FF868778\n"
