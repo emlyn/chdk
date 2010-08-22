@@ -152,6 +152,49 @@
 //==========================================================
 // A-series
 //==========================================================
+#elif defined (CAMERA_a430)
+	#define CAM_PROPSET						1
+
+	#define CAM_RAW_ROWPIX					2392  // for 4 MP 1/3" sensor size
+	#define CAM_RAW_ROWS					1752  // for 4 MP 1/3" sensor size
+
+	#undef  CAM_USE_ZOOM_FOR_MF
+	#undef  CAM_HAS_ZOOM_LEVER
+	#define CAM_DRAW_EXPOSITION				1
+	#undef  CAM_HAS_ERASE_BUTTON
+	#undef  CAM_HAS_IRIS_DIAPHRAGM
+	#define CAM_HAS_ND_FILTER				1
+	#undef  CAM_HAS_MANUAL_FOCUS
+	#undef  CAM_HAS_USER_TV_MODES
+	#define CAM_SHOW_OSD_IN_SHOOT_MENU		1
+	#undef  CAM_HAS_IS
+	#define CAM_CAN_MUTE_MICROPHONE			1
+	#define CAM_AF_SCAN_DURING_VIDEO_RECORD	1
+	#define CAM_EV_IN_VIDEO					1
+	#define DNG_SUPPORT						1
+	// pattern
+	#define cam_CFAPattern 0x01000201  // Green Blue Red Green
+	// color
+	#define CAM_COLORMATRIX1                                \
+      479627,  1000000, -156240, 1000000,  -84926, 1000000, \
+     -215238,  1000000,  534902, 1000000,   60219, 1000000, \
+      -96906,  1000000,  148194, 1000000,  191583, 1000000
+
+	#define CAM_CONSOLE_LOG_ENABLED			1
+	#define cam_CalibrationIlluminant1		1 // Daylight
+	// cropping
+	#define CAM_JPEG_WIDTH			2272
+	#define CAM_JPEG_HEIGHT			1704
+	#define CAM_ACTIVE_AREA_X1		0
+	#define CAM_ACTIVE_AREA_Y1		8
+	#define CAM_ACTIVE_AREA_X2		2336
+	#define CAM_ACTIVE_AREA_Y2		1748
+	// camera name
+	#define PARAM_CAMERA_NAME		3 // parameter number for GetParameterData
+	#define CAM_BRACKETING			1
+//	#define CAM_MULTIPART			1
+//----------------------------------------------------------
+
 #elif defined (CAMERA_a450)
     #define CAM_PROPSET                 2
 
@@ -159,8 +202,7 @@
     #define CAM_RAW_ROWS                1968   // for 5 MP 1/3" sensor size
 
     #undef  CAM_USE_ZOOM_FOR_MF
-    #undef  CAM_HAS_ZOOM_LEVER
-    #define CAM_DRAW_EXPOSITION         1
+    #undef  CAM_HAS_ZOOM_LEVER#define CAM_DRAW_EXPOSITION         1
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
@@ -2690,113 +2732,113 @@
 //----------------------------------------------------------
 
 #elif defined (CAMERA_sx20)
-    #define CAM_PROPSET                 3
-    #define CAM_DRYOS                   1
-    #define CAM_DRYOS_2_3_R39           1
+	#define CAM_PROPSET					3
+	#define CAM_DRYOS					1
+	#define CAM_DRYOS_2_3_R39			1
 
-    #define CAM_RAW_ROWPIX              4080
-    #define CAM_RAW_ROWS                3048
+	#define CAM_RAW_ROWPIX				4080
+	#define CAM_RAW_ROWS				3048
 
-    #define CAM_SWIVEL_SCREEN           1
-    #define CAM_ADJUSTABLE_ALT_BUTTON   1
-    #undef  CAM_CAN_SD_OVER_NOT_IN_MF
-    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
-    #define CAM_HAS_VIDEO_BUTTON		1
-    #define CAM_VIDEO_QUALITY_ONLY      1  
-    #define CAM_BRACKETING              1 
-    #undef  CAM_VIDEO_CONTROL
-    #define CAM_MULTIPART               1
-    #define CAM_HAS_JOGDIAL             1
-    #undef  CAM_USE_ZOOM_FOR_MF
-    #undef  CAM_UNCACHED_BIT  // shut up compiler
-    #define CAM_UNCACHED_BIT    0x40000000
+	#define CAM_SWIVEL_SCREEN			1
+	#define CAM_ADJUSTABLE_ALT_BUTTON	1
+	#undef  CAM_CAN_SD_OVER_NOT_IN_MF
+	#undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
+	#define CAM_HAS_VIDEO_BUTTON		1
+	#define CAM_VIDEO_QUALITY_ONLY		1
+	#define CAM_BRACKETING				1
+	#undef  CAM_VIDEO_CONTROL
+	#define CAM_MULTIPART				1
+	#define CAM_HAS_JOGDIAL				1
+	#undef  CAM_USE_ZOOM_FOR_MF
+	#undef  CAM_UNCACHED_BIT  // shut up compiler
+	#define CAM_UNCACHED_BIT			0x40000000
 
-    #define DNG_SUPPORT                 1
-    // pattern
-    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
-    // color
+	#define DNG_SUPPORT					1
+	// pattern
+	#define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
+	// color
 
-    #define CAM_COLORMATRIX1                               \
+	#define CAM_COLORMATRIX1                               \
       827547, 1000000, -290458, 1000000, -126086, 1000000, \
-     -12829,  1000000, 530507,  1000000, 50537,   1000000, \
-      5181,   1000000, 48183,   1000000, 245014,  1000000
+      -12829, 1000000,  530507, 1000000,   50537, 1000000, \
+        5181, 1000000,   48183, 1000000,  245014, 1000000
 
-    #define cam_CalibrationIlluminant1 1 // Daylight
-    // cropping
-    #define CAM_JPEG_WIDTH	4000
-    #define CAM_JPEG_HEIGHT 3000
-    #define CAM_ACTIVE_AREA_X1 24
-    #define CAM_ACTIVE_AREA_Y1 12
-    #define CAM_ACTIVE_AREA_X2 4080-48
-    #define CAM_ACTIVE_AREA_Y2 3048-24
-    // camera name
-    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
-    #undef  CAM_SENSOR_BITS_PER_PIXEL
-    #undef  CAM_WHITE_LEVEL
-    #undef  CAM_BLACK_LEVEL
-    #define CAM_SENSOR_BITS_PER_PIXEL   12
-    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
-    #define CAM_BLACK_LEVEL             127
+	#define cam_CalibrationIlluminant1	1 // Daylight
+	// cropping
+	#define CAM_JPEG_WIDTH				4000
+	#define CAM_JPEG_HEIGHT				3000
+	#define CAM_ACTIVE_AREA_X1			24
+	#define CAM_ACTIVE_AREA_Y1			12
+	#define CAM_ACTIVE_AREA_X2			4080-48
+	#define CAM_ACTIVE_AREA_Y2			3048-24
+	// camera name
+	#define PARAM_CAMERA_NAME			4 // parameter number for GetParameterData
+	#undef  CAM_SENSOR_BITS_PER_PIXEL
+	#undef  CAM_WHITE_LEVEL
+	#undef  CAM_BLACK_LEVEL
+	#define CAM_SENSOR_BITS_PER_PIXEL	12
+	#define CAM_WHITE_LEVEL				((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+	#define CAM_BLACK_LEVEL				127
 
-    #define CAM_EXT_TV_RANGE            1
-    #define CAM_QUALITY_OVERRIDE        1
+	#define CAM_EXT_TV_RANGE			1
+	#define CAM_QUALITY_OVERRIDE		1
 
-    // copied from the SX200 which has the same video buffer size
-    #undef CAM_USES_ASPECT_CORRECTION   
-    #undef CAM_USES_ASPECT_YCORRECTION  
-    #define CAM_USES_ASPECT_CORRECTION  1  //camera uses the modified graphics primitives to map screens an viewports to buffers more sized 
-    #define CAM_USES_ASPECT_YCORRECTION  0  //only uses mappings on x coordinate
+	// copied from the SX200 which has the same video buffer size
+	#undef CAM_USES_ASPECT_CORRECTION
+	#undef CAM_USES_ASPECT_YCORRECTION
+	#define CAM_USES_ASPECT_CORRECTION		1  //camera uses the modified graphics primitives to map screens an viewports to buffers more sized 
+	#define CAM_USES_ASPECT_YCORRECTION		0  //only uses mappings on x coordinate
 
-    #undef ASPECT_XCORRECTION
-    #define ASPECT_XCORRECTION(x)  ( ( ((x)<<3) + (x) )  >>2 )   //correction x*screen_buffer_width/screen_width = x*720/320 = x*9/4 = (x<<3 + x)>>2
+	#undef ASPECT_XCORRECTION
+	#define ASPECT_XCORRECTION(x)  ( ( ((x)<<3) + (x) )  >>2 )  //correction x*screen_buffer_width/screen_width = x*720/320 = x*9/4 = (x<<3 + x)>>2
 
-    #undef ASPECT_GRID_XCORRECTION
-    #define ASPECT_GRID_XCORRECTION(x)  ( ((x)<<3)/9  )  //grids are designed on a 360x240 basis and screen is 320x240, we need x*320/360=x*8/9
-    #undef ASPECT_GRID_YCORRECTION
-    #define ASPECT_GRID_YCORRECTION(y)  ( (y) )       //y correction for grids  made on a 360x240 As the buffer is 720x240 we have no correction here.
+	#undef ASPECT_GRID_XCORRECTION
+	#define ASPECT_GRID_XCORRECTION(x)  ( ((x)<<3)/9  )  //grids are designed on a 360x240 basis and screen is 320x240, we need x*320/360=x*8/9
+	#undef ASPECT_GRID_YCORRECTION
+    #define ASPECT_GRID_YCORRECTION(y)  ( (y) )  //y correction for grids  made on a 360x240 As the buffer is 720x240 we have no correction here.
 
-    #undef ASPECT_VIEWPORT_XCORRECTION 
-    #define ASPECT_VIEWPORT_XCORRECTION(x) ASPECT_GRID_XCORRECTION(x) //viewport is 360x240 and screen 320x240, we need x*320/360=x*8/9, equal than grids, used by edgeoverlay
-    #undef ASPECT_VIEWPORT_YCORRECTION 
-    #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) ) 
+	#undef ASPECT_VIEWPORT_XCORRECTION 
+	#define ASPECT_VIEWPORT_XCORRECTION(x) ASPECT_GRID_XCORRECTION(x) //viewport is 360x240 and screen 320x240, we need x*320/360=x*8/9, equal than grids, used by edgeoverlay
+	#undef ASPECT_VIEWPORT_YCORRECTION 
+	#define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) )
 
-    //games mappings
-    #undef GAMES_SCREEN_WIDTH
-    #undef GAMES_SCREEN_HEIGHT
-	#define GAMES_SCREEN_WIDTH 360
-    #define GAMES_SCREEN_HEIGHT 240
-    #undef ASPECT_GAMES_XCORRECTION
-    // 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer wirh another resolution
-    // used by gui.c that configures the draw environment (trhough new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
-    // other modes in perfect aspect ratio 4/3: slightly better visualization: file menus more readable, ...
-    #define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )  
-    #undef ASPECT_GAMES_YCORRECTION
-    #define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
+	//games mappings
+	#undef GAMES_SCREEN_WIDTH
+	#undef GAMES_SCREEN_HEIGHT
+	#define GAMES_SCREEN_WIDTH		360
+	#define GAMES_SCREEN_HEIGHT		240
+	#undef ASPECT_GAMES_XCORRECTION
+	// 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer wirh another resolution
+	// used by gui.c that configures the draw environment (trhough new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
+	// other modes in perfect aspect ratio 4/3: slightly better visualization: file menus more readable, ...
+	#define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )
+	#undef ASPECT_GAMES_YCORRECTION
+	#define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
 
-    #undef CAM_BITMAP_PALETTE
-    #define CAM_BITMAP_PALETTE    6
+	#undef CAM_BITMAP_PALETTE
+	#define CAM_BITMAP_PALETTE		6
 
-   //zebra letterbox for saving memory
-   #undef ZEBRA_HMARGIN0
-   #define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
-  
-   #undef EDGE_HMARGIN
-   #define EDGE_HMARGIN 20
+	//zebra letterbox for saving memory
+	#undef ZEBRA_HMARGIN0
+	#define ZEBRA_HMARGIN0			30  //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
 
-   // the SX20 has a very small amount of free ram once CHDK is loaded - probably due to the large display buffers in use
-   // The RAM is so low that edge detection and zebra crash the device
-   // unloading the games from this build free's 14k of ram allowing zebra and edge to
-   // work normally and the random crashes to go away
-   #undef OPT_GAME_REVERSI
-   #undef OPT_GAME_SOKOBAN
-   #undef OPT_GAME_CONNECT4
-   #undef OPT_GAME_MASTERMIND
-   #undef OPT_CALENDAR
+	#undef EDGE_HMARGIN
+	#define EDGE_HMARGIN			20
+
+	// the SX20 has a very small amount of free ram once CHDK is loaded - probably due to the large display buffers in use
+	// The RAM is so low that edge detection and zebra crash the device
+	// unloading the games from this build free's 14k of ram allowing zebra and edge to
+	// work normally and the random crashes to go away
+	#undef OPT_GAME_REVERSI
+	#undef OPT_GAME_SOKOBAN
+	#undef OPT_GAME_CONNECT4
+	#undef OPT_GAME_MASTERMIND
+	#undef OPT_CALENDAR
 //----------------------------------------------------------
 
 
 #else
-    #error camera type not defined
+	#error camera type not defined
 #endif
 //==========================================================
 // END of Camera-dependent settings

@@ -265,6 +265,9 @@ PLATFORMSUB=100a
 PLATFORM=ixus95_sd1200
 PLATFORMSUB=100c
 
+#PLATFORM=a430
+#PLATFORMSUB=100b
+
 MEMISOSIZE="(&_end-&_start)"
 # override this on the command line or in buildconf to use PRIMARY.BIN from a different tree
 # should be an absolute path
@@ -296,10 +299,10 @@ export LC_ALL=C
 ifndef OSTYPE
   HOSTPLATFORM:=$(patsubst MINGW%,MINGW,$(shell uname -s))
   ifeq ($(HOSTPLATFORM),MINGW)
-    OSTYPE = Windows
-    EXE = .exe
-    SH = sh
-    DEVNULL = NUL
+	OSTYPE = Windows
+	EXE = .exe
+	SH = sh
+	DEVNULL = NUL
 	OLDSEPARATOR = \\\\
 	NEWSEPARATOR = /
 	SORT := $(dir $(shell which uniq.exe | sed 's_$(OLDSEPARATOR)_$(NEWSEPARATOR)_g'))/sort.exe
@@ -417,13 +420,13 @@ ifndef SKIPBUILDRULES
 
 .dep/%.d: %.c .dep
 	$(CC) $(CFLAGS) -M $< > $@.$$$$; \
-	    sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
-	    rm -f $@.$$$$
+		sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
 
 .dep/%.d: %.S .dep
 	$(CC) $(CFLAGS) -M $< > $@.$$$$; \
-	    sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
-	    rm -f $@.$$$$
+		sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+		rm -f $@.$$$$
 
 endif
 
@@ -436,28 +439,28 @@ distclean: distclean-recursive
 
 clean-recursive:
 	@for i in $(SUBDIRS); do \
-	    echo \>\> Cleaning in $(FOLDER)$$i; \
-	    $(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" clean || exit 1; \
+		echo \>\> Cleaning in $(FOLDER)$$i; \
+		$(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" clean || exit 1; \
 	done
 
 distclean-recursive:
 	@for i in $(SUBDIRS); do \
-	    echo \>\> Distcleaning in $(FOLDER)$$i; \
-	    $(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" distclean || exit 1; \
+		echo \>\> Distcleaning in $(FOLDER)$$i; \
+		$(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" distclean || exit 1; \
 	done
 
 all-recursive:
 	@for i in $(SUBDIRS); do \
-	    echo \>\> Entering to $(FOLDER)$$i; \
-	    $(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" || exit 1; \
-	    echo \<\< Leaving $(FOLDER)$$i; \
+		echo \>\> Entering to $(FOLDER)$$i; \
+		$(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" || exit 1; \
+		echo \<\< Leaving $(FOLDER)$$i; \
 	done
 
 depend-recursive:
 	@for i in $(SUBDIRS); do \
-	    echo \>\> Entering to $(FOLDER)$$i; \
-	    $(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" depend || exit 1; \
-	    echo \<\< Leaving $(FOLDER)$$i; \
+		echo \>\> Entering to $(FOLDER)$$i; \
+		$(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" depend || exit 1; \
+		echo \<\< Leaving $(FOLDER)$$i; \
 	done
 
 ifdef SILENT
