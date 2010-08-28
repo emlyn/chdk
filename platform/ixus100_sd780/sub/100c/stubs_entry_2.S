@@ -58,7 +58,6 @@ NHSTUB(SetAE_ShutterSpeed, 0xFFA96F60)
 NHSTUB(PostLogicalEventForNotPowerType,0xFF858BEC)
 
 
-NHSTUB(GetFocusLensSubjectDistance,0xDEADC0DE)
+NHSTUB(GetFocusLensSubjectDistance,0xffa94780)  //from http://chdk.setepontos.com/index.php/topic,5596.msg54340.html#msg54340
 NHSTUB(SetScriptMode, 0xDEADC0DE)
-
 
