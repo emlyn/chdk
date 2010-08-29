@@ -3,7 +3,7 @@
 #include "core.h"
 #include "conf.h"
 
-static long *nrflag = (long*)0x9B40;
+static long *nrflag = (long*)0x7910;
 
 #include "../../../generic/capt_seq.c"
 
@@ -330,7 +330,8 @@ void __attribute__((naked,noinline)) sub_FF962520_my(){
  asm volatile(
 		"STMFD	SP!, {R0-R8,LR}\n"
 		"MOV	R4, R0\n"
-		"BL	sub_FF9631B8\n"
+		//"BL	sub_FF9631B8\n" - WTF?
+		"BL	sub_FF963374\n"
 		"LDR	R1, =0xFFFFFFFF\n"  // "MVN	R1, #0\n"
 		"BL	sub_FF8871B0\n"
 		"LDR	R5, =0x7910\n"
@@ -372,25 +373,28 @@ void __attribute__((naked,noinline)) sub_FF962520_my(){
 		"LDRSH	R2, [R8,#0xC]\n"
 		"SUB	R3, R3,	#8\n"
 		"BL	sub_FF9649D8\n"
-		"LDR	R0, [R4,#0x1C]\n"
-		"CMP	R0, #0\n" // get here!
-		"MOVNE	R0, #1\n"
-		"STRNE	R0, [R5]\n"
-		"LDR	R0, [R5,#4]\n"
-		"BL	sub_FF92551C\n"
-		"LDR	R0, [R5,#8]\n"
-		"BL	sub_FF8C842C\n"
-		"MOV	R0, #1\n"
-		"BL	sub_FF8C8438\n" // BX LR
-		"LDR	R0, =0xFF961F1C\n"
-		"MOV	R1, R4\n"
-		"BL	sub_FF8C8408\n"
-		"LDR	R0, [R5]\n"
-		"CMP	R0, #5\n" // get here!
-		"ADDLS	PC, PC,	R0,LSL#2\n" // badly wrong setting pc here
-                "BL     wait_until_remote_button_is_released\n"
-                "BL     capt_seq_hook_set_nr\n"                     // +
-		"B	sub_FF9626D8\n"                             // continue function in firmware , loc -> sub
+                 "BL      wait_until_remote_button_is_released\n"
+                 "BL      capt_seq_hook_set_nr\n"                     // +
+                 "B       sub_FF9625CC\n"                             // continue function in firmware
+//		"LDR	R0, [R4,#0x1C]\n"
+//		"CMP	R0, #0\n" // get here!
+//		"MOVNE	R0, #1\n"
+//		"STRNE	R0, [R5]\n"
+//		"LDR	R0, [R5,#4]\n"
+//		"BL	sub_FF92551C\n"
+//		"LDR	R0, [R5,#8]\n"
+//		"BL	sub_FF8C842C\n"
+//		"MOV	R0, #1\n"
+//		"BL	sub_FF8C8438\n" // BX LR
+//		"LDR	R0, =0xFF961F1C\n"
+//		"MOV	R1, R4\n"
+//		"BL	sub_FF8C8408\n"
+//		"LDR	R0, [R5]\n"
+//		"CMP	R0, #5\n" // get here!
+//		"ADDLS	PC, PC,	R0,LSL#2\n" // badly wrong setting pc here
+//                "BL     wait_until_remote_button_is_released\n"
+//                "BL     capt_seq_hook_set_nr\n"                     // +
+//		"B	sub_FF9626D8\n"                             // continue function in firmware , loc -> sub
  );
 
 }
@@ -522,7 +526,7 @@ void __attribute__((naked,noinline)) sub_FF87C698_my(){
 		"BL	sub_FF962438\n" //changed
 		"BL	sub_FF962EB0\n" // changed
 		"MOV	R0, R4\n"
-					"BL	sub_FF962520\n" //changed sub_FF962364_my - badly wrong if we use _my
+					"BL	sub_FF962520_my\n" //changed
 		"MOV	R7, R0\n"
 					"BL      capt_seq_hook_raw_here\n"      // +
 		"B	loc_FF87C874\n"

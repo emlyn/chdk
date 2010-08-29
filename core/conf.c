@@ -138,7 +138,7 @@ void clear_values()
 	 conf.video_bitrate = VIDEO_DEFAULT_BITRATE;
 	 shooting_video_bitrate_change(conf.video_bitrate);
  	}
- 	conf.edge_overlay_lock = 0; // reset it because otherwise this feature cant be used at startup (when buffer is empty) - needs workaround other than this!
+ 	conf.edge_overlay_pano = 0; // reset it because otherwise this feature cant be used at startup (when buffer is empty) - needs workaround other than this!
 }
 
 static const ConfInfo conf_info[] = {
@@ -343,7 +343,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(185, conf.curve_file,             CONF_DEF_PTR, ptr:"", NULL),
     CONF_INFO(186, conf.curve_enable,           CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(187, conf.edge_overlay_enable,    CONF_DEF_VALUE, i:0, NULL),
-    CONF_INFO(188, conf.edge_overlay_thresh,    CONF_DEF_VALUE, i:40, NULL),
+    CONF_INFO(188, conf.edge_overlay_thresh,    CONF_DEF_VALUE, i:60, NULL),
     CONF_INFO(189, conf.edge_overlay_color,     CONF_DEF_VALUE, cl:0x66, NULL),
     CONF_INFO(190, conf.synch_enable,           CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(191, conf.synch_delay_enable,     CONF_DEF_VALUE, i:0, NULL),
@@ -378,7 +378,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(220, conf.temperature_unit,              CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(221, conf.clear_zoom_override,         CONF_DEF_VALUE, i:1, NULL),			
     CONF_INFO(222, conf.edge_overlay_play,    CONF_DEF_VALUE, i:0, NULL),
-    CONF_INFO(223, conf.edge_overlay_lock,              CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(223, conf.edge_overlay_pano,              CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(224, conf.edge_overlay_zoom,                CONF_DEF_VALUE, i:1, NULL),
     CONF_INFO(225, conf.raw_cache,              CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(226, conf.dng_raw,                CONF_DEF_VALUE, i:0, conf_change_dng),
@@ -396,6 +396,9 @@ static const ConfInfo conf_info[] = {
 	CONF_INFO(238, conf.debug_lua_restart_on_error,     CONF_DEF_VALUE, i:0, NULL),
 	CONF_INFO(239, conf.debug_propcase_page,     CONF_DEF_VALUE, i:0, NULL),
 	CONF_INFO(240, conf.debug_misc_vals_show,     CONF_DEF_VALUE, i:0, NULL),
+	CONF_INFO(241, conf.edge_overlay_filter,     CONF_DEF_VALUE, i:0, NULL),
+	CONF_INFO(242, conf.edge_overlay_show,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(243, conf.edge_overlay_pano_overlap,   CONF_DEF_VALUE, i:30, NULL),
     };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 

@@ -533,9 +533,8 @@
 417 "Lade Konturen ..."
 418 "Speichere Konturen ..."
 419 "Auch im Wiedegabe-Modus?"
-420 "Gib Speicher frei ..."
 421 "Lade und setze Zoom"
-422 "Sperre Konturenüberlagerung"
+422 "Panorama-Modus"
 
 423 "2. Vorhang Blitzsynchro"
 
@@ -574,3 +573,6 @@
 451 "Dateien zurücksetzen ..."
 452 "Kamera neu starten ..."
 453 "Erzwinge manuellen Blitz"
+456 "Konturenfilterung"
+457 "Kontinuierlich anz."
+458 "   Pano-Überlappung (%)"

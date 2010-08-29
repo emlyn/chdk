@@ -527,9 +527,9 @@
 #define LANG_MENU_EDGE_LOAD		417
 #define LANG_MENU_EDGE_SAVE		418
 #define LANG_MENU_EDGE_PLAY		419
-#define LANG_MENU_EDGE_FREE		420
+//#define LANG_MENU_EDGE_FREE		420 // option no longer exists
 #define LANG_MENU_EDGE_ZOOM		421
-#define LANG_MENU_EDGE_LOCK		422
+#define LANG_MENU_EDGE_PANO		422
 #define LANG_MENU_REAR_CURTAIN          423 
 #define LANG_MENU_DNG_FORMAT            424
 #define LANG_MENU_RAW_CACHED            425
@@ -565,9 +565,12 @@
 #define LANG_MENU_FLASH_MANUAL_OVERRIDE        453
 #define LANG_MENU_MISC_IMAGE_QUALITY	454
 #define LANG_MENU_LUA_RESTART        455
+#define LANG_MENU_EDGE_FILTER        456
+#define LANG_MENU_EDGE_SHOW        457
+#define LANG_MENU_EDGE_PANO_OVERLAP  458
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  455
+#define GUI_LANG_ITEMS                  458
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

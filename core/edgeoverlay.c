@@ -4,387 +4,702 @@
 #include "keyboard.h"
 #include "stdlib.h"
 #include "gui_draw.h"
-
-// This edge overlay code has major changes to the "old" one. One major change
-// is, that it doesn cause my cam (ixus 950) to crash anymore by mistaking the
-// boundaries of the viewport buffer it can read from and write pixels to.
-// Unfortunately it still has the bug (that is also present in the original
-// version) that when you move the overlay too much you again overwrite data.
-// One might not necessarily notice it at once, or at all, but for me
-// unfortunately it overwrote vital data for the chdk menu structure.
-// 
-// Also the old version was flickering for me and wasn't playing well with the
-// chdk osd. I tried to change a bit about that, which makes it also a bit
-// faster updating, at least on my cam.
-//
-// And then of course, this can load the viewport to a seperate file 
-
+#include "bitvector.h"
+ 
 // the way we save edge overlays on their own...
 #define EDGE_FILE_PREFIX "EDG_"
 #define EDGE_FILE_FORMAT EDGE_FILE_PREFIX "%04d.edg"
-
-static char * imgbuf = 0;
-static char * imgbuf_end = 0;
-static int inmem=0;
-// whole viewport size in bytes ??
-static int viewport_size = 0;
-// width in bytes of one viewport line ??
-
-static int viewport_width;// screenwidth * 3
+ 
+typedef enum _edge_fsm_state
+{
+    EDGE_LIVE = 0,
+    EDGE_FROZEN
+} edge_fsm_state_t;
+ 
+static edge_fsm_state_t fsm_state = EDGE_LIVE;
+static bit_vector_t* edgebuf = NULL;
+static int xoffset = 0, yoffset = 0;
+ 
+static int viewport_size;   // whole viewport size in bytes ??
+static int viewport_width;      // screenwidth * 3, width in bytes of one viewport line ??
 static int viewport_height;
 #if CAM_USES_ASPECT_CORRECTION
 static int viewportw; //nandoide , width of viewport (not necessarily equal to width of screen)
 #endif
-// flag to remember if current buffer is already saved, so hitting save won't
-// save it again
-static int is_saved = 0;
-// set this to 1 when things need to be moved, so that a redraw clears "old"
-// pixels... Otherwise it just will write pixels that need edge overlay data.
-// This sometimes leaves trails when the pixel alignment isn't nice but it is
-// better than writing "transparent" to everwhere, essentially overwriting
-// important things that will cause flickering.
-static int need_redraw = 0;
-
-// debug output that waits
-void out_wait( const char* buf );
-
-void get_viewport_size( ) {
-	
-	// since screen_height is used in the drawing downwards, we should use it
-	// here too to calculate the buffer we need...
-	
-   #if CAM_USES_ASPECT_CORRECTION//nandoide sept-2009 get the viewport dimensions, not the screen dimensions, on sx200is they aren't the same. 
-      #undef MARGIN //not need margins, we have edhe_hmargin.
-      #define MARGIN 0
-      viewport_height = vid_get_viewport_height()-EDGE_HMARGIN*2; //don't trace bottom lines: we don't have enough memory
-      viewportw= vid_get_viewport_width();
-      viewport_width = viewportw * 3;
-      viewport_size = viewport_height * viewport_width;
-   #else
-      viewport_height = screen_height;//vid_get_viewport_height();
-      viewport_width = screen_width * 3;
-      viewport_size = viewport_height * screen_width * 3;
-   #endif
-}
-
-void ensure_allocate_imagebuffer( ) { 
-	if(imgbuf == 0)
-	{
-		imgbuf = malloc( viewport_size );
-		imgbuf_end = imgbuf + (viewport_size);
-	}
-}
-
-// scans a filename for the number of the edge detection file it contains
-int get_edge_file_num( const char* fn )
+  
+static void get_viewport_size()
 {
-	int num = 0;
-	if( strncmp(fn,EDGE_FILE_PREFIX,sizeof(EDGE_FILE_PREFIX)-1) == 0 )
-	{ // has the correct beginning at least, now try to read as a number...
-		fn += sizeof(EDGE_FILE_PREFIX);
-		while( *fn == '0' ) // skip leading 0s
-		{
-			++fn;
-		}
-		while( isdigit(*fn) )
-		{
-			num *= 10;
-			num += *fn - '0';
-			++fn;
-		}
-		// ignore anything else after it, that is like the ending etc.
-	}
-	return num;
-}
-
-// we eat up to 300k of memory, for people needing it we have a menu point
-// where they can manually free it. makes of course only sense when the edge
-// overlay is not active.
-void free_memory_edge_overlay(void){
-	char buf[64];
-	free(imgbuf);
-	imgbuf = 0;
-	sprintf(buf,"Freed %u byte",viewport_size);
-	draw_string(30, 10, buf, conf.osd_color);
-	viewport_size = 0;
-}
-
-// saves the actual active overlay data to a file... Well, actually the
-// viewport is saved...
-void save_edge_overlay(void){
-
-	char fn[64];
-	char msg[64];
-	FILE *fd;
-	DIR* d;
-	int fnum = 0;
-	int fr = 0;
-	int zoom = 0;
-	struct dirent* de;
-	static struct utimbuf t;
-	// nothing to save? then dont save
-	if( !imgbuf ) return;
-	zoom = shooting_get_zoom();
-	
-	// first figure out the most appropriate filename to use
-	d = opendir(EDGE_SAVE_DIR);
-	if( ! d )
-	{
-		return;
-	}
-
-	while( (de = readdir(d)) )
-	{
-		fr = get_edge_file_num(de->d_name);
-		if( fr > fnum )
-		{
-			fnum = fr;
-		}
-	}
-	++fnum; // the highest is set, we use the next one
-	get_viewport_size();
-	// open the right file
-	sprintf(fn, EDGE_SAVE_DIR "/" EDGE_FILE_FORMAT, fnum );
-	fd = fopen(fn, "wb");
-	if(fd !=NULL)
-	{
-		// write the data
-		fwrite(imgbuf,viewport_size,1,fd);
-		fwrite(&zoom,sizeof(zoom),1,fd);
-		is_saved = 1;
-		fclose(fd);
-		t.actime = t.modtime = time(NULL);
-		utime(fn, &t);
-		sprintf(msg, "Saved as %s",fn);
-		draw_string(30, 10, msg, conf.osd_color);
-	}
-	closedir(d);
-}
-
-// load the viewport copy thats being used for edge detection (and from that
-// displaying) from a file
-void load_edge_overlay( const char* fn ) {
-	FILE *fd;
-	int ret,ret2;
-	int zoom;
-
-	is_saved = 1; // won't want to save it again, its already there
-	get_viewport_size();
-	ensure_allocate_imagebuffer( );
-	fd = fopen(fn,"rb");
-	if( fd != NULL )
-	{
-		ret = fread(imgbuf,viewport_size,1,fd);
-		ret2 = fread (&zoom,sizeof(zoom),1,fd);
-		fclose(fd);
-		if( (ret == 1) && (ret2 == 1) )
-		{
-			inmem = 1; // fake having loaded stuff
-			if (conf.edge_overlay_zoom)	{
-				shooting_set_zoom(zoom);
-			}
-		}
-	}
-}
-
-// paint the edge overlay
-void edge_overlay(){
-
-	static int shotTaken = 0;
-	static int imgmem = 0;
-	static int ymin = 0;
-	static int thresh;
-	thresh = conf.edge_overlay_thresh; //40
-	static int xoffset = 0;
-	static int yoffset = 0;
-	static int full_press = 0;//cure for flaky behavior. due to multiple  returns to the scrip during one full press
-	static char strbuf[7] = "Frozen";
-	static unsigned char *img;
-	int i, hi, c;
-	int x, y, h, v, ymax, y1, x1, y2;
-	const char * ptrh1;
-	const char * ptrh2;
-	const char * ptrv1;
-	const char * ptrv2;
-	char xbuf[64];
-	char * optr;
-
-	is_saved = 0; // a new one, we could potentially save it
-	if((mode_get()&MODE_MASK) != MODE_PLAY)
-	{
-		img = vid_get_viewport_fb();
-	}
-	else
-	{
-		img = vid_get_viewport_fb_d();
-   }
-	get_viewport_size();
-	ensure_allocate_imagebuffer( );
-	if(imgbuf == 0) return; // ensure failed, make the best we can out of it
-
-	if(conf.edge_overlay_play || ((mode_get()&MODE_MASK) != MODE_PLAY))  {
-		// setup offsets for moving the edge overlay around. Always set
-		// need_redraw so that we actually do a complete redraw, overwriting
-		// also old pixels
-		if (gui_get_mode()==GUI_MODE_ALT) {
-				if (kbd_is_key_pressed(KEY_RIGHT)) {
-					xoffset -=XINC;
-					++need_redraw;
-				}
-				if (kbd_is_key_pressed(KEY_LEFT)) {
-					xoffset +=XINC;
-					++need_redraw;
-				}
-				if (kbd_is_key_pressed(KEY_DOWN)) {
-					yoffset -=YINC;
-					++need_redraw;
-				}
-				if (kbd_is_key_pressed(KEY_UP)) {
-					yoffset +=YINC;
-					++need_redraw;
-				}
-		}
-		if ((kbd_is_key_pressed(KEY_SHOOT_HALF)||kbd_is_key_pressed(KEY_SHOOT_FULL)) && (conf.edge_overlay_lock!=1)) {
-			if (kbd_is_key_pressed(KEY_SHOOT_FULL) && !full_press) {
-				shotTaken = 1 - shotTaken;
-				memcpy(imgbuf,img+EDGE_HMARGIN*viewport_width,viewport_size); //nandoide added EDGE_HMARGIN for save memory needings if neccesary
-				ymin = CALCYMARGIN;
-				inmem = 1;
-				full_press = 1;
-				xoffset = 0;
-				yoffset = 0;
-				return;
-			}
-			if(shotTaken) {
-				return;
-			}
-			memcpy(imgbuf,img+EDGE_HMARGIN*viewport_width,viewport_size); //nandoide added EDGE_HMARGIN for save memory needings if neccesary
-			ymin = CALCYMARGIN;
-			inmem = 1;
-			xoffset = 0;
-			yoffset = 0;
-			return;
-		}
-		else full_press = 0;
-
-
-
-		if (inmem && (ymin < viewport_height-CALCYMARGIN)) {
-			ymax = ymin + (viewport_height - 2 * CALCYMARGIN) / NSTAGES;
-			if(ymax > viewport_height - CALCYMARGIN) ymax = viewport_height - CALCYMARGIN;
-			for (y=ymin; y<ymax; y++) {
-				ptrh1 = imgbuf + y * viewport_width + 7;
-				ptrh2 = imgbuf + y * viewport_width - 5;
-				ptrv1 = imgbuf + (y + 1) * viewport_width + 1;
-				ptrv2 = imgbuf + (y - 1) * viewport_width + 1;
-				optr = imgbuf + y * viewport_width + 3;
-            #if CAM_USES_ASPECT_CORRECTION
-            for (x=12; x<(viewportw- 4) * 3; x+=6) {
-            #else
-				for (x=12; x<(screen_width- 4) * 3; x+=6) {
-            #endif
-					h = ptrh1[x] - ptrh2[x];
-					if(h  < 0) h = -h;
-					v = ptrv1[x] - ptrv2[x];
-					if(v  < 0) v = -v;
-					optr[x] = h + v;
-					h = ptrh1[x + 3] - ptrh2[x + 3];
-					if(h  < 0) h = -h;
-					v = ptrv1[x + 3] - ptrv2[x + 3];
-					if(v  < 0) v = -v;
-					optr[x + 2] = h + v;
-				}
-			}
-			ymin += (viewport_height - 2 * CALCYMARGIN) / NSTAGES;
-			return;
-		}
-
-		if(inmem &&(ymin >= viewport_height-CALCYMARGIN) && 
-			((gui_get_mode() == GUI_MODE_NONE) || (gui_get_mode() == GUI_MODE_ALT))){
-
-				for (y=MARGIN; y<viewport_height-MARGIN; y++) {
-					y1 = y + yoffset;
-					if((y1 < CALCYMARGIN) || (y1 >= viewport_height - CALCYMARGIN)) {
-						/*
-						for (x=MARGIN; x < screen_width - MARGIN; x+=2) {
-							draw_pixel(x, y, 0);
-							draw_pixel(x+1, y, 0);
-						}
-						*/
-					}
-					else {
-                  #if CAM_USES_ASPECT_CORRECTION
-                  for (x=MARGIN; x < viewportw - MARGIN; x+=2) {
-                  #else
-						for (x=MARGIN; x < screen_width - MARGIN; x+=2) {
-                  #endif
-							x1 = x + xoffset;
-							// leave a margin normally, only write to it when a
-							// full redraw is requested
-                     #if CAM_USES_ASPECT_CORRECTION
-							if((x1 < 12) || (x1 >= viewportw-13)) {
-                     #else
-                     if((x1 < 12) || (x1 >= screen_width-13)) {
-                     #endif
-								if( need_redraw )
-								{
-									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x), y+EDGE_HMARGIN, 0);
-									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x+1), y+EDGE_HMARGIN, 0);
-								}
-							}
-							else {
-								// draw a pixel if the threshold is reached. If
-								// not, draw it transparent only if we want a
-								// complete redraw to overwrite spurious pixels
-								// or if the color of the existing pixel is the
-								// same as the overlay color
-								if(imgbuf[y1 * viewport_width + x1 * 3 + 3]  > thresh)
-								{
-									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x), y+EDGE_HMARGIN, conf.edge_overlay_color );
-								}
-								else if( need_redraw || (draw_get_pixel(ASPECT_VIEWPORT_XCORRECTION(x),y+EDGE_HMARGIN) == conf.edge_overlay_color) )
-								{
-									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x), y+EDGE_HMARGIN, 0);
-								}
-
-								if(imgbuf[y1 * viewport_width + x1 * 3 + 5]  > thresh)
-								{
-									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x+1), y+EDGE_HMARGIN, conf.edge_overlay_color );
-								}
-								else if( need_redraw || (draw_get_pixel(ASPECT_VIEWPORT_XCORRECTION(x+1),y+EDGE_HMARGIN) == conf.edge_overlay_color) )
-								{
-									draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x+1), y+EDGE_HMARGIN, 0);
-								}
-							}
-						}
-				}
-				// disabled drawing the grid, the new way of drawing the
-				// overlay should leave the standard grid intact, allowing the
-				// custom grid to remain intact too.
-				if(shotTaken) draw_string(30, 10, strbuf, conf.osd_color);
-			}
-			// If a complete redraw was requested, decrement the request. That
-			// way we do it as much as it was requested, also in one run. Will
-			// cause some flickering, but better than nothing.
-			if( need_redraw )
-			{
-				--need_redraw;
-			}
-			return;
-		}
-	}
-	else {
-		full_press = 0;
-		inmem = 0;
-		shotTaken = 0;
-		ymin = 0;
-		xoffset = 0;
-		yoffset = 0;
-	}
-	return;
-}
-
-// there used to be some commented out version here. it was confusing, so I
-// removed it. Its still in the svn anyways.
+    // since screen_height is used in the drawing downwards, we should use it
+    // here too to calculate the buffer we need...
  
-// vim: tabstop=4 shiftwidth=4
+#if CAM_USES_ASPECT_CORRECTION//nandoide sept-2009 get the viewport dimensions, not the screen dimensions, on sx200is they aren't the same.
+    viewport_height = vid_get_viewport_height()-EDGE_HMARGIN*2; //don't trace bottom lines
+    viewportw = vid_get_viewport_width();
+    viewport_width = viewportw * 3;
+    viewport_size = viewport_height * viewport_width;
+#else
+    viewport_height = screen_height;//vid_get_viewport_height();
+    viewport_width = screen_width * 3;
+    viewport_size = viewport_height * screen_width * 3;
+#endif
+}
+ 
+static void ensure_allocate_imagebuffer()
+{
+    if(edgebuf == NULL)
+    {
+        edgebuf = bv_create(viewport_size, 1);
+    }
+}
+ 
+static void reset_edge_overlay()
+{
+    bv_free(edgebuf);
+    edgebuf = NULL;
+    fsm_state = EDGE_LIVE;
+}
+ 
+static int is_buffer_ready()
+{
+    if (edgebuf == NULL) return 0;
+    if (edgebuf->ptr == NULL) return 0; // this should never happen, but it does not hurt to check
+    return 1;
+}
+ 
+// scans a filename for the number of the edge detection file it contains
+static int get_edge_file_num(const char* fn)
+{
+    int num = 0;
+    if( strncmp(fn,EDGE_FILE_PREFIX,sizeof(EDGE_FILE_PREFIX)-1) == 0 )
+    {
+        // has the correct beginning at least, now try to read as a number...
+        fn += sizeof(EDGE_FILE_PREFIX);
+        while( *fn == '0' ) // skip leading 0s
+        {
+            ++fn;
+        }
+        while( isdigit(*fn) )
+        {
+            num *= 10;
+            num += *fn - '0';
+            ++fn;
+        }
+        // ignore anything else after it, that is like the ending etc.
+    }
+    return num;
+}
+  
+// saves the actual active overlay data to a file.
+void save_edge_overlay(void)
+{
+ 
+    char fn[64];
+    char msg[64];
+    FILE *fd;
+    DIR* d;
+    int fnum = 0;
+    int fr = 0;
+    int zoom = 0;
+    struct dirent* de;
+    static struct utimbuf t;
+    // nothing to save? then dont save
+ 
+    if( !is_buffer_ready() )
+    {
+        draw_string(0, 0, "No overlay to save.", conf.osd_color);
+        return;
+    }
+ 
+    zoom = shooting_get_zoom();
+ 
+    // first figure out the most appropriate filename to use
+    d = opendir(EDGE_SAVE_DIR);
+    if( ! d )
+    {
+        return;
+    }
+ 
+    while( (de = readdir(d)) )
+    {
+        fr = get_edge_file_num(de->d_name);
+        if( fr > fnum )
+        {
+            fnum = fr;
+        }
+    }
+    ++fnum; // the highest is set, we use the next one
+    get_viewport_size();
+    // open the right file
+    sprintf(fn, EDGE_SAVE_DIR "/" EDGE_FILE_FORMAT, fnum );
+    fd = fopen(fn, "wb");
+    if(fd !=NULL)
+    {
+        // write the data
+        fwrite(edgebuf->ptr,edgebuf->ptrLen,1,fd);
+        fwrite(&zoom,sizeof(zoom),1,fd);
+        fclose(fd);
+        t.actime = t.modtime = time(NULL);
+        utime(fn, &t);
+        sprintf(msg, "Saved as %s",fn);
+        draw_string(0, 0, msg, conf.osd_color);
+    }
+    closedir(d);
+}
+ 
+// load the edge overlay from a file
+void load_edge_overlay(const char* fn)
+{
+    FILE *fd;
+    int ret,ret2;
+    int zoom;
+ 
+    get_viewport_size();
+    ensure_allocate_imagebuffer( );
+    fd = fopen(fn,"rb");
+    if( fd != NULL )
+    {
+        ret = fread(edgebuf->ptr,edgebuf->ptrLen,1,fd);
+        ret2 = fread (&zoom,sizeof(zoom),1,fd);
+        fclose(fd);
+        if( (ret == 1) && (ret2 == 1) )
+        {
+            fsm_state = EDGE_FROZEN;    // switch to "edge overlay frozen"-mode
+            if (conf.edge_overlay_zoom)
+            {
+                shooting_set_zoom(zoom);
+            }
+        }
+    }
+}
+ 
+static void average_filter_row(const unsigned char* ptrh1,  // previous row
+                               const unsigned char* ptrh2,  // current row
+                               const unsigned char* ptrh3,  // next row
+                               unsigned char* smptr )       // write results here
+{
+    int x;
+#if CAM_USES_ASPECT_CORRECTION
+    for (x=12; x<(viewportw - 4) * 3; x+=6)
+#else
+    for (x=12; x<(screen_width - 4) * 3; x+=6)
+#endif
+    {
+        *(smptr + x + 1) = (*(ptrh1 + x - 1) +
+                            *(ptrh1 + x + 1) +
+                            *(ptrh1 + x + 3) +
+ 
+                            *(ptrh2 + x - 1) +
+                            *(ptrh2 + x + 1) +
+                            *(ptrh2 + x + 3) +
+ 
+                            *(ptrh3 + x - 1) +
+                            *(ptrh3 + x + 1) +
+                            *(ptrh3 + x + 3)) / 9;
+ 
+        *(smptr + x + 3) = (*(ptrh1 + x + 1) +
+                            *(ptrh1 + x + 3) +
+                            *(ptrh1 + x + 4) +
+ 
+                            *(ptrh2 + x + 1) +
+                            *(ptrh2 + x + 3) +
+                            *(ptrh2 + x + 4) +
+ 
+                            *(ptrh3 + x + 1) +
+                            *(ptrh3 + x + 3) +
+                            *(ptrh3 + x + 4)) / 9;
+ 
+        *(smptr + x + 4) = (*(ptrh1 + x + 3) +
+                            *(ptrh1 + x + 4) +
+                            *(ptrh1 + x + 5) +
+ 
+                            *(ptrh2 + x + 3) +
+                            *(ptrh2 + x + 4) +
+                            *(ptrh2 + x + 5) +
+ 
+                            *(ptrh3 + x + 3) +
+                            *(ptrh3 + x + 4) +
+                            *(ptrh3 + x + 5)) / 9;
+ 
+        *(smptr + x + 5) = (*(ptrh1 + x + 4) +
+                            *(ptrh1 + x + 5) +
+                            *(ptrh1 + x + 7) +
+ 
+                            *(ptrh2 + x + 4) +
+                            *(ptrh2 + x + 5) +
+                            *(ptrh2 + x + 7) +
+ 
+                            *(ptrh3 + x + 4) +
+                            *(ptrh3 + x + 5) +
+                            *(ptrh3 + x + 7)) / 9;
+    }
+}
+ 
+// Sobel edge detector
+static void calc_edge_overlay()
+{
+    const int bPlayMode = (mode_get() & MODE_MASK) == MODE_PLAY;
+    const unsigned char* img = bPlayMode ? vid_get_viewport_fb_d() :  vid_get_viewport_fb();
+    const unsigned char * ptrh1 = NULL;    // previous pixel line
+    const unsigned char * ptrh2 = NULL;    // current pixel line
+    const unsigned char * ptrh3 = NULL;    // next pixel line
+    unsigned char* smbuf = NULL;
+    unsigned char * smptr = NULL;    // pointer to line in smbuf
+    int x, y;
+    int conv1, conv2;
+    
+    const int y_min = EDGE_HMARGIN;
+    const int y_max = EDGE_HMARGIN + viewport_height;
+    const int x_min = 6;
+#if CAM_USES_ASPECT_CORRECTION
+    const int x_max = (viewportw - 4) * 3;
+#else
+    const int x_max = (screen_width - 4) * 3;
+#endif
+
+    xoffset =0;
+    yoffset =0;
+ 
+    // Reserve buffers
+    ensure_allocate_imagebuffer();
+    if( !is_buffer_ready() ) return;
+ 
+    // Clear all edges, if any
+    memset(edgebuf->ptr, 0, edgebuf->ptrLen);
+ 
+    // In every 6 bytes four pixels are described in the
+    // viewport (UYVYYY format). For edge detection we only
+    // consider the second in the current and the first
+    // in the next pixel.
+ 
+ 
+    if (conf.edge_overlay_filter)
+    {
+        smbuf = (unsigned char*)malloc(viewport_width*3);
+        memset(smbuf, 0, viewport_width*3);
+        if (smbuf==NULL)
+            return;
+ 
+        // Prefill smbuf with three lines of avergae-filtered data.
+        // This looks much more complex then it actually is.
+        // We really are just summing up nine pixels in a 3x3 box
+        // and averaging the current pixel based on them. And
+        // we do it 4 bytes at a time because of the UYVYYY format.
+        for (y = -1; y <= 1; ++y)
+        {
+            ptrh1 = img + (EDGE_HMARGIN+y-1) * viewport_width;
+            ptrh2 = img + (EDGE_HMARGIN+y  ) * viewport_width;
+            ptrh3 = img + (EDGE_HMARGIN+y+1) * viewport_width;
+            smptr = smbuf + (y+1) * viewport_width;
+ 
+            average_filter_row(ptrh1, ptrh2, ptrh3, smptr);
+        }
+    }
+ 
+    for (y = y_min; y < y_max; ++y)
+    {
+        if (conf.edge_overlay_filter)
+        {
+            // We need to shift up our smbuf one line,
+            // and fill in the last line (which now empty)
+            // with average-filtered data from img.
+            // By storing only three lines of smoothed picture
+            // in memory, we save memory.
+ 
+            // Shift
+            memcpy(smbuf+viewport_width*0, smbuf+viewport_width*1, viewport_width);
+            memcpy(smbuf+viewport_width*1, smbuf+viewport_width*2, viewport_width);
+ 
+            // Filter new line
+            ptrh1 = img +  y * viewport_width;
+            ptrh2 = img + (y+1)    * viewport_width;
+            ptrh3 = img + (y+2) * viewport_width;
+            smptr = smbuf + 2 * viewport_width;
+            average_filter_row(ptrh1, ptrh2, ptrh3, smptr);
+ 
+            ptrh1 = smbuf + 0 * viewport_width;
+            ptrh2 = smbuf + 1 * viewport_width;
+            ptrh3 = smbuf + 2 * viewport_width;
+        }
+        else
+        {
+            ptrh1 = img + (y-1) * viewport_width;
+            ptrh2 = img +  y    * viewport_width;
+            ptrh3 = img + (y+1) * viewport_width;
+        }
+ 
+        // Now we do sobel on the current line
+ 
+        for (x = x_min; x < x_max; x += 6)
+        {
+            // convolve vert (second Y)
+            conv1 = *(ptrh1 + x + 1) * ( 1) +
+                    *(ptrh1 + x + 4) * (-1) +
+ 
+                    *(ptrh2 + x + 1) * ( 2) +
+                    *(ptrh2 + x + 4) * (-2) +
+ 
+                    *(ptrh3 + x + 1) * ( 1) +
+                    *(ptrh3 + x + 4) * (-1);
+            if  (conv1 < 0)     // abs()
+                conv1 = -conv1;
+ 
+            // convolve vert (first Y of next pixel)
+            conv2 = *(ptrh1 + x + 1) * ( 1) +
+                    *(ptrh1 + x + 3) * ( 2) +
+                    *(ptrh1 + x + 4) * ( 1) +
+ 
+                    *(ptrh3 + x + 1) * (-1) +
+                    *(ptrh3 + x + 3) * (-2) +
+                    *(ptrh3 + x + 4) * (-1);
+            if  (conv2 < 0)     // abs()
+                conv2 = -conv2;
+ 
+            if (conv1 + conv2 > conf.edge_overlay_thresh)
+            {
+                bv_set(edgebuf, (y-EDGE_HMARGIN)*viewport_width + x/3, 1);
+            }
+ 
+            // Do it once again for the next 'pixel'
+ 
+            // convolve vert (second Y)
+            conv1 = *(ptrh1 + x + 5) * ( 1) +
+                    *(ptrh1 + x + 9) * (-1) +
+ 
+                    *(ptrh2 + x + 5) * ( 2) +
+                    *(ptrh2 + x + 9) * (-2) +
+ 
+                    *(ptrh3 + x + 5) * ( 1) +
+                    *(ptrh3 + x + 9) * (-1);
+            if  (conv1 < 0)     // abs()
+                conv1 = -conv1;
+ 
+            // convolve vert (first Y of next pixel)
+            conv2 = *(ptrh1 + x + 5) * ( 1) +
+                    *(ptrh1 + x + 7) * ( 2) +
+                    *(ptrh1 + x + 9) * ( 1) +
+ 
+                    *(ptrh3 + x + 5) * (-1) +
+                    *(ptrh3 + x + 7) * (-2) +
+                    *(ptrh3 + x + 9) * (-1);
+            if  (conv2 < 0)     // abs()
+                conv2 = -conv2;
+ 
+            if (conv1 + conv2 > conf.edge_overlay_thresh)
+            {
+                bv_set(edgebuf, (y-EDGE_HMARGIN)*viewport_width + x/3+1, 1);
+            }
+        }   // for x
+    }   // for y
+ 
+    if (smbuf != NULL)
+    {
+        free(smbuf);
+        smbuf = NULL;
+    }
+ 
+//  For an even more improved edge overlay, enabling the following lines will 
+//  post-filter the results of the edge detection, removing false edge 'dots'
+//  from the display. However, the speed hit is large. In the developer's opinion
+//  this code is not needed, but if you want that additional quality and do not 
+//  care so much about performance, you can enable it.
+// 
+//    if (conf.edge_overlay_filter)
+//    {
+//        // Here we do basic filtering on the detected edges.
+//        // If a pixel is marked as edge but just a few of its
+//        // neighbors are also edges, then we assume that the
+//        // current pixel is just noise and delete the mark.
+//
+//        bit_vector_t* bv_tmp = bv_create(edgebuf->nElem, edgebuf->nBits);
+//        if (bv_tmp != NULL)
+//        {
+//            memset(bv_tmp->ptr, 0, bv_tmp->ptrLen);
+//
+//            for (y = 1; y < viewport_height-1; ++y)
+//            {
+//#if CAM_USES_ASPECT_CORRECTION
+//                for (x=12; x<(viewportw - 4); ++x)
+//#else
+//                for (x=12; x<(screen_width - 4); ++x)
+//#endif
+//                {
+//                    int bEdge = bv_get(edgebuf, y*viewport_width + x);
+//                    if (bEdge)
+//                    {
+//                        // Count the number of neighbor edges
+//                        int sum =
+//                            bv_get(edgebuf, (y-1)*viewport_width + (x-1)) +
+//                            bv_get(edgebuf, (y-1)*viewport_width + (x)) +
+//                            bv_get(edgebuf, (y-1)*viewport_width + (x+1)) +
+//
+//                            bv_get(edgebuf, (y)*viewport_width + (x-1)) +
+////              bv_get(&edgebuf, (y)*viewport_width + (x)) + //  we only inspect the neighbors
+//                            bv_get(edgebuf, (y)*viewport_width + (x+1)) +
+//
+//                            bv_get(edgebuf, (y+1)*viewport_width + (x-1)) +
+//                            bv_get(edgebuf, (y+1)*viewport_width + (x)) +
+//                            bv_get(edgebuf, (y+1)*viewport_width + (x+1));
+//
+//                        if (!conf.edge_overlay_show)
+//                        {
+//                            if (sum >= 5)    // if we have at least 5 neighboring edges
+//                                bv_set(bv_tmp, y*viewport_width + x, 1);   // keep the edge
+//                            // else
+//                            // there is no need to delete because the buffer is already zeroed
+//                        }
+//                    }
+//                }   // for x
+//            }   // for y
+//
+//            // Swap the filtered edge buffer for the real one
+//            bit_vector_t* swap_tmp = edgebuf;
+//            edgebuf = bv_tmp;
+//            bv_free(swap_tmp);
+//        }   // NULL-check
+//    }   // if filtering
+ 
+}
+ 
+static void draw_edge_overlay()
+{
+    int x, y;
+    int x_off, y_off;
+ 
+    const int y_min = EDGE_HMARGIN;
+    const int y_max = EDGE_HMARGIN+viewport_height;
+    const int x_min = 6;
+#if CAM_USES_ASPECT_CORRECTION
+    const int x_max = (viewportw - 4);
+#else
+    const int x_max = (screen_width - 4);
+#endif
+
+    if( !is_buffer_ready() ) return;
+ 
+    for (y = y_min; y < y_max; ++y)
+    {
+        y_off = y + yoffset;
+ 
+        if ((y_off > y_min) && (y_off < y_max)) // do not draw outside of allowed area
+        {
+            for (x = x_min; x < x_max; ++x)
+            {
+                x_off = x + xoffset;
+ 
+                if ((x_off > x_min) && (x_off < x_max)) // do not draw outside of allowed area
+                {
+                    // Draw a pixel to the screen wherever we detected an edge.
+                    // If there is no edge based on the newest data, but there is one painted on the screen
+                    // from previous calls, delete it from the screen.
+                    if (bv_get(edgebuf, (y-y_min)*viewport_width + x))
+                        draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x_off), y_off, conf.edge_overlay_color );
+                    else if (draw_get_pixel(ASPECT_VIEWPORT_XCORRECTION(x_off), y_off) == conf.edge_overlay_color)
+                        draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x_off), y_off, 0 );
+                }
+            }   // for x
+        }
+    }   // for y
+ 
+ 
+    // Drawing the overlay is over.
+    // But as a finishing touch we clear up garbage on the screen
+    // by clearing those parts that the overlay has left.
+ 
+    if (xoffset != 0)
+    {
+        // Cleans up leftover from horizontal motion
+ 
+        const int x_min_c = (xoffset < 0) ? x_max + xoffset : x_min;
+        const int x_max_c = (xoffset > 0) ? x_min + xoffset : x_max;
+ 
+        for (y = y_min; y < y_max; ++y)
+        {
+            for (x = x_min_c; x < x_max_c; ++x)
+            {
+                if (draw_get_pixel(ASPECT_VIEWPORT_XCORRECTION(x), y) == conf.edge_overlay_color)  // if there is an edge drawn on the screen but there is no edge there based on the newest data, delete it from the screen
+                    draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x), y, 0 );
+            }
+        }
+    }
+ 
+    if (yoffset != 0)
+    {
+        // Cleans up leftover from vertical motion
+ 
+        const int y_min_c = (yoffset < 0) ? y_max + yoffset : y_min;
+        const int y_max_c = (yoffset > 0) ? y_min + yoffset : y_max;
+ 
+        for (y = y_min_c; y < y_max_c; ++y)
+        {
+            for (x = x_min; x < x_max; ++x)
+            {
+                if (draw_get_pixel(ASPECT_VIEWPORT_XCORRECTION(x), y) == conf.edge_overlay_color)  // if there is an edge drawn on the screen but there is no edge there based on the newest data, delete it from the screen
+                    draw_pixel(ASPECT_VIEWPORT_XCORRECTION(x), y, 0 );
+            }
+        }
+    }
+}
+
+static void set_offset_from_overlap()
+{
+    const int y_max = viewport_height;
+#if CAM_USES_ASPECT_CORRECTION
+    const int x_max = (viewportw - 4);
+#else
+    const int x_max = (screen_width - 4);
+#endif
+
+    switch(conf.edge_overlay_pano)
+    {
+    case 0:     // pano off
+        xoffset = 0;
+        yoffset = 0;
+        break;
+    case 1:     // pano from left to right
+        xoffset = -x_max*(100-conf.edge_overlay_pano_overlap)/100;
+        break;
+    case 2:     // pano from top to bottom
+        yoffset = -y_max*(100-conf.edge_overlay_pano_overlap)/100;
+        break;
+    case 3:     // pano from right to left
+        xoffset = x_max*(100-conf.edge_overlay_pano_overlap)/100;
+        break;
+    case 4:     // pano from bottom to top
+        yoffset = y_max*(100-conf.edge_overlay_pano_overlap)/100;
+        break;
+    case 5:     // free mode
+    default:
+        // free mode: change position with "ALT" and cursor
+        // nothing to do here.
+        break;
+    }
+}
+ 
+ 
+// Main edge overlay function.
+// It works by detecting edges using the Sobel operator
+// (calc_edgeoverlay()), the detected edges are then stored into an
+// array of 1-bit elements. A set bit indicates that there is an
+// edge and that it should be drawn onto the overlay.
+// When needed, the 1-bit edge buffer is drawn onto the screen
+// (dynamically decompressing it) using draw_edge_overlay().
+void edge_overlay()
+{
+    // Was the shutter fully pressed the last time we ran?
+    // We use this to make sure that the user has released
+    // the button before processing the next FullPress event.
+    // This prevents switching FSM states more than once
+    // per press.
+    static int bFullPress_prev = 0;
+ 
+    // Have we already started taking pictures in panorama mode?
+    // We use this variable to be able to detect if panorama
+    // mode has been turned off.
+    static int bPanoInProgress = 0;
+ 
+    // Precalculate some values to make the rest of the
+    // code easier to read.
+    const int bHalfPress = kbd_is_key_pressed(KEY_SHOOT_HALF);
+    const int bFullPress = kbd_is_key_pressed(KEY_SHOOT_FULL);
+    const int bPlayMode = (mode_get() & MODE_MASK) == MODE_PLAY;
+    const int bPanoramaMode = (conf.edge_overlay_pano != 0);
+    const int bNeedHalfPress = (conf.edge_overlay_show != 1);
+    const int bDisplayInPlay = (conf.edge_overlay_play == 1);
+    const int bGuiModeNone = (gui_get_mode() == GUI_MODE_NONE);
+    const int bGuiModeAlt = (gui_get_mode() == GUI_MODE_ALT);
+    const int bCanDisplay = (
+                                (!bPlayMode && (bHalfPress || !bNeedHalfPress)) ||   // we have a HalfPress in rec-mode
+                                ( bPlayMode && bDisplayInPlay)  // or we are in play-mode with the right settings
+                            );
+ 
+    if (bPanoInProgress && !bPanoramaMode)
+    {
+        // This means panorama mode has been recently
+        // turned off in the menu. So let's release
+        // Frozen mode for the user.
+        reset_edge_overlay();
+        bPanoInProgress = 0;
+    }
+ 
+    get_viewport_size();
+
+    // For just two states a state machine is not actually needed.
+    // But it is scalable in the future in case anybody
+    // wants to extend the functionality of edge overlay.
+    switch (fsm_state)
+    {
+    case EDGE_LIVE:
+    {
+        // In this state we assume no edge overlay in memory,
+        // but we are ready to create one if the user presses wishes so.
+ 
+        if (bFullPress && !bFullPress_prev && bGuiModeNone)
+        {
+            calc_edge_overlay();
+            set_offset_from_overlap();
+            fsm_state = EDGE_FROZEN;
+            
+            bPanoInProgress = bPanoramaMode;
+        }
+        else if (bCanDisplay && (bGuiModeAlt || bGuiModeNone))
+        {
+            calc_edge_overlay();
+            draw_edge_overlay();
+        }
+        else
+        {
+            // Nothing happens. So do nothing.
+            // Or rather, we could clean up if we are that bored.
+            bv_free(edgebuf);
+            edgebuf = NULL;
+        }
+ 
+        break;
+    }
+    case EDGE_FROZEN:
+    {
+        // We have a stored edge overlay in memory and we display
+        // it on screen in 'frozen' mode.
+ 
+        // Move edge overlay around.
+        if (gui_get_mode() == GUI_MODE_ALT)
+        {
+            if (kbd_is_key_pressed(KEY_RIGHT))
+                xoffset +=XINC;
+            if (kbd_is_key_pressed(KEY_LEFT))
+                xoffset -=XINC;
+            if (kbd_is_key_pressed(KEY_DOWN))
+                yoffset +=YINC;
+            if (kbd_is_key_pressed(KEY_UP))
+                yoffset -=YINC;
+        }
+ 
+        // In event of a FullPress, we either capture a new
+        // overlay and stay frozen, OR we go back to live mode.
+        if (bFullPress && !bFullPress_prev && bGuiModeNone)
+        {
+            if (bPanoramaMode)
+            {
+                calc_edge_overlay();
+                set_offset_from_overlap();
+                bPanoInProgress = 1;
+            }
+            else
+                fsm_state = EDGE_LIVE;
+        }
+        else if (bCanDisplay && (bGuiModeAlt || bGuiModeNone))
+        {
+            draw_edge_overlay();
+            draw_string(0, 0, "Frozen", conf.osd_color);
+        }
+ 
+        break;
+    }   // case
+    }   // switch
+ 
+    bFullPress_prev = bFullPress;
+}   // function
+ 
+ 
+ 
+ 

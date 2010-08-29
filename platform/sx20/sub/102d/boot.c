@@ -6,7 +6,7 @@ const char * const new_sa = &_end;
 
 void JogDial_task_my(void);
 
-void taskCreateHook3(int *p) { 
+void taskCreateHook3(int *p) {
  p-=17;
  if (p[0]==0xFF87CD90)  p[0]=(int)capt_seq_task;
  if (p[0]==0xFF89A91C)  p[0]=(int)init_file_modules_task;
@@ -14,6 +14,11 @@ void taskCreateHook3(int *p) {
  if (p[0]==0xFF8C1480)  p[0]=(int)exp_drv_task;
  if (p[0]==0xff85f3cc)	p[0]=(int)JogDial_task_my;
  if (p[0]==0xFF879084)  p[0]=(int)movie_record_task;
+}
+void taskCreateHook2(int *p) { 
+p-=17;
+if (p[0]==0xFF89A91C)  p[0]=(int)init_file_modules_task;
+if (p[0]==0xFF8C1480)  p[0]=(int)exp_drv_task;
 }
 
 void CreateTask_spytask() {
@@ -118,7 +123,9 @@ void __attribute__((naked,noinline)) boot() {
 
 void __attribute__((naked,noinline)) sub_FF810354_my() {
 	//http://chdk.setepontos.com/index.php/topic,4194.0.html
+	*(int*)0x1934 = (int)taskCreateHook2;   // this is inferred, but not actually tested
 	*(int*)0x1938 = (int)taskCreateHook3;
+    *(int*)(0x2564)= (*(int*)0xC0220134)&1 ? 0x2000000 : 0x1000000; // replacement of sub_FF8331CC for correct power-on.
 
 	asm volatile (
                  "LDR     R0, =0xFF8103CC\n"
@@ -264,7 +271,7 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() {
 "loc_FF81F89C:\n"
 		"B	loc_FF81F89C\n"
 "loc_FF81F8A0:\n"
-		"BL	sub_FF8331CC\n"
+//		"BL	sub_FF8331CC\n"         // see begin of sub_FF810354_my()
 //		"BL	j_nullsub_235\n"
 		"BL	sub_FF8388E4\n"
 		"LDR	R1, =0x34E000\n"
@@ -532,7 +539,7 @@ void __attribute__((naked,noinline)) sub_FF86E724_my() {
           "MOV     R4, R12\n"                    // Move the new MBR offset for the partition detection.
 
      "dg_sd_fat32_end:\n"
-          // End of DataGhost's FAT32 autodetection code 
+          // End of DataGhost's FAT32 autodetection code
 
 		"LDRB	R1, [R4,#0x1C9]\n"
 		"LDRB	R3, [R4,#0x1C8]\n"

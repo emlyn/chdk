@@ -2533,7 +2533,7 @@
     #undef ASPECT_VIEWPORT_YCORRECTION 
     #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) ) 
     #undef EDGE_HMARGIN 
-    #define EDGE_HMARGIN 20
+    #define EDGE_HMARGIN 28
     
     //games mappings
    #undef GAMES_SCREEN_WIDTH
@@ -2621,7 +2621,7 @@
     #undef ASPECT_VIEWPORT_YCORRECTION 
     #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) ) 
     #undef EDGE_HMARGIN 
-    #define EDGE_HMARGIN 20
+    #define EDGE_HMARGIN 28
 
 	/**** From SX200IS, ok for G11 ?*/
     #define DNG_SUPPORT    1
@@ -2708,7 +2708,7 @@
     #undef ASPECT_VIEWPORT_YCORRECTION 
     #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) ) 
     #undef EDGE_HMARGIN 
-    #define EDGE_HMARGIN 20
+    #define EDGE_HMARGIN 28
 
 	/**** From SX200IS, ok for S90 ?*/
     #define DNG_SUPPORT    1
@@ -2751,7 +2751,7 @@
 	#define CAM_MULTIPART				1
 	#define CAM_HAS_JOGDIAL				1
 	#undef  CAM_USE_ZOOM_FOR_MF
-	#undef  CAM_UNCACHED_BIT  // shut up compiler
+	#undef  CAM_UNCACHED_BIT			// shut up compiler
 	#define CAM_UNCACHED_BIT			0x40000000
 
 	#define DNG_SUPPORT					1
@@ -2819,22 +2819,13 @@
 	#undef CAM_BITMAP_PALETTE
 	#define CAM_BITMAP_PALETTE		6
 
-	//zebra letterbox for saving memory
-	#undef ZEBRA_HMARGIN0
-	#define ZEBRA_HMARGIN0			30  //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
+   //zebra letterbox for saving memory
+   #undef ZEBRA_HMARGIN0
+   #define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
+  
+   #undef EDGE_HMARGIN
+   #define EDGE_HMARGIN 28
 
-	#undef EDGE_HMARGIN
-	#define EDGE_HMARGIN			20
-
-	// the SX20 has a very small amount of free ram once CHDK is loaded - probably due to the large display buffers in use
-	// The RAM is so low that edge detection and zebra crash the device
-	// unloading the games from this build free's 14k of ram allowing zebra and edge to
-	// work normally and the random crashes to go away
-	#undef OPT_GAME_REVERSI
-	#undef OPT_GAME_SOKOBAN
-	#undef OPT_GAME_CONNECT4
-	#undef OPT_GAME_MASTERMIND
-	#undef OPT_CALENDAR
 //----------------------------------------------------------
 
 

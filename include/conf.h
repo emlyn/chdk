@@ -250,14 +250,17 @@ typedef struct {
     int mute_on_zoom;
     int bad_pixel_removal;
     int video_af_key;
-    
+
     char curve_file[100];
     int curve_enable;
-    
+
     int edge_overlay_enable;
+    int edge_overlay_filter;
     int edge_overlay_thresh;
     int edge_overlay_zoom; // shall zoom be set when *edg file is loaded?
-    int edge_overlay_lock; // whether edge overlay should be overwritten on each half-press or not
+    int edge_overlay_pano; // whether a full press changes back to live mode
+    int edge_overlay_pano_overlap; // overlap in % in pano mode
+    int edge_overlay_show; // whether to show overlay even when no button is pressed
     int edge_overlay_play; // whether edge overlay is switched on also for play mode
     color edge_overlay_color;
 

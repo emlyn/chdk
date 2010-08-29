@@ -538,9 +538,9 @@ static char* gui_lang_default = \
 "417 \"Load Edge Overlay\"\n"
 "418 \"Save Edge Overlay\"\n"
 "419 \"Enable in Play\"\n"
-"420 \"Free internal Memory\"\n"
+// "420 \"Free internal Memory\"\n" // option no longer exists
 "421 \"Load+Set Zoom\"\n"
-"422 \"Lock Edge Overlay\"\n"
+"422 \"Panorama Mode\"\n"
 "423 \"Rear curtain flash sync\"\n"
 "424 \"DNG format\"\n"
 "425 \"RAW buffer cached\"\n"
@@ -576,6 +576,9 @@ static char* gui_lang_default = \
 "453 \"Force manual flash\"\n"
 "454 \"Quality override\"\n"
 "455 \"Restart Lua on error\"\n"
+"456 \"Filter edges\"\n"
+"457 \"Always show\"\n"
+"458 \"   Pano overlap (%)\"\n"
 ;
 
 //-------------------------------------------------------------------

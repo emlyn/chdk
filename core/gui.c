@@ -160,7 +160,6 @@ static void gui_draw_load_lang(int arg);
 static void gui_menuproc_mkbootdisk(int arg);
 static void gui_menuproc_edge_save(int arg);
 static void gui_menuproc_edge_load(int arg);
-static void gui_menuproc_edge_free(int arg);
 #ifdef OPT_DEBUGGING
 void gui_compare_props(int arg);
 #endif
@@ -255,6 +254,9 @@ static const char* gui_override_disable_enum(int change, int arg);
 	static const char* gui_debug_display_enum(int change, int arg);
 	static void gui_debug_shortcut(void);
 #endif
+
+static const char* gui_edge_pano_enum(int change, int arg);
+
 void rinit();
 
 
@@ -634,13 +636,15 @@ static CMenu operation_submenu = {0x21,LANG_MENU_OPERATION_PARAM_TITLE, NULL, op
 #ifdef OPT_EDGEOVERLAY
 static CMenuItem edge_overlay_submenu_items[] = {
     {0x5c,LANG_MENU_EDGE_OVERLAY_ENABLE,     MENUITEM_BOOL,          &conf.edge_overlay_enable },
-    {0x33,LANG_MENU_EDGE_SAVE,			MENUITEM_PROC,		(int*)gui_menuproc_edge_save },
-    {0x5c,LANG_MENU_EDGE_ZOOM,     MENUITEM_BOOL,          &conf.edge_overlay_zoom },
-    {0x5c,LANG_MENU_EDGE_LOCK,     MENUITEM_BOOL,          &conf.edge_overlay_lock },
+    {0x5c,LANG_MENU_EDGE_FILTER,     MENUITEM_BOOL,          &conf.edge_overlay_filter },
+    {0x5c,LANG_MENU_EDGE_PANO,     MENUITEM_ENUM,          (int*)gui_edge_pano_enum },
+    {0x7f,LANG_MENU_EDGE_PANO_OVERLAP,   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.edge_overlay_pano_overlap, MENU_MINMAX(0, 100)},
+    {0x5c,LANG_MENU_EDGE_SHOW,     MENUITEM_BOOL,          &conf.edge_overlay_show },
     {0x7f,LANG_MENU_EDGE_OVERLAY_TRESH,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.edge_overlay_thresh, MENU_MINMAX(0, 255)},
     {0x65,LANG_MENU_EDGE_OVERLAY_COLOR,      MENUITEM_COLOR_FG,      (int*)&conf.edge_overlay_color },
     {0x5c,LANG_MENU_EDGE_PLAY,			MENUITEM_BOOL,		&conf.edge_overlay_play }, //does not work on cams like s-series, which dont have a real "hardware" play/rec switch, need a workaround, probably another button
-    {0x33,LANG_MENU_EDGE_FREE,			MENUITEM_PROC,		(int*)gui_menuproc_edge_free },
+    {0x33,LANG_MENU_EDGE_SAVE,			MENUITEM_PROC,		(int*)gui_menuproc_edge_save },
+    {0x5c,LANG_MENU_EDGE_ZOOM,     MENUITEM_BOOL,          &conf.edge_overlay_zoom },
     {0x33,LANG_MENU_EDGE_LOAD,			MENUITEM_PROC,		(int*)gui_menuproc_edge_load },
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
     {0}
@@ -3200,10 +3204,6 @@ void gui_menuproc_mkbootdisk(int arg) {
     mark_filesystem_bootable();
 }
 
-void gui_menuproc_edge_free(int arg) {
-    free_memory_edge_overlay();
-}
-
 void gui_menuproc_edge_save(int arg) {
     save_edge_overlay();
 }
@@ -3412,6 +3412,19 @@ void gui_compare_props(int arg)
 		}
 	}
 	initialized = 1;
+}
+
+static const char* gui_edge_pano_enum(int change, int arg)
+{
+    static const char* modes[]={ "Off", "Right", "Down", "Left", "Up", "Free"};
+
+    conf.edge_overlay_pano+=change;
+    if (conf.edge_overlay_pano<0)
+        conf.edge_overlay_pano=0;
+    else if (conf.edge_overlay_pano>=(sizeof(modes)/sizeof(modes[0])))
+        conf.edge_overlay_pano=sizeof(modes)/sizeof(modes[0])-1;
+
+    return modes[conf.edge_overlay_pano]; 
 }
 
 #endif

@@ -220,7 +220,9 @@ static void gui_osd_draw_single_histo(int hist, coord x, coord y, int small) {
 //-------------------------------------------------------------------
 // free and NULL zebra buffers. free(NULL) is always OK.
 static void gui_osd_zebra_free() {
+  #if !defined (CAMERA_sx20)
 	free(buf);
+  #endif
 	buf=NULL;
 #if ZEBRA_CANONOSD_BORDER_RESTORE
 	free(cur_buf_top);
@@ -237,19 +239,24 @@ static void gui_osd_zebra_free() {
 static int gui_osd_zebra_init(int show) {
 	unsigned i;
 
-    if(show) { 
-        if (!buf) {
-            timer = 0;
-            #if defined (CAMERA_sx200is) || defined (CAMERA_g11) || defined (CAMERA_ixus100_sd780) || defined (CAMERA_ixus95_sd1200) || defined (CAMERA_s90) || defined (CAMERA_sx20)//nandoide sept-2009
-               buffer_size=screen_buffer_size-ZEBRA_HMARGIN0*screen_buffer_width;
-               buf = malloc(buffer_size);
-               //~ if (!buf) draw_txt_string(0, 14, "Warn: No space to allocate zebra buffer: restart camera", MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
-               if (!buf) buf=vid_get_bitmap_fb(); //without new buffer: directly into screen buffer: we got some flickering in OSD and histogram but it's usable 
-               //~ msleep(50);
-            #else
-               buf = malloc(screen_buffer_size);
-            #endif
-           
+  if(show)
+  {
+    if (!buf)
+    {
+      timer = 0;
+      #if defined (CAMERA_sx200is) || defined(CAMERA_g11) || defined (CAMERA_ixus100_sd780)  || defined (CAMERA_ixus95_sd1200) || defined (CAMERA_s90) //nandoide sept-2009
+        buffer_size=screen_buffer_size-ZEBRA_HMARGIN0*screen_buffer_width;
+        buf = malloc(buffer_size);
+        //~ if (!buf) draw_txt_string(0, 14, "Warn: No space to allocate zebra buffer: restart camera", MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
+        if (!buf)
+          buf=vid_get_bitmap_fb(); //without new buffer: directly into screen buffer: we got some flickering in OSD and histogram but it's usable
+        //~ msleep(50);
+      #elif defined (CAMERA_sx20)
+        buffer_size=screen_buffer_size-ZEBRA_HMARGIN0*screen_buffer_width;
+        buf=vid_get_bitmap_fb();
+      #else
+        buf = malloc(screen_buffer_size);
+      #endif
             scr_buf = vid_get_bitmap_fb();
 #if ZEBRA_CANONOSD_BORDER_RESTORE
             cur_buf_top = malloc(screen_buffer_width * ZFIX_TOP); 
