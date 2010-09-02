@@ -1015,14 +1015,11 @@
 
 	#define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green 
 
-    // TODO copied from ixus 100
     #define CAM_COLORMATRIX1                               \
-      661840,  1000000, -185671, 1000000, -97110,  1000000, \
-      -83661,  1000000, 578860, 1000000,   32308,  1000000, \
-      -8681,    1000000, 70356,   1000000, 207341, 1000000
-
-    // TODO copied from ixus 100
-    #define cam_CalibrationIlluminant1  17			// Standard Light A
+      14052, 10000, -5229, 10000, -1156, 10000, \
+      -1325, 10000,  9420, 10000,  2252, 10000, \
+       -498, 10000,  1957, 10000,  4116, 10000
+    #define cam_CalibrationIlluminant1  21			// D65
 
 	// cropping OK
     #define CAM_JPEG_WIDTH              4000
@@ -1034,6 +1031,42 @@
 
     // camera name OK
     #define PARAM_CAMERA_NAME           4			// parameter number for GetParameterData
+
+    // XXXX
+    #undef CAM_USES_ASPECT_CORRECTION
+    #undef CAM_USES_ASPECT_YCORRECTION
+    #define CAM_USES_ASPECT_CORRECTION		1  //camera uses the modified graphics primitives to map screens an viewports to buffers more sized 
+    #define CAM_USES_ASPECT_YCORRECTION		0  //only uses mappings on x coordinate
+
+    #undef ASPECT_XCORRECTION
+    #define ASPECT_XCORRECTION(x)   ( ((x)<<1) )
+
+    // Note color palette affects grids!
+    #undef ASPECT_GRID_XCORRECTION
+    #define ASPECT_GRID_XCORRECTION(x)   ( (x) )
+
+    #undef ASPECT_GRID_YCORRECTION
+    #define ASPECT_GRID_YCORRECTION(y)  ( (y) )
+
+    #undef ASPECT_VIEWPORT_XCORRECTION 
+    #define ASPECT_VIEWPORT_XCORRECTION(x) ASPECT_GRID_XCORRECTION(x)
+    #undef ASPECT_VIEWPORT_YCORRECTION 
+    #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) )
+
+    // Note color palette affects games!
+	//games mappings
+	#undef GAMES_SCREEN_WIDTH
+	#undef GAMES_SCREEN_HEIGHT
+	#define GAMES_SCREEN_WIDTH		360
+	#define GAMES_SCREEN_HEIGHT		240
+	#undef ASPECT_GAMES_XCORRECTION
+	// 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer wirh another resolution
+	// used by gui.c that configures the draw environment (trhough new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
+	// other modes in perfect aspect ratio 4/3: slightly better visualization: file menus more readable, ...
+	#define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )
+	#undef ASPECT_GAMES_YCORRECTION
+	#define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
+
 //----------------------------------------------------------
 
 
