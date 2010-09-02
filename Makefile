@@ -274,8 +274,6 @@ batch-zip: version
 	mv $(topdir)bin/$(VER)-s90-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-s90-101b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-s90-101c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-s90-101c-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus100_sd780-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus100_sd780-100c-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-sx20-102b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx20-102b-$(BUILD_NUMBER).zip
-	mv $(topdir)bin/$(VER)-sx20-102d-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx20-102d-$(BUILD_NUMBER).zip
 	mv $(topdir)bin/$(VER)-ixus85_sd770-100a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus85_sd770-100a-$(BUILD_NUMBER)_BETA.zip
 	#mv $(topdir)bin/$(VER)-ixus95_sd1200-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus95_sd1200-100c-$(BUILD_NUMBER)_BETA.zip
 	#mv $(topdir)bin/$(VER)-a430-100b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a430-100b-$(BUILD_NUMBER)_BETA.zip
@@ -457,10 +455,6 @@ batch-zip-complete: version
 	mv $(topdir)bin/s90-101b-$(BUILD_NUMBER).zip $(topdir)bin/s90-101b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/s90-101c-$(BUILD_NUMBER)-full.zip $(topdir)bin/s90-101c-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/s90-101c-$(BUILD_NUMBER).zip $(topdir)bin/s90-101c-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/sx20-102b-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx20-102b-$(BUILD_NUMBER)-full.zip
-	mv $(topdir)bin/sx20-102b-$(BUILD_NUMBER).zip $(topdir)bin/sx20-102b-$(BUILD_NUMBER).zip
-	mv $(topdir)bin/sx20-102d-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx20-102d-$(BUILD_NUMBER)-full.zip
-	mv $(topdir)bin/sx20-102d-$(BUILD_NUMBER).zip $(topdir)bin/sx20-102d-$(BUILD_NUMBER).zip
 	mv $(topdir)bin/ixus85_sd770-100a-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus85_sd770-100a-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/ixus85_sd770-100a-$(BUILD_NUMBER).zip $(topdir)bin/ixus85_sd770-100a-$(BUILD_NUMBER)_BETA.zip
 	#mv $(topdir)bin/ixus95_sd1200-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus95_sd1200-100c-$(BUILD_NUMBER)-full_BETA.zip
