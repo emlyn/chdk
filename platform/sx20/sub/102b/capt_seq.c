@@ -3,7 +3,7 @@
 #include "core.h"
 #include "conf.h"
 
-static long *nrflag = (long*)0x9B40;
+static long *nrflag = (long*)0x7910;
 
 #include "../../../generic/capt_seq.c"
 
@@ -372,25 +372,28 @@ void __attribute__((naked,noinline)) sub_FF962364_my(){
 		"LDRSH	R2, [R8,#0xC]\n"
 		"SUB	R3, R3,	#8\n"
 		"BL	sub_FF96481C\n"
-		"LDR	R0, [R4,#0x1C]\n"
-		"CMP	R0, #0\n" // get here!
-		"MOVNE	R0, #1\n"
-		"STRNE	R0, [R5]\n"
-		"LDR	R0, [R5,#4]\n"
-		"BL	sub_FF9254CC\n"
-		"LDR	R0, [R5,#8]\n"
-		"BL	sub_FF8C83DC\n"
-		"MOV	R0, #1\n"
-		"BL	sub_FF8C83E8\n" // BX LR
-		"LDR	R0, =0xFF961D60\n"
-		"MOV	R1, R4\n"
-		"BL	sub_FF8C83B8\n"
-		"LDR	R0, [R5]\n"
-		"CMP	R0, #5\n" // get here!
-		"ADDLS	PC, PC,	R0,LSL#2\n" // badly wrong setting pc here
-                "BL     wait_until_remote_button_is_released\n"
-                "BL     capt_seq_hook_set_nr\n"                     // +
-		"B	sub_FF96251C\n"                             // continue function in firmware
+                 "BL      wait_until_remote_button_is_released\n"
+                 "BL      capt_seq_hook_set_nr\n"                     // +
+                 "B       sub_FF962410\n"                             // continue function in firmware
+//		"LDR	R0, [R4,#0x1C]\n"
+//		"CMP	R0, #0\n" // get here!
+//		"MOVNE	R0, #1\n"
+//		"STRNE	R0, [R5]\n"
+//		"LDR	R0, [R5,#4]\n"
+//		"BL	sub_FF9254CC\n"
+//		"LDR	R0, [R5,#8]\n"
+//		"BL	sub_FF8C83DC\n"
+//		"MOV	R0, #1\n"
+//		"BL	sub_FF8C83E8\n" // BX LR
+//		"LDR	R0, =0xFF961D60\n"
+//		"MOV	R1, R4\n"
+//		"BL	sub_FF8C83B8\n"
+//		"LDR	R0, [R5]\n"
+//		"CMP	R0, #5\n" // get here!
+//		"ADDLS	PC, PC,	R0,LSL#2\n" // badly wrong setting pc here
+//                "BL     wait_until_remote_button_is_released\n"
+//                "BL     capt_seq_hook_set_nr\n"                     // +
+//		"B	sub_FF96251C\n"                             // continue function in firmware
  );
 
 }
@@ -522,7 +525,7 @@ void __attribute__((naked,noinline)) sub_FF87C648_my(){
 		"BL	sub_FF96227C\n" //changed
 		"BL	sub_FF962CF4\n" // changed
 		"MOV	R0, R4\n"
-					"BL	sub_FF962364\n" //changed sub_FF962364_my - badly wrong if we use _my
+					"BL	sub_FF962364_my\n"
 		"MOV	R7, R0\n"
 					"BL      capt_seq_hook_raw_here\n"      // +
 		"B	loc_FF87C824\n"

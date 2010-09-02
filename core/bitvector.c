@@ -22,42 +22,17 @@ bit_vector_t* bv_create(int len, int nbits)
 }
 
 // Utility function. Use bv_set instead.
-static inline void bv_setbit(bit_vector_t* bm, int pos, int val)
+static inline void bv_setbit(const bit_vector_t* bm, int pos, int val)
 {
     int bp = pos - ((pos >> 3) << 3);
     if (val == 0)
         bm->ptr[pos >> 3] &= ~(1 << bp);
     else
         bm->ptr[pos >> 3] |=  (1 << bp);
-
-// Following ASM code is bad. It crashes the camera, but why?
-// It'd be very nice to replace this function with an inline
-// assembly macro in the future (the same for bv_getbit()).
-// The compiler seems to generate suboptimal ASM for me,
-// but this is performance critical code.
-//
-//    char t = bm->ptr[pos >> 3];
-//    asm volatile (
-//                 ".syntax unified\n"
-//                 "MOV     %[pos], %[pos], lsr #3\n"           // r1 = pos >> 3
-//                 "SUB     %[pos], %[pos], %[pos], lsl #3\n"        // pos -= pos<<3
-//                 "MOV     r2, #1\n"                    // r2 = 1
-//                 "MOV     r2, r2, lsl %[pos]\n"         // r2 <<= pos
-//                 "CMP     %[val], #0\n"                    // val == 0
-//                 "ITE     EQ\n"                             // if
-//                 "BICEQ     %[t], %[t], r2\n"        // &= ~(1 << bp)
-//                 "ORRNE     %[t], %[t], r2\n"      // |=  (1 << bp)
-//                 ".syntax divided"
-//                 : [t]"+r"(t)
-//                 : [val]"r"(val), [pos]"r"(pos)
-//                 : "r2", "cc"
-//                 );
-//    bm->ptr[pos >> 3] = t;
-
 }
 
 // Utility function. Use bv_get instead.
-static inline int bv_getbit(bit_vector_t* bm, int pos)
+static inline int bv_getbit(const bit_vector_t* bm, int pos)
 {
     // Note: bv_get() and other code rely on this
     // method returning '1' if the bit is set.
@@ -65,22 +40,22 @@ static inline int bv_getbit(bit_vector_t* bm, int pos)
     // you can use bv_testbit().
 
     int bp = pos - ((pos >> 3) << 3);
-    return ((bm->ptr[pos >> 3] & (1 << bp)) > 0) ? 1 : 0;
+    return (bm->ptr[pos >> 3] & (1 << bp)) >> bp;
 }
 
-void bv_set(bit_vector_t* bm, int pos, int val)
+void bv_set(const bit_vector_t* bm, int pos, int val)
 {
-    int i;
+    int i = bm->nBits - 1;
     int bitpos = pos * bm->nBits;
-    for (i = 0; i < bm->nBits; ++i)
+    do
     {
         bv_setbit(bm, bitpos + i, val & (1<<i));
-    }
+    }while(--i >= 0);
 }
 
 // Same as bv_set, but sets val to two consecutive elements
 // instead of just one.
-void bv_set2(bit_vector_t* bm, int pos, int val)
+void bv_set2(const bit_vector_t* bm, int pos, int val)
 {
     int i;
     int bitpos = pos * bm->nBits;
@@ -94,7 +69,7 @@ void bv_set2(bit_vector_t* bm, int pos, int val)
 
 // Same as bv_set, but sets val to four consecutive elements
 // instead of just one.
-void bv_set4(bit_vector_t* bm, int pos, int val)
+void bv_set4(const bit_vector_t* bm, int pos, int val)
 {
     int i;
     int bitpos = pos * bm->nBits;
@@ -108,15 +83,15 @@ void bv_set4(bit_vector_t* bm, int pos, int val)
     }
 }
 
-int bv_get(bit_vector_t* bm, int pos)
+int bv_get(const bit_vector_t* bm, int pos)
 {
-    int i;
     int ret = 0;
+    int i = bm->nBits - 1;
     int bitpos = pos * bm->nBits;
-    for (i = 0; i < bm->nBits; ++i)
+    do
     {
         ret |= (bv_getbit(bm, bitpos + i) << i);
-    }
+    }while(--i >= 0);
 
     return ret;
 }

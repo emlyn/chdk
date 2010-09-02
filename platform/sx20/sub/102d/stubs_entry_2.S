@@ -46,6 +46,7 @@ NHSTUB(GetZoomLensCurrentPoint,			0xFF956864) // looks good
 NHSTUB(Remove,							0xFF8352B0)
 NHSTUB(RenameFile_Fut,					0xFF834B74) // doesn't look like SX10 but works
 NHSTUB(strrchr,							0xFF813FE4) // incorrectly detected
+NHSTUB(add_ptp_handler, 				0xFFA49320) 
 
 # Might be wrong
 NHSTUB(UnlockAF,						0xFF879714) // ? could be right

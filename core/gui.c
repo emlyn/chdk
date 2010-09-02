@@ -637,10 +637,10 @@ static CMenu operation_submenu = {0x21,LANG_MENU_OPERATION_PARAM_TITLE, NULL, op
 static CMenuItem edge_overlay_submenu_items[] = {
     {0x5c,LANG_MENU_EDGE_OVERLAY_ENABLE,     MENUITEM_BOOL,          &conf.edge_overlay_enable },
     {0x5c,LANG_MENU_EDGE_FILTER,     MENUITEM_BOOL,          &conf.edge_overlay_filter },
-    {0x5c,LANG_MENU_EDGE_PANO,     MENUITEM_ENUM,          (int*)gui_edge_pano_enum },
-    {0x7f,LANG_MENU_EDGE_PANO_OVERLAP,   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.edge_overlay_pano_overlap, MENU_MINMAX(0, 100)},
+    {0x5f,LANG_MENU_EDGE_PANO,     MENUITEM_ENUM,          (int*)gui_edge_pano_enum },
+    {0x5e,LANG_MENU_EDGE_PANO_OVERLAP,   MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.edge_overlay_pano_overlap, MENU_MINMAX(0, 100)},
     {0x5c,LANG_MENU_EDGE_SHOW,     MENUITEM_BOOL,          &conf.edge_overlay_show },
-    {0x7f,LANG_MENU_EDGE_OVERLAY_TRESH,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.edge_overlay_thresh, MENU_MINMAX(0, 255)},
+    {0x5e,LANG_MENU_EDGE_OVERLAY_TRESH,      MENUITEM_INT|MENUITEM_F_UNSIGNED|MENUITEM_F_MINMAX, &conf.edge_overlay_thresh, MENU_MINMAX(0, 255)},
     {0x65,LANG_MENU_EDGE_OVERLAY_COLOR,      MENUITEM_COLOR_FG,      (int*)&conf.edge_overlay_color },
     {0x5c,LANG_MENU_EDGE_PLAY,			MENUITEM_BOOL,		&conf.edge_overlay_play }, //does not work on cams like s-series, which dont have a real "hardware" play/rec switch, need a workaround, probably another button
     {0x33,LANG_MENU_EDGE_SAVE,			MENUITEM_PROC,		(int*)gui_menuproc_edge_save },
@@ -3419,11 +3419,10 @@ static const char* gui_edge_pano_enum(int change, int arg)
     static const char* modes[]={ "Off", "Right", "Down", "Left", "Up", "Free"};
 
     conf.edge_overlay_pano+=change;
-    if (conf.edge_overlay_pano<0)
-        conf.edge_overlay_pano=0;
-    else if (conf.edge_overlay_pano>=(sizeof(modes)/sizeof(modes[0])))
-        conf.edge_overlay_pano=sizeof(modes)/sizeof(modes[0])-1;
-
+    if (conf.edge_overlay_pano<0) 
+        conf.edge_overlay_pano=(sizeof(modes)/sizeof(modes[0]))-1; 
+    else if (conf.edge_overlay_pano>=(sizeof(modes)/sizeof(modes[0]))) 
+        conf.edge_overlay_pano=0; 
     return modes[conf.edge_overlay_pano]; 
 }
 

@@ -23,6 +23,9 @@ if (p[0]==0xFF8C1480)  p[0]=(int)exp_drv_task;
 
 void CreateTask_spytask() {
 	_CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
+#ifdef CAM_CHDK_PTP
+    _CreateTask("InitCHDKPTP", 0x19, 0x2000, init_chdk_ptp, 0);
+#endif
 };
 
 void __attribute__((naked,noinline)) boot() {
