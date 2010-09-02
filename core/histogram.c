@@ -13,7 +13,7 @@
 
 
 static float identity(float x);
-static float locarithmic(float x);
+static float logarithmic(float x);
 
 
 unsigned char histogram[5][HISTO_WIDTH];                    // RGBYG
@@ -35,14 +35,14 @@ float identity(float x)
     return x;
 }
 
-float locarithmic(float x) {
+float logarithmic(float x) {
     return log(x);
 }
 
 void histogram_set_mode(unsigned int mode) {
     switch (mode) {
         case HISTO_MODE_LOG: 
-            histogram_transform = locarithmic; 
+            histogram_transform = logarithmic; 
             break;
         case HISTO_MODE_LINEAR: 
         default:
