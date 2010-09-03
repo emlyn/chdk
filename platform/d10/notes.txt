@@ -24,6 +24,8 @@ Working/completed
 - multi partition support
 - motion detection
 - setting Tv from script
+- DNG matrix (DavidB)
+- OSD size/aspect (DavidB,reyalP)
 
 Scripts tested successfully
 - llibtst.lua 
@@ -35,12 +37,7 @@ Scripts tested successfully
 
 Known issues:
 - Continuous shooting with raw/dng enabled crashes (sometimes ?)
-- DNG is not calibrated, matrix is copied from ixus 100. Looks reasonably close to jpeg
 - CHDK OSD disappears frequently.
 - If you press the shutter quickly without waiting for focus, override settings are ignored
 - DNG has dark borders. This is intentional, the active area covers all pixels that have any data, but there are large areas which have data but are distinct from the normal jpeg area.
-
-Untested:
-- most shooting overrides and equivalent script commands
-- pretty much everything else ;)
 
