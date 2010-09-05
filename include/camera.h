@@ -1883,6 +1883,41 @@
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData sd990: OK
 
+    // copied from DavidBs D10 stuff
+    #undef CAM_USES_ASPECT_CORRECTION
+    #undef CAM_USES_ASPECT_YCORRECTION
+    #define CAM_USES_ASPECT_CORRECTION		1  //camera uses the modified graphics primitives to map screens an viewports to buffers more sized 
+    #define CAM_USES_ASPECT_YCORRECTION		0  //only uses mappings on x coordinate
+
+    #undef ASPECT_XCORRECTION
+    #define ASPECT_XCORRECTION(x)   ( ((x)<<1) )
+
+    // Note color palette affects grids!
+    #undef ASPECT_GRID_XCORRECTION
+    #define ASPECT_GRID_XCORRECTION(x)   ( (x) )
+
+    #undef ASPECT_GRID_YCORRECTION
+    #define ASPECT_GRID_YCORRECTION(y)  ( (y) )
+
+    #undef ASPECT_VIEWPORT_XCORRECTION 
+    #define ASPECT_VIEWPORT_XCORRECTION(x) ASPECT_GRID_XCORRECTION(x)
+    #undef ASPECT_VIEWPORT_YCORRECTION 
+    #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) )
+
+    // Note color palette affects games!
+	//games mappings
+	#undef GAMES_SCREEN_WIDTH
+	#undef GAMES_SCREEN_HEIGHT
+	#define GAMES_SCREEN_WIDTH		360
+	#define GAMES_SCREEN_HEIGHT		240
+	#undef ASPECT_GAMES_XCORRECTION
+	// 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer wirh another resolution
+	// used by gui.c that configures the draw environment (through new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
+	// other modes in perfect aspect ratio 4/3: slightly better visualization: file menus more readable, ...
+	#define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )
+	#undef ASPECT_GAMES_YCORRECTION
+	#define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
+
 //    #define DNG_EXT_FROM ".CR2"
 //----------------------------------------------------------
 
@@ -2576,7 +2611,7 @@
    #define GAMES_SCREEN_HEIGHT 240
    #undef ASPECT_GAMES_XCORRECTION
    // 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer wirh another resolution
-   // used by gui.c that configures the draw environment (trhough new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
+   // used by gui.c that configures the draw environment (through new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
    // other modes in perfect aspect ratio 4/3: slightly better visualization: file menus more readable, ...
    #define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )  
    #undef ASPECT_GAMES_YCORRECTION
