@@ -51,17 +51,22 @@ static char osd_buf4[10];
 
 static int step;
 
-// Width (in pixels) of half-shoot Canon OSD area of the screen buffer, for restore during 
-// Zebra draw, to limit RAM usage of zebra. Only these border areas are stored in RAM.
-// Only top and bottom are restored, not left&right.
-#define ZEBRA_CANONOSD_BORDER_RESTORE   1
 
-#if defined (CAMERA_sx200is) || defined(CAMERA_g11) || defined (CAMERA_ixus100_sd780) || defined (CAMERA_ixus95_sd1200) || defined (CAMERA_s90) || defined (CAMERA_sx20)
-  //there are no memory for that (the screen buffer is big): 960x270
-  //TODO use a buffer of screen dimensions
+#if defined (CAM_ZEBRA_NOBUF) && !defined(CAM_ZEBRA_ASPECT_ADJUST)
+// old sx20 #ifdefs were roughly equivalent of both
+	#error "defined (CAM_ZEBRA_NOBUF) && !defined(CAM_ZEBRA_ASPECT_ADJUST). Remove this if you've verified it will work!"
+#endif
+
+#ifdef CAM_ZEBRA_ASPECT_ADJUST
+// TODO should just not save anything at all instead of 1 px. Also, this shouldn't be tied to aspect correct
+  #define ZEBRA_CANONOSD_BORDER_RESTORE   1
   #define ZFIX_TOP    1
   #define ZFIX_BOTTOM 1
 #else
+// Width (in pixels) of half-shoot Canon OSD area of the screen buffer, for restore during 
+// Zebra draw, to limit RAM usage of zebra. Only these border areas are stored in RAM.
+// Only top and bottom are restored, not left&right.
+  #define ZEBRA_CANONOSD_BORDER_RESTORE   1
   #define ZFIX_TOP    29
   #define ZFIX_BOTTOM 30
 #endif
@@ -75,7 +80,8 @@ static unsigned char *cur_buf;
 static int cur_buf_size;
 static int timer = 0;
 static unsigned char *buf = NULL;
-#if defined (CAMERA_sx200is) || defined(CAMERA_g11) || defined (CAMERA_ixus100_sd780) || defined (CAMERA_ixus95_sd1200) || defined (CAMERA_s90) || defined (CAMERA_sx20)
+
+#ifdef CAM_ZEBRA_ASPECT_ADJUST
 static int buffer_size;
 #endif
 
@@ -220,9 +226,9 @@ static void gui_osd_draw_single_histo(int hist, coord x, coord y, int small) {
 //-------------------------------------------------------------------
 // free and NULL zebra buffers. free(NULL) is always OK.
 static void gui_osd_zebra_free() {
-  #if !defined (CAMERA_sx20)
+#if !defined (CAM_ZEBRA_NOBUF)
 	free(buf);
-  #endif
+#endif
 	buf=NULL;
 #if ZEBRA_CANONOSD_BORDER_RESTORE
 	free(cur_buf_top);
@@ -244,16 +250,16 @@ static int gui_osd_zebra_init(int show) {
     if (!buf)
     {
       timer = 0;
-      #if defined (CAMERA_sx200is) || defined(CAMERA_g11) || defined (CAMERA_ixus100_sd780)  || defined (CAMERA_ixus95_sd1200) || defined (CAMERA_s90) //nandoide sept-2009
+	  #if defined (CAM_ZEBRA_NOBUF)
+        buffer_size=screen_buffer_size-ZEBRA_HMARGIN0*screen_buffer_width;
+        buf=vid_get_bitmap_fb();
+	  #elif defined (CAM_ZEBRA_ASPECT_ADJUST)
         buffer_size=screen_buffer_size-ZEBRA_HMARGIN0*screen_buffer_width;
         buf = malloc(buffer_size);
         //~ if (!buf) draw_txt_string(0, 14, "Warn: No space to allocate zebra buffer: restart camera", MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
         if (!buf)
           buf=vid_get_bitmap_fb(); //without new buffer: directly into screen buffer: we got some flickering in OSD and histogram but it's usable
         //~ msleep(50);
-      #elif defined (CAMERA_sx20)
-        buffer_size=screen_buffer_size-ZEBRA_HMARGIN0*screen_buffer_width;
-        buf=vid_get_bitmap_fb();
       #else
         buf = malloc(screen_buffer_size);
       #endif
@@ -261,7 +267,7 @@ static int gui_osd_zebra_init(int show) {
 #if ZEBRA_CANONOSD_BORDER_RESTORE
             cur_buf_top = malloc(screen_buffer_width * ZFIX_TOP); 
             cur_buf_bot = malloc(screen_buffer_width * ZFIX_BOTTOM); 
-#if defined (CAMERA_g11) || defined (CAMERA_s90)		
+#if defined (CAM_ZEBRA_ASPECT_ADJUST)
             if (cur_buf_top) memset(cur_buf_top,0,screen_buffer_width * ZFIX_TOP);
             if (cur_buf_bot) memset(cur_buf_bot,0,screen_buffer_width * ZFIX_BOTTOM);
 #endif
@@ -296,7 +302,8 @@ static int gui_osd_zebra_init(int show) {
 
 //-------------------------------------------------------------------
 static void draw_pixel_buffered(unsigned int offset, color cl) {
-   #if defined (CAMERA_sx200is) || defined (CAMERA_sx20)
+// shouldn't this be checked on all cams ?
+   #if defined CAM_ZEBRA_ASPECT_ADJUST
       if (offset < buffer_size)
          buf[offset] = cl;
    #else
@@ -376,11 +383,11 @@ static void gui_osd_draw_zebra_osd() {
     }
 }
 
-// reyalp - TODO this SHOULD NOT BE CAMERA SPECIFIC. Should be generalized to work with all cameras
-// having a copy/paste/modified version for individual cameras will be a maintenance nightmare.
-#if defined (CAMERA_sx200is) || defined (CAMERA_g11) || defined (CAMERA_ixus100_sd780) || defined (CAMERA_ixus95_sd1200) || defined (CAMERA_s90) || defined (CAMERA_sx20)
+// reyalp - TODO this should be rewritten so there is one generic zebra func for all cameras
+#if defined(CAM_ZEBRA_ASPECT_ADJUST)
 //nandoide sept-2009 
 // viewport is 360x240 and screen buffer 960x270, we need to expand the x coordinate
+//reyalp - applies to other cameras where the real bitmap width is is different from what lib.c reports. Also used on some other cameras ...
 int gui_osd_draw_zebra(int show) {
     unsigned int v, s, x, y, f, over;
     color cl_under=conf.zebra_color>>8, cl_over=conf.zebra_color&0xFF;

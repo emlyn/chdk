@@ -9,7 +9,6 @@ This is a semi-functional ALPHA build
 
 Not implemented/Not Working
 - movie_rec: meaning all movie related functions
-- zebra
 - dark frame subtraction control. Don't try to use this, it will break horribly.
 - USB remote support
 
@@ -26,6 +25,7 @@ Working/completed
 - setting Tv from script
 - DNG matrix (DavidB)
 - OSD size/aspect (DavidB,reyalP)
+- zebra
 
 Scripts tested successfully
 - llibtst.lua 

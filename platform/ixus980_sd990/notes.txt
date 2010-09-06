@@ -22,8 +22,6 @@ Other keys use the standard mapping for cameras without an erase button.
 
 Features known BROKEN or NOT supported:
 - DNG extension over USB.
-- Zebra
-- Edge overlay
 - Custom curves
 - Microphone mute/unmute
 - Many other things are untested.

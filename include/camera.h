@@ -87,7 +87,9 @@
 
     #undef CAM_QUALITY_OVERRIDE //camera may need shooting quality override (sx200is lacks SuperFine quality)
 
-
+	#undef CAM_ZEBRA_ASPECT_ADJUST // zebra needs to account for real bitmap size being different from what lib.c reports
+									// also used by some cameras with normal bitmap layouts for memory saving ?
+	#undef CAM_ZEBRA_NOBUF // zebra draws directly on bitmap buffer. Requires above as well
 //----------------------------------------------------------
 // Overridden values for each camera
 //----------------------------------------------------------
@@ -1068,6 +1070,8 @@
 	#undef ASPECT_GAMES_YCORRECTION
 	#define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
 
+    #define CAM_ZEBRA_ASPECT_ADJUST 1
+
 //----------------------------------------------------------
 
 
@@ -1918,6 +1922,8 @@
 	#undef ASPECT_GAMES_YCORRECTION
 	#define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
 
+   #define CAM_ZEBRA_ASPECT_ADJUST 1
+
 //    #define DNG_EXT_FROM ".CR2"
 //----------------------------------------------------------
 
@@ -2002,6 +2008,8 @@
     #define CAM_ACTIVE_AREA_Y2          3040
     // camera name
     #define PARAM_CAMERA_NAME           4			// parameter number for GetParameterData sd990: OK
+// TODO this was in the original zebra mess, not clear if needed or just for mem saving ?
+   #define CAM_ZEBRA_ASPECT_ADJUST 1
 //----------------------------------------------------------
 
 #elif defined (CAMERA_ixus90_sd790)
@@ -2175,6 +2183,8 @@
 
 	// camera name
 	#define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+// TODO this was in the original zebra mess, not clear if needed or just for mem saving ?
+   #define CAM_ZEBRA_ASPECT_ADJUST 1
 //----------------------------------------------------------
 
 
@@ -2624,6 +2634,7 @@
    //end nandoide sept-2009
    #define CAM_QUALITY_OVERRIDE 1
    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+   #define CAM_ZEBRA_ASPECT_ADJUST 1
 //----------------------------------------------------------
 
 #elif defined (CAMERA_g11)
@@ -2712,6 +2723,7 @@
     #define CAM_ACTIVE_AREA_X2 3648
     #define CAM_ACTIVE_AREA_Y2 2736
 	  /**** From SX200IS, ok for G11 END?*/
+   #define CAM_ZEBRA_ASPECT_ADJUST 1
 //----------------------------------------------------------
 
 #elif defined (CAMERA_s90)
@@ -2799,6 +2811,8 @@
     #define CAM_ACTIVE_AREA_X2 3648
     #define CAM_ACTIVE_AREA_Y2 2736
     /**** From SX200IS, ok for S90 END?*/
+
+   #define CAM_ZEBRA_ASPECT_ADJUST 1
 //----------------------------------------------------------
 
 #elif defined (CAMERA_sx20)
@@ -2884,6 +2898,9 @@
 	#define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )
 	#undef ASPECT_GAMES_YCORRECTION
 	#define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
+
+    #define CAM_ZEBRA_ASPECT_ADJUST 1
+    #define CAM_ZEBRA_NOBUF 1
 
 	#undef CAM_BITMAP_PALETTE
 	#define CAM_BITMAP_PALETTE		6
