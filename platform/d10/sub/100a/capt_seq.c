@@ -3,10 +3,62 @@
 #include "core.h"
 #include "conf.h"
 
-// TODO FAKE
-static long *nrflag = (long*)(0xDEAD); 
+static long *nrflag = (long*)(0x64E8); // 0x64F0-8 from sub_FF934548
 
 #include "../../../generic/capt_seq.c"
+
+
+void __attribute__((naked,noinline)) sub_FF934548_my() {
+	asm volatile (
+"                STMFD   SP!, {R0-R8,LR}\n"
+"                MOV     R4, R0\n"
+"                BL      sub_FF9352A0\n" // SsShootEvent.c 60
+"                MVN     R1, #0\n"
+"                BL      sub_FF869BF4\n"
+"                LDR     R5, =0x64E8\n"
+"                LDR     R0, [R5,#0xC]\n"
+"                CMP     R0, #0\n"
+"                BNE     loc_FF934598\n"
+"                MOV     R1, #1\n"
+"                MOV     R0, #0\n"
+"                BL      sub_FF827478\n" // KernelMisc.c 31
+"                STR     R0, [R5,#0xC]\n"
+"                MOV     R3, #0\n"
+"                STR     R3, [SP]\n"
+"                LDR     R3, =0xFF934004\n" // SsCaptureSeq.c 155
+"                LDR     R0, =0xFF9347C8\n" // "ShutterSoundTask"
+"                MOV     R2, #0x400\n"
+"                MOV     R1, #0x17\n"
+"                BL      sub_FF827444\n" // KernelCreateTask
+"loc_FF934598:\n"
+"                MOV     R2, #4\n"
+"                ADD     R1, SP, #8\n"
+"                MOV     R0, #0x8A\n"
+"                BL      sub_FF871CCC\n" // GetPropertyCase
+"                TST     R0, #1\n"
+"                LDRNE   R1, =0x3AE\n"
+"                LDRNE   R0, =0xFF93429C\n" // "SsCaptureSeq.c"
+"                BLNE    sub_FF81B284\n" // DebugAssert
+"                LDR     R8, =0x1441C\n"
+"                LDR     R7, =0x14358\n"
+"                LDRSH   R1, [R8,#0xE]\n"
+"                LDR     R0, [R7,#0x8C]\n"
+"                BL      sub_FF8F68C8\n"
+"                BL      sub_FF8497D0\n" // GetCCDTemperature
+"                LDR     R3, =0x64F0\n"
+"                STRH    R0, [R4,#0x9C]\n"
+"                SUB     R2, R3, #4\n"
+"                STRD    R2, [SP]\n"
+"                MOV     R1, R0\n"
+"                LDRH    R0, [R7,#0x5C]\n"
+"                LDRSH   R2, [R8,#0xC]\n"
+"                SUB     R3, R3, #8\n"
+"                BL      sub_FF9368B4\n"
+//"                BL      wait_until_remote_button_is_released\n" // untested!
+"                BL      capt_seq_hook_set_nr\n"
+"                B       sub_FF9345F4\n" // -> continue in firmware
+	);
+}
 
 void __attribute__((naked,noinline)) sub_FF861320_my() {
 	asm volatile (
@@ -53,7 +105,7 @@ void __attribute__((naked,noinline)) sub_FF861320_my() {
 "                BL      sub_FF934460\n" // SsCaptureSeq.c 1
 "                BL      sub_FF934FC0\n" // SsShootLib.c 488
 "                MOV     R0, R4\n"
-"                BL      sub_FF934548\n" // SsCaptureSeq.c 0 nr setup ?
+"                BL      sub_FF934548_my\n" // SsCaptureSeq.c -> nr setup
 "                MOV     R5, R0\n"
 "                B       loc_FF8613E0\n"
 "loc_FF8613D0:\n"
@@ -161,7 +213,7 @@ void __attribute__((naked,noinline)) task_CaptSeqTask_my() {
 "                MOV     R0, R5\n"
 "                BL      sub_FF860A18\n"
 "                MOV     R0, R5\n"
-"                BL      sub_FF934548\n" // SsCaptureSeq.c 0
+"                BL      sub_FF934548_my\n" // SsCaptureSeq.c 0 -> nr setup (quick press)
 "                TST     R0, #1\n"
 "                STRNE   R9, [R6,#0x10]\n"
 "                B       loc_FF861208\n"
