@@ -56,12 +56,8 @@ void gui_menu_init(CMenu *menu_ptr) {
     }
     
     num_lines = screen_height/rbf_font_height()-1;
-#if defined (CAMERA_g11) || defined (CAMERA_s90)
-    w = screen_width-10-10;
-#else
-    w = screen_width-30-30;
-#endif
-    x = (screen_width-w)>>1;
+    x = CAM_MENU_BORDERWIDTH;
+    w = screen_width-x-x;
     len_bool = rbf_str_width("\x95");
     len_int = rbf_str_width("99999");
     len_enum = rbf_str_width("WUBfS3a");

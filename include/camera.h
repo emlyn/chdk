@@ -42,6 +42,9 @@
     #define CAM_EMUL_KEYPRESS_DELAY     40  // Delay to interpret <alt>-button press as longpress
     #define CAM_EMUL_KEYPRESS_DURATION  5   // Length of keypress emulation
 
+    #define CAM_MENU_BORDERWIDTH        30  // Related to screen layout somehow. 
+                                            // TODO someone explain what this does, probably doesn't really belong here
+
     #undef  CAM_AF_SCAN_DURING_VIDEO_RECORD // CHDK can make single AF scan during video record 
     #undef  CAM_HAS_VIDEO_BUTTON            // Camera can take stills in video mode, and vice versa
     #undef  CAM_EV_IN_VIDEO                 // CHDK can change exposure in video mode
@@ -2647,6 +2650,9 @@
     #undef  CAM_EMUL_KEYPRESS_DURATION
     #define CAM_EMUL_KEYPRESS_DURATION  10
 
+    #undef CAM_MENU_BORDERWIDTH
+    #define CAM_MENU_BORDERWIDTH	10
+
 	#define CAM_QUALITY_OVERRIDE 1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_HAS_JOGDIAL             1
@@ -2735,6 +2741,9 @@
     #define CAM_RAW_ROWS                2784   // See g11 lib.c
     #undef  CAM_EMUL_KEYPRESS_DURATION
     #define CAM_EMUL_KEYPRESS_DURATION  10
+
+    #undef CAM_MENU_BORDERWIDTH
+    #define CAM_MENU_BORDERWIDTH	10
 
 	#define CAM_QUALITY_OVERRIDE 1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
