@@ -976,8 +976,7 @@
 
     #define CAM_HAS_ZOOM_LEVER          1 // note, has zoom in/out buttons, not lever
 
-// TODO 
-    #undef CAM_CHDK_HAS_EXT_VIDEO_MENU   // In CHDK for this camera realized adjustable video compression
+
 // TODO
 //    #define CAM_CAN_SD_OVER_NOT_IN_MF   1			// Camera allows subject distance (focus) override when not in manual focus mode
 //    #define CAM_CAN_SD_OVERRIDE         1			// Camera allows to do subject distance override
@@ -986,9 +985,10 @@
 // long shutter is acutally user TV, may work ?
     #undef 	CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU            1
-//    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1
- //   #define CAM_AF_SCAN_DURING_VIDEO_RECORD       1
-//    #define CAM_CHDK_HAS_EXT_VIDEO_MENU           1
+    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1
+// TODO this doesn't seem to be working
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD       1
+    #define CAM_CHDK_HAS_EXT_VIDEO_MENU   1 // In CHDK for this camera realized adjustable video compression
 
     #define CAM_HAS_IS                  1
     #undef CAM_HAS_JOGDIAL
@@ -1007,7 +1007,7 @@
 // OK looks similar to ixus100 based on forum posts
     #define CAM_BITMAP_PALETTE          5
 
-// TODO all zebra stuff
+// TODO is this needed ?
 //    #undef ZEBRA_HMARGIN0
 //    #define ZEBRA_HMARGIN0              150			//zebra adjust buffer height: show use at sx200is: needed for save memory space
 

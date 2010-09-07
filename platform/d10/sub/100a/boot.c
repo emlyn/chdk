@@ -17,9 +17,7 @@ void taskCreateHook(int *p) {
  p-=17;
  if (p[0]==0xFF87B84C)  p[0]=(int)init_file_modules_task;
  if (p[0]==0xFF860F34)  p[0]=(int)task_CaptSeqTask_my;
- /*
- if (p[0]==0x)  p[0]=(int)movie_record_task;
- */
+ if (p[0]==0xFF92F5C8)  p[0]=(int)movie_record_task;
 }
 
 /*
@@ -303,7 +301,7 @@ void __attribute__((naked,noinline)) init_file_modules_task() {
 "                 MOVNE   R1, #0\n"
 "                 MOVNE   R0, R5\n"
 "                 BLNE    sub_FF8773D4\n" // PostLogicalEventToUI
-"                 BL      sub_FF872598_my\n" // -> TODO
+"                 BL      sub_FF872598_my\n"
 "                 BL      core_spytask_can_start\n" // + safe to start spytask
 "                 CMP     R4, #0\n"
 "                 MOVEQ   R0, R5\n"

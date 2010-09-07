@@ -5,11 +5,11 @@ Digic IV
 propset 2
 No iris, only ND filter
 
-This is a mostly  functional BETA build
+This is a mostly functional BETA build
 
 Not implemented/Not Working
-- movie_rec: meaning all movie related functions
 - USB remote support
+- DNG extension over USB
 
 Working/completed
 - loader/* done
@@ -26,6 +26,8 @@ Working/completed
 - OSD size/aspect (DavidB,reyalP)
 - zebra
 - dark frame subtraction control
+- video quality override
+- video optical zoom unlock
 
 Scripts tested successfully
 - llibtst.lua 
@@ -40,4 +42,5 @@ Known issues:
 - CHDK OSD disappears frequently.
 - If you press the shutter quickly without waiting for focus, override settings are ignored
 - DNG has dark borders. This is intentional, the active area covers all pixels that have any data, but there are large areas which have data but are distinct from the normal jpeg area.
-
+- AF in video doesn't seem to work
+- with video optical zoom, if you zoom into digital zoom, you cannot zoom out the optical

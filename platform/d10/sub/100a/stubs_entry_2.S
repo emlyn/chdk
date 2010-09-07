@@ -31,6 +31,8 @@ NHSTUB(UnlockAF,0xFF85E924) // PT_UnlockAF
 NHSTUB(WriteSDCard,0xFF918B18) // via sub_FF855348, near "SCRIPT", same as found by err99 udumper
 NHSTUB(LEDDrive,0xFF846818) // string LEDDrive
 NHSTUB(SetScriptMode,0xFF877B2C) // "SetScriptMode"
+NHSTUB(MakeAFScan,0xFF932820) // from sub_FF861864 called from CaptSeqTask jumptable entry 0
+NHSTUB(ExpCtrlTool_StartContiAE,0xFF83024C) // "StartContiAE"
 
 // These don't exist/aren't found in dryos
 NHSTUB(Mount_FileSystem,NULLSUB) // NULLSUB
@@ -38,3 +40,5 @@ NHSTUB(Unmount_FileSystem,NULLSUB) // NULLSUB
 NHSTUB(rewinddir,NULLSUB) // NULLSUB
 NHSTUB(SetZoomActuatorSpeedPercent,NULLSUB) // NULLSUB
 
+// useful for debugging with uart redirect or crash log
+NHSTUB(LogPrintf,0xFF86EF38)
