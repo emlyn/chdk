@@ -1,6 +1,9 @@
 #include "lolevel.h"
 #include "platform.h"
 #include "core.h"
+#include "dryos31.h"
+
+#define offsetof(TYPE, MEMBER) ((int) &((TYPE *)0)->MEMBER)
 
 const char * const new_sa = &_end;
 
@@ -13,54 +16,117 @@ void CreateTask_spytask();
 void boot();
 void task_CaptSeqTask_my();
 
-void taskCreateHook(int *p) { 
- p-=17;
- if (p[0]==0xFF87B84C)  p[0]=(int)init_file_modules_task;
- if (p[0]==0xFF860F34)  p[0]=(int)task_CaptSeqTask_my;
- if (p[0]==0xFF92F5C8)  p[0]=(int)movie_record_task;
-}
+void taskHook(context_t **context) { 
+ task_t *tcb=(task_t*)((char*)context-offsetof(task_t, context));
 
-/*
-void taskCreateHook2(int *p) {
- p-=17;
+// physw is done directly to avoid wasting stack space
+// if(!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task; 
+ if(!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)task_CaptSeqTask_my; 
+ if(!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
+ if(!_strcmp(tcb->name, "MovieRecord"))     tcb->entry = (void*)movie_record_task;
+// not implemented yet
+// if(!_strcmp(tcb->name, "ExpDrvTask"))      tcb->entry = (void*)exp_drv_task;
 }
-*/
-
 
 #define DEBUG_LED ((unsigned volatile *)0xC0220130) // RED
 #define GREEN_LED ((unsigned volatile *)0xC0220134) // GREEN
+
 void boot() {
-    long *canon_data_src = (void*)0xFFB4EFA4;
-    long *canon_data_dst = (void*)0x1900;
-    long canon_data_len = 0xCDA0 - 0x1900; // data_end - data_start
-    long *canon_bss_start = (void*)0xCDA0; // just after data 
-    long canon_bss_len = 0x146A2C - 0xCDA0; 
-
-    long i;
-
-	*DEBUG_LED = 0x44;
-	*GREEN_LED = 0x46;
-
-    // enable caches and write buffer... this is a carryover from old dryos ports, may not be useful
-    asm volatile (
-	"MRC     p15, 0, R0,c1,c0\n"
-	"ORR     R0, R0, #0x1000\n"
-	"ORR     R0, R0, #4\n"
-	"ORR     R0, R0, #1\n"
-	"MCR     p15, 0, R0,c1,c0\n"
-    :::"r0");
-
-    for(i=0;i<canon_data_len/4;i++)
-	canon_data_dst[i]=canon_data_src[i];
-
-    for(i=0;i<canon_bss_len/4;i++)
-	canon_bss_start[i]=0;
+	asm volatile(
+"                LDR     R1, =0xC0410000\n"
+"                MOV     R0, #0\n"
+"                STR     R0, [R1]\n"
+"                MOV     R1, #0x78\n"
+"                MCR     p15, 0, R1,c1,c0\n"
+"                MOV     R1, #0\n"
+"                MCR     p15, 0, R1,c7,c10, 4\n"
+"                MCR     p15, 0, R1,c7,c5\n"
+"                MCR     p15, 0, R1,c7,c6\n"
+"                MOV     R0, #0x3D\n"
+"                MCR     p15, 0, R0,c6,c0\n"
+"                MOV     R0, #0xC000002F\n"
+"                MCR     p15, 0, R0,c6,c1\n"
+"                MOV     R0, #0x33\n"
+"                MCR     p15, 0, R0,c6,c2\n"
+"                MOV     R0, #0x40000033\n"
+"                MCR     p15, 0, R0,c6,c3\n"
+"                MOV     R0, #0x80000017\n"
+"                MCR     p15, 0, R0,c6,c4\n"
+"                LDR     R0, =0xFF80002D\n"
+"                MCR     p15, 0, R0,c6,c5\n"
+"                MOV     R0, #0x34\n"
+"                MCR     p15, 0, R0,c2,c0\n"
+"                MOV     R0, #0x34\n"
+"                MCR     p15, 0, R0,c2,c0, 1\n"
+"                MOV     R0, #0x34\n"
+"                MCR     p15, 0, R0,c3,c0\n"
+"                LDR     R0, =0x3333330\n"
+"                MCR     p15, 0, R0,c5,c0, 2\n"
+"                LDR     R0, =0x3333330\n"
+"                MCR     p15, 0, R0,c5,c0, 3\n"
+"                MRC     p15, 0, R0,c1,c0\n"
+"                ORR     R0, R0, #0x1000\n"
+"                ORR     R0, R0, #4\n"
+"                ORR     R0, R0, #1\n"
+"                MCR     p15, 0, R0,c1,c0\n"
+"                MOV     R1, #0x80000006\n"
+"                MCR     p15, 0, R1,c9,c1\n"
+"                MOV     R1, #6\n"
+"                MCR     p15, 0, R1,c9,c1, 1\n"
+"                MRC     p15, 0, R1,c1,c0\n"
+"                ORR     R1, R1, #0x50000\n"
+"                MCR     p15, 0, R1,c1,c0\n"
+"                LDR     R2, =0xC0200000\n"
+"                MOV     R1, #1\n"
+"                STR     R1, [R2,#0x10C]\n"
+"                MOV     R1, #0xFF\n"
+"                STR     R1, [R2,#0xC]\n"
+"                STR     R1, [R2,#0x1C]\n"
+"                STR     R1, [R2,#0x2C]\n"
+"                STR     R1, [R2,#0x3C]\n"
+"                STR     R1, [R2,#0x4C]\n"
+"                STR     R1, [R2,#0x5C]\n"
+"                STR     R1, [R2,#0x6C]\n"
+"                STR     R1, [R2,#0x7C]\n"
+"                STR     R1, [R2,#0x8C]\n"
+"                STR     R1, [R2,#0x9C]\n"
+"                STR     R1, [R2,#0xAC]\n"
+"                STR     R1, [R2,#0xBC]\n"
+"                STR     R1, [R2,#0xCC]\n"
+"                STR     R1, [R2,#0xDC]\n"
+"                STR     R1, [R2,#0xEC]\n"
+"                STR     R1, [R2,#0xFC]\n"
+"                LDR     R1, =0xC0400008\n"
+"                LDR     R2, =0x430005\n"
+"                STR     R2, [R1]\n"
+"                MOV     R1, #1\n"
+"                LDR     R2, =0xC0243100\n"
+"                STR     R2, [R1]\n"
+"                LDR     R2, =0xC0242010\n"
+"                LDR     R1, [R2]\n"
+"                ORR     R1, R1, #1\n"
+"                STR     R1, [R2]\n"
+"                LDR     R0, =0xFFB4EFA4\n"
+"                LDR     R1, =0x1900\n"
+"                LDR     R3, =0xCDA0\n"
+"loc_FF81013C:\n"
+"                CMP     R1, R3\n"
+"                LDRCC   R2, [R0],#4\n"
+"                STRCC   R2, [R1],#4\n"
+"                BCC     loc_FF81013C\n"
+"                LDR     R1, =0x146A2C\n"
+"                MOV     R2, #0\n"
+"loc_FF810154:\n"
+"                CMP     R3, R1\n"
+"                STRCC   R2, [R3],#4\n"
+"                BCC     loc_FF810154\n"
+	);
 
 // see http://chdk.setepontos.com/index.php/topic,2972.msg30712.html#msg30712
 // this works for init_file_modules task in both play and rec mode
-    *(int*)0x1934=(int)taskCreateHook;
+    *(int*)0x1934=(int)taskHook;
 // this does not start init_file_modules task ever
-//    *(int*)0x1938=(int)taskCreateHook2;
+//    *(int*)0x1938=(int)taskHook;
 
 	// Search on 0x12345678 finds function called by sub_FF849EB0, values found there OK
     *(int*)(0x2444)= (*(int*)0xC02200F8)&1 ? 0x200000 : 0x100000; 

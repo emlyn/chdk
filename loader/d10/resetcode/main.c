@@ -6,17 +6,18 @@
  * Make sure stack is not used.
  */
 
-#define DP (void *)0xC0220130 // RED led (wiki)
+#define DP (void *)0xC0220130 // RED led
 #define DELAY 5000000
 
 void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_void, long length) {
 
+
+        // DEBUG: blink led
+		/*
         volatile unsigned *p = (void*)DP;       
 
         int counter;
 
-        // DEBUG: blink led
-		/*
         counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
         counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
 		*/
@@ -52,6 +53,9 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
 
         // DEBUG: jump to regular firmware-boot (causing a boot loop)
         //dst_void = (void*) 0xFF810000;
+
+		// restart function
+		// from sub_FF828E54 via 0x12345678 and "FirmUpgrade.c"
         asm volatile (
 		"MRS     R0, CPSR\n"
 		"BIC     R0, R0, #0x3F\n"
@@ -75,27 +79,27 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
 		"STR     R0, [R1,#0xCC]\n"
 		"STR     R0, [R1,#0xDC]\n"
 		"STR     R0, [R1,#0xEC]\n"
-		"CMP     R4, #7\n" // ???
+//		"CMP     R4, #7\n"
 		"STR     R0, [R1,#0xFC]\n"
-		"LDMEQFD SP!, {R4,PC}\n" //???
+//		"LDMEQFD SP!, {R4,PC}\n"
 		"MOV     R0, #0x78\n"
-		"MCR     p15, 0, R0,c1,c0\n"
+		"MCR     p15, 0, R0,c1,c0\n" // disable caches and TCM
 		"MOV     R0, #0\n"
-		"MCR     p15, 0, R0,c7,c10, 4\n"
-		"MCR     p15, 0, R0,c7,c5\n"
-		"MCR     p15, 0, R0,c7,c6\n"
+		"MCR     p15, 0, R0,c7,c10, 4\n" // drain write buffer
+		"MCR     p15, 0, R0,c7,c5\n" // flush instruction cache
+		"MCR     p15, 0, R0,c7,c6\n" // flushd data cache
 		"MOV     R0, #0x80000006\n"
-		"MCR     p15, 0, R0,c9,c1\n"
-		"MCR     p15, 0, R0,c9,c1, 1\n"
-		"MRC     p15, 0, R0,c1,c0\n"
-		"ORR     R0, R0, #0x50000\n"
+		"MCR     p15, 0, R0,c9,c1\n" // set data TCM at 0x80000000, 4kb
+		"MCR     p15, 0, R0,c9,c1, 1\n" // instruction TCM (DDIO201D says should only write zero as base ...)
+		"MRC     p15, 0, R0,c1,c0\n" // read control state
+		"ORR     R0, R0, #0x50000\n" // enable both TCM
 		"MCR     p15, 0, R0,c1,c0\n"
-		"LDR     R0, =0x12345678\n"
+		"LDR     R0, =0x12345678\n"  // marker value stored in TCM
 		"MOV     R1, #0x80000000\n"
 		"STR     R0, [R1,#0xFFC]\n"
 //		"LDR     R0, =loc_FF810000\n"
 		"mov     R0, %0\n"
-		"LDMFD   SP!, {R4,LR}\n" //???
+//		"LDMFD   SP!, {R4,LR}\n"
 		"BX      R0\n"
 		: : "r"(dst_void) : "memory","r0","r1","r2","r3","r4");
 
