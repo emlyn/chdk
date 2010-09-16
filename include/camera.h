@@ -2722,12 +2722,14 @@
     #define cam_CalibrationIlluminant1 17 // Standard Light A
 
     // cropping
-    #define CAM_JPEG_WIDTH  3600
-    #define CAM_JPEG_HEIGHT 2700
-    #define CAM_ACTIVE_AREA_X1 52
-    #define CAM_ACTIVE_AREA_Y1 14
-    #define CAM_ACTIVE_AREA_X2 3648
-    #define CAM_ACTIVE_AREA_Y2 2736
+	//g11 values from Amit Talwar
+    #define CAM_JPEG_WIDTH  3648
+    #define CAM_JPEG_HEIGHT 2736
+    #define CAM_ACTIVE_AREA_X1 16
+    #define CAM_ACTIVE_AREA_Y1 8
+    #define CAM_ACTIVE_AREA_X2 3692
+    #define CAM_ACTIVE_AREA_Y2 2776
+	
 	  /**** From SX200IS, ok for G11 END?*/
    #define CAM_ZEBRA_ASPECT_ADJUST 1
 //----------------------------------------------------------
