@@ -20,3 +20,9 @@ ifeq ($(KEYSYS), d4a)
 FI2KEY=
 FI2IV =
 endif
+
+ifeq ($(KEYSYS), d4b)
+FI2KEY=
+FI2IV =
+endif
+
