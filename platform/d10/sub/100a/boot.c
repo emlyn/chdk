@@ -128,7 +128,7 @@ void boot() {
 // this does not start init_file_modules task ever
 //    *(int*)0x1938=(int)taskHook;
 
-	// Search on 0x12345678 finds function called by sub_FF849EB0, values found there OK
+	// Search on 0x12345678 finds function called by sub_FF846AF4, values found there OK
     *(int*)(0x2444)= (*(int*)0xC02200F8)&1 ? 0x200000 : 0x100000; 
 
     // jump to init-sequence that follows the data-copy-routine 
