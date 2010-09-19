@@ -3652,6 +3652,37 @@ static FuncSig func_sig_strtoul_1[] = {
 	/* 26/32 */
 };
 
+static FuncSig func_sig_Restart_1[] = {
+	{   1, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   2, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB082DFA
+	{   3, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB016901
+	{   4, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB000255
+	{   5, 0xe59f00d8, 0xfdffffff }, // ldr:4:0xE59F00D8
+	{   6, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB0A9CAE
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB002373
+	{   8, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB00185E
+	{   9, 0xe1a00003, 0xfdffffff }, // mov:6:0xE3A00003
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFF14D
+	{  11, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFA10
+	{  16, 0xe59f20b4, 0xfdffffff }, // ldr:4:0xE59F20B4
+	{  18, 0xe582110c, 0xfdffffff }, // str:4:0xE582110C
+	{  19, 0xe582100c, 0xfdffffff }, // str:4:0xE582100C
+	{  20, 0xe582101c, 0xfdffffff }, // str:4:0xE582101C
+	{  21, 0xe582102c, 0xfdffffff }, // str:4:0xE582102C
+	{  22, 0xe582103c, 0xfdffffff }, // str:4:0xE582103C
+	{  23, 0xe582104c, 0xfdffffff }, // str:4:0xE582104C
+	{  24, 0xe582105c, 0xfdffffff }, // str:4:0xE582105C
+	{  25, 0xe582106c, 0xfdffffff }, // str:4:0xE582106C
+	{  26, 0xe582107c, 0xfdffffff }, // str:4:0xE582107C
+	{  27, 0xe582108c, 0xfdffffff }, // str:4:0xE582108C
+	{  28, 0xe582109c, 0xfdffffff }, // str:4:0xE582109C
+	{  29, 0xe58210ac, 0xfdffffff }, // str:4:0xE58210AC
+	{  30, 0xe58210bc, 0xfdffffff }, // str:4:0xE58210BC
+	{  31, 0xe58210cc, 0xfdffffff }, // str:4:0xE58210CC
+	{ -1, -1, -1 },
+	/* 26/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   1, 0xe59f6030, 0xfdffffff }, // ldr:4:0xE59F6030
 	{   2, 0xe5965000, 0xfdffffff }, // ldr:4:0xE5965000
@@ -5445,6 +5476,7 @@ FuncsList func_list[] = {
 	{ "Remove", func_sig_Remove_3 },
 	{ "RenameFile_Fut", func_sig_RenameFile_Fut_1 },
 	{ "RenameFile_Fut", func_sig_RenameFile_Fut_3 },
+	{ "Restart", func_sig_Restart_1 },
 	{ "SetAutoShutdownTime", func_sig_SetAutoShutdownTime_1 },
 	{ "SetAutoShutdownTime", func_sig_SetAutoShutdownTime_2 },
 	{ "SetCurrentCaptureModeType", func_sig_SetCurrentCaptureModeType_1 },

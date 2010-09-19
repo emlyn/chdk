@@ -78,6 +78,8 @@ NSTUB(PutOutNdFilter, 0xffa50420)
 NSTUB(RefreshPhysicalScreen, 0xff90bc18)
 NSTUB(Remove, 0xffa99fb4)
 NSTUB(RenameFile_Fut, 0xffa954c0)
+// Best match: 96%
+NSTUB(Restart, 0xff81b74c)
 NSTUB(SetAutoShutdownTime, 0xffb36a04)
 NSTUB(SetCurrentCaptureModeType, 0xff828fc4)
 NSTUB(SetLogicalEventActive, 0xffb3460c)

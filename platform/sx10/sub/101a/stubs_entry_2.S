@@ -27,6 +27,7 @@ NHSTUB(LEDDrive, 0xFF84AB48)
 NHSTUB(WriteSDCard, 0xFF92A9A4)
 NHSTUB(PostLogicalEventForNotPowerType, 0xFF87EC9C)
 NHSTUB(apex2us, 0xFF9E0128)
+NHSTUB(Restart, 0xFF829848)
 
 // null sub - point these at nullsub_1 as labelled in IDA
 

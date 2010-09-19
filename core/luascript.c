@@ -1295,6 +1295,17 @@ static int luaCB_call_event_proc( lua_State* L )
 
 #endif // OPT_LUA_CALL_NATIVE
 
+/*
+result = reboot(["filename"])
+returns false on failure, does not return on success
+see lib/armutil/reboot.c for details
+*/
+static int luaCB_reboot( lua_State* L )
+{
+	lua_pushboolean(L, reboot(luaL_optstring( L, 1, NULL )));
+	return 1;
+}
+
 void register_lua_funcs( lua_State* L )
 {
 #define FUNC( X )			\
@@ -1458,4 +1469,5 @@ void register_lua_funcs( lua_State* L )
    FUNC(call_event_proc);
    FUNC(call_func_ptr);
 #endif
+   FUNC(reboot);
 }

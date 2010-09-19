@@ -43,3 +43,5 @@ NHSTUB(ExitFromCompensationEVF, 0xff96817c)
 NHSTUB(DoAFLock, 0xff967f48)
 NHSTUB(UnlockAF, 0xff968024)
 NHSTUB(SetScriptMode,0xFF9819CC) // by find_eventproc name @ 0xFF9A40C8
+NHSTUB(Restart,0xFF823DE8) // "Restart Called"
+

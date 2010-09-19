@@ -32,6 +32,7 @@ NHSTUB(kbd_pwr_on,0xFF81093C) // NULLSUB ... no corresponding call in kbd_read_k
 NHSTUB(kbd_pwr_off,0xFF81093C) // NULLSUB ... pwr_on doesn't exist, last function in readkeys looks more like kbd_read_keys_r2
 NHSTUB(strchr,0xFF897640) 
 //NHSTUB(vsprintf,0xFF81CAE8) // via CPrintf
+NHSTUB(Restart,0xFF8297B0)
 
 // These don't exist/aren't found in dryos
 NHSTUB(Mount_FileSystem,0xFF81093C) // NULLSUB

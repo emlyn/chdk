@@ -71,6 +71,8 @@ NSTUB(ReadFastDir, 0xffa7d6d4)
 NSTUB(RenameFile_Fut, 0xff834d40)
 // ALT: NSTUB(RenameFile_Fut, 0xffa69a1c) // 8/7
 // ALT: NSTUB(RenameFile_Fut, 0xffa69a6c) // 8/7
+// Best match: 96%
+NSTUB(Restart, 0xff83a540)
 // Best match: 93%
 NSTUB(SetAutoShutdownTime, 0xff896f70)
 // Best match: 81%

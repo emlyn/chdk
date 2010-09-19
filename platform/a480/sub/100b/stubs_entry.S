@@ -68,6 +68,7 @@ NSTUB(ReadFastDir, 0xffdb0044)
 NSTUB(Remove, 0xffc13274)
 // Best match: 93%
 NSTUB(RenameFile_Fut, 0xffc12a84)
+NSTUB(Restart, 0xffc17e44)
 // Best match: 93%
 NSTUB(SetAutoShutdownTime, 0xffc55284)
 // Best match: 90%

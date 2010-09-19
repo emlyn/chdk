@@ -104,3 +104,4 @@ SetCurrentCaptureModeType 0xFFC6214C 15
 GetFocusLensSubjectDistance 0xFFCFDB3C
 GetFocusLensSubjectDistanceFromLens 0xFFCFDE48 22
 strtolx 0xFFC1FA10
+Restart 0xFFC1B8A4

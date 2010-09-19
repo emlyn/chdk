@@ -118,3 +118,4 @@ NHSTUB(SetScriptMode,0xFF955C24) //  "EvntTbl_SetScriptMode"
 NHSTUB(SetCurrentCaptureModeType,0xFFAAAED0) // NOT FOUND, NULLSUB
 NHSTUB(SetLogicalEventActive,0xFFAAAED0) // NOT FOUND, NULLSUB
 
+NHSTUB(Restart,0xFF824F58) // "Restart Called"

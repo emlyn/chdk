@@ -94,6 +94,8 @@ NSTUB(RefreshPhysicalScreen, 0xff96c550)
 NSTUB(Remove, 0xff8c0700)
 NSTUB(RenameFile_Fut, 0xff869934)
 // ALT: NSTUB(RenameFile_Fut, 0xfff16fd8) // 27/0
+// Best match: 80%
+NSTUB(Restart, 0xff824f50)
 // ERROR: SetAutoShutdownTime is not found!
 // ERROR: SetCurrentCaptureModeType is not found!
 // Best match: 62%

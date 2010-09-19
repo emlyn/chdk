@@ -279,4 +279,8 @@ extern void _SetCurrentCaptureModeType();
 extern unsigned _ExecuteEventProcedure(const char *name,...);
 // known in CHDK as _RefreshPhysicalScreen
 //extern void _ScreenUnLock();
+
+// 7 calls functions and sets some MMIOs, but doesn't disable caches and actually restart
+// 3 skips one function call on some cameras, but does restart
+void _Restart(unsigned option);
 #endif

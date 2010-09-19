@@ -173,3 +173,4 @@ NHSTUB(Mount_FileSystem,						0xFFC00940)
 NHSTUB(rewinddir,										0xFFC00940)
 
 NHSTUB(SetScriptMode,										0xFFC5C77C) // string
+NHSTUB(Restart, 0xFFC189EC) 

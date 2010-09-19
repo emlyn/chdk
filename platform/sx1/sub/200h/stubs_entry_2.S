@@ -25,6 +25,7 @@ NHSTUB(LEDDrive, 0xFF84CC34)
 NHSTUB(WriteSDCard, 0xFF93DD0C)
 NHSTUB(PostLogicalEventForNotPowerType, 0xFF88328C)
 NHSTUB(apex2us, 0xFF9FDBC8)
+NHSTUB(Restart, 0xFF8298F0) // via 0x12345678
 
 // null sub
 

@@ -28,6 +28,7 @@ NHSTUB(WriteSDCard, 0xFF92AA44)
 NHSTUB(PostLogicalEventForNotPowerType, 0xFF87ED3C)
 NHSTUB(apex2us, 0xFF9E01DC)
 NHSTUB(SetScriptMode, 0xFF880D20)
+NHSTUB(Restart, 0xFF829848)
 
 // null sub
 // null sub - point these at nullsub_1 as labelled in IDA

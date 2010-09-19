@@ -50,4 +50,4 @@ NHSTUB(kbd_pwr_off,NULL_SUB)
 NHSTUB(qsort, 0xffa84fc8)  // search 01 00 50 E1 1E FF 2F 01
 NHSTUB(strrchr, 0xff9b8750)  // via memset (strrchr is above it)
 NHSTUB(SetScriptMode, 0xFF878C68)  // "SetScriptMode"
-
+NHSTUB(Restart, 0xFF8293DC)

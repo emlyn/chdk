@@ -64,6 +64,7 @@ NSTUB(RefreshPhysicalScreen, 0xff9aabf8)
 NSTUB(Remove, 0xff823e9c)
 // Best match: 93%
 NSTUB(RenameFile_Fut, 0xff8236ac)
+NSTUB(Restart, 0xff829ea8)
 // Best match: 93%
 NSTUB(SetAutoShutdownTime, 0xff873908)
 // Best match: 81%

@@ -2,7 +2,7 @@ topdir=../../
 
 include $(topdir)makefile.inc
 
-OBJS = reversebytes.o callfunc.o
+OBJS = reversebytes.o callfunc.o reboot.o
 
 all: libarmutil.a
 

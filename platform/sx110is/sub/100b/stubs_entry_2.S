@@ -44,6 +44,7 @@ NHSTUB(eventproc_export_PostLogicalEventToUI, 0xffc61c00)
 NHSTUB(eventproc_export_SleepTask, 0xffc176ac)
 NHSTUB(eventproc_export_ExitTask, 0xffc0bb50)
 NHSTUB(SetScriptMode, 0xFFC63B40) //"SetScriptMode"
+NHSTUB(Restart, 0xFFC190A0)
 
 //do they really exists in dryos? --> point to nullsub
 NHSTUB(Mount_FileSystem, 0xFFC00940)

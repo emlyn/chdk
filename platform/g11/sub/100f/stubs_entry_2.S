@@ -38,6 +38,7 @@ NHSTUB(ScreenUnlock,             0xFFA110BC)
 NHSTUB(Lseek,                    0xFF835A9C) // same address as lseek
 NHSTUB(rename,                   0xFF835A5C) 
 NHSTUB(RenameFile_Fut,           0xFF835278)
+NHSTUB(Restart,                  0xFF83AB40)
 
 // nullsubs
 NHSTUB(kbd_pwr_on, 0xFF810B04) // nullsub

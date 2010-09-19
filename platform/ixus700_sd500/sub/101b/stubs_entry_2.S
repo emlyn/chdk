@@ -52,3 +52,4 @@ NHSTUB(ExpCtrlTool_StartContiAE, 0xFF8F94B8)
 NHSTUB(DoAFLock, 0xff94efcc)
 NHSTUB(UnlockAF, 0xff94f044)
 NHSTUB(SetScriptMode,0xFF9662E0) // by find_eventproc name @ 0xFF986B7C
+NHSTUB(Restart,0xFF8233A0) // "Restart Called"

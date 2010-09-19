@@ -484,6 +484,20 @@ void SetScriptMode(unsigned mode);
 */
 unsigned call_func_ptr(void *func, const unsigned *args, unsigned n_args);
 
+/*
+ shut down the display and reboot the camera. 
+ bootfile is the name of the file to boot.
+  Must be an unencoded ARM binary, will be loaded at 0x1900
+  For cameras which use encoded diskboot, loader/<camera>/main.bin may be used
+  For cameras which do not use encoded diskboot, DISKBOOT.BIN may be used
+  No sanity checking is performed on the binary, except that the size is >= 4 bytes
+ If bootfile is NULL, camera firmware is rebooted. DISKBOOT.BIN will be loaded or not according to normal rules
+ returns 0 on failure, does not return on success
+ does NOT save camera settings to flash
+ does NOT retract lens before rebooting
+ calling from playback mode is recommended
+*/
+int reboot(const char *bootfile);
 
 #define started() debug_led(1)
 #define finished() debug_led(0)

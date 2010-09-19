@@ -187,3 +187,4 @@ NHSTUB(DoAFLock, 0xff827c90)
 NHSTUB(UnlockAF, 0xff827cfc)
 NHSTUB(apex2us, 0xFF9CAF14)
 NHSTUB(SetScriptMode, 0xFF877C04) // "SetScriptMode"
+NHSTUB(Restart, 0xFF82CDE4) // "Restart Called"

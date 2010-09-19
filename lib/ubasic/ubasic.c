@@ -2089,6 +2089,17 @@ static void set_capture_mode_statement()
     accept_cr();
 }
 
+static void reboot_statement() {
+    accept(TOKENIZER_REBOOT);
+    if(tokenizer_token() == TOKENIZER_STRING) {
+      tokenizer_string(string, sizeof(string));
+      tokenizer_next();
+	  reboot(string);
+	} else {
+	  reboot(NULL);
+	}
+}
+
 /*---------------------------------------------------------------------------*/
 
 static void wait_click_statement()
@@ -2641,6 +2652,11 @@ statement(void)
   case TOKENIZER_SET_CAPTURE_MODE_CANON:
     set_capture_mode_canon_statement();
     break;
+
+ case TOKENIZER_REBOOT: {
+	reboot_statement();
+	break;
+  }
 
 
   default:

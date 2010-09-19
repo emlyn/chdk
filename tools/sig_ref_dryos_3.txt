@@ -26,3 +26,4 @@ closedir 0xFFA7E06C
 vsprintf 0xFF820350
 VbattGet 0xFF831E04 10
 GetFocusLensSubjectDistanceFromLens 0xFF9430E8 22
+Restart 0xFF83A130

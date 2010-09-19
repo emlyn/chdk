@@ -948,3 +948,11 @@ long __attribute__((weak)) _GetCurrentTargetDistance()
 }
 #endif
 
+/*
+// this wrapper isn't currently needed
+// 7 calls functions and sets some MMIOs, but doesn't disable caches and actually restart
+// 3 skips one function call on some cameras, but does restart
+void Restart(unsigned option) {
+	_Restart(option);
+}
+*/

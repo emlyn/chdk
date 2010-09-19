@@ -75,6 +75,7 @@ NSTUB(Read, 0xff86f63c)
 NSTUB(RefreshPhysicalScreen, 0xff988ef0)
 NSTUB(Remove, 0xff86f5c8)
 NSTUB(RenameFile_Fut, 0xff8686c8)
+NSTUB(Restart, 0xff822b38)
 NSTUB(SetAutoShutdownTime, 0xff972008)
 NSTUB(SetCurrentCaptureModeType, 0xff9a3278)
 // Best match: 88%

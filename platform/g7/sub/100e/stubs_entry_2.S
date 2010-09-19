@@ -27,3 +27,4 @@ NHSTUB(taskNameToId, 0xFFBAB5A4)
 NHSTUB(DoAFLock, 0xff99af54)
 NHSTUB(UnlockAF, 0xff99afc8)
 NHSTUB(SetScriptMode,0xFF9B38E4) // by find_eventproc name @ 0xFF9DFDBC
+NHSTUB(Restart, 0xFF823ABC)
