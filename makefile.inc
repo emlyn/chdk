@@ -458,16 +458,16 @@ distclean-recursive:
 
 all-recursive:
 	@for i in $(SUBDIRS); do \
-		echo \>\> Entering to $(FOLDER)$$i; \
+		echo \>\> Entering $(FOLDER)$$i; \
 		$(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" || exit 1; \
-		echo \<\< Leaving $(FOLDER)$$i; \
+		echo \<\< "Leaving " $(FOLDER)$$i; \
 	done
 
 depend-recursive:
 	@for i in $(SUBDIRS); do \
-		echo \>\> Entering to $(FOLDER)$$i; \
+		echo \>\> Entering $(FOLDER)$$i; \
 		$(MAKE) -C $$i FOLDER="$(FOLDER)$$i/" depend || exit 1; \
-		echo \<\< Leaving $(FOLDER)$$i; \
+		echo \<\< "Leaving " $(FOLDER)$$i; \
 	done
 
 ifdef SILENT
