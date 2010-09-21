@@ -1,2 +1,6 @@
 *.o
 *.a
+*.elf
+main.bin
+main.dump
+main.elf.syms
