@@ -27,4 +27,4 @@ for v in $VERSIONS; do
 	)
 done | "$1"
 
-printf "\t{ NULL }\n};"
+printf "\t{ NULL }\n};\n"
