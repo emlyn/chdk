@@ -19,7 +19,7 @@ OPT_LUA_STRLIB=1
 #OPT_LUA_CALL_NATIVE=1
 #OPT_MD_DEBUG=1
 # needs proper fi2.inc in platform/ !!! see http://chdk.setepontos.com/index.php/topic,2995.0.html
-#OPT_FI2=1
+OPT_FI2=1
 # if enabled, compiler will produce a lot of warnings, maybe not always correct ones, see http://chdk.setepontos.com/index.php/topic,2509.msg32191.html#msg32191
 #OPT_WARNINGS=1
 # If enabled (and reference binaries are present in /tools), compiler will generate function signatures
