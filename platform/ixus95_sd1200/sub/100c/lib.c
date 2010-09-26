@@ -84,9 +84,10 @@ void *vid_get_viewport_fb_d()
 }
 
 
+// note real width is 720, report 360 for aspect adjustment
 long vid_get_bitmap_screen_width()
 {
-    return 720;
+    return 360;
 }
 
 long vid_get_bitmap_screen_height()
