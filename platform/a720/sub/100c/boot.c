@@ -1368,6 +1368,8 @@ void __attribute__((naked,noinline)) sub_FFC3EDA0_my() { //#fs  ; Partition tabl
         "loc_FFC3EE38:\n"
                 "MOV     R0, R8\n"
                 "BL      sub_FFCF554C\n"        // Add FAT32 autodetect-code after this line\n"
+                "MOV   R1, R4\n"           //  pointer to MBR in R1
+                "BL    mbr_read_dryos\n"   //  total sectors count in R0 before and after call
 
                 // Start of DataGhost's FAT32 autodetection code
                 // Policy: If there is a partition which has type W95 FAT32, use the first one of those for image storage

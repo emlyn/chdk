@@ -880,6 +880,8 @@
 
     #define CAM_RAW_ROWPIX              3336   // for new 8 MP
     #define CAM_RAW_ROWS                2480   // for new 8 MP
+
+    #define CAM_MULTIPART               1
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
@@ -2814,13 +2816,13 @@
       -1158,   1000000, 1929,   1000000, 3581,  1000000
     #define cam_CalibrationIlluminant1 17 // Standard Light A
 
-    // cropping
-    #define CAM_JPEG_WIDTH  3600
-    #define CAM_JPEG_HEIGHT 2700
-    #define CAM_ACTIVE_AREA_X1 52
-    #define CAM_ACTIVE_AREA_Y1 14
-    #define CAM_ACTIVE_AREA_X2 3648
-    #define CAM_ACTIVE_AREA_Y2 2736
+    // cropping -> G11
+    #define CAM_JPEG_WIDTH              3648
+    #define CAM_JPEG_HEIGHT             2736
+    #define CAM_ACTIVE_AREA_X1          16
+    #define CAM_ACTIVE_AREA_Y1          8
+    #define CAM_ACTIVE_AREA_X2          3692
+    #define CAM_ACTIVE_AREA_Y2          2776
     /**** From SX200IS, ok for S90 END?*/
 
    #define CAM_ZEBRA_ASPECT_ADJUST 1
