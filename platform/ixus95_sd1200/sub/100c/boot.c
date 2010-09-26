@@ -9,16 +9,20 @@ const char * const new_sa = &_end;
 /* Ours stuff */
 extern long wrs_kernel_bss_start;
 extern long wrs_kernel_bss_end;
+/*
 long aHookList[128];
 long aHookNum=0;
+*/
 
 // Forward declarations
 void CreateTask_spytask();
-void CreateTask_blinker();
+//void CreateTask_blinker();
 void boot();
-void DumpMemory(char *path, void *start_address, int length);
+//void DumpMemory(char *path, void *start_address, int length);
 
 void taskCreateHook(int *p) {
+	// reyalp - ???
+	/*
 	int i;
 	int found=0;
 
@@ -42,6 +46,7 @@ void taskCreateHook(int *p) {
 		}
 
 	}
+	*/
 
     p-=17;
     if (p[0] == 0xFFC61374) p[0] = (int) init_file_modules_task;
@@ -123,6 +128,7 @@ void boot() { //#fs
 "    ORR     R1, R1, #1\n"
 "    STR     R1, [R2]\n" */ 
 
+// reyalp - WTF ? either you need this OR the for loops, but not both...
 // Without this chunk we get stuck in stdioSetup
 "    LDR     R0, =0xFFECD3E4\n"
 "    LDR     R1, =0x1900\n"
@@ -292,7 +298,7 @@ void __attribute__((naked,noinline)) sub_FFC04D38_my() {
 void __attribute__((naked,noinline)) taskcreate_Startup_my() { 
 	asm volatile (
 "                STMFD   SP!, {R3,LR}\n"
-"                BL      sub_FFC11B18\n" //nullsub
+//"                BL      sub_FFC11B18\n" //nullsub
 "                BL      sub_FFC18AC8\n"
 "                CMP     R0, #0\n"
 "                BNE     loc_FFC0C298\n"
@@ -308,7 +314,7 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() {
 "                B       loc_FFC0C294\n"
 "loc_FFC0C298:\n"
 "                BL      sub_FFC11B20\n"
-"                BL      sub_FFC11B1C\n"   //nullsub
+//"                BL      sub_FFC11B1C\n"   //nullsub
 "                BL      sub_FFC16D84\n"
 "                LDR     R1, =0x34E000\n"
 "                MOV     R0, #0\n"
@@ -337,7 +343,7 @@ void __attribute__((naked,noinline)) task_Startup_my() {
 "                 BL      sub_FFC10F04\n"
 "                 BL      sub_FFC18B08\n" // j_nullsub
 "                 BL      sub_FFC18CEC\n"
-"                 BL      sub_FFC18B9C\n"
+//"                 BL      sub_FFC18B9C\n" // diskboot
         );
 
        CreateTask_spytask();
@@ -506,6 +512,7 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() {
 	);
 }
 
+#if 0
 const unsigned ledlist[]={
     0xC0220134, // green
     0xC0220130, // red
@@ -587,13 +594,13 @@ void DumpMemory(char *path, void *start_address, int length) {
     while(1);
 }
 
+void CreateTask_blinker() {
+       _CreateTask("Blinker", 0x1, 0x200, task_blinker, 0);
+}
+#endif
 
 void CreateTask_spytask() {
        _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
-}
-
-void CreateTask_blinker() {
-       _CreateTask("Blinker", 0x1, 0x200, task_blinker, 0);
 }
 
 //SD780 - ASM Matches - Original location 0xFF877DD0

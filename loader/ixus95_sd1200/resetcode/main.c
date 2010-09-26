@@ -77,7 +77,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
 		"STR     R0, [R1,#0xEC]\n"
 		"CMP     R4, #7\n" // ???
 		"STR     R0, [R1,#0xFC]\n"
-		"LDMEQFD SP!, {R4,PC}\n" //???
+//		"LDMEQFD SP!, {R4,PC}\n" // from original restart func, doesn't make sense here
 		"MOV     R0, #0x78\n"
 		"MCR     p15, 0, R0,c1,c0\n"
 		"MOV     R0, #0\n"
@@ -95,7 +95,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
 		"STR     R0, [R1,#0xFFC]\n"
 //		"LDR     R0, =loc_FF810000\n"
 		"mov     R0, %0\n"
-		"LDMFD   SP!, {R4,LR}\n" //???
+//		"LDMFD   SP!, {R4,LR}\n" // no return possible
 		"BX      R0\n"
 		: : "r"(dst_void) : "memory","r0","r1","r2","r3","r4");
 
