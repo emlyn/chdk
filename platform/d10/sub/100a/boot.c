@@ -195,6 +195,8 @@ void __attribute__((naked,noinline)) sub_FF810FC4_my() {
 "                STR     R0, [SP,#0x1C]\n"
 "                LDR     R0, =0x19B\n"
 "                LDR     R1, =sub_FF814D38_my\n"
+"                LDR     PC, =0xFF811018\n" // jump back to original FW
+/*
 "                STR     R0, [SP,#0x20]\n"
 "                MOV     R0, #0x96\n"
 "                STR     R0, [SP,#0x24]\n"
@@ -216,8 +218,10 @@ void __attribute__((naked,noinline)) sub_FF810FC4_my() {
 "                MOV     R0, SP\n"
 "                MOV     R2, #0\n"
 "                BL      sub_FF812D68\n"
-"                ADD     SP, SP, #0x74\n"
-"                LDR     PC, [SP],#4\n"
+// will never return
+//"                ADD     SP, SP, #0x74\n"
+//"                LDR     PC, [SP],#4\n"
+*/
 	);
 }
 void __attribute__((naked,noinline)) sub_FF814D38_my() {
@@ -311,6 +315,8 @@ void __attribute__((naked,noinline)) task_Startup_my() {
 "                BL      sub_FF8267FC\n"
 "                BL      sub_FF829308\n"
 "                BL      taskcreatePhySw_my\n"  // we do this here rather than hook so we don't waste the original stack
+"                LDR     PC, =0xFF81C230\n" // jump back to original firmware
+/*
 //"                BL      sub_FF821A88\n" // taskcreate_PhySw
 "                BL      sub_FF824ADC\n"
 "                BL      sub_FF829320\n"
@@ -324,6 +330,7 @@ void __attribute__((naked,noinline)) task_Startup_my() {
 "                BL      sub_FF820738\n"
 "                LDMFD   SP!, {R4,LR}\n"
 "                B       sub_FF8154B4\n" // LOCATION: MLHClock.c:0
+*/
 	);
 }
 
@@ -383,6 +390,8 @@ void __attribute__((naked,noinline)) sub_FF872598_my() {
 "                STMFD   SP!, {R4,LR}\n"
 "                MOV     R0, #3\n"
 "                BL      sub_FF855974_my\n" // -> (Mounter.c)
+"                LDR     PC,=0xFF8725A8\n" //jump back to firmware
+/*
 //"                BL      nullsub_64\n"
 "                LDR     R4, =0x2E20\n"
 "                LDR     R0, [R4,#4]\n"
@@ -398,7 +407,7 @@ void __attribute__((naked,noinline)) sub_FF872598_my() {
 "                MOV     R0, #1\n"
 "                STR     R0, [R4]\n"
 "                LDMFD   SP!, {R4,PC}\n"
-
+*/
  );
 } 
 
@@ -426,6 +435,8 @@ void __attribute__((naked,noinline)) sub_FF855974_my() {
 "                BL      sub_FF855420\n"
 "                MOV     R0, R5\n"
 "                BL      sub_FF855714_my\n" // ->
+"                LDR     PC,=0xFF8559CC\n" // jump back to original fw
+/*
 "                MOV     R7, R0\n"
 "                MOV     R0, R5\n"
 "                BL      sub_FF855778\n" // Mounter.c 7
@@ -457,7 +468,7 @@ void __attribute__((naked,noinline)) sub_FF855974_my() {
 "                LDREQ   R0, =0xFF855C18\n" // "EmemMountError"
 "                BEQ     sub_FF8115A8\n" // qPrintf
 "                LDMFD   SP!, {R4-R8,PC}\n"
-
+*/
  );
 } 
 
@@ -474,6 +485,8 @@ void __attribute__((naked,noinline)) sub_FF855714_my() {
 "                LDR     R0, [R4,#0x38]\n"
 "                MOV     R1, R5\n"
 "                BL      sub_FF8554A4_my\n" // -> (Mounter.c)
+"                LDR     PC, =0xFF855740\n" // jump back to origina fw
+/*
 "                CMP     R0, #0\n"
 "                LDMEQFD SP!, {R4-R6,PC}\n"
 "                LDR     R0, [R4,#0x38]\n"
@@ -488,6 +501,7 @@ void __attribute__((naked,noinline)) sub_FF855714_my() {
 "                ORRNE   R1, R1, #2\n"
 "                STRNE   R1, [R4,#0x70]\n"
 "                LDMFD   SP!, {R4-R6,PC}\n"
+*/
  );
 } 
 void __attribute__((naked,noinline)) sub_FF8554A4_my() { 

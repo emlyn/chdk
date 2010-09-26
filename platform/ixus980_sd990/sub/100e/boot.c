@@ -39,7 +39,7 @@ void boot() { //#fs
     long i;
 
 
-    // enable caches and write buffer... this is a carryover from old dryos ports, may not be useful
+    // enable caches and write buffer, disabled earlier in loader 
     asm volatile (
 	"MRC     p15, 0, R0,c1,c0\n"
 	"ORR     R0, R0, #0x1000\n"
