@@ -69,7 +69,7 @@ void *vid_get_viewport_fb_d()
 //SD780 - 720px real screen width
 long vid_get_bitmap_screen_width()
 {
-    return 720;
+    return 360; // half of real for aspect correction
     //720
 }
 
