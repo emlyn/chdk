@@ -2048,6 +2048,8 @@
 	#undef ASPECT_GAMES_YCORRECTION
 	#define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
     #define CAM_ZEBRA_ASPECT_ADJUST 1
+	// camera has little free memory
+    #define CAM_ZEBRA_NOBUF 1
 //----------------------------------------------------------
 
 #elif defined (CAMERA_ixus90_sd790)
@@ -2257,6 +2259,8 @@
 	#define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
 
     #define CAM_ZEBRA_ASPECT_ADJUST 1
+	// camera has very little free memory
+    #define CAM_ZEBRA_NOBUF 1
 
 //----------------------------------------------------------
 
