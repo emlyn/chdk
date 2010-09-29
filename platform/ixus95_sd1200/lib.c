@@ -29,20 +29,17 @@ int get_flash_params_count(void){
              // VERIFY_SD1200. Dunno where the above is from (Not SD780)
 }
 
-// based on SX10, values found by experiment
-void ubasic_set_led(int led, int state, int bright) {
-    return; /* doesn't seem to work */
- static char led_table[]={0, // green
-                          1, // orange, right
-                          2, // yellow, left
-                          3, // power
-                          // 4,5,6,7,
-                          8, // blue
-                          9 // af
-                          };
- if((unsigned)led < sizeof(led_table))
-  _LEDDrive(led_table[led], state<=1 ? !state : state);
-// _LEDDrive(led_table[led%sizeof(led_table)], state<=1 ? !state : state);
+
+// from  Microfunguy in
+// http://chdk.setepontos.com/index.php/topic,4324.msg55475.html#msg55475
+void ubasic_set_led(int led, int state, int bright)
+{
+   int leds[] = {0x134,0x138,0x134,0x130,0x134,0x3030,0x3030};  //  green=4 | (yellow) | (not used) | orange | (not used) | af beam | timer
+   volatile long *p=(void*)0xc0220000 + leds[(led-4)%sizeof(leds)];
+   if (state)
+      p[0]=0x46;
+   else
+      p[0]=0x44;
 }
 
 #define DEBUG_LED LED_IO_Y
