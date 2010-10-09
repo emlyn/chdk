@@ -2202,24 +2202,24 @@
 	#define  CAM_BLACK_LEVEL             127
 
 	// pattern
-	#define  cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
+    #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
 
 	// color preliminary
-	// Stole this from sd990 VERIFY_SD1200
+	// from para in forum
 	#define  CAM_COLORMATRIX1                             \
-    837237, 1000000, -290137, 1000000, -128156, 1000000, \
-    -127762, 1000000, 643909, 1000000, 52973, 1000000, \
-    4446, 1000000, 88354, 1000000, 224246, 1000000
+    1484685, 1000000, -530958, 1000000, -208054, 1000000, \
+    143142, 1000000, 793552, 1000000, 83907, 1000000, \
+    146290, 1000000, -44679, 1000000, 430414, 1000000
 
 	#define  cam_CalibrationIlluminant1 1 // Daylight
 
 	// cropping 
 	#define  CAM_JPEG_WIDTH  3648
 	#define  CAM_JPEG_HEIGHT 2736
-	#define  CAM_ACTIVE_AREA_X1 12
+	#define  CAM_ACTIVE_AREA_X1 8
 	#define  CAM_ACTIVE_AREA_Y1 12
-	#define  CAM_ACTIVE_AREA_X2 3648
-	#define  CAM_ACTIVE_AREA_Y2 2736
+	#define  CAM_ACTIVE_AREA_X2 3692
+	#define  CAM_ACTIVE_AREA_Y2 2772
 
 	// camera name
 	#define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
