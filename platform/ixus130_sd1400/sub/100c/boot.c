@@ -2,8 +2,7 @@
 #include "platform.h"
 #include "core.h"
 
-#define LED 0xC0220130 // IO, green
-#define DELAY 5000000
+#include "led.h"
 
 const char * const new_sa = &_end;
 
@@ -213,9 +212,18 @@ void boot() {
     "ORR     R0, R0, #4\n"
     "ORR     R0, R0, #1\n"
     "MCR     p15, 0, R0,c1,c0\n"
+    );
 
-    //"b       sub_FF810000\n"
+  // boot         = 16bfe8
+  // boot + 0x100 = 16c0e8
+  // tmp_1        = 16c134 = boot + 0x14c
 
+  //led_dump((char *)boot + 0x164, 4);
+  //led_dump(sub_ff810134, 1);
+  //led_dump((void *)0x16cf80, 1);
+  //"b       sub_FF810000\n"
+
+  asm volatile (
     "ldr	r1, =0xc0410000\n"
     "mov	r0, #0\n"//	; 0x0
     "str	r0, [r1]\n"
@@ -288,11 +296,19 @@ void boot() {
     "ldr	r2, =0xc0242010\n" 
     "ldr	r1, [r2]\n"
     "orr	r1, r1, #1\n"//	; 0x1
-    "str	r1, [r2]\n"
+    "str	r1, [r2]\n" // tmp_1
+    );
 
-    //"B          sub_ff810130\n" // works with this
+  led_dump((long *)boot + 0x56, 4);
+  //led_dump(sub_ff810134, 1);
+  led_dump((long *)0x16c708, 2);
+
+  asm volatile (
+    //"b          sub_ff810130\n" // works with this
+    //"ldr        pc, =0xff810130\n" // and this
     "ldr	r0, =0xffbf837c\n"
-    "B          sub_ff810134\n" // fails with this
+    //"b          sub_ff810134\n" // fails with this
+    "ldr        pc, =0xff810134\n" // and this
 
     "ldr	r1, =0x1900\n"
     "ldr	r3, =0xebd0\n"
@@ -320,10 +336,10 @@ void boot_old() { //#fs
 
     long i;
 
-    volatile unsigned *p = (void*)LED;
-    int counter;
-    counter = DELAY/16; *p = 0x46; while (counter--) { asm("nop\n nop\n"); };
-    counter = DELAY/16; *p = 0x44; while (counter--) { asm("nop\n nop\n"); };
+    //volatile unsigned *p = (void*)LED;
+    //int counter;
+    //counter = DELAY/16; *p = 0x46; while (counter--) { asm("nop\n nop\n"); };
+    //counter = DELAY/16; *p = 0x44; while (counter--) { asm("nop\n nop\n"); };
 
     // enable caches and write buffer... this is a carryover from old dryos ports, may not be useful
     // SD780 still has this in first function VERIFY_SD780
@@ -378,8 +394,8 @@ void boot_old() { //#fs
      // Search on 0x12345678 finds function that is called from function with this code (SD780 0xFF842A90)
     //*(int*)(0x2480)= (*(int*)0xC0220128)&1 ? 0x400000 : 0x200000; //VERIFY_SD780 replacement of sub_FF842A90/sub_FF821B7C for correct power-on.
 
-    counter = DELAY; *p = 0x46; while (counter--) { asm("nop\n nop\n"); };
-    counter = DELAY; *p = 0x44; while (counter--) { asm("nop\n nop\n"); };
+    //counter = DELAY; *p = 0x46; while (counter--) { asm("nop\n nop\n"); };
+    //counter = DELAY; *p = 0x44; while (counter--) { asm("nop\n nop\n"); };
 
     // jump to init-sequence that follows the data-copy-routine
     //asm volatile ("B      sub_FF810354_my\n");
