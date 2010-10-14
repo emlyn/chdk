@@ -6,16 +6,15 @@
 
 const char * const new_sa = &_end;
 
-/* Ours stuff */
-extern long wrs_kernel_bss_start;
-extern long wrs_kernel_bss_end;
+// Our stuff
+//extern long wrs_kernel_bss_start;
+//extern long wrs_kernel_bss_end;
 long aHookList[128];
 long aHookNum=0;
 
-
 // Forward declarations
-void CreateTask_spytask();
-void boot();
+//void CreateTask_spytask();
+//void boot();
 
 //void __attribute__((naked,noinline)) sub_STUB_my() {
 //	asm volatile (
@@ -24,7 +23,7 @@ void boot();
 //}
 
 void taskCreateHook(int *p) {
-
+  led_flash(LED_RED, 1);
 	int i;
 	int found=0;
 
@@ -128,10 +127,11 @@ loc:  2f2dbc - data:ff8645b - *data:       errLogTask
 
 // ??? from sx10
 void taskCreateHook2(int *p) {
- p-=17;
- //VERIFY_SD780 - Does this need to be here at all anymore?
-//Uncomment if (p[0]==0xFF881534)  p[0]=(int)init_file_modules_task;
- //???if (p[0]==0xFF877DD0) p[0]=(int)init_file_modules_task;
+  led_flash(LED_RED, 1);
+  p-=17;
+  //VERIFY_SD780 - Does this need to be here at all anymore?
+  //Uncomment if (p[0]==0xFF881534)  p[0]=(int)init_file_modules_task;
+  //???if (p[0]==0xFF877DD0) p[0]=(int)init_file_modules_task;
 }
 
 #if 0
@@ -207,562 +207,445 @@ void CreateTask_blinker() {
 
 void boot() {
   asm volatile (
-    "MRC     p15, 0, R0,c1,c0\n"
-    "ORR     R0, R0, #0x1000\n"
-    "ORR     R0, R0, #4\n"
-    "ORR     R0, R0, #1\n"
-    "MCR     p15, 0, R0,c1,c0\n"
+	"ldr	r1, =0xc0410000\n" // was: "[pc, #336]	; ff810164" 
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"str	r0, [r1]\n"
+	"ldr	r1, =0x78\n" // was: "mov ..., #120"
+	"mcr	15, 0, r1, cr1, cr0, 0\n"
+	"ldr	r1, =0x0\n" // was: "mov ..., #0"
+	"mcr	15, 0, r1, cr7, cr10, 4\n"
+	"mcr	15, 0, r1, cr7, cr5, 0\n"
+	"mcr	15, 0, r1, cr7, cr6, 0\n"
+	"ldr	r0, =0x3d\n" // was: "mov ..., #61"
+	"mcr	15, 0, r0, cr6, cr0, 0\n"
+	"ldr	r0, =0xc000002f\n" // was: "mov ..., #-1073741777"
+	"mcr	15, 0, r0, cr6, cr1, 0\n"
+	"ldr	r0, =0x33\n" // was: "mov ..., #51"
+	"mcr	15, 0, r0, cr6, cr2, 0\n"
+	"ldr	r0, =0x40000033\n" // was: "mov ..., #1073741875"
+	"mcr	15, 0, r0, cr6, cr3, 0\n"
+	"ldr	r0, =0x80000017\n" // was: "mov ..., #-2147483625"
+	"mcr	15, 0, r0, cr6, cr4, 0\n"
+	"ldr	r0, =0xff80002d\n" // was: "[pc, #264]	; ff810168" 
+	"mcr	15, 0, r0, cr6, cr5, 0\n"
+	"ldr	r0, =0x34\n" // was: "mov ..., #52"
+	"mcr	15, 0, r0, cr2, cr0, 0\n"
+	"ldr	r0, =0x34\n" // was: "mov ..., #52"
+	"mcr	15, 0, r0, cr2, cr0, 1\n"
+	"ldr	r0, =0x34\n" // was: "mov ..., #52"
+	"mcr	15, 0, r0, cr3, cr0, 0\n"
+	"ldr	r0, =0x03333330\n" // was: "[pc, #236]	; ff81016c" 
+	"mcr	15, 0, r0, cr5, cr0, 2\n"
+	"ldr	r0, =0x03333330\n" // was: "[pc, #228]	; ff81016c" 
+	"mcr	15, 0, r0, cr5, cr0, 3\n"
+	"mrc	15, 0, r0, cr1, cr0, 0\n"
+	"orr	r0, r0, #4096\n"	// 0x1000
+	"orr	r0, r0, #4\n"	// 0x4
+	"orr	r0, r0, #1\n"	// 0x1
+	"mcr	15, 0, r0, cr1, cr0, 0\n"
+	"ldr	r1, =0x80000006\n" // was: "mov ..., #-2147483642"
+	"mcr	15, 0, r1, cr9, cr1, 0\n"
+	"ldr	r1, =0x6\n" // was: "mov ..., #6"
+	"mcr	15, 0, r1, cr9, cr1, 1\n"
+	"mrc	15, 0, r1, cr1, cr0, 0\n"
+	"orr	r1, r1, #327680\n"	// 0x50000
+	"mcr	15, 0, r1, cr1, cr0, 0\n"
+	"ldr	r2, =0xc0200000\n" // was: "[pc, #176]	; ff810170" 
+	"ldr	r1, =0x1\n" // was: "mov ..., #1"
+	"str	r1, [r2, #268]\n"
+	"ldr	r1, =0xff\n" // was: "mov ..., #255"
+	"str	r1, [r2, #12]\n"
+	"str	r1, [r2, #28]\n"
+	"str	r1, [r2, #44]\n"
+	"str	r1, [r2, #60]\n"
+	"str	r1, [r2, #76]\n"
+	"str	r1, [r2, #92]\n"
+	"str	r1, [r2, #108]\n"
+	"str	r1, [r2, #124]\n"
+	"str	r1, [r2, #140]\n"
+	"str	r1, [r2, #156]\n"
+	"str	r1, [r2, #172]\n"
+	"str	r1, [r2, #188]\n"
+	"str	r1, [r2, #204]\n"
+	"str	r1, [r2, #220]\n"
+	"str	r1, [r2, #236]\n"
+	"str	r1, [r2, #252]\n"
+	"ldr	r1, =0xc0400008\n" // was: "[pc, #100]	; ff810174" 
+	"ldr	r2, =0x00430005\n" // was: "[pc, #100]	; ff810178" 
+	"str	r2, [r1]\n"
+	"ldr	r1, =0x1\n" // was: "mov ..., #1"
+	"ldr	r2, =0xc0243100\n" // was: "[pc, #92]	; ff81017c" 
+	"str	r2, [r1]\n"
+	"ldr	r2, =0xc0242010\n" // was: "[pc, #88]	; ff810180" 
+	"ldr	r1, [r2]\n"
+	"orr	r1, r1, #1\n"	// 0x1
+	"str	r1, [r2]\n"
+	"ldr	r0, =0xffbf8434\n" // was: "[pc, #76]	; ff810184" 
+	"ldr	r1, =0x00001900\n" // was: "[pc, #76]	; ff810188" 
+	"ldr	r3, =0x0000ebd0\n" // was: "[pc, #76]	; ff81018c" 
+"loc_ff81013c:\n"
+	"cmp	r1, r3\n"
+	"ldrcc	r2, [r0], #4\n"
+	"strcc	r2, [r1], #4\n"
+	"bcc	loc_ff81013c\n"
+	"ldr	r1, =0x0014fe20\n" // was: "[pc, #60]	; ff810190" 
+	"ldr	r2, =0x0\n" // was: "mov ..., #0"
+"loc_ff810154:\n"
+	"cmp	r3, r1\n"
+	"strcc	r2, [r3], #4\n"
+	"bcc	loc_ff810154\n"
     );
+/*
+ff85f3f0: 	e92d4010 	push	{r4, lr}
+ff85f3f4: 	e59f46cc 	ldr	r4, [pc, #1740]	; ff85fac8: (00002480) 
+ff85f3f8: 	e3a00000 	mov	r0, #0	; 0x0
+ff85f3fc: 	e5840000 	str	r0, [r4]
+ff85f400: 	ebff71a0 	bl	loc_ff83ba88
+ff85f404: 	e3500000 	cmp	r0, #0	; 0x0
+ff85f408: 	15940000 	ldrne	r0, [r4]
+ff85f40c: 	13800502 	orrne	r0, r0, #8388608	; 0x800000
+ff85f410: 	15840000 	strne	r0, [r4]
+ff85f414: 	e59f06b0 	ldr	r0, [pc, #1712]	; ff85facc: (c0220128) 
+ff85f418: 	eb0001c8 	bl	loc_ff85fb40
+ff85f41c: 	e3500000 	cmp	r0, #0	; 0x0
+ff85f420: 	05940000 	ldreq	r0, [r4]
+ff85f424: 	03800602 	orreq	r0, r0, #2097152	; 0x200000
+ff85f428: 	05840000 	streq	r0, [r4]
+ff85f42c: 	e59f069c 	ldr	r0, [pc, #1692]	; ff85fad0: (c022012c) 
+ff85f430: 	eb0001c2 	bl	loc_ff85fb40
+ff85f434: 	e3500000 	cmp	r0, #0	; 0x0
+ff85f438: 	05940000 	ldreq	r0, [r4]
+ff85f43c: 	03800501 	orreq	r0, r0, #4194304	; 0x400000
+ff85f440: 	05840000 	streq	r0, [r4]
+ff85f444: 	e8bd8010 	pop	{r4, pc}
+// Search on 0x12345678 finds function that is called from function with this code (SD780 0xFF842A90)
+*/
+  *(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
 
-  // boot         = 16bfe8
-  // boot + 0x100 = 16c0e8
-  // tmp_1        = 16c134 = boot + 0x14c
-
-  //led_dump((char *)boot + 0x164, 4);
-  //led_dump(sub_ff810134, 1);
-  //led_dump((void *)0x16cf80, 1);
-  //"b       sub_FF810000\n"
+  *(int*)0x1934 = (int)taskCreateHook;
+  *(int*)0x1938 = (int)taskCreateHook2;
 
   asm volatile (
-    "ldr	r1, =0xc0410000\n"
-    "mov	r0, #0\n"//	; 0x0
-    "str	r0, [r1]\n"
-    "mov	r1, #120\n"//	; 0x78
-    "mcr	15, 0, r1, cr1, cr0, 0\n"
-    "mov	r1, #0\n"//	; 0x0
-    "mcr	15, 0, r1, cr7, cr10, 4\n"
-    "mcr	15, 0, r1, cr7, cr5, 0\n"
-    "mcr	15, 0, r1, cr7, cr6, 0\n"
-    "mov	r0, #61\n"//	; 0x3d
-    "mcr	15, 0, r0, cr6, cr0, 0\n"
-    "mov	r0, #0xc000002f\n"
-    "mcr	15, 0, r0, cr6, cr1, 0\n"
-    "mov	r0, #51\n"//	; 0x33
-    "mcr	15, 0, r0, cr6, cr2, 0\n"
-    "mov	r0, #0x40000033\n"
-    "mcr	15, 0, r0, cr6, cr3, 0\n"
-    "mov	r0, #0x80000017\n"
-    "mcr	15, 0, r0, cr6, cr4, 0\n"
-    "ldr	r0, =0xff80002d\n" 
-    "mcr	15, 0, r0, cr6, cr5, 0\n"
-    "mov	r0, #52\n"//	; 0x34
-    "mcr	15, 0, r0, cr2, cr0, 0\n"
-    "mov	r0, #52\n"//	; 0x34
-    "mcr	15, 0, r0, cr2, cr0, 1\n"
-    "mov	r0, #52\n"//	; 0x34
-    "mcr	15, 0, r0, cr3, cr0, 0\n"
-    "ldr	r0, =0x03333330\n" 
-    "mcr	15, 0, r0, cr5, cr0, 2\n"
-    "ldr	r0, =0x03333330\n" 
-    "mcr	15, 0, r0, cr5, cr0, 3\n"
-    "mrc	15, 0, r0, cr1, cr0, 0\n"
-    "orr	r0, r0, #4096\n"//	; 0x1000
-    "orr	r0, r0, #4\n"//	; 0x4
-    "orr	r0, r0, #1\n"//	; 0x1
-    "mcr	15, 0, r0, cr1, cr0, 0\n"
-    "mov	r1, #0x80000006\n"
-    "mcr	15, 0, r1, cr9, cr1, 0\n"
-    "mov	r1, #6\n"//	; 0x6
-    "mcr	15, 0, r1, cr9, cr1, 1\n"
-    "mrc	15, 0, r1, cr1, cr0, 0\n"
-    "orr	r1, r1, #0x50000\n"
-    "mcr	15, 0, r1, cr1, cr0, 0\n"
-    "ldr	r2, =0xc0200000\n" 
-    "mov	r1, #1\n"//	; 0x1
-    "str	r1, [r2, #268]\n"
-    "mov	r1, #255\n"//	; 0xff
-    "str	r1, [r2, #12]\n"
-    "str	r1, [r2, #28]\n"
-    "str	r1, [r2, #44]\n"
-    "str	r1, [r2, #60]\n"
-    "str	r1, [r2, #76]\n"
-    "str	r1, [r2, #92]\n"
-    "str	r1, [r2, #108]\n"
-    "str	r1, [r2, #124]\n"
-    "str	r1, [r2, #140]\n"
-    "str	r1, [r2, #156]\n"
-    "str	r1, [r2, #172]\n"
-    "str	r1, [r2, #188]\n"
-    "str	r1, [r2, #204]\n"
-    "str	r1, [r2, #220]\n"
-    "str	r1, [r2, #236]\n"
-    "str	r1, [r2, #252]\n"
-    "ldr	r1, =0xc0400008\n" 
-    "ldr	r2, =0x00430005\n" 
-    "str	r2, [r1]\n"
-    "mov	r1, #1\n"//	; 0x1
-    "ldr	r2, =0xc0243100\n" 
-    "str	r2, [r1]\n"
-    "ldr	r2, =0xc0242010\n" 
-    "ldr	r1, [r2]\n"
-    "orr	r1, r1, #1\n"//	; 0x1
-    "str	r1, [r2]\n" // tmp_1
-    );
-
-  led_dump((long *)boot + 0x56, 4);
-  //led_dump(sub_ff810134, 1);
-  led_dump((long *)0x16c708, 2);
-
-  asm volatile (
-    //"b          sub_ff810130\n" // works with this
-    //"ldr        pc, =0xff810130\n" // and this
-    "ldr	r0, =0xffbf837c\n"
-    //"b          sub_ff810134\n" // fails with this
-    "ldr        pc, =0xff810134\n" // and this
-
-    "ldr	r1, =0x1900\n"
-    "ldr	r3, =0xebd0\n"
-"loc_FF81013C:\n"
-    "cmp	r1, r3\n"
-    "ldrcc	r2, [r0], #4\n"
-    "strcc	r2, [r1], #4\n"
-    "bcc	loc_FF81013C\n"
-    "ldr	r1, =0x14fe20\n" 
-    "mov	r2, #0\n"//	; 0x0
-"loc_FF810154:\n"
-    "cmp	r3, r1\n"
-    "strcc	r2, [r3], #4\n"
-    "bcc	loc_FF810154\n"
-    "b  	sub_FF810354\n"
+	"b	sub_ff810354_my\n"
     );
 }
 
-void boot_old() { //#fs
-    long *canon_data_src = (void*)0xFFBF837C;  	//From end of first function
-    long *canon_data_dst = (void*)0x1900;		//From end of first function
-    long canon_data_len = 0xEBD0 - 0x1900; 		// data_end - data_start
-    long *canon_bss_start = (void*)0xEBD0; 		// just after data
-    long canon_bss_len = 0x14FE20 - 0xEBD0;		//In loop at end of first function
-
-    long i;
-
-    //volatile unsigned *p = (void*)LED;
-    //int counter;
-    //counter = DELAY/16; *p = 0x46; while (counter--) { asm("nop\n nop\n"); };
-    //counter = DELAY/16; *p = 0x44; while (counter--) { asm("nop\n nop\n"); };
-
-    // enable caches and write buffer... this is a carryover from old dryos ports, may not be useful
-    // SD780 still has this in first function VERIFY_SD780
-    asm volatile (
-	"MRC     p15, 0, R0,c1,c0\n"
-	"ORR     R0, R0, #0x1000\n"
-	"ORR     R0, R0, #4\n"
-	"ORR     R0, R0, #1\n"
-	"MCR     p15, 0, R0,c1,c0\n"
-        "B       sub_ff810000\n"
-    :::"r0");
-
-    for(i=0;i<canon_data_len/4;i++)
-        canon_data_dst[i]=canon_data_src[i];
-
-    for(i=0;i<canon_bss_len/4;i++)
-        canon_bss_start[i]=0;
-
-// see http://chdk.setepontos.com/index.php/topic,2972.msg30712.html#msg30712
-
-    //*(int*)0x1934=(int)taskCreateHook;
-    //*(int*)0x1938=(int)taskCreateHook2; //VERIFY_SD780
-
-    // IXUS130: Found at FF85F3F0
-	/*
-//	ROM:FF842A90 sub_FF842A90                            ; CODE XREF: sub_FF821B7Cj
-//	ROM:FF842A90                 STMFD   SP!, {R4,LR}
-//	ROM:FF842A94                 LDR     R4, =0x2480     // was 0x2278
-//	ROM:FF842A98                 MOV     R0, #0
-//	ROM:FF842A9C                 STR     R0, [R4]        // was [R4,#4]
-//	ROM:FF842AA0                 BL      sub_FF83BA88    // was FF828C8C
-//	ROM:FF842AA4                 CMP     R0, #0
-//	ROM:FF842AA8                 LDRNE   R0, [R4]        // was [R4,#4]
-//	ROM:FF842AAC                 ORRNE   R0, R0, #0x800000
-//	ROM:FF842AB0                 STRNE   R0, [R4]        // was [R4,#4]
-//	ROM:FF842AB4                 LDR     R0, =0xC0220128 // was 0xC02200C0
-//	ROM:FF842AB8                 BL      sub_FF85FB40    // was FF84321C
-//	ROM:FF842ABC                 CMP     R0, #0
-//	ROM:FF842AC0                 LDREQ   R0, [R4]        // was [R4,#4]
-//	ROM:FF842AC4                 ORREQ   R0, R0, #0x200000
-//	ROM:FF842AC8                 STREQ   R0, [R4]        // was [R4,#4]
-//	ROM:FF842ACC                 LDR     R0, =0xC022012C // was 0xC02200CC
-//	ROM:FF842AD0                 BL      sub_FF85FB40    // was FF84321C
-//	ROM:FF842AD4                 CMP     R0, #0
-//	ROM:FF842AD8                 LDREQ   R0, [R4]        // was [R4,#4]
-//	ROM:FF842ADC                 ORREQ   R0, R0, #0x400000
-//	ROM:FF842AE0                 STREQ   R0, [R4]        // was [R4,#4]
-//	ROM:FF842AE4                 LDMFD   SP!, {R4,PC}
-//	ROM:FF842AE4 ; End of function sub_FF842A90
-	*/
-
-     // Search on 0x12345678 finds function that is called from function with this code (SD780 0xFF842A90)
-    //*(int*)(0x2480)= (*(int*)0xC0220128)&1 ? 0x400000 : 0x200000; //VERIFY_SD780 replacement of sub_FF842A90/sub_FF821B7C for correct power-on.
-
-    //counter = DELAY; *p = 0x46; while (counter--) { asm("nop\n nop\n"); };
-    //counter = DELAY; *p = 0x44; while (counter--) { asm("nop\n nop\n"); };
-
-    // jump to init-sequence that follows the data-copy-routine
-    //asm volatile ("B      sub_FF810354_my\n");
-    asm volatile ("B      sub_FF810354_my\n");
-}
-
-//??? Found at ff810354
-//SD780 - ASM matches but comments are unknown if correct....
-void __attribute__((naked,noinline)) sub_FF810354_my() { //??? was FF8101A0
-        asm volatile (
-"                LDR     R0, =0xFF8103CC\n" // exception handler code
-"                MOV     R1, #0\n"
-"                LDR     R3, =0xFF810404\n"
-"loc_FF810360:\n"
-"                CMP     R0, R3\n"          // load exception vector
-"                LDRCC   R2, [R0],#4\n"
-"                STRCC   R2, [R1],#4\n"
-"                BCC     loc_FF810360\n"
-"                LDR     R0, =0xFF810404\n"
-"                MOV     R1, #0x4B0\n"
-"                LDR     R3, =0xFF810618\n"
-"loc_FF81037C:\n"
-"                CMP     R0, R3\n"          // copy IRQ handler to ITCM starting at 0x4b0, 532 bytes up to 0x6C4
-"                LDRCC   R2, [R0],#4\n"
-"                STRCC   R2, [R1],#4\n"
-"                BCC     loc_FF81037C\n"
-"                MOV     R0, #0xD2\n"
-"                MSR     CPSR_cxsf, R0\n"   // set CPSR mode = IRQ, ints disabled
-"                MOV     SP, #0x1000\n"     // irq mode SP
-"                MOV     R0, #0xD3\n"
-"                MSR     CPSR_cxsf, R0\n"   // set CPSR mode = Super, ints disabled
-"                MOV     SP, #0x1000\n"     // super mode SP
-"                LDR     R0, =0x6C4\n"
-"                LDR     R2, =0xEEEEEEEE\n"
-"                MOV     R3, #0x1000\n"
-"loc_FF8103B0:\n"
-"                CMP     R0, R3\n"          // clear ITCM 0x6C4-end with EEEEEEEE
-"                STRCC   R2, [R0],#4\n"
-"                BCC     loc_FF8103B0\n"
-"                BL      sub_FF811198_my\n" //->my
+void __attribute__((naked,noinline)) sub_ff810354_my() { //??? was FF8101A0
+  asm volatile (
+	"ldr	r0, =0xff8103cc\n" // was: "[pc, #1036]	; ff810768" 
+	"ldr	r1, =0x0\n" // was: "mov ..., #0"
+	"ldr	r3, =0xff810404\n" // was: "[pc, #1032]	; ff81076c" 
+"loc_ff810360:\n"
+	"cmp	r0, r3\n"
+	"ldrcc	r2, [r0], #4\n"
+	"strcc	r2, [r1], #4\n"
+	"bcc	loc_ff810360\n"
+	"ldr	r0, =0xff810404\n" // was: "[pc, #1016]	; ff810770" 
+	"ldr	r1, =0x4b0\n" // was: "mov ..., #1200"
+	"ldr	r3, =0xff810618\n" // was: "[pc, #1012]	; ff810774" 
+"loc_ff81037c:\n"
+	"cmp	r0, r3\n"
+	"ldrcc	r2, [r0], #4\n"
+	"strcc	r2, [r1], #4\n"
+	"bcc	loc_ff81037c\n"
+	"ldr	r0, =0xd2\n" // was: "mov ..., #210"
+	"msr	CPSR_fsxc, r0\n"
+	"ldr	sp, =0x1000\n" // was: "mov ..., #4096"
+	"ldr	r0, =0xd3\n" // was: "mov ..., #211"
+	"msr	CPSR_fsxc, r0\n"
+	"ldr	sp, =0x1000\n" // was: "mov ..., #4096"
+	"ldr	r0, =0x000006c4\n" // was: "[pc, #20]	; ff8103c0" 
+	"ldr	r2, =0xeeeeeeee\n" // was: "[pc, #968]	; ff810778" 
+	"ldr	r3, =0x1000\n" // was: "mov ..., #4096"
+"loc_ff8103b0:\n"
+	"cmp	r0, r3\n"
+	"strcc	r2, [r0], #4\n"
+	"bcc	loc_ff8103b0\n"
+	"bl	sub_ff811198_my\n"
         );
 }
 
-//SD780 - ASM matches
-void __attribute__((naked,noinline)) sub_FF811198_my() { //??? was FF810FC4
-	asm volatile (
-"                 STR     LR, [SP,#-4]!\n"
-"                 SUB     SP, SP, #0x74\n"
-"                 MOV     R0, SP\n"
-"                 MOV     R1, #0x74\n"
-"                 BL      sub_FFB39910\n" // was sub_FFAC7EFC
-"                 MOV     R0, #0x53000\n"
-"                 STR     R0, [SP,#4]\n"
-
-"                 LDR     R0, =new_sa\n" //Replaces original start location 0x14FE20 (was 0x146B8C)
-"                 LDR     R0, [R0]\n"	 //
-
-"                 LDR     R2, =0x339C00\n"
-"                 LDR     R1, =0x3324A8\n"
-"                 STR     R0, [SP,#8]\n"
-"                 SUB     R0, R1, R0\n"
-"                 ADD     R3, SP, #0xC\n"
-"                 STR     R2, [SP]\n"
-"                 STMIA   R3, {R0-R2}\n"
-"                 MOV     R0, #0x22\n"
-"                 STR     R0, [SP,#0x18]\n"
-"                 MOV     R0, #0x68\n"
-"                 STR     R0, [SP,#0x1C]\n"
-"                 LDR     R0, =0x19B\n"
-"                 LDR     R1, =0xFF815E58\n" // "LDR     R1, =sub_FF815E58"
-"                 STR     R0, [SP,#0x20]\n"
-"                 MOV     R0, #0x96\n"
-"                 STR     R0, [SP,#0x24]\n"
-"                 MOV     R0, #0x78\n"
-"                 STR     R0, [SP,#0x28]\n"
-"                 MOV     R0, #0x64\n"
-"                 STR     R0, [SP,#0x2C]\n"
-"                 MOV     R0, #0\n"
-"                 STR     R0, [SP,#0x30]\n"
-"                 STR     R0, [SP,#0x34]\n"
-"                 MOV     R0, #0x10\n"
-"                 STR     R0, [SP,#0x5C]\n"
-"                 MOV     R0, #0x800\n"
-"                 STR     R0, [SP,#0x60]\n"
-"                 MOV     R0, #0xA0\n"
-"                 STR     R0, [SP,#0x64]\n"
-"                 MOV     R0, #0x280\n"
-"                 STR     R0, [SP,#0x68]\n"
-
-// DBG: OK
-"                 LDR     R0, =0xC0220130\n"
-"                 MOV     R2, #0x46\n"
-"                 STR     R2, [r0, #0]\n"
-
-"                 MOV     R0, SP\n"
-"                 MOV     R2, #0\n"
-"                 BL      sub_FF813404\n" // was FF812D68
-
-// DBG: NO
-"                 LDR     R0, =0xC0220134\n"
-"                 MOV     R2, #0x46\n"
-"                 STR     R2, [r0, #0]\n"
-"tmp123:\n"
-"                 B       tmp123\n"
-
-"                 ADD     SP, SP, #0x74\n"
-"                 LDR     PC, [SP],#4\n"
-	);
+void __attribute__((naked,noinline)) sub_ff811198_my() {
+  asm volatile (
+	"push	{lr}\n"		// (str lr, [sp, #-4]!)
+	"sub	sp, sp, #116\n"	// 0x74
+	"mov	r0, sp\n"
+	"ldr	r1, =0x74\n" // was: "mov ..., #116"
+	"bl	sub_ffb399c4\n"
+	"ldr	r0, =0x53000\n" // was: "mov ..., #339968"
+	"str	r0, [sp, #4]\n"
+	"ldr	r0, =new_sa\n" // Replaces original start location 0x14fe20
+	"ldr	r2, =0x00339c00\n" // was: "[pc, #136]	; ff811248" 
+	"ldr	r1, =0x003324a8\n" // was: "[pc, #140]	; ff811250" 
+	"str	r0, [sp, #8]\n"
+	"sub	r0, r1, r0\n"
+	"add	r3, sp, #12\n"	// 0xc
+	"str	r2, [sp]\n"
+	"stm	r3, {r0, r1, r2}\n"
+	"ldr	r0, =0x22\n" // was: "mov ..., #34"
+	"str	r0, [sp, #24]\n"
+	"ldr	r0, =0x68\n" // was: "mov ..., #104"
+	"str	r0, [sp, #28]\n"
+	"ldr	r0, =0x0000019b\n" // was: "[pc, #104]	; ff811254" 
+	"ldr	r1, =sub_ff815e58_my\n" // was: "[pc, #104]	; ff811258"
+	"str	r0, [sp, #32]\n"
+	"ldr	r0, =0x96\n" // was: "mov ..., #150"
+	"str	r0, [sp, #36]\n"
+	"ldr	r0, =0x78\n" // was: "mov ..., #120"
+	"str	r0, [sp, #40]\n"
+	"ldr	r0, =0x64\n" // was: "mov ..., #100"
+	"str	r0, [sp, #44]\n"
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"str	r0, [sp, #48]\n"
+	"str	r0, [sp, #52]\n"
+	"ldr	r0, =0x10\n" // was: "mov ..., #16"
+	"str	r0, [sp, #92]\n"
+	"ldr	r0, =0x800\n" // was: "mov ..., #2048"
+	"str	r0, [sp, #96]\n"
+	"ldr	r0, =0xa0\n" // was: "mov ..., #160"
+	"str	r0, [sp, #100]\n"
+	"ldr	r0, =0x280\n" // was: "mov ..., #640"
+	"str	r0, [sp, #104]\n"
+	"mov	r0, sp\n"
+	"ldr	r2, =0x0\n" // was: "mov ..., #0"
+	"bl	sub_ff813404\n"
+	"add	sp, sp, #116\n"	// 0x74
+	"pop	{pc}\n"		// (ldr pc, [sp], #4)
+    );
 }
 
-//SD780 - ASM matches
-void __attribute__((naked,noinline)) sub_FF815E58_my() { // was FF814D38
-	asm volatile (
-"                 STMFD   SP!, {R4,LR}\n"
-
-"                 LDR     R0, =0xC0220134\n"
-"                 MOV     R2, #0x46\n"
-"                 STR     R2, [r0, #0]\n"
-"tmp456:\n"
-"                 B       tmp456\n"
-
-"                 BL      sub_FF810B20\n" // was FF810954
-"                 BL      sub_FF81A244\n" // was FF8190B4 dmSetup
-"                 CMP     R0, #0\n"
-"                 LDRLT   R0, =0xFF815F6C\n" // "dmSetup"
-"                 BLLT    sub_FF815F4C\n" // was FF814E2C err_init_task
-"                 BL      sub_FF815A94\n" // was FF814974
-"                 CMP     R0, #0\n"
-"                 LDRLT   R0, =0xFF815F74\n" // "termDriverInit"
-"                 BLLT    sub_FF815F4C\n" // was FF814E2C err_init_task
-"                 LDR     R0, =0xFF815F84\n" // "/_term"
-"                 BL      sub_FF815B7C\n" // was FF814A5C termDeviceCreate
-"                 CMP     R0, #0\n"
-"                 LDRLT   R0, =0xFF815F8C\n" // "termDeviceCreate"
-"                 BLLT    sub_FF815F4C\n" // was FF814E2C err_init_task
-"                 LDR     R0, =0xFF815F84\n" // "/_term"
-"                 BL      sub_FF813BF0\n" // was FF813578 stdioSetup  //VERIFY_SD780 testing
-"                 CMP     R0, #0\n"
-"                 LDRLT   R0, =0xFF815FA0\n" // "stdioSetup"
-"                 BLLT    sub_FF815F4C\n" // was FF814E2C err_init_task
-"                 BL      sub_FF819C3C\n" // was ???????? stdlibSetup
-"                 CMP     R0, #0\n"
-"                 LDRLT   R0, =0xFF815FAC\n" // "stdlibSetup"
-"                 BLLT    sub_FF815F4C\n" // was FF814E2C err_init_task
-"                 BL      sub_FF81167C\n" // was FF8114A8
-"                 CMP     R0, #0\n"
-"                 LDRLT   R0, =0xFF815FB8\n" // "armlib_setup"
-"                 BLLT    sub_FF815F4C\n" // was FF814E2C err_init_task
-"                 LDMFD   SP!, {R4,LR}\n"
-"                 B       taskcreate_Startup_my\n" // FF81FAF0
-	);
+void __attribute__((naked,noinline)) sub_ff815e58_my() {
+  asm volatile (
+	"push	{r4, lr}\n"
+	"bl	sub_ff810b20\n"
+	"bl	sub_ff81a244\n"
+	"cmp	r0, #0\n"	// 0x0
+	"addlt	r0, pc, #252\n"	// ff815f6c: (65536d64)  *"dmSetup"
+	"bllt	sub_ff815f4c\n"
+	"bl	sub_ff815a94\n"
+	"cmp	r0, #0\n"	// 0x0
+	"addlt	r0, pc, #244\n"	// ff815f74: (6d726574)  *"termDriverInit"
+	"bllt	sub_ff815f4c\n"
+	"add	r0, pc, #252\n"	// ff815f84: (65745f2f)  *"/_term"
+	"bl	sub_ff815b7c\n"
+	"cmp	r0, #0\n"	// 0x0
+	"addlt	r0, pc, #248\n"	// ff815f8c: (6d726574)  *"termDeviceCreate"
+	"bllt	sub_ff815f4c\n"
+	"add	r0, pc, #232\n"	// ff815f84: (65745f2f)  *"/_term"
+	"bl	sub_ff813bf0\n"
+	"cmp	r0, #0\n"	// 0x0
+	"addlt	r0, pc, #248\n"	// ff815fa0: (69647473)  *"stdioSetup"
+	"bllt	sub_ff815f4c\n"
+	"bl	sub_ff819c3c\n"
+	"cmp	r0, #0\n"	// 0x0
+	"addlt	r0, pc, #244\n"	// ff815fac: (6c647473)  *"stdlibSetup"
+	"bllt	sub_ff815f4c\n"
+	"bl	sub_ff81167c\n"
+	"cmp	r0, #0\n"	// 0x0
+	"addlt	r0, pc, #240\n"	// ff815fb8: (6c6d7261)  *"armlib_setup"
+	"bllt	sub_ff815f4c\n"
+	"pop	{r4, lr}\n"
+	"b	taskcreate_Startup_my\n" // ff81faf0
+    );
 }
 
-//SD780 - ASM matches
-void __attribute__((naked,noinline)) taskcreate_Startup_my() {  //0xFF81FAF0 (was 0xFF81C260)
-	asm volatile (
-"                STMFD   SP!, {R3,LR}\n"
-"                BL      sub_FF834340\n" // was FF821B74 ??? nullsub
-"                BL      sub_FF83BA88\n" // was FF828C8C
-"                CMP     R0, #0\n"
-"                BNE     loc_FF81FB34\n" // was FF81C298
-"                BL      sub_FF835B2C\n" // was FF821B70
-
-"                CMP     R0, #0\n" // new in IXUS130
-"                BEQ     loc_FF81FB34\n"
-"                BL      sub_FF83433C\n"
-
-"                CMP     R0, #0\n"
-"                BNE     loc_FF81FB34\n" // was FF81C298
-"                BL      sub_FF8339DC\n" // was FF82123C
-"                LDR     R1, =0xC0220000\n"
-"                MOV     R0, #0x44\n"
-"                STR     R0, [R1,#0x1C]\n"
-"                BL      sub_FF833BC8\n" // was FF821428
-"loc_FF81FB30:\n"
-"                B       loc_FF81FB30\n"
-"loc_FF81FB34:\n" // was FF81C298
-//"                BL      sub_FF834348\n" // was FF821B7C VERIFY_SD780 is this true? - removed for correct power-on on 'on/off' button.  Hmm seems fine...
-"                BL      sub_FF834344\n"   // was FF821B78 ??? nullsub
-"                BL      sub_FF839CB0\n" // was FF826F44
-"                LDR     R1, =0x38E000\n" // was 34E000
-"                MOV     R0, #0\n"
-"                BL      sub_FF83A0F8\n" // was FF82738C
-"                BL      sub_FF839EA4\n" // was FF827138 LOCATION: KerSys.c:548
-"                MOV     R3, #0\n"
-"                STR     R3, [SP]\n"
-"                LDR     R3, =task_Startup_my\n" // FF81FA8C ->
-"                MOV     R2, #0\n"
-"                MOV     R1, #0x19\n"
-"                LDR     R0, =0xFF81FB7C\n"  // "Startup"
-"                BL      sub_FF81E83C\n" // was FF81AFAC eventproc_export_CreateTask ; LOCATION: KerTask.c:163\n"
-"                MOV     R0, #0\n"
-"                LDMFD   SP!, {R12,PC}\n"
-	);
+void __attribute__((naked,noinline)) taskcreate_Startup_my() { // 0xff81faf0
+  asm volatile (
+	"push	{r3, lr}\n"
+	"bl	sub_ff834340\n"
+	"bl	sub_ff83ba88\n"
+	"cmp	r0, #0\n"	// 0x0
+	"bne	loc_ff81fb34\n"
+	"bl	sub_ff835b2c\n"
+	"cmp	r0, #0\n"	// 0x0
+	"beq	loc_ff81fb34\n"
+	"bl	sub_ff83433c\n"
+	"cmp	r0, #0\n"	// 0x0
+	"bne	loc_ff81fb34\n"
+	"bl	sub_ff8339dc\n"
+	"ldr	r1, =0xc0220000\n" // was: "[pc, #76]	; ff81fb74" 
+	"ldr	r0, =0x44\n" // was: "mov ..., #68"
+	"str	r0, [r1, #28]\n"
+	"bl	sub_ff833bc8\n"
+"loc_ff81fb30:\n"
+	"b	loc_ff81fb30\n"
+"loc_ff81fb34:\n" // 3 refs
+	"bl	sub_ff834348\n"
+	"bl	sub_ff834344\n"
+	"bl	sub_ff839cb0\n"
+	"ldr	r1, =0x0038e000\n" // was: "[pc, #48]	; ff81fb78" 
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"bl	sub_ff83a0f8\n"
+	"bl	sub_ff839ea4\n"
+	"ldr	r3, =0x0\n" // was: "mov ..., #0"
+	"str	r3, [sp]\n"
+	"ldr    r3, =task_Startup_my\n" // was: "sub	r3, pc, #212\n"	// ff81fa8c: (e92d4010) 
+	"ldr	r2, =0x0\n" // was: "mov ..., #0"
+	"ldr	r1, =0x19\n" // was: "mov ..., #25"
+	"add	r0, pc, #16\n"	// ff81fb7c: (72617453)  *"Startup"
+	"bl	sub_ff81e83c\n"
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"pop	{ip, pc}\n"
+    );
 }
 
+void __attribute__((naked,noinline)) task_Startup_my() { // ff81fa8c
+  asm volatile (
+	"push	{r4, lr}\n"
+	"bl	sub_ff81650c\n" // taskcreate_ClockSave
+	"bl	sub_ff83543c\n"
+	"bl	sub_ff833638\n"
+	"bl	sub_ff83bac8\n" // j_nullsub
+	"bl	sub_ff83bcb4\n"
+//SD780??? following was commented out:
+	"bl	sub_ff83bb5c\n" // diskboot loop - VERIFY_SD780
+    );
 
-//SD780 - ASM matches - Original location 0xFF81C1FC, IXUS130 -> FF81FA8C
-void __attribute__((naked,noinline)) task_Startup_my() {
-	asm volatile (
-"                 STMFD   SP!, {R4,LR}\n"
-"                 BL      sub_FF81650C\n" // was FF815394 taskcreate_ClockSave
-"                 BL      sub_FF83543C\n" // was FF822C58
-"                 BL      sub_FF833638\n" // was FF820F04
-"                 BL      sub_FF83BAC8\n" // was FF828CCC j_nullsub
-"                 BL      sub_FF83BCB4\n" // was FF828EB0
-//??? following was commented out
-"                 BL      sub_FF83BB5C\n"  // was FF828D60 diskboot loop - VERIFY_SD780
-        );
-
-        //???CreateTask_spytask();
+  //???CreateTask_spytask();
 //       CreateTask_blinker();
 
-        asm volatile (
-"                 BL      sub_FF83BE58\n" // was FF829054
-"                 BL      sub_FF8322E4\n" // was FF81FB90
-"                 BL      sub_FF83BCE4\n" // was FF828EE0
-"                 BL      sub_FF839454\n" // was FF826544
-"                 BL      sub_FF83BE5C\n" // was FF829058
-"                 BL      sub_FF834230_my\n" // was FF821A70 taskcreate_PhySw
-"                 BL      sub_FF8377A8_my\n" // was FF824A98 taskcreate_SsTask -> for shoot seq stuff
-"                 BL      sub_FF83BE74\n" // was FF829070
-"                 BL      sub_FF8316A8\n" // was FF81EFB0 ??? nullsub
-"                 BL      sub_FF833090\n" // was FF820808
-"                 BL      sub_FF83B860\n" // was FF828A68 taskcreate_Bye
-"                 BL      sub_FF8335EC\n" // was FF820EB4
-"                 BL      sub_FF83302C\n" // was FF820714 taskcreate_TempCheck
-"                 BL      sub_FF832318\n" // was FF81FBC4
-"                 BL      sub_FF83C8F4\n" // was FF829AEC
-"                 BL      sub_FF833004\n" // was FF8206EC
-"                 LDMFD   SP!, {R4,LR}\n"
-"                 B       sub_FF81662C\n" // was FF8154B4 _sub_FF8154B4__MLHClock_c__0 ; LOCATION: MLHClock.c:0
-	);
+  asm volatile (
+	"bl	sub_ff83be58\n"
+	"bl	sub_ff8322e4\n"
+	"bl	sub_ff83bce4\n"
+	"bl	sub_ff839454\n"
+	"bl	sub_ff83be5c\n"
+	"bl	sub_ff834230_my\n" // taskcreate_PhySw
+	"bl	sub_ff8377a8_my\n" // taskcreate_SsTask -> for shoot seq stuff
+	"bl	sub_ff83be74\n"
+	"bl	sub_ff8316a8\n" // nullsub
+	"bl	sub_ff833090\n"
+	"bl	sub_ff83b860\n" // taskcreate_Bye
+	"bl	sub_ff8335ec\n"
+	"bl	sub_ff83302c\n" // taskcreate_TempCheck
+	"bl	sub_ff832318\n"
+	"bl	sub_ff83c8f4\n"
+	"bl	sub_ff833004\n"
+	"pop	{r4, lr}\n"
+	"b	sub_ff81662c\n"
+    );
 }
 
-//SD780 - ASM matches
-void __attribute__((naked,noinline)) sub_FF8377A8_my() { // was FF824A98
+void __attribute__((naked,noinline)) sub_ff8377a8_my() {
 asm volatile (
-"                 STMFD   SP!, {R4,LR}\n"
-"                 MOV     R0, #0\n"
-"                 MOV     R1, #0\n"
-"                 BL      sub_FF839F50\n" // was FF8271E4 KernelMisc.c:43
-"                 LDR     R4, =0x1C7C\n" // was 0x1C48
-"                 STR     R0, [R4,#16]\n" // was #4
-"                 BL      sub_FF87F19C\n" // was FF862108
-"                 BL      sub_FF8808E4\n" // was FF863818 -> taskcreate_SsTask
-"                 BL      sub_FF87E2E4\n" // was FF861238
-"                 BL      sub_FF878D1C_my\n" // was FF85C228
-"                 BL      sub_FF87F480\n" // was FF8623EC
-"                 LDR     R0, [R4,#16]\n" // was #4
-"                 LDMFD   SP!, {R4,LR}\n"
-"                 MOV     R1, #0x1000\n"
-"                 B       sub_FF883F4C\n" // was FF866178
-	);
+	"push	{r4, lr}\n"
+	"ldr	r1, =0x0\n" // was: "mov ..., #0"
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"bl	sub_ff839f50\n"
+	"ldr	r4, =0x00001c7c\n" // was: "[pc, #-492]	; ff8375d4" 
+	"str	r0, [r4, #16]\n"
+	"bl	sub_ff87f1ec\n" // SD708 was FF87F19C
+	"bl	sub_ff880934\n" // SD780 was FF8808E4 -> taskcreate_SsTask
+	"bl	sub_ff87e334\n" // SD780 was FF87E2E4
+	"bl	sub_ff878d6c_my\n" // SD780 was FF878D1C_my
+	"bl	sub_ff87f4d0\n" // SD780 was FF87F480
+	"ldr	r0, [r4, #16]\n"
+	"pop	{r4, lr}\n"
+	"ldr	r1, =0x1000\n" // was: "mov ..., #4096"
+	"b	sub_ff883f9c\n" // SD780 was FF883F4C
+  );
 }
 
-//SD780 - ASM matches
-void __attribute__((naked,noinline)) sub_FF878D1C_my() { // was FF85C228
-	asm volatile (
-"                STMFD   SP!, {R4,LR}\n"
-"                LDR     R4, =0x2B64\n" // was 0x28E4
-"                LDR     R0, [R4,#0xC]\n"
-"                CMP     R0, #0\n"
-"                BNE     loc_FF878D88\n" // was FF85C294
-"                BL      sub_FF87C848\n" // was FF85FA38 ??? nullsub
-"                MOV     R1, #1\n"
-"                MOV     R0, #0\n"
-"                BL      sub_FF839F74\n" // was FF827208 KernelMisc.c:55
-"                STR     R0, [R4,#4]\n"
-"                MOV     R0, #0\n"
-"                MOV     R1, #8\n"
-"                BL      sub_FF839F50\n" // was FF8271E4 KernelMisc.c:43
-"                STR     R0, [R4,#0x8]\n"
-"                BL      sub_FF8790FC\n" // was FF85C590
-"                BL      sub_FF879884\n" // was FF85CD18
-"                MOV     R0, #0\n"
-"                STR     R0, [R4]\n"
-"                ADD     R0, R4, #0x10\n"
-"                MOV     R1, #0\n"
-"                STR     R1, [R0],#4\n"
-"                STR     R1, [R0]\n"
-"                BL      sub_FF879A94\n" // was FF85CF20
-"                BL      sub_FF87F680\n" // was FF8625F4
-"                BL      sub_FF87CC74\n" // was FF85FD7C
-"                BL      sub_FF87A5D8_my\n" // was FF85DA4C ->taskcreate_CaptSeqTask
-"                BL      sub_FF87B688\n" // was FF85EA10
-
-"loc_FF878D88:\n"
-"                MOV     R0, #1\n"
-"                STR     R0, [R4,#0xC]\n"
-"                LDMFD   SP!, {R4,PC}\n"
-	);
+void __attribute__((naked,noinline)) sub_ff878d6c_my() { // was FF878D1C_my
+  asm volatile (
+	"push	{r4, lr}\n"
+	"ldr	r4, =0x00002b64\n" // was: "[pc, #-3512]	; ff877fc0" 
+	"ldr	r0, [r4, #12]\n"
+	"cmp	r0, #0\n"	// 0x0
+	"bne	loc_ff878dd8\n" // SD780 was FF878D88
+	"bl	sub_ff87c898\n" // SD780 was FF87C848 nullsub
+	"ldr	r1, =0x1\n" // was: "mov ..., #1"
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"bl	sub_ff839f74\n" // SD780 was FF839F74 KernelMisc.c:55
+	"str	r0, [r4, #4]\n"
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"ldr	r1, =0x8\n" // was: "mov ..., #8"
+	"bl	sub_ff839f50\n" // SD780 was FF839F50 KernelMisc.c:43
+	"str	r0, [r4, #8]\n"
+	"bl	sub_ff87914c\n" // SD780 was FF8790FC
+	"bl	sub_ff8798d4\n" // SD780 was FF879884
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"str	r0, [r4]\n"
+	"add	r0, r4, #16\n"	// 0x10
+	"ldr	r1, =0x0\n" // was: "mov ..., #0"
+	"str	r1, [r0], #4\n"
+	"str	r1, [r0]\n"
+	"bl	sub_ff879ae4\n" // SD780 was FF879A94
+	"bl	sub_ff87f6d0\n" // SD780 was FF87F680
+	"bl	sub_ff87ccc4\n" // SD780 was FF87CC74
+	"bl	sub_ff87a628_my\n" // SD780 was FF87A5D8_my -> taskcreate_CaptSeqTask
+	"bl	sub_ff87b6d8\n" // SD780 was FF87B688
+"loc_ff878dd8:\n"
+	"ldr	r0, =0x1\n" // was: "mov ..., #1"
+	"str	r0, [r4, #12]\n"
+	"pop	{r4, pc}\n"
+    );
 }
 
-//SD780 - ASM matches
-void __attribute__((naked,noinline)) sub_FF87A5D8_my() { // was FF85DA4C
-	asm volatile (
-"                STMFD   SP!, {R3-R5,LR}\n"
-"                LDR     R2, =0x39578\n" // was 0x1446C
-"                MOV     R0, #0\n"
-"                MOV     R1, #0\n"
-
-"loc_FF87A5E8:\n"
-"                ADD     R3, R2, R0,LSL#4\n"
-"                ADD     R0, R0, #1\n"
-"                CMP     R0, #5\n"
-"                STR     R1, [R3,#8]\n"
-"                BCC     loc_FF87A5E8\n"
-"                BL      sub_FF87B1C4\n" // was FF85E55C
-"                BL      sub_FF95F3A0\n" // was FF9202C4
-
-"                BL      sub_FF95FF60\n" // new in IXUS130
-
-"                MOV     R1, #5\n"
-"                MOV     R0, #0\n"
-"                BL      sub_FF839F2C\n" // was FF8271C0 KernelMisc.c:31
-"                LDR     R4, =0x2B9C\n" // was 0x291C
-"                LDR     R1, =0x101DFF\n"
-"                STR     R0, [R4,#0x4]\n"
-"                MOV     R0, #0\n"
-"                BL      sub_FF839F50\n" // was FF8271E4 KernelMisc.c:43
-"                STR     R0, [R4]\n"
-"                MOV     R0, #0\n"
-"                MOV     R1, #1\n"
-"                BL      sub_FF839F74\n" // was FF827208 KernelMisc.c:55
-"                STR     R0, [R4,#0x8]\n"
-"                MOV     R3, #0\n"
-"                STR     R3, [SP]\n"
-//"                LDR     R3, =task_CaptSeqTask_my\n" // 0xFF87A2C0
-"                LDR     R3, =0xFF87A2C0\n" //???
-
-"                LDR     R0, =0xFF87A848\n" // was 0xFF85DC98 "CaptSeqTask"
-"                MOV     R2, #0x1000\n"
-"                MOV     R1, #0x17\n"
-"                BL      sub_FF839EF8\n"// was FF82718C KernelCreateTask ; LOCATION: KernelMisc.c:19
-"                LDMFD   SP!, {R3-R5,PC}\n"
-	);
+void __attribute__((naked,noinline)) sub_ff87a628_my() { // was sub_FF87A5D8_my
+  asm volatile (
+	"push	{r3, r4, r5, lr}\n"
+	"ldr	r2, =0x00039578\n" // was: "[pc, #-1920]	; ff879eb4" 
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"ldr	r1, =0x0\n" // was: "mov ..., #0"
+"loc_ff87a638:\n"
+	"add	r3, r2, r0, lsl #4\n"
+	"add	r0, r0, #1\n"	// 0x1
+	"cmp	r0, #5\n"	// 0x5
+	"str	r1, [r3, #8]\n"
+	"bcc	loc_ff87a638\n"
+	"bl	sub_ff87b214\n" // was FF87A5E8
+	"bl	sub_ff95f458\n" // was FF95F3A0
+	"bl	sub_ff960018\n" // was FF95FF60
+	"ldr	r1, =0x5\n" // was: "mov ..., #5"
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"bl	sub_ff839f2c\n" // was FF839F2C KernelMisc.c:31
+	"ldr	r4, =0x00002b9c\n" // was: "[pc, #-2000]	; ff879e9c" 
+	"ldr	r1, =0x00101dff\n" // was: "[pc, #-1968]	; ff879ec0" 
+	"str	r0, [r4, #4]\n"
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"bl	sub_ff839f50\n" // was FF839F50 KernelMisc.c:43
+	"str	r0, [r4]\n"
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"ldr	r1, =0x1\n" // was: "mov ..., #1"
+	"bl	sub_ff839f74\n" // was FF839F74 KernelMisc.c:55
+	"str	r0, [r4, #8]\n"
+	"ldr	r3, =0x0\n" // was: "mov ..., #0"
+	"str	r3, [sp]\n"
+	"ldr    r3, =0xff87a310\n" // was "sub	r3, pc, #908\n"	// ff87a310: (e92d43f8) 
+	"ldr    r0, =0xff87a898\n" // was "add	r0, pc, #504\n"	// ff87a898: (74706143)  *"CaptSeqTask"
+	"ldr	r2, =0x1000\n" // was: "mov ..., #4096"
+	"ldr	r1, =0x17\n" // was: "mov ..., #23"
+	"bl	sub_ff839ef8\n" // was FF839EF8 KernelCreateTask ; LOCATION: KernelMisc.c:19
+	"pop	{r3, r4, r5, pc}\n"
+    );
 }
 
-//SD780 - ASM matches
-void __attribute__((naked,noinline)) sub_FF834230_my() { // was FF821A70
-	asm volatile (
-"                STMFD   SP!, {R3-R5,LR}\n"
-"                LDR     R4, =0x1C20\n" // was 0x1C28
-"                LDR     R0, [R4,#0x10]\n"
-"                CMP     R0, #0\n"
-"                BNE     loc_FF834264\n" // was FF821AA4
-"                MOV     R3, #0\n"
-"                STR     R3, [SP]\n"
-//"                LDR     R3, =mykbd_task\n" // FF8341FC task_PhySw
-"                LDR     R3, =0xFF8341FC\n" //???
-
-"                MOV     R2, #0x2000\n" 	// Increate stack size from 0x800 to 0x2000 for new task_PhySw so we don't have to do stack switch
-"                MOV     R1, #0x17\n"
-"                LDR     R0, =0xFF834438\n" // "PhySw"
-"                BL      sub_FF839EF8\n" // was FF82718C KernelCreateTask
-"                STR     R0, [R4,#0x10]\n"
-
-"loc_FF834264:\n"
-"                BL      sub_FF88A5F4\n" // was FF86C714
-"                BL      sub_FF835AA4\n" // was FF846654 IsFactoryMode
-"                CMP     R0, #0\n"
-"                LDREQ   R1, =0x3280C\n" // was 0xE244
-"                LDMEQFD SP!, {R3-R5,LR}\n"
-"                BEQ     sub_FF88A57C\n" // was FF86C69C eventproc_export_OpLog_Start
-"                LDMFD   SP!, {R3-R5,PC}\n"
-	);
+void __attribute__((naked,noinline)) sub_ff834230_my() {
+  asm volatile (
+	"push	{r3, r4, r5, lr}\n"
+	"ldr	r4, =0x00001c20\n" // was: "[pc, #476]	; ff834418" 
+	"ldr	r0, [r4, #16]\n"
+	"cmp	r0, #0\n"	// 0x0
+	"bne	loc_ff834264\n"
+	"ldr	r3, =0x0\n" // was: "mov ..., #0"
+	"str	r3, [sp]\n"
+	"ldr	r3, =0xff8341fc\n" // was: "sub	r3, pc, #88"  
+        // Increate stack size from 0x800 to 0x2000 for new task_PhySw so we don't have to do stack switch
+	"ldr	r2, =0x2000\n" // was: "mov ..., #2048"
+	"ldr	r1, =0x17\n" // was: "mov ..., #23"
+	"ldr	r0, =0xff834438\n" // was: "add	r0, pc, #472"   *"PhySw"
+	"bl	sub_ff839ef8\n" // KernelCreateTask
+	"str	r0, [r4, #16]\n"
+"loc_ff834264:\n"
+	"bl	sub_ff88a644\n" // was FF88A5F4
+	"bl	sub_ff835aa4\n" // was FF835AA4 IsFactoryMode
+	"cmp	r0, #0\n"	// 0x0
+	"ldreq	r1, =0x0003280c\n" // was: "[pc, #428]	; ff834424" 
+	"popeq	{r3, r4, r5, lr}\n"
+	"beq	sub_ff88a5cc\n" // was FF88A57C eventproc_export_OpLog_Start
+	"pop	{r3, r4, r5, pc}\n"
+    );
 }
 
 #if 0
