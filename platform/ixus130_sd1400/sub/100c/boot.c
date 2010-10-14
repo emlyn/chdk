@@ -1,209 +1,27 @@
 #include "lolevel.h"
 #include "platform.h"
 #include "core.h"
-
+#include "dryos31.h"
 #include "led.h"
 
 const char * const new_sa = &_end;
 
-// Our stuff
-//extern long wrs_kernel_bss_start;
-//extern long wrs_kernel_bss_end;
-long aHookList[128];
-long aHookNum=0;
+#define offsetof(TYPE, MEMBER) ((int) &((TYPE *)0)->MEMBER)
 
-// Forward declarations
-//void CreateTask_spytask();
-//void boot();
-
-//void __attribute__((naked,noinline)) sub_STUB_my() {
-//	asm volatile (
-//	"nop\n"
-//	);
-//}
-
-void taskCreateHook(int *p) {
-  led_flash(LED_RED, 1);
-	int i;
-	int found=0;
-
-	if (aHookNum < 126)
-	{
-		if (*(p-17) > 0xff810000)
-		{
-			found=0;
-			for (i=0;i<aHookNum;i++)
-			{
-                          if (aHookList[i]==(long)p)
-				{
-					found=1;
-				}
-			}
-			if (found==0)
-			{
-                          aHookList[aHookNum]=(long)p;
-			aHookNum++;
-			}
-		}
-
-	}
-	 p-=17;
-
-//VERIFY_SD780 - MORE?
-// if (p[0]==0x)  p[0]=(int)capt_seq_task;
-//Corrected by JHARP - if (p[0]==0xFF91A6AC)  p[0]=(int)movie_record_task;
-// task_InitFileModules
-//if (p[0]==0xFF85D754) p[0]=(int)capt_seq_task;
-
-//???if (p[0]==0xFF899CC4) p[0]=(int)exp_drv_task;
-//???if (p[0]==0xFF91A6AC) p[0]=(int)movie_record_task;
-//???if (p[0]==0xFF877DD0) p[0]=(int)init_file_modules_task;
-
-//if (p[0]==0xFF877F84) p[0]=(int)init_file_modules_task;
-/*
-loc:  2f34f4 - data:ff8a6368 - *data:      AFTask
-loc:  2f2d14 - data:ff845914 - *data:      ASIF
-loc:  2f34a - data:ff8a57b8 - *data:       AfIntSrvTask
-loc:  2f287c - data:ff843884 - *data:      AudioTsk
-loc:  2f2d68 - data:ff8411cc - *data:      BeepTask
-loc:  2f36ec - data:ff8944f - *data:       BrtMsrTask
-loc:  2f2f6 - data:ff828c7c - *data:       Bye
-loc:  2f2bc4 - data:ff916cc - *data:       CZ
-loc:  2f2fc - data:ff85dc98 - *data:       CaptSeqTask
-loc:  2f3adc - data:ff8a12f - *data:       ChaceFace
-loc:  2f38 - data:ff877f94 - *data:        CommonDrivers
-loc:  2f3c8 - data:ff81be8 - *data:        ConsoleSvr
-loc:  2f2e1 - data:ff8733 - *data:         CtrlSrv
-loc:  2f314 - data:ff8f449 - *data:        DPOFTask
-loc:  2f3f2 - data:ff87fd1c - *data:       DSITask
-loc:  2f3b84 - data:ff89f48 - *data:       DetectMoveTask
-loc:  2f33a4 - data:ff9a473c - *data:      DetectVerticalWound
-loc:  2f335 - data:ff8a32ac - *data:       DevelopModule
-loc:  2f3b3 - data:ff8a12fc - *data:       DispFace
-loc:  2f3bd8 - data:ff86de34 - *data:      EvShel
-loc:  2f3698 - data:ff9ad1d8 - *data:      ExpDrvSubTask
-loc:  2f3644 - data:ff89b12c - *data:      ExpDrvTask
-loc:  2f3f74 - data:ff87fb4c - *data:      FaceFrame
-loc:  2f32 - data:ff8e3848 - *data:        Fencing
-loc:  2f2a74 - data:ff9115bc - *data:      FocusLens
-loc:  2f389 - data:ff8ef34 - *data:        FolderCreateCheckTask
-loc:  2f3b - data:ff84f6dc - *data:        FsIoNotifyTask
-loc:  2f28d - data:ff8419fc - *data:       HdmiDriverTask
-loc:  2f2c18 - data:ff917acc - *data:      ISComTask
-loc:  2f3cd4 - data:ff858aac - *data:      ISMainTask
-loc:  2f2924 - data:ff834e - *data:        ImageSensorTask
-loc:  2f2cc - data:ff855d8 - *data:        ImgPlayDrv
-loc:  2f35c - data:ff877f84 - *data:       InitFileModules
-loc:  2f2c6c - data:ff8426d - *data:       LEDCon
-loc:  2f32fc - data:ff9e365 - *data:       LiveImageTask
-loc:  2f3c2c - data:ff81bdfc - *data:      LowConsole
-loc:  2f3938 - data:ff8f1814 - *data:      MetaCtg
-loc:  2f3254 - data:ff8cd67 - *data:       MotionVector
-loc:  2f359c - data:ff89e178 - *data:      OBCtrlTask
-loc:  2f2e64 - data:ff821c78 - *data:      PhySw
-loc:  2f3a88 - data:ff8b24d8 - *data:      PrcssFil
-loc:  2f272c - data:ff852fc - *data:       SD1stInit
-loc:  2f32a8 - data:ff8cedd4 - *data:      SceneDetectTask
-loc:  2f3d28 - data:ff85cbf - *data:       SsStartupTask
-loc:  2f2eb8 - data:ff86391 - *data:       SsTask
-loc:  2f3e24 - data:ff8ab714 - *data:      SsgMainTask
-loc:  2f3e78 - data:ff8ab72 - *data:       SsgPeriodTask
-loc:  2f35f - data:ff829574 - *data:       StartupImage
-loc:  2f344c - data:ff8b2a1c - *data:      SyncPeriod
-loc:  2f33f8 - data:ff8b2a1 - *data:       SynchTask
-loc:  2f2fb4 - data:ff82984 - *data:       TempCheck
-loc:  2f3dd - data:ff8af358 - *data:       TgTask
-loc:  2f2978 - data:ff8462 - *data:        Thermometer
-loc:  2f3a34 - data:ff89d334 - *data:      WBCtrl
-loc:  2f3548 - data:ff88e4c - *data:       WBIntegTask
-loc:  2f3ecc - data:ff9bde7 - *data:       WBLPFace
-loc:  2f2828 - data:ff86d9 - *data:        WdtPrint
-loc:  2f27d4 - data:ff86d84 - *data:       WdtReset
-loc:  2f29cc - data:ff9168ac - *data:      ZoomLens
-loc:  2f2dbc - data:ff8645b - *data:       errLogTask
- */
-
+void taskHook(context_t **context) {
+  task_t * tcb = (task_t*)((char*)context - offsetof(task_t, context));
+  if (!_strcmp(tcb->name, "PhySw"))           led_flash(LED_RED, 2);
+  //if (!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
+  //if (!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)capt_seq_task;
+  //if (!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
+  //if (!_strcmp(tcb->name, "MovieRecord"))     tcb->entry = (void*)movie_record_task;
+  //if (!_strcmp(tcb->name, "ExpDrvTask"))      tcb->entry = (void*)exp_drv_task;
+  //if (!_strcmp(tcb->name, "RotarySw"))        tcb->entry = (void*)JogDial_task_my;
 }
 
-// ??? from sx10
-void taskCreateHook2(int *p) {
-  led_flash(LED_RED, 1);
-  p-=17;
-  //VERIFY_SD780 - Does this need to be here at all anymore?
-  //Uncomment if (p[0]==0xFF881534)  p[0]=(int)init_file_modules_task;
-  //???if (p[0]==0xFF877DD0) p[0]=(int)init_file_modules_task;
+void CreateTask_spytask() {
+  //_CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
 }
-
-#if 0
-int dumpCF90_SD7802() {
-
-#define START_ADDRESS     0xCF00
-#define START_ADDRESS2     0x1900
-#define FWSIZE            0x3FF
-char j[32];
-int jF;
-
-	void* l;
-	char filen[32];
-
-	l=(void*)Fopen_Fut("A/0xCF90a.bin","ab");
-	Fwrite_Fut(START_ADDRESS,1,FWSIZE,l);
-	Fflush_Fut(l);
-	Fclose_Fut(l);
-	l=(void*)Fopen_Fut("A/0xCF90b.bin","ab");
-	Fwrite_Fut(START_ADDRESS2,1,FWSIZE,l);
-	Fflush_Fut(l);
-	Fclose_Fut(l);
-
-	//jF = open("/_term", O_RDONLY,0777);
-	//getc()
-	//sprintf(filen, "open(%8x)", jF);
-
-	//draw_txt_string(20, 12, filen, conf.osd_color);
-
-	//		int fd;
-
-		//	script_console_add_line(buf);
-		//	script_console_draw();
-
-		//char filen=malloc(16);
-		//int i;
-		//for (i=0x4; i>0; i = i << 1) {
-		//	sprintf(filen, "A/crash_%i_.log", i);
-		//	fd = open("A/crash.log", O_WRONLY|O_CREAT|O_APPEND, 0777);
-		//	write(fd, buf, len);
-//			close(jF);
-
-
-
-//	char *Tfilename = (char*) 0xFF814E64;
-
-
-//	l=(void*)Fopen_Fut(Tfilename,"r");
-//	Fread_Fut(j,1,31,l);
-//	draw_txt_string(26, 14, j, conf.osd_color);
-	//Fclose_Fut(l);
-	//save_rom_log();
-	return 0;
-}
-
-
-void __attribute__((naked,noinline)) task_blinker() {
-
-int i;
-_SleepTask(5000);
-		while(1){
-			draw_txt_string(27, 12, "Str_ShowAllTaskInfo", 200);
-			dumpCF90_SD7802();
-			_SleepTask(1000);
-			draw_txt_string(27, 12, "End_ShowAllTaskInfo", 200);
-		}
-};
-
-void CreateTask_blinker() {
-        _CreateTask("Blinker", 0x1, 0x200, task_blinker, 0);
-};
-#endif
 
 void boot() {
   asm volatile (
@@ -280,21 +98,25 @@ void boot() {
 	"ldr	r1, [r2]\n"
 	"orr	r1, r1, #1\n"	// 0x1
 	"str	r1, [r2]\n"
-	"ldr	r0, =0xffbf8434\n" // was: "[pc, #76]	; ff810184" 
-	"ldr	r1, =0x00001900\n" // was: "[pc, #76]	; ff810188" 
-	"ldr	r3, =0x0000ebd0\n" // was: "[pc, #76]	; ff81018c" 
+	"ldr	r0, =0xffbf8434\n" // canon_data_src
+	"ldr	r1, =0x00001900\n" // MEMBASEADDR 
+	"ldr	r3, =0x0000ebd0\n" // canon_bss_start
 "loc_ff81013c:\n"
 	"cmp	r1, r3\n"
 	"ldrcc	r2, [r0], #4\n"
 	"strcc	r2, [r1], #4\n"
 	"bcc	loc_ff81013c\n"
-	"ldr	r1, =0x0014fe20\n" // was: "[pc, #60]	; ff810190" 
+	"ldr	r1, =0x0014fe20\n" // MEMISOSTART
 	"ldr	r2, =0x0\n" // was: "mov ..., #0"
 "loc_ff810154:\n"
 	"cmp	r3, r1\n"
 	"strcc	r2, [r3], #4\n"
 	"bcc	loc_ff810154\n"
+	"b	sub_ff810354_my\n"
     );
+}
+
+void __attribute__((naked,noinline)) sub_ff810354_my() { //??? was FF8101A0
 /*
 ff85f3f0: 	e92d4010 	push	{r4, lr}
 ff85f3f4: 	e59f46cc 	ldr	r4, [pc, #1740]	; ff85fac8: (00002480) 
@@ -322,15 +144,9 @@ ff85f444: 	e8bd8010 	pop	{r4, pc}
 */
   *(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
 
-  *(int*)0x1934 = (int)taskCreateHook;
-  *(int*)0x1938 = (int)taskCreateHook2;
+  *(int*)0x1934 = (int)taskHook; // no effect
+  //*(int*)0x1938 = (int)taskHook;
 
-  asm volatile (
-	"b	sub_ff810354_my\n"
-    );
-}
-
-void __attribute__((naked,noinline)) sub_ff810354_my() { //??? was FF8101A0
   asm volatile (
 	"ldr	r0, =0xff8103cc\n" // was: "[pc, #1036]	; ff810768" 
 	"ldr	r1, =0x0\n" // was: "mov ..., #0"
@@ -387,7 +203,7 @@ void __attribute__((naked,noinline)) sub_ff811198_my() {
 	"ldr	r0, =0x68\n" // was: "mov ..., #104"
 	"str	r0, [sp, #28]\n"
 	"ldr	r0, =0x0000019b\n" // was: "[pc, #104]	; ff811254" 
-	"ldr	r1, =sub_ff815e58_my\n" // was: "[pc, #104]	; ff811258"
+	"ldr	r1, =uHwSetup_my\n" // was: "[pc, #104]	; ff811258"
 	"str	r0, [sp, #32]\n"
 	"ldr	r0, =0x96\n" // was: "mov ..., #150"
 	"str	r0, [sp, #36]\n"
@@ -414,35 +230,35 @@ void __attribute__((naked,noinline)) sub_ff811198_my() {
     );
 }
 
-void __attribute__((naked,noinline)) sub_ff815e58_my() {
+void __attribute__((naked,noinline)) uHwSetup_my() { // 0xff815e58
   asm volatile (
 	"push	{r4, lr}\n"
 	"bl	sub_ff810b20\n"
 	"bl	sub_ff81a244\n"
 	"cmp	r0, #0\n"	// 0x0
-	"addlt	r0, pc, #252\n"	// ff815f6c: (65536d64)  *"dmSetup"
+	"ldrlt	r0, =0xff815f6c\n" // was: "addlt	r0, pc, #252"   *"dmSetup"
 	"bllt	sub_ff815f4c\n"
 	"bl	sub_ff815a94\n"
 	"cmp	r0, #0\n"	// 0x0
-	"addlt	r0, pc, #244\n"	// ff815f74: (6d726574)  *"termDriverInit"
+	"ldrlt	r0, =0xff815f74\n" // was: "addlt	r0, pc, #244"   *"termDriverInit"
 	"bllt	sub_ff815f4c\n"
-	"add	r0, pc, #252\n"	// ff815f84: (65745f2f)  *"/_term"
+	"ldr	r0, =0xff815f84\n" // was: "add	r0, pc, #252"   *"/_term"
 	"bl	sub_ff815b7c\n"
 	"cmp	r0, #0\n"	// 0x0
-	"addlt	r0, pc, #248\n"	// ff815f8c: (6d726574)  *"termDeviceCreate"
+	"ldrlt	r0, =0xff815f8c\n" // was: "addlt	r0, pc, #248"   *"termDeviceCreate"
 	"bllt	sub_ff815f4c\n"
-	"add	r0, pc, #232\n"	// ff815f84: (65745f2f)  *"/_term"
+	"ldr	r0, =0xff815f84\n" // was: "add	r0, pc, #232"   *"/_term"
 	"bl	sub_ff813bf0\n"
 	"cmp	r0, #0\n"	// 0x0
-	"addlt	r0, pc, #248\n"	// ff815fa0: (69647473)  *"stdioSetup"
+	"ldrlt	r0, =0xff815fa0\n" // was: "addlt	r0, pc, #248"   *"stdioSetup"
 	"bllt	sub_ff815f4c\n"
 	"bl	sub_ff819c3c\n"
 	"cmp	r0, #0\n"	// 0x0
-	"addlt	r0, pc, #244\n"	// ff815fac: (6c647473)  *"stdlibSetup"
+	"ldrlt	r0, =0xff815fac\n" // was: "addlt	r0, pc, #244"   *"stdlibSetup"
 	"bllt	sub_ff815f4c\n"
 	"bl	sub_ff81167c\n"
 	"cmp	r0, #0\n"	// 0x0
-	"addlt	r0, pc, #240\n"	// ff815fb8: (6c6d7261)  *"armlib_setup"
+	"ldrlt	r0, =0xff815fb8\n" // was: "addlt	r0, pc, #240"   *"armlib_setup"
 	"bllt	sub_ff815f4c\n"
 	"pop	{r4, lr}\n"
 	"b	taskcreate_Startup_my\n" // ff81faf0
@@ -497,11 +313,11 @@ void __attribute__((naked,noinline)) task_Startup_my() { // ff81fa8c
 	"bl	sub_ff833638\n"
 	"bl	sub_ff83bac8\n" // j_nullsub
 	"bl	sub_ff83bcb4\n"
-//SD780??? following was commented out:
-	"bl	sub_ff83bb5c\n" // diskboot loop - VERIFY_SD780
+	//"bl	sub_ff83bb5c\n" // original: StartSdInit() -> StartDiskboot()
     );
 
-  //???CreateTask_spytask();
+  CreateTask_spytask();
+  led_flash(LED_RED, 1);
 //       CreateTask_blinker();
 
   asm volatile (
@@ -510,23 +326,23 @@ void __attribute__((naked,noinline)) task_Startup_my() { // ff81fa8c
 	"bl	sub_ff83bce4\n"
 	"bl	sub_ff839454\n"
 	"bl	sub_ff83be5c\n"
-	"bl	sub_ff834230_my\n" // taskcreate_PhySw
-	"bl	sub_ff8377a8_my\n" // taskcreate_SsTask -> for shoot seq stuff
+	"bl	taskcreate_PhySw_my\n" // sub_ff834230
+	"bl	task_ShootSeqTask_my\n" // sub_ff8377a8 taskcreate_SsTask -> for shoot seq stuff
 	"bl	sub_ff83be74\n"
-	"bl	sub_ff8316a8\n" // nullsub
-	"bl	sub_ff833090\n"
+	//"bl	sub_ff8316a8\n" // nullsub
+	"bl	sub_ff833090\n" // Battery.c:0
 	"bl	sub_ff83b860\n" // taskcreate_Bye
 	"bl	sub_ff8335ec\n"
-	"bl	sub_ff83302c\n" // taskcreate_TempCheck
+	"bl	sub_ff83302c\n" // taskcreate_BatteryTask / taskcreate_TempCheck
 	"bl	sub_ff832318\n"
-	"bl	sub_ff83c8f4\n"
-	"bl	sub_ff833004\n"
+	"bl	sub_ff83c8f4\n" // taskcreate_FactoryModeController
+	"bl	sub_ff833004\n" // taskcreate_Ui
 	"pop	{r4, lr}\n"
-	"b	sub_ff81662c\n"
+	"b	sub_ff81662c\n" // MLHClock.c:992
     );
 }
 
-void __attribute__((naked,noinline)) sub_ff8377a8_my() {
+void __attribute__((naked,noinline)) task_ShootSeqTask_my() {
 asm volatile (
 	"push	{r4, lr}\n"
 	"ldr	r1, =0x0\n" // was: "mov ..., #0"
@@ -552,29 +368,29 @@ void __attribute__((naked,noinline)) sub_ff878d6c_my() { // was FF878D1C_my
 	"ldr	r4, =0x00002b64\n" // was: "[pc, #-3512]	; ff877fc0" 
 	"ldr	r0, [r4, #12]\n"
 	"cmp	r0, #0\n"	// 0x0
-	"bne	loc_ff878dd8\n" // SD780 was FF878D88
-	"bl	sub_ff87c898\n" // SD780 was FF87C848 nullsub
+	"bne	loc_ff878dd8\n"
+	"bl	sub_ff87c898\n" // nullsub
 	"ldr	r1, =0x1\n" // was: "mov ..., #1"
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
-	"bl	sub_ff839f74\n" // SD780 was FF839F74 KernelMisc.c:55
+	"bl	sub_ff839f74\n" // KernelMisc.c:55
 	"str	r0, [r4, #4]\n"
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
 	"ldr	r1, =0x8\n" // was: "mov ..., #8"
-	"bl	sub_ff839f50\n" // SD780 was FF839F50 KernelMisc.c:43
+	"bl	sub_ff839f50\n" // KernelMisc.c:43
 	"str	r0, [r4, #8]\n"
-	"bl	sub_ff87914c\n" // SD780 was FF8790FC
-	"bl	sub_ff8798d4\n" // SD780 was FF879884
+	"bl	sub_ff87914c\n"
+	"bl	sub_ff8798d4\n"
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
 	"str	r0, [r4]\n"
 	"add	r0, r4, #16\n"	// 0x10
 	"ldr	r1, =0x0\n" // was: "mov ..., #0"
 	"str	r1, [r0], #4\n"
 	"str	r1, [r0]\n"
-	"bl	sub_ff879ae4\n" // SD780 was FF879A94
-	"bl	sub_ff87f6d0\n" // SD780 was FF87F680
-	"bl	sub_ff87ccc4\n" // SD780 was FF87CC74
-	"bl	sub_ff87a628_my\n" // SD780 was FF87A5D8_my -> taskcreate_CaptSeqTask
-	"bl	sub_ff87b6d8\n" // SD780 was FF87B688
+	"bl	sub_ff879ae4\n"
+	"bl	sub_ff87f6d0\n"
+	"bl	sub_ff87ccc4\n"
+	"bl	sub_ff87a628_my\n" // taskcreate_CaptSeqTask
+	"bl	sub_ff87b6d8\n"
 "loc_ff878dd8:\n"
 	"ldr	r0, =0x1\n" // was: "mov ..., #1"
 	"str	r0, [r4, #12]\n"
@@ -594,26 +410,27 @@ void __attribute__((naked,noinline)) sub_ff87a628_my() { // was sub_FF87A5D8_my
 	"cmp	r0, #5\n"	// 0x5
 	"str	r1, [r3, #8]\n"
 	"bcc	loc_ff87a638\n"
-	"bl	sub_ff87b214\n" // was FF87A5E8
-	"bl	sub_ff95f458\n" // was FF95F3A0
-	"bl	sub_ff960018\n" // was FF95FF60
+	"bl	sub_ff87b214\n"
+	"bl	sub_ff95f458\n" // nullsub
+	"bl	sub_ff960018\n"
 	"ldr	r1, =0x5\n" // was: "mov ..., #5"
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
-	"bl	sub_ff839f2c\n" // was FF839F2C KernelMisc.c:31
+	"bl	sub_ff839f2c\n" // KernelMisc.c:31
 	"ldr	r4, =0x00002b9c\n" // was: "[pc, #-2000]	; ff879e9c" 
 	"ldr	r1, =0x00101dff\n" // was: "[pc, #-1968]	; ff879ec0" 
 	"str	r0, [r4, #4]\n"
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
-	"bl	sub_ff839f50\n" // was FF839F50 KernelMisc.c:43
+	"bl	sub_ff839f50\n" // KernelMisc.c:43
 	"str	r0, [r4]\n"
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
 	"ldr	r1, =0x1\n" // was: "mov ..., #1"
-	"bl	sub_ff839f74\n" // was FF839F74 KernelMisc.c:55
+	"bl	sub_ff839f74\n" // KernelMisc.c:55
 	"str	r0, [r4, #8]\n"
 	"ldr	r3, =0x0\n" // was: "mov ..., #0"
 	"str	r3, [sp]\n"
-	"ldr    r3, =0xff87a310\n" // was "sub	r3, pc, #908\n"	// ff87a310: (e92d43f8) 
-	"ldr    r0, =0xff87a898\n" // was "add	r0, pc, #504\n"	// ff87a898: (74706143)  *"CaptSeqTask"
+	//"ldr    r3, =capt_seq_task\n"
+	"ldr    r3, =0xff87a310\n" // capt_seq_task
+	"ldr    r0, =0xff87a898\n" // *"CaptSeqTask"
 	"ldr	r2, =0x1000\n" // was: "mov ..., #4096"
 	"ldr	r1, =0x17\n" // was: "mov ..., #23"
 	"bl	sub_ff839ef8\n" // was FF839EF8 KernelCreateTask ; LOCATION: KernelMisc.c:19
@@ -621,7 +438,7 @@ void __attribute__((naked,noinline)) sub_ff87a628_my() { // was sub_FF87A5D8_my
     );
 }
 
-void __attribute__((naked,noinline)) sub_ff834230_my() {
+void __attribute__((naked,noinline)) taskcreate_PhySw_my() { // 0xff834230
   asm volatile (
 	"push	{r3, r4, r5, lr}\n"
 	"ldr	r4, =0x00001c20\n" // was: "[pc, #476]	; ff834418" 
@@ -630,7 +447,8 @@ void __attribute__((naked,noinline)) sub_ff834230_my() {
 	"bne	loc_ff834264\n"
 	"ldr	r3, =0x0\n" // was: "mov ..., #0"
 	"str	r3, [sp]\n"
-	"ldr	r3, =0xff8341fc\n" // was: "sub	r3, pc, #88"  
+	"ldr	r3, =0xff8341fc\n" //   
+	//"ldr	r3, =mykbd_task\n" // 0xff8341fc  
         // Increate stack size from 0x800 to 0x2000 for new task_PhySw so we don't have to do stack switch
 	"ldr	r2, =0x2000\n" // was: "mov ..., #2048"
 	"ldr	r1, =0x17\n" // was: "mov ..., #23"
@@ -650,10 +468,6 @@ void __attribute__((naked,noinline)) sub_ff834230_my() {
 
 #if 0
 //VERIFY_SD780 - What does this do for us?
-void CreateTask_spytask() {
-  //???_CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
-}
-
 
 //SD780 - ASM Matches - Original location 0xFF877DD0
 void __attribute__((naked,noinline)) init_file_modules_task() {
