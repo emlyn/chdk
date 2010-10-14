@@ -11,14 +11,13 @@
 
 void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_void, long length) {
 
-        volatile unsigned *p = (void*)LED;       
-
-        int counter;
+        //volatile unsigned *p = (void*)LED;       
+        //int counter;
 
         // DEBUG: blink led
 		
-        counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
-        counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
+        //counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
+        //counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
 		
 
         {
@@ -46,8 +45,8 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
 
         //DEBUG: blink again
 		
-        counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
-        counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
+        //counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
+        //counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
 		
 
         // DEBUG: jump to regular firmware-boot (causing a boot loop)
