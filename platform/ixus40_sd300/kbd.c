@@ -42,7 +42,7 @@ typedef enum {
 
 } SEM_B_STATE;
 
-typedef void *SEM_ID; 
+typedef int SEM_ID; 
 extern SEM_ID _semBCreate(int options, SEM_B_STATE initialState);
 extern STATUS _TakeSemaphore(SEM_ID, int);
 //extern STATUS _GiveSemaphore(SEM_ID);

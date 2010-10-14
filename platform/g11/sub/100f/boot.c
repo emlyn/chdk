@@ -772,7 +772,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
                "LDR     R0, [R5,R4,LSL#2]\n"
                "BL      sub_FF8398B4\n"
              //"ADR     R2, sub_FF860490\n"
-               "ADR     R2, sub_FF860490_my\n" //+
+               "ADRL     R2, sub_FF860490_my\n" //+
                "MOV     R1, R2\n"
                "ORR     R3, R4, #0x200\n"
                "MOV     R0, #0x28\n"
@@ -891,7 +891,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
                "CMP     R0, #0\n"
                "BEQ     loc_FF860810\n"
             // "ADR     R2, sub_FF860490\n"
-               "ADR     R2, sub_FF860490_my\n" //+
+               "ADRL     R2, sub_FF860490_my\n" //+
                "MOV     R1, R2\n"
                "ORR     R3, R4, #0x400\n"
                "BL      sub_FF8397D0\n"

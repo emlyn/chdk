@@ -1,13 +1,16 @@
 #include "lolevel.h"
 #include "platform.h"
 #include "core.h"
+#include "stdlib.h"
+#include "gui.h"
+#include "../../../../core/gui_draw.h"
 
 const char * const new_sa = &_end;
 
 /* Ours stuff */
 extern long wrs_kernel_bss_start;
 extern long wrs_kernel_bss_end;
-long aHookList[128];
+int* aHookList[128];
 long aHookNum=0;
 
 
@@ -138,15 +141,15 @@ int dumpCF90_SD7802() {
 char j[32];
 int jF;
 
-	void* l;
+	long l;
 	char filen[32];
 
-	l=(void*)Fopen_Fut("A/0xCF90a.bin","ab");
-	Fwrite_Fut(START_ADDRESS,1,FWSIZE,l);
+	l = Fopen_Fut("A/0xCF90a.bin","ab");
+	Fwrite_Fut((void*)(START_ADDRESS),1,FWSIZE,l);
 	Fflush_Fut(l);
 	Fclose_Fut(l);
-	l=(void*)Fopen_Fut("A/0xCF90b.bin","ab");
-	Fwrite_Fut(START_ADDRESS2,1,FWSIZE,l);
+	l = Fopen_Fut("A/0xCF90b.bin","ab");
+	Fwrite_Fut((void*)(START_ADDRESS2),1,FWSIZE,l);
 	Fflush_Fut(l);
 	Fclose_Fut(l);
 

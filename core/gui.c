@@ -42,7 +42,9 @@
 #ifdef OPT_CURVES
 	#include "curves.h"
 #endif
-#include "edgeoverlay.h"
+#ifdef OPT_EDGEOVERLAY
+	#include "edgeoverlay.h"
+#endif
 //-------------------------------------------------------------------
 
 #define OPTIONS_AUTOSAVE
@@ -158,8 +160,6 @@ static void gui_draw_calendar(int arg);
 #endif
 static void gui_draw_load_lang(int arg);
 static void gui_menuproc_mkbootdisk(int arg);
-static void gui_menuproc_edge_save(int arg);
-static void gui_menuproc_edge_load(int arg);
 #ifdef OPT_DEBUGGING
 void gui_compare_props(int arg);
 #endif
@@ -255,7 +255,11 @@ static const char* gui_override_disable_enum(int change, int arg);
 	static void gui_debug_shortcut(void);
 #endif
 
+#ifdef OPT_EDGEOVERLAY
+static void gui_menuproc_edge_save(int arg);
+static void gui_menuproc_edge_load(int arg);
 static const char* gui_edge_pano_enum(int change, int arg);
+#endif
 
 void rinit();
 
@@ -2047,11 +2051,6 @@ void gui_init()
 #endif
 }
 
-static void gui_load_edge_selected( const char* fn ) {
-    if( fn )
-	load_edge_overlay(fn);
-}
-
 //-------------------------------------------------------------------
 #ifdef OPT_CURVES
 static void gui_load_curve_selected(const char *fn) {
@@ -3204,6 +3203,12 @@ void gui_menuproc_mkbootdisk(int arg) {
     mark_filesystem_bootable();
 }
 
+#ifdef OPT_EDGEOVERLAY
+static void gui_load_edge_selected( const char* fn ) {
+    if( fn )
+	load_edge_overlay(fn);
+}
+
 void gui_menuproc_edge_save(int arg) {
     save_edge_overlay();
 }
@@ -3223,6 +3228,7 @@ void gui_menuproc_edge_load(int arg) {
 
     gui_fselect_init(LANG_MENU_EDGE_LOAD, path, gui_load_edge_selected);
 }
+#endif
 
 //-------------------------------------------------------------------
 #ifdef OPT_CALENDAR
@@ -3364,6 +3370,20 @@ void user_menu_restore() {
  	}
 }
 
+#ifdef OPT_EDGEOVERLAY
+static const char* gui_edge_pano_enum(int change, int arg)
+{
+    static const char* modes[]={ "Off", "Right", "Down", "Left", "Up", "Free"};
+
+    conf.edge_overlay_pano+=change;
+    if (conf.edge_overlay_pano<0) 
+        conf.edge_overlay_pano=(sizeof(modes)/sizeof(modes[0]))-1; 
+    else if (conf.edge_overlay_pano>=(sizeof(modes)/sizeof(modes[0]))) 
+        conf.edge_overlay_pano=0; 
+    return modes[conf.edge_overlay_pano]; 
+}
+#endif
+
 #ifdef OPT_DEBUGGING
 
 void gui_compare_props(int arg)
@@ -3412,18 +3432,6 @@ void gui_compare_props(int arg)
 		}
 	}
 	initialized = 1;
-}
-
-static const char* gui_edge_pano_enum(int change, int arg)
-{
-    static const char* modes[]={ "Off", "Right", "Down", "Left", "Up", "Free"};
-
-    conf.edge_overlay_pano+=change;
-    if (conf.edge_overlay_pano<0) 
-        conf.edge_overlay_pano=(sizeof(modes)/sizeof(modes[0]))-1; 
-    else if (conf.edge_overlay_pano>=(sizeof(modes)/sizeof(modes[0]))) 
-        conf.edge_overlay_pano=0; 
-    return modes[conf.edge_overlay_pano]; 
 }
 
 #endif

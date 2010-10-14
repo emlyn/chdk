@@ -1,5 +1,7 @@
-#include "edgeoverlay.h"
 #include "platform.h"
+
+#ifdef OPT_EDGEOVERLAY
+#include "edgeoverlay.h"
 #include "conf.h"
 #include "keyboard.h"
 #include "stdlib.h"
@@ -764,3 +766,6 @@ void edge_overlay()
         slice = 0;
 
 }   // function
+
+#endif
+

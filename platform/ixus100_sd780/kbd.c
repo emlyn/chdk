@@ -3,7 +3,9 @@
 #include "core.h"
 #include "keyboard.h"
 #include "conf.h"
-//#include "stdlib.h"
+#include "stdlib.h"
+#include "gui.h"
+#include "../../core/gui_draw.h"
 
 typedef struct {
 	short grp;
@@ -202,7 +204,7 @@ void save_rom_log() {
 		"mov r1, #1 \n"
 		"stmdb sp!, {r0, r1, lr}\n"
 		"mov r0, sp\n"
-		"BL 0xFF922E14\n"  //GetLogToFile
+		"BL =0xFF922E14\n"  //GetLogToFile
 		"ldmia sp!, {r0, r1, lr}\n"
 	);
 }
@@ -211,9 +213,9 @@ void dumpProps() {
 	short int avv;
 	int i;
 	char aStr[50];
-	void* l;
+	long l;
 
-	l=(void*)Fopen_Fut("A/PropDmp.txt","a");
+	l=Fopen_Fut("A/PropDmp.txt","a");
 	for (i=0;i<300;i++){
 		_GetPropertyCase(i, &avv, sizeof(avv));	// 23 for DiGiC III
 		sprintf(aStr,"[%3d]=(%8x)\n",i,avv);
@@ -228,7 +230,7 @@ int dump1900_SD780() {
 	#define START_ADDRESS     0x1900
 	#define FWSIZE            0x30
 
-	void* l;
+	long l;
 	int j,k;
 	int* myPtr, myPtr2;
 	char sampleChr[64];
@@ -244,7 +246,7 @@ int dump1900_SD780() {
 	//Fclose_Fut(l);
 	j=0;
 
-	l=(void*)Fopen_Fut("A/aHookList.txt","ab");
+	l=Fopen_Fut("A/aHookList.txt","ab");
 
 	while (j<aHookNum)
 	{

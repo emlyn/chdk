@@ -490,7 +490,7 @@ void __attribute__((naked,noinline)) sub_FF86F8AC_my() {
                "CMP     R0, #0\n"
                "LDMEQFD SP!, {R4-R8,LR}\n"
                "LDREQ   R0, =0xFF86F9A8\n"
-			   "BEQ     0xFF81175C\n" //qPrintf
+			   "BEQ     =0xFF81175C\n" //qPrintf
                "LDMFD   SP!, {R4-R8,PC}\n"
  );
 }; 
@@ -681,7 +681,7 @@ void __attribute__((naked,noinline)) sub_FF86F1DC_my() {
                  "LDR     R1, =0x568\n"
                  "LDR     R0, =0xFF86F378\n"
                  
-				 "BL   0xFF81E88C\n"
+				 "BL   	  =0xFF81E88C\n"
 
 "loc_FF86F340:\n"
                  "STR     R7, [R5,#0x44]!\n"
@@ -778,7 +778,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
                "LDR     R5, =0x25E0\n"
                "LDR     R0, [R5,R4,LSL#2]\n"
                "BL      sub_FF8398E4\n"
-               "ADR     R2, sub_FF8604E0_my\n"
+               "ADRL     R2, sub_FF8604E0_my\n"
 //               "LDR     R2, sub_FF8604E0\n"
                "ADD     R1, R2, #0\n"
                "ORR     R3, R4, #0x200\n"
@@ -899,7 +899,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
                "CMP     R0, #0\n"
                "BEQ     loc_FF860860\n"
 //               "ADR     R2, loc_FF8604E0\n"
-               "ADR     R2,sub_FF8604E0_my\n"
+               "ADRL     R2,sub_FF8604E0_my\n"
                "ADD     R1, R2, #0\n"
                "ORR     R3, R4, #0x400\n"
                "BL      sub_FF839800\n"

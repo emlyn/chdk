@@ -2,6 +2,7 @@
 #include "platform.h"
 #include "core.h"
 #include "keyboard.h"
+#include "stdlib.h"
 
 #define KEY_MASK 0x17FF
 

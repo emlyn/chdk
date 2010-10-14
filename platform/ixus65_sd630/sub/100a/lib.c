@@ -39,7 +39,7 @@ void *vid_get_viewport_fb()
  */
 void *vid_get_viewport_fb_d()
 {
-    return 0x104AFCA0;
+    return (void*)0x104AFCA0;
     //return (void*)(*(int*));
 }
 
