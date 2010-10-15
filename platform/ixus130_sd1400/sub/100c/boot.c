@@ -10,7 +10,7 @@ const char * const new_sa = &_end;
 
 void taskHook(context_t **context) {
   task_t * tcb = (task_t*)((char*)context - offsetof(task_t, context));
-  if (!_strcmp(tcb->name, "PhySw"))           led_flash(LED_RED, 2);
+  //if (!_strcmp(tcb->name, "PhySw"))           led_flash(LED_RED, 2);
   //if (!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
   //if (!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)capt_seq_task;
   //if (!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
@@ -20,7 +20,7 @@ void taskHook(context_t **context) {
 }
 
 void CreateTask_spytask() {
-  //_CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
+  _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
 }
 
 void boot() {
@@ -99,8 +99,8 @@ void boot() {
 	"orr	r1, r1, #1\n"	// 0x1
 	"str	r1, [r2]\n"
 	"ldr	r0, =0xffbf8434\n" // canon_data_src
-	"ldr	r1, =0x00001900\n" // MEMBASEADDR 
-	"ldr	r3, =0x0000ebd0\n" // canon_bss_start
+	"ldr	r1, =0x1900\n"     // MEMBASEADDR 
+	"ldr	r3, =0xebd0\n"     // canon_bss_start
 "loc_ff81013c:\n"
 	"cmp	r1, r3\n"
 	"ldrcc	r2, [r0], #4\n"
@@ -144,7 +144,7 @@ ff85f444: 	e8bd8010 	pop	{r4, pc}
 */
   *(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
 
-  *(int*)0x1934 = (int)taskHook; // no effect
+  *(int*)0x1934 = (int)taskHook;
   //*(int*)0x1938 = (int)taskHook;
 
   asm volatile (
@@ -317,7 +317,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { // ff81fa8c
     );
 
   CreateTask_spytask();
-  led_flash(LED_RED, 1);
+  //led_flash(LED_RED, 1);
 //       CreateTask_blinker();
 
   asm volatile (
@@ -350,15 +350,15 @@ asm volatile (
 	"bl	sub_ff839f50\n"
 	"ldr	r4, =0x00001c7c\n" // was: "[pc, #-492]	; ff8375d4" 
 	"str	r0, [r4, #16]\n"
-	"bl	sub_ff87f1ec\n" // SD708 was FF87F19C
-	"bl	sub_ff880934\n" // SD780 was FF8808E4 -> taskcreate_SsTask
-	"bl	sub_ff87e334\n" // SD780 was FF87E2E4
-	"bl	sub_ff878d6c_my\n" // SD780 was FF878D1C_my
-	"bl	sub_ff87f4d0\n" // SD780 was FF87F480
+	"bl	sub_ff87f1ec\n"
+	"bl	sub_ff880934\n" // taskcreate_SsTask
+	"bl	sub_ff87e334\n"
+	"bl	sub_ff878d6c_my\n"
+	"bl	sub_ff87f4d0\n"
 	"ldr	r0, [r4, #16]\n"
 	"pop	{r4, lr}\n"
 	"ldr	r1, =0x1000\n" // was: "mov ..., #4096"
-	"b	sub_ff883f9c\n" // SD780 was FF883F4C
+	"b	sub_ff883f9c\n"
   );
 }
 
@@ -466,308 +466,3 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() { // 0xff834230
     );
 }
 
-#if 0
-//VERIFY_SD780 - What does this do for us?
-
-//SD780 - ASM Matches - Original location 0xFF877DD0
-void __attribute__((naked,noinline)) init_file_modules_task() {
-  asm volatile (
-"                 STMFD   SP!, {R4-R6,LR}\n"
-"                 BL      sub_FF86EB24\n"
-"                 LDR     R5, =0x5006\n"
-"                 MOVS    R4, R0\n"
-"                 MOVNE   R1, #0\n"
-"                 MOVNE   R0, R5\n"
-"                 BLNE    sub_FF873978\n"			// PostLogicalEventToUI
-"                 BL      sub_FF86EB50_my\n" // ->
-"                 BL      core_spytask_can_start\n" // + safe to start spytask
-"                 CMP     R4, #0\n"
-"                 MOVEQ   R0, R5\n"
-"                 LDMEQFD SP!, {R4-R6,LR}\n"
-"                 MOVEQ   R1, #0\n"
-"                 BEQ     sub_FF873978\n" // PostLogicalEventToUI
-"                 LDMFD   SP!, {R4-R6,PC}\n"
-	);
-}
-
-//SD780 - ASM matches
-void __attribute__((naked,noinline)) sub_FF86EB50_my() {
-  asm volatile (
-"                 STMFD   SP!, {R4,LR}\n"
-"                 MOV	  R0, #3\n"
-"                 BL      sub_FF852020_my\n" // ->  //Mounter.c
-//"                 BL      nullsub_95\n"
-"                 LDR     R4, =0x2C94\n"
-"                 LDR     R0, [R4,#4]\n"
-"                 CMP     R0, #0\n"
-"                 BNE     loc_FF86EB88\n"
-"                 BL      sub_FF8513E4\n"
-"                 BL      sub_FF8ED998\n"
-"                 BL      sub_FF8513E4\n"
-"                 BL      sub_FF84D438\n"
-"                 BL      sub_FF8512E4\n"
-"                 BL      sub_FF8EDA64\n"
-"loc_FF86EB88:\n"
-"                 MOV     R0, #1\n"
-"                 STR     R0, [R4]\n"
-"                 LDMFD   SP!, {R4,PC}\n"
- );
-}
-
-//SD780 - ASM matches
-void __attribute__((naked,noinline)) sub_FF852020_my() {
-  asm volatile (
-
-"                 STMFD   SP!, {R4-R8,LR}\n"
-"                 MOV     R6, R0\n"
-"                 BL      sub_FF851F88\n"
-"                 LDR     R1, =0x10938\n"
-"                 MOV     R5, R0\n"
-"                 ADD     R4, R1, R0, LSL#7\n"
-"                 LDR     R0, [R4,#0x70]\n"
-"                 CMP     R0, #4\n"
-"                 LDREQ   R1, =0x6D8\n"
-"                 LDREQ   R0, =0xFF851AAC\n"
-"                 BLEQ    sub_FF81B284\n"
-"                 MOV     R1, R6\n"
-"                 MOV     R0, R5\n"
-"                 BL      sub_FF8519F4\n" // LOCATION: Mounter.c:824// Original
-"                 LDR     R0, [R4,#0x38]\n"
-"                 BL      sub_FF85254C\n"
-"				  CMP	  R0, #0\n"
-"				  STREQ	  R0, [R4,#0x70]\n"
-"				  MOV	  R0, R5\n"
-"				  BL	  sub_FF851ACC\n"
-"				  MOV	  R0, R5\n"
-"				  BL	  sub_FF851DC0_my\n"
-"                 MOV     R7, R0\n"
-"                 MOV     R0, R5\n"
-"                 BL      sub_FF851E24\n" // LOCATION: Mounter.c:8// Original
-"                 LDR     R1, [R4,#0x3C]\n"
-"                 AND     R2, R7, R0\n"
-"                 CMP     R1, #0\n"
-"                 MOV     R0, #0\n"
-"                 MOVEQ   R0, #0x80000001\n"
-"                 BEQ     loc_FF8520C8\n"
-"                 LDR     R3, [R4,#0x2C]\n"
-"                 CMP     R3, #2\n"
-"                 MOVEQ   R0, #4\n"
-"                 CMP     R1, #5\n"
-"                 ORRNE   R0, R0, #1\n"
-"                 BICEQ   R0, R0, #1\n"
-"                 CMP     R2, #0\n"
-"                 BICEQ   R0, R0, #2\n"
-"                 ORREQ   R0, R0, #0x80000000\n"
-"                 BICNE   R0, R0, #0x80000000\n"
-"                 ORRNE   R0, R0, #2\n"
-"loc_FF8520C8:\n"
-"				  CMP	  R6, #7\n"
-"                 STR     R0, [R4,#0x40]\n"
-"				  LDMNEFD SP!, {R4-R8,PC}\n"
-"				  MOV	  R0, R6\n"
-"				  BL	  sub_FF851FD8\n"
-"				  CMP	  R0, #0\n"
-"				  LDMEQFD SP!, {R4-R8,LR}\n"
-"				  LDREQ   R0,=0xFF8522C4\n"
-"				  BEQ 	  sub_FF8115A8\n"
-"                 LDMFD   SP!, {R4-R6,PC}\n"
- );
-}
-
-//SD780 - ASM matches - Note support of FAT32 is OFF
-void __attribute__((naked,noinline)) sub_FF851DC0_my() {
-  asm volatile (
-"                 STMFD   SP!, {R4-R6,LR}\n"
-"                 MOV     R5, R0\n"
-"                 LDR     R0, =0x10938\n"
-"				  ADD 	  R4, R0, R5,LSL#7\n"
-"                 LDR     R0, [R4,#0x70]\n"
-"                 TST     R0, #2\n"
-"                 MOVNE   R0, #1\n"
-"                 LDMNEFD SP!, {R4-R6,PC}\n"
-"				  LDR 	  R0, [R4,#0x38]\n"
-"                 MOV     R1, R5\n"
-"                 BL      sub_FF851B50_my\n"  // -> FAT32 Support  //VERIFY_SD780
-//"                 BL      sub_FF851B50\n" 		// -> is Mounter.c
-"                 CMP     R0, #0\n"
-"                 LDMEQFD SP!, {R4-R6,PC}\n"
-"                 LDR     R0, [R4,#0x38]\n"
-"                 MOV     R1, R5\n"
-"                 BL      sub_FF851CBC\n" // LOCATION: Mounter.c:0
-"                 CMP     R0, #0\n"
-"                 LDMEQFD SP!, {R4-R6,PC}\n"
-"                 MOV     R0, R5\n"
-"                 BL      sub_FF8515DC\n"
-"                 CMP     R0, #0\n"
-"				  LDRNE	  R1, [R4,#0x70]\n"
-"				  ORRNE	  R1, R1, #2\n"
-"                 STRNE   R1, [R4,#0x70]\n"
-"                 LDMFD   SP!, {R4-R6,PC}\n"
-  );
-}
-
-
-//VERIFY_SD780 - FAT32 is OFF
-void __attribute__((naked,noinline)) sub_FF851B50_my() {  //Need to fix
-  asm volatile (
-"                 STMFD   SP!, {R4-R8,LR}\n"
-"                 MOV     R8, R0\n"
-//"                 MOV     R0, #0x17\n"
-//"                 MUL     R1, R0, R1\n"
-"                 LDR     R0, =0x10938\n"
-"                 MOV     R7, #0\n"
-"                 ADD     R5, R0, R1,LSL#7\n"
-"                 LDR     R0, [R5,#0x3C]\n"
-"                 MOV     R6, #0\n"
-"                 CMP     R0, #7\n"
-"                 ADDLS   PC, PC, R0,LSL#2\n"
-"                 B       loc_FF851CA0\n"
-"                 B       loc_FF851BB0\n"
-"                 B       loc_FF851B98\n"
-"                 B       loc_FF851B98\n"
-"                 B       loc_FF851B98\n"
-"                 B       loc_FF851B98\n"
-"                 B       loc_FF851C98\n"
-"                 B       loc_FF851B98\n"
-"                 B       loc_FF851B98\n"
-"loc_FF851B98:\n"
-// jumptable FF851B70 entries 1-4,6,7
-"                 MOV     R2, #0\n"
-"                 MOV     R1, #0x200\n"
-"                 MOV     R0, #2\n"
-"                 BL      sub_FF868C1C\n"
-"                 MOVS    R4, R0\n"
-"                 BNE     loc_FF851BB8\n"
-"loc_FF851BB0:\n"
-// jumptable FF851B70 entry 0
-"                 MOV     R0, #0\n"
-"                 LDMFD   SP!, {R4-R8,PC}\n"
-"loc_FF851BB8:\n"
-"                 LDR     R12, [R5,#0x4C]\n"
-"                 MOV     R3, R4\n"
-"                 MOV     R2, #1\n"
-"                 MOV     R1, #0\n"
-"                 MOV     R0, R8\n"
-//"               BLX 	  R12\n"			//-
-"                 MOV 	  LR, PC\n"			//+
-"                 MOV 	  PC, R12\n"		//+
-"                 CMP     R0, #1\n"
-"                 BNE     loc_FF851BE4\n"
-"                 MOV     R0, #2\n"
-"                 BL      sub_FF868D68\n" // LOCATION: ExMemMan.c:0
-"                 B       loc_FF851BB0\n"
-"loc_FF851BE4:\n"
-"                 LDR     R1, [R5,#0x68]\n"
-"                 MOV     R0, R8\n"
-//"               BLX     R1\n"  //FF851BEC //-
-"                 MOV     LR, PC\n" //+
-"                 MOV     PC, R1\n" //+
-
-
-
- 	 "MOV   R1, R4\n"           //  pointer to MBR in R1
- 	 "BL    mbr_read_dryos\n"   //  total sectors count in R0 before and after call
-
-        // Start of DataGhost's FAT32 autodetection code
-        // Policy: If there is a partition which has type W95 FAT32, use the first one of those for image storage
-        // According to the code below, we can use R1, R2, R3 and R12.
-        // LR wasn't really used anywhere but for storing a part of the partition signature. This is the only thing
-        // that won't work with an offset, but since we can load from LR+offset into LR, we can use this to do that :)
-        "MOV     R12, R4\n"                    // Copy the MBR start address so we have something to work with
-        "MOV     LR, R4\n"                     // Save old offset for MBR signature
-        "MOV     R1, #1\n"                     // Note the current partition number
-        "B       dg_sd_fat32_enter\n"          // We actually need to check the first partition as well, no increments yet!
-   "dg_sd_fat32:\n"
-        "CMP     R1, #4\n"                     // Did we already see the 4th partition?
-        "BEQ     dg_sd_fat32_end\n"            // Yes, break. We didn't find anything, so don't change anything.
-        "ADD     R12, R12, #0x10\n"            // Second partition
-        "ADD     R1, R1, #1\n"                 // Second partition for the loop
-   "dg_sd_fat32_enter:\n"
-        "LDRB    R2, [R12, #0x1BE]\n"          // Partition status
-        "LDRB    R3, [R12, #0x1C2]\n"          // Partition type (FAT32 = 0xB)
-        "CMP     R3, #0xB\n"                   // Is this a FAT32 partition?
-        "CMPNE   R3, #0xC\n"                   // Not 0xB, is it 0xC (FAT32 LBA) then?
-        "BNE     dg_sd_fat32\n"                // No, it isn't. Loop again.
-        "CMP     R2, #0x00\n"                  // It is, check the validity of the partition type
-        "CMPNE   R2, #0x80\n"
-        "BNE     dg_sd_fat32\n"                // Invalid, go to next partition
-                                               // This partition is valid, it's the first one, bingo!
-		//	  		  "LDR R0, =0xC0223000\n"
-		//	  		  "MOV R7, #0x46\n"
-		//	  		  "STR R7, [R0, #0x30]\n"
-        "MOV     R4, R12\n"                    // Move the new MBR offset for the partition detection.
-
-   "dg_sd_fat32_end:\n"
-        // End of DataGhost's FAT32 autodetection code
-		  //FF851BF0
-"                 LDRB    R1, [R4,#0x1C9]\n"
-"                 LDRB    R3, [R4,#0x1C8]\n"
-"                 LDRB    R12, [R4,#0x1CC]\n"
-"                 MOV     R1, R1,LSL#24\n"
-"                 ORR     R1, R1, R3,LSL#16\n"
-"                 LDRB    R3, [R4,#0x1C7]\n"
-"                 LDRB    R2, [R4,#0x1BE]\n"
-//"                 LDRB    LR, [R4,#0x1FF]\n" // -
-"                 ORR     R1, R1, R3,LSL#8\n"
-"                 LDRB    R3, [R4,#0x1C6]\n"
-"                 CMP     R2, #0\n"
-"                 CMPNE   R2, #0x80\n"
-"                 ORR     R1, R1, R3\n"
-"                 LDRB    R3, [R4,#0x1CD]\n"
-"                 MOV     R3, R3,LSL#24\n"
-"                 ORR     R3, R3, R12,LSL#16\n"
-"                 LDRB    R12, [R4,#0x1CB]\n"
-"                 ORR     R3, R3, R12,LSL#8\n"
-"                 LDRB    R12, [R4,#0x1CA]\n"
-"                 ORR     R3, R3, R12\n"
-
-		  //fix below
-//"                 LDRB    R12, [R4,#0x1FE]\n" // -
-"                 LDRB    R12, [LR,#0x1FE]\n" // +
-"                 LDRB    LR, [LR,#0x1FF]\n" // +
-//At ff851c44
-		  "                 MOV     R4, #0\n"
-"                 BNE     loc_FF851C70\n"
-"                 CMP     R0, R1\n"
-"                 BCC     loc_FF851C70\n"
-"                 ADD     R2, R1, R3\n"
-"                 CMP     R2, R0\n"
-"                 CMPLS   R12, #0x55\n"
-"                 CMPEQ   LR, #0xAA\n"
-"                 MOVEQ   R7, R1\n"
-"                 MOVEQ   R6, R3\n"
-"                 MOVEQ   R4, #1\n"
-"loc_FF851C70:\n"
-"                 MOV     R0, #2\n"
-"                 BL      sub_FF868D68\n" // LOCATION: ExMemMan.c:0
-"                 CMP     R4, #0\n"
-"                 BNE     loc_FF851CAC\n"
-//was a non-comment		  LDR R1, [R5,#0x68]
-"                 LDR     R1, [R5,#0x68]\n"
-"                 MOV     R7, #0\n"
-"                 MOV     R0, R8\n"
-//"                 BL      sub_FF9214E8\n"
-//"               BLX     R1\n"  //-
-"                 MOV     LR, PC\n" //+
-"                 MOV     PC, R1\n" //+
-
-"                 MOV     R6, R0\n"
-"                 B       loc_FF851CAC\n"
-"loc_FF851C98:\n"
-// jumptable FF851B70 entry 5
-"                 MOV     R6, #0x40\n"
-"                 B       loc_FF851CAC\n"
-"loc_FF851CA0:\n"
-// jumptable FF851B70 default entry
-"                 LDR     R1, =0x5C9\n"
-"                 LDR     R0, =0xFF851AAC\n" // "Mounter.c"
-"                 BL      sub_FF81B284\n" // DebugAssert
-" loc_FF851CAC:\n"
-"                 STR     R7, [R5,#0x44]!\n"
-"                 MOV     R0, #1\n"
-"                 STR     R6, [R5,#4]\n"
-"                 LDMFD   SP!, {R4-R8,PC}\n"
-  );
-}
-
-#endif
