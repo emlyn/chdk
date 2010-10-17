@@ -293,7 +293,7 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() {
 "loc_FF81F8A8:\n"
 				"B       loc_FF81F8A8\n"
 "loc_FF81F8AC:\n"
-//                "BL      0xFF833334\n"// removed, see boot() function
+//                "BL      sub_FF833334\n"// removed, see boot() function
                 "BL      sub_FF85FA68\n"
                 "BL		 sub_FF838F18\n"
                 "MOV     R0, #0x46\n"
@@ -490,7 +490,7 @@ void __attribute__((naked,noinline)) sub_FF86F8AC_my() {
                "CMP     R0, #0\n"
                "LDMEQFD SP!, {R4-R8,LR}\n"
                "LDREQ   R0, =0xFF86F9A8\n"
-			   "BEQ     =0xFF81175C\n" //qPrintf
+			   "BEQ     sub_FF81175C\n" //qPrintf
                "LDMFD   SP!, {R4-R8,PC}\n"
  );
 }; 
@@ -681,7 +681,7 @@ void __attribute__((naked,noinline)) sub_FF86F1DC_my() {
                  "LDR     R1, =0x568\n"
                  "LDR     R0, =0xFF86F378\n"
                  
-				 "BL   	  =0xFF81E88C\n"
+				 "BL   	  sub_FF81E88C\n"
 
 "loc_FF86F340:\n"
                  "STR     R7, [R5,#0x44]!\n"

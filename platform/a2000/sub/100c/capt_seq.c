@@ -21,8 +21,8 @@ void __attribute__((naked,noinline)) capt_seq_task() {
 "                BEQ     loc_FFC4AEB8\n"
 "                LDR     R1, =0x539\n"
 "                LDR     R0, =0xFFC4AA98\n"			// "SsShootTask.c"
-"                BL      =0xFFC0BD98\n"				// DebugAssert
-"                BL      =0xFFC0BB50\n"				// eventproc_export_ExitTask ; LOCATION: KerTask.c:0
+"                BL      sub_FFC0BD98\n"				// DebugAssert
+"                BL      sub_FFC0BB50\n"				// eventproc_export_ExitTask ; LOCATION: KerTask.c:0
 "                LDMFD   SP!, {R3-R7,PC}\n"
 "loc_FFC4AEB8:\n"
 "                LDR     R0, [SP]\n"

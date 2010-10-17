@@ -684,7 +684,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 			"                LDR     R0, [R7,#0x1C]\n"
 			"                MOV     R1, #1\n"
 			"                BL      sub_FF866178\n"
-			"                BL      =0xFF81B23C\n"		//ExitTask
+			"                BL      sub_FF81B23C\n"		//ExitTask
 			"                ADD     SP, SP, #0x20\n"
 			"                LDMFD   SP!, {R4-R8,PC}\n"
 			"loc_FF899D60:\n"
@@ -737,7 +737,7 @@ void __attribute__((naked,noinline)) exp_drv_task()
 			"                MOV     R1, #0xDD0\n"
 			"loc_FF899E10:\n"
 			"                LDR     R0, =0xFF896C24\n"  //aExpdrv_c
-			"                BL      =0xFF81B284\n" 		//DebugAssert
+			"                BL      sub_FF81B284\n" 		//DebugAssert
 			"                B       loc_FF899DB8\n"
 			"loc_FF899E1C:\n"
 			"                CMP     R1, #0x28\n"
@@ -1185,7 +1185,7 @@ void __attribute__((naked,noinline)) sub_FF897634_my()
 			"                TST     R0, #1\n"
 			"                LDRNE   R1, =0x583\n"
 			"                LDRNE   R0, =0xFF896C24\n" //aExpdrv_c
-			"                BLNE    =0xFF81B284\n"  //DebugAssert
+			"                BLNE    sub_FF81B284\n"  //DebugAssert
 			"loc_FF897740:\n"
 			"                CMP     R5, #1\n"
 			"                LDMNEFD SP!, {R4-R8,PC}\n"
@@ -1197,7 +1197,7 @@ void __attribute__((naked,noinline)) sub_FF897634_my()
 			"                LDRNE   R1, =0x588\n"
 			"                LDRNE   R0, =0xFF896C24\n" //aExpdrv_c
 			"                LDMNEFD SP!, {R4-R8,LR}\n"
-			"                BNE     =0xFF81B284\n"  //DebugAssert
+			"                BNE     sub_FF81B284\n"  //DebugAssert
 			"                LDMFD   SP!, {R4-R8,PC}\n"
 );
 }
@@ -1215,19 +1215,19 @@ void __attribute__((naked,noinline)) sub_FF888F0C_my()
 			"                CMP     R0, #1\n"
 			"                MOVNE   R1, #0x140\n"
 			"                LDRNE   R0, =0xFF888D10\n"  //aShutter_c
-			"                BLNE    =0xFF81B284\n"  //DebugAssert
+			"                BLNE    sub_FF81B284\n"  //DebugAssert
 			"                CMN     R4, #0xC00\n"
 			"                LDREQSH R4, [R5,#2]\n"
 			"                CMN     R4, #0xC00\n"
 			"                LDREQ   R1, =0x146\n"
 			"                LDREQ   R0, =0xFF888D10\n"  //aShutter_c
 			"                STRH    R4, [R5,#2]\n"
-			"                BLEQ    =0xFF81B284\n"  //DebugAssert
+			"                BLEQ    sub_FF81B284\n"  //DebugAssert
 			"                MOV     R0, R4\n"
 //			"                BL      sub_FF9A010C\n" //--
 			"				 BL      apex2us\n" // ++
 			"                MOV     R4, R0\n"
-//			"                BL      0xFF8AEED4\n"  //nullsub_59
+//			"                BL      sub_FF8AEED4\n"  //nullsub_59
 			"                MOV     R0, R4\n"
 			"                BL      sub_FF8B2850\n"
 			"                TST     R0, #1\n"
@@ -1235,7 +1235,7 @@ void __attribute__((naked,noinline)) sub_FF888F0C_my()
 			"				 LDRNE   R1, =0x14B\n"
 			"                LDMNEFD SP!, {R4-R6,LR}\n"
 			"                LDRNE   R0, =0xFF888D10\n"  //aShutter_c
-			"                BNE     =0xFF81B284\n"  //DebugAssert
+			"                BNE     sub_FF81B284\n"  //DebugAssert
 			"                LDMFD   SP!, {R4-R6,PC}\n"
 );
 }

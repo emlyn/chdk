@@ -204,7 +204,8 @@ void save_rom_log() {
 		"mov r1, #1 \n"
 		"stmdb sp!, {r0, r1, lr}\n"
 		"mov r0, sp\n"
-		"BL =0xFF922E14\n"  //GetLogToFile
+		"MOV LR, PC\n"
+		"LDR PC, =0xFF922E14\n"  //GetLogToFile
 		"ldmia sp!, {r0, r1, lr}\n"
 	);
 }

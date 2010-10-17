@@ -241,7 +241,7 @@ void __attribute__((naked,noinline)) sub_FF82BCAC_my() {
         "     MOV     R1, #4\n"
         "     MOV     R0, #2\n"
         "     BL         _taskcreate_WdtReset\n"
-        "     BL         =0xFF868080\n"    // StartWDT
+        "     BL         sub_FF868080\n"    // StartWDT
         "     BL         _EventProcedure\n"
         "     BL         sub_FF86376C\n"
         "     BL         sub_FF840AF8\n"

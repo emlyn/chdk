@@ -1588,7 +1588,7 @@ void __attribute__((naked,noinline)) sub_FF877C0C_my() {
         "     MOV     R1, #0\n"
         "     MOV     R0, R6\n"
         "     BL         sub_FF859588\n"
-        "     BL         =0xFF980908\n"    // StartRecModeMenu
+        "     BL         sub_FF980908\n"    // StartRecModeMenu
         "     B         loc_FF877FF4\n"
 
 
@@ -3146,7 +3146,7 @@ void __attribute__((naked,noinline)) sub_FF82C1B0_my() {
         "     BEQ     loc_FF82C1EC\n"
         "     MOV     R1, #0\n"
         "     MOV     R0, #0\n"
-        "     BL         =0xFF82CDC8\n"    // sub_FF82CDC8
+        "     BL         sub_FF82CDC8\n"    // sub_FF82CDC8
         "     LDR     R0, [R4,#8]\n"
         "     BL         sub_FF86A26C\n"
         "     MOV     R0, #0\n"
