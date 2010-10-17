@@ -218,6 +218,7 @@ void kbd_sched_shoot()
 }
 
 static lua_State* L, *Lt;
+static int lua_keep_result;
 
 static int is_lua()
 {
@@ -239,13 +240,17 @@ static void lua_count_hook(lua_State *L, lua_Debug *ar)
 
 void lua_script_reset()
 {
+  if ( !lua_keep_result )
+  {
     lua_close( L );
     L = 0;
-    Lt = 0;
+  }
+  Lt = 0;
 }
 
 static int lua_script_start( char const* script )
 {
+  lua_keep_result = 0;
   L = lua_open();
   luaL_openlibs( L );
   register_lua_funcs( L );
@@ -260,6 +265,32 @@ static int lua_script_start( char const* script )
   lua_sethook(Lt, lua_count_hook, LUA_MASKCOUNT, 1000 );
   return 1;
 }
+
+void lua_script_exec( char *script , int keep_result )
+{
+  lua_script_start(script);
+  lua_keep_result = keep_result;
+  state_lua_kbd_first_call_to_resume = 1;
+  state_kbd_script_run = 1;
+  kbd_blocked = 1;
+  auto_started = 0;
+}
+
+void lua_script_wait()
+{
+  while ( state_kbd_script_run )
+  {
+    msleep(100);
+  }
+}
+
+void *lua_get_result()
+{
+  lua_State* r = L;
+  L = 0;
+  return r;
+}
+
 
 static void wait_and_end(void)
 {

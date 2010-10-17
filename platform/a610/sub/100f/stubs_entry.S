@@ -78,6 +78,7 @@ NSTUB(_pow, 0xffea92fc)
 // ALT: NSTUB(_pow, 0xffea92fc) // 25/0
 NSTUB(_sqrt, 0xffead648)
 // ALT: NSTUB(_sqrt, 0xffead648) // 24/0
+NSTUB(add_ptp_handler, 0xffe22658)
 NSTUB(chdir, 0xffebc8a4)
 // ALT: NSTUB(chdir, 0xffebc8a4) // 27/0
 NSTUB(close, 0xffebc1e4)

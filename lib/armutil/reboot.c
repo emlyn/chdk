@@ -5,7 +5,8 @@
 /*
  shut down the display and reboot the camera. 
  bootfile is the name of the file to boot.
-  Must be an unencoded ARM binary, will be loaded at 0x1900
+  If the filename ends in .FI*, load with _reboot_fw_update if implemented
+  Otherwise must be an unencoded ARM binary, will be loaded at 0x1900
   For cameras which use encoded diskboot, loader/<camera>/main.bin may be used
   For cameras which do not use encoded diskboot, DISKBOOT.BIN may be used
   No sanity checking is performed on the binary, except that the size is >= 4 bytes
@@ -24,6 +25,13 @@ int reboot(const char *bootfile) {
 			return 0;
 		}
 		_Restart(0);
+	}
+
+	int namelen=strlen(bootfile);
+	if(namelen > 3 && (strncmp(bootfile + namelen - 4,".FI",3) == 0)) {
+		_reboot_fw_update(bootfile);
+		// if _reboot_fw_update returns, it failed or is not implemented
+		return 0;
 	}
 
 	int fd;

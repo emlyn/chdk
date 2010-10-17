@@ -948,6 +948,36 @@ long __attribute__((weak)) _GetCurrentTargetDistance()
 }
 #endif
 
+#ifdef CAM_CHDK_PTP
+int add_ptp_handler(int opcode, ptp_handler handler, int unknown)
+{
+  return _add_ptp_handler(opcode,handler,unknown);
+}
+
+// this would make more sense in generic/main.c but not all a cameras use it
+void init_chdk_ptp_task() {
+  _CreateTask("InitCHDKPTP", 0x19, 0x2000, init_chdk_ptp, 0);
+};
+
+#endif
+
+void ExitTask()
+{
+  _ExitTask();
+}
+
+// TODO not in sigs for vx yet
+#ifndef CAM_DRYOS
+void __attribute__((weak)) _reboot_fw_update(const char *fw_update)
+{
+	return;
+}
+#endif
+
+int __attribute__((weak)) switch_mode_usb(int mode)
+{
+  return 0;
+}
 /*
 // this wrapper isn't currently needed
 // 7 calls functions and sets some MMIOs, but doesn't disable caches and actually restart

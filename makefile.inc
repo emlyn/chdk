@@ -394,6 +394,10 @@ ifdef OPT_DEBUGGING
 CFLAGS+=-DOPT_DEBUGGING
 endif
 
+ifdef OPT_PTP
+CFLAGS+=-DOPT_PTP
+endif
+
 ifdef OPT_WARNINGS
      ifeq ($(GCC_VERSION_MAJOR),3)
            CFLAGS+=-Wwrite-strings -Wsign-compare -Wunused -Wno-unused-parameter

@@ -103,6 +103,7 @@ NSTUB(_log, 0xffb3e048)
 NSTUB(_log10, 0xffb3cf8c)
 NSTUB(_pow, 0xffb3d0fc)
 NSTUB(_sqrt, 0xffb3f3b0)
+NSTUB(add_ptp_handler, 0xffa4e04c)
 NSTUB(close, 0xff81a990)
 NSTUB(closedir, 0xffa842b4)
 // Best match: 71%
@@ -138,6 +139,8 @@ NSTUB(qsort, 0xffaf3a98)
 NSTUB(rand, 0xff8204f4)
 NSTUB(read, 0xff81ab78)
 // ERROR: readfastdir is not found!
+// Best match: 82%
+NSTUB(reboot_fw_update, 0xffa8993c)
 // ERROR: rename is not found!
 // Best match: 95%
 NSTUB(srand, 0xff8204e8)

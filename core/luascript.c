@@ -553,9 +553,15 @@ static int luaCB_exit_alt( lua_State* L )
   return 0;
 }
 
+// optional parameter is 0 for soft shutdown (default) or 1 for hard/immediate
 static int luaCB_shut_down( lua_State* L )
 {
+  if ( luaL_optnumber(L,1,0) == 1 )
+  {
+    shutdown();
+  } else {
   camera_shutdown_in_a_second();
+  }
   return 0;
 }
 
@@ -1172,6 +1178,20 @@ static int luaCB_set_record( lua_State* L )
   return 0;
 }
 
+// switch mode (0 = playback, 1 = record)
+// only for when USB is connected
+static int luaCB_switch_mode_usb( lua_State* L )
+{
+  int mode = luaL_checknumber(L,1);
+
+  if ( mode != 0 && mode != 1 )
+  {
+    return 0;
+  }
+
+  return switch_mode_usb(mode);
+}
+
 /*
 pack the lua args into a buffer to pass to the native code calling functions 
 currently only handles strings/numbers
@@ -1464,6 +1484,8 @@ void register_lua_funcs( lua_State* L )
    FUNC(is_capture_mode_valid);
 
    FUNC(set_record);
+
+   FUNC(switch_mode_usb);
 
 #ifdef OPT_LUA_CALL_NATIVE
    FUNC(call_event_proc);

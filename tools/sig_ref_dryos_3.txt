@@ -27,3 +27,4 @@ vsprintf 0xFF820350
 VbattGet 0xFF831E04 10
 GetFocusLensSubjectDistanceFromLens 0xFF9430E8 22
 Restart 0xFF83A130
+add_ptp_handler 0xFFA3F97C

@@ -485,21 +485,54 @@ void SetScriptMode(unsigned mode);
 unsigned call_func_ptr(void *func, const unsigned *args, unsigned n_args);
 
 /*
- shut down the display and reboot the camera. 
- bootfile is the name of the file to boot.
-  Must be an unencoded ARM binary, will be loaded at 0x1900
-  For cameras which use encoded diskboot, loader/<camera>/main.bin may be used
-  For cameras which do not use encoded diskboot, DISKBOOT.BIN may be used
-  No sanity checking is performed on the binary, except that the size is >= 4 bytes
- If bootfile is NULL, camera firmware is rebooted. DISKBOOT.BIN will be loaded or not according to normal rules
- returns 0 on failure, does not return on success
- does NOT save camera settings to flash
- does NOT retract lens before rebooting
- calling from playback mode is recommended
+ reboot, optionally loading a different binary
+ see lib/armutil/reboot.c for documentation
 */
 int reboot(const char *bootfile);
 
 #define started() debug_led(1)
 #define finished() debug_led(0)
+
+
+#ifdef CAM_CHDK_PTP
+
+typedef struct {
+    int code;
+    int sess_id;
+    int trans_id;
+    int num_param;
+    int param1;
+    int param2;
+    int param3;
+    int param4;
+    int param5;
+} PTPContainer;
+
+typedef struct {
+    int handle;
+    int (*send_data)(int handle, const char *buf, int part_size, int total_size, int, int, int); // (0xFF9F525C), total_size should be 0 except for the first call
+    int (*recv_data)(int handle, char *buf, int size, int, int); // (0xFF9F5500)
+    int (*send_resp)(int handle, PTPContainer *resp); // (0xFF9F5688)
+    int (*get_data_size)(int handle); // (0xFF9F5830)
+    int (*send_err_resp)(int handle, PTPContainer *resp); // (0xFF9F5784)
+    int unknown1; // ???
+    int (*f2)(); // ??? (0xFF8D5B24)
+    int (*f3)(); // ??? (0xFF8D5B5C)
+    // more??
+} ptp_data;
+
+typedef int (*ptp_handler)(int, ptp_data*, int, int, int, int, int, int, int, int);
+
+int add_ptp_handler(int opcode, ptp_handler handler, int unknown);
+
+void init_chdk_ptp();
+void init_chdk_ptp_task();
+
+#endif // CAM_CHDK_PTP
+
+int switch_mode_usb(int mode); // 0 = playback, 1 = record; return indicates success
+                               // N.B.: switch_mode only supported when USB is connected
+
+void ExitTask();
 
 #endif

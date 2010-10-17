@@ -55,6 +55,11 @@ endif
 ifdef OPT_LUA_CALL_NATIVE
 CFLAGS+=-DOPT_LUA_CALL_NATIVE
 endif 
+ifdef OPT_PTP
+# in top level
+#CFLAGS+=-DOPT_PTP
+OPT_OBJS+=ptp.o 
+endif 
 
 OBJS=entry.o nothumb.o main.o gui_draw.o gui_menu.o gui_palette.o gui_mbox.o \
      gui_fselect.o gui.o kbd.o conf.o \

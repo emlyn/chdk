@@ -283,4 +283,11 @@ extern unsigned _ExecuteEventProcedure(const char *name,...);
 // 7 calls functions and sets some MMIOs, but doesn't disable caches and actually restart
 // 3 skips one function call on some cameras, but does restart
 void _Restart(unsigned option);
+
+// boot an fir/fi2 file
+void _reboot_fw_update(const char* bootfile);
+#ifdef CAM_CHDK_PTP
+extern int _add_ptp_handler(int, void*, int);
+#endif
+
 #endif

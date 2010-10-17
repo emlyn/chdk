@@ -3683,6 +3683,38 @@ static FuncSig func_sig_Restart_1[] = {
 	/* 26/32 */
 };
 
+static FuncSig func_sig_add_ptp_handler_1[] = {
+	{   1, 0xe59f3070, 0xfdffffff }, // ldr:4:0xE59F3070
+	{   2, 0xe5933000, 0xfdffffff }, // ldr:4:0xE5933000
+	{   3, 0xe1a0c800, 0xfdffffff }, // mov:6:0xE1A0C800
+	{   4, 0xe1530000, 0xfdffffff }, // cmp:7:0xE3530000
+	{   5, 0xe1a0e001, 0xfdffffff }, // mov:6:0xE1A0E001
+	{   6, 0xe1a00017, 0xfdffffff }, // mov:6:0xE3A00017
+	{   7, 0xe1a05002, 0xfdffffff }, // mov:6:0xE1A05002
+	{   8, 0xe1a0184c, 0xfdffffff }, // mov:6:0xE1A0184C
+	{  10, 0xe15e0000, 0xfdffffff }, // cmp:7:0xE35E0000
+	{  11, 0xe1a01801, 0xfdffffff }, // mov:6:0xE1A01801
+	{  12, 0xe1a0200e, 0xfdffffff }, // mov:6:0xE1A0200E
+	{  13, 0xe0830004, 0xfdffffff }, // add:6:0xE2830004
+	{  14, 0x01a00003, 0xfdffffff }, // mov:6:0x03A00003
+	{  16, 0xe5933000, 0xfdffffff }, // ldr:4:0xE5933000
+	{  17, 0xe1a01821, 0xfdffffff }, // mov:6:0xE1A01821
+	{  18, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB00020A
+	{  19, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  20, 0xe1540013, 0xfdffffff }, // cmp:7:0xE3540013
+	{  22, 0x10033001, 0xfdffffff }, // and:6:0x12033001
+	{  23, 0x01a03001, 0xfdffffff }, // mov:6:0x03A03001
+	{  24, 0xe1530000, 0xfdffffff }, // cmp:7:0xE3530000
+	{  25, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000002
+	{  26, 0xe1550000, 0xfdffffff }, // cmp:7:0xE3550000
+	{  27, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000000
+	{  28, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFF8D
+	{  29, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  31, 0x00009ea4, 0xfdffffff }, // and:6:0x00009EA4
+	{ -1, -1, -1 },
+	/* 27/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   1, 0xe59f6030, 0xfdffffff }, // ldr:4:0xE59F6030
 	{   2, 0xe5965000, 0xfdffffff }, // ldr:4:0xE5965000
@@ -5508,6 +5540,7 @@ FuncsList func_list[] = {
 	{ "_pow", func_sig__pow_2 },
 	{ "_sqrt", func_sig__sqrt_1 },
 	{ "_sqrt", func_sig__sqrt_2 },
+	{ "add_ptp_handler", func_sig_add_ptp_handler_1 },
 	{ "chdir", func_sig_chdir_1 },
 	{ "chdir", func_sig_chdir_2 },
 	{ "close", func_sig_close_1 },

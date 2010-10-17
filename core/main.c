@@ -78,6 +78,10 @@ void core_spytask()
 
     spytask_can_start=0;
 
+#ifdef CAM_CHDK_PTP
+	init_chdk_ptp_task();
+#endif
+
     while((i++<400) && !spytask_can_start) msleep(10);
 
     started();

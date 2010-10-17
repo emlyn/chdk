@@ -33,6 +33,9 @@ NHSTUB(PutOutNdFilter,0xFFA3AD3C)  // function table TurnOffNdFilter (used ixus9
 NHSTUB(ScreenLock, 0xFF9B83CC)  // via aScreenlock
 NHSTUB(MakeAFScan,  0xFF933E50)  // via aSsprepareseqba (function with most uses)
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFF830D00)  // via aStartcontiae
+NHSTUB(set_control_event, 0xFF878894) // via eventproc_export_IsControlEventActive (last call)
+NHSTUB(PB2Rec, 0xFF87BF0C) // via aAcPb2rec
+NHSTUB(Rec2PB, 0xFF87A8A4) // via aAcRec2pb
 
 
 // Corrections for uncertain entries in stubs_entry.S

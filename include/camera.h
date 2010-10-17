@@ -55,6 +55,7 @@
     #undef  CAM_REAR_CURTAIN                // Camera do not have front/rear curtain flash sync in menu
     #undef  CAM_BRACKETING                // Cameras that have bracketing (focus & ev) in original firmware already, most likely s- & g-series (propcase for digic III not found yet!)
     #undef  CAM_EXT_TV_RANGE             // CHDK can make exposure time longer than 64s
+    #undef  CAM_CHDK_PTP                 // include CHDK PTP support
 
     #define CAM_UNCACHED_BIT    0x10000000 // bit indicating the uncached memory
 
@@ -461,6 +462,9 @@
     #define DNG_EXT_FROM ".DPS"
 
     #define CAM_EXT_TV_RANGE            1
+
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
+
 //----------------------------------------------------------
 
 #elif defined (CAMERA_a550)
@@ -1077,6 +1081,8 @@
 
     #define CAM_ZEBRA_ASPECT_ADJUST 1
 
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
+
 //----------------------------------------------------------
 
 
@@ -1660,7 +1666,8 @@
     #define CAM_HAS_ZOOM_LEVER          1
     #define CAM_MULTIPART               1
     #define CAM_REMOTE                  1
-    #define CAM_SYNCH                   1   // XXX
+    #define CAM_SYNCH                   1
+    #define CAM_CHDK_PTP                1
     #undef CAM_UNCACHED_BIT
     #define CAM_UNCACHED_BIT            0x40000000  // 0xFF874198 (via ExMem.FreeCacheable
     #define PARAM_CAMERA_NAME           4 // parameter number for GetParameterData
@@ -3011,6 +3018,10 @@
 // curves only work in 10bpp for now
 #if CAM_SENSOR_BITS_PER_PIXEL != 10
 #undef OPT_CURVES
+#endif
+
+#ifndef OPT_PTP
+#undef CAM_CHDK_PTP
 #endif
 
 #endif /* CAMERA_H */

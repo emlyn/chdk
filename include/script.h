@@ -28,4 +28,8 @@ extern void script_console_set_layout(int x1, int y1, int x2, int y2);
 extern void script_console_set_autoredraw(int value);
 extern void script_console_redraw();
 //-------------------------------------------------------------------
+
+extern void lua_script_exec(char *script, int keep_result);
+extern void lua_script_wait();
+extern void *lua_get_result();
 #endif

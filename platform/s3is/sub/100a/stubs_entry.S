@@ -105,6 +105,8 @@ NSTUB(_pow, 0xffb45be8)
 // ALT: NSTUB(_pow, 0xffb45be8) // 25/0
 NSTUB(_sqrt, 0xffb47abc)
 // ALT: NSTUB(_sqrt, 0xffb47abc) // 24/0
+// Best match: 96%
+NSTUB(add_ptp_handler, 0xffab0098)
 NSTUB(chdir, 0xffb54858)
 // ALT: NSTUB(chdir, 0xffb54858) // 27/0
 NSTUB(close, 0xffb54198)

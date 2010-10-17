@@ -137,3 +137,4 @@ PostLogicalEventForNotPowerType 0xFFD44F04
 SetCurrentCaptureModeType 0xFFD76E1C 16
 strtoul 0xFFEB5814
 Restart 0xFFC12800
+add_ptp_handler 0xFFE222D0
