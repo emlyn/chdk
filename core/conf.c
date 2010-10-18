@@ -393,71 +393,71 @@ static const ConfInfo conf_info[] = {
     CONF_INFO(235, conf.dng_usb_ext,     CONF_DEF_VALUE, i:0, conf_change_dng_ext),
     CONF_INFO(236, conf.flash_manual_override,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(237, conf.fast_image_quality,     CONF_DEF_VALUE, i:3, NULL),
-	CONF_INFO(238, conf.debug_lua_restart_on_error,     CONF_DEF_VALUE, i:0, NULL),
-	CONF_INFO(239, conf.debug_propcase_page,     CONF_DEF_VALUE, i:0, NULL),
-	CONF_INFO(240, conf.debug_misc_vals_show,     CONF_DEF_VALUE, i:0, NULL),
-	CONF_INFO(241, conf.edge_overlay_filter,     CONF_DEF_VALUE, i:0, NULL),
-	CONF_INFO(242, conf.edge_overlay_show,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(238, conf.debug_lua_restart_on_error,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(239, conf.debug_propcase_page,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(240, conf.debug_misc_vals_show,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(241, conf.edge_overlay_filter,     CONF_DEF_VALUE, i:0, NULL),
+    CONF_INFO(242, conf.edge_overlay_show,     CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO(243, conf.edge_overlay_pano_overlap,   CONF_DEF_VALUE, i:30, NULL),
     };
 #define CONF_NUM (sizeof(conf_info)/sizeof(conf_info[0]))
 
 //-------------------------------------------------------------------
 static void conf_change_histo_mode() {
-    histogram_set_mode(conf.histo_mode);
+  histogram_set_mode(conf.histo_mode);
 }
 
 static void conf_change_histo_layout() {
-    if (conf.histo_layout==OSD_HISTO_LAYOUT_Y || conf.histo_layout==OSD_HISTO_LAYOUT_Y_argb) {
-        histogram_set_main(HISTO_Y);
-    } else {
-        histogram_set_main(HISTO_RGB);
-    }
+  if (conf.histo_layout==OSD_HISTO_LAYOUT_Y || conf.histo_layout==OSD_HISTO_LAYOUT_Y_argb) {
+    histogram_set_main(HISTO_Y);
+  } else {
+    histogram_set_main(HISTO_RGB);
+  }
 }
 
 static void conf_change_font_cp() {
-    font_init();
-    font_set(conf.font_cp);
+  font_init();
+  font_set(conf.font_cp);
 }
 
 static void conf_change_script_file() {
-    script_load(conf.script_file, 2);
+  script_load(conf.script_file, 2);
 }
 
 static void conf_change_menu_rbf_file() {
-    if (!rbf_load(conf.menu_rbf_file))
-        rbf_load_from_8x16(current_font);
-    rbf_set_codepage(FONT_CP_WIN);
+  //if (!rbf_load(conf.menu_rbf_file))
+  //  rbf_load_from_8x16(current_font);
+  //rbf_set_codepage(FONT_CP_WIN);
 }
 
 static void conf_change_menu_symbol_rbf_file() {
-    if(!rbf_load_symbol(conf.menu_symbol_rbf_file)) conf.menu_symbol_enable=0;		//AKA
+  //if(!rbf_load_symbol(conf.menu_symbol_rbf_file)) conf.menu_symbol_enable=0;		//AKA
 }
 
 static void conf_change_alt_mode_button() {
-#if CAM_ADJUSTABLE_ALT_BUTTON
-    kbd_set_alt_mode_key_mask(conf.alt_mode_button);
-#else
-    conf.alt_mode_button = KEY_PRINT;
-#endif
+//#if CAM_ADJUSTABLE_ALT_BUTTON
+  //kbd_set_alt_mode_key_mask(conf.alt_mode_button);
+//#else
+  //conf.alt_mode_button = KEY_PRINT;
+//#endif
 }
 
 static void conf_change_grid_file() {
-    grid_lines_load(conf.grid_lines_file);
+  //grid_lines_load(conf.grid_lines_file);
 }
 
 static void conf_change_video_bitrate() {
-    shooting_video_bitrate_change(conf.video_bitrate);
- }
+  //shooting_video_bitrate_change(conf.video_bitrate);
+}
 
 void conf_change_dng(void){
-#if DNG_SUPPORT
- if (conf.dng_raw) {
-  if (!badpixel_list_loaded_b()) load_bad_pixels_list_b("A/CHDK/badpixel.bin");
-  if (!badpixel_list_loaded_b()) conf.dng_raw=0;
- }
- else unload_bad_pixels_list_b();
-#endif
+//#if DNG_SUPPORT
+// if (conf.dng_raw) {
+//  if (!badpixel_list_loaded_b()) load_bad_pixels_list_b("A/CHDK/badpixel.bin");
+//  if (!badpixel_list_loaded_b()) conf.dng_raw=0;
+// }
+// else unload_bad_pixels_list_b();
+//#endif
 }
 
 void conf_change_dng_ext(void){
@@ -535,10 +535,22 @@ void conf_load_defaults() {
                 break;
         }
         if (conf_info[i].func) {
-            conf_info[i].func();
+          conf_info[i].func();
         }
     }
 }
+
+//conf_change_histo_mode
+//conf_change_histo_layout
+//conf_change_script_file
+//conf_change_alt_mode_button
+//conf_change_font_cp
+//conf_change_menu_rbf_file
+//conf_change_video_bitrate
+//conf_change_menu_symbol_rbf_file
+//conf_change_script_file
+//conf_change_dng
+//conf_change_dng_ext
 
 //-------------------------------------------------------------------
 void conf_save() {
@@ -578,6 +590,7 @@ void conf_restore() {
     conf_init_defaults();
 
     conf_load_defaults();
+    return;
 
     if( stat(CONF_FILE,&st) != 0 || st.st_size < sizeof(int))
         return;

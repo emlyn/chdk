@@ -10,6 +10,7 @@
 #ifdef OPT_EDGEOVERLAY
 	#include "edgeoverlay.h"
 #endif
+#include "led.h"
 static int raw_need_postprocess;
 static volatile int spytask_can_start;
 
@@ -82,7 +83,10 @@ void core_spytask()
 	init_chdk_ptp_task();
 #endif
 
-    while((i++<400) && !spytask_can_start) msleep(10);
+    led_flash(LED_RED, 1);
+    //while((i++<400) && !spytask_can_start) msleep(10);
+    while((i++<100) && !spytask_can_start) msleep(10);
+    led_flash(LED_RED, 2);
 
     started();
     msleep(50);
@@ -90,6 +94,7 @@ void core_spytask()
     drv_self_unhide();
 
     conf_restore();
+    return;
     gui_init();
 
 #if CAM_CONSOLE_LOG_ENABLED

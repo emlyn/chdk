@@ -315,12 +315,15 @@ void script_load(const char *fn, int saved_params) {
     
 //    save_params_values(0);
 
-    if(script_source_str && script_source_str != ubasic_script_default)
-        free((void *)script_source_str);
+    //return;//*** no crash
+    if (script_source_str && script_source_str != ubasic_script_default) {
+      //free((void *)script_source_str);
+    }
 
+    //return;//*** crashes (so commented out free above)
     script_source_str = ubasic_script_default;
     update_vars = (strcmp(fn, conf.script_file) != 0) || !saved_params || (saved_params == 2);  // update if new file
-
+    //return;//***
     if (!fn[0]) { // load internal script
         if (!conf.script_file[0]) { // internal script was used last time
             fd = fopen(SCRIPT_DEFAULT_FILENAME, "rb");
@@ -330,12 +333,14 @@ void script_load(const char *fn, int saved_params) {
             }
         }
     } else {
-        fd = fopen(fn, "rb");
+        fd = fopen(fn, "rb"); // crashes here
+        return;//***
         if (!fd) {
             conf.script_file[0]=0;
             update_vars = 1; 
         }
     }
+    return;//*** crashes
     // zero size = default script
     if(stat(fn,&st) != 0 || st.st_size == 0) {
         conf.script_file[0]=0;
@@ -345,6 +350,7 @@ void script_load(const char *fn, int saved_params) {
             fd=0;
         }
     }
+    return;//***
     if (fd){
         int rcnt;
         char *buf;

@@ -3,14 +3,14 @@
 #include "core.h"
 #include "keyboard.h"
 
-#include "sd1400_debug.h"
+//#include "sd1400_debug.h"
 
 extern long link_bss_start;
 extern long link_bss_end;
 extern void boot();
 
-#define LED 0xC0220130 // IO, green
-#define DELAY 500000
+//#define LED 0xC0220130 // IO, green
+//#define DELAY 500000
 
 void startup()
 {
@@ -39,7 +39,7 @@ void startup()
     boot();
 }
 
-
+/*
 
 // TODO setting the DP button as a shortcut to movie in canon menu
 // gives a value of (current mode)+1024 while movie is recording, unless
@@ -77,12 +77,13 @@ static struct {
 
 
 #define MODESCNT (sizeof(modemap)/sizeof(modemap[0]))
-
+*/
 //SD780 is [f/3.2 is 6mm] [f/3.5 7mm] [f/4.5 11mm] [f/5   15mm] [f/5.8 18mm]
 //SD780 is 5.9-17.9mm f/3.2-5.8 (35mm film equivalent: 33-100mm)
 //SD780 is CF_EFL = (33/6)*10000=55000 or (100/18)*10000=55555.
+//TODO: Correct focal length table
 static const int fl_tbl[] = {6000, 7000, 11000, 15000, 18000};
-#define NUM_FL (sizeof(fl_tbl)/sizeof(fl_tbl[0]))
+#define NUM_FL (sizeof fl_tbl / sizeof *fl_tbl)
 #define CF_EFL 55278 // split the difference
 
 const int zoom_points = NUM_FL;
@@ -104,8 +105,7 @@ int get_zoom_x(int zp) {
 }
 
 /*
-physw_ bit OK
-*/
+// physw_ bit OK
 int mode_get2() {
     int mode, i, t=0xFF;
     mode  = (physw_status[1] & 0x00000001)?MODE_REC:MODE_PLAY;
@@ -119,7 +119,8 @@ int mode_get2() {
     }
     return (mode);
 }
-
+*/
+//TODO: VBatt min/max
 long get_vbatt_min()
 {
     return 3425; // hnikesch on forum
@@ -129,7 +130,7 @@ long get_vbatt_max()
 {
     return 4000; // fresh off charger slightly greater
 }
-
+/*
 #if CAM_CONSOLE_LOG_ENABLED
 
 #define DEV_HDR_WRITE_OFFSET (0x14C/4)
@@ -186,3 +187,5 @@ void console_init()
 }
 
 #endif
+*/
+
