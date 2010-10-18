@@ -326,8 +326,10 @@ void __attribute__((naked,noinline)) task_Startup_my() { // ff81fa8c
 	"bl	sub_ff83bce4\n"
 	"bl	sub_ff839454\n"
 	"bl	sub_ff83be5c\n"
-	"bl	taskcreate_PhySw_my\n" // sub_ff834230
-	"bl	task_ShootSeqTask_my\n" // sub_ff8377a8 taskcreate_SsTask -> for shoot seq stuff
+	//"bl	taskcreate_PhySw_my\n" // sub_ff834230
+	"bl	sub_ff834230\n" // sub_ff834230
+	//"bl	task_ShootSeqTask_my\n" // sub_ff8377a8 taskcreate_SsTask -> for shoot seq stuff
+	"bl	sub_ff8377a8\n" // sub_ff8377a8 taskcreate_SsTask -> for shoot seq stuff
 	"bl	sub_ff83be74\n"
 	//"bl	sub_ff8316a8\n" // nullsub
 	"bl	sub_ff833090\n" // Battery.c:0
