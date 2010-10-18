@@ -17,6 +17,9 @@ long lens_get_target_distance()
 	return _GetCurrentTargetDistance();
 }
 
+// Prevent warning: implicit declaration of function `_OpLog_Get'
+extern long _OpLog_Get(long i);
+
 //VERIFY_SD780 Only one arg?
 long OpLog_Get(long i)
 {
