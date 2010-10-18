@@ -45,7 +45,7 @@ $firmware_file_path = "$firmware_basepath/$ARGV[1]";
 # check if we wrap over
 die "error stat($firmware_file_path): $!" unless ($flen = (stat($firmware_file_path))[7]);
  
-if ( hex($offset) + $flen > 0xffffffff) {
+if (hex($offset) + $flen > 0xffffffff) {
 	die "offset + filesize > 0xffffffff. We can't wrap around!\n\ngame over"
 }
  
@@ -162,8 +162,15 @@ while (<IN>) {
         }
 	# add string comment
 	if (my $str = $strings{$addr}) {
-		print OUT qq|"$str":\n|;
+          # escape quotes and backslashes
+          $str =~ s/([\\"])/\\$1/g;
+	  print OUT qq|"$str":\n|;
 	}
+        if (my ($l1, $l2, $l3) = $line =~ /^([^"]*")(.*)("[^"]*)$/) {
+          # escape quotes and backslashes inside quotes
+          $l2 =~ s/([\\"])/\\$1/g;
+          $line = "$l1$l2$l3";
+        }
 	print OUT "$addr: $line\n"; 
 	print "\r0x$addr  ";
 }
