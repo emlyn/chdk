@@ -91,10 +91,10 @@ open(OUT,">$firmware_file_path.labels") or die "cannot write to $firmware_file_p
  
 while (<IN>) {
         if (my ($addr, $dest) = $_ =~ /^ *([[:xdigit:]]+):[ \t]+[[:xdigit:]]+[ \t]+[Bb][[:alpha:]]*[ \t]+([[:xdigit:]]+)/) {
-                if ($labels{$dest} ne 1) {
+                if ($labels{$dest} lt 1) {
                         print OUT "$dest ($addr)\n";
                 }
-                $labels{$dest} = 1;
+                $labels{$dest} += 1;
                 print "\r0x$addr  ";
         }
 }
@@ -155,7 +155,9 @@ while (<IN>) {
                 $line = "$1loc_$2"
         }
         # insert label
-        if ($labels{$addr} gt 0) {
+        if ($labels{$addr} gt 1) {
+                print OUT "loc_$addr: ; $labels{$addr} refs\n";
+        } elsif ($labels{$addr} gt 0) {
                 print OUT "loc_$addr:\n";
         }
 	# add string comment
