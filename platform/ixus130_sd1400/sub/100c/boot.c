@@ -142,10 +142,10 @@ ff85f440: 	05840000 	streq	r0, [r4]
 ff85f444: 	e8bd8010 	pop	{r4, pc}
 // Search on 0x12345678 finds function that is called from function with this code (SD780 0xFF842A90)
 */
-  *(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
+  //*(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
 
-  *(int*)0x1934 = (int)taskHook;
-  //*(int*)0x1938 = (int)taskHook;
+  //*(int*)0x1934 = (int)taskHook;
+  ////*(int*)0x1938 = (int)taskHook;
 
   asm volatile (
 	"ldr	r0, =0xff8103cc\n" // was: "[pc, #1036]	; ff810768" 
@@ -326,8 +326,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { // ff81fa8c
 	"bl	sub_ff83bce4\n"
 	"bl	sub_ff839454\n"
 	"bl	sub_ff83be5c\n"
-	//"bl	taskcreate_PhySw_my\n" // sub_ff834230
-	"bl	sub_ff834230\n" // sub_ff834230
+	"bl	taskcreate_PhySw_my\n" // sub_ff834230
 	//"bl	task_ShootSeqTask_my\n" // sub_ff8377a8 taskcreate_SsTask -> for shoot seq stuff
 	"bl	sub_ff8377a8\n" // sub_ff8377a8 taskcreate_SsTask -> for shoot seq stuff
 	"bl	sub_ff83be74\n"
@@ -341,6 +340,34 @@ void __attribute__((naked,noinline)) task_Startup_my() { // ff81fa8c
 	"bl	sub_ff833004\n" // taskcreate_Ui
 	"pop	{r4, lr}\n"
 	"b	sub_ff81662c\n" // MLHClock.c:992
+    );
+}
+
+void __attribute__((naked,noinline)) taskcreate_PhySw_my() { // 0xff834230
+  asm volatile (
+	"push	{r3, r4, r5, lr}\n"
+	"ldr	r4, =0x00001c20\n" // was: "[pc, #476]	; ff834418" 
+	"ldr	r0, [r4, #16]\n"
+	"cmp	r0, #0\n"	// 0x0
+	"bne	loc_ff834264\n"
+	"ldr	r3, =0x0\n" // was: "mov ..., #0"
+	"str	r3, [sp]\n"
+	"ldr	r3, =0xff8341fc\n" //   
+	//"ldr	r3, =mykbd_task\n" // 0xff8341fc  
+        // Increate stack size from 0x800 to 0x2000 for new task_PhySw so we don't have to do stack switch
+	"ldr	r2, =0x2000\n" // was: "mov ..., #2048"
+	"ldr	r1, =0x17\n" // was: "mov ..., #23"
+	"ldr	r0, =0xff834438\n" // was: "add	r0, pc, #472"   *"PhySw"
+	"bl	sub_ff839ef8\n" // KernelCreateTask
+	"str	r0, [r4, #16]\n"
+"loc_ff834264:\n"
+	"bl	sub_ff88a644\n"
+	"bl	sub_ff835aa4\n" // IsFactoryMode
+	"cmp	r0, #0\n"	// 0x0
+	"ldreq	r1, =0x0003280c\n" // was: "[pc, #428]	; ff834424" 
+	"popeq	{r3, r4, r5, lr}\n"
+	"beq	sub_ff88a5cc\n" // eventproc_export_OpLog_Start
+	"pop	{r3, r4, r5, pc}\n"
     );
 }
 
@@ -436,34 +463,6 @@ void __attribute__((naked,noinline)) sub_ff87a628_my() { // was sub_FF87A5D8_my
 	"ldr	r2, =0x1000\n" // was: "mov ..., #4096"
 	"ldr	r1, =0x17\n" // was: "mov ..., #23"
 	"bl	sub_ff839ef8\n" // was FF839EF8 KernelCreateTask ; LOCATION: KernelMisc.c:19
-	"pop	{r3, r4, r5, pc}\n"
-    );
-}
-
-void __attribute__((naked,noinline)) taskcreate_PhySw_my() { // 0xff834230
-  asm volatile (
-	"push	{r3, r4, r5, lr}\n"
-	"ldr	r4, =0x00001c20\n" // was: "[pc, #476]	; ff834418" 
-	"ldr	r0, [r4, #16]\n"
-	"cmp	r0, #0\n"	// 0x0
-	"bne	loc_ff834264\n"
-	"ldr	r3, =0x0\n" // was: "mov ..., #0"
-	"str	r3, [sp]\n"
-	"ldr	r3, =0xff8341fc\n" //   
-	//"ldr	r3, =mykbd_task\n" // 0xff8341fc  
-        // Increate stack size from 0x800 to 0x2000 for new task_PhySw so we don't have to do stack switch
-	"ldr	r2, =0x2000\n" // was: "mov ..., #2048"
-	"ldr	r1, =0x17\n" // was: "mov ..., #23"
-	"ldr	r0, =0xff834438\n" // was: "add	r0, pc, #472"   *"PhySw"
-	"bl	sub_ff839ef8\n" // KernelCreateTask
-	"str	r0, [r4, #16]\n"
-"loc_ff834264:\n"
-	"bl	sub_ff88a644\n" // was FF88A5F4
-	"bl	sub_ff835aa4\n" // was FF835AA4 IsFactoryMode
-	"cmp	r0, #0\n"	// 0x0
-	"ldreq	r1, =0x0003280c\n" // was: "[pc, #428]	; ff834424" 
-	"popeq	{r3, r4, r5, lr}\n"
-	"beq	sub_ff88a5cc\n" // was FF88A57C eventproc_export_OpLog_Start
 	"pop	{r3, r4, r5, pc}\n"
     );
 }
