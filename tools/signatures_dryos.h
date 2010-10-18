@@ -3287,33 +3287,31 @@ static FuncSig func_sig_AllocateMemory_2[] = {
 };
 
 static FuncSig func_sig_ExecuteEventProcedure_2[] = {
-	{   2, 0xe59f0104, 0xfdffffff }, // ldr:4:0xE59F0104
+	{   2, 0xe59f017c, 0xfdffffff }, // ldr:4:0xE59F017C
 	{   3, 0xe59d1010, 0xfdffffff }, // ldr:4:0xE59D1010
 	{   4, 0xe0404014, 0xfdffffff }, // sub:6:0xE2404014
 	{   5, 0xe58d0000, 0xfdffffff }, // str:4:0xE58D0000
 	{   6, 0xe5940008, 0xfdffffff }, // ldr:4:0xE5940008
 	{   7, 0xe08d5014, 0xfdffffff }, // add:6:0xE28D5014
 	{   8, 0xe1a0200d, 0xfdffffff }, // mov:6:0xE1A0200D
-	{   9, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFECF
+	{   9, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFEED
 	{  10, 0xe1500019, 0xfdffffff }, // cmp:7:0xE3500019
-	{  11, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A00000A
-	{  12, 0xe59f00ac, 0xfdffffff }, // ldr:4:0xE59F00AC
+	{  11, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A000007
+	{  12, 0xe59f0124, 0xfdffffff }, // ldr:4:0xE59F0124
 	{  13, 0xe59d3010, 0xfdffffff }, // ldr:4:0xE59D3010
-	{  14, 0xe08f20d8, 0xfdffffff }, // add:6:0xE28F20D8
-	{  15, 0xe08f10c8, 0xfdffffff }, // add:6:0xE28F10C8
-	{  16, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFED162
+	{  14, 0xe08f2e15, 0xfdffffff }, // add:6:0xE28F2E15
+	{  15, 0xe08f1d05, 0xfdffffff }, // add:6:0xE28F1D05
+	{  16, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFED180
 	{  17, 0xe5941004, 0xfdffffff }, // ldr:4:0xE5941004
-	{  18, 0xe59f0094, 0xfdffffff }, // ldr:4:0xE59F0094
-	{  20, 0xe1a010dd, 0xfdffffff }, // mov:6:0xE3A010DD
-	{  21, 0xe08f00d0, 0xfdffffff }, // add:6:0xE28F00D0
-	{  22, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFECAD8
-	{  23, 0xe5942000, 0xfdffffff }, // ldr:4:0xE5942000
-	{  24, 0xe59d1010, 0xfdffffff }, // ldr:4:0xE59D1010
-	{  25, 0xe5940010, 0xfdffffff }, // ldr:4:0xE5940010
-	{  27, 0xe59d0000, 0xfdffffff }, // ldr:4:0xE59D0000
-	{  29, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  18, 0xe59f010c, 0xfdffffff }, // ldr:4:0xE59F010C
+	{  20, 0xe5942000, 0xfdffffff }, // ldr:4:0xE5942000
+	{  21, 0xe59d1010, 0xfdffffff }, // ldr:4:0xE59D1010
+	{  22, 0xe5940010, 0xfdffffff }, // ldr:4:0xE5940010
+	{  24, 0xe59d0000, 0xfdffffff }, // ldr:4:0xE59D0000
+	{  26, 0xe1a00005, 0xfdffffff }, // mov:6:0xE1A00005
+	{  29, 0xe49df014, 0xfdffffff }, // ldr:4:0xE49DF014
 	{ -1, -1, -1 },
-	/* 25/32 */
+	/* 23/32 */
 };
 
 static FuncSig func_sig_EnterToCompensationEVF_2[] = {

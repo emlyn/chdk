@@ -10,7 +10,7 @@ NSTUB(CreateTask, 0xff81b9c4)
 NSTUB(DeleteFile_Fut, 0xff8255f4)
 // Best match: 79%
 NSTUB(EnterToCompensationEVF, 0xff828194)
-// Best match: 75%
+// Best match: 78%
 NSTUB(ExecuteEventProcedure, 0xff81bf64)
 // Best match: 79%
 NSTUB(ExitFromCompensationEVF, 0xff828040)

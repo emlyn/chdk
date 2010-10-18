@@ -7,7 +7,7 @@ NSTUB(Close, 0xff823c98)
 NSTUB(CreateTask, 0xff81afac)
 NSTUB(DeleteFile_Fut, 0xff823544)
 // ERROR: EnterToCompensationEVF is not found!
-NSTUB(ExecuteEventProcedure, 0xff86a590)
+NSTUB(ExecuteEventProcedure, 0xff86a518)
 // ERROR: ExitFromCompensationEVF is not found!
 // Best match: 57%
 NSTUB(ExitTask, 0xff81b23c)

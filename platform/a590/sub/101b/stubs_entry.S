@@ -9,7 +9,7 @@ NSTUB(DeleteFile_Fut, 0xffc13434)
 // Best match: 79%
 NSTUB(EnterToCompensationEVF, 0xffc15f54)
 // ALT: NSTUB(EnterToCompensationEVF, 0xffc15fd4) // 19/5
-NSTUB(ExecuteEventProcedure, 0xffc59f2c)
+NSTUB(ExecuteEventProcedure, 0xffc59eb4)
 // Best match: 79%
 NSTUB(ExitFromCompensationEVF, 0xffc15f24)
 // ALT: NSTUB(ExitFromCompensationEVF, 0xffc15fa4) // 19/5
