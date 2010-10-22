@@ -7,7 +7,7 @@ NHSTUB(DoAFLock, 0xff83809c)                     // "AFL*"
 NHSTUB(EnterToCompensationEVF, 0xff8381e8)       // "ExpOn"
 NHSTUB(ExitFromCompensationEVF, 0xff83822c)      // "ExpOff"
 NHSTUB(ExpCtrlTool_StartContiAE, 0xff845e30)     //
-NHSTUB(GetDrive_FreeClusters, 0xff86f198)        // ?
+NHSTUB(GetDrive_FreeClusters, 0xff86f510)
 NHSTUB(MakeAFScan, 0xff95d380)                   // "SsPrepareSeqBase.c"
 NHSTUB(Mount_FileSystem, 0xffff1134)             // nullsub
 NHSTUB(OpLog_Get, 0xff88a4b0)                    // search just before "OpePlay"
@@ -18,7 +18,7 @@ NHSTUB(ReadFastDir, 0xffa751f8)                  // how to find this? same as re
 NHSTUB(RefreshPhysicalScreen, 0xff9f786c)        // "ScreenUnLock"
 NHSTUB(Remove, 0xff836bac)                       // ixus300 - 0x240
 NHSTUB(ScreenLock, 0xff9f8cb4)                   // "ScreenLock"
-NHSTUB(SetScriptMode, 0xff810f04)                // (0000192c)
+NHSTUB(SetScriptMode, 0xff890a68)                // "EventReciever.c"
 NHSTUB(SetZoomActuatorSpeedPercent, 0xffff1134) 
 NHSTUB(TurnOffBackLight, 0xff89df30)             // "TurnOffBackLight"
 NHSTUB(TurnOnBackLight, 0xff89df18)              // "TurnOnBackLight"
@@ -50,3 +50,9 @@ NHSTUB(closedir, 0xffa75054)
 NHSTUB(closefastdir, 0xffa75054)                 // same as closedir
 NHSTUB(strcat, 0xff8a5290)
 NHSTUB(strrchr, 0xff814008)
+NHSTUB(GetZoomLensCurrentPosition, 0xffa861d8)
+NHSTUB(kbd_pwr_off, 0xffff1134)
+//NHSTUB(MoveFocusLensToDistance, 0xffafd56c)
+
+// Check:
+// GetCurrentAvValue, GetZoomLensCurrentPoint
