@@ -415,31 +415,27 @@ static void conf_change_histo_layout() {
   }
 }
 
+//static void conf_change_script_file() {
+//  script_load(conf.script_file, 2);
+//}
+
+static void conf_change_alt_mode_button() {
+#if CAM_ADJUSTABLE_ALT_BUTTON
+  kbd_set_alt_mode_key_mask(conf.alt_mode_button);
+#else
+  conf.alt_mode_button = KEY_PRINT;
+#endif
+}
+
 static void conf_change_font_cp() {
   font_init();
   font_set(conf.font_cp);
 }
 
-static void conf_change_script_file() {
-  script_load(conf.script_file, 2);
-}
-
 static void conf_change_menu_rbf_file() {
-  //if (!rbf_load(conf.menu_rbf_file))
-  //  rbf_load_from_8x16(current_font);
+  if (!rbf_load(conf.menu_rbf_file))
+    rbf_load_from_8x16(current_font);
   //rbf_set_codepage(FONT_CP_WIN);
-}
-
-static void conf_change_menu_symbol_rbf_file() {
-  //if(!rbf_load_symbol(conf.menu_symbol_rbf_file)) conf.menu_symbol_enable=0;		//AKA
-}
-
-static void conf_change_alt_mode_button() {
-//#if CAM_ADJUSTABLE_ALT_BUTTON
-  //kbd_set_alt_mode_key_mask(conf.alt_mode_button);
-//#else
-  //conf.alt_mode_button = KEY_PRINT;
-//#endif
 }
 
 static void conf_change_grid_file() {
@@ -450,20 +446,28 @@ static void conf_change_video_bitrate() {
   //shooting_video_bitrate_change(conf.video_bitrate);
 }
 
+static void conf_change_menu_symbol_rbf_file() {
+  //if (!rbf_load_symbol(conf.menu_symbol_rbf_file)) conf.menu_symbol_enable=0;		//AKA
+}
+
+static void conf_change_script_file() {
+  //script_load(conf.script_file, 2);
+}
+
 void conf_change_dng(void){
-//#if DNG_SUPPORT
-// if (conf.dng_raw) {
-//  if (!badpixel_list_loaded_b()) load_bad_pixels_list_b("A/CHDK/badpixel.bin");
-//  if (!badpixel_list_loaded_b()) conf.dng_raw=0;
-// }
-// else unload_bad_pixels_list_b();
-//#endif
+#if DNG_SUPPORT
+  //if (conf.dng_raw) {
+  //  if (!badpixel_list_loaded_b()) load_bad_pixels_list_b("A/CHDK/badpixel.bin");
+  //  if (!badpixel_list_loaded_b()) conf.dng_raw=0;
+  //}
+  //else unload_bad_pixels_list_b();
+#endif
 }
 
 void conf_change_dng_ext(void){
 #if defined (DNG_EXT_FROM)
- save_ext_for_dng();
- if (conf.dng_usb_ext) change_ext_to_dng(); else change_ext_to_default();
+  //save_ext_for_dng();
+  //if (conf.dng_usb_ext) change_ext_to_dng(); else change_ext_to_default();
 #endif 
 }
 
@@ -542,10 +546,11 @@ void conf_load_defaults() {
 
 //conf_change_histo_mode
 //conf_change_histo_layout
-//conf_change_script_file
+//conf_change_script_file (?)
 //conf_change_alt_mode_button
 //conf_change_font_cp
 //conf_change_menu_rbf_file
+//conf_change_grid_file
 //conf_change_video_bitrate
 //conf_change_menu_symbol_rbf_file
 //conf_change_script_file
