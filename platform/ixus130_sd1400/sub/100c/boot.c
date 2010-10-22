@@ -355,7 +355,8 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() { // 0xff834230
 	"ldr	r3, =0xff8341fc\n" //   
 	//"ldr	r3, =mykbd_task\n" // 0xff8341fc  
         // Increate stack size from 0x800 to 0x2000 for new task_PhySw so we don't have to do stack switch
-	"ldr	r2, =0x2000\n" // was: "mov ..., #2048"
+	//"ldr	r2, =0x2000\n" // was: "mov ..., #2048"
+	"ldr	r2, =0x800\n" // was: "mov ..., #2048"
 	"ldr	r1, =0x17\n" // was: "mov ..., #23"
 	"ldr	r0, =0xff834438\n" // was: "add	r0, pc, #472"   *"PhySw"
 	"bl	sub_ff839ef8\n" // KernelCreateTask
