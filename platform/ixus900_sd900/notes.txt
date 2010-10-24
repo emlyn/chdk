@@ -1,0 +1,143 @@
+--- CHDK Canon IXUS 900 Ti / Powershot SD900 / IXY Digital 1000 Port -------------------
+Camera:     Canon Powershot SD900 (North America/outside Europe) / IXUS 900 Ti (Europe) / IXY Digital 1000 (Japan)
+Firmware:   1.00C
+Author:     pixel::doc (http://pixeldoc.kicks-ass.net/)
+P-ID:       0x3115 (12565)
+OS:         VxWorks
+Based on Canon IXUS 850IS / SD800 source from chdk trunk.
+
+
+--- Note ------------------------------------------------------------
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+TITLE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE
+BE LIABLE FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Software or Author are not affiliated in any way with Canon INC.
+Product and Company names mentioned herein may be the trademarks of their respective owners.
+
+
+--- Links -----------------------------------------------------------
+* http://chdk.wikia.com/
+* http://chdk.wikia.com/wiki/SD900
+
+
+--- Developer Stuff --------------------------------------------------
+* Rom Start address: 0xFF810000
+* CPU: Juno - ARM946ES (ARM)
+* OS: VxWorks
+
+
+--- Changelog -------------------------------------------------------
+* Beta v24 (2010-09-26)
+    * trunk: #946
+    * version: 0.9.9
+    * keyboard stuff changed (using kbd_read_keys() from canon firmware)
+    * kbd.c added feather task suspend (now feather task is disabled in ALT mode -> does not overdraw chdk anymore)
+    * camera.h updated (SD override reenabled)
+    * minor improvments
+
+* Beta v23 (2010-08-17)
+    * trunk: #920
+    * version: 0.9.9
+    * CAM_MULTIPART enabled (mount.c)
+    * CAM_CONSOLE_LOG_ENABLED enabled (chdklog.txt, stdout.txt, romlog.txt)
+    * camera.h defines updated
+    * minor improvments
+
+* Beta v22 (2010-08-12)
+    * trunk: #919
+    * version: 0.9.9
+    * fixed source to compile against recent trunk
+    * multi partition Support still disabled ("CAM_MULTIPART 1" does crash camera)
+
+* Beta v21 (2009-03-12)
+    * trunk: #718
+    * version: 0.9.7
+    * set_backlight script command FIXED
+
+* Beta v20 (2009-02-14)
+    * trunk: #708
+    * RAW hook FIXED
+    * minor changes
+
+* Beta v19 (2009-02-01)
+    * trunk: #701
+    * crash in movie mode (bitrate setting) FIXED
+    * EnterToCompensationEVF & ExitFromCompensationEVF ADDED
+    * compiled with gcc 4.3.2 (chdk-shell 2.0)
+
+* Beta v18 (2009-01-14)
+    * trunk: #678
+    * AV display (F stop) FIXED (values for auto nd filter corrected)
+
+* Beta v17 (2009-01-09)
+    * trunk: #673
+    * AV display (F stop) CHANGED
+    * reenabled sd override FIXED
+    * disabled mf (sd series does not support mf) CHANGED
+    * Custom Auto ISO does work TESTED
+    * SD overrides does work TESTED
+
+* Beta v16 (2009-01-05)
+    * trunk: #666
+    * mode map changed FIXED
+    * various changes
+    * Fast EV Switching (canon menu is not disabled, so currently not very usefull yet) CHANGED
+    * MF does not work ToDo
+    * Custom Auto ISO does not work ToDo
+
+* Beta v15 (2009-01-03)
+    * crash in movie mode with advanced settings FIXED
+    * zoom in video mode ADDED
+    * AV / TV Value display ADDED
+    * log CHANGED
+    * MF does not work
+    * EV "quick change" does not work
+    * various changes
+
+* Beta v14 (2008-12-31)
+    * log CHANGED
+    * crash in movie mode (advance video settings disabled) FIXED
+    * various changes
+
+* Beta v13 (2008-12-30)
+    * RAW support ADDED (first RAW image may be corrupted)
+    * CRW support does not work yet, badpixel.lua still does not finish correctly (only create file "CHDK\bad_tmp.bin")
+    * modemap FIXED
+    * movie_mode FIXED
+    * after trying to record video, camera does lock up (only CHDK menu work)
+    * Debug Log added. If your Camera crashed while using CHDK, look at "stdout.txt", "chdklog.txt" and "romlog.txt" on SD-Card (you can use my added menu items in Debug menu) and add log content to your post.
+    * Debug Menu Entries to view log files ("stdout.log", "chdklog.txt", "romlog.txt") added
+    * various changes
+
+* Beta v12 (2008-12-28)
+    * trunk: #654
+    * capt_seq.c FIXED
+    * movie_rec.c FIXED
+    * shutdown in movie mode if you try to record movie ToDo
+
+* Beta v11 (2008-12-28)
+    * trunk: #649
+    * chdk works in play, photo and video mode
+    * scripts like llibtst.lua OK
+    * Zebra OK
+    * Histogram OK
+    * RAW disabled
+    * capt_seq_hook() & movie_record_hook() still disabled in main.c
+    * Jogdial / Feather Key symbol gets displayed over chdk menu (feather stuff not ported yet) ToDo
+    * movie mode info overlay window is displayed in all modes any time ToDo
+    * battery level not correct ToDo
+    * sometimes does not boot or shutdown ToDo
+
+* Beta v6 - v10 (2008-12-XX)
+    * BIG thanks goes to reyalP for some hours of help und "remote" debugging!
+
+* Beta v1
+    * chdk boot not completly and flashes every led in a loop
+    * boot.c working
+
+--- ToDo -----------------------------------------------------------
+* badpixel.lua does not finish correctly
+* CAM_MULTIPART (mount.c) does crash camera

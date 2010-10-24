@@ -240,6 +240,7 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=d10 PLATFORMSUB=100a NO_INC_BUILD=1 firzipsub
 	#$(MAKE) -s --no-print-directory PLATFORM=ixus95_sd1200  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	#$(MAKE) -s --no-print-directory PLATFORM=a430 PLATFORMSUB=100b NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus900_sd900  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	@echo "**** All firmwares created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/$(VER)-a610-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a610-100d-$(BUILD_NUMBER).zip
@@ -388,6 +389,7 @@ batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=d10 PLATFORMSUB=100a NO_INC_BUILD=1 firzipsubcomplete
 	#$(MAKE) -s --no-print-directory PLATFORM=ixus95_sd1200  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
 	#$(MAKE) -s --no-print-directory PLATFORM=a430 PLATFORMSUB=100b NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=ixus900_sd900  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
 	@echo "**** All zipfiles including firmwares and extra stuff created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/a610-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/a610-100d-$(BUILD_NUMBER)-full.zip
@@ -567,5 +569,6 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=d10 PLATFORMSUB=100a NO_INC_BUILD=1 clean
 	#$(MAKE) -s --no-print-directory PLATFORM=ixus95_sd1200 PLATFORMSUB=100c NO_INC_BUILD=1 clean
 	#$(MAKE) -s --no-print-directory PLATFORM=a430 PLATFORMSUB=100b NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus900_sd900  PLATFORMSUB=100c NO_INC_BUILD=1 clean
 
 	.PHONY: fir upload

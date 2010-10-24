@@ -33,7 +33,7 @@ static int shoot_counter=0;
 #define USB_REG 0
 #endif
 
-#if defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_ixus65_sd630) || defined(CAMERA_ixus850_sd800) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850)
+#if defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_ixus800_sd700) || defined(CAMERA_ixus65_sd630) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus900_sd900) || defined (CAMERA_ixus70_sd1000) || defined (CAMERA_ixus950_sd850)
 #define USB_MASK 0x8000000
 #define USB_REG 1
 #endif
@@ -490,6 +490,4 @@ long kbd_use_zoom_as_mf() {
     }
     return 0;
 }
-
-
 
