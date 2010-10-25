@@ -83,18 +83,17 @@ void core_spytask()
 	init_chdk_ptp_task();
 #endif
 
-    led_flash(LED_RED, 1);
+    //led_flash(LED_RED, 1);
     while((i++<400) && !spytask_can_start) msleep(10);
     //while((i++<100) && !spytask_can_start) msleep(10);
-    led_flash(LED_RED, 2);
+    //led_flash(LED_RED, 2);
 
     started();
-    msleep(50);
+    msleep(100);
     finished();
     drv_self_unhide();
 
     conf_restore();
-    return;
     gui_init();
 
 #if CAM_CONSOLE_LOG_ENABLED
