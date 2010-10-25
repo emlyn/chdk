@@ -11,7 +11,7 @@ const char * const new_sa = &_end;
 void taskHook(context_t **context) {
   task_t * tcb = (task_t*)((char*)context - offsetof(task_t, context));
   //if (!_strcmp(tcb->name, "PhySw"))           led_flash(LED_RED, 2);
-  //if (!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
+  if (!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
   //if (!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)capt_seq_task;
   //if (!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
   //if (!_strcmp(tcb->name, "MovieRecord"))     tcb->entry = (void*)movie_record_task;
@@ -23,7 +23,7 @@ void CreateTask_spytask() {
   _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
 }
 
-void boot() {
+void __attribute__((naked,noinline)) boot() {
   asm volatile (
 	"ldr	r1, =0xc0410000\n" // was: "[pc, #336]	; ff810164" 
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
@@ -142,9 +142,9 @@ ff85f440: 	05840000 	streq	r0, [r4]
 ff85f444: 	e8bd8010 	pop	{r4, pc}
 // Search on 0x12345678 finds function that is called from function with this code (SD780 0xFF842A90)
 */
-  //*(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
+  *(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
 
-  //*(int*)0x1934 = (int)taskHook;
+  *(int*)0x1934 = (int)taskHook;
   ////*(int*)0x1938 = (int)taskHook;
 
   asm volatile (
@@ -190,7 +190,10 @@ void __attribute__((naked,noinline)) sub_ff811198_my() {
 	"bl	sub_ffb399c4\n"
 	"ldr	r0, =0x53000\n" // was: "mov ..., #339968"
 	"str	r0, [sp, #4]\n"
+
 	"ldr	r0, =new_sa\n" // Replaces original start location 0x14fe20
+        "ldr    r0, [r0]\n"
+
 	"ldr	r2, =0x00339c00\n" // was: "[pc, #136]	; ff811248" 
 	"ldr	r1, =0x003324a8\n" // was: "[pc, #140]	; ff811250" 
 	"str	r0, [sp, #8]\n"
@@ -327,8 +330,9 @@ void __attribute__((naked,noinline)) task_Startup_my() { // ff81fa8c
 	"bl	sub_ff839454\n"
 	"bl	sub_ff83be5c\n"
 	"bl	taskcreate_PhySw_my\n" // sub_ff834230
-	//"bl	task_ShootSeqTask_my\n" // sub_ff8377a8 taskcreate_SsTask -> for shoot seq stuff
-	"bl	sub_ff8377a8\n" // sub_ff8377a8 taskcreate_SsTask -> for shoot seq stuff
+	//"bl	sub_ff834230\n"
+	"bl	task_ShootSeqTask_my\n" // sub_ff8377a8 taskcreate_SsTask -> for shoot seq stuff
+	//"bl	sub_ff8377a8\n" // sub_ff8377a8 taskcreate_SsTask -> for shoot seq stuff
 	"bl	sub_ff83be74\n"
 	//"bl	sub_ff8316a8\n" // nullsub
 	"bl	sub_ff833090\n" // Battery.c:0
@@ -352,11 +356,11 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() { // 0xff834230
 	"bne	loc_ff834264\n"
 	"ldr	r3, =0x0\n" // was: "mov ..., #0"
 	"str	r3, [sp]\n"
-	"ldr	r3, =0xff8341fc\n" //   
-	//"ldr	r3, =mykbd_task\n" // 0xff8341fc  
+	//"ldr	r3, =0xff8341fc\n" //   
+	"ldr	r3, =mykbd_task\n" // 0xff8341fc  
         // Increate stack size from 0x800 to 0x2000 for new task_PhySw so we don't have to do stack switch
-	//"ldr	r2, =0x2000\n" // was: "mov ..., #2048"
-	"ldr	r2, =0x800\n" // was: "mov ..., #2048"
+	"ldr	r2, =0x2000\n"
+	//"ldr	r2, =0x800\n" // was: "mov ..., #2048"
 	"ldr	r1, =0x17\n" // was: "mov ..., #23"
 	"ldr	r0, =0xff834438\n" // was: "add	r0, pc, #472"   *"PhySw"
 	"bl	sub_ff839ef8\n" // KernelCreateTask
@@ -467,4 +471,3 @@ void __attribute__((naked,noinline)) sub_ff87a628_my() { // was sub_FF87A5D8_my
 	"pop	{r3, r4, r5, pc}\n"
     );
 }
-
