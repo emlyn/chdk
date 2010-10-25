@@ -1,6 +1,6 @@
 #include "stubs_asm.h"
 
-// 0xff811800 is a nullsub
+// 0xff811800 is a nullsub (points to a "bx lr" instruction)
 
 // First round, these are not found
 NHSTUB(DoAFLock, 0xff83809c)                     // "AFL*"
