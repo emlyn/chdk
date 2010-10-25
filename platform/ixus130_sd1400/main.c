@@ -14,14 +14,7 @@ extern void boot();
 
 void startup()
 {
-#if 0
     long *bss = &link_bss_start;
-    long *ptr;
-
-    volatile unsigned *p = (void*)LED;
-    int counter;
-    counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
-    counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
 
     // sanity check (pointless with automemiso)
     if ((long)&link_bss_end > (MEMISOSTART + MEMISOSIZE)){
@@ -29,13 +22,10 @@ void startup()
 	shutdown();
     }
 
-    counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
-    counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
-
     // initialize .bss senment
-    while (bss<&link_bss_end)
+    while (bss < &link_bss_end)
 	*bss++ = 0;
-#endif
+
     boot();
 }
 
