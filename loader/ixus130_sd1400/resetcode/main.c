@@ -32,8 +32,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
         "mrs    r0, CPSR\n"
         "bic    r0, r0, #63\n"  // 0x3f
         "orr    r0, r0, #211\n" // 0xd3
-        //"msr    CPSR_, r0\n" // doesn't compile, add cf flag:
-        "msr    CPSR_cf, r0\n"
+        "msr    CPSR, r0\n"
         "ldr    r1, =0xc0200000\n" // was: "[pc, #164]  ; ff83ba7c" 
         "mvn    r0, #0\n"       // 0x0
         "str    r0, [r1, #268]\n"
