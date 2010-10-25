@@ -435,39 +435,39 @@ static void conf_change_font_cp() {
 static void conf_change_menu_rbf_file() {
   if (!rbf_load(conf.menu_rbf_file))
     rbf_load_from_8x16(current_font);
-  //rbf_set_codepage(FONT_CP_WIN);
+  rbf_set_codepage(FONT_CP_WIN);
 }
 
 static void conf_change_grid_file() {
-  //grid_lines_load(conf.grid_lines_file);
+  grid_lines_load(conf.grid_lines_file);
 }
 
 static void conf_change_video_bitrate() {
-  //shooting_video_bitrate_change(conf.video_bitrate);
+  shooting_video_bitrate_change(conf.video_bitrate);
 }
 
 static void conf_change_menu_symbol_rbf_file() {
-  //if (!rbf_load_symbol(conf.menu_symbol_rbf_file)) conf.menu_symbol_enable=0;		//AKA
+  if (!rbf_load_symbol(conf.menu_symbol_rbf_file)) conf.menu_symbol_enable=0;		//AKA
 }
 
 static void conf_change_script_file() {
-  //script_load(conf.script_file, 2);
+  script_load(conf.script_file, 2);
 }
 
 void conf_change_dng(void){
 #if DNG_SUPPORT
-  //if (conf.dng_raw) {
-  //  if (!badpixel_list_loaded_b()) load_bad_pixels_list_b("A/CHDK/badpixel.bin");
-  //  if (!badpixel_list_loaded_b()) conf.dng_raw=0;
-  //}
-  //else unload_bad_pixels_list_b();
+  if (conf.dng_raw) {
+    if (!badpixel_list_loaded_b()) load_bad_pixels_list_b("A/CHDK/badpixel.bin");
+    if (!badpixel_list_loaded_b()) conf.dng_raw=0;
+  }
+  else unload_bad_pixels_list_b();
 #endif
 }
 
 void conf_change_dng_ext(void){
 #if defined (DNG_EXT_FROM)
-  //save_ext_for_dng();
-  //if (conf.dng_usb_ext) change_ext_to_dng(); else change_ext_to_default();
+  save_ext_for_dng();
+  if (conf.dng_usb_ext) change_ext_to_dng(); else change_ext_to_default();
 #endif 
 }
 

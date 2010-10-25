@@ -84,8 +84,8 @@ void core_spytask()
 #endif
 
     led_flash(LED_RED, 1);
-    //while((i++<400) && !spytask_can_start) msleep(10);
-    while((i++<100) && !spytask_can_start) msleep(10);
+    while((i++<400) && !spytask_can_start) msleep(10);
+    //while((i++<100) && !spytask_can_start) msleep(10);
     led_flash(LED_RED, 2);
 
     started();
