@@ -100,16 +100,16 @@ void *vid_get_viewport_fb_d() {
 //long vid_get_bitmap_screen_width() { return 320; }
 //long vid_get_bitmap_screen_width() { return 360; }
 //long vid_get_bitmap_screen_width() { return 480; }
-long vid_get_bitmap_screen_width() { return 640; }
+long vid_get_bitmap_screen_width() { return 480; }
 //long vid_get_bitmap_screen_width() { return 720; }
 //long vid_get_bitmap_screen_width() { return 960; }
 
 //long vid_get_bitmap_screen_height() { return 240; }
 //long vid_get_bitmap_screen_height() { return 270; }
-long vid_get_bitmap_screen_height() { return 360; }
+long vid_get_bitmap_screen_height() { return 240; }
 
 //int vid_get_viewport_width() { return 360; }    // viewport is still 360, even though live view is 720 (from SD990)
-int vid_get_viewport_width() { return 640; }
+int vid_get_viewport_width() { return 480; }
 
 /*
 int vid_get_viewport_width() {
@@ -118,7 +118,7 @@ int vid_get_viewport_width() {
 */
 
 //long vid_get_viewport_height() { return 240; }
-long vid_get_viewport_height() { return 360; }
+long vid_get_viewport_height() { return 270; }
 
 // ?!?
 // search for String "9999"
@@ -136,8 +136,8 @@ char *camera_jpeg_count_str() {
 // if buffer width was to small, Logo was shown as distorted "row" on Display
 //long vid_get_bitmap_buffer_width() { return 360; }
 //long vid_get_bitmap_buffer_width() { return 720; }
-long vid_get_bitmap_buffer_width() { return 640; }
+long vid_get_bitmap_buffer_width() { return 960; }
 
 //long vid_get_bitmap_buffer_height() { return 240; }
 //long vid_get_bitmap_buffer_height() { return 270; }
-long vid_get_bitmap_buffer_height() { return 360; }
+long vid_get_bitmap_buffer_height() { return 270; }
