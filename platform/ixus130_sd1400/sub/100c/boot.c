@@ -8,15 +8,39 @@ const char * const new_sa = &_end;
 
 #define offsetof(TYPE, MEMBER) ((int) &((TYPE *)0)->MEMBER)
 
+void __attribute__((naked,noinline)) init_file_modules_task() {    // ff8946cc
+  asm volatile (
+        "push   {r4, r5, r6, lr}\n"
+        "bl     sub_ff88cb10\n"
+        "ldr    r5, =0x00005006\n" // was: "[pc, #408]  ; ff894874" 
+        "movs   r4, r0\n"
+        "ldrne  r1, =0x0\n" // was: "mov ..., #0"
+        "movne  r0, r5\n"
+        "blne   sub_ff89051c\n"
+        "bl     sub_ff88cb3c\n"
+        //"bl     sub_ff88cb3c_my\n"
+        "bl     core_spytask_can_start\n"
+        "cmp    r4, #0\n"       // 0x0
+        "moveq  r0, r5\n"
+        "popeq  {r4, r5, r6, lr}\n"
+        "ldreq  r1, =0x0\n" // was: "mov ..., #0"
+        "beq    sub_ff89051c\n"
+    );
+  led_flash(LED_RED, 1);
+  asm volatile (
+        "pop    {r4, r5, r6, pc}\n"
+    );
+};
+
 void taskHook(context_t **context) {
   task_t * tcb = (task_t*)((char*)context - offsetof(task_t, context));
-  //if (!_strcmp(tcb->name, "PhySw"))           led_flash(LED_RED, 2);
-  if (!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
+  //if (!_strcmp(tcb->name, "PhySw"))           { led_flash(LED_RED, 2); led_flash(LED_GREEN, 1); tcb->entry = (void*)mykbd_task; }
   //if (!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)capt_seq_task;
-  //if (!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
+  if (!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
   //if (!_strcmp(tcb->name, "MovieRecord"))     tcb->entry = (void*)movie_record_task;
   //if (!_strcmp(tcb->name, "ExpDrvTask"))      tcb->entry = (void*)exp_drv_task;
   //if (!_strcmp(tcb->name, "RotarySw"))        tcb->entry = (void*)JogDial_task_my;
+  //led_flash(LED_GREEN, 1);
 }
 
 void CreateTask_spytask() {
@@ -142,10 +166,10 @@ ff85f440: 	05840000 	streq	r0, [r4]
 ff85f444: 	e8bd8010 	pop	{r4, pc}
 // Search on 0x12345678 finds function that is called from function with this code (SD780 0xFF842A90)
 */
-  *(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
+  //*(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
 
-  *(int*)0x1934 = (int)taskHook;
-  ////*(int*)0x1938 = (int)taskHook;
+  //*(int*)0x1934 = (int)taskHook;
+  *(int*)0x1938 = (int)taskHook;
 
   asm volatile (
 	"ldr	r0, =0xff8103cc\n" // was: "[pc, #1036]	; ff810768" 
@@ -471,3 +495,176 @@ void __attribute__((naked,noinline)) sub_ff87a628_my() { // was sub_FF87A5D8_my
 	"pop	{r3, r4, r5, pc}\n"
     );
 }
+
+//****************
+/*
+void __attribute__((naked,noinline)) sub_ff88cb3c_my() {    // sub_FF88FF58_my
+  asm volatile (
+        "push   {r4, lr}\n"
+        "ldr    r0, =0x3\n" // was: "mov ..., #3"
+        "bl     sub_ff86f084_my\n"
+        "bl     sub_ff94002c\n"
+        "ldr    r4, =0x00002f54\n" // was: "[pc, #112]  ; ff88cbc4" 
+        "ldr    r0, [r4, #4]\n"
+        "cmp    r0, #0\n"       // 0x0
+        "bne    loc_ff88cb74\n"
+        "bl     sub_ff86e2cc\n"
+        "bl     sub_ff9344f0\n"
+        "bl     sub_ff86e2cc\n"
+        "bl     sub_ff86a6f0\n"
+        "bl     sub_ff86e1cc\n"
+        "bl     sub_ff93458c\n"
+"loc_ff88cb74:\n"
+        "ldr    r0, =0x1\n" // was: "mov ..., #1"
+        "str    r0, [r4]\n"
+        "pop    {r4, pc}\n"
+    );
+};
+
+void __attribute__((naked,noinline)) sub_ff86f084_my() {    // sub_FF871A04_my
+  asm volatile (
+        "push   {r4, r5, r6, r7, r8, lr}\n"
+        "mov    r8, r0\n"
+        "bl     sub_ff86f004\n"
+        "ldr    r1, =0x00038448\n" // was: "[pc, #-2052]        ; ff86e894" 
+        "mov    r6, r0\n"
+        "add    r4, r1, r0, lsl #7\n"
+        "ldr    r0, [r4, #108]\n"
+        "cmp    r0, #4\n"       // 0x4
+        "ldreq  r1, =0x0000085a\n" // was: "[pc, #208]  ; ff86f17c" 
+        "ldreq  r0, =0xff86eb44\n" // was: "[pc, #200]  ; ff86f178"  **"Mounter.c"
+        "bleq   sub_ff81eb14\n"
+        "mov    r1, r8\n"
+        "mov    r0, r6\n"
+        "bl     sub_ff86e8bc\n"
+        "ldr    r0, [r4, #56]\n"
+        "bl     sub_ff86f724\n"
+        "cmp    r0, #0\n"       // 0x0
+        "streq  r0, [r4, #108]\n"
+        "mov    r0, r6\n"
+        "bl     sub_ff86e94c\n"
+        "mov    r0, r6\n"
+        "bl     sub_ff86ecac\n"
+        "mov    r5, r0\n"
+        "mov    r0, r6\n"
+        "bl     sub_ff86eedc_my\n"
+        "ldr    r6, [r4, #60]\n"
+        "and    r7, r5, r0\n"
+        "cmp    r6, #0\n"       // 0x0
+        "ldr    r1, [r4, #56]\n"
+        "ldreq  r0, =0x80000001\n" // was: "mov ..., #-2147483647"
+        "ldr    r5, =0x0\n" // was: "mov ..., #0"
+        "beq    loc_ff86f134\n"
+        "mov    r0, r1\n"
+        "bl     sub_ff86e434\n"
+        "cmp    r0, #0\n"       // 0x0
+        "ldrne  r5, =0x4\n" // was: "mov ..., #4"
+        "cmp    r6, #5\n"       // 0x5
+        "orrne  r0, r5, #1\n"   // 0x1
+        "biceq  r0, r5, #1\n"   // 0x1
+        "cmp    r7, #0\n"       // 0x0
+        "biceq  r0, r0, #2\n"   // 0x2
+        "orreq  r0, r0, #0x80000000\n"
+        "bicne  r0, r0, #0x80000000\n"
+        "orrne  r0, r0, #2\n"   // 0x2
+"loc_ff86f134:\n"
+        "cmp    r8, #7\n"       // 0x7
+        "str    r0, [r4, #64]\n"
+        "popne  {r4, r5, r6, r7, r8, pc}\n"
+        "mov    r0, r8\n"
+        "bl     sub_ff86f054\n"
+        "cmp    r0, #0\n"       // 0x0
+        "popeq  {r4, r5, r6, r7, r8, lr}\n"
+        "ldreq  r0, =0xff86f180\n" // was: "addeq       r0, pc, #40"   *"EMEM MOUNT ERROR!!!"
+        "beq    sub_ff81177c\n"
+        "pop    {r4, r5, r6, r7, r8, pc}\n"
+    );
+};
+
+void __attribute__((naked,noinline)) sub_ff86eedc_my() {    // FF87185C
+  asm volatile (
+	"push	{r3, r4, r5, r6, r7, r8, r9, lr}\n"
+	"mov	r5, r0\n"
+	"ldr	r0, =0xff86f16c\n" // was: "add	r0, pc, #640"  
+	"ldr	r0, [r0]\n"
+	"ldr	r9, =0x00038448\n" // was: "[pc, #-1632]	; ff86e894" 
+	"str	r0, [sp]\n"
+	"add	r4, r9, r5, lsl #7\n"
+	"ldr	r0, [r4, #108]\n"
+	"tst	r0, #4\n"	// 0x4
+	"ldrne	r0, =0x1\n" // was: "mov ..., #1"
+	"bne	loc_ff86ef48\n"
+	"ldr	r0, [r4, #60]\n"
+	"ldr	r6, =0x00002968\n" // was: "[pc, #-1672]	; ff86e88c" 
+	"cmp	r0, #6\n"	// 0x6
+	"ldr	r8, =0x1\n" // was: "mov ..., #1"
+	"ldr	r7, =0x0\n" // was: "mov ..., #0"
+	"addls	pc, pc, r0, lsl #2\n"
+	"b	loc_ff86efa8\n"
+	"b	loc_ff86ef40\n"
+	"b	loc_ff86ef4c\n"
+	"b	loc_ff86ef4c\n"
+	"b	loc_ff86ef4c\n"
+	"b	loc_ff86ef4c\n"
+	"b	loc_ff86ef64\n"
+	"b	loc_ff86ef4c\n"
+"loc_ff86ef40:\n" // jumptable entry 0
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"str	r7, [r4, #108]\n"
+"loc_ff86ef48:\n"
+	"pop	{r3, r4, r5, r6, r7, r8, r9, pc}\n"
+"loc_ff86ef4c:\n" // 5 refs, jumptable entries 1-4,6
+	"ldr	r0, [r4, #56]\n"
+	"bl	sub_ff86e434\n"
+	"cmp	r0, #0\n"	// 0x0
+	"streq	r7, [r6, #16]\n"
+	"strne	r8, [r6, #16]\n"
+	"b	loc_ff86efb4\n"
+"loc_ff86ef64:\n" // jumptable entry 5
+	"ldr	r2, =0x0\n" // was: "mov ..., #0"
+	"ldr	r1, =0x8000\n" // was: "mov ..., #32768"
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"str	r8, [r6, #16]\n"
+	"bl	sub_ff886bc0\n"
+	"mov	r6, r0\n"
+	"mov	r2, r4\n"
+	"ldr	r1, =0x8000\n" // was: "mov ..., #32768"
+	"bl	sub_ff941dd8\n"
+	"ldr	r0, [r9, r5, lsl #7]\n"
+	"mov	r1, r6\n"
+	"str	r0, [r4, #80]\n"
+	"ldr	r0, [r4, #4]\n"
+	"str	r0, [r4, #84]\n"
+	"mov	r0, r5\n"
+	"bl	sub_ff86e578\n"
+	"b	loc_ff86efb4\n"
+"loc_ff86efa8:\n" // jumptable default entry
+	"ldr	r1, =0x000006c1\n" // was: "[pc, #448]	; ff86f170" 
+	"ldr	r0, =0xff86eb44\n" // was: "sub	r0, pc, #1136"   *"Mounter.c"
+	"bl	sub_ff81eb14\n"
+"loc_ff86efb4:\n" // 2 refs
+	"mov	r0, r5\n"
+	"bl	sub_ff86e1d4\n"
+	"strb	r0, [sp]\n"
+	"mov	r0, r5\n"
+	"mov	r1, sp\n"
+	"bl	sub_ff86edac\n"
+	"cmn	r0, #1\n"	// 0x1
+	"bne	loc_ff86eff4\n"
+	"ldr	r1, =0x000384c8\n" // was: "[pc, #-1860]	; ff86e898" 
+	"add	r0, r5, r5, lsl #4\n"
+	"str	r7, [r1, r0, lsl #2]\n"
+	"ldr	r1, [r4, #108]\n"
+	"ldr	r0, =0x0\n" // was: "mov ..., #0"
+	"bic	r1, r1, #6\n"	// 0x6
+"loc_ff86efec:\n"
+	"str	r1, [r4, #108]\n"
+	"pop	{r3, r4, r5, r6, r7, r8, r9, pc}\n"
+"loc_ff86eff4:\n"
+	"ldr	r1, [r4, #108]\n"
+	"ldr	r0, =0x1\n" // was: "mov ..., #1"
+	"orr	r1, r1, #4\n"	// 0x4
+	"b	loc_ff86efec\n"
+    );
+};
+*/
