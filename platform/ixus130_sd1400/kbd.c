@@ -28,7 +28,7 @@ static int shoot_counter=0;
 #define SD_READONLY_FLAG (0x20000)  // SD-Card Lock Status (locked / unlocked)
 #define USB_MASK (0x80000)          // USB-Power (triggered around 3,5V)
 
-volatile int jogdial_stopped=0;
+//volatile int jogdial_stopped=0;
 
 long __attribute__((naked)) wrap_kbd_p1_f();
 
@@ -74,7 +74,7 @@ void my_kbd_read_keys() {
     if (kbd_process() == 0) {
         // we read keyboard state with _kbd_read_keys()
 
-        jogdial_stopped=0;
+        //jogdial_stopped=0;
     } else {
         // override keys
         physw_status[0] = (kbd_new_state[0] | KEYS_MASK0) & (~KEYS_MASK0 | kbd_mod_state[0]);
@@ -292,7 +292,7 @@ static KeyMap keymap[] = {
     { 2, KEY_ZOOM_IN    , 0x00000004 },
     { 2, KEY_ZOOM_OUT   , 0x00000008 },
     { 2, KEY_MENU       , 0x00000001 },
-    { 0, KEY_PRINT      , 0x0000000C },   // ALT Key workaround: KEY_DISP + KEY_SET (camera has no print key)
+    { 0, KEY_PRINT      , 0x0000000C },   // ALT Key workaround: KEY_DISP(8) + KEY_SET(4) (camera has no print key)
     { 0, 0, 0 }
 };
 
