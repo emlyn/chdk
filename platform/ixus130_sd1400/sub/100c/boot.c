@@ -34,7 +34,7 @@ void __attribute__((naked,noinline)) init_file_modules_task() {    // ff8946cc
 
 void taskHook(context_t **context) {
   task_t * tcb = (task_t*)((char*)context - offsetof(task_t, context));
-  //if (!_strcmp(tcb->name, "PhySw"))           { led_flash(LED_RED, 2); led_flash(LED_GREEN, 1); tcb->entry = (void*)mykbd_task; }
+  if (!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
   //if (!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)capt_seq_task;
   if (!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
   //if (!_strcmp(tcb->name, "MovieRecord"))     tcb->entry = (void*)movie_record_task;
@@ -167,6 +167,7 @@ ff85f444: 	e8bd8010 	pop	{r4, pc}
 // Search on 0x12345678 finds function that is called from function with this code (SD780 0xFF842A90)
 */
   //*(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
+  //*(int*)0x2480 = (*(int*)0xc022012c) & 1 ? 0x200000 : 0x400000;
 
   //*(int*)0x1934 = (int)taskHook;
   *(int*)0x1938 = (int)taskHook;
