@@ -2,9 +2,24 @@
 #include "lolevel.h"
 #include "sd1400_debug.h"
 
+// Force Screen to refresh like original Firmware
+// from SX210, thanks asm1989
 void vid_bitmap_refresh() {
-  _ScreenLock();
-  _RefreshPhysicalScreen(1);
+    extern int enabled_refresh_physical_screen;
+    extern int full_screen_refresh;
+ 
+    // asm1989: i've tried refreshphysical screen (screen unlock) and that caused the canon and
+    // function menu to not display at all. This seems to work and is called in a similar
+    // way in other places where original OSD should be refreshed.
+    extern void _LockAndRefresh();   // wrapper function for screen lock
+    extern void _UnlockAndRefresh();   // wrapper function for screen unlock
+ 
+    _LockAndRefresh();
+ 
+    enabled_refresh_physical_screen=1;
+    full_screen_refresh=3;   // found in ScreenUnlock underneath a CameraLog.c call
+ 
+    _UnlockAndRefresh();
 }
 
 void shutdown() {

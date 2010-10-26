@@ -66,6 +66,7 @@ DEF(zoom_status, 0x315B)   // ?!?
 // ff95dbbc, search for "Ver.005.003" (or other numbers)
 DEF(some_flag_for_af_scan, 0x67e8)
 
+DEF(full_screen_refresh, 0x8dcc) // ??? not sure
 
 // --- ToDo
 //DEF(some_f_for_dng, 0xDEAD)          // ??? TODO NOT FOUND!
