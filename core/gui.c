@@ -2303,19 +2303,19 @@ void other_kbd_process(){
 
 void gui_draw_debug_vals_osd() {
 #ifdef OPT_DEBUGGING
-  if (1) { //conf.debug_misc_vals_show) {
+  if (conf.debug_misc_vals_show) {
         //        long v=get_file_counter();
         //	sprintf(osd_buf, "1:%03d-%04d  ", (v>>18)&0x3FF, (v>>4)&0x3FFF);
         //	sprintf(osd_buf, "1:%d, %08X  ", xxxx, eeee);
         
         extern long physw_status[3];
-        sprintf(osd_buf, "1:%8x  ", physw_status[0]);
+        sprintf(osd_buf, "0:%8x  ", physw_status[0] & ~0x3000d000);
         draw_txt_string(48,  6, osd_buf, conf.osd_color);
 
-        sprintf(osd_buf, "2:%8x  ", physw_status[1]);
+        sprintf(osd_buf, "1:%8x  ", physw_status[1] & ~0x0331300e);
         draw_txt_string(48,  7, osd_buf, conf.osd_color);
 
-        sprintf(osd_buf, "3:%8x  ", physw_status[2]);
+        sprintf(osd_buf, "2:%8x  ", physw_status[2]);
         draw_txt_string(48,  8, osd_buf, conf.osd_color);
 
         //      sprintf(osd_buf, "4:%8x  ", vid_get_viewport_fb_d());
@@ -2335,10 +2335,10 @@ void gui_draw_debug_vals_osd() {
         draw_txt_string(48, 12, osd_buf, conf.osd_color);
 
         // some cameras missing zoom_status
-        #if 0
+        //#if 0
         sprintf(osd_buf, "t:%8x  ", zoom_status);
         draw_txt_string(28, 13, osd_buf, conf.osd_color);
-        #endif
+        //#endif
 
     }
     {
