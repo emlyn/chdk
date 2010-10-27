@@ -35,10 +35,10 @@ void __attribute__((naked,noinline)) init_file_modules_task() {    // ff8946cc
 void taskHook(context_t **context) {
   task_t * tcb = (task_t*)((char*)context - offsetof(task_t, context));
   if (!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
-  //if (!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)capt_seq_task;
+  if (!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)capt_seq_task;
   if (!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
   //if (!_strcmp(tcb->name, "MovieRecord"))     tcb->entry = (void*)movie_record_task;
-  //if (!_strcmp(tcb->name, "ExpDrvTask"))      tcb->entry = (void*)exp_drv_task;
+  if (!_strcmp(tcb->name, "ExpDrvTask"))      tcb->entry = (void*)exp_drv_task;
   //if (!_strcmp(tcb->name, "RotarySw"))        tcb->entry = (void*)JogDial_task_my;
   //led_flash(LED_GREEN, 1);
 }
