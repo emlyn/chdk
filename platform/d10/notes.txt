@@ -1,4 +1,4 @@
-Power shot D10
+Powershot D10
 Camera information
 
 Digic IV
@@ -8,8 +8,8 @@ No iris, only ND filter
 This is a mostly functional BETA build
 
 Not implemented/Not Working
-- USB remote support
-- DNG extension over USB
+- DNG extension over USB: won't be implemented 
+- extra long exposures
 
 Working/completed
 - loader/* done
@@ -28,6 +28,8 @@ Working/completed
 - dark frame subtraction control
 - video quality override
 - video optical zoom unlock
+- USB remote support
+- bracketing in custom timer mode
 
 Scripts tested successfully
 - llibtst.lua 
@@ -36,6 +38,7 @@ Scripts tested successfully
 - romlog.lua
 - badpixel.lua
 - mdfb digic 3
+- remote.bas
 
 Known issues:
 - Continuous shooting with raw/dng enabled crashes (sometimes ?)
@@ -44,3 +47,4 @@ Known issues:
 - DNG has dark borders. This is intentional, the active area covers all pixels that have any data, but there are large areas which have data but are distinct from the normal jpeg area.
 - AF in video doesn't seem to work
 - with video optical zoom, if you zoom into digital zoom, you cannot zoom out the optical
+- PTP doesn't support mode switching
