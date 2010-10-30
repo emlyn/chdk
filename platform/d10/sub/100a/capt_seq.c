@@ -54,7 +54,7 @@ void __attribute__((naked,noinline)) sub_FF934548_my() {
 "                LDRSH   R2, [R8,#0xC]\n"
 "                SUB     R3, R3, #8\n"
 "                BL      sub_FF9368B4\n"
-//"                BL      wait_until_remote_button_is_released\n" // untested!
+"                BL      wait_until_remote_button_is_released\n" // untested!
 "                BL      capt_seq_hook_set_nr\n"
 "                B       sub_FF9345F4\n" // -> continue in firmware
 	);

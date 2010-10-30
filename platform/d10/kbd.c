@@ -29,8 +29,8 @@ static int shoot_counter=0;
 // D10 verified
 #define SD_READONLY_FLAG (0x20000)
 
-// TODO, probably wrong
-#define USB_MASK (0x40000)
+// D10 verified physw in PTP mode
+#define USB_MASK (0x80000)
 
 void kbd_fetch_data(long*);
 
