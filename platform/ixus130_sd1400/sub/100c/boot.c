@@ -166,8 +166,11 @@ ff85f440: 	05840000 	streq	r0, [r4]
 ff85f444: 	e8bd8010 	pop	{r4, pc}
 // Search on 0x12345678 finds function that is called from function with this code (SD780 0xFF842A90)
 */
+  // Power Button detection (short press = playback mode, long press = record mode)
+  // replacement for sub_ff834348
   //*(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
-  //*(int*)0x2480 = (*(int*)0xc022012c) & 1 ? 0x200000 : 0x400000;
+  // Long press on play to start in playback mode:
+  *(int*)0x2480 = (*(int*)0xc022012c) & 1 ? 0x200000 : 0x400000;
 
   //*(int*)0x1934 = (int)taskHook;
   *(int*)0x1938 = (int)taskHook;
@@ -314,8 +317,8 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() { // 0xff81faf0
 "loc_ff81fb30:\n"
 	"b	loc_ff81fb30\n"
 "loc_ff81fb34:\n" // 3 refs
-	"bl	sub_ff834348\n"
-	"bl	sub_ff834344\n"
+	//"bl	sub_ff834348\n" // disabled for correct Power Button detection
+	//"bl	sub_ff834344\n" // nullsub
 	"bl	sub_ff839cb0\n"
 	"ldr	r1, =0x0038e000\n" // was: "[pc, #48]	; ff81fb78" 
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
