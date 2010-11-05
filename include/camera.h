@@ -2057,6 +2057,26 @@
     //-0.055837 0.400827 0.020378
     //-0.004622 0.048662 0.139970
 
+    #undef CAM_USES_ASPECT_CORRECTION
+    #undef CAM_USES_ASPECT_YCORRECTION
+    #define CAM_USES_ASPECT_CORRECTION  1  //camera uses the modified graphics primitives to map screens an viewports to buffers more sized
+    #define CAM_USES_ASPECT_YCORRECTION  0  //only uses mappings on x coordinate
+    #undef GAMES_SCREEN_WIDTH
+    #undef GAMES_SCREEN_HEIGHT
+    #define GAMES_SCREEN_WIDTH 360
+    #define GAMES_SCREEN_HEIGHT 240
+    #undef ASPECT_GAMES_XCORRECTION
+    // 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer wirh another resolution
+    // used by gui.c that configures the draw environment (trhough new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
+    // other modes in perfect aspect ratio 4/3: slightly better visualization: file menus more readable, ...
+    #define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )  
+    #undef ASPECT_GAMES_YCORRECTION
+    #define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
+    #undef ASPECT_GRID_XCORRECTION
+    #define ASPECT_GRID_XCORRECTION(x)  ( ((x)<<3)/9  )  //grids are designed on a 360x240 basis and screen is 320x240, we need x*320/360=x*8/9
+    #undef ASPECT_GRID_YCORRECTION
+    #define ASPECT_GRID_YCORRECTION(y)  ( (y) )       //y correction for grids  made on a 360x240 As the buffer is 720x240 we have no correction here.
+
     #define cam_CalibrationIlluminant1  17			// Standard Light A
 
 	// cropping
