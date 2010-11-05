@@ -493,6 +493,7 @@ void __attribute__((naked,noinline)) sub_ff87a714_my() { // FF87D754
 }
 
 // ff8bab28: task_ExpDrvTask()
+// Is anything changed in here? If not, why not just call original?
 void __attribute__((naked,noinline)) exp_drv_task() { // was FF8C25DC
   asm volatile (
 	"push	{r4, r5, r6, r7, r8, lr}\n"

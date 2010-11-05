@@ -51,7 +51,7 @@ int get_flash_params_count(void){
 
 // based on SX10, values found by experiment
 void ubasic_set_led(int led, int state, int bright) {
-  return; /* doesn't seem to work */
+  return; // doesn't seem to work
   static char led_table[]={0, // green
                            1, // orange, right
                            2, // yellow, left
