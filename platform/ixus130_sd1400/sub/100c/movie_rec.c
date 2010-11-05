@@ -16,6 +16,7 @@ void  set_quality(int *x) { // -17 highest; +12 lowest
 // ff95a5f4: movie_record_task() aka. task_MovieRecord()
 void __attribute__((naked,noinline)) movie_record_task() { // was FF96BD30
   asm volatile (
+    //"b      sub_ff95a5f4\n"
 	"push	{r2, r3, r4, r5, r6, r7, r8, lr}\n"
 	"ldr	r8, =0x000004b3\n" // was: "[pc, #756]	; ff95a8f4" 
 	"ldr	r7, =0x00002710\n" // was: "[pc, #-2512]	; ff959c34" 
@@ -50,12 +51,12 @@ void __attribute__((naked,noinline)) movie_record_task() { // was FF96BD30
 	"ldr	r0, =0xff95a308\n" // was: "sub	r0, pc, #872"  
 	"str	r6, [r4, #52]\n"
 	"str	r0, [r4, #164]\n"
-/*
+
         // Ixus300 has this, referenced in case 4: (what does it do?)
         //"ADR     R0, =0xFF96BA00\n"
-        "LDR     R0, =sub_FF96BA00_my\n"      // +
-        "STR     R0, [R4,#0xAC]\n"
-*/
+        //"LDR     R0, =sub_ff959f88_my\n"      // +
+        //"STR     R0, [R4,#0xAC]\n"
+
 	"ldr	r2, =0xff959820\n" // was: "[pc, #636]	; ff95a8f8" 
 	"ldr	r1, =0x0009668c\n" // was: "[pc, #-2604]	; ff959c54" 
 	"ldr	r0, =0xff959904\n" // was: "sub	r0, pc, #3456"  
@@ -64,17 +65,17 @@ void __attribute__((naked,noinline)) movie_record_task() { // was FF96BD30
 	"str	r5, [r4, #56]\n" // 0x38
 	"b	loc_ff95a6dc\n"
 "loc_ff95a690:\n" // jump table entry 0
-        "b      unlock_optical_zoom\n" // added
+        "bl     unlock_optical_zoom\n" // added (disabled in camera.h, crashes)
 	"bl	sub_ff95a410\n"
 	"b	loc_ff95a6dc\n"
 "loc_ff95a698:\n" // jump table entry 4
-/*
+
         // Ixus300 has the next 2 lines instead of the following one: (what does it do?)
-        "LDR     R1, [R4,#0xAC]\n"
-        "BLX     R1\n"
-*/
-	//"bl	sub_ff959f88\n"
-	"bl	sub_ff959f88_my\n"
+        //"LDR     R1, [R4,#0xAC]\n"
+        //"BLX     R1\n"
+
+	"bl	sub_ff959f88\n"
+	//"bl	sub_ff959f88_my\n"
 	"b	loc_ff95a6dc\n"
 "loc_ff95a6a0:\n" // jump table entry 6
 	"ldr	r1, [r0, #24]\n"
@@ -108,7 +109,7 @@ void __attribute__((naked,noinline)) movie_record_task() { // was FF96BD30
 	"b	loc_ff95a60c\n"
     );
 }
-
+/*
 void __attribute__((naked,noinline)) sub_ff959f88_my() { // was FF96BA00
   asm volatile (
 	"push	{r4, r5, r6, r7, r8, lr}\n"
@@ -331,8 +332,8 @@ void __attribute__((naked,noinline)) sub_ff959f88_my() { // was FF96BA00
 	"ldr	r2, =0xf\n" // was: "mov ..., #15"
 	"bl	sub_ffa8b040\n"
 
-        "ldr    r0, =0x6470-4\n" // added
-        "bl     set_quality\n" // added
+        //"ldr    r0, =0x6470-4\n" // added
+        //"bl     set_quality\n" // added
 
 "loc_ff95a2b0:\n"
 	"ldr	r0, [r6, #92]\n"
@@ -361,3 +362,4 @@ void __attribute__((naked,noinline)) sub_ff959f88_my() { // was FF96BA00
 	"b	loc_ff95a0f8\n"
     );
 }
+*/

@@ -24,7 +24,7 @@ NHSTUB(TurnOffBackLight, 0xff89df30)             // "TurnOffBackLight"
 NHSTUB(TurnOnBackLight, 0xff89df18)              // "TurnOnBackLight"
 NHSTUB(UnlockAF, 0xff838120)                     // "AFUL"
 NHSTUB(Unmount_FileSystem, 0xff811800)
-NHSTUB(UnsetZoomForMovie, 0xff811800)
+NHSTUB(UnsetZoomForMovie, 0xff98c45c)            // "ZoomCon_UnsetZoomForMovie"
 NHSTUB(WriteSDCard, 0xff942b50)                  // "SdDrv.c", compare to sx210is
 NHSTUB(apex2us, 0xff9fc310)                      // (fffffdc0)
 NHSTUB(qsort, 0xffae54e8)                        // search 'orr r2, r0, r2' near 'tst r2, #3'
