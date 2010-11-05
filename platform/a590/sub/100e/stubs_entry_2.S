@@ -108,4 +108,6 @@ NHSTUB(apex2us, 0xFFD7DD6C)
 NHSTUB(WriteSDCard, 0xFFD01548)
 NHSTUB(SetScriptMode, 0xFFC61F08) // string
 
-
+NHSTUB(set_control_event, 0xFFC61C0C) // via eventproc_export_IsControlEventActive (last call)  
+NHSTUB(PB2Rec, 0xFFC64D3C) // via aAcPb2rec  
+NHSTUB(Rec2PB, 0xFFC64D6C) // via aAcRec2pb  

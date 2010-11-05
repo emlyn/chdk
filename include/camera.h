@@ -630,6 +630,7 @@
 
 #define CAM_EXT_TV_RANGE            1
 #define CAM_MULTIPART               1
+#define  CAM_CHDK_PTP               1 // include CHDK PTP support
 //----------------------------------------------------------
 
 #elif defined (CAMERA_a610)
