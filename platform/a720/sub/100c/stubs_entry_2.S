@@ -197,3 +197,7 @@ NHSTUB(DoAFLock, 0xffc16d2c)
 NHSTUB(UnlockAF, 0xffc16d7c)
 NHSTUB(SetScriptMode, 0xFFC5BD20)
 NHSTUB(WriteSDCard,0xFFCF51B0)
+
+NHSTUB(set_control_event, 0xFFC5BAA4) // via eventproc_export_IsControlEventActive (last call)
+NHSTUB(PB2Rec, 0xFFC5ECF8) // via aAcPb2rec
+NHSTUB(Rec2PB, 0xFFC5ED28) // via aAcRec2pb

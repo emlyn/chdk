@@ -913,6 +913,7 @@
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
     #define DNG_EXT_FROM ".CR2"
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 //----------------------------------------------------------
 
 #elif defined (CAMERA_a2000)
