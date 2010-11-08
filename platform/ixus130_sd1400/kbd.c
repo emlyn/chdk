@@ -292,7 +292,8 @@ static KeyMap keymap[] = {
     { 2, KEY_ZOOM_IN    , 0x00000004 },
     { 2, KEY_ZOOM_OUT   , 0x00000008 },
     { 2, KEY_MENU       , 0x00000001 },
-    { 0, KEY_PRINT      , 0x0000000C },   // ALT Key workaround: KEY_DISP(8) + KEY_SET(4) (camera has no print key)
+    //{ 0, KEY_PRINT      , 0x0000000C },   // ALT Key workaround: KEY_DISP(8) + KEY_SET(4) (camera has no print key)
+    { 0, KEY_PRINT      , 0x00000008 },   // ALT Key workaround: KEY_DISP(8) (camera has no print key)
     { 0, 0, 0 }
 };
 
