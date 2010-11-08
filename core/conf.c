@@ -595,7 +595,6 @@ void conf_restore() {
     conf_init_defaults();
 
     conf_load_defaults();
-    return;
 
     if( stat(CONF_FILE,&st) != 0 || st.st_size < sizeof(int))
         return;
