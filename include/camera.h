@@ -2056,7 +2056,7 @@
     //0.459395 -0.129083 -0.068085
     //-0.055837 0.400827 0.020378
     //-0.004622 0.048662 0.139970
-
+/*
     #undef CAM_USES_ASPECT_CORRECTION
     #undef CAM_USES_ASPECT_YCORRECTION
     #define CAM_USES_ASPECT_CORRECTION  1  //camera uses the modified graphics primitives to map screens an viewports to buffers more sized
@@ -2076,7 +2076,7 @@
     #define ASPECT_GRID_XCORRECTION(x)  ( ((x)<<3)/9  )  //grids are designed on a 360x240 basis and screen is 320x240, we need x*320/360=x*8/9
     #undef ASPECT_GRID_YCORRECTION
     #define ASPECT_GRID_YCORRECTION(y)  ( (y) )       //y correction for grids  made on a 360x240 As the buffer is 720x240 we have no correction here.
-
+*/
     #define cam_CalibrationIlluminant1  17			// Standard Light A
 
 	// cropping
