@@ -168,9 +168,9 @@ ff85f444: 	e8bd8010 	pop	{r4, pc}
 */
   // Power Button detection (short press = playback mode, long press = record mode)
   // replacement for sub_ff834348
-  //*(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
+  *(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
   // Long press on play to start in playback mode:
-  *(int*)0x2480 = (*(int*)0xc022012c) & 1 ? 0x200000 : 0x400000;
+  //*(int*)0x2480 = (*(int*)0xc022012c) & 1 ? 0x200000 : 0x400000;
 
   //*(int*)0x1934 = (int)taskHook;
   *(int*)0x1938 = (int)taskHook;
