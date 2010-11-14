@@ -32,6 +32,16 @@ static int shoot_counter=0;
 // D10 verified physw in PTP mode
 #define USB_MASK (0x80000)
 
+/*
+battery door switch, 0: door open
+forcing to one allows camera to run with door open.
+Informational only for now,
+making the camera boot with door open requires some ugly changes in boot.c
+see http://chdk.setepontos.com/index.php?topic=5744.0
+found via GetBatteryCoverClose (which looks in a table that tells it the physw word and bit)
+#define BATDOOR_MASK (0x8000)
+*/
+
 void kbd_fetch_data(long*);
 
 long __attribute__((naked)) wrap_kbd_p1_f() ;
@@ -232,6 +242,9 @@ void my_kbd_read_keys()
         physw_status[2] = physw_status[2] & ~(SD_READONLY_FLAG | USB_MASK);
     }
     else physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
+
+// hide battery door status
+//	physw_status[2] |= BATDOOR_MASK;
 
     _kbd_pwr_off();
 }
