@@ -12,8 +12,8 @@ NHSTUB(MakeAFScan, 0xff95d380)                   // "SsPrepareSeqBase.c"
 NHSTUB(Mount_FileSystem, 0xff811800)             // nullsub
 NHSTUB(OpLog_Get, 0xff88a4b0)                    // just before "OpePlay"
 NHSTUB(PT_PlaySound, 0xff880eb4)                 // (000001ef)
-NHSTUB(PutInNdFilter, 0xffafb2e4)                // (e59f00b0)
-NHSTUB(PutOutNdFilter, 0xffafb31c)               //   ditto
+NHSTUB(PutInNdFilter, 0xffafb228)                // (e59f00b0) (careful, it appears more than once)
+NHSTUB(PutOutNdFilter, 0xffafb260)               //   ditto
 NHSTUB(ReadFastDir, 0xffa751f8)                  // how to find this? same as readfastdir (below)?
 NHSTUB(RefreshPhysicalScreen, 0xff9f786c)        // "ScreenUnLock"
 NHSTUB(Remove, 0xff836bac)                       // ixus300 - 0x240
