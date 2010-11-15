@@ -181,7 +181,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO( 35, conf.raw_in_dir,             CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 36, conf.raw_prefix,             CONF_DEF_VALUE, i:RAW_PREFIX_CRW, NULL),
     CONF_INFO( 37, conf.raw_ext,                CONF_DEF_VALUE, i:DEFAULT_RAW_EXT, NULL),
-    CONF_INFO( 38, conf.reader_file,            CONF_DEF_PTR,   ptr:"A/README.TXT", conf_change_script_file),
+    CONF_INFO( 38, conf.reader_file,            CONF_DEF_PTR,   ptr:"A/README.TXT", NULL),
     CONF_INFO( 39, conf.reader_pos,             CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 40, conf.sokoban_level,          CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 41, conf.show_clock,             CONF_DEF_VALUE, i:2, NULL),
