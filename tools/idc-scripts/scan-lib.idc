@@ -1,5 +1,7 @@
-
-// Change to your ROM start
+// Note: Use correct ROM start address for your firmware dump
+// Camera A-series
+//#define ROM_START   0xFFC00000
+// Camera S-, SD-, and G- series
 #define ROM_START   0xFF810000
 
 
@@ -22,8 +24,6 @@ static getString(addr)
 
   return stringRead;
 }
-
-
 
 
 static replace(str, src, dest)
