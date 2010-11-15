@@ -3052,7 +3052,7 @@
   
    #undef EDGE_HMARGIN
    #define EDGE_HMARGIN 28
-
+   #define CAM_CHDK_PTP 1
 //----------------------------------------------------------
 
 
