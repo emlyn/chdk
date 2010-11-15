@@ -3,18 +3,21 @@
 int *video_quality = &conf.video_quality;
 int *video_mode    = &conf.video_mode;
 
-long def_table1[9]={0x2000,0x38D,0x788,0x5800,0x9C5,0x14B8,0x10000,0x1C6A,0x3C45};   // ???
-long def_table2[9]={0x1CCD,-0x2E1,-0x579,0x4F33,-0x7EB,-0xF0C,0xE666,-0x170A,-0x2BC6};   // ???
+long def_table1[9]= {0x2000,0x38D,0x788,0x5800,0x9C5,0x14B8,0x10000,0x1C6A,0x3C45};    // ???
+long def_table2[9]= {0x1CCD,-0x2E1,-0x579,0x4F33,-0x7EB,-0xF0C,0xE666,-0x170A,-0x2BC6};    // ???
 
 long table1[9], table2[9];
 
 void change_video_tables(int a, int b) {
     int i;
-    for (i=0;i<9;i++) { table1[i]=(def_table1[i]*a)/b; table2[i]=(def_table2[i]*a)/b; }
+    for(i=0; i<9; i++) {
+        table1[i]=(def_table1[i]*a)/b;
+        table2[i]=(def_table2[i]*a)/b;
+    }
 }
 
 //long CompressionRateTable[]={0x60, 0x5D, 0x5A, 0x57, 0x54, 0x51, 0x4D, 0x48, 0x42, 0x3B, 0x32, 0x29, 0x22, 0x1D, 0x17, 0x14, 0x10, 0xE, 0xB, 9, 7, 6, 5, 4, 3, 2, 1};   // from SD800
-long CompressionRateTable[]={0x54, 0x51, 0x4D, 0x48, 0x42, 0x3B, 0x32, 0x29, 0x22, 0x1D, 0x17, 0x14, 0x10, 0xE, 0xB, 9, 7, 6, 5, 4, 3, 2, 1};   // ??? ROM:FF986318
+long CompressionRateTable[]= {0x54, 0x51, 0x4D, 0x48, 0x42, 0x3B, 0x32, 0x29, 0x22, 0x1D, 0x17, 0x14, 0x10, 0xE, 0xB, 9, 7, 6, 5, 4, 3, 2, 1};  // ??? ROM:FF986318
 
 // ROM:FF984E84 task_MovieRecord()
 void __attribute__((naked,noinline)) movie_record_task() {
@@ -105,7 +108,7 @@ void __attribute__((naked,noinline)) movie_record_task() {
 
 // ROM:FF98565C
 void __attribute__((naked,noinline)) sub_FF98565C_my() {
-     asm volatile(
+    asm volatile(
         "STMFD   SP!, {R4-R11,LR}\n"
         "LDR     R5, =0x76410\n"
         "SUB     SP, SP, #0x34\n"
@@ -260,7 +263,7 @@ void __attribute__((naked,noinline)) sub_FF98565C_my() {
     );
 }
 
-void __attribute__((naked,noinline)) sub_FF98650C_my(){
+void __attribute__((naked,noinline)) sub_FF98650C_my() {
     asm volatile(
         "CMP     R2, #1\n"
         "STMFD   SP!, {R4-R7,LR}\n"

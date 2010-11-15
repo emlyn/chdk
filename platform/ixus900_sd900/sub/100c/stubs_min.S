@@ -205,17 +205,12 @@ ROM:FF9E1F4C                 BL      eventproc_export_PTM_RestoreUIProperty ; LO
 DEF(recreview_hold, 0x7EB0)   // ROM:FF9E1F18 after function string "AR:Snd:0x%04x", LDR R3, =0x7EB4; then 0x7EB4 - 0x4 = 0x7EB0 (quietschi's prescription, SD1000)
 
 
-//DEF(zoom_status, 0x7DB0)   // from SD800 ROM:FF9EAADC ?
-DEF(zoom_status, 0x7F70)
+DEF(zoom_status, 0x7F70)   // OK
 
-
-//DEF(movie_status, 0x8BC00)   // from SD800 ROM:FF98BE98 ?
-DEF(movie_status, 0x76410)
-
+DEF(movie_status, 0x76410)   // ROM:FF985994, OK
 
 //DEF(some_flag_for_af_scan, 0x6AE0)   // from SD800 ROM:FF99923C or ROM:FF99B358 ?
 DEF(some_flag_for_af_scan, 0x6B8C)   // ??? ROM:FF992F68 or ROM:FF99524C
-
 
 // DEF(some_f_for_dng, 0x9A68)   // ??? from SD800 ROM:FFAB182C ?
 //DEF(some_f_for_dng, 0x9CD4)   // ??? ROM:FFAB1180

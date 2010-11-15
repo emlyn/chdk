@@ -10,7 +10,7 @@ static long *nrflag = (long*)0x6B78;   // ??? ROM:FF995AB8
 
 // ROM:FF992B24 task_CaptSeqTask() (SD800: ROM:FF998E1C)
 void __attribute__((naked,noinline)) capt_seq_task() {
-    asm volatile (
+    asm volatile(
         "STMFD   SP!, {R4,LR}\n"
         "SUB     SP, SP, #4\n"
         "MOV     R4, SP\n"
@@ -186,7 +186,7 @@ void __attribute__((naked,noinline)) capt_seq_task() {
 
 // ROM:FF9925E4
 void __attribute__((naked,noinline)) sub_FF9925E4_my(long p) {
-    asm volatile (
+    asm volatile(
         "STMFD   SP!, {R4,LR}\n"
         "LDR     R4, [R0,#0xC]\n"
         "LDR     R3, [R4,#8]\n"
@@ -327,7 +327,7 @@ void __attribute__((naked,noinline)) sub_FF9925E4_my(long p) {
 
 // ROM:FF995A50
 void __attribute__((naked,noinline)) sub_FF995A50_my(long p) {
-    asm volatile (
+    asm volatile(
         "STMFD   SP!, {R4,R5,LR}\n"
         "MOV     R4, R0\n"
         "SUB     SP, SP, #0xC\n"

@@ -1,7 +1,10 @@
-#define PARAM_FILE_COUNTER      0x34   // ??? 0x34 , 0x37 count of available camera parameter
-//#define PARAM_FILE_COUNTER      0x6D   // 109, count of available camera parameter
-
 #include "platform.h"
+
+// Camera Parameter of Image Filenumber
+// wrong PARAM_FILE_COUNTER cause camera shutdown if RAW is enabled or wrong number in RAW filename (for example always CRW_0001.CRW)
+// use "Debug Paramenters -> Debug data display -> Params" to verify
+// 0x6D = 109, count of available Camera Parameter
+#define PARAM_FILE_COUNTER      0x34
 
 // PROPCASE_AV (68)
 // Take a picture with the camera at every zoom step and note each PROPCASE_AV value. Repeat former steps but focus at an very bright light source where camera puts in ND filter (focus a lamp bulp for example). Look at EXIF data from your picture to get correspondig Aperture value.
@@ -155,8 +158,8 @@ char* shooting_get_tv_str() {
     short int tvv;
     long i;
     _GetPropertyCase(PROPCASE_TV, &tvv, sizeof(tvv));
-    for (i=0;i<SS_SIZE;i++) {
-        if (shutter_speeds_table[i].prop_id >= tvv)
+    for(i=0; i<SS_SIZE; i++) {
+        if(shutter_speeds_table[i].prop_id >= tvv)
             return (char*)shutter_speeds_table[i].name;
     }
     return (void*)"?";
@@ -167,8 +170,8 @@ char* shooting_get_av_str() {
     short int avv;
     long i;
     _GetPropertyCase(PROPCASE_AV, &avv, sizeof(avv));
-    for (i=0;i<AS_SIZE;i++) {
-        if (aperture_sizes_table[i].prop_id == avv)
+    for(i=0; i<AS_SIZE; i++) {
+        if(aperture_sizes_table[i].prop_id == avv)
             return (char*)aperture_sizes_table[i].name;
     }
     return (char*) "?";
@@ -179,8 +182,8 @@ char* shooting_get_iso_str() {
     short int isov;
     long i;
     _GetPropertyCase(PROPCASE_ISO_MODE, &isov, sizeof(isov));
-    for (i=0;i<ISO_SIZE;i++) {
-        if (iso_table[i].prop_id == isov)
+    for(i=0; i<ISO_SIZE; i++) {
+        if(iso_table[i].prop_id == isov)
             return (char*)iso_table[i].name;
     }
     return (char*) "?";

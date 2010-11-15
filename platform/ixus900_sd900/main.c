@@ -19,14 +19,14 @@ int get_effective_focal_length(int zp) {
 }
 
 int get_focal_length(int zp) {
-    if (zp<0) return fl_tbl[0];
-    else if (zp>NUM_FL-1) return fl_tbl[NUM_FL-1];
+    if(zp<0) return fl_tbl[0];
+    else if(zp>NUM_FL-1) return fl_tbl[NUM_FL-1];
     else return fl_tbl[zp];
 }
 
 int get_zoom_x(int zp) {
-    if (zp<1) return 10;
-    else if (zp>NUM_FL-1) return fl_tbl[NUM_FL-1]*10/fl_tbl[0];
+    if(zp<1) return 10;
+    else if(zp>NUM_FL-1) return fl_tbl[NUM_FL-1]*10/fl_tbl[0];
     else return fl_tbl[zp]*10/fl_tbl[0];
 }
 

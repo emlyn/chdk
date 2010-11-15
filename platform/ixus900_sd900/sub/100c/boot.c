@@ -4,15 +4,15 @@
 
 const char * const new_sa = &_end;
 
-/* Ours stuff */
+// Ours stuff
 extern long wrs_kernel_bss_start;
 extern long wrs_kernel_bss_end;
-extern void createHook (void *pNewTcb);
-extern void deleteHook (void *pTcb);
+extern void createHook(void *pNewTcb);
+extern void deleteHook(void *pTcb);
 
 void boot();
 
-/* "relocated" functions */
+// "relocated" functions
 void __attribute__((naked,noinline)) h_usrInit();
 void __attribute__((naked,noinline)) h_usrKernelInit();
 void __attribute__((naked,noinline)) h_usrRoot();
@@ -29,7 +29,7 @@ void boot() {
     long i;
 
     // ROM:FF8100E4 , same as SD800, SD750 and other VxWorks
-    asm volatile (
+    asm volatile(
         "MRC     p15, 0, R0,c1,c0\n"
         "ORR     R0, R0, #0x1000\n"
         "ORR     R0, R0, #4\n"
@@ -38,14 +38,14 @@ void boot() {
         :::"r0"
     );
 
-    for(i=0;i<canon_data_len/4;i++)
+    for(i=0; i<canon_data_len/4; i++)
         canon_data_dst[i]=canon_data_src[i];
 
-    for(i=0;i<canon_bss_len/4;i++)
+    for(i=0; i<canon_bss_len/4; i++)
         canon_bss_start[i]=0;
 
     // ROM:FF81015C , same as SD800, SD750 and other VxWorks
-    asm volatile (
+    asm volatile(
         "MRC     p15, 0, R0,c1,c0\n"
         "ORR     R0, R0, #0x1000\n"
         "BIC     R0, R0, #4\n"
@@ -59,7 +59,7 @@ void boot() {
 
 // ROM:FF81198C
 void h_usrInit() {
-    asm volatile (
+    asm volatile(
         "STR     LR, [SP,#-4]!\n"
         "BL      sub_FF811968\n"
         "MOV     R0, #2\n"
@@ -75,7 +75,7 @@ void h_usrInit() {
 
 // ROM:FF811744 #
 void  h_usrKernelInit() {
-    asm volatile (
+    asm volatile(
         "STMFD   SP!, {R4,LR}\n"
         "SUB     SP, SP, #8\n"
         "BL      sub_FFB54A84\n"     // classLibInit()
@@ -113,24 +113,23 @@ void  h_usrKernelInit() {
 
 void  h_usrRoot() {
     // ROM:FF811A60
-    asm volatile (
+    asm volatile(
         "STMFD   SP!, {R4,R5,LR}\n"
         "MOV     R5, R0\n"
         "MOV     R4, R1\n"
-        "BL      sub_FF8119D0\n"   // lib_Init() ###
+        "BL      sub_FF8119D0\n"   // lib_Init()
         "MOV     R1, R4\n"
         "MOV     R0, R5\n"
-        "BL      sub_FFB59718\n"   // memInit() ###
+        "BL      sub_FFB59718\n"   // memInit()
         "MOV     R1, R4\n"
         "MOV     R0, R5\n"
-        "BL      sub_FFB5A190\n"   // memPartLibInit() ###
-        "BL      sub_FF8117E8\n"   // nullsub_1() , required ? ###
+        "BL      sub_FFB5A190\n"   // memPartLibInit()
+        //"BL      sub_FF8117E8\n"   // nullsub_1()
         "BL      sub_FF811704\n"
         "BL      sub_FF811A0C\n"   // tty_Init() (console log)
         //"BL      sub_FF811A0C_my\n"   // tty_Init() (console log)
         "BL      sub_FF8119F0\n"   // env_Init()
         "BL      sub_FF811A38\n"   // stdlog_Init() (logInit)
-        
         "BL      sub_FF8119C4\n"   // show_Init()
     );
 
@@ -139,8 +138,8 @@ void  h_usrRoot() {
 
     drv_self_hide();
 
-    // ROM:FF811AA0 , search for "B       taskcreate_Startup" , same as SD800, SD750
-    asm volatile (
+    // ROM:FF811AA0 , same as SD800, SD750
+    asm volatile(
         "LDMFD   SP!, {R4,R5,LR}\n"
         "B       sub_FF81136C\n"   // startup_Init()
     );

@@ -48,7 +48,7 @@ ROM:FF9985EC                 DCD 0x114D36C0
 ***********/
 char *hook_raw_image_addr() {
     // return (char*)(0x1082C320);   // 0x1082C000 + 0x320 does not work
-    return (char*) (*(int*)0x6BC4 ? 0x11BE3880 : 0x1082C320);   // looks like SD900 has volatile RAW buffer like G7 / G9 / A650
+    return (char*)(*(int*)0x6BC4 ? 0x11BE3880 : 0x1082C320);    // looks like SD900 has volatile RAW buffer like G7 / G9 / A650
 }
 
 /*********** hook_raw_size()
@@ -123,10 +123,9 @@ void *vid_get_viewport_live_fb() {   // live picture buffer (shoot not pressed)
     //return (void*)0x106E64B0;   // 0x1065B130 + 0x8B380
     void **fb = (void **)0x55BC;
     unsigned char buff = *((unsigned char*)0x55D4);
-    if (buff == 0) {
+    if(buff == 0) {
         buff = 2;
-    }
-    else {
+    } else {
         buff--;
     }
     return fb[buff];
@@ -202,6 +201,10 @@ char *camera_jpeg_count_str() {
     return (char*)0x818C8;   // ROM:FFAA714C
 }
 
-long vid_get_bitmap_buffer_width() { return 360; }
+long vid_get_bitmap_buffer_width() {
+    return 360;
+}
 
-long vid_get_bitmap_buffer_height() { return 240; }
+long vid_get_bitmap_buffer_height() {
+    return 240;
+}
