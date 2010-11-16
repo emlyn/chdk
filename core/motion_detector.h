@@ -93,7 +93,6 @@ function md_get_cell_diff (
 #ifndef __MOTION_DETECTOR__
 #define __MOTION_DETECTOR__
 
-#include "../include/ubasic.h"
 #include "../include/platform.h"
 #include "../include/stdlib.h"
 #include "../include/script.h"
@@ -131,9 +130,6 @@ int md_init_motion_detector(
              // true(1) to draw grid(detected sectors/cells).
              // false(0) - to not display grid/detected sectors
 
- int ret_var_num, // variable number into wich return result
-
-
 // clipping. allows to exclude some region from mtion detection triggering
 // or use onli selected area to make motion detection
 // I'm not sure that following parameters are required but using them anyway
@@ -169,6 +165,7 @@ void md_init();
 
 int md_running();
 void md_draw_grid();
+int md_get_result();
 
 #endif
 

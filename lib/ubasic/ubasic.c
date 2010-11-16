@@ -111,6 +111,8 @@ static int variables[MAX_VARNUM];
 
 static int ended;
 
+static int ubasic_md_ret_var_num;
+
 static int expr(void);
 static void line_statement(void);
 static void statement(void);
@@ -2205,7 +2207,6 @@ static void md_detect_motion_statement()
  int clipping_region_column1=0;
  int clipping_region_row2=0;
  int clipping_region_column2=0;
- int ret_var_num;
  int parameters=0;
  int pixels_step=1;
  int msecs_before_trigger=0;
@@ -2235,7 +2236,7 @@ static void md_detect_motion_statement()
 		draw_grid=expr();tokenizer_next();
 
 //		printf("token: %d",tokenizer_token());
-    ret_var_num = tokenizer_variable_num();
+        ubasic_md_ret_var_num = tokenizer_variable_num();
 
 //		printf("%d,%d,%d,%d",columns,rows,pixel_measure_mode, detection_timeout);
 
@@ -2297,7 +2298,7 @@ static void md_detect_motion_statement()
 
 	md_init_motion_detector(
 			columns, rows, pixel_measure_mode, detection_timeout, 
-			measure_interval, threshold, draw_grid, ret_var_num,
+			measure_interval, threshold, draw_grid,
 			clipping_region_mode,
 			clipping_region_column1, clipping_region_row1,
 			clipping_region_column2, clipping_region_row2,
@@ -2744,3 +2745,8 @@ void
 ubasic_end() {
 }
 /*---------------------------------------------------------------------------*/
+
+void ubasic_set_md_ret(int md_ret)
+{
+    ubasic_set_variable(ubasic_md_ret_var_num, md_ret);
+}

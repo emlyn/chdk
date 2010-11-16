@@ -68,5 +68,6 @@ int jump_label(char * label);
 
 int ubasic_get_variable(int varnum);
 void ubasic_set_variable(int varum, int value);
+void ubasic_set_md_ret(int md_ret);
 
 #endif /* __UBASIC_H__ */

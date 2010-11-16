@@ -394,7 +394,11 @@ void process_script()
                            // We need to recover the motion detector's
                            // result from ubasic variable 0 and push
                            // it onto the thread's stack. -- AUJ
-                           lua_pushnumber( Lt, ubasic_get_variable(0) );
+                           lua_pushnumber( Lt, md_get_result() );
+                    }
+                    else
+                    {
+                           ubasic_set_md_ret(md_get_result());
                     }
                 }
                 return;

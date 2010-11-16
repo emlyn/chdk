@@ -99,7 +99,7 @@ struct motion_detector_s {
 
 	int previous_picture_is_ready;
 
-	int ret_var_num;
+	int return_value;
 	int parameters;
 	int pixels_step;
 	int msecs_before_trigger;
@@ -141,7 +141,6 @@ int md_init_motion_detector(
  int measure_interval,
  int threshold,
  int draw_grid,
- int ret_var_num,
  int clipping_region_mode,
  int clipping_region_column1,
  int clipping_region_row1,
@@ -206,7 +205,7 @@ int md_init_motion_detector(
 	motion_detector->pixels_step=pixels_step;
 	motion_detector->columns=columns;
 	motion_detector->rows=rows;
-	motion_detector->ret_var_num=ret_var_num;
+	motion_detector->return_value=0;
 	
 
 	motion_detector->pixel_measure_mode=pixel_measure_mode;
@@ -553,8 +552,8 @@ img += bufoff * 0x7E900;
 
 		if (motion_detector->start_time+motion_detector->msecs_before_trigger < tick){
 			motion_detector->running=0;
-			ubasic_set_variable(motion_detector->ret_var_num, motion_detector->detected_cells);
-
+            motion_detector->return_value = motion_detector->detected_cells;
+            
 //			md_save_calls_history();
 			if( ( motion_detector->parameters&MD_DO_IMMEDIATE_SHOOT ) !=0){
 				//make shoot
@@ -670,7 +669,10 @@ void md_draw_grid(){
 				col=0;
 			}
 	}
-	
-	
 
+}
+
+int md_get_result()
+{
+    return motion_detector->return_value;
 }
