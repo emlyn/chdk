@@ -56,7 +56,7 @@ int get_flash_params_count(void){
  return 85;
 }
 
-void ubasic_set_led(int led, int state, int bright)
+void camera_set_led(int led, int state, int bright)
 {
 	if (state) {
 		if (bright > LED_BRIGHTNESS) bright = LED_BRIGHTNESS;

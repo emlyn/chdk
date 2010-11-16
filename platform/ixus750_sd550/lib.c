@@ -30,7 +30,7 @@ void debug_led(int state)
 #define LED_AF 0xc02200ec
 #define LED_BASE 0xc02200dc
 
-void ubasic_set_led(int led, int state, int bright)
+void camera_set_led(int led, int state, int bright)
 
 {
   int leds[] = {12,16,4,8,4,0,4};

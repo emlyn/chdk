@@ -46,7 +46,7 @@ void debug_led_c(int color, int state)
 }
 
 //  fe50 10-Aug-2008
-void ubasic_set_led(int led, int state, int bright)
+void camera_set_led(int led, int state, int bright)
 {
 	// "brigth" not implemented
 	// YELLOW not available
@@ -60,7 +60,7 @@ void ubasic_set_led(int led, int state, int bright)
 		p[0]=0x44;
 }
 
-//void ubasic_set_led(int led, int state, int bright)
+//void camera_set_led(int led, int state, int bright)
 //{
 //	static char led_table[5]={4,5,7,8,9};
 //	_LEDDrive(led_table[led%sizeof(led_table)], state<=1 ? !state : state);

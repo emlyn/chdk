@@ -35,7 +35,7 @@ int get_flash_params_count(void){
 
 #define LED_BASE 0xc02200C0
 
-void ubasic_set_led(int led, int state, int bright)
+void camera_set_led(int led, int state, int bright)
 
 {
   int leds[] = {12,16,4,8,4,0,4};

@@ -41,7 +41,7 @@ void debug_led(int state)
 
 #define LED_BASE 0xC02200C0
 
-void ubasic_set_led(int led, int state, int bright)
+void camera_set_led(int led, int state, int bright)
 
 {
   int leds[] = {12,16,-1,8,4,0,20}; // cannot quite figure, in which order they're supposed to be..

@@ -13,7 +13,7 @@
 #define SCRIPT_MAX_LINE_LENGTH        45
 
 //-------------------------------------------------------------------
-const char *state_ubasic_script=NULL; //ERR99
+const char *script_source_str=NULL; //ERR99
 char cfg_name[100] = "\0";
 char cfg_set_name[100] = "\0";
 int script_console_num_lines, script_console_line_length, script_console_x, script_console_y, auto_redraw=1;
@@ -134,7 +134,7 @@ static void process_default(const char *param, char update) {
 
 //-------------------------------------------------------------------
 static void script_scan(const char *fn, int update_vars) {
-    register const char *ptr = state_ubasic_script;
+    register const char *ptr = script_source_str;
     register int i, j=0, n;
     char *c;
 
@@ -335,10 +335,10 @@ void script_load(const char *fn, int saved_params) {
 
 //    save_params_values(0);
 
-    if(state_ubasic_script && state_ubasic_script != ubasic_script_default)
-        free((void *)state_ubasic_script);
+    if(script_source_str && script_source_str != ubasic_script_default)
+        free((void *)script_source_str);
 
-    state_ubasic_script = ubasic_script_default;
+    script_source_str = ubasic_script_default;
     update_vars = (strcmp(fn, conf.script_file) != 0) || !saved_params || (saved_params == 2);  // update if new file
 
     if (!fn[0]) { // load internal script
@@ -380,7 +380,7 @@ void script_load(const char *fn, int saved_params) {
         rcnt = fread(buf, 1, st.st_size,fd);
         if (rcnt > 0){
             buf[rcnt] = 0;
-            state_ubasic_script = buf;
+            script_source_str = buf;
             strcpy(conf.script_file, fn);
         }
         else {

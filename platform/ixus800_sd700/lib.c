@@ -31,7 +31,7 @@ void debug_led(int state)
 	p[0]=0x44;
 }
 
-void ubasic_set_led(int led, int state, int bright)
+void camera_set_led(int led, int state, int bright)
 {
 	debug_led(state);
 }

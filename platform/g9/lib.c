@@ -32,7 +32,7 @@ void debug_led(int state)
 #define LED_BASE 0xc0220080
 #define LED_AF 0xC0220094//was 0xc0220080 //a650- 0xc0220080//from g7
 
-void ubasic_set_led1(int led, int state, int bright)//?
+void camera_set_led1(int led, int state, int bright)//?
 {
   int leds[] = {12,16,4,8,4,0,4};
   if(led < 4 || led > 10 || led == 6) return;

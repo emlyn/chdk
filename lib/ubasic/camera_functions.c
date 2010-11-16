@@ -162,19 +162,19 @@ int md_init_motion_detector()
     printf("*** md_init_motion_detector ***\n");
 	return 0;
 }
-void ubasic_camera_set_nr(to) 
+void camera_set_nr(to) 
 {
 	raw_nr = to;
     printf("*** set raw nr %d ***\n",raw_nr);
 };
 
-int ubasic_camera_get_nr(to) 
+int camera_get_nr(to) 
 {
     printf("*** get raw nr ***\n");
 	return raw_nr;
 };
 
-void ubasic_camera_set_raw(int mode)
+void camera_set_raw(int mode)
 {
 	raw = mode;
     printf("*** set raw %d ***\n",raw);
@@ -196,7 +196,7 @@ long stat_get_vbatt()
 {
 	return 4085;
 }
-void ubasic_set_led(int led, int state, int bright)
+void camera_set_led(int led, int state, int bright)
 {
     printf("*** set led %d %d %d ***\n",led, state, bright);
 }
@@ -209,11 +209,11 @@ int shooting_get_tick_count()
 {
 	return 0;
 }
-int ubasic_camera_script_autostart()
+int camera_get_script_autostart()
 {
 	return 0;
 }
-void ubasic_camera_set_script_autostart(int state)
+void camera_set_script_autostart(int state)
 {
 	autostart = state;
     printf("*** set autostart %d ***\n",autostart);

@@ -402,11 +402,11 @@ int get_battery_temp();
 long get_vbatt_min();
 long get_vbatt_max();
 void play_sound(unsigned sound);
-void ubasic_camera_set_raw(int mode);
-void ubasic_camera_set_nr(int mode);
-int ubasic_camera_get_nr();
-int ubasic_camera_script_autostart();
-void ubasic_camera_set_script_autostart();
+void camera_set_raw(int mode);
+void camera_set_nr(int mode);
+int camera_get_nr();
+int camera_get_script_autostart();
+void camera_set_script_autostart();
 void exit_alt();
 void camera_shutdown_in_a_second(void); 
 
@@ -420,7 +420,7 @@ int get_flash_params_count(void);
 
 /******************************************************************/
 void __attribute__((noreturn)) shutdown();
-void ubasic_set_led(int led, int state, int bright);
+void camera_set_led(int led, int state, int bright);
 void debug_led(int state);
 /****************************************/
 extern int canon_menu_active;  

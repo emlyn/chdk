@@ -542,11 +542,11 @@ void __attribute__((noinline)) task_blinker() {
                     *led = 0x44;      // LED off
                     led=(void *)ledlist[(i_led)%4];
                     //led=(void *)ledlist[(++i_led)%4];
-                    //ubasic_set_led(i_led % 6, ledstate, 0);
+                    //camera_set_led(i_led % 6, ledstate, 0);
                     //core_test(1);
             } else {
                     ledstate = 1;
-                    //ubasic_set_led(i_led % 6, ledstate, 0);
+                    //camera_set_led(i_led % 6, ledstate, 0);
                     *led = 0x46;      // LED on
                     //core_test(0);
             }

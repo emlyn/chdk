@@ -32,7 +32,7 @@ int get_flash_params_count(void){
 
 // from  Microfunguy in
 // http://chdk.setepontos.com/index.php/topic,4324.msg55475.html#msg55475
-void ubasic_set_led(int led, int state, int bright)
+void camera_set_led(int led, int state, int bright)
 {
    int leds[] = {0x134,0x138,0x134,0x130,0x134,0x3030,0x3030};  //  green=4 | (yellow) | (not used) | orange | (not used) | af beam | timer
    volatile long *p=(void*)0xc0220000 + leds[(led-4)%sizeof(leds)];

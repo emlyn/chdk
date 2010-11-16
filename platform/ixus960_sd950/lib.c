@@ -23,7 +23,7 @@ else
 p[0]=0x44;
 }
 #define LED_AF 0xc0223030
-void ubasic_set_led(int led, int state, int bright)
+void camera_set_led(int led, int state, int bright)
 {
 int leds[] = {106,0,0,103,0,3940,0};
 if(led < 4 || led > 10 || led == 6) return;

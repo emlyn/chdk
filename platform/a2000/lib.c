@@ -55,7 +55,7 @@ int get_flash_params_count(void){
  return 120; 
 }
 
-void ubasic_set_led(int led, int state, int bright) { 
+void camera_set_led(int led, int state, int bright) { 
         struct led_control led_c; 
         char convert_table[11]={0,1,2,3,0,2,3,1,8,10,10};  // s3 to a710 (and a720) convert table
 

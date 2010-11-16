@@ -41,7 +41,7 @@ int get_flash_params_count(void){
 
 #define LED_BASE 0xC02200C0
 
-void ubasic_set_led(int led, int state, int bright)
+void camera_set_led(int led, int state, int bright)
 {
   int leds[] = {12,16,4,8,4,0,4};
   if(led < 4 || led > 10 || led == 6) return;

@@ -243,7 +243,7 @@ case TOKENIZER_GET_VBATT:
    break;
  case TOKENIZER_GET_RAW_NR:
     accept(TOKENIZER_GET_RAW_NR);
-    r = ubasic_camera_get_nr();     
+    r = camera_get_nr();     
     break;
  case TOKENIZER_IS_KEY:
     accept(TOKENIZER_IS_KEY);
@@ -253,7 +253,7 @@ case TOKENIZER_GET_VBATT:
     break;
 case TOKENIZER_SCRIPT_AUTOSTARTED:
     accept(TOKENIZER_SCRIPT_AUTOSTARTED);
-    r = ubasic_camera_script_autostart();
+    r = camera_get_script_autostart();
     break;
 case TOKENIZER_GET_SCRIPT_AUTOSTART:
     accept(TOKENIZER_GET_SCRIPT_AUTOSTART);
@@ -1964,7 +1964,7 @@ static void set_led_statement()
 	if (tokenizer_token() != TOKENIZER_CR && tokenizer_token() != TOKENIZER_ELSE ) {
 		to2 = expr();
     }
-	ubasic_set_led(to, to1, to2);
+	camera_set_led(to, to1, to2);
     accept_cr();
 }
 static void set_prop_statement()
@@ -2026,7 +2026,7 @@ static void set_raw_statement()
     int to;
     accept(TOKENIZER_SET_RAW);
     to = expr();
-    ubasic_camera_set_raw(to);
+    camera_set_raw(to);
     accept_cr();
 }
 static void set_raw_nr_statement()
@@ -2034,7 +2034,7 @@ static void set_raw_nr_statement()
     int to;
     accept(TOKENIZER_SET_RAW_NR);
     to = expr();
-    ubasic_camera_set_nr(to);
+    camera_set_nr(to);
     accept_cr();
 }
 

@@ -17,7 +17,7 @@ long lens_get_target_distance()
 }
 
 
-void ubasic_set_led(int led, int state, int bright)
+void camera_set_led(int led, int state, int bright)
 { 
         struct led_control led_c; 
 		

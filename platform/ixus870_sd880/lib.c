@@ -45,7 +45,7 @@ void debug_led(int state)
  *((int*) 0xC02200D4) = state ? 0x46 : 0x44;
 }
 
-void ubasic_set_led(int led, int state, int bright) {
+void camera_set_led(int led, int state, int bright) {
   // approximation of behaviour advertised in documentation.
   long val = state ? 0x46 : 0x44;
   switch ( led )

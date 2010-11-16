@@ -69,29 +69,29 @@ static void conf_change_grid_file();
 static void conf_change_video_bitrate();
 static void conf_change_dng_ext();
 
-void ubasic_camera_set_raw(int mode)
+void camera_set_raw(int mode)
 {
     conf.save_raw = mode;
 }
 
-void ubasic_camera_set_nr(int mode)
+void camera_set_nr(int mode)
 {
 	// "Auto", "Off", "On"
     conf.raw_nr = mode;
 }
-int ubasic_camera_script_autostart()
+int camera_get_script_autostart()
 {	
 	// 1 = Autostarted
 	return auto_started;
 }
 
-void ubasic_camera_set_script_autostart(int state)
+void camera_set_script_autostart(int state)
 {	
 	// 1 = Autostarted
 	auto_started = state;
 }
 
-int ubasic_camera_get_nr()
+int camera_get_nr()
 {
 	// "Auto", "Off", "On"
     return conf.raw_nr;

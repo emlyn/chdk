@@ -331,7 +331,7 @@ static int luaCB_set_led( lua_State* L )
   to2 = 200;
   if( lua_isnumber( L, 3 ) )
     to2 = lua_tonumber( L, 3 );
-  ubasic_set_led(to, to1, to2);
+  camera_set_led(to, to1, to2);
   return 0;
 }
 
@@ -352,19 +352,19 @@ static int luaCB_set_prop( lua_State* L )
 
 static int luaCB_set_raw_nr( lua_State* L )
 {
-  ubasic_camera_set_nr(luaL_checknumber( L, 1 ));
+  camera_set_nr(luaL_checknumber( L, 1 ));
   return 0;
 }
 
 static int luaCB_get_raw_nr( lua_State* L )
 {
-  lua_pushnumber( L, ubasic_camera_get_nr() );
+  lua_pushnumber( L, camera_get_nr() );
   return 1;
 }
 
 static int luaCB_set_raw( lua_State* L )
 {
-  ubasic_camera_set_raw(luaL_checknumber( L, 1 ));
+  camera_set_raw(luaL_checknumber( L, 1 ));
   return 0;
 }
 
@@ -521,7 +521,7 @@ static int luaCB_md_detect_motion( lua_State* L )
 
 static int luaCB_autostarted( lua_State* L )
 {
-  lua_pushboolean( L, ubasic_camera_script_autostart() );
+  lua_pushboolean( L, camera_get_script_autostart() );
   return 1;
 }
 

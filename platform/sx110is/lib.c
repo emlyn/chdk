@@ -47,7 +47,7 @@ void debug_led(int state)
  *(int*)LED_GRN=state ? 0x46 : 0x44;
 }
 
-void ubasic_set_led(int led, int state, int bright) {
+void camera_set_led(int led, int state, int bright) {
  static char led_table[5]={4,5,7,8,9};
  _LEDDrive(led_table[led%sizeof(led_table)], state<=1 ? !state : state);
 }

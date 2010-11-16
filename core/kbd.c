@@ -330,7 +330,7 @@ void script_start( int autostart )
         script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
 
     if( is_lua() ) {
-        if( !lua_script_start(state_ubasic_script) ) {
+        if( !lua_script_start(script_source_str) ) {
             script_print_screen_end();
             wait_and_end();
             return;
@@ -345,7 +345,7 @@ void script_start( int autostart )
         }
         state_lua_kbd_first_call_to_resume = 1;
     } else { // ubasic
-        ubasic_init(state_ubasic_script);
+        ubasic_init(script_source_str);
 
         for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
             ubasic_set_variable(i, conf.ubasic_vars[i]);

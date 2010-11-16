@@ -4,7 +4,6 @@
 #include "keyboard.h"
 #include "conf.h"
 #include "math.h"
-#include "ubasic.h"
 #include "gui.h"
 #include "gui_draw.h"
 #include "histogram.h"
