@@ -1,11 +1,22 @@
 #define PARAM_FILE_COUNTER      0x38
+#define PARAM_EXPOSURE_COUNTER  0x02
 
 #include "platform.h"
 
 // These F-numbers are the "mock" values shown by the cam.
 // They're linked to FL (zoom) and ND8 filter.
 // aperture_sizes_table[].id is just a serial number.
-const ApertureSize aperture_sizes_table[] = { // PROPCASE 26
+const ApertureSize aperture_sizes_table[] = { // PROPCASE 26 (?)
+/*
+  {  9, 293, "2.8" }, // TODO: this
+  { 10, 317, "3.2" },
+  { 11, 336, "3.5" },
+  { 12, 364, "3.5" },
+  { 13, 397, "4.0" },
+  { 14, 422, "4.5" },
+  { 15, 454, "5.0" },
+  { 16, 500, "5.9" },
+*/
     {  9, 295, "2.8" }, // zoom 1.0
     { 10, 318, "3.2" }, // zoom 1.2
     { 11, 342, "3.5" }, // etc.
@@ -89,32 +100,36 @@ const ISOTable iso_table[] = {
     {  6,  1600,  "1600", -1},
 };          
 
-// PROPCACE 49
+// PROPCASE 49
 static const CapturemodeMap modemap[] = {
-    { MODE_AUTO,               32768 },
-    { MODE_M,                  32769 },
-    { MODE_P,                  32772 },
-    { MODE_PORTRAIT,           0x800D },
-    { MODE_NIGHT_SNAPSHOT,     0x800B },
-    { MODE_SCN_KIDS_PETS,      0x8010 },
-    { MODE_SCN_INDOOR,         0x8011 },
-    { MODE_SCN_SUNSET,         0x4012 },
-    { MODE_SCN_FOLIAGE,        0x4013 },
-    { MODE_SCN_SNOW,           0x4014 },
-    { MODE_SCN_BEACH,          0x4015 },
-    { MODE_SCN_FIREWORK,       0x4016 },
-    { MODE_SCN_NIGHT_SCENE,    0x4006 }, //AKA Long Shutter
-    { MODE_SCN_UNDERWATER,     0x4017 },
-    { MODE_SCN_AQUARIUM,       0x4018 },
-    { MODE_SCN_ISO_3200,       0x401D },
-    { MODE_DIGITAL_MACRO,      0x4208 },
-    { MODE_SCN_COLOR_ACCENT,   0x421B },
-    { MODE_SCN_COLOR_SWAP,     0x421C },
-    { MODE_STITCH,             0x420A },
-//    { MODE_QUICK,              33312 },
-    { MODE_VIDEO_STD,          0xA29  },
-    { MODE_VIDEO_COLOR_ACCENT, 0xA27  },
-    { MODE_VIDEO_COLOR_SWAP,   0xA28  },
+  { MODE_AUTO,               32768 },
+//  { MODE_M,                  32769 },
+  { MODE_P,                  32772 },
+  { MODE_PORTRAIT,           32783 },
+  { MODE_NIGHT_SNAPSHOT,     32781 },
+  { MODE_SCN_KIDS_PETS,      32786 },
+  { MODE_SCN_INDOOR,         32787 },
+//  { MODE_SCN_SUNSET,         0x4012 },
+  { MODE_SCN_FOLIAGE,        32789 },
+  { MODE_SCN_SNOW,           32790 },
+  { MODE_SCN_BEACH,          32791 },
+  { MODE_SCN_FIREWORK,       32792 },
+  { MODE_SCN_NIGHT_SCENE,    32774 }, // AKA Long Shutter
+  { MODE_SCN_UNDERWATER,     32793 },
+//  { MODE_SCN_AQUARIUM,       0x4018 },
+//  { MODE_SCN_ISO_3200,       0x401D },
+//  { MODE_DIGITAL_MACRO,      0x4208 },
+  { MODE_SCN_COLOR_ACCENT,   33309 },
+  { MODE_SCN_COLOR_SWAP,     33310 },
+  { MODE_STITCH,             33292 },
+  { MODE_VIDEO_STD,          2612  },
+  { MODE_VIDEO_COLOR_ACCENT, 2610  },
+  { MODE_VIDEO_COLOR_SWAP,   2611  },
+  { MODE_LOWLIGHT,           32801 },
+// Ixus 130 extra modes:
+  { MODE_SMART_SHUTTER,      33321 },
+  { MODE_FISHEYE,            33323 },
+  { MODE_MINIATURE,          33324 },
 };
 
 #include "../generic/shooting.c"

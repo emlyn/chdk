@@ -96,5 +96,8 @@ MODE_SCN_STITCH         ,
 MODE_SCN_LONG_SHUTTER   , // only known on sx1, d10
 MODE_LOWLIGHT           , // g11
 MODE_SCN_NOSTALGIC      , // s90
+MODE_SMART_SHUTTER      , // Ixus 130
+MODE_MINIATURE          , // Ixus 130
+MODE_FISHEYE            , // Ixus 130
 };
 #endif
