@@ -2009,7 +2009,7 @@
 //    #define CAM_CAN_SD_OVERRIDE         1			// Camera allows to do subject distance override
 
     #undef  CAM_HAS_MANUAL_FOCUS
-    #define CAM_HAS_USER_TV_MODES                 1
+    #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU            1
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD       1
