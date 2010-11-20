@@ -11,6 +11,7 @@
 #include "script.h"
 #include "gui_lang.h"
 #include "motion_detector.h"
+#include "console.h"
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
@@ -318,7 +319,7 @@ void script_start( int autostart )
 
     /*if (!autostart)*/ kbd_key_release_all();
 
-    script_console_clear();
+    console_clear();
     script_print_screen_init();
 
     if (conf.script_param_save) {
@@ -587,7 +588,7 @@ void script_autostart()
 {
     kbd_blocked = 1;
     gui_kbd_enter();
-    script_console_clear(); 
+    console_clear(); 
     script_console_add_line("***Autostart***"); //lang_str(LANG_CONSOLE_TEXT_STARTED));
     script_start( 1 );
 }

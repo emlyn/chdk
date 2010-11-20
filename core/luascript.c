@@ -13,6 +13,7 @@
 #include "raw.h"
 #include "raw_merge.h"
 #include "levent.h"
+#include "console.h"
 
 #ifdef OPT_CURVES
 #include "curves.h"
@@ -62,25 +63,27 @@ static int luaCB_keyfunc( lua_State* L )
 
 static int luaCB_cls( lua_State* L )
 {
-  script_console_clear();
+  console_clear();
   return 0;
 }
 
 static int luaCB_set_console_layout( lua_State* L )
 {
-  script_console_set_layout(luaL_checknumber( L, 1 ),luaL_checknumber( L, 2 ),luaL_checknumber( L, 3 ),luaL_checknumber( L, 4 ));
+  console_set_layout(luaL_checknumber( L, 1 ),luaL_checknumber( L, 2 ),luaL_checknumber( L, 3 ),luaL_checknumber( L, 4 ));
   return 0;
 }
 
 static int luaCB_set_console_autoredraw( lua_State* L )
 {
-  script_console_set_autoredraw(luaL_checknumber( L, 1 ));
+  // NOTE: This functionality has been removed.
+  // Lua function is kept for compatibility with older
+  // scripts.
   return 0;
 }
 
 static int luaCB_console_redraw( lua_State* L )
 {
-  script_console_redraw();
+  console_redraw();
   return 0;
 }
 static int luaCB_get_av96( lua_State* L )

@@ -6,17 +6,13 @@
 #include "gui_draw.h"
 #include "conf.h"
 #include "script.h"
+#include "console.h"
 
 //-------------------------------------------------------------------
 
-#define SCRIPT_MAX_CONSOLE_LINES      14
-#define SCRIPT_MAX_LINE_LENGTH        45
-
-//-------------------------------------------------------------------
 const char *script_source_str=NULL; //ERR99
 char cfg_name[100] = "\0";
 char cfg_set_name[100] = "\0";
-int script_console_num_lines, script_console_line_length, script_console_x, script_console_y, auto_redraw=1;
 
 static const char *ubasic_script_default =
 #if 0
@@ -74,10 +70,6 @@ char script_params[SCRIPT_NUM_PARAMS][28];
 int script_param_order[SCRIPT_NUM_PARAMS];
 static char script_params_update[SCRIPT_NUM_PARAMS];
 static int script_loaded_params[SCRIPT_NUM_PARAMS];
-//static char script_console_buf[script_console_num_lines][script_console_line_length+1];
-static char **script_console_buf;
-static int script_con_start_line=0; // oldest valid line in console
-static int script_con_num_lines=0; // number of valid lines
 
 //-------------------------------------------------------------------
 static void process_title(const char *title) {
@@ -321,18 +313,6 @@ void script_load(const char *fn, int saved_params) {
     FILE *fd = NULL;
     struct stat st;
     
-    auto_redraw=1;
-    script_console_num_lines=5;
-    script_console_line_length=25;
-    script_console_y=SCRIPT_MAX_CONSOLE_LINES-script_console_num_lines;
-    script_console_x=0;
-    script_console_buf=malloc(script_console_num_lines*sizeof(char*));
-    for (i=0;i<script_console_num_lines;i++){ 
-      script_console_buf[i]=malloc(script_console_line_length*sizeof(char)+1); 
-    }
-    script_con_start_line=0;
-    script_con_num_lines=0;
-
 //    save_params_values(0);
 
     if(script_source_str && script_source_str != ubasic_script_default)
@@ -402,34 +382,6 @@ void script_load(const char *fn, int saved_params) {
 }
 
 //-------------------------------------------------------------------
-void script_console_clear() {
-    register int i;
-
-    for (i=0; i<script_console_num_lines; ++i) {
-        script_console_buf[i][0]=0;
-    }
-    script_con_num_lines=script_con_start_line=0;
-    if(auto_redraw) draw_restore();
-}
-
-//-------------------------------------------------------------------
-static inline int script_con_line_index(int i) {
-    return i%script_console_num_lines;
-}
-
-void script_console_draw(int drawing) {
-  int i,c,l;
-  if(drawing){
-    for(c = 0; c < script_con_num_lines; ++c) {
-      i=script_con_line_index(script_con_start_line+c);
-      l=strlen(script_console_buf[i]);
-      draw_txt_string(script_console_x, script_console_y+script_console_num_lines-script_con_num_lines+c, script_console_buf[i], MAKE_COLOR(COLOR_BG, COLOR_FG));
-      for (; l<script_console_line_length; ++l)
-        draw_txt_char(script_console_x+l, script_console_y+script_console_num_lines-script_con_num_lines+c, ' ', MAKE_COLOR(COLOR_BG, COLOR_FG));
-    }
-  }
-}
-
 static int  print_screen_p;             // print_screen predicate: 0-off 1-on.
 static int  print_screen_d = -1;        // print_screen file descriptor.
 //static const char print_screen_file[] ="A/CHDK/SCRIPTS/PR_SCREEN.TXT";
@@ -475,98 +427,14 @@ void script_print_screen_statement(int val)
   }
 }
 
-//-------------------------------------------------------------------
-void script_console_start_line() {
-    if (script_console_num_lines==script_con_num_lines) {
-        script_con_start_line=script_con_line_index(script_con_start_line+1);
-    }
-    else {
-        ++script_con_num_lines;
-    }
-     script_console_buf[script_con_line_index(script_con_start_line+script_con_num_lines-1)][0]=0;
-}
+void script_console_add_line(const char *str)
+{
+    console_add_line(str);
 
-void script_console_add_text(const char *str) {
-    char *cur;
-    int curlen;
-    int left;
-
-    do {
-        cur = script_console_buf[script_con_line_index(script_con_start_line+script_con_num_lines-1)];
-        curlen = strlen(cur);
-        left = script_console_line_length-curlen;
-        if(strlen(str) > left) {
-            strncpy(cur+curlen,str,left);
-            cur[script_console_line_length]=0;
-            script_console_start_line();
-            str+=left;
-        }
-        else {
-            strcat(cur,str);
-            break;
-        }
-    } while(1);
-}
-
-void script_console_add_line(const char *str) {
-    script_console_start_line();
-    script_console_add_text(str);
-    if (print_screen_p && print_screen_d>=0) {
+    if (print_screen_p && (print_screen_d >= 0)) {
         char nl = '\n';
 		// TODO this should be uncached memory
         write(print_screen_d, str, strlen(str) );
         write(print_screen_d, &nl, 1);
     }
-    script_console_draw(auto_redraw);
 }
-//-------------------------------------------------------------------
-void script_console_set_layout(int x1, int y1, int x2, int y2) { //untere linke Ecke(x1,y1), obere reche Ecke(x2,y2) - lower left corner (x1,y1), upper right corner(x2,y2)
-  int i,len,newLinesCount,newLineLength,newNumLines,lineDelta,idx;
-  char **tmp;
-  if(x1>=0 && x1<x2 && x1<=SCRIPT_MAX_LINE_LENGTH && y1>=0 && y1<y2 && y1<=SCRIPT_MAX_CONSOLE_LINES && x2<=SCRIPT_MAX_LINE_LENGTH && y2<=SCRIPT_MAX_CONSOLE_LINES) {
-    //In neuen Puffer kopieren - copy to new buffer
-    newLineLength=x2-x1;
-    newLinesCount=y2-y1;
-    if(newLineLength!=script_console_line_length || newLinesCount!=script_console_num_lines) {
-      lineDelta=script_con_num_lines-newLinesCount;
-      if(lineDelta<0) lineDelta=0;
-      newNumLines=0;
-      tmp=malloc(newLinesCount*sizeof(char*)); //realloc Nachbildung - realloc emulation
-      for(i=0;i<newLinesCount;i++){
-        tmp[i]=malloc(newLineLength*sizeof(char)+1);
-        if(i<script_con_num_lines){
-          newNumLines++;
-          idx=script_con_line_index(script_con_start_line+i+lineDelta);
-          len=strlen(script_console_buf[idx]);
-          if(len>newLineLength) len=newLineLength;
-          strncpy(tmp[i],script_console_buf[idx],len);
-          tmp[i][len]=0x0;
-        } else tmp[i][0]=0x0;
-      }
-      //Speicher freigeben - free memory
-      for(i=0;i<script_console_num_lines;i++) {
-        free(script_console_buf[i]);
-      }
-      free(script_console_buf);
-      //neue Werte setzten - set new values
-      script_console_buf=tmp;
-      script_con_start_line=0;
-      script_con_num_lines=newNumLines;
-      script_console_num_lines=newLinesCount;
-      script_console_line_length=newLineLength;
-    }
-    script_console_x=x1;
-    script_console_y=SCRIPT_MAX_CONSOLE_LINES-y2;
-    if(auto_redraw) draw_restore();
-  }
-}
-//-------------------------------------------------------------------
-void script_console_set_autoredraw(int value){
-  auto_redraw=value;
-}
-//-------------------------------------------------------------------
-void script_console_redraw(){
-  draw_restore();
-  script_console_draw(1);
-}
-//-------------------------------------------------------------------

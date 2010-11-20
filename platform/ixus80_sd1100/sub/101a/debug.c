@@ -2,6 +2,7 @@
 #include "stdlib.h"
 //#include "core.h"
 #include "script.h"
+#include "console.h"
 // exception handler hooks
 // Extracted method: (ff82786c-ff827894)
 void __attribute__((naked,noinline)) sub_FF82786C_my() {
@@ -46,14 +47,14 @@ void assert_hook() {
 	asm volatile(
 		"stmdb sp!, {r0, r1} \n"
 	);
-	script_console_add_line("assert failed: game over :(");
+	console_add_line("assert failed: game over :(");
 	_OpLog_WriteToSD(0);
 	msleep(1000);
 	asm volatile(
 		"ldmia sp!, {r0, r1} \n"
 		"BL sub_FF862858 \n" // original assert handler, no return
 	);
-	script_console_add_line("assert done");
+	console_add_line("assert done");
 }
 
 void abort_hook() {
@@ -61,7 +62,7 @@ void abort_hook() {
 		"stmdb sp!, {r0} \n"
 	);
 
-	script_console_add_line("abort error: game over :(");
+	console_add_line("abort error: game over :(");
 	_OpLog_WriteToSD(0);
 	msleep(1000);
 	asm volatile(
@@ -69,7 +70,7 @@ void abort_hook() {
 		"BL sub_FF862C50 \n" // abort default, no return: default shutdown
 	);
 
-	script_console_add_line("abort done");
+	console_add_line("abort done");
 }
 // GetLogToFile
 void panic_hook_dump();
@@ -77,14 +78,14 @@ void panic_hook() {
 	asm volatile(
 		"stmdb sp!, {r0, r1} \n"
 	);
-	script_console_add_line("dryos panic: game over :(");
+	console_add_line("dryos panic: game over :(");
 	_OpLog_WriteToSD(0);
 	msleep(1000);
 	asm volatile(
 		"ldmia sp!, {r0, r1} \n"
 		"BL sub_FF862FCC \n" // panic_hook_dump();
 	);
-	script_console_add_line("panic done");
+	console_add_line("panic done");
 }
 #if 0
 ///////////////////////////////////////
@@ -360,7 +361,7 @@ void __attribute__((naked,noinline)) WdtPrint_my() {
 		"str	r0, [r4, #4] \n"
 
 	"ldr	r0, =0xff86bb4c \n" // ; (21200a0a) "!!!WatchDog expired!!!"
-	"BL script_console_add_line \n"
+	"BL console_add_line \n"
 		"ldr	r0, =0xff86bb4c \n" // ; (21200a0a) "!!!WatchDog expired!!!"
 	"BL	sub_FF81351C_my \n" // ; STDERR
 	"mov r0, #0 \n"

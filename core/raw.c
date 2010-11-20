@@ -2,6 +2,7 @@
 #include "conf.h"
 #include "stdlib.h"
 #include "raw.h"
+#include "console.h"
 #if DNG_SUPPORT
 	#include "dng.h"
 	#include "math.h"
@@ -196,7 +197,7 @@ int timer; char txt[30];
             if (conf.raw_timer) {
                 timer=get_tick_count()-timer;
                 sprintf(txt, "saving time=%d", timer);
-                script_console_add_line(txt);
+                console_add_line(txt);
             }
         }
 

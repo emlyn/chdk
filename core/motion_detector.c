@@ -29,6 +29,7 @@ void dump_memory();
 #endif
 
 #include "motion_detector.h"
+#include "console.h"
 
 #include "gui.h"
 #include "gui_draw.h"
@@ -269,7 +270,7 @@ void md_save_calls_history(){
 	strcpy(fn,"A/MD_INFO.TXT");//,BUILD_NUMBER,motion_detector->pixels_step);
 	fd = open(fn, O_WRONLY|O_CREAT, 0777);
 	if( fd>=0) {
-		script_console_add_line("Writing info file...");
+		console_add_line("Writing info file...");
 		lseek(fd,0,SEEK_END);
     t2 = time(NULL);
     ttm = localtime(&t2);

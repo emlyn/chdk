@@ -18,6 +18,7 @@
 #include "gui_sokoban.h"
 #include "gui_4wins.h"
 #include "gui_mastermind.h"
+#include "console.h"
 #ifdef OPT_DEBUGGING
 #include "gui_debug.h"
 #endif
@@ -2138,7 +2139,7 @@ static void gui_handle_splash(void) {
 void gui_redraw()
 {
     enum Gui_Mode gui_mode_old;
-    static int show_script_console=0;
+    static int show_md_grid=0;
 
 	gui_handle_splash();
 
@@ -2164,13 +2165,13 @@ void gui_redraw()
             draw_txt_string(20, 14, "<ALT>", MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
             if ((mode_get()&MODE_MASK) == MODE_REC) {
                 draw_txt_string(0, 14, script_title, MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
-                if (state_kbd_script_run) show_script_console=5;
-                if (show_script_console) {
-                    --show_script_console;
+                if (state_kbd_script_run) show_md_grid=5;
+                if (show_md_grid) {
+                    --show_md_grid;
                     md_draw_grid();
-                    script_console_draw(auto_redraw);
                 }
             }
+            console_draw();
             break;
         case GUI_MODE_NONE:
             gui_draw_osd();

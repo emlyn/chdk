@@ -40,6 +40,7 @@
 #include "../../include/script.h"
 #include "../../include/shot_histogram.h"
 #include "../../include/levent.h"
+#include "../../include/console.h"
 #include <string.h>
 #include <time.h>
 #include <fcntl.h>
@@ -53,6 +54,7 @@
 #include "shot_histogram.h"
 #include "stdlib.h"
 #include "levent.h"
+#include "console.h"
 #endif
 #include "tokenizer.h"
 
@@ -1208,7 +1210,7 @@ static void
 cls_statement(void)
 {
   accept(TOKENIZER_CLS);
-  script_console_clear();
+  console_clear();
   DEBUG_PRINTF("cls_statement\n");
   accept(TOKENIZER_CR);
 }
@@ -1477,21 +1479,25 @@ static void set_console_layout(void)
   y1 = expr();
   x2 = expr();
   y2 = expr();
-  script_console_set_layout(x1,y1,x2,y2);
+  console_set_layout(x1,y1,x2,y2);
   accept_cr();
 }
 /*---------------------------------------------------------------------------*/
 static void set_console_autoredraw(void)
 {
   accept(TOKENIZER_SET_CONSOLE_AUTOREDRAW);
-  script_console_set_autoredraw(expr());
+
+  // NOTE: This functionality has been removed.
+  // UBasic function is kept for compatibility with older
+  // scripts.
+  
   accept_cr();
 }
 /*---------------------------------------------------------------------------*/
-static void console_redraw(void)
+static void console_redraw_statement(void)
 {
   accept(TOKENIZER_CONSOLE_REDRAW);
-  script_console_redraw();
+  console_redraw();
   accept_cr();
 }
 /*---------------------------------------------------------------------------*/
@@ -2653,7 +2659,9 @@ statement(void)
   case TOKENIZER_SET_CAPTURE_MODE_CANON:
     set_capture_mode_canon_statement();
     break;
-
+  case TOKENIZER_CONSOLE_REDRAW:
+    console_redraw_statement();
+    break;
  case TOKENIZER_REBOOT: {
 	reboot_statement();
 	break;
