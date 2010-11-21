@@ -229,7 +229,7 @@ int hook_tyWriteOrig(DEV_HDR *hdr, char *buf, int len)
 
 }
 
-void console_init()
+void cam_console_init()
 {
     DEV_HDR *DRV_struct;
 

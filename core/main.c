@@ -93,7 +93,7 @@ void core_spytask()
     gui_init();
 
 #if CAM_CONSOLE_LOG_ENABLED
-    console_init();
+    cam_console_init();
 #endif
 
     mkdir("A/CHDK");
