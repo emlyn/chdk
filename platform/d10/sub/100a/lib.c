@@ -14,19 +14,17 @@ long hook_raw_size()
 
 void *vid_get_viewport_live_fb()
 {
-/*
-// SD990
-    void **fb=(void **)0x2254;
-    unsigned char buff = *((unsigned char*)0x20B8); // sub_FF839850
+	// from sub_FF837020 (similar to sd990 sub_FF839850), via sub_FF8EC2DC ref to table at FFAE28FC
+    void **fb=(void **)0x210C;
+    unsigned char buff = *((unsigned char*)0x1F74);
     if (buff == 0) {
         buff = 2;
     }
     else {
         buff--;
     }
-    return fb[buff];
-*/
-	return 0;
+	// d10 adds this extra value.  Didn't ever see the value change from zero, may be wrong
+    return fb[buff] + *(int *)(0x1F74 + 0xd4); 
 }
 
 void *vid_get_bitmap_fb()       

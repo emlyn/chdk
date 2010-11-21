@@ -20,7 +20,7 @@ Working/completed
 - Tv bracketing in continuous mode
 - histogram
 - multi partition support
-- motion detection
+- motion detection. Fast MD implemented, speedup not verified.
 - setting Tv from script
 - DNG matrix (DavidB)
 - OSD size/aspect (DavidB,reyalP)
