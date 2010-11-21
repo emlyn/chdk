@@ -978,10 +978,6 @@
     #undef  CAM_HAS_IRIS_DIAPHRAGM
     #define CAM_HAS_ND_FILTER           1
 
-// TODO 
-    #undef CAM_REMOTE
-    #undef CAM_SYNCH
-
     #define CAM_HAS_ZOOM_LEVER          1 // note, has zoom in/out buttons, not lever
 
 
