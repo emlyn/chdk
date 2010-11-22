@@ -7,8 +7,7 @@
 // They're linked to FL (zoom) and ND8 filter.
 // aperture_sizes_table[].id is just a serial number.
 const ApertureSize aperture_sizes_table[] = { // PROPCASE 26 (?)
-/*
-  {  9, 293, "2.8" }, // TODO: this
+  {  9, 293, "2.8" },
   { 10, 317, "3.2" },
   { 11, 336, "3.5" },
   { 12, 364, "3.5" },
@@ -16,7 +15,8 @@ const ApertureSize aperture_sizes_table[] = { // PROPCASE 26 (?)
   { 14, 422, "4.5" },
   { 15, 454, "5.0" },
   { 16, 500, "5.9" },
-*/
+// TODO: values with ND filter
+/*
     {  9, 295, "2.8" }, // zoom 1.0
     { 10, 318, "3.2" }, // zoom 1.2
     { 11, 342, "3.5" }, // etc.
@@ -34,6 +34,7 @@ const ApertureSize aperture_sizes_table[] = { // PROPCASE 26 (?)
     { 22, 708, "13.0" },
     { 23, 742, "14.0" },
     { 24, 774, "16.0" },
+*/
 };
 
 // OLD copied comment!
