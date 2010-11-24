@@ -106,10 +106,10 @@ long vid_get_bitmap_screen_width() { return 480; }
 
 //long vid_get_bitmap_screen_height() { return 240; }
 //long vid_get_bitmap_screen_height() { return 270; }
-long vid_get_bitmap_screen_height() { return 240; }
+long vid_get_bitmap_screen_height() { return 270; }
 
 //int vid_get_viewport_width() { return 360; }    // viewport is still 360, even though live view is 720 (from SD990)
-int vid_get_viewport_width() { return 480; }
+int vid_get_viewport_width() { return 360; }
 
 /*
 int vid_get_viewport_width() {
