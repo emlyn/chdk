@@ -5,7 +5,7 @@
 @default b 10
 @param c koef3
 @default c 1
-@param d Sleep Interval (*100) 
+@param d Sleep Interval (*100)
 @default d 20
 
 sleep 500
@@ -19,4 +19,5 @@ shoot
 get_iso_real e
 get_iso_market f
 print "ISO:", e, "(", f, ")"
+
 end

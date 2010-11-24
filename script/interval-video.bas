@@ -3,9 +3,9 @@
 @param a Number of Videos
 @default a 5
 
-@param b Video length (min) 
+@param b Video length (min)
 @default b 0
-@param c Video length (sec) 
+@param c Video length (sec)
 @default c 10
 
 @param d Interval (min)

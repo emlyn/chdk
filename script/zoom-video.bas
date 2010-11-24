@@ -12,15 +12,15 @@ get_zoom z
 click "shoot_full"
 
 :loop
-  wait_click
+    wait_click
 
-  is_key k "zoom_in"
+    is_key k "zoom_in"
     if k=1 then set_zoom_rel +1
-  is_key k "zoom_out"
+    is_key k "zoom_out"
     if k=1 then set_zoom_rel -1
-  is_key k "shoot_half"
+    is_key k "shoot_half"
     if k=1 then goto "end"
-goto "loop"
+    goto "loop"
 
 :end
 click "shoot_full"

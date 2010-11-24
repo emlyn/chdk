@@ -27,7 +27,6 @@
 @param i measure mode(1-Y,0-U,2-V)
 @default i 1
 
-
 if a<1 then let a=1
 if b<1 then let b=1
 if c<0 then let c=0
@@ -37,14 +36,12 @@ if f<1 then let f=1
 let f=f*1000
 let e=e*1000
 
-
 print_screen 1
 
 print ">[";a;",";b;"] threshold: ";c
 
 for z=0 to 10000
-
-	let t=0
+    let t=0
 
 rem              /--/-columns, rows to split picture into
 rem              |  |
@@ -78,6 +75,5 @@ rem if t>0 then shoot
 if t>0 then print "detected cells:",t else print "Timeout"
 
 next z
-
 
 end

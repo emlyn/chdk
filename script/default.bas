@@ -10,15 +10,16 @@ if a<1 then let a=2
 if b<1 then let b=3
 
 for s=1 to a
-  shoot
-  for n=1 to b
-    click "right"
-  next n
+    shoot
+    for n=1 to b
+        click "right"
+    next n
 next s
+
 shoot
 
 for n=1 to a*b
-  click "left"
+    click "left"
 next n
 
 end

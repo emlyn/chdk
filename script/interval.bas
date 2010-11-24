@@ -18,6 +18,7 @@ sleep 1000
 
 print "Shoot 1 of", a
 shoot
+
 for n=2 to a
     sleep t
     print "Shoot", n, "of", a

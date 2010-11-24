@@ -5,7 +5,7 @@
 @default b 10
 @param c koef3
 @default c 1
-@param d Sleep Interval (*100) 
+@param d Sleep Interval (*100)
 @default d 20
 
 sleep 500
@@ -22,4 +22,5 @@ print "ISO:", e, "(", f, ")"
 press "shoot_full"
 release "shoot_full"
 release "shoot_half"
+
 end

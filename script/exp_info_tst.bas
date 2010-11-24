@@ -1,4 +1,5 @@
 @title Test Ev info
+
 sleep 500
 press "shoot_half"
 sleep t
@@ -12,4 +13,5 @@ sleep 5000
 press "shoot_full"
 release "shoot_full"
 release "shoot_half"
+
 end

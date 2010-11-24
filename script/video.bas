@@ -16,15 +16,15 @@ t=60000*b+1000*c+1000
 i=60000*d+1000*e+1000
 
 for s=1 to a
-click "shoot_full"
-print "Снимаю",s,"-й из",c" фильмов"
-sleep t
-click "shoot_full"
-print "Жду",d,"минут",e,"секунд"
-sleep i
+    click "shoot_full"
+    print "Снимаю",s,"-й из",c" фильмов"
+    sleep t
+    click "shoot_full"
+    print "Жду",d,"минут",e,"секунд"
+    sleep i
 next s
 
 print "Приятного просмотра!"
 sleep 2000
-end
 
+end

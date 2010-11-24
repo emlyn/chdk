@@ -6,16 +6,14 @@
 
 b=b*10
 
-for a=1 to 4 
+for a=1 to 4
+    d=b+32*5*a
 
-d=b+32*5*a
+    set_tv96_direct d
 
-set_tv96_direct d
+    rem sleep 2000
 
-rem sleep 2000
-
-shoot
-
+    shoot
 next a
 
 end

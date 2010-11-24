@@ -1,5 +1,5 @@
 @title EXP bracketing 
-@param a Number of ñsteps 
+@param a Number of steps
 @default a 2
 @param b Step size (1/3EV)
 @default b 3
