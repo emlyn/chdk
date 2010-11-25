@@ -2226,17 +2226,35 @@
     //RealRom:FFA99FB4                    ADR     R0, aObRG1G2BLdLdLd ; "\n  OB : (R, G1, G2, B) = (%ld, %ld, %ld"...
     #define cam_CFAPattern              0x02010100		// Red  Green  Green  Blue
 
-    // color preliminary (see DNG4PS2 wiki)
+    // Preliminary values, tested in DNG4PS2
+#define CAM_COLORMATRIX1 510370, 1000000, -68998, 1000000,  -86859, 1000000, \
+                        -279980, 1000000, 766686, 1000000,   67944, 1000000, \
+                         -14382, 1000000, 113688, 1000000,  239853, 1000000
+/*
+    // need fixing (from sx210is)
     #define CAM_COLORMATRIX1                               \
+      14134, 1000000, -5576, 1000000, -1527, 1000000, \
+     -1991,  1000000, 10719,  1000000, 1273,   1000000, \
+      -1158,   1000000, 1929,   1000000, 3581,  1000000
+
+    // color preliminary (see DNG4PS2 wiki)
+
+    #define CAM_COLORMATRIX1                                  \
       661840,  1000000, -185671, 1000000, -97110,  1000000, \
       -83661,  1000000, 578860, 1000000,   32308,  1000000, \
       -8681,    1000000, 70356,   1000000, 207341, 1000000
 
+*/
     //Here is an alternate CAM_COLORMATRIX1 - Current one is nice for me but hey I'm no colour expert.
     //XYZ -> Camera matrix:
     //0.459395 -0.129083 -0.068085
     //-0.055837 0.400827 0.020378
     //-0.004622 0.048662 0.139970
+
+    #define CAM_ACTIVE_AREA_X1                  48
+    #define CAM_ACTIVE_AREA_Y1                  28
+    #define CAM_ACTIVE_AREA_X2                  4416-48
+    #define CAM_ACTIVE_AREA_Y2                  3296-28
 
     #define cam_CalibrationIlluminant1  17			// Standard Light A
 
