@@ -24,9 +24,13 @@ ZIPFILE := $(RELPATH)/CHDK-$(PLATFORM)-$(PLATFORMSUB)-$(RELDATE).zip
 DUMPFILE := $(RELPATH)/$(PLATFORM)-$(PLATFORMSUB)-$(RELDATE).dump
 zip: fir
 	rm  -f   $(ZIPFILE)
-	zip -j   $(ZIPFILE) bin/DISKBOOT.BIN bin/PS.FI2
-	zip -grq $(ZIPFILE) CHDK
+	zip -9j   $(ZIPFILE) bin/DISKBOOT.BIN bin/PS.FI2
+	zip -9grq $(ZIPFILE) CHDK
 	cp core/main.dump $(DUMPFILE) && gzip -f $(DUMPFILE)
+
+zips:
+	$(MAKE) PLATFORMSUB=100c zip
+	$(MAKE) PLATFORMSUB=100a zip
 
 fir: version firsub
 
