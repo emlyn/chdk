@@ -98,7 +98,7 @@ long vid_get_bitmap_buffer_width() { return 960; }
 long vid_get_bitmap_buffer_height() { return 270; }
 
 long vid_get_bitmap_screen_width() { return 480; }
-long vid_get_bitmap_screen_height() { return 270; }
+long vid_get_bitmap_screen_height() { return 240; }
 
 // buffer containing live view (when shutter half pressed)
 // check by looking at edge overlay
