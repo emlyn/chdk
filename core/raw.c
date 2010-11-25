@@ -11,6 +11,7 @@
 	#include "curves.h"
 #endif
 #include "shot_histogram.h"
+#include "led.h"
 
 //-------------------------------------------------------------------
 #define RAW_TARGET_DIRECTORY    "A/DCIM/%03dCANON"
@@ -103,7 +104,7 @@ int raw_savefile() {
      struct t_data_for_exif* exif_data = NULL;  
      char *thumbnail_buf = NULL;
      if (conf.dng_raw) exif_data=capture_data_for_exif();
-#endif    
+#endif
     if (state_kbd_script_run && shot_histogram_isenabled()) build_shot_histogram();
 
     // ! ! ! exclusively for special script which creates badpixel.bin ! ! !
@@ -155,7 +156,21 @@ int timer; char txt[30];
         t.actime = t.modtime = time(NULL);
 
         mkdir("A/DCIM");
-        sprintf(dir, RAW_TARGET_DIRECTORY, (conf.raw_in_dir)?get_target_dir_num():100);
+        #if defined(CAMERA_sx210is) || defined(CAMERA_ixus1000_sd4500) || defined(CAMERA_ixus130_sd1400)
+          if (conf.raw_in_dir) {
+            int month;
+            struct tm *ttm;
+            unsigned long t;
+            t = time(NULL);
+            ttm = localtime(&t);
+            month = ttm->tm_mon + 1;
+            sprintf(dir, "A/DCIM/%03d___%02d", get_target_dir_num(), month);
+          }
+          else
+            sprintf(dir, "A/DCIM/%03dRAW", get_target_dir_num());
+        #else
+          sprintf(dir, RAW_TARGET_DIRECTORY, (conf.raw_in_dir)?get_target_dir_num():100);
+        #endif
         mkdir(dir);
 
         sprintf(fn, "%s/", dir);

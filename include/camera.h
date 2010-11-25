@@ -2045,17 +2045,32 @@
     //RealRom:FFA99FB4                    ADR     R0, aObRG1G2BLdLdLd ; "\n  OB : (R, G1, G2, B) = (%ld, %ld, %ld"...
     #define cam_CFAPattern              0x02010100		// Red  Green  Green  Blue
 
-    // color preliminary (see DNG4PS2 wiki)
+    // Preliminary values, tested in DNG4PS2
+    #define CAM_COLORMATRIX1 0.510370, -0.068998, -0.086859, -0.279980, 0.766686, 0.067944, -0.014382, 0.113688, 0.239853
+/*
+    // need fixing (from sx210is)
     #define CAM_COLORMATRIX1                               \
+      14134, 1000000, -5576, 1000000, -1527, 1000000, \
+     -1991,  1000000, 10719,  1000000, 1273,   1000000, \
+      -1158,   1000000, 1929,   1000000, 3581,  1000000
+
+    // color preliminary (see DNG4PS2 wiki)
+
+    #define CAM_COLORMATRIX1                                  \
       661840,  1000000, -185671, 1000000, -97110,  1000000, \
       -83661,  1000000, 578860, 1000000,   32308,  1000000, \
       -8681,    1000000, 70356,   1000000, 207341, 1000000
-
+*/
     //Here is an alternate CAM_COLORMATRIX1 - Current one is nice for me but hey I'm no colour expert.
     //XYZ -> Camera matrix:
     //0.459395 -0.129083 -0.068085
     //-0.055837 0.400827 0.020378
     //-0.004622 0.048662 0.139970
+
+    #define CAM_ACTIVE_AREA_X1                  48
+    #define CAM_ACTIVE_AREA_Y1                  28
+    #define CAM_ACTIVE_AREA_X2                  4416-48
+    #define CAM_ACTIVE_AREA_Y2                  3296-28
 
     //nandoide sept-2009
     #undef CAM_USES_ASPECT_CORRECTION   
@@ -2155,8 +2170,8 @@
     #define CAM_DRYOS                   1
     #define CAM_DRYOS_2_3_R39           1
 
-    #define CAM_RAW_ROWPIX              4320		// 14 MP 12bpp
-    #define CAM_RAW_ROWS                3240		// 
+    #define CAM_RAW_ROWPIX              4416		// 14 MP 12bpp
+    #define CAM_RAW_ROWS                3296		// 
 
     #undef  CAM_HAS_ERASE_BUTTON
     //#undef  CAM_USE_ZOOM_FOR_MF
@@ -2228,10 +2243,6 @@
 	// cropping
     #define CAM_JPEG_WIDTH              4320
     #define CAM_JPEG_HEIGHT             3240
-    #define CAM_ACTIVE_AREA_X1          40
-    #define CAM_ACTIVE_AREA_Y1          24
-    #define CAM_ACTIVE_AREA_X2          4056
-    #define CAM_ACTIVE_AREA_Y2          3040
     // camera name
     #define PARAM_CAMERA_NAME           4			// parameter number for GetParameterData sd990: OK
 
