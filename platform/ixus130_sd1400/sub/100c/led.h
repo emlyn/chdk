@@ -16,6 +16,8 @@ void led_flashx(long * led, ulong times, ulong delay);
 void led_binx(long val, ulong delay);
 void led_dumpx(long * mem, ulong len, ulong delay);
 
+void __attribute__((naked,noinline)) led_flash2();
+
 /*
 static inline void led_flash(long * led, ulong times) {
   led_flashx(led, times, DEFAULT_DELAY);
