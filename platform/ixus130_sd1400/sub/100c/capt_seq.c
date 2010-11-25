@@ -71,8 +71,10 @@ void __attribute__((naked,noinline)) capt_seq_task() {
         // but it can cause some unexpected side effects. In this case, remove this code!
         "mov    r0, #0\n"
         "str    r0, [r4, #36]\n"  // 0x24 fixes overrides  behavior at short shutter press
-
 	"b	loc_ff87a5f8\n"
+
+        // The following compare and conditional branch will always be taken with the above added code
+        // So just change it to an unconditional branch, and remove the rest of jumptable entry 0
 /*
 	"ldr	r0, [r4, #36]\n"
 	"cmp	r0, #0\n"	// 0x0
