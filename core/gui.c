@@ -1410,17 +1410,13 @@ const char* gui_tv_override_value_enum(int change, int arg) {
 const char* gui_tv_enum_type_enum(int change, int arg) {
     static const char* modes[]={"Factor", "Ev Step"};
 
-    conf.tv_enum_type+=change;
-    if (conf.tv_enum_type<0)
-        conf.tv_enum_type=sizeof(modes)/sizeof(modes[0])-1;
-    else if (conf.tv_enum_type>=(sizeof(modes)/sizeof(modes[0])))
-        conf.tv_enum_type=0;
+    gui_enum_value_change(&conf.tv_enum_type,change,sizeof(modes)/sizeof(modes[0]));
     if (change) {
-      conf.tv_override_koef=6;	
-	  if (conf.tv_enum_type)  
-	     conf.tv_override_value=tv_override_zero_shift;
-	  else conf.tv_override_value=1; 
-      }
+        conf.tv_override_koef=6;	
+        if (conf.tv_enum_type)  
+            conf.tv_override_value=tv_override_zero_shift;
+        else conf.tv_override_value=1; 
+    }
     return modes[conf.tv_enum_type]; 
 }
 
