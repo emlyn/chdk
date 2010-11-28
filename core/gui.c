@@ -1006,17 +1006,29 @@ void cb_change_dng_usb_ext(){
 }
 #endif
 
+/*
+common code for "enum" menu items that just take a list of string values and don't require any special setters
+would be better to have another menu item type that does this by default
+save memory by eliminating dupe code
+*/
+static void gui_enum_value_change(int *value, int change, unsigned num_items) {
+    *value+=change;
+    if (*value<0)
+        *value = num_items-1;
+    else if (*value>=num_items)
+        *value = 0;
+}
+static const char* gui_change_simple_enum(int* value, int change, const char** items, unsigned num_items) {
+	gui_enum_value_change(value, change, num_items);
+    return items[*value];
+}
 
 //-------------------------------------------------------------------
 #ifdef OPT_CURVES
 const char* gui_conf_curve_enum(int change, int arg) {
     static const char* modes[]={ "None", "Custom", "+1EV", "+2EV", "Auto DR" };
 
-    conf.curve_enable+=change;
-    if (conf.curve_enable<0)
-        conf.curve_enable=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.curve_enable>=(sizeof(modes)/sizeof(modes[0])))
-        conf.curve_enable=0;
+    gui_enum_value_change(&conf.curve_enable,change,sizeof(modes)/sizeof(modes[0]));
 
 	if(change)
 		curve_init_mode();
@@ -1026,14 +1038,7 @@ const char* gui_conf_curve_enum(int change, int arg) {
 //-------------------------------------------------------------------
 const char* gui_script_autostart_enum(int change, int arg) {
     static const char* modes[]={ "Off", "On", "Once"};
-
-    conf.script_startup+=change;
-    if (conf.script_startup<0)
-        conf.script_startup=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.script_startup>=(sizeof(modes)/sizeof(modes[0])))
-        conf.script_startup=0;
-
-    return modes[conf.script_startup];
+	return gui_change_simple_enum(&conf.script_startup,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 //-------------------------------------------------------------------
@@ -1044,11 +1049,7 @@ const char* gui_script_param_set_enum(int change, int arg) {
         if (conf.script_param_save) {
             save_params_values(0);
         }
-        conf.script_param_set += change;
-        if (conf.script_param_set < 0)
-            conf.script_param_set = (sizeof(modes)/sizeof(modes[0]))-1;
-        else if (conf.script_param_set >= (sizeof(modes)/sizeof(modes[0])))
-            conf.script_param_set=0;
+		gui_enum_value_change(&conf.script_param_set,change,sizeof(modes)/sizeof(modes[0]));
 
         if (!load_params_values(conf.script_file, 1, 0))
             script_load(conf.script_file, 0);
@@ -1062,25 +1063,14 @@ const char* gui_script_param_set_enum(int change, int arg) {
 //-------------------------------------------------------------------
 const char* gui_override_disable_enum(int change, int arg) {
     static const char* modes[]={ "Off", "On", "Disabled"};
-
-    conf.override_disable+=change;
-    if (conf.override_disable<0)
-        conf.override_disable=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.override_disable>=(sizeof(modes)/sizeof(modes[0])))
-        conf.override_disable=0;
-
-    return modes[conf.override_disable];
+	return gui_change_simple_enum(&conf.override_disable,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 //-------------------------------------------------------------------
 const char* gui_histo_mode_enum(int change, int arg) {
     static const char* modes[]={ "Linear", "Log" };
 
-    conf.histo_mode+=change;
-    if (conf.histo_mode<0)
-        conf.histo_mode=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.histo_mode>=(sizeof(modes)/sizeof(modes[0])))
-        conf.histo_mode=0;
+	gui_enum_value_change(&conf.histo_mode,change,sizeof(modes)/sizeof(modes[0]));
 
     histogram_set_mode(conf.histo_mode);
 
@@ -1090,25 +1080,14 @@ const char* gui_histo_mode_enum(int change, int arg) {
 //-------------------------------------------------------------------
 const char* gui_temp_mode_enum(int change, int arg) {
     static const char* modes[]={ "Off", "Optical","CCD","Battery","all" };
-
-    conf.show_temp+=change;
-    if (conf.show_temp<0)
-        conf.show_temp=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.show_temp>=(sizeof(modes)/sizeof(modes[0])))
-        conf.show_temp=0;
-
-    return modes[conf.show_temp];
+	return gui_change_simple_enum(&conf.show_temp,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 //-------------------------------------------------------------------
 const char* gui_histo_layout_enum(int change, int arg) {
     static const char* modes[]={ "RGB", "Y", "RGB Y",  "R G B", "RGB all", "Y all", "Blend", "Blend Y"};
 
-    conf.histo_layout+=change;
-    if (conf.histo_layout<0)
-        conf.histo_layout=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.histo_layout>=(sizeof(modes)/sizeof(modes[0])))
-        conf.histo_layout=0;
+	gui_enum_value_change(&conf.histo_layout,change,sizeof(modes)/sizeof(modes[0]));
 
     if (conf.histo_layout==OSD_HISTO_LAYOUT_Y || conf.histo_layout==OSD_HISTO_LAYOUT_Y_argb) {
         histogram_set_main(HISTO_Y);
@@ -1123,11 +1102,7 @@ const char* gui_histo_layout_enum(int change, int arg) {
 const char* gui_font_enum(int change, int arg) {
     static const char* fonts[]={ "Win1250", "Win1251", "Win1252", "Win1253", "Win1254", "Win1257"};
 
-    conf.font_cp+=change;
-    if (conf.font_cp<0)
-        conf.font_cp=(sizeof(fonts)/sizeof(fonts[0]))-1;
-    else if (conf.font_cp>=(sizeof(fonts)/sizeof(fonts[0])))
-        conf.font_cp=0;
+	gui_enum_value_change(&conf.font_cp,change,sizeof(fonts)/sizeof(fonts[0]));
 
     if (change != 0) {
         font_set(conf.font_cp);
@@ -1142,297 +1117,130 @@ const char* gui_font_enum(int change, int arg) {
 
 //-------------------------------------------------------------------
 const char* gui_raw_prefix_enum(int change, int arg) {
-    conf.raw_prefix+=change;
-    if (conf.raw_prefix<0)
-        conf.raw_prefix=NUM_IMG_PREFIXES-1;
-    else if (conf.raw_prefix>=NUM_IMG_PREFIXES)
-        conf.raw_prefix=0;
-
-    return img_prefixes[conf.raw_prefix];
+	return gui_change_simple_enum(&conf.raw_prefix,change,img_prefixes,NUM_IMG_PREFIXES);
 }
 
 //-------------------------------------------------------------------
 const char* gui_raw_ext_enum(int change, int arg) {
-    conf.raw_ext+=change;
-    if (conf.raw_ext<0)
-        conf.raw_ext=NUM_IMG_EXTS-1;
-    else if (conf.raw_ext>=NUM_IMG_EXTS)
-        conf.raw_ext=0;
-
-    return img_exts[conf.raw_ext];
+	return gui_change_simple_enum(&conf.raw_ext,change,img_exts,NUM_IMG_EXTS);
 }
 
 //-------------------------------------------------------------------
 const char* gui_sub_batch_prefix_enum(int change, int arg) {
-    conf.sub_batch_prefix+=change;
-    if (conf.sub_batch_prefix<0)
-        conf.sub_batch_prefix=NUM_IMG_PREFIXES-1;
-    else if (conf.sub_batch_prefix>=NUM_IMG_PREFIXES)
-        conf.sub_batch_prefix=0;
-
-    return img_prefixes[conf.sub_batch_prefix];
+	return gui_change_simple_enum(&conf.sub_batch_prefix,change,img_prefixes,NUM_IMG_PREFIXES);
 }
 
 //-------------------------------------------------------------------
 const char* gui_sub_batch_ext_enum(int change, int arg) {
-    conf.sub_batch_ext+=change;
-    if (conf.sub_batch_ext<0)
-        conf.sub_batch_ext=NUM_IMG_EXTS-1;
-    else if (conf.sub_batch_ext>=NUM_IMG_EXTS)
-        conf.sub_batch_ext=0;
-
-    return img_exts[conf.sub_batch_ext];
+	return gui_change_simple_enum(&conf.sub_batch_ext,change,img_exts,NUM_IMG_EXTS);
 }
 
 //-------------------------------------------------------------------
 const char* gui_raw_nr_enum(int change, int arg) {
     static const char* modes[]={ "Auto", "Off", "On"};
-
-    conf.raw_nr+=change;
-    if (conf.raw_nr<0)
-        conf.raw_nr=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.raw_nr>=(sizeof(modes)/sizeof(modes[0])))
-        conf.raw_nr=0;
-
-    return modes[conf.raw_nr];
+	return gui_change_simple_enum(&conf.raw_nr,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 //-------------------------------------------------------------------
 #ifdef OPT_TEXTREADER
 const char* gui_reader_codepage_enum(int change, int arg) {
     static const char* cps[]={ "Win1251", "DOS"};
-
-    conf.reader_codepage+=change;
-    if (conf.reader_codepage<0)
-        conf.reader_codepage=(sizeof(cps)/sizeof(cps[0]))-1;
-    else if (conf.reader_codepage>=(sizeof(cps)/sizeof(cps[0])))
-        conf.reader_codepage=0;
-
-    return cps[conf.reader_codepage];
+	return gui_change_simple_enum(&conf.reader_codepage,change,cps,sizeof(cps)/sizeof(cps[0]));
 }
 #endif
 //-------------------------------------------------------------------
 const char* gui_autoiso_shutter_enum(int change, int arg) {
     static const char* shutter[]={ "Auto", "1/8s", "1/15s", "1/30s", "1/60s", "1/125s", "1/250s", "1/500s", "1/1000s"};
-
-    conf.autoiso_shutter+=change;
-    if (conf.autoiso_shutter<0)
-        conf.autoiso_shutter=(sizeof(shutter)/sizeof(shutter[0]))-1;
-    else if (conf.autoiso_shutter>=(sizeof(shutter)/sizeof(shutter[0])))
-        conf.autoiso_shutter=0;
-
-    return shutter[conf.autoiso_shutter];
+	return gui_change_simple_enum(&conf.autoiso_shutter,change,shutter,sizeof(shutter)/sizeof(shutter[0]));
 }
 
 //-------------------------------------------------------------------
 const char* gui_zebra_mode_enum(int change, int arg) {
     static const char* modes[]={ "Blink 1", "Blink 2", "Blink 3", "Solid", "Zebra 1", "Zebra 2" };
-
-    conf.zebra_mode+=change;
-    if (conf.zebra_mode<0)
-        conf.zebra_mode=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.zebra_mode>=(sizeof(modes)/sizeof(modes[0])))
-        conf.zebra_mode=0;
-
-    return modes[conf.zebra_mode];
+	return gui_change_simple_enum(&conf.zebra_mode,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 //-------------------------------------------------------------------
 const char* gui_zebra_draw_osd_enum(int change, int arg) {
     static const char* modes[]={ "Nothing", "Histo", "OSD" };
-
-    conf.zebra_draw_osd+=change;
-    if (conf.zebra_draw_osd<0)
-        conf.zebra_draw_osd=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.zebra_draw_osd>=(sizeof(modes)/sizeof(modes[0])))
-        conf.zebra_draw_osd=0;
-
-    return modes[conf.zebra_draw_osd];
+	return gui_change_simple_enum(&conf.zebra_draw_osd,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 //-------------------------------------------------------------------
 const char* gui_zoom_value_enum(int change, int arg) {
     static const char* modes[]={ "X", "FL", "EFL" };
-
-    conf.zoom_value+=change;
-    if (conf.zoom_value<0)
-        conf.zoom_value=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.zoom_value>=(sizeof(modes)/sizeof(modes[0])))
-        conf.zoom_value=0;
-
-    return modes[conf.zoom_value];
+	return gui_change_simple_enum(&conf.zoom_value,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_show_values_enum(int change, int arg) {
     static const char* modes[]={ "Don't", "Always", "Shoot" };
-
-    conf.show_values+=change;
-    if (conf.show_values<0)
-        conf.show_values=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.show_values>=(sizeof(modes)/sizeof(modes[0])))
-        conf.show_values=0;
-
-    return modes[conf.show_values];
+	return gui_change_simple_enum(&conf.show_values,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_nd_filter_state_enum(int change, int arg) {
     static const char* modes[]={ "Off", "In", "Out" };
-
-    conf.nd_filter_state+=change;
-    if (conf.nd_filter_state<0)
-        conf.nd_filter_state=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.nd_filter_state>=(sizeof(modes)/sizeof(modes[0])))
-        conf.nd_filter_state=0;
-
-    return modes[conf.nd_filter_state];
+	return gui_change_simple_enum(&conf.nd_filter_state,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
-
-
 
 const char* gui_dof_show_value_enum(int change, int arg) {
     static const char* modes[]={ "Don't", "Separate", "In Misc" };
-
-    conf.show_dof+=change;
-    if (conf.show_dof<0)
-        conf.show_dof=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.show_dof>=(sizeof(modes)/sizeof(modes[0])))
-        conf.show_dof=0;
-
-    return modes[conf.show_dof];
+	return gui_change_simple_enum(&conf.show_dof,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
-
 
 const char* gui_histo_show_enum(int change, int arg) {
     static const char* modes[]={ "Don't", "Always", "Shoot" };
-
-    conf.show_histo+=change;
-    if (conf.show_histo<0)
-        conf.show_histo=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.show_histo>=(sizeof(modes)/sizeof(modes[0])))
-        conf.show_histo=0;
-
-    return modes[conf.show_histo];
+	return gui_change_simple_enum(&conf.show_histo,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_show_clock_enum(int change, int arg) {
     static const char* modes[]={ "Don't", "Normal", "Seconds"};
-
-    conf.show_clock+=change;
-    if (conf.show_clock<0)
-        conf.show_clock=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.show_clock>=(sizeof(modes)/sizeof(modes[0])))
-        conf.show_clock=0;
-
-    return modes[conf.show_clock];
+	return gui_change_simple_enum(&conf.show_clock,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_hide_osd_enum(int change, int arg) {
     static const char* modes[]={ "Don't", "In Playback", "On Disp Press", "both"};
-
-    conf.hide_osd+=change;
-    if (conf.hide_osd<0)
-        conf.hide_osd=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.hide_osd>=(sizeof(modes)/sizeof(modes[0])))
-        conf.hide_osd=0;
-
-    return modes[conf.hide_osd];
+	return gui_change_simple_enum(&conf.hide_osd,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_clock_format_enum(int change, int arg) {
     static const char* modes[]={ "24h", "12h"};
-
-    conf.clock_format+=change;
-    if (conf.clock_format<0)
-        conf.clock_format=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.clock_format>=(sizeof(modes)/sizeof(modes[0])))
-        conf.clock_format=0;
-
-    return modes[conf.clock_format];
+	return gui_change_simple_enum(&conf.clock_format,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_clock_indicator_enum(int change, int arg) {
     static const char* modes[]={ "PM", "P","."};
-
-    conf.clock_indicator+=change;
-    if (conf.clock_indicator<0)
-        conf.clock_indicator=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.clock_indicator>=(sizeof(modes)/sizeof(modes[0])))
-        conf.clock_indicator=0;
-
-    return modes[conf.clock_indicator];
+	return gui_change_simple_enum(&conf.clock_indicator,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_clock_halfpress_enum(int change, int arg) {
     static const char* modes[]={ "Full", "Seconds","Don't"};
-
-    conf.clock_halfpress+=change;
-    if (conf.clock_halfpress<0)
-        conf.clock_halfpress=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.clock_halfpress>=(sizeof(modes)/sizeof(modes[0])))
-        conf.clock_halfpress=0;
-
-    return modes[conf.clock_halfpress];
+	return gui_change_simple_enum(&conf.clock_halfpress,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_space_bar_enum(int change, int arg) {
     static const char* modes[]={ "Don't", "Horizontal", "Vertical"};
-
-    conf.space_bar_show+=change;
-    if (conf.space_bar_show<0)
-        conf.space_bar_show=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.space_bar_show>=(sizeof(modes)/sizeof(modes[0])))
-        conf.space_bar_show=0;
-
-    return modes[conf.space_bar_show];
+	return gui_change_simple_enum(&conf.space_bar_show,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_space_bar_size_enum(int change, int arg) {
     static const char* modes[]={ "1/4", "1/2", "1"};
-
-    conf.space_bar_size+=change;
-    if (conf.space_bar_size<0)
-        conf.space_bar_size=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.space_bar_size>=(sizeof(modes)/sizeof(modes[0])))
-        conf.space_bar_size=0;
-
-    return modes[conf.space_bar_size];
+	return gui_change_simple_enum(&conf.space_bar_size,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_space_bar_width_enum(int change, int arg) {
     static const char* modes[]={ "1", "2", "3","4","5","6","7","8","9","10"};
-
-    conf.space_bar_width+=change;
-    if (conf.space_bar_width<0)
-        conf.space_bar_width=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.space_bar_width>=(sizeof(modes)/sizeof(modes[0])))
-        conf.space_bar_width=0;
-
-    return modes[conf.space_bar_width];
+	return gui_change_simple_enum(&conf.space_bar_width,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_space_warn_type_enum(int change, int arg) {
     static const char* modes[]={ "Percent", "MB", "Don't"};
-
-    conf.space_warn_type+=change;
-    if (conf.space_warn_type<0)
-        conf.space_warn_type=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.space_warn_type>=(sizeof(modes)/sizeof(modes[0])))
-        conf.space_warn_type=0;
-
-    return modes[conf.space_warn_type];
+	return gui_change_simple_enum(&conf.space_warn_type,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
- const char* gui_show_movie_time(int change, int arg) {
-     static const char* modes[]={ "Don't", "hh:mm:ss", "KB/s","both"};
- 
-     conf.show_movie_time+=change;
-     if (conf.show_movie_time<0)
-         conf.show_movie_time=(sizeof(modes)/sizeof(modes[0]))-1;
-     else if (conf.show_movie_time>=(sizeof(modes)/sizeof(modes[0])))
-         conf.show_movie_time=0;
- 
-     return modes[conf.show_movie_time];
- }
+const char* gui_show_movie_time(int change, int arg) {
+    static const char* modes[]={ "Don't", "hh:mm:ss", "KB/s","both"};
+	return gui_change_simple_enum(&conf.show_movie_time,change,modes,sizeof(modes)/sizeof(modes[0]));
+}
 
 //-------------------------------------------------------------------
 #if CAM_ADJUSTABLE_ALT_BUTTON
@@ -1484,12 +1292,7 @@ const char* gui_alt_mode_button_enum(int change, int arg) {
 //-------------------------------------------------------------------
 const char* gui_alt_power_enum(int change, int arg) {
     static const char* modes[]={ "Never", "Alt", "Script","Always" };
-
-    conf.alt_prevent_shutdown+=change;
-    if (conf.alt_prevent_shutdown<0)
-        conf.alt_prevent_shutdown=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.alt_prevent_shutdown>=(sizeof(modes)/sizeof(modes[0])))
-        conf.alt_prevent_shutdown=0;
+	gui_enum_value_change(&conf.alt_prevent_shutdown,change,sizeof(modes)/sizeof(modes[0]));
 	
 	conf_update_prevent_shutdown();
 
@@ -1497,22 +1300,12 @@ const char* gui_alt_power_enum(int change, int arg) {
 }
 const char* gui_fast_ev_step(int change, int arg) {
     static const char* modes[]={"1/6 Ev","1/3 Ev","1/2 Ev", "2/3 Ev","5/6 Ev","1 Ev","1 1/6 Ev","1 1/3 Ev","1 1/2 Ev", "1 2/3 Ev","1 5/6 Ev","2 Ev","2 1/6 Ev","2 1/3 Ev","2 1/2 Ev", "2 2/3 Ev","2 5/6 Ev","3 Ev","3 1/6 Ev","3 1/3 Ev","3 1/2 Ev", "3 2/3 Ev","3 5/6 Ev","4 Ev"};
-    conf.fast_ev_step+=change;
-    if (conf.fast_ev_step<0)
-        conf.fast_ev_step=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.fast_ev_step>=(sizeof(modes)/sizeof(modes[0])))
-        conf.fast_ev_step=0;
-    return modes[conf.fast_ev_step];
+	return gui_change_simple_enum(&conf.fast_ev_step,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 #if CAM_QUALITY_OVERRIDE
 const char* gui_fast_image_quality(int change, int arg) {
     static const char* modes[]={"sup.fine","fine","normal","off"};
-    conf.fast_image_quality+=change;
-    if (conf.fast_image_quality<0)
-        conf.fast_image_quality=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.fast_image_quality>=(sizeof(modes)/sizeof(modes[0])))
-        conf.fast_image_quality=0;
-    return modes[conf.fast_image_quality];
+	return gui_change_simple_enum(&conf.fast_image_quality,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 #endif
 
@@ -1522,22 +1315,12 @@ const char* gui_video_mode_enum(int change, int arg) {
 #else
     static const char* modes[]={ "Default", "Quality"};
 #endif
-    conf.video_mode+=change;
-    if (conf.video_mode<0)
-        conf.video_mode=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.video_mode>=(sizeof(modes)/sizeof(modes[0])))
-        conf.video_mode=0;
-
-    return modes[conf.video_mode];
+	return gui_change_simple_enum(&conf.video_mode,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 //-------------------------------------------------------------------
 const char* gui_video_bitrate_enum(int change, int arg) {
-    conf.video_bitrate+=change;
-    if (conf.video_bitrate<0)
-        conf.video_bitrate=VIDEO_BITRATE_STEPS-1;
-    else if (conf.video_bitrate>=VIDEO_BITRATE_STEPS)
-        conf.video_bitrate=0;
+	gui_enum_value_change(&conf.video_bitrate,change,VIDEO_BITRATE_STEPS);
 
     shooting_video_bitrate_change(conf.video_bitrate);
 
@@ -1548,62 +1331,27 @@ const char* gui_video_bitrate_enum(int change, int arg) {
 //-------------------------------------------------------------------
 const char* gui_tv_bracket_values_enum(int change, int arg) {
     static const char* modes[]={ "Off", "1/3 Ev","2/3 Ev", "1 Ev", "1 1/3Ev", "1 2/3Ev", "2 Ev", "2 1/3Ev", "2 2/3Ev", "3 Ev", "3 1/3Ev", "3 2/3Ev", "4 Ev"};
-
-    conf.tv_bracket_value+=change;
-    if (conf.tv_bracket_value<0)
-        conf.tv_bracket_value=sizeof(modes)/sizeof(modes[0])-1;
-    else if (conf.tv_bracket_value>=(sizeof(modes)/sizeof(modes[0])))
-        conf.tv_bracket_value=0;
-
-    return modes[conf.tv_bracket_value]; 
+	return gui_change_simple_enum(&conf.tv_bracket_value,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_av_bracket_values_enum(int change, int arg) {
     static const char* modes[]={ "Off", "1/3 Ev","2/3 Ev", "1 Ev", "1 1/3Ev", "1 2/3Ev", "2 Ev", "2 1/3Ev", "2 2/3Ev", "3 Ev", "3 1/3Ev", "3 2/3Ev", "4 Ev"};
-
-    conf.av_bracket_value+=change;
-    if (conf.av_bracket_value<0)
-        conf.av_bracket_value=sizeof(modes)/sizeof(modes[0])-1;
-    else if (conf.av_bracket_value>=(sizeof(modes)/sizeof(modes[0])))
-        conf.av_bracket_value=0;
-
-    return modes[conf.av_bracket_value]; 
+	return gui_change_simple_enum(&conf.av_bracket_value,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_subj_dist_bracket_koef_enum(int change, int arg) {
     static const char* modes[]={"Off", "1", "10","100","1000"};
-
-    conf.subj_dist_bracket_koef+=change;
-    if (conf.subj_dist_bracket_koef<0)
-        conf.subj_dist_bracket_koef=sizeof(modes)/sizeof(modes[0])-1;
-    else if (conf.subj_dist_bracket_koef>=(sizeof(modes)/sizeof(modes[0])))
-        conf.subj_dist_bracket_koef=0;
-    
-    return modes[conf.subj_dist_bracket_koef]; 
+	return gui_change_simple_enum(&conf.subj_dist_bracket_koef,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_iso_bracket_koef_enum(int change, int arg) {
     static const char* modes[]={ "Off","1", "10","100"};
-
-    conf.iso_bracket_koef+=change;
-    if (conf.iso_bracket_koef<0)
-        conf.iso_bracket_koef=sizeof(modes)/sizeof(modes[0])-1;
-    else if (conf.iso_bracket_koef>=(sizeof(modes)/sizeof(modes[0])))
-        conf.iso_bracket_koef=0;
-    
-    return modes[conf.iso_bracket_koef]; 
+	return gui_change_simple_enum(&conf.iso_bracket_koef,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_bracket_type_enum(int change, int arg) {
     static const char* modes[]={ "+/-", "-","+"};
-
-    conf.bracket_type+=change;
-    if (conf.bracket_type<0)
-        conf.bracket_type=0;
-    else if (conf.bracket_type>=(sizeof(modes)/sizeof(modes[0])))
-        conf.bracket_type=sizeof(modes)/sizeof(modes[0])-1;
-
-    return modes[conf.bracket_type]; 
+	return gui_change_simple_enum(&conf.bracket_type,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_tv_override_koef_enum(int change, int arg) {
@@ -1679,14 +1427,7 @@ const char* gui_tv_enum_type_enum(int change, int arg) {
 
 const char* gui_iso_override_koef_enum(int change, int arg) {
     static const char* modes[]={ "Off","1", "10","100"};
-
-    conf.iso_override_koef+=change;
-    if (conf.iso_override_koef<0)
-        conf.iso_override_koef=0;
-    else if (conf.iso_override_koef>=(sizeof(modes)/sizeof(modes[0])))
-        conf.iso_override_koef=sizeof(modes)/sizeof(modes[0])-1;
-    
-    return modes[conf.iso_override_koef]; 
+	return gui_change_simple_enum(&conf.iso_override_koef,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 const char* gui_subj_dist_override_value_enum(int change, int arg) {
@@ -1704,13 +1445,7 @@ const char* gui_subj_dist_override_value_enum(int change, int arg) {
 
 const char* gui_subj_dist_override_koef_enum(int change, int arg) {
     static const char* modes[]={ "Off","1", "10","100","1000"};
-
-    conf.subj_dist_override_koef+=change;
-    if (conf.subj_dist_override_koef<0) conf.subj_dist_override_koef=0;
-    else if (conf.subj_dist_override_koef>=(sizeof(modes)/sizeof(modes[0])))
-        conf.subj_dist_override_koef=sizeof(modes)/sizeof(modes[0])-1;
-    
-    return modes[conf.subj_dist_override_koef]; 
+	return gui_change_simple_enum(&conf.subj_dist_override_koef,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 /*
@@ -1802,14 +1537,7 @@ const char* gui_user_menu_show_enum(int change, int arg) {
     static const char* modes[]={ "Off", "On","On Direct", "Edit" };
 
 	if (conf.user_menu_enable == 3) user_menu_save();
-
-    conf.user_menu_enable+=change;
-    if (conf.user_menu_enable<0)
-        conf.user_menu_enable=(sizeof(modes)/sizeof(modes[0]))-1;
-    else if (conf.user_menu_enable>=(sizeof(modes)/sizeof(modes[0])))
-        conf.user_menu_enable=0;
-
-    return modes[conf.user_menu_enable];
+	return gui_change_simple_enum(&conf.user_menu_enable,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
  
 const char* gui_video_af_key_enum(int change, int arg){ 
@@ -1835,13 +1563,7 @@ const char* gui_video_af_key_enum(int change, int arg){
     
 const char* gui_bad_pixel_enum(int change, int arg) { 
     int modes[]={LANG_MENU_BAD_PIXEL_OFF, LANG_MENU_BAD_PIXEL_INTERPOLATION, LANG_MENU_BAD_PIXEL_RAW_CONVERTER}; 
-    conf.bad_pixel_removal+=change; 
-    if (conf.bad_pixel_removal<0) 
-        conf.bad_pixel_removal=(sizeof(modes)/sizeof(modes[0]))-1; 
-    else if (conf.bad_pixel_removal>=(sizeof(modes)/sizeof(modes[0]))) 
-        conf.bad_pixel_removal=0; 
- 
-    return lang_str(modes[conf.bad_pixel_removal]); 
+	return lang_str(gui_change_simple_enum(&conf.bad_pixel_removal,change,modes,sizeof(modes)/sizeof(modes[0])));
 } 
  
 //-------------------------------------------------------------------
@@ -1937,26 +1659,12 @@ static void gui_debug_draw_tasklist(void) {
 #define DEBUG_DISPLAY_TASKS 3
 static const char * gui_debug_shortcut_enum(int change, int arg) {
     static const char* modes[]={ "None", "DmpRAM", "Page", "CmpProps"};
-
-    conf.debug_shortcut_action += change;
-    if (conf.debug_shortcut_action < 0) 
-        conf.debug_shortcut_action = sizeof(modes)/sizeof(modes[0])-1;
-    else if (conf.debug_shortcut_action >= (sizeof(modes)/sizeof(modes[0])))
-        conf.debug_shortcut_action = 0;
-    
-    return modes[conf.debug_shortcut_action]; 
+	return gui_change_simple_enum(&conf.debug_shortcut_action,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 static const char * gui_debug_display_enum(int change, int arg) {
     static const char* modes[]={ "None", "Props", "Params", "Tasks"};
-
-    conf.debug_display += change;
-    if (conf.debug_display < 0) 
-        conf.debug_display=sizeof(modes)/sizeof(modes[0])-1;
-    else if (conf.debug_display >= (sizeof(modes)/sizeof(modes[0])))
-        conf.debug_display = 0;
-    
-    return modes[conf.debug_display]; 
+	return gui_change_simple_enum(&conf.debug_display,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 
 static void gui_debug_shortcut(void) {
@@ -3363,13 +3071,7 @@ void user_menu_restore() {
 static const char* gui_edge_pano_enum(int change, int arg)
 {
     static const char* modes[]={ "Off", "Right", "Down", "Left", "Up", "Free"};
-
-    conf.edge_overlay_pano+=change;
-    if (conf.edge_overlay_pano<0) 
-        conf.edge_overlay_pano=(sizeof(modes)/sizeof(modes[0]))-1; 
-    else if (conf.edge_overlay_pano>=(sizeof(modes)/sizeof(modes[0]))) 
-        conf.edge_overlay_pano=0; 
-    return modes[conf.edge_overlay_pano]; 
+	return gui_change_simple_enum(&conf.edge_overlay_pano,change,modes,sizeof(modes)/sizeof(modes[0]));
 }
 #endif
 
