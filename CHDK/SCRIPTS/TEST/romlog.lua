@@ -16,7 +16,9 @@ if (type(call_event_proc) ~= "function" ) then
 end
 
 if (call_event_proc("SystemEventInit") == -1) then
-	printf("SystemEventInit failed")
+	if (call_event_proc("System.Create") == -1) then
+		printf("SystemEventInit / System.Create failed")
+	end
 end
 
 if a ~= 0 then
