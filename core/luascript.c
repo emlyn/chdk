@@ -75,9 +75,7 @@ static int luaCB_set_console_layout( lua_State* L )
 
 static int luaCB_set_console_autoredraw( lua_State* L )
 {
-  // NOTE: This functionality has been removed.
-  // Lua function is kept for compatibility with older
-  // scripts.
+  console_set_autoredraw(luaL_checknumber(L,1));
   return 0;
 }
 

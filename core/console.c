@@ -12,6 +12,7 @@ static int console_num_lines; // number of valid lines
 static int console_line_length;
 static int console_x;
 static int console_y;
+static int console_autoredraw = 1;
 static long console_last_drawn;
 
 static int console_is_inited()
@@ -112,7 +113,9 @@ void console_clear()
     
     console_num_lines = console_line_start = 0;
     
-    console_redraw();
+	if(console_autoredraw) {
+		console_redraw();
+	}
 }
 
 void console_draw()
@@ -147,7 +150,9 @@ void console_add_line(const char *str)
     console_add_text(str);
     
     console_last_drawn = get_tick_count();
-    console_draw();
+	if(console_autoredraw) {
+		console_draw();
+	}
 }
 
 void console_set_layout(int x1, int y1, int x2, int y2) //untere linke Ecke(x1,y1), obere reche Ecke(x2,y2) - lower left corner (x1,y1), upper right corner(x2,y2)
@@ -199,14 +204,20 @@ void console_set_layout(int x1, int y1, int x2, int y2) //untere linke Ecke(x1,y
         
         console_x = x1;
         console_y = MAX_CONSOLE_LINES - y2;
-        console_redraw();
+		if(console_autoredraw) {
+			console_redraw();
+		}
     }
+}
+
+void console_set_autoredraw(int val) {
+	console_autoredraw = val;
 }
 
 void console_redraw()
 {
-    draw_restore();
-    console_last_drawn = get_tick_count();
-    console_draw();
+	draw_restore();
+	console_last_drawn = get_tick_count();
+	console_draw();
 }
 

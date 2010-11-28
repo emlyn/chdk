@@ -1486,11 +1486,7 @@ static void set_console_layout(void)
 static void set_console_autoredraw(void)
 {
   accept(TOKENIZER_SET_CONSOLE_AUTOREDRAW);
-
-  // NOTE: This functionality has been removed.
-  // UBasic function is kept for compatibility with older
-  // scripts.
-  
+  console_set_autoredraw(expr());
   accept_cr();
 }
 /*---------------------------------------------------------------------------*/

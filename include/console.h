@@ -12,6 +12,7 @@ void console_add_line(const char *str);
 void console_draw();
 void console_set_layout(int x1, int y1, int x2, int y2);
 void console_redraw();
+void console_set_autoredraw(int val);
 
 #endif // _CONSOLE_H
 
