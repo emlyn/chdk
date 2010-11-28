@@ -210,7 +210,7 @@ static const ConfInfo conf_info[] = {
     CONF_INFO( 64, conf.lang_file,              CONF_DEF_PTR,   ptr:"", NULL),
     CONF_INFO( 65, conf.font_cp,                CONF_DEF_VALUE, i:FONT_CP_WIN_1251, conf_change_font_cp),
     CONF_INFO( 66, conf.menu_rbf_file,          CONF_DEF_PTR,   ptr:"", conf_change_menu_rbf_file),
-    CONF_INFO( 67, conf.alt_prevent_shutdown,   CONF_DEF_VALUE, i:ALT_PREVENT_SHUTDOWN_ALT, NULL),
+    CONF_INFO( 67, conf.alt_prevent_shutdown,   CONF_DEF_VALUE, i:ALT_PREVENT_SHUTDOWN_ALT, conf_update_prevent_shutdown),
     CONF_INFO( 68, conf.show_grid_lines,        CONF_DEF_VALUE, i:0, NULL),
     CONF_INFO( 69, conf.grid_lines_file,        CONF_DEF_PTR,   ptr:"", conf_change_grid_file),
     CONF_INFO( 70, conf.raw_nr,                 CONF_DEF_VALUE, i:NOISE_REDUCTION_AUTO_CANON, NULL),
@@ -465,6 +465,20 @@ void conf_change_dng_ext(void){
  save_ext_for_dng();
  if (conf.dng_usb_ext) change_ext_to_dng(); else change_ext_to_default();
 #endif 
+}
+
+/*
+update the prevent display off/prevent shutdown based on current state
+doesn't really belong in conf but not clear where else it should go
+*/
+void conf_update_prevent_shutdown(void) {
+	if(conf.alt_prevent_shutdown == ALT_PREVENT_SHUTDOWN_ALWAYS 
+		|| (conf.alt_prevent_shutdown == ALT_PREVENT_SHUTDOWN_ALT && gui_get_mode() != GUI_MODE_NONE)
+		|| (conf.alt_prevent_shutdown == ALT_PREVENT_SHUTDOWN_ALT_SCRIPT && state_kbd_script_run)) {
+        disable_shutdown();
+	} else {
+        enable_shutdown();
+	}
 }
 
 //-------------------------------------------------------------------

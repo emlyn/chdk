@@ -1483,13 +1483,15 @@ const char* gui_alt_mode_button_enum(int change, int arg) {
 
 //-------------------------------------------------------------------
 const char* gui_alt_power_enum(int change, int arg) {
-    static const char* modes[]={ "No", "Alt", "Script" };
+    static const char* modes[]={ "Never", "Alt", "Script","Always" };
 
     conf.alt_prevent_shutdown+=change;
     if (conf.alt_prevent_shutdown<0)
         conf.alt_prevent_shutdown=(sizeof(modes)/sizeof(modes[0]))-1;
     else if (conf.alt_prevent_shutdown>=(sizeof(modes)/sizeof(modes[0])))
         conf.alt_prevent_shutdown=0;
+	
+	conf_update_prevent_shutdown();
 
     return modes[conf.alt_prevent_shutdown];
 }
@@ -2503,11 +2505,10 @@ void gui_kbd_enter()
 #ifdef OPTIONS_AUTOSAVE
     conf_store_old_settings();
 #endif
-    if ((conf.alt_prevent_shutdown == ALT_PREVENT_SHUTDOWN_ALT && !state_kbd_script_run) 
-        || conf.alt_prevent_shutdown == ALT_PREVENT_SHUTDOWN_ALT_SCRIPT) {
-        disable_shutdown();
-    }
     gui_mode = GUI_MODE_ALT;
+
+	conf_update_prevent_shutdown();
+
     vid_turn_off_updates();
 
 	gui_user_menu_flag = 0;
@@ -2532,9 +2533,10 @@ void gui_kbd_leave()
     if (gui_mode == GUI_MODE_READ && !rbf_load(conf.menu_rbf_file))
         rbf_load_from_8x16(current_font);
     rbf_set_codepage(FONT_CP_WIN);
-    enable_shutdown();
     vid_turn_on_updates();
     gui_mode = GUI_MODE_NONE;
+
+	conf_update_prevent_shutdown();
 }
 //------------------------------------------------------------------- 
  

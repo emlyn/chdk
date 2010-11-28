@@ -287,6 +287,7 @@ extern Conf conf;
 #define ALT_PREVENT_SHUTDOWN_NO         0
 #define ALT_PREVENT_SHUTDOWN_ALT        1
 #define ALT_PREVENT_SHUTDOWN_ALT_SCRIPT 2
+#define ALT_PREVENT_SHUTDOWN_ALWAYS 	3
 
 #define SHOOTING_PROGRESS_NONE          0
 #define SHOOTING_PROGRESS_STARTED       1
@@ -311,6 +312,7 @@ extern void conf_restore();
 extern void conf_load_defaults();
 extern int shutter_int;
 extern void conf_change_dng(void);
+extern void conf_update_prevent_shutdown(void);
 
 // reyalp: putting these in conf, since the conf values are lookups for them
 // prefixes and extentions available for raw images (index with conf.raw_prefix etc)

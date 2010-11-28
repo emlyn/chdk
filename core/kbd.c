@@ -355,9 +355,8 @@ void script_start( int autostart )
 
     state_kbd_script_run = 1;
 
-    if (conf.alt_prevent_shutdown != ALT_PREVENT_SHUTDOWN_ALT_SCRIPT) {
-        enable_shutdown();
-    }
+    conf_update_prevent_shutdown();
+
 }
 
 void script_end()
@@ -371,11 +370,11 @@ void script_end()
     }
 	md_close_motion_detector();
 	shot_histogram_set(0);
-    if ((conf.alt_prevent_shutdown != ALT_PREVENT_SHUTDOWN_NO) && (gui_get_mode()==GUI_MODE_ALT)) {
-        disable_shutdown();
-    }
     kbd_key_release_all();
     state_kbd_script_run = 0;
+
+    conf_update_prevent_shutdown();
+
     vid_bitmap_refresh();
 }
 
