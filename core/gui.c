@@ -2782,17 +2782,9 @@ void gui_draw_osd() {
 		return; // if zebra drawn, we're done
 	}
 #if !CAM_SHOW_OSD_IN_SHOOT_MENU
-//    #if defined (CAMERA_sx200is)
-//      if (!(conf.show_osd) || (canon_menu_active>0) || (canon_shoot_menu_active>0))  return;
-//    #else
       if (!(conf.show_osd && (canon_menu_active==(int)&canon_menu_active-4) && (canon_shoot_menu_active==0)))  return;    
-//    #endif
 #else
-//    #if defined (CAMERA_sx200is)
-//       if (!(conf.show_osd) || (canon_menu_active>0) /*&& (canon_shoot_menu_active==0)*/ )  return;
-//    #else
       if (!(conf.show_osd && (canon_menu_active==(int)&canon_menu_active-4) /*&& (canon_shoot_menu_active==0)*/ ))  return;
-//    #endif
 #endif  
 
     
@@ -2805,11 +2797,6 @@ void gui_draw_osd() {
     }
 
     if ((m&MODE_MASK) == MODE_REC && (recreview_hold==0 || conf.show_osd_in_review) ) {
-//        m &= MODE_SHOOTING_MASK;
-//        if (m==MODE_SCN_WATER || m==MODE_SCN_NIGHT || m==MODE_SCN_CHILD || m==MODE_SCN_PARTY || m==MODE_STITCH ||
-//            m==MODE_SCN_GRASS || m==MODE_SCN_SNOW  || m==MODE_SCN_BEACH || m==MODE_SCN_FIREWORK || m==MODE_VIDEO)
-//            ++n;
-
         if (conf.show_grid_lines) {
             gui_grid_draw_osd(1);
         }
@@ -3076,7 +3063,6 @@ void gui_draw_splash(char* logo, int logo_size) {
       int my=0;
       int offset_x = (screen_width-150)>>1;
       int offset_y = ((screen_height-84)>>1) - 42;
-//      const color color_lookup[8] = {0xFF, 0x2E, 0x22, 0x3D, 0x1F,  0x21, 0x00, 0x11};
       const color color_lookup[8] = {COLOR_BLACK,
 	  								COLOR_SPLASH_RED/*0x2E redish*/,
 									COLOR_RED,
@@ -3392,15 +3378,14 @@ static const char* gui_edge_pano_enum(int change, int arg)
 void gui_compare_props(int arg)
 {
 	#define NUM_PROPS 512
-	static int initialized = 0;
-	static int props[NUM_PROPS] = { };
+	// never freed, but not allocated unless prop compare is used once
+	static int *props = NULL;
 	char buf[64];
 	int i;
 	int p;
 	int c;
 
-
-	if( initialized )
+	if( props )
 	{ // we have previous data set! do a comparison
 		c = 0;
 		for( i = 0; i < NUM_PROPS; ++i )
@@ -3429,12 +3414,14 @@ void gui_compare_props(int arg)
 	else
 	{
 	// no previous data was set so we save the data initially
-		for( i = 0; i < NUM_PROPS; ++i )
-		{
-			props[i] = shooting_get_prop(i);
+		props = (int *)malloc(NUM_PROPS*sizeof(int));
+		if(props) {
+			for( i = 0; i < NUM_PROPS; ++i )
+			{
+				props[i] = shooting_get_prop(i);
+			}
 		}
 	}
-	initialized = 1;
 }
 
 #endif
