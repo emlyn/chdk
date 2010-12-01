@@ -2,39 +2,65 @@
 
 // RAM addresses
 
-// search String "CRAW BUFF"
 char *hook_raw_image_addr() {
-    return (char*)0x41db3b80;           // first RAW buffer address
+    return (char*)0x41db3b80;           // first RAW buffer address, search String "CRAW BUFF"
+    // table at 0xffb40208, no second buffer
 }
-
-
-// ffb03ef8: 0x41db3b80 First RAW address
-// ffb401ec Table contains first RAW address
-// function ff87bc38: references the table with first RAW address (SsImgProcBuf.c)
-// ff87bc3c: 0x2bec
-// ff87bc68: 0xC
-//char *hook_raw_image_addr() {
-//    return (char*) (*(int*)(0x2bec + 0xC)? 0x???????? : 0x41db3b80);
-//}
 
 // search String "CRAW BUFF SIZE"
 long hook_raw_size() {
     return 0x14d2400;
 }
 
-void *vid_get_viewport_live_fb() {
-    return (void*)0;
+// Live picture buffer (shoot half-pressed)
+// search for String "VRAM Address" (like SX10)
+// or search for String "MaxY %ld MinY %ld" and look below
+void *vid_get_viewport_fb() {
+    return (void*)0x40547700;
+}
+
+// ?!?
+// possible future use
+void *vid_get_viewport_fb_d() {
+    return (void*)(*(int*)0x29f4);         // ff871dec: 0x29a0 + 0x54
 }
 
 /*
-// ?!?
-// Live picture buffer (shoot not pressed)
-// ROM:FF84FB50 ?!?
+from http://chdk.setepontos.com/index.php?topic=5045.msg54035#msg54035
+this must be completely opaque to an uninitiated scholar...
+
+First, a quick suggestion: for a start, return 0 in *vid_get_viewport_live_fb(),
+and return the correct viewport base address in *vid_get_viewport_fb(),
+which is easy to find from the code that references the "VRAM Address: %p" string.
+
+Now in more detail. Actually, Canon uses (or used to anyway) three buffers,
+one (first) of them located at the base address, and switches between them about 30 times a second,
+if I remember correctly. We only need to know which one of them is most recently updated,
+if we want to speed up motion detection by about 30ms.
+There is a table somewhere in RAM with the addresses of the buffers, and a variable with the index 0,1,2 into this table.
+It's these two locations that you may want to find, but I'm afraid there's no generic recipe...
+They are usually referenced in the code just before, or around "LiveView.c".
+Here're sample code snippets from the Ixus950 and A720 (sorry, don't have disasms of later cameras):
+
+FF9C9E84                 LDR     R3, =0x8C74
+FF9C9E88                 LDR     R2, =0x8C58
+FF9C9E8C                 LDRB    R0, [R3]
+FF9C9E90                 LDR     R1, [R2,R0,LSL#2]
+
+FFC2936C                 LDR     R4, =0x2084
+...
+FFC293B8                 LDRB    R2, [R4]
+FFC293BC                 LDR     R0, =0x21D0
+FFC293C0                 LDR     R2, [R0,R2,LSL#2]
+
+You can verify them in memory browser: the index variable should circle through 0,1,2,
+and the table should contain three addresses, starting with the VRAM base address.
+*/
 void *vid_get_viewport_live_fb() {
-    //void **fb=(void **)0x21E8;      // ?!?
-    //void **fb=(void **)0x21EC;      // ?!?
-    void **fb=(void **)0x21F8;      // ROM:FF85078C ?!? more or less guesswork
-    unsigned char buff = *((unsigned char*)0x204C);   // ROM:FF850904
+    return (void*)0;
+    // sub_ff84e0e0??? (cf sd990 FF839850)
+    void **fb=(void **)0x; // ???
+    unsigned char buff = *((unsigned char*)0x2040);
     if (buff == 0) {
         buff = 2;
     }
@@ -43,7 +69,6 @@ void *vid_get_viewport_live_fb() {
     }
     return fb[buff];
 }
-*/
 
 // OSD buffer
 // search dispcon* functions and BmpDDev.c
@@ -78,19 +103,6 @@ void *vid_get_viewport_live_fb() {
 // ff90ce74: 	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
 void *vid_get_bitmap_fb() {
     return (void*)0x40431000;
-}
-
-// Live picture buffer (shoot half-pressed)
-// search for String "VRAM Address" (like SX10)
-// or search for String "MaxY %ld MinY %ld" and look below
-void *vid_get_viewport_fb() {
-    return (void*)0x40547700;
-}
-
-// ?!?
-// possible future use
-void *vid_get_viewport_fb_d() {
-    return (void*)(*(int*)0x29f4);         // ff871dec: 0x29a0 + 0x54
 }
 
 // if buffer width was to small, Logo was shown as distorted "row" on Display
