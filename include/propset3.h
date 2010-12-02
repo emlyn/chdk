@@ -1,10 +1,12 @@
 #ifndef PROPSET3_H
 #define PROPSET3_H
-/* 
+
+/*
 constants for propset 3
 WARNING:
- The build uses tools/gen_propset_lua.sed to generate propset3.lua from this file
+The build uses tools/gen_propset_lua.sed to generate propset3.lua from this file
 */
+
 #define PROPCASE_DRIVE_MODE                      102
 #define PROPCASE_FOCUS_MODE                      133
 #define PROPCASE_FLASH_MODE                      143
@@ -12,7 +14,7 @@ WARNING:
 #define PROPCASE_FLASH_MANUAL_OUTPUT             141
 #define PROPCASE_FLASH_ADJUST_MODE               121
 #define PROPCASE_USER_TV                         266
-#define PROPCASE_TV	                             264
+#define PROPCASE_TV                              264
 #define PROPCASE_USER_AV                         26
 #define PROPCASE_AV                              23
 #define PROPCASE_MIN_AV                          25
@@ -43,4 +45,5 @@ WARNING:
 #define PROPCASE_ASPECT_RATIO                    294
 #define PROPCASE_TIMER_MODE                      225
 #define PROPCASE_OPTICAL_ZOOM_POSITION           197
+
 #endif

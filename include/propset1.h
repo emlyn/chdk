@@ -1,10 +1,12 @@
 #ifndef PROPSET1_H
 #define PROPSET1_H
-/* 
+
+/*
 constants for propset 1, most digic2 camera
 WARNING:
- The build uses tools/gen_propset_lua.sed to generate propset1.lua from this file
+The build uses tools/gen_propset_lua.sed to generate propset1.lua from this file
 */
+
 #define PROPCASE_DRIVE_MODE                      6
 #define PROPCASE_FOCUS_MODE                      12
 #define PROPCASE_FLASH_MODE                      16
@@ -15,7 +17,7 @@ WARNING:
 #define PROPCASE_FLASH_MANUAL_OUTPUT             29
 //#define PROPCASE_FOCUS_OK                      67
 #define PROPCASE_USER_TV                         40
-#define PROPCASE_TV	                             69
+#define PROPCASE_TV                              69
 #define PROPCASE_USER_AV                         39
 #define PROPCASE_AV                              68
 #define PROPCASE_MIN_AV                          77
@@ -39,9 +41,10 @@ WARNING:
 #define PROPCASE_DIGITAL_ZOOM_STATE              58
 #define PROPCASE_DIGITAL_ZOOM_POSITION           57
 #define PROPCASE_DISPLAY_MODE                    181
-#define PROPCASE_BRACKET_MODE                    36 //missing for dryos!
+#define PROPCASE_BRACKET_MODE                    36    //missing for dryos!
 #define PROPCASE_FLASH_SYNC_CURTAIN              20
 #define PROPCASE_METERING_MODE                   9
 #define PROPCASE_WB_ADJ                          100
-#define PROPCASE_OPTICAL_ZOOM_POSITION           99 // tested a540, sd400
+#define PROPCASE_OPTICAL_ZOOM_POSITION           99    // tested a540, sd400
+
 #endif

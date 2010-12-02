@@ -1,10 +1,12 @@
 #ifndef PROPSET2_H
 #define PROPSET2_H
-/* 
+
+/*
 constants for propset 2, most digic3 camera
 WARNING:
- The build uses tools/gen_propset_lua.sed to generate propset2.lua from this file
+The build uses tools/gen_propset_lua.sed to generate propset2.lua from this file
 */
+
 #define PROPCASE_DRIVE_MODE                      102
 #define PROPCASE_FOCUS_MODE                      133
 #define PROPCASE_FLASH_MODE                      143
@@ -12,7 +14,7 @@ WARNING:
 #define PROPCASE_FLASH_MANUAL_OUTPUT             141
 #define PROPCASE_FLASH_ADJUST_MODE               121
 #define PROPCASE_USER_TV                         264
-#define PROPCASE_TV	                             262
+#define PROPCASE_TV                              262
 #define PROPCASE_USER_AV                         26
 #define PROPCASE_AV                              23
 #define PROPCASE_MIN_AV                          25
@@ -43,5 +45,6 @@ WARNING:
 #define PROPCASE_ASPECT_RATIO                    294
 #define PROPCASE_TIMER_MODE                      223
 #define PROPCASE_OPTICAL_ZOOM_POSITION           195
-//#define PROPCASE_OPTICAL_ZOOM_POSITION         251   // not working sx200is
+//#define PROPCASE_OPTICAL_ZOOM_POSITION         251    // not working sx200is
+
 #endif

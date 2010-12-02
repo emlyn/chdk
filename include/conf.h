@@ -23,12 +23,12 @@ typedef struct {
     int raw_in_dir;
     int raw_prefix;
     int raw_ext;
-    int raw_save_first_only; //for series shooting
+    int raw_save_first_only;    //for series shooting
     int raw_nr;
-    int sub_batch_prefix; // output of batch subtracts
+    int sub_batch_prefix;    // output of batch subtracts
     int sub_batch_ext;
-    int sub_in_dark_value; // values <= to this are not subtracted, i.e. the dark value of your darkframe
-    int sub_out_dark_value; // minimum value to output from subtract, i.e. dark value of your final image
+    int sub_in_dark_value;    // values <= to this are not subtracted, i.e. the dark value of your darkframe
+    int sub_out_dark_value;    // minimum value to output from subtract, i.e. dark value of your final image
     int raw_cache;
     int dng_raw;
     int raw_timer;
@@ -67,7 +67,6 @@ typedef struct {
     int space_warn_type;
     int show_movie_time;
     int show_movie_refresh;
-
 
     int zoom_value;
 
@@ -112,7 +111,7 @@ typedef struct {
     OSD_pos ev_video_pos;
 
     color histo_color;
-    color histo_color2; // markers/border
+    color histo_color2;    // markers/border
     color osd_color;
     color osd_color_warn;
     color batt_icon_color;
@@ -125,7 +124,7 @@ typedef struct {
     int menu_select_first_entry;
     int menu_symbol_enable;
     color reader_color;
-    color zebra_color; // under/over
+    color zebra_color;    // under/over
     color grid_color;
     color osd_color_override;
 
@@ -156,7 +155,7 @@ typedef struct {
     int platformid;
 
     int use_zoom_mf;
-    long alt_mode_button; //for S-series
+    long alt_mode_button;    // for S-series
     int alt_prevent_shutdown;
 
     int show_grid_lines;
@@ -166,7 +165,7 @@ typedef struct {
     int video_mode;
     int video_quality;
     int video_bitrate;
-      
+
     int tv_bracket_value;
     int av_bracket_value;
     int iso_bracket_value;
@@ -180,14 +179,13 @@ typedef struct {
     int override_disable;
     int override_disable_all;
 
-
     int tv_override_value;
     int tv_override_koef;
     int tv_enum_type;
     int av_override_value;
-    
+
     int nd_filter_state;
-    
+
     int iso_override_value;
     int iso_override_koef;
     int zoom_override_value;
@@ -196,7 +194,7 @@ typedef struct {
     int subj_dist_override_koef;
     int clear_override;
     int clear_zoom_override;
-    
+
     int autoiso_enable;
     int autoiso_shutter;
     int autoiso_user_factor;
@@ -218,11 +216,10 @@ typedef struct {
     int dof_hyperfocal_in_misc;
     int dof_depth_in_misc;
     int dof_dist_from_lens;
-    
-    
+
     int values_show_in_review;
     int values_show_zoom;
-    int values_show_real_aperture;		
+    int values_show_real_aperture;
     int values_show_real_iso;
     int values_show_market_iso;
     int values_show_iso_only_in_autoiso_mode;
@@ -237,11 +234,11 @@ typedef struct {
     int debug_shortcut_action;  // 0=none, 1=dump, 2=page display
     int debug_display;          // 0=none, 1=props, 2=flash param, 3=tasks
     int debug_propcase_page;     // save propcase page
-	int debug_lua_restart_on_error; // 0=no, 1=yes
-	int debug_misc_vals_show; // 0=no, 1=yes
+    int debug_lua_restart_on_error;    // 0=no, 1=yes
+    int debug_misc_vals_show;    // 0=no, 1=yes
 
-    int script_startup;			// remote autostart
-    int remote_enable;			// remote enable
+    int script_startup;    // remote autostart
+    int remote_enable;    // remote enable
     int user_menu_enable;
     int user_menu_vars[USER_MENU_ITEMS];
     int user_menu_as_root;
@@ -257,11 +254,11 @@ typedef struct {
     int edge_overlay_enable;
     int edge_overlay_filter;
     int edge_overlay_thresh;
-    int edge_overlay_zoom; // shall zoom be set when *edg file is loaded?
-    int edge_overlay_pano; // whether a full press changes back to live mode
-    int edge_overlay_pano_overlap; // overlap in % in pano mode
-    int edge_overlay_show; // whether to show overlay even when no button is pressed
-    int edge_overlay_play; // whether edge overlay is switched on also for play mode
+    int edge_overlay_zoom;    // shall zoom be set when *edg file is loaded?
+    int edge_overlay_pano;    // whether a full press changes back to live mode
+    int edge_overlay_pano_overlap;    // overlap in % in pano mode
+    int edge_overlay_show;    // whether to show overlay even when no button is pressed
+    int edge_overlay_play;    // whether edge overlay is switched on also for play mode
     color edge_overlay_color;
 
     int synch_enable;
@@ -274,7 +271,7 @@ typedef struct {
 
     int script_param_set;
     int script_param_save;
-    
+
     long mem_view_addr_init;
     int flash_sync_curtain;
     int flash_video_override;
@@ -287,7 +284,7 @@ extern Conf conf;
 #define ALT_PREVENT_SHUTDOWN_NO         0
 #define ALT_PREVENT_SHUTDOWN_ALT        1
 #define ALT_PREVENT_SHUTDOWN_ALT_SCRIPT 2
-#define ALT_PREVENT_SHUTDOWN_ALWAYS 	3
+#define ALT_PREVENT_SHUTDOWN_ALWAYS     3
 
 #define SHOOTING_PROGRESS_NONE          0
 #define SHOOTING_PROGRESS_STARTED       1
@@ -295,9 +292,9 @@ extern Conf conf;
 #define SHOOTING_PROGRESS_DONE          3
 
 // video quality defaults. Ideally, these should match the camera default settings
-#define VIDEO_DEFAULT_QUALITY   84  // ? where does 84 come from
+#define VIDEO_DEFAULT_QUALITY   84    // ? where does 84 come from
 #define VIDEO_MAX_QUALITY       99
-#define VIDEO_DEFAULT_BITRATE   3 // should be 1 for all cams
+#define VIDEO_DEFAULT_BITRATE   3    // should be 1 for all cams
 
 extern int state_kbd_script_run;
 extern int state_shooting_progress;
@@ -306,7 +303,7 @@ extern int state_expos_recalculated;
 extern int state_expos_under;
 extern int state_expos_over;
 
-extern void script_autostart();				// remote autostart
+extern void script_autostart();    // remote autostart
 extern void conf_save();
 extern void conf_restore();
 extern void conf_load_defaults();
@@ -316,11 +313,12 @@ extern void conf_update_prevent_shutdown(void);
 
 // reyalp: putting these in conf, since the conf values are lookups for them
 // prefixes and extentions available for raw images (index with conf.raw_prefix etc)
-#define NUM_IMG_PREFIXES 3 // IMG_ CRW_ SND_ (could add ETC_ SDR_ AUT_ MVI_ MRK_)
-#define NUM_IMG_EXTS 5 // .JPG .CRW .CR2 .THM .WAV (could add .AVI .MRK)
+#define NUM_IMG_PREFIXES 3    // IMG_ CRW_ SND_ (could add ETC_ SDR_ AUT_ MVI_ MRK_)
+#define NUM_IMG_EXTS 5    // .JPG .CRW .CR2 .THM .WAV (could add .AVI .MRK)
 extern const char* img_prefixes[NUM_IMG_PREFIXES];
 extern const char* img_exts[NUM_IMG_EXTS];
 // ugh, but various things need it
 #define VIDEO_BITRATE_STEPS 10
 extern const char *video_bitrate_strings[VIDEO_BITRATE_STEPS];
+
 #endif
