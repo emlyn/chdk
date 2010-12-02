@@ -12,7 +12,7 @@ OPT_DEBUGGING=1
 OPT_EDGEOVERLAY=1
 OPT_LUA_STRLIB=1
 # experimental PTP/USB interface
-#OPT_PTP=1
+OPT_PTP=1
 #allow Lua to call arbitrary ROM functions and eventprocs
 # WARNING: This is DANGEROUS. e.g. call_event_proc("EraseSectorOfRom",...)
 # NOTE: the interface for this may change in the future, to support better support buffers etc
