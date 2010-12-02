@@ -15,6 +15,23 @@ clean: clean-recursive
 
 distclean: distclean-recursive
 
+sd: fir
+	cp bin/DISKBOOT.BIN bin/PS.FI2 /Volumes/CANON_DC/. && echo "Copied to SD"
+
+RELDATE := $(shell date +%Y-%m-%d)
+RELPATH := ../chdk-releases
+ZIPFILE := $(RELPATH)/CHDK-$(PLATFORM)-$(PLATFORMSUB)-$(RELDATE).zip
+DUMPFILE := $(RELPATH)/$(PLATFORM)-$(PLATFORMSUB)-$(RELDATE).dump
+zip: fir
+	rm  -f   $(ZIPFILE)
+	zip -9j   $(ZIPFILE) bin/DISKBOOT.BIN bin/PS.FI2
+	zip -9grq $(ZIPFILE) CHDK
+	cp core/main.dump $(DUMPFILE) && gzip -f $(DUMPFILE)
+
+zips:
+	$(MAKE) PLATFORMSUB=100c zip
+	$(MAKE) PLATFORMSUB=100a zip
+
 fir: version firsub
 
 firsub: all
