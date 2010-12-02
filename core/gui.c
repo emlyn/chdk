@@ -1559,7 +1559,7 @@ const char* gui_video_af_key_enum(int change, int arg){
     
 const char* gui_bad_pixel_enum(int change, int arg) { 
     int modes[]={LANG_MENU_BAD_PIXEL_OFF, LANG_MENU_BAD_PIXEL_INTERPOLATION, LANG_MENU_BAD_PIXEL_RAW_CONVERTER}; 
-	return lang_str(gui_change_simple_enum(&conf.bad_pixel_removal,change,modes,sizeof(modes)/sizeof(modes[0])));
+    return lang_str((int)gui_change_simple_enum(&conf.bad_pixel_removal,change,(const char**)modes,sizeof(modes)/sizeof(modes[0])));
 } 
  
 //-------------------------------------------------------------------
