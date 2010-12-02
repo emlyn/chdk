@@ -8,23 +8,23 @@ const char * const new_sa = &_end;
 
 #define offsetof(TYPE, MEMBER) ((int) &((TYPE *)0)->MEMBER)
 
-void __attribute__((naked,noinline)) init_file_modules_task() {    // ff8946cc
+void __attribute__((naked,noinline)) init_file_modules_task() {    // FF89467C
   asm volatile (
         "push   {r4, r5, r6, lr}\n"
-        "bl     sub_ff88cb10\n"
+        "bl     sub_FF88CAC0\n" 
         "ldr    r5, =0x00005006\n" // was: "[pc, #408]  ; ff894874" 
         "movs   r4, r0\n"
         "ldrne  r1, =0x0\n" // was: "mov ..., #0"
         "movne  r0, r5\n"
-        "blne   sub_ff89051c\n"
-        "bl     sub_ff88cb3c\n"
+        "blne   sub_FF8904CC\n" 
+        "bl     sub_FF88CAEC\n" 
         //"bl     sub_ff88cb3c_my\n"
-        "bl     core_spytask_can_start\n"
+		"bl     core_spytask_can_start\n"
         "cmp    r4, #0\n"       // 0x0
         "moveq  r0, r5\n"
         "popeq  {r4, r5, r6, lr}\n"
         "ldreq  r1, =0x0\n" // was: "mov ..., #0"
-        "beq    sub_ff89051c\n"
+        "beq    sub_FF8904CC\n" 
     );
   led_flash(LED_RED, 1);
   asm volatile (
@@ -122,7 +122,7 @@ void __attribute__((naked,noinline)) boot() {
 	"ldr	r1, [r2]\n"
 	"orr	r1, r1, #1\n"	// 0x1
 	"str	r1, [r2]\n"
-	"ldr	r0, =0xffbf8434\n" // canon_data_src
+	"ldr	r0, =0xFFBF837C\n" // canon_data_src 
 	"ldr	r1, =0x1900\n"     // MEMBASEADDR 
 	"ldr	r3, =0xebd0\n"     // canon_bss_start
 "loc_ff81013c:\n"
@@ -171,10 +171,10 @@ ff85f444: 	e8bd8010 	pop	{r4, pc}
   *(int*)0x2480 = (*(int*)0xC0220128) & 1 ? 0x400000 : 0x200000;
   // Long press on play to start in playback mode:
   //*(int*)0x2480 = (*(int*)0xc022012c) & 1 ? 0x200000 : 0x400000;
-
+	
   //*(int*)0x1934 = (int)taskHook;
   *(int*)0x1938 = (int)taskHook;
-
+	
   asm volatile (
 	"ldr	r0, =0xff8103cc\n" // was: "[pc, #1036]	; ff810768" 
 	"ldr	r1, =0x0\n" // was: "mov ..., #0"
@@ -215,7 +215,7 @@ void __attribute__((naked,noinline)) sub_ff811198_my() {
 	"sub	sp, sp, #116\n"	// 0x74
 	"mov	r0, sp\n"
 	"ldr	r1, =0x74\n" // was: "mov ..., #116"
-	"bl	sub_ffb399c4\n"
+	"bl	sub_FFB39910\n" 
 	"ldr	r0, =0x53000\n" // was: "mov ..., #339968"
 	"str	r0, [sp, #4]\n"
 
@@ -293,7 +293,7 @@ void __attribute__((naked,noinline)) uHwSetup_my() { // 0xff815e58
 	"bllt	sub_ff815f4c\n"
 	"pop	{r4, lr}\n"
 	"b	taskcreate_Startup_my\n" // ff81faf0
-    );
+    );	
 }
 
 void __attribute__((naked,noinline)) taskcreate_Startup_my() { // 0xff81faf0
@@ -349,7 +349,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { // ff81fa8c
 
   CreateTask_spytask();
   //led_flash(LED_RED, 1);
-//       CreateTask_blinker();
+   //CreateTask_blinker();
 
   asm volatile (
 	"bl	sub_ff83be58\n"
@@ -394,17 +394,17 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() { // 0xff834230
 	"bl	sub_ff839ef8\n" // KernelCreateTask
 	"str	r0, [r4, #16]\n"
 "loc_ff834264:\n"
-	"bl	sub_ff88a644\n"
+	"bl	sub_FF88A5F4\n" 
 	"bl	sub_ff835aa4\n" // IsFactoryMode
 	"cmp	r0, #0\n"	// 0x0
 	"ldreq	r1, =0x0003280c\n" // was: "[pc, #428]	; ff834424" 
 	"popeq	{r3, r4, r5, lr}\n"
-	"beq	sub_ff88a5cc\n" // eventproc_export_OpLog_Start
+	"beq	sub_FF88A57C\n" // eventproc_export_OpLog_Start
 	"pop	{r3, r4, r5, pc}\n"
     );
 }
 
-void __attribute__((naked,noinline)) task_ShootSeqTask_my() {
+void __attribute__((naked,noinline)) task_ShootSeqTask_my() { //FF8377A8
 asm volatile (
 	"push	{r4, lr}\n"
 	"ldr	r1, =0x0\n" // was: "mov ..., #0"
@@ -412,26 +412,26 @@ asm volatile (
 	"bl	sub_ff839f50\n"
 	"ldr	r4, =0x00001c7c\n" // was: "[pc, #-492]	; ff8375d4" 
 	"str	r0, [r4, #16]\n"
-	"bl	sub_ff87f1ec\n"
-	"bl	sub_ff880934\n" // taskcreate_SsTask
-	"bl	sub_ff87e334\n"
-	"bl	sub_ff878d6c_my\n"
-	"bl	sub_ff87f4d0\n"
+	"bl	sub_FF87F19C\n" 
+	"bl	sub_FF8808E4\n" // taskcreate_SsTask 
+	"bl	sub_FF87E2E4\n" 
+	"bl	sub_ff878d6c_my\n" 
+	"bl	sub_FF87F480\n" 
 	"ldr	r0, [r4, #16]\n"
 	"pop	{r4, lr}\n"
 	"ldr	r1, =0x1000\n" // was: "mov ..., #4096"
-	"b	sub_ff883f9c\n"
+	"b	sub_FF883F4C\n" 
   );
 }
 
-void __attribute__((naked,noinline)) sub_ff878d6c_my() { // was FF878D1C_my
+void __attribute__((naked,noinline)) sub_ff878d6c_my() { // was FF878D1C_my FF878D1C 
   asm volatile (
 	"push	{r4, lr}\n"
 	"ldr	r4, =0x00002b64\n" // was: "[pc, #-3512]	; ff877fc0" 
 	"ldr	r0, [r4, #12]\n"
 	"cmp	r0, #0\n"	// 0x0
-	"bne	loc_ff878dd8\n"
-	"bl	sub_ff87c898\n" // nullsub
+	"bne	loc_FF878D88\n"
+	"bl	sub_FF87C848\n" // nullsub 
 	"ldr	r1, =0x1\n" // was: "mov ..., #1"
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
 	"bl	sub_ff839f74\n" // KernelMisc.c:55
@@ -440,41 +440,41 @@ void __attribute__((naked,noinline)) sub_ff878d6c_my() { // was FF878D1C_my
 	"ldr	r1, =0x8\n" // was: "mov ..., #8"
 	"bl	sub_ff839f50\n" // KernelMisc.c:43
 	"str	r0, [r4, #8]\n"
-	"bl	sub_ff87914c\n"
-	"bl	sub_ff8798d4\n"
+	"bl	sub_FF8790FC\n" 
+	"bl	sub_FF879884\n" 
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
 	"str	r0, [r4]\n"
 	"add	r0, r4, #16\n"	// 0x10
 	"ldr	r1, =0x0\n" // was: "mov ..., #0"
 	"str	r1, [r0], #4\n"
 	"str	r1, [r0]\n"
-	"bl	sub_ff879ae4\n"
-	"bl	sub_ff87f6d0\n"
-	"bl	sub_ff87ccc4\n"
-	"bl	sub_ff87a628_my\n" // taskcreate_CaptSeqTask
-	"bl	sub_ff87b6d8\n"
-"loc_ff878dd8:\n"
+	"bl	sub_FF879A94\n" 
+	"bl	sub_FF87F680\n" 
+	"bl	sub_FF87CC74\n" 
+	"bl	sub_ff87a5d8_my\n" // taskcreate_CaptSeqTask
+	"bl	sub_ff87b688\n" 
+"loc_FF878D88:\n"
 	"ldr	r0, =0x1\n" // was: "mov ..., #1"
 	"str	r0, [r4, #12]\n"
 	"pop	{r4, pc}\n"
     );
 }
 
-void __attribute__((naked,noinline)) sub_ff87a628_my() { // was sub_FF87A5D8_my
-  asm volatile (
+void __attribute__((naked,noinline)) sub_ff87a5d8_my() { // was sub_ff87a5d8_my
+  asm volatile (  //FF87A5D8
 	"push	{r3, r4, r5, lr}\n"
 	"ldr	r2, =0x00039578\n" // was: "[pc, #-1920]	; ff879eb4" 
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
 	"ldr	r1, =0x0\n" // was: "mov ..., #0"
-"loc_ff87a638:\n"
+"loc_FF87A5E8:\n"  //WAS loc_ff87a638
 	"add	r3, r2, r0, lsl #4\n"
 	"add	r0, r0, #1\n"	// 0x1
 	"cmp	r0, #5\n"	// 0x5
 	"str	r1, [r3, #8]\n"
-	"bcc	loc_ff87a638\n"
-	"bl	sub_ff87b214\n"
-	"bl	sub_ff95f458\n" // nullsub
-	"bl	sub_ff960018\n"
+	"bcc	loc_FF87A5E8\n" 
+	"bl	sub_FF87B1C4\n" 
+	"bl	sub_FF95F3A0\n" // nullsub 
+	"bl	sub_FF95FF60\n" 
 	"ldr	r1, =0x5\n" // was: "mov ..., #5"
 	"ldr	r0, =0x0\n" // was: "mov ..., #0"
 	"bl	sub_ff839f2c\n" // KernelMisc.c:31
@@ -491,8 +491,8 @@ void __attribute__((naked,noinline)) sub_ff87a628_my() { // was sub_FF87A5D8_my
 	"ldr	r3, =0x0\n" // was: "mov ..., #0"
 	"str	r3, [sp]\n"
 	//"ldr    r3, =capt_seq_task\n"
-	"ldr    r3, =0xff87a310\n" // capt_seq_task
-	"ldr    r0, =0xff87a898\n" // *"CaptSeqTask"
+	"ldr    r3, =0xFF87A2C0\n" // capt_seq_task 
+	"ldr    r0, =0xFF87A848\n" // *"CaptSeqTask" 
 	"ldr	r2, =0x1000\n" // was: "mov ..., #4096"
 	"ldr	r1, =0x17\n" // was: "mov ..., #23"
 	"bl	sub_ff839ef8\n" // was FF839EF8 KernelCreateTask ; LOCATION: KernelMisc.c:19

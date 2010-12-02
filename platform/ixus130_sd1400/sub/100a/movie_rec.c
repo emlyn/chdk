@@ -13,42 +13,42 @@ void  set_quality(int *x) { // -17 highest; +12 lowest
     if (conf.video_mode) *x=12-((conf.video_quality-1)*(12+17)/(99-1));
 }
 
-// ff95a5f4: movie_record_task() aka. task_MovieRecord()
+// FF95A538: movie_record_task() aka. task_MovieRecord()
 void __attribute__((naked,noinline)) movie_record_task() { // was FF96BD30
   asm volatile (
     //"b      sub_ff95a5f4\n"
 	"push	{r2, r3, r4, r5, r6, r7, r8, lr}\n"
-	"ldr	r8, =0x000004b3\n" // was: "[pc, #756]	; ff95a8f4" 
-	"ldr	r7, =0x00002710\n" // was: "[pc, #-2512]	; ff959c34" 
-	"ldr	r4, =0x000063f8\n" // was: "[pc, #-4020]	; ff959654" 
+	"ldr	r8, =0x000004b3\n" // was: [pc, #756]	; ff95a838: (000004b3) 
+	"ldr	r7, =0x00002710\n" // was: [pc, #-2500]	; ff959b84: (00002710) 
+	"ldr	r4, =0x000063f8\n" // was: [pc, #-4008]	; ff9595a4: (000063f8) 
 	"ldr	r6, =0x0\n" // was: "mov ..., #0"
 	"ldr	r5, =0x1\n" // was: "mov ..., #1"
-"loc_ff95a60c:\n"
+"loc_FF95A550:\n"
 	"ldr	r0, [r4, #24]\n"
 	"ldr	r2, =0x0\n" // was: "mov ..., #0"
 	"add	r1, sp, #4\n"	// 0x4
 	"bl	sub_ff8396e4\n"
 	"ldr	r0, [r4, #32]\n"
 	"cmp	r0, #0\n"	// 0x0
-	"bne	loc_ff95a6dc\n"
+	"bne	loc_FF95A620\n"
 	"ldr	r0, [sp, #4]\n"
 	"ldr	r1, [r0]\n"
 	"sub	r1, r1, #2\n"	// 0x2
 	"cmp	r1, #9\n"	// 0x9
 	"addls	pc, pc, r1, lsl #2\n"
-	"b	loc_ff95a6dc\n"
-	"b	loc_ff95a690\n" // 0 jump table start
-	"b	loc_ff95a6b0\n"
-	"b	loc_ff95a6c0\n"
-	"b	loc_ff95a6c8\n"
-	"b	loc_ff95a698\n"
-	"b	loc_ff95a6d0\n"
-	"b	loc_ff95a6a0\n"
-	"b	loc_ff95a6dc\n"
-	"b	loc_ff95a6d8\n"
-	"b	loc_ff95a668\n" // 9
-"loc_ff95a668:\n" // jump table entry 9
-	"ldr	r0, =0xff95a308\n" // was: "sub	r0, pc, #872"  
+	"b	loc_FF95A620\n"
+	"b	loc_FF95A5D4\n" // 0 jump table start
+	"b	loc_FF95A5F4\n"
+	"b	loc_FF95A604\n"
+	"b	loc_FF95A60C\n"
+	"b	loc_FF95A5DC\n"
+	"b	loc_FF95A614\n"
+	"b	loc_FF95A5E4\n"
+	"b	loc_FF95A620\n"
+	"b	loc_FF95A61C\n"
+	"b	loc_FF95A5AC\n" // 9
+"loc_FF95A5AC:\n" // jump table entry 9
+	"ldr	r0, =0xFF95A24C\n" // was: "sub	r0, pc, #872"  
 	"str	r6, [r4, #52]\n"
 	"str	r0, [r4, #164]\n"
 
@@ -57,56 +57,56 @@ void __attribute__((naked,noinline)) movie_record_task() { // was FF96BD30
         //"LDR     R0, =sub_ff959f88_my\n"      // +
         //"STR     R0, [R4,#0xAC]\n"
 
-	"ldr	r2, =0xff959820\n" // was: "[pc, #636]	; ff95a8f8" 
-	"ldr	r1, =0x0009668c\n" // was: "[pc, #-2604]	; ff959c54" 
-	"ldr	r0, =0xff959904\n" // was: "sub	r0, pc, #3456"  
-	"str	r6, [r4, #36]\n" // 0x24
+	"ldr	r0, =0xFF959854\n" // was: [pc, #-2596]	; ff959ba4: (0009668c)
+	"ldr	r2, =0xFF959770\n" // was: [pc, #640]	; ff95a840: (ff959854) 
+	"ldr	r1, =0x0009668c\n" // was: [pc, #632]	; ff95a83c: (ff959770) 
+	"str	r6, [r4, #0x24]\n" // 0x24
 	"bl	sub_ff85021c\n"
 	"str	r5, [r4, #56]\n" // 0x38
-	"b	loc_ff95a6dc\n"
-"loc_ff95a690:\n" // jump table entry 0
+	"b	loc_FF95A620\n"
+"loc_FF95A5D4:\n" // jump table entry 0
         "bl     unlock_optical_zoom\n" // added (disabled in camera.h, crashes)
-	"bl	sub_ff95a410\n"
-	"b	loc_ff95a6dc\n"
-"loc_ff95a698:\n" // jump table entry 4
+	"bl	sub_FF95A354\n"
+	"b	loc_FF95A620\n"
+"loc_FF95A5DC:\n" // jump table entry 4
 
         // Ixus300 has the next 2 lines instead of the following one: (what does it do?)
         //"LDR     R1, [R4,#0xAC]\n"
         //"BLX     R1\n"
 
-	"bl	sub_ff959f88\n"
+	"bl	sub_FF959ECC\n"
 	//"bl	sub_ff959f88_my\n"
-	"b	loc_ff95a6dc\n"
-"loc_ff95a6a0:\n" // jump table entry 6
+	"b	loc_FF95A620\n"
+"loc_FF95A5E4:\n" // jump table entry 6
 	"ldr	r1, [r0, #24]\n"
 	"ldr	r0, [r0, #4]\n"
-	"bl	sub_ffa8cc28\n"
-	"b	loc_ff95a6dc\n"
-"loc_ff95a6b0:\n" // jump table entry 1
+	"bl	sub_FFA8CB84\n"
+	"b	loc_FF95A620\n"
+"loc_FF95A5F4:\n" // jump table entry 1
 	"ldr	r0, [r4, #56]\n"
 	"cmp	r0, #5\n"	// 0x5
 	"strne	r5, [r4, #40]\n"
-	"b	loc_ff95a6dc\n"
-"loc_ff95a6c0:\n" // jump table entry 2
-	"bl	sub_ff959c84\n"
-	"b	loc_ff95a6dc\n"
-"loc_ff95a6c8:\n" // jump table entry 3
-	"bl	sub_ff959950\n"
-	"b	loc_ff95a6dc\n"
-"loc_ff95a6d0:\n" // jump table entry 5
-	"bl	sub_ff9597ac\n"
-	"b	loc_ff95a6dc\n"
-"loc_ff95a6d8:\n" // jump table entry 8
-	"bl	sub_ff95a844\n"
-"loc_ff95a6dc:\n" // jump table entry 7, default
+	"b	loc_FF95A620\n"
+"loc_FF95A604:\n" // jump table entry 2
+	"bl	sub_FF959BC8\n"
+	"b	loc_FF95A620\n"
+"loc_FF95A60C:\n" // jump table entry 3
+	"bl	sub_FF9598A0\n"
+	"b	loc_FF95A620\n"
+"loc_FF95A614:\n" // jump table entry 5
+	"bl	sub_FF9596FC\n"
+	"b	loc_FF95A620\n"
+"loc_FF95A61C:\n" // jump table entry 8
+	"bl	sub_FF95A788\n"
+"loc_FF95A620:\n" // jump table entry 7, default
 	"ldr	r1, [sp, #4]\n"
-	"ldr	r3, =0xff959640\n" // was: "[pc, #-2696]	; ff959c60"  **"MovieRecorder.c"
+	"ldr	r3, =0xFF959590\n" // was [pc, #-2684]	; ff959bb0: (ff959590)  **"MovieRecorder.c"
 	"str	r6, [r1]\n"
 	"str	r8, [sp]\n"
 	"ldr	r0, [r4, #28]\n"
 	"mov	r2, r7\n"
-	"bl	sub_ff83a038\n"
-	"b	loc_ff95a60c\n"
+	"bl	sub_FF83A038\n"
+	"b	loc_FF95A550\n"
     );
 }
 /*

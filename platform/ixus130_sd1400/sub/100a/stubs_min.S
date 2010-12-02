@@ -34,7 +34,7 @@ DEF(enabled_refresh_physical_screen, 0x8e30)    // ff9f8cb8, 0x8e10 + 0x20 = 0x8
 //ffaa2b40:       e59f1018        ldr     r1, [pc, #24]   ; ffaa2b60: (ffbd0d60) 
 //ffaa2b44:       e7910100        ldr     r0, [r1, r0, lsl #2]
 //ffaa2b48:       e12fff1e        bx      lr
-DEF(FlashParamsTable, 0xffbd0d60)   // referenced at ffaa2b40
+DEF(FlashParamsTable, 0xFFBD0CAC)//ffbd0d60)   // referenced at ffaa2b40
 
 // ff88ce14, search for (00000858) near (0000085c)
 DEF(canon_menu_active, 0x2f60)   // 0x2f5c + 4 ?!!

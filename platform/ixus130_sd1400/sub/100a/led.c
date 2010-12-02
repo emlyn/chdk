@@ -18,6 +18,28 @@ void led_off(long * led) {
   LED_OFF(led);
 }
 
+void led_flash2_helper() {
+#define d (1024*1024*3)
+  BUSY_WAIT(d);
+  LED_ON(LED_GREEN);
+  BUSY_WAIT(d);
+  LED_ON(LED_RED);
+  BUSY_WAIT(2*d);
+  LED_OFF(LED_GREEN);
+  BUSY_WAIT(d);
+  LED_OFF(LED_RED);
+  BUSY_WAIT(d);
+#undef d
+}
+
+void __attribute__((naked,noinline)) led_flash2() {
+  asm volatile(
+    "push {r0-r11,lr}\n"
+    "bl   led_flash2_helper\n"
+    "pop  {r0-r11,pc}\n"
+    );
+}
+
 void led_flashx(long * led, ulong times, ulong delay) {
   LED_FLASHX(led, times, delay);
 }
