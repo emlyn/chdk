@@ -69,9 +69,11 @@ void __attribute__((naked,noinline)) capt_seq_task() {
 
         // this code added to avoid some incorrect behavior if overrides are used.
         // but it can cause some unexpected side effects. In this case, remove this code!
-        //"mov    r0, #0\n"
-        //"str    r0, [r4, #36]\n"  // 0x24 fixes overrides  behavior at short shutter press
+        "mov    r0, #0\n"
+        "str    r0, [r4, #36]\n"  // 0x24 fixes overrides  behavior at short shutter press
 
+	"b	loc_FF87A5A8\n"
+/*    
 	"ldr	r0, [r4, #36]\n"
 	"cmp	r0, #0\n"	// 0x0
 	"beq	loc_FF87A5A8\n" 
@@ -92,14 +94,14 @@ void __attribute__((naked,noinline)) capt_seq_task() {
 	"mov	r0, r5\n"
 	"bl	sub_FF879DD4\n"
 	"mov	r0, r5\n"
-
-	//"bl	sub_ff95f120\n"
+	
 	"bl	sub_ff95f120_my\n" // taskcreate_ShutterSoundTask()
         "bl     capt_seq_hook_raw_here\n" // added
 
 	"tst	r0, #1\n"	// 0x1
 	"strne	r9, [r6, #16]\n"
 	"b	loc_FF87A5A8\n"
+*/    
 "loc_FF87A3F0:\n" // jumptable entry 1 
 	"ldr	r0, [r4, #36]\n"
 	"cmp	r0, #0\n"	// 0x0
@@ -469,6 +471,7 @@ void __attribute__((naked,noinline)) sub_ff87a714_my() { // FF87A6C4
 	//"bl	sub_ff95f120\n"
 	"bl	sub_ff95f120_my\n"
 	"mov	r5, r0\n"
+        "bl     capt_seq_hook_raw_here\n" // added (sx210is)
 	"b	loc_FF87A79C\n"
 "loc_FF87A78C:\n"
 	"ldr	r0, =0x00002b9c\n" // was: "[pc, #-2376]	; ff879e9c" 
