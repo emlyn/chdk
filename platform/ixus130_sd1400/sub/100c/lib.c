@@ -59,7 +59,7 @@ and the table should contain three addresses, starting with the VRAM base addres
 void *vid_get_viewport_live_fb() {
     return (void*)0;
     // sub_ff84e0e0??? (cf sd990 FF839850)
-    void **fb=(void **)0x; // ???
+    void **fb=(void **)0x0; // ???
     unsigned char buff = *((unsigned char*)0x2040);
     if (buff == 0) {
         buff = 2;
