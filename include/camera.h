@@ -2045,8 +2045,98 @@
     //RealRom:FFA99FB4                    ADR     R0, aObRG1G2BLdLdLd ; "\n  OB : (R, G1, G2, B) = (%ld, %ld, %ld"...
     #define cam_CFAPattern              0x02010100		// Red  Green  Green  Blue
 
+    // color preliminary (see DNG4PS2 wiki)
+    #define CAM_COLORMATRIX1                               \
+      661840,  1000000, -185671, 1000000, -97110,  1000000, \
+      -83661,  1000000, 578860, 1000000,   32308,  1000000, \
+      -8681,    1000000, 70356,   1000000, 207341, 1000000
+
+    //Here is an alternate CAM_COLORMATRIX1 - Current one is nice for me but hey I'm no colour expert.
+    //XYZ -> Camera matrix:
+    //0.459395 -0.129083 -0.068085
+    //-0.055837 0.400827 0.020378
+    //-0.004622 0.048662 0.139970
+
+    #define cam_CalibrationIlluminant1  17			// Standard Light A
+
+	// cropping
+    #define CAM_JPEG_WIDTH              4000
+    #define CAM_JPEG_HEIGHT             3000
+    #define CAM_ACTIVE_AREA_X1          40
+    #define CAM_ACTIVE_AREA_Y1          24
+    #define CAM_ACTIVE_AREA_X2          4056
+    #define CAM_ACTIVE_AREA_Y2          3040
+    // camera name
+    #define PARAM_CAMERA_NAME           4			// parameter number for GetParameterData sd990: OK
+// TODO this was in the original zebra mess, not clear if needed or just for mem saving ?
+   #define CAM_ZEBRA_ASPECT_ADJUST 1
+//----------------------------------------------------------
+
+#elif defined (CAMERA_ixus130_sd1400)
+    #define CAM_PROPSET                 3
+    #define CAM_DRYOS                   1
+    #define CAM_DRYOS_2_3_R39           1
+
+    #define CAM_RAW_ROWPIX              4416		// 14 MP 12bpp
+    #define CAM_RAW_ROWS                3296		// 
+
+    #undef  CAM_HAS_ERASE_BUTTON
+    //#undef  CAM_USE_ZOOM_FOR_MF
+    #define CAM_MULTIPART               1
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define CAM_HAS_ND_FILTER           1
+
+    #undef CAM_REMOTE
+    #undef CAM_SYNCH
+
+    #define CAM_HAS_ZOOM_LEVER          1
+
+//    #define CAM_CAN_SD_OVER_NOT_IN_MF   1			// Camera allows subject distance (focus) override when not in manual focus mode
+//    #define CAM_CAN_SD_OVERRIDE         1			// Camera allows to do subject distance override
+
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU            1
+    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1
+    #define CAM_AF_SCAN_DURING_VIDEO_RECORD       1
+    #define CAM_CHDK_HAS_EXT_VIDEO_MENU           1
+
+    #define CAM_HAS_IS                  1
+    #undef CAM_HAS_JOGDIAL
+
+    #undef  CAM_VIDEO_CONTROL
+    #define CAM_VIDEO_QUALITY_ONLY      1
+    #define DNG_SUPPORT                 1
+
+    #define CAM_EXT_TV_RANGE            1
+
+    #undef CAM_UNCACHED_BIT
+    #define CAM_UNCACHED_BIT            0x40000000
+
+    #define CAM_MAKE                    "Canon"
+
+    #undef CAM_BITMAP_PALETTE
+    #define CAM_BITMAP_PALETTE          5
+
+    #undef ZEBRA_HMARGIN0
+    #define ZEBRA_HMARGIN0              150			//zebra adjust buffer height: show use at sx200is: needed for save memory space
+
+    #define CAM_QUALITY_OVERRIDE 1
+    #undef CAM_SENSOR_BITS_PER_PIXEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
+    #undef CAM_WHITE_LEVEL
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+    #undef CAM_BLACK_LEVEL
+    #define CAM_BLACK_LEVEL             127
+
+    // pattern
+    //RealRom:FFA99FB4                    ADR     R0, aObRG1G2BLdLdLd ; "\n  OB : (R, G1, G2, B) = (%ld, %ld, %ld"...
+    #define cam_CFAPattern              0x02010100		// Red  Green  Green  Blue
+
     // Preliminary values, tested in DNG4PS2
-    #define CAM_COLORMATRIX1 0.510370, -0.068998, -0.086859, -0.279980, 0.766686, 0.067944, -0.014382, 0.113688, 0.239853
+#define CAM_COLORMATRIX1 510370, 1000000, -68998, 1000000,  -86859, 1000000, \
+                        -279980, 1000000, 766686, 1000000,   67944, 1000000, \
+                         -14382, 1000000, 113688, 1000000,  239853, 1000000
 /*
     // need fixing (from sx210is)
     #define CAM_COLORMATRIX1                               \
@@ -2114,147 +2204,6 @@
    #define ASPECT_GAMES_XCORRECTION(x)   ( (x) << 1 )  
    #undef ASPECT_GAMES_YCORRECTION
    #define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
-
-    #define cam_CalibrationIlluminant1  17			// Standard Light A
-
-	// cropping
-    #define CAM_JPEG_WIDTH              4000
-    #define CAM_JPEG_HEIGHT             3000
-    #define CAM_ACTIVE_AREA_X1          40
-    #define CAM_ACTIVE_AREA_Y1          24
-    #define CAM_ACTIVE_AREA_X2          4056
-    #define CAM_ACTIVE_AREA_Y2          3040
-    // camera name
-    #define PARAM_CAMERA_NAME           4			// parameter number for GetParameterData sd990: OK
-
-    #undef CAM_USES_ASPECT_CORRECTION
-    #undef CAM_USES_ASPECT_YCORRECTION
-    #define CAM_USES_ASPECT_CORRECTION		1  //camera uses the modified graphics primitives to map screens an viewports to buffers more sized 
-    #define CAM_USES_ASPECT_YCORRECTION		0  //only uses mappings on x coordinate
-
-    #undef ASPECT_XCORRECTION
-    #define ASPECT_XCORRECTION(x)   ( ((x)<<1) )
-
-    // Note color palette affects grids!
-    #undef ASPECT_GRID_XCORRECTION
-    #define ASPECT_GRID_XCORRECTION(x)   ( (x) )
-
-    #undef ASPECT_GRID_YCORRECTION
-    #define ASPECT_GRID_YCORRECTION(y)  ( (y) )
-
-    #undef ASPECT_VIEWPORT_XCORRECTION 
-    #define ASPECT_VIEWPORT_XCORRECTION(x) ASPECT_GRID_XCORRECTION(x)
-    #undef ASPECT_VIEWPORT_YCORRECTION 
-    #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) )
-
-    // Note color palette affects games!
-	//games mappings
-	#undef GAMES_SCREEN_WIDTH
-	#undef GAMES_SCREEN_HEIGHT
-	#define GAMES_SCREEN_WIDTH		360
-	#define GAMES_SCREEN_HEIGHT		240
-	#undef ASPECT_GAMES_XCORRECTION
-	// 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer wirh another resolution
-	// used by gui.c that configures the draw environment (through new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
-	// other modes in perfect aspect ratio 4/3: slightly better visualization: file menus more readable, ...
-	#define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )
-	#undef ASPECT_GAMES_YCORRECTION
-	#define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
-    #define CAM_ZEBRA_ASPECT_ADJUST 1
-	// camera has little free memory
-    #define CAM_ZEBRA_NOBUF 1
-//----------------------------------------------------------
-
-#elif defined (CAMERA_ixus130_sd1400)
-    #define CAM_PROPSET                 3
-    #define CAM_DRYOS                   1
-    #define CAM_DRYOS_2_3_R39           1
-
-    #define CAM_RAW_ROWPIX              4416		// 14 MP 12bpp
-    #define CAM_RAW_ROWS                3296		// 
-
-    #undef  CAM_HAS_ERASE_BUTTON
-    //#undef  CAM_USE_ZOOM_FOR_MF
-    #define CAM_MULTIPART               1
-    #undef  CAM_HAS_IRIS_DIAPHRAGM
-    #define CAM_HAS_ND_FILTER           1
-
-    #undef CAM_REMOTE
-    #undef CAM_SYNCH
-
-    #define CAM_HAS_ZOOM_LEVER          1
-
-//    #define CAM_CAN_SD_OVER_NOT_IN_MF   1			// Camera allows subject distance (focus) override when not in manual focus mode
-//    #define CAM_CAN_SD_OVERRIDE         1			// Camera allows to do subject distance override
-
-    #undef  CAM_HAS_MANUAL_FOCUS
-    #define CAM_HAS_USER_TV_MODES                 1
-    #define CAM_SHOW_OSD_IN_SHOOT_MENU            1
-    #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO  1
-    #define CAM_AF_SCAN_DURING_VIDEO_RECORD       1
-    #define CAM_CHDK_HAS_EXT_VIDEO_MENU           1
-
-    #define CAM_HAS_IS                  1
-    #undef CAM_HAS_JOGDIAL
-
-    #undef  CAM_VIDEO_CONTROL
-    #define CAM_VIDEO_QUALITY_ONLY      1
-    #define DNG_SUPPORT                 1
-
-    #define CAM_EXT_TV_RANGE            1
-
-    #undef CAM_UNCACHED_BIT
-    #define CAM_UNCACHED_BIT            0x40000000
-
-    #define CAM_MAKE                    "Canon"
-
-    #undef CAM_BITMAP_PALETTE
-    #define CAM_BITMAP_PALETTE          5
-
-    #undef ZEBRA_HMARGIN0
-    #define ZEBRA_HMARGIN0              150			//zebra adjust buffer height: show use at sx200is: needed for save memory space
-
-    #define CAM_QUALITY_OVERRIDE 1
-    #undef CAM_SENSOR_BITS_PER_PIXEL
-    #define CAM_SENSOR_BITS_PER_PIXEL   12
-    #undef CAM_WHITE_LEVEL
-    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
-    #undef CAM_BLACK_LEVEL
-    #define CAM_BLACK_LEVEL             127
-
-    // pattern
-    //RealRom:FFA99FB4                    ADR     R0, aObRG1G2BLdLdLd ; "\n  OB : (R, G1, G2, B) = (%ld, %ld, %ld"...
-    #define cam_CFAPattern              0x02010100		// Red  Green  Green  Blue
-
-    // Preliminary values, tested in DNG4PS2
-#define CAM_COLORMATRIX1 510370, 1000000, -68998, 1000000,  -86859, 1000000, \
-                        -279980, 1000000, 766686, 1000000,   67944, 1000000, \
-                         -14382, 1000000, 113688, 1000000,  239853, 1000000
-/*
-    // need fixing (from sx210is)
-    #define CAM_COLORMATRIX1                               \
-      14134, 1000000, -5576, 1000000, -1527, 1000000, \
-     -1991,  1000000, 10719,  1000000, 1273,   1000000, \
-      -1158,   1000000, 1929,   1000000, 3581,  1000000
-
-    // color preliminary (see DNG4PS2 wiki)
-
-    #define CAM_COLORMATRIX1                                  \
-      661840,  1000000, -185671, 1000000, -97110,  1000000, \
-      -83661,  1000000, 578860, 1000000,   32308,  1000000, \
-      -8681,    1000000, 70356,   1000000, 207341, 1000000
-
-*/
-    //Here is an alternate CAM_COLORMATRIX1 - Current one is nice for me but hey I'm no colour expert.
-    //XYZ -> Camera matrix:
-    //0.459395 -0.129083 -0.068085
-    //-0.055837 0.400827 0.020378
-    //-0.004622 0.048662 0.139970
-
-    #define CAM_ACTIVE_AREA_X1                  48
-    #define CAM_ACTIVE_AREA_Y1                  28
-    #define CAM_ACTIVE_AREA_X2                  4416-48
-    #define CAM_ACTIVE_AREA_Y2                  3296-28
 
     #define cam_CalibrationIlluminant1  17			// Standard Light A
 
