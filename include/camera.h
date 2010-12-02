@@ -640,7 +640,8 @@
     #define CAM_RAW_ROWS                1968   // for 5 MP
     
     #define CAM_SWIVEL_SCREEN           1
-    #undef  CAM_CAN_SD_OVER_NOT_IN_MF 
+    #define CAM_MULTIPART               1
+    #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_HAS_IS
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 2
