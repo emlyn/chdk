@@ -11,6 +11,7 @@ OPT_CALENDAR=1
 OPT_DEBUGGING=1
 OPT_EDGEOVERLAY=1
 OPT_LUA_STRLIB=1
+
 # experimental PTP/USB interface
 #OPT_PTP=1
 #allow Lua to call arbitrary ROM functions and eventprocs
@@ -26,11 +27,11 @@ OPT_LUA_STRLIB=1
 OPT_GEN_SIGS=1
 # If enabled (and firmware binaries are present) compiler will update "stubs_entry.S"
 OPT_GEN_STUBS=1
-# Shall ubasic be compiled into build? not done yet
-#!OPT_UBASIC=1
-# Shall lua support be compiled into build? not done yet
-#!OPT_LUA=1
 # the symbols / not done yet
 #!OPT_SYMBOLS=1
 # for people who won't use lang files at all / not done yet
 #!OPT_LANGUAGEINTERFACE=1
+
+# Not yet working, but need to be defined for a build right now
+OPT_UBASIC=1
+OPT_LUA=1

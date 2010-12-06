@@ -1,11 +1,12 @@
 #include "camera.h"
 #ifdef CAM_CHDK_PTP
-
 #include "platform.h"
 #include "stdlib.h"
 #include "ptp.h"
 #include "script.h"
+#include "action_stack.h"
 #include "lua.h"
+#include "kbd.h"
 
 #define BUF_SIZE 0x20000 // XXX what's a good camera-independent value?
 
@@ -379,13 +380,16 @@ static int handle_ptp(
 
         recv_ptp_data(data,buf,s);
 
-        lua_script_exec(buf, param3&PTP_CHDK_ES_RESULT);
+        long script_action_stack = script_start_ptp(buf, param3&PTP_CHDK_ES_RESULT);
 
         free(buf);
 
         if ( param3 & PTP_CHDK_ES_WAIT )
         {
-          lua_script_wait();
+
+          while ( script_is_running() )
+            msleep(100);
+
           if ( param3 & PTP_CHDK_ES_RESULT )
           {
             lua_State *Lt;

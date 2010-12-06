@@ -14,6 +14,7 @@
 #include "raw_merge.h"
 #include "levent.h"
 #include "console.h"
+#include "action_stack.h"
 
 #ifdef OPT_CURVES
 #include "curves.h"
@@ -38,13 +39,13 @@ static int luaCB_set_aflock(lua_State* L)
 
 static int luaCB_shoot( lua_State* L )
 {
-  kbd_sched_shoot();
+  action_push(AS_SHOOT);
   return lua_yield( L, 0 );
 }
 
 static int luaCB_sleep( lua_State* L )
 {
-  kbd_sched_delay( luaL_checknumber( L, 1 ) );
+  action_push_delay( luaL_checknumber( L, 1 ) );
   return lua_yield( L, 0 );
 }
 
@@ -1340,15 +1341,15 @@ void register_lua_funcs( lua_State* L )
   FUNC(set_console_autoredraw);
   FUNC(console_redraw);
 
-  lua_pushlightuserdata( L, kbd_sched_click );
+  lua_pushlightuserdata( L, action_push_click );
   lua_pushcclosure( L, luaCB_keyfunc, 1 );
   lua_setglobal( L, "click" );
 
-  lua_pushlightuserdata( L, kbd_sched_press );
+  lua_pushlightuserdata( L, action_push_press );
   lua_pushcclosure( L, luaCB_keyfunc, 1 );
   lua_setglobal( L, "press" );
 
-  lua_pushlightuserdata( L, kbd_sched_release );
+  lua_pushlightuserdata( L, action_push_release );
   lua_pushcclosure( L, luaCB_keyfunc, 1 );
   lua_setglobal( L, "release" );
 

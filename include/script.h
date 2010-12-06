@@ -23,7 +23,6 @@ extern int load_params_values(const char *fn, int update_vars, int read_param_se
 extern void save_params_values(int unconditional);
 //-------------------------------------------------------------------
 
-extern void lua_script_exec(char *script, int keep_result);
-extern void lua_script_wait();
+extern long script_start_ptp(char *script, int keep_result);
 extern void *lua_get_result();
 #endif
