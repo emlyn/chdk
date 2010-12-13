@@ -72,8 +72,7 @@ long action_stack_create(action_process proc_func, long p)
         if (task_comp_id < 0)
             task_comp_id = 0;
     } while( !action_stack_is_finished(task_comp_id) );
-    
-    return num_stacks - 1;
+	return stack->comp_id; 
 }
 
 static void action_stack_finish(int task_id)
