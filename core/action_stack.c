@@ -23,7 +23,7 @@ static int num_stacks = 0;
 static long task_comp_id = 1;
 
 // Returns true if the task denoted by comp_id has finished execution.
-// comp_id is returned by task_new_stack().
+// comp_id is returned by action_stack_create().
 int action_stack_is_finished(long comp_id)
 {
     int i;
@@ -36,26 +36,26 @@ int action_stack_is_finished(long comp_id)
     return 1;
 }
 
-// Starts a new task with initial stack entry p.
-// The task is alive as long as its stack has entries.
+// Starts a new action stack with initial stack entry p.
+// The action stack is alive as long as its stack has entries.
 long action_stack_create(action_process proc_func, long p)
 {
     // Cap the maximum number of action_stacks
     if (num_stacks == MAX_ACTION_STACKS)
         return -1;
         
-    // Initialize new task
+    // Initialize new action stack
     action_stack_t** tmp = (action_stack_t**)malloc(sizeof(action_stack_t*) * (num_stacks + 1));
     memcpy(tmp, action_stacks, sizeof(action_stack_t*) * num_stacks);
 
     tmp[num_stacks] = (action_stack_t*)malloc(sizeof(action_stack_t));
     
-    action_stack_t* task = tmp[num_stacks];
-    task->action_process = proc_func;
-    task->stack_ptr = 0;
-    task->comp_id = task_comp_id;
-    task->delay_target_ticks = 0;
-    task->stack[0] = p;    
+    action_stack_t* stack = tmp[num_stacks];
+    stack->action_process = proc_func;
+    stack->stack_ptr = 0;
+    stack->comp_id = task_comp_id;
+    stack->delay_target_ticks = 0;
+    stack->stack[0] = p;    
 
     action_stack_t** old = action_stacks;
     action_stacks = tmp;
@@ -102,7 +102,7 @@ static void action_stack_finish(int task_id)
     free(old);
 }
 
-// Can only be called from a task stack
+// Can only be called from an action stack
 void action_pop()
 {
     if (active_stack == -1)
@@ -111,14 +111,14 @@ void action_pop()
     --(action_stacks[active_stack]->stack_ptr);
 }
 
-// Can only be called from a task stack
+// Can only be called from an action stack
 void action_push_delay(long msec)
 {
     action_push(msec);
     action_push(AS_SLEEP);
 }
 
-// Can only be called from a task stack
+// Can only be called from an action stack
 void action_push_press(long key)
 {
     // WARNING stack program flow is reversed
@@ -127,7 +127,7 @@ void action_push_press(long key)
     action_push(AS_PRESS);
 }
 
-// Can only be called from a task stack
+// Can only be called from an action stack
 void action_push_release(long key)
 {
     // WARNING stack program flow is reversed
@@ -143,7 +143,7 @@ void action_push_click(long key)
     action_push_press(key);
 }
 
-// Can only be called from a task stack
+// Can only be called from an action stack
 void action_push(long p)
 {
     if (active_stack == -1)
@@ -153,7 +153,7 @@ void action_push(long p)
     task->stack[++task->stack_ptr] = p;    
 }
 
-// Can only be called from a task stack
+// Can only be called from an action stack
 long action_get_prev(int p)
 {
     if (active_stack == -1)
@@ -164,7 +164,7 @@ long action_get_prev(int p)
 }
 
 // Defines some standard operations. Returns false if it could not process anything.
-// Can only be called from a task stack
+// Can only be called from an action stack
 int action_stack_standard(long p)
 {        
     long t;
