@@ -116,7 +116,14 @@ static int handle_ptp(
       ptp.param1 = PTP_CHDK_VERSION_MAJOR;
       ptp.param2 = PTP_CHDK_VERSION_MINOR;
       break;
-
+    case PTP_CHDK_ScriptSupport:
+      ptp.num_param = 1;
+      ptp.param1 = PTP_CHDK_SCRIPT_SUPPORT_LUA;
+      break;
+    case PTP_CHDK_ScriptStatus:
+      ptp.num_param = 1;
+      ptp.param1 = script_is_running()?PTP_CHDK_SCRIPT_STATUS_RUN:0;
+      break;
     case PTP_CHDK_GetMemory:
       if ( param2 == 0 || param3 < 1 ) // null pointer or invalid size?
       {
