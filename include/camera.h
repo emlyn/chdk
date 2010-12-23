@@ -2119,7 +2119,9 @@
     #define CAM_BITMAP_PALETTE          5
 
     #undef ZEBRA_HMARGIN0
-    #define ZEBRA_HMARGIN0              150			//zebra adjust buffer height: show use at sx200is: needed for save memory space
+    #define ZEBRA_HMARGIN0              30			//zebra adjust buffer height: show use at sx200is: needed for save memory space
+    #define CAM_ZEBRA_ASPECT_ADJUST 1
+    #define CAM_ZEBRA_NOBUF 1
 
     #define CAM_QUALITY_OVERRIDE 1
     #undef CAM_SENSOR_BITS_PER_PIXEL
