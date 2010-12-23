@@ -33,17 +33,17 @@
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_SUPER_MACRO || \
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_STITCH || \
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_MANUAL)
-/* propcase ID constants. These are in their own header files for easier sed processing */
-#if CAM_PROPSET == 3 
- #include "propset3.h"
-#elif CAM_PROPSET == 2     // most digic3 cameras
- #include "propset2.h"
-#elif CAM_PROPSET == 1   // most digic2 cameras
- #include "propset1.h"
-#else
- #error unknown camera processor
-#endif
 
+/* propcase ID constants. These are in their own header files for easier sed processing */
+#if CAM_PROPSET == 3
+    #include "propset3.h"
+#elif CAM_PROPSET == 2    // most digic3 cameras
+    #include "propset2.h"
+#elif CAM_PROPSET == 1    // most digic2 cameras
+    #include "propset1.h"
+#else
+    #error unknown camera processor
+#endif
 
 #define MAX_DIST 65535
 
@@ -62,28 +62,28 @@
 #define KBD_REPEAT_DELAY  140
 #define KBD_INITIAL_DELAY 300
 
-// Video recording current status constants, see movie_status variable 
-#define VIDEO_RECORD_NEVER_STARTED 0  
-#define VIDEO_RECORD_STOPPED 1  
-#define VIDEO_RECORD_IN_PROGRESS 4
+// Video recording current status constants, see movie_status variable
+#define VIDEO_RECORD_NEVER_STARTED    0
+#define VIDEO_RECORD_STOPPED          1
+#define VIDEO_RECORD_IN_PROGRESS      4
 
-//Optical & digital zoom status constants, see zoom_status variable 
-#define ZOOM_OPTICAL_MIN         1
-#define ZOOM_OPTICAL_MAX         2
-#define ZOOM_OPTICAL_MEDIUM      3
-#define ZOOM_OPTICAL_IN          4
-#define ZOOM_OPTICAL_OUT         5
-#define ZOOM_OPTICAL_REACHED_MIN 7
+//Optical & digital zoom status constants, see zoom_status variable
+#define ZOOM_OPTICAL_MIN              1
+#define ZOOM_OPTICAL_MAX              2
+#define ZOOM_OPTICAL_MEDIUM           3
+#define ZOOM_OPTICAL_IN               4
+#define ZOOM_OPTICAL_OUT              5
+#define ZOOM_OPTICAL_REACHED_MIN      7
 
-#define ZOOM_DIGITAL_MAX         9
-#define ZOOM_DIGITAL_MEDIUM      10
-#define ZOOM_DIGITAL_IN          11
-#define ZOOM_DIGITAL_OUT         12
-#define ZOOM_DIGITAL_REACHED_MAX 13
+#define ZOOM_DIGITAL_MAX              9
+#define ZOOM_DIGITAL_MEDIUM           10
+#define ZOOM_DIGITAL_IN               11
+#define ZOOM_DIGITAL_OUT              12
+#define ZOOM_DIGITAL_REACHED_MAX      13
 
 typedef struct {
-	int hackmode; // platform independent mode values from MODE_xxx enum
-	int canonmode; // PROPCASE_SHOOTING_MODE value
+    int hackmode; // platform independent mode values from MODE_xxx enum
+    int canonmode; // PROPCASE_SHOOTING_MODE value
 } CapturemodeMap;
 
 typedef struct {
@@ -132,7 +132,6 @@ typedef struct {
 #define SHOW_ALWAYS    1
 #define SHOW_HALF      2
 
-
 typedef struct {
     short av96;
     short tv96;
@@ -163,11 +162,11 @@ typedef struct {
     short ev96_measured; //Bv96+Sv96
     short dev96;// Ev96_external-Ev96_internal
     short dev96_canon;// Canon OverExposure
-    int b; //average scene luminance 
+    int b; //average scene luminance
 } EXPO_TYPE;
 
 typedef struct {
-    float value; 
+    float value;
     char fraction[10];
 } shutter_speed;
 
@@ -371,7 +370,7 @@ int shooting_set_mode_chdk(int mode);
 int shooting_set_mode_canon(int mode);
 
 // returns 0 if in play, nonzero if rec
-int rec_mode_active(void); 
+int rec_mode_active(void);
 
 // not used. Right now this is just to preserve code from earlier version of mode_get()
 // in case we want to check play/rec switch state in the future.
@@ -408,7 +407,7 @@ int camera_get_nr();
 int camera_get_script_autostart();
 void camera_set_script_autostart();
 void exit_alt();
-void camera_shutdown_in_a_second(void); 
+void camera_shutdown_in_a_second(void);
 
 void disable_shutdown();
 void enable_shutdown();
@@ -423,16 +422,14 @@ void __attribute__((noreturn)) shutdown();
 void camera_set_led(int led, int state, int bright);
 void debug_led(int state);
 /****************************************/
-extern int canon_menu_active;  
-extern char canon_shoot_menu_active;  
+extern int canon_menu_active;
+extern char canon_shoot_menu_active;
 extern int recreview_hold;
 
 extern int movie_status;
 unsigned int movie_reset;
 unsigned int GetFreeCardSpaceKb(void);
 unsigned int GetTotalCardSpaceKb(void);
-
-
 
 void swap_partitions(void);
 int get_part_count(void);
@@ -442,8 +439,8 @@ extern char * camera_jpeg_count_str();
 unsigned int GetJpgCount(void);
 unsigned int GetRawCount(void);
 
-void MakeAFScan(void); 
-extern int movie_status; 
+void MakeAFScan(void);
+extern int movie_status;
 extern int zoom_status;
 void EnterToCompensationEVF(void);
 void ExitFromCompensationEVF(void);
@@ -458,11 +455,11 @@ short shooting_get_ev_correction1();
 void shooting_set_image_quality(int imq);
 
 int get_ev_video_avail(void);
-void set_ev_video_avail(int); 
+void set_ev_video_avail(int);
 int get_ev_video(void);
-void set_ev_video(int); 
+void set_ev_video(int);
 //dng related
-void reverse_bytes_order(char* start, int count); 
+void reverse_bytes_order(char* start, int count);
 void save_ext_for_dng(void);
 void change_ext_to_dng(void);
 void change_ext_to_default(void);

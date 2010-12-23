@@ -5,7 +5,12 @@
 // only included by ptp.c (which already checks this before including ptp.h)
 
 #define PTP_CHDK_VERSION_MAJOR 0  // increase only with backwards incompatible changes (and reset minor)
-#define PTP_CHDK_VERSION_MINOR 1  // increase with extensions of functionality
+#define PTP_CHDK_VERSION_MINOR 2  // increase with extensions of functionality
+/*
+protocol version history
+0.1 - initial proposal from mweerden, + luar
+0.2 - Added ScriptStatus and ScriptSupport, based on work by ultimA
+*/
 
 #define PTP_OC_CHDK 0x9999
 
@@ -33,6 +38,12 @@ enum {
   PTP_CHDK_ExecuteScript,   // data is script to be executed
                             // param2 is language of script
                             // param3 is for the ES flags below
+  PTP_CHDK_ScriptStatus,	// Script execution status
+                            // param1 CHDK_PTP_SCRIPT_STATUS_RUN is set if a script running, cleared if not
+							// all other bits and params are reserved for future use
+  PTP_CHDK_ScriptSupport,   // Which scripting interfaces are supported in this build
+                            // param1 CHDK_PTP_SUPPORT_LUA is set if lua is supported, cleared if not
+							// all other bits and params are reserved for future use
 } ptp_chdk_command;
 
 // data types as used by TempData and ExecuteScript
@@ -61,8 +72,13 @@ enum {
                                    // code result and param2 the value (booleans
                                    // and integers) or length (strings)
 
-// Script Languages
+// Script Languages - for execution
 #define PTP_CHDK_SL_LUA    0
 #define PTP_CHDK_SL_UBASIC 1
+
+// bit flags for script status
+#define PTP_CHDK_SCRIPT_STATUS_RUN   0x1
+// bit flags for scripting support
+#define PTP_CHDK_SCRIPT_SUPPORT_LUA  0x1
 
 #endif // __PTP_H

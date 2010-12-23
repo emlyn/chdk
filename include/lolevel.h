@@ -19,7 +19,7 @@ extern volatile long zoom_busy;
 extern long _GetFocusLensCurrentPosition();
 extern long _GetFocusLensSubjectDistance();
 extern long _GetFocusLensSubjectDistanceFromLens();
-extern void _MoveFocusLensToDistance(short *dist); 
+extern void _MoveFocusLensToDistance(short *dist);
 extern void _PutInNdFilter();
 extern void _PutOutNdFilter();
 extern volatile long focus_busy;
@@ -32,19 +32,19 @@ extern long _VbattGet();
 extern int _GetBatteryTemperature();
 extern int _GetCCDTemperature();
 extern int _GetOpticalTemperature();
-extern void _PT_PlaySound(short , void*);  
+extern void _PT_PlaySound(short , void*);
 extern void _RefreshPhysicalScreen(long f);
 extern void _Unmount_FileSystem();
 extern void _Mount_FileSystem();
 extern void _SleepTask(long msec);
-extern int _CreateTask (const char *name, int prio, int stack_size /*?*/, 
-    void *entry, long parm /*?*/);
+extern int _CreateTask (const char *name, int prio, int stack_size /*?*/,
+                        void *entry, long parm /*?*/);
 extern void _SleepTask(long msec);
 extern void __attribute__((noreturn)) _ExitTask();
-extern int _taskNameToId(char* taskName); // VxWorks only, task's name first letter must be 't', maximum 10 chars total 
+extern int _taskNameToId(char* taskName); // VxWorks only, task's name first letter must be 't', maximum 10 chars total
 extern const char *_taskName(int taskID); // VxWorks only for now
 extern int _taskIdListGet(int *idlist,int max); // VxWorks only for now
-extern void _taskSuspend(int taskId); 
+extern void _taskSuspend(int taskId);
 extern void _taskResume(int taskId);
 extern int _errnoOfTaskGet(int tid);
 extern long _IsStrobeChargeCompleted();
@@ -113,7 +113,7 @@ extern long _strtol(const char *nptr, char **endptr, int base);
 extern unsigned long _strtoul(const char *nptr, char **endptr, int base);
 // DRYOS: this function is called by strtol (mode=1) and strtoul (mode=0)
 // easier to match with sig finder
-extern long _strtolx(const char *nptr, char **endptr, int base, int mode); 
+extern long _strtolx(const char *nptr, char **endptr, int base, int mode);
 
 extern int _tolower(int c);
 extern int _toupper(int c);
@@ -175,15 +175,14 @@ void kbd_fetch_data(long *dst);
   3 = maybe transition ?
  address in all cases can be found with strings "MenuIn", "MenuOut"
 */
-extern long playrec_mode; 
+extern long playrec_mode;
 
 extern void *led_table;
 extern void _UniqueLedOn(void *addr, long brightness);
 extern void _UniqueLedOff(void *addr);
 struct led_control {int led_num; int action; int brightness; int blink_count;};
 extern int _PostLEDMessage(struct led_control *);
-int _LEDDrive(int led, int action); 
-
+int _LEDDrive(int led, int action);
 
 extern long _LockMainPower();
 extern long _UnlockMainPower();
@@ -192,9 +191,9 @@ extern void _SetAutoShutdownTime(int t);
 /*
 The following two functions post an event such as button press, switch change, cable connection change.
 event:
-  A number identifying the event. This number may vary between camera models. 
+  A number identifying the event. This number may vary between camera models.
   See levent.c and levent.h for methods to identify events by name.
-unk: 
+unk:
   Unknown value, usually 0 in canon code. For jogdial messages, this is number of clicks.
 return value:
   Unknown, possibly void.
@@ -202,7 +201,7 @@ return value:
 extern int  _PostLogicalEventForNotPowerType(int event, int unk);
 extern int  _PostLogicalEventToUI(int event, int unk);
 /*
-Used in the canon code to modify the generation or delivery of events. For example, Canon 
+Used in the canon code to modify the generation or delivery of events. For example, Canon
 mode override code sets 1 on the desired dial position, and zero on all others.
 event: as described above for PostLogicalEvent*
 state: if 1, the event will be generated/delivered as normal. If 0, the event is disabled/blocked.
@@ -210,7 +209,6 @@ state: if 1, the event will be generated/delivered as normal. If 0, the event is
 extern void _SetLogicalEventActive(unsigned event, unsigned state);
 /* Somehow related to the above. Normally 0, set to 1 for script mode */
 extern void _SetScriptMode(unsigned mode);
-
 
 /* math */
 extern int _rand(void);
@@ -251,12 +249,12 @@ extern void _UnsetZoomForMovie(void);
 void _TurnOffMic(void);
 void _TurnOnMic(void);
 
-extern void _MakeAFScan(int*, int); 
-extern void _ExpCtrlTool_StartContiAE(int, int); 
-extern void _ExpCtrlTool_StopContiAE(int, int); 
+extern void _MakeAFScan(int*, int);
+extern void _ExpCtrlTool_StartContiAE(int, int);
+extern void _ExpCtrlTool_StopContiAE(int, int);
 
-extern int some_flag_for_af_scan; 
-extern int parameter_for_af_scan; 
+extern int some_flag_for_af_scan;
+extern int parameter_for_af_scan;
 extern void _SetAE_ShutterSpeed(short* tv);
 
 extern void _EnterToCompensationEVF(void);

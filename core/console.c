@@ -79,6 +79,8 @@ void console_close()
             free(console_buf[i]);
         }
         free(console_buf);
+
+        console_buf = NULL;
     }
 }
 
