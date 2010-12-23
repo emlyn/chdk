@@ -100,9 +100,6 @@ function md_get_cell_diff (
 
 #define MOTION_DETECTOR_CELLS 1024
 
-void kbd_sched_motion_detector();
-
-
 void md_close_motion_detector();
 int md_init_motion_detector(
 

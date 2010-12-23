@@ -4,6 +4,7 @@
 #include "core.h"
 #include "keyboard.h"
 #include "conf.h"
+#include "action_stack.h"
 #include "camera.h"
 #include "lang.h"
 #include "ubasic.h"
@@ -19,27 +20,7 @@
 #include "../lib/lua/lstate.h"	// for L->nCcalls, baseCcalls
 #include "shot_histogram.h"
 
-#define SCRIPT_END              0
-#define SCRIPT_CLICK            1
-#define SCRIPT_SHOOT            2
-#define SCRIPT_SLEEP            3
-#define SCRIPT_PRESS            4
-#define SCRIPT_RELEASE          5
-#define SCRIPT_PR_WAIT_SAVE     6
-#define SCRIPT_WAIT_SAVE        7
-#define SCRIPT_WAIT_FLASH       8
-#define SCRIPT_WAIT_EXPHIST     9
-#define SCRIPT_PR_WAIT_EXPHIST  10
-#define SCRIPT_WAIT_CLICK       11
-#define SCRIPT_MOTION_DETECTOR  12
-
-#define KBD_STACK_SIZE 24
-
-static long kbd_int_stack[KBD_STACK_SIZE];
-static int kbd_int_stack_ptr;
-
-#define KBD_STACK_PUSH(v) kbd_int_stack[kbd_int_stack_ptr++] = (v);
-#define KBD_STACK_PREV(p) (kbd_int_stack[kbd_int_stack_ptr-(p)])
+static int script_action_stack(long p);
 
 static int soft_half_press = 0;
 static int kbd_blocked;
@@ -47,7 +28,9 @@ static int key_pressed;
 int state_kbd_script_run;
 int state_lua_kbd_first_call_to_resume;	// AUJ
 static long delay_target_ticks;
-static long kbd_last_clicked;
+static long running_script_stack_name = -1;
+long kbd_last_clicked;
+
 
 // ------ add by Masuji SUTO (start) --------------
 static int mvideo,mplay;
@@ -131,91 +114,18 @@ static int nTxtbl[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13};
 static int nTxtbl[]={0,1,2,3,4,5,6,7,8,9};
 #endif
 
-void kbd_sched_delay(long msec)
-{
-    KBD_STACK_PUSH(msec);
-    KBD_STACK_PUSH(SCRIPT_SLEEP);
-}
-
-
-void kbd_sched_motion_detector(){
-    KBD_STACK_PUSH(SCRIPT_MOTION_DETECTOR);
-}
-
-void kbd_sched_press(long key)
-{
-// WARNING stack program flow is reversed
-    kbd_sched_delay(20);
-
-    KBD_STACK_PUSH(key);
-    KBD_STACK_PUSH(SCRIPT_PRESS);
-}
-
-void kbd_sched_release(long key)
-{
-// WARNING stack program flow is reversed
-    kbd_sched_delay(20);
-
-    KBD_STACK_PUSH(key);
-    KBD_STACK_PUSH(SCRIPT_RELEASE);
-}
-
 void md_kbd_sched_immediate_shoot(int no_release)
 {
-    kbd_int_stack_ptr-=1;// REMOVE MD ITEM
+    action_pop();// REMOVE MD ITEM
   
     // stack operations are reversed!
     if (!no_release)  // only release shutter if allowed
     {
-      kbd_sched_release(KEY_SHOOT_FULL);
-      kbd_sched_delay(20);
+      action_push_release(KEY_SHOOT_FULL);
+      action_push_delay(20);
     }
-    KBD_STACK_PUSH(SCRIPT_MOTION_DETECTOR); // it will removed right after exit from this function
+    action_push(AS_MOTION_DETECTOR); // it will removed right after exit from this function
     kbd_key_press(KEY_SHOOT_FULL); // not a stack operation... pressing right now
-}
-
-
-void kbd_sched_click(long key)
-{
-// WARNING stack program flow is reversed
-    kbd_sched_release(key);
-    kbd_sched_press(key);
-}
-
-static void kbd_sched_wait_click(int timeout)
-{
-// WARNING stack program flow is reversed
-    KBD_STACK_PUSH(timeout);
-    KBD_STACK_PUSH(SCRIPT_WAIT_CLICK);
-}
-
-void kbd_sched_shoot()
-{
-// WARNING stack program flow is reversed
-
-    kbd_sched_delay(conf.script_shoot_delay*100);// XXX FIXME find out how to wait to jpeg save finished
-
-    KBD_STACK_PUSH(SCRIPT_WAIT_SAVE);
-
-    KBD_STACK_PUSH(KEY_SHOOT_FULL);
-    KBD_STACK_PUSH(SCRIPT_RELEASE);
-
-    kbd_sched_delay(20);
-
-    KBD_STACK_PUSH(KEY_SHOOT_FULL);
-    KBD_STACK_PUSH(SCRIPT_PRESS);
-
-    KBD_STACK_PUSH(SCRIPT_WAIT_FLASH);
-    KBD_STACK_PUSH(SCRIPT_WAIT_EXPHIST);
-    KBD_STACK_PUSH(SCRIPT_PR_WAIT_EXPHIST);
-
-    kbd_sched_delay(10);
-
-    KBD_STACK_PUSH(KEY_SHOOT_HALF);
-    KBD_STACK_PUSH(SCRIPT_PRESS);
-
-    KBD_STACK_PUSH(SCRIPT_PR_WAIT_SAVE);
-
 }
 
 static lua_State* L, *Lt;
@@ -267,7 +177,18 @@ static int lua_script_start( char const* script )
   return 1;
 }
 
-void lua_script_exec( char *script , int keep_result )
+int script_is_running()
+{
+    return !action_stack_is_finished(running_script_stack_name);
+}
+
+static long script_stack_start()
+{
+    running_script_stack_name = action_stack_create(&script_action_stack, AS_SCRIPT_RUN);
+    return running_script_stack_name;
+}
+
+long script_start_ptp( char *script , int keep_result )
 {
   lua_script_start(script);
   lua_keep_result = keep_result;
@@ -275,14 +196,7 @@ void lua_script_exec( char *script , int keep_result )
   state_kbd_script_run = 1;
   kbd_blocked = 1;
   auto_started = 0;
-}
-
-void lua_script_wait()
-{
-  while ( state_kbd_script_run )
-  {
-    msleep(100);
-  }
+  return script_stack_start();
 }
 
 void *lua_get_result()
@@ -303,7 +217,7 @@ static void wait_and_end(void)
 	state_kbd_script_run = 3;	
 }
 
-void script_start( int autostart )
+long script_start_gui( int autostart )
 {
     int i;
 
@@ -313,8 +227,6 @@ void script_start( int autostart )
     else
         auto_started = 0;
 
-    delay_target_ticks = 0;
-    kbd_int_stack_ptr = 0;
     kbd_last_clicked = 0;
 
     /*if (!autostart)*/ kbd_key_release_all();
@@ -334,7 +246,7 @@ void script_start( int autostart )
         if( !lua_script_start(script_source_str) ) {
             script_print_screen_end();
             wait_and_end();
-            return;
+            return -1;
         }
         for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
             if( script_params[i][0] ) {
@@ -357,6 +269,7 @@ void script_start( int autostart )
 
     conf_update_prevent_shutdown();
 
+    return script_stack_start();
 }
 
 void script_end()
@@ -378,105 +291,11 @@ void script_end()
     vid_bitmap_refresh();
 }
 
-void process_script()
-{
+static void process_script()
+{   // Note: This function is called from an action stack for AS_SCRIPT_RUN.
+    
     long t;
     int Lres;
-
-    // process stack operations
-    if (kbd_int_stack_ptr){
-        switch (KBD_STACK_PREV(1)) {
-            case SCRIPT_MOTION_DETECTOR:
-                if(md_detect_motion()==0) {
-                    kbd_int_stack_ptr-=1;
-                    if (L)
-                    {
-                           // We need to recover the motion detector's
-                           // result from ubasic variable 0 and push
-                           // it onto the thread's stack. -- AUJ
-                           lua_pushnumber( Lt, md_get_result() );
-                    }
-                    else
-                    {
-                           ubasic_set_md_ret(md_get_result());
-                    }
-                }
-                return;
-            case SCRIPT_PRESS:
-                kbd_key_press(KBD_STACK_PREV(2));
-                kbd_int_stack_ptr-=2; // pop op.
-                return;
-            case SCRIPT_RELEASE:
-                kbd_key_release(KBD_STACK_PREV(2));
-                kbd_int_stack_ptr-=2; // pop op.
-                return;
-            case SCRIPT_SLEEP:
-                t = get_tick_count();
-                // FIXME take care if overflow occurs
-                if (delay_target_ticks == 0){
-                    /* setup timer */
-                    delay_target_ticks = t+KBD_STACK_PREV(2);
-                } else {
-                    if (delay_target_ticks <= t){
-                        delay_target_ticks = 0;
-                        kbd_int_stack_ptr-=2; // pop sleep op.
-                    }
-                }
-                return;
-            case SCRIPT_PR_WAIT_SAVE:
-                state_shooting_progress = SHOOTING_PROGRESS_NONE;
-                state_expos_recalculated = 0;
-                histogram_stop();
-
-                kbd_int_stack_ptr-=1; // pop op.
-                return;
-            case SCRIPT_WAIT_SAVE:{
-                if (state_shooting_progress == SHOOTING_PROGRESS_DONE)
-                    kbd_int_stack_ptr-=1; // pop op.
-                return;
-            }
-            case SCRIPT_WAIT_FLASH:{
-                if (shooting_is_flash_ready())
-                    kbd_int_stack_ptr-=1; // pop op.
-                return;
-            }
-            case SCRIPT_WAIT_EXPHIST:{
-                if (state_expos_recalculated) {
-                    kbd_int_stack_ptr-=1; // pop op.
-                    state_expos_under = under_exposed;
-                    state_expos_over = over_exposed;
-                }
-                return;
-            }
-            case SCRIPT_PR_WAIT_EXPHIST: {
-                if (shooting_in_progress() || mvideo) {
-                    state_expos_recalculated = 0;
-                    histogram_restart();
-                    kbd_int_stack_ptr-=1; // pop op.
-                }
-                return;
-            }
-            case SCRIPT_WAIT_CLICK: {
-                t = get_tick_count();
-                if (delay_target_ticks == 0){
-                    /* setup timer */
-                    delay_target_ticks = t+((KBD_STACK_PREV(2))?KBD_STACK_PREV(2):86400000);
-                } else {
-                    kbd_last_clicked = kbd_get_clicked_key();
-                    if (kbd_last_clicked || delay_target_ticks <= t) {
-                        if (!kbd_last_clicked) 
-                            kbd_last_clicked=0xFFFF;
-                        delay_target_ticks = 0;
-                        kbd_int_stack_ptr-=2; // pop op.
-                    }
-                }
-                return;
-            }
-            default:
-                /*finished();*/
-                script_end();
-        }
-    }
 
     if (state_kbd_script_run != 3) {
         if( L ) {
@@ -493,7 +312,7 @@ void process_script()
                 script_console_add_line( lua_tostring( Lt, -1 ) );
                 if(conf.debug_lua_restart_on_error){
                     lua_script_reset();
-                    script_start(0);
+                    script_start_gui(0);
                 } else {
                     wait_and_end();
                 }
@@ -502,23 +321,65 @@ void process_script()
 
             if (Lres != LUA_YIELD) {
                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
+                action_pop();
                 script_end();
             }    
-        } else {
+        } else
+        {
             ubasic_run();
             if (ubasic_finished()) {
                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
+                action_pop();
                 script_end();
             }    
         }
     }
 }
 
+static int script_action_stack(long p)
+{
+    // process stack operations
+    switch (p) {
+        case AS_SCRIPT_RUN:
+            if (state_kbd_script_run)
+                process_script();
+            else
+                action_pop();
+            break;
+        case AS_MOTION_DETECTOR:
+            if(md_detect_motion()==0)
+            {
+                action_pop();
+                if (L)
+                {
+                       // We need to recover the motion detector's
+                       // result and push
+                       // it onto the thread's stack.
+                       lua_pushnumber( Lt, md_get_result() );
+                } else
+                {
+                    ubasic_set_md_ret(md_get_result());
+                }
+            }
+            break;
+        default:
+            if (!action_stack_standard(p) && !state_kbd_script_run)
+            {
+                /*finished();*/
+                action_pop();
+                script_end();
+            }
+            break;
+    }
+    
+    return 1;
+}
+
 void ubasic_camera_press(const char *s)
 {
     long k = keyid_by_name(s);
     if (k > 0) {
-        kbd_sched_press(k);
+        action_push_press(k);
     } else {
         ubasic_error = 3;
     }
@@ -528,7 +389,7 @@ void ubasic_camera_release(const char *s)
 {
     long k = keyid_by_name(s);
     if (k > 0) {
-        kbd_sched_release(k);
+        action_push_release(k);
     } else {
         ubasic_error = 3;
     }
@@ -538,7 +399,7 @@ void ubasic_camera_click(const char *s)
 {
     long k = keyid_by_name(s);
     if (k > 0) {
-        kbd_sched_click(k);
+        action_push_click(k);
     } else {
         ubasic_error = 3;
     }
@@ -546,7 +407,8 @@ void ubasic_camera_click(const char *s)
 
 void ubasic_camera_wait_click(int timeout)
 {
-    kbd_sched_wait_click(timeout);
+    action_push(timeout);
+    action_push(AS_WAIT_CLICK);
 }
 
 int ubasic_camera_is_pressed(const char *s)
@@ -575,12 +437,12 @@ int ubasic_camera_is_clicked(const char *s)
 
 void ubasic_camera_sleep(long v)
 {
-    kbd_sched_delay(v);
+    action_push_delay(v);
 }
 
 void ubasic_camera_shoot()
 {
-    kbd_sched_shoot();
+    action_push(AS_SHOOT);
 }
 // remote autostart
 void script_autostart()
@@ -589,7 +451,7 @@ void script_autostart()
     gui_kbd_enter();
     console_clear(); 
     script_console_add_line("***Autostart***"); //lang_str(LANG_CONSOLE_TEXT_STARTED));
-    script_start( 1 );
+    script_start_gui( 1 );
 }
 void exit_alt()
 {
@@ -712,7 +574,7 @@ long kbd_process()
         if (kbd_is_key_pressed(KEY_SHOOT_FULL)) {
             key_pressed = 100;
             if (!state_kbd_script_run) {
-                script_start(0);
+                script_start_gui(0);
             } else if (state_kbd_script_run == 2 || state_kbd_script_run == 3) {
                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
                 script_end();
@@ -735,9 +597,8 @@ long kbd_process()
             }
         }
 
-        if (state_kbd_script_run)
-            process_script();
-        else
+        action_stack_process_all();
+        if (!state_kbd_script_run)
             gui_kbd_process();
     } else {
 #ifndef SYNCHABLE_REMOTE_NOT_ENABLED
