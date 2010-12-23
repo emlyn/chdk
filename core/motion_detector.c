@@ -29,6 +29,7 @@ void dump_memory();
 #endif
 
 #include "motion_detector.h"
+#include "action_stack.h"
 #include "console.h"
 
 #include "gui.h"
@@ -37,7 +38,6 @@ void dump_memory();
 
 #define MD_XY2IDX(x,y) ((y)*motion_detector->columns+x)
 
-void kbd_sched_shoot();
 void md_kbd_sched_immediate_shoot(int no_release);
 
 
@@ -245,7 +245,7 @@ int md_init_motion_detector(
 
 	motion_detector->running=1;
 
-	kbd_sched_motion_detector();
+	action_push(AS_MOTION_DETECTOR);
 	draw_clear();
 
 	return 1;
