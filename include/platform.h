@@ -35,7 +35,9 @@
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_MANUAL)
 
 /* propcase ID constants. These are in their own header files for easier sed processing */
-#if CAM_PROPSET == 3
+#if CAM_PROPSET == 4
+    #include "propset4.h"
+#elif CAM_PROPSET == 3
     #include "propset3.h"
 #elif CAM_PROPSET == 2    // most digic3 cameras
     #include "propset2.h"
@@ -195,7 +197,11 @@ long set_property_case(long id, void *buf, long bufsize);
 long get_file_counter();
 long get_exposure_counter();
 long get_file_next_counter();
+#if defined(CAM_DATE_FOLDER_NAMING)
+void get_target_dir_name(char*);
+#else
 long get_target_dir_num();
+#endif
 long get_target_file_num();
 
 /******************************************************************/
@@ -228,6 +234,9 @@ void *vid_get_viewport_live_fb();
 void vid_bitmap_refresh();
 long vid_get_viewport_height();
 int vid_get_viewport_width();
+#if defined(CAM_VIEWPORT_BUFFER_WIDTH_FIX)
+int vid_get_viewport_buffer_width();
+#endif
 void vid_turn_off_updates();
 void vid_turn_on_updates();
 
@@ -236,6 +245,9 @@ void vid_turn_on_updates();
 void *hook_raw_fptr();
 void *hook_raw_ret_addr();
 char *hook_raw_image_addr();
+#if DNG_DOUBLE_BUF
+char *hook_alt_raw_image_addr();
+#endif
 long hook_raw_size();
 void hook_raw_install();
 void hook_raw_save_complete();
@@ -459,7 +471,10 @@ void set_ev_video_avail(int);
 int get_ev_video(void);
 void set_ev_video(int);
 //dng related
-void reverse_bytes_order(char* start, int count);
+// new version to support DNG double buffer
+void reverse_bytes_order2(char* from, char* to, int count);
+// convert old version calls to new version (to minimise code changes)
+#define	reverse_bytes_order(start, count)	reverse_bytes_order2(start,start,count)
 void save_ext_for_dng(void);
 void change_ext_to_dng(void);
 void change_ext_to_default(void);
