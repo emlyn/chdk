@@ -738,6 +738,8 @@ int mbr_read_dryos(unsigned long drive_total_sectors, char* mbr_sector ){
  return drive_total_sectors;
 }
 
+#endif
+
 int get_part_count(void){
  unsigned long part_start_sector, part_length;
  char part_status, part_type;
@@ -755,8 +757,6 @@ int get_part_count(void){
  }
  return count;
 }
-
-#endif
 
 void swap_partitions(void){
 	if (is_mbr_loaded())
