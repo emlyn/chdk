@@ -73,7 +73,7 @@ int script_params_has_changed=0;
  // KEY_DISPLAY is used for gui_subj_dist_override_koef_enum;
  // KEY_LEFT/KEY_RIGHT is used for gui_subj_dist_override_value_enum (because of no separate ZOOM_IN/OUT)
  
-#elif defined(CAMERA_g7) || defined(CAMERA_sx10) || defined(CAMERA_sx1) || defined(CAMERA_sx20)
+#elif defined(CAMERA_g7) || defined(CAMERA_sx10) || defined(CAMERA_sx1) || defined(CAMERA_sx20) || defined(CAMERA_sx30)
 //Alt mode
  #define SHORTCUT_TOGGLE_RAW          KEY_ERASE
 //Half press shoot button    
@@ -1260,7 +1260,7 @@ const char* gui_alt_mode_button_enum(int change, int arg) {
 #elif defined(CAMERA_sx100is) || defined(CAMERA_sx110is)
     static const char* names[]={ "Print", "Face"};
     static const int keys[]={ KEY_PRINT, KEY_FACE };
-#elif defined(CAMERA_sx10) || defined(CAMERA_sx1) || defined(CAMERA_sx20)
+#elif defined(CAMERA_sx10) || defined(CAMERA_sx1) || defined(CAMERA_sx20) || defined(CAMERA_sx30)
     static const char* names[]={ "Shrtcut", "Flash", "Video"};
     static const int keys[]={ KEY_PRINT, KEY_FLASH, KEY_VIDEO };
 #elif defined(CAMERA_a570) || defined(CAMERA_a590) || defined(CAMERA_a720)
@@ -1537,8 +1537,13 @@ const char* gui_user_menu_show_enum(int change, int arg) {
 }
  
 const char* gui_video_af_key_enum(int change, int arg){ 
+#if CAMERA_g12
+    static const char* names[]={ "", "Shutter", "Set", "AE Lock"}; 
+    static const int keys[]={0, KEY_SHOOT_HALF, KEY_SET, KEY_AE_LOCK }; 
+#else
     static const char* names[]={ "", "Shutter", "Set"}; 
     static const int keys[]={0, KEY_SHOOT_HALF, KEY_SET }; 
+#endif
     int i; 
  
     for (i=0; i<sizeof(names)/sizeof(names[0]); ++i) { 
@@ -2268,6 +2273,7 @@ void other_kbd_process(){
       get_property_case(PROPCASE_DIGITAL_ZOOM_POSITION, &x, sizeof(x));
 #if defined (CAMERA_s90)
 	  if (x==0) zoom_status=ZOOM_OPTICAL_MAX; //ERR99: No zoom back from digital to optical zoom possible if set to medium
+#elif defined (CAMERA_sx30)	|| defined (CAMERA_g12)		// can't find, crashes camera *******
 #else
 	  if (x==0) zoom_status=ZOOM_OPTICAL_MEDIUM;
 #endif

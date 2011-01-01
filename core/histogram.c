@@ -65,6 +65,9 @@ void histogram_process()
     static unsigned char *img;
     int i, hi, c;
     int y, v, u;
+#if defined (CAM_VIEWPORT_BUFFER_WIDTH_FIX)
+	static int x, vp_w, vp_bw;
+#endif
     static int viewport_size;
     unsigned int histo_fill[5];
 
@@ -75,7 +78,13 @@ void histogram_process()
         	if (img==NULL){
 	    	  img = vid_get_viewport_fb();
 		    }
+#if defined (CAM_VIEWPORT_BUFFER_WIDTH_FIX)
+			vp_w = vid_get_viewport_width();
+			vp_bw = vid_get_viewport_buffer_width();
+            viewport_size = vid_get_viewport_height() * vp_bw;
+#else
             viewport_size = vid_get_viewport_height() * vid_get_viewport_width();
+#endif
             for (c=0; c<5; ++c) {
                 for (i=0; i<HISTO_WIDTH; ++i) {
                     histogram_proc[c][i]=0;
@@ -89,6 +98,9 @@ void histogram_process()
         case 1:
         case 2:
         case 3:
+#if defined (CAM_VIEWPORT_BUFFER_WIDTH_FIX)
+			x = 0;
+#endif
             for (i=(histogram_stage-1)*6; i<viewport_size*3; i+=6*3*2) {
                 y = img[i+1];
                 u = *(signed char*)(&img[i]);
@@ -104,7 +116,16 @@ void histogram_process()
                 ++histogram_proc[HISTO_G][hi];
                 hi = clip(((y<<12) + u*7258          + 2048)/4096)*HISTO_WIDTH/256; // B
                 ++histogram_proc[HISTO_B][hi];
-            }
+
+#if defined (CAM_VIEWPORT_BUFFER_WIDTH_FIX)
+				x++;
+				if (x == vp_w)
+				{
+					i += ((vp_bw - vp_w) * 3);
+					x = 0;
+				}
+#endif
+			}
 
             ++histogram_stage;
             break;

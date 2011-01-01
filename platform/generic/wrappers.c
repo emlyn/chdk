@@ -125,12 +125,23 @@ void lens_set_zoom_point(long newpt)
     } else if (newpt >= zoom_points) {
         newpt = zoom_points-1;
     }
+#if defined(CAMERA_sx30)
+// SX30 - Can't find zoom_status, _MoveZoomLensWithPoint crashes camera
+	extern void _PT_MoveOpticalZoomAt(long*);
+	if (lens_get_zoom_point() != newpt)
+		_PT_MoveOpticalZoomAt(&newpt);
+#elif defined(CAMERA_g12)
+// G12 - Can't find zoom_status, _MoveZoomLensWithPoint works anyway, and updates PROPCASE_OPTICAL_ZOOM_POSITION; but doesn't wait for zoom to finish
+	if (lens_get_zoom_point() != newpt)
+	    _MoveZoomLensWithPoint((short*)&newpt);
+#else
     _MoveZoomLensWithPoint((short*)&newpt);
     while (zoom_busy);
     if (newpt==0) zoom_status=ZOOM_OPTICAL_MIN;
     else if (newpt >= zoom_points) zoom_status=ZOOM_OPTICAL_MAX;
     else zoom_status=ZOOM_OPTICAL_MEDIUM; 
     _SetPropertyCase(PROPCASE_OPTICAL_ZOOM_POSITION, &newpt, sizeof(newpt));
+#endif
 }
 
 void lens_set_zoom_speed(long newspd)
@@ -678,6 +689,13 @@ void UnlockAF(void)
 static char *mbr_buf=(void*)0;
 static unsigned long drive_sectors;
 
+int is_mbr_loaded()
+{
+	return (mbr_buf == (void*)0) ? 0 : 1;
+}
+
+#ifndef	CAM_DRYOS
+
 int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long *part_start_sector,  unsigned long *part_length){
 // return value: 1 - success, 0 - fail
 // called only in VxWorks
@@ -710,6 +728,7 @@ int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long 
  return valid;
 }
 
+#else
 
 int mbr_read_dryos(unsigned long drive_total_sectors, char* mbr_sector ){
 // Called only in DRYOS
@@ -724,48 +743,59 @@ int get_part_count(void){
  char part_status, part_type;
  int i;
  int count=0;
- for (i=0; i<=1;i++){
-  part_start_sector=(*(unsigned short*)(mbr_buf+i*16+0x1C8)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1C6); 
-  part_length=(*(unsigned short*)(mbr_buf+i*16+0x1CC)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1CA); 
-  part_status=mbr_buf[i*16+0x1BE];
-  part_type=mbr_buf[0x1C2+i*16];
-  if ( part_start_sector && part_length && part_type && ((part_status==0) || (part_status==0x80)) ) count++;
+ if (is_mbr_loaded())
+ {
+	 for (i=0; i<=1;i++){
+	  part_start_sector=(*(unsigned short*)(mbr_buf+i*16+0x1C8)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1C6); 
+	  part_length=(*(unsigned short*)(mbr_buf+i*16+0x1CC)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1CA); 
+	  part_status=mbr_buf[i*16+0x1BE];
+	  part_type=mbr_buf[0x1C2+i*16];
+	  if ( part_start_sector && part_length && part_type && ((part_status==0) || (part_status==0x80)) ) count++;
+	 }
  }
  return count;
 }
 
+#endif
+
 void swap_partitions(void){
- int i;
- char c;
- for(i=0;i<16;i++){
-  c=mbr_buf[i+0x1BE];
-  mbr_buf[i+0x1BE]=mbr_buf[i+0x1CE];
-  mbr_buf[i+0x1CE]=c;
- }
- _WriteSDCard(0,0,1,mbr_buf);
+	if (is_mbr_loaded())
+	{
+	 int i;
+	 char c;
+	 for(i=0;i<16;i++){
+	  c=mbr_buf[i+0x1BE];
+	  mbr_buf[i+0x1BE]=mbr_buf[i+0x1CE];
+	  mbr_buf[i+0x1CE]=c;
+	 }
+	 _WriteSDCard(0,0,1,mbr_buf);
+	}
 }
 
 void create_partitions(void){
- unsigned long start, length;
- char type;
+	if (is_mbr_loaded())
+	{
+	 unsigned long start, length;
+	 char type;
 
- _memset(mbr_buf,0,SECTOR_SIZE);
- 
- start=1; length=2*1024*1024/SECTOR_SIZE; //2 Mb
- type=1; // FAT primary
- mbr_buf[0x1BE + 4]=type;
- mbr_buf[0x1BE + 8]=start;   mbr_buf[0x1BE + 9]=start>>8;   mbr_buf[0x1BE + 10]=start>>16;  mbr_buf[0x1BE + 11]=start>>24;
- mbr_buf[0x1BE + 12]=length; mbr_buf[0x1BE + 13]=length>>8; mbr_buf[0x1BE + 14]=length>>16; mbr_buf[0x1BE + 15]=length>>24;
+	 _memset(mbr_buf,0,SECTOR_SIZE);
+	 
+	 start=1; length=2*1024*1024/SECTOR_SIZE; //2 Mb
+	 type=1; // FAT primary
+	 mbr_buf[0x1BE + 4]=type;
+	 mbr_buf[0x1BE + 8]=start;   mbr_buf[0x1BE + 9]=start>>8;   mbr_buf[0x1BE + 10]=start>>16;  mbr_buf[0x1BE + 11]=start>>24;
+	 mbr_buf[0x1BE + 12]=length; mbr_buf[0x1BE + 13]=length>>8; mbr_buf[0x1BE + 14]=length>>16; mbr_buf[0x1BE + 15]=length>>24;
 
- start=start+length; length=drive_sectors-start-1; 
- type=0x0B;  //FAT32 primary;
- mbr_buf[0x1CE + 4]=type;
- mbr_buf[0x1CE + 8]=start;   mbr_buf[0x1CE + 9]=start>>8;   mbr_buf[0x1CE + 10]=start>>16;  mbr_buf[0x1CE + 11]=start>>24;
- mbr_buf[0x1CE + 12]=length; mbr_buf[0x1CE + 13]=length>>8; mbr_buf[0x1CE + 14]=length>>16; mbr_buf[0x1CE + 15]=length>>24;
+	 start=start+length; length=drive_sectors-start-1; 
+	 type=0x0B;  //FAT32 primary;
+	 mbr_buf[0x1CE + 4]=type;
+	 mbr_buf[0x1CE + 8]=start;   mbr_buf[0x1CE + 9]=start>>8;   mbr_buf[0x1CE + 10]=start>>16;  mbr_buf[0x1CE + 11]=start>>24;
+	 mbr_buf[0x1CE + 12]=length; mbr_buf[0x1CE + 13]=length>>8; mbr_buf[0x1CE + 14]=length>>16; mbr_buf[0x1CE + 15]=length>>24;
 
- mbr_buf[0x1FE]=0x55; mbr_buf[0x1FF]=0xAA; // signature;
+	 mbr_buf[0x1FE]=0x55; mbr_buf[0x1FF]=0xAA; // signature;
 
- _WriteSDCard(0,0,1,mbr_buf);
+	 _WriteSDCard(0,0,1,mbr_buf);
+	}
 }
 
 #endif

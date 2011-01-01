@@ -41,8 +41,13 @@ static void get_viewport_size()
 
 #if CAM_USES_ASPECT_CORRECTION//nandoide sept-2009 get the viewport dimensions, not the screen dimensions, on sx200is they aren't the same.
     viewport_height = vid_get_viewport_height()-EDGE_HMARGIN*2; //don't trace bottom lines
+#if defined (CAM_VIEWPORT_BUFFER_WIDTH_FIX) // buffer is wider than viewport on G12
+    viewportw = vid_get_viewport_width();
+    viewport_width = vid_get_viewport_buffer_width() * 3;
+#else
     viewportw = vid_get_viewport_width();
     viewport_width = viewportw * 3;
+#endif
 #else
     viewport_height = screen_height;//vid_get_viewport_height();
     viewport_width = screen_width * 3;

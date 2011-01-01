@@ -420,12 +420,18 @@ img += bufoff * 0x7E900;
 #endif
 
 	vp_h=vid_get_viewport_height();
+#if defined(CAM_VIEWPORT_BUFFER_WIDTH_FIX)
+	vp_w=vid_get_viewport_buffer_width();
+
+	x_step=vid_get_viewport_width()/motion_detector->columns;
+	y_step=vp_h/motion_detector->rows;
+#else
 	vp_w=vid_get_viewport_width();
 
 
 	x_step=vp_w/motion_detector->columns;
 	y_step=vp_h/motion_detector->rows;
-
+#endif
 
 	for(row=0, col=0; row < motion_detector->rows ; ){
 		do_calc=0;

@@ -496,7 +496,10 @@ int gui_osd_draw_zebra(int show) {
 
                     if (mrec) {
                     }
-                }
+				}
+#if defined(CAM_VIEWPORT_BUFFER_WIDTH_FIX)
+				v += ((vid_get_viewport_buffer_width() - viewport_width) * 3);	// buffer is wider than viewport on G12
+#endif
             }
         if (!zebra_drawn) f=0;
     }

@@ -64,6 +64,11 @@ static int nTxtbl[]={0,1,2,3,4,5,6};
 static int nTxtbl[]={0,11,25,41,64,86,105,128};
 #endif
 
+#if defined(CAMERA_sx30)
+#define ZSTEP_TABLE_SIZE 11
+static int nTxtbl[]={0,20,40,60,80,100,120,140,160,180,200};
+#endif
+
 #if defined(CAMERA_tx1)
 #define ZSTEP_TABLE_SIZE 8
 static int nTxtbl[]={0,18,43,55,76,93,113,124};
@@ -105,7 +110,7 @@ static int nTxtbl[]={0,1,2,3,4,5,6,7,8,9};
 static int nTxtbl[]={0,16,32,62,78,102,125};
 #endif
 
-#if defined(CAMERA_g11)
+#if defined(CAMERA_g11) || defined(CAMERA_g12)
 #define ZSTEP_TABLE_SIZE 14
 static int nTxtbl[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13};
 #endif
