@@ -96,7 +96,7 @@ NSTUB(TakeSemaphore, 0xff838d38)
 // ERROR: UIFS_WriteFirmInfoToFile is not found!
 // Best match: 93%
 NSTUB(UnlockMainPower, 0xff8951c8)
-NSTUB(UpdateMBROnFlash, 0xff813f74)
+NSTUB(UpdateMBROnFlash, 0xff86fab0)
 NSTUB(VbattGet, 0xff831e08)
 NSTUB(Write, 0xff835a10)
 NSTUB(_log, 0xffb3dd88)

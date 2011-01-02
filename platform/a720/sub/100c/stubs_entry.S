@@ -70,7 +70,6 @@ NSTUB(TurnOnBackLight, 0xffc676dc)
 NSTUB(UIFS_WriteFirmInfoToFile, 0xffd4a934)
 NSTUB(UnlockMainPower, 0xffc5bec0)
 NSTUB(UpdateMBROnFlash, 0xffc3f28c)
-// ALT: NSTUB(UpdateMBROnFlash, 0xffc71b5c) // 21/0
 NSTUB(VbattGet, 0xffc119a8)
 NSTUB(Write, 0xffc150d8)
 NSTUB(_log, 0xffe3c8dc)

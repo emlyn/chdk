@@ -90,7 +90,6 @@ NSTUB(TurnOnBackLight, 0xff888450)
 // Best match: 60%
 NSTUB(UnlockMainPower, 0xff877d4c)
 NSTUB(UpdateMBROnFlash, 0xff856b98)
-// ALT: NSTUB(UpdateMBROnFlash, 0xff8b3230) // 21/0
 // Best match: 78%
 NSTUB(VbattGet, 0xff8222e4)
 NSTUB(Write, 0xff825e38)

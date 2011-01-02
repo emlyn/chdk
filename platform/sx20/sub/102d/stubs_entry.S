@@ -95,7 +95,7 @@ NSTUB(TurnOnBackLight, 0xff8a5b18)
 // ERROR: UIFS_WriteFirmInfoToFile is not found!
 // Best match: 93%
 NSTUB(UnlockMainPower, 0xff896e50)
-NSTUB(UpdateMBROnFlash, 0xff813f74)
+NSTUB(UpdateMBROnFlash, 0xff86f048)
 // Best match: 57%
 NSTUB(VbattGet, 0xff831d04)
 // ALT: NSTUB(VbattGet, 0xff8b2318) // 4/3

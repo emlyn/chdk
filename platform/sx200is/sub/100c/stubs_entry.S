@@ -96,8 +96,8 @@ NSTUB(TurnOnBackLight, 0xff88923c)
 NSTUB(UIFS_WriteFirmInfoToFile, 0xff94f9d8)
 // Best match: 93%
 NSTUB(UnlockMainPower, 0xff87bc34)
-// Best match: 85%
-NSTUB(UpdateMBROnFlash, 0xff88fc60)
+// Best match: 89%
+NSTUB(UpdateMBROnFlash, 0xff857924)
 // Best match: 85%
 NSTUB(VbattGet, 0xff820644)
 NSTUB(Write, 0xff823d9c)
