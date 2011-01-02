@@ -53,7 +53,6 @@
     #define ZOOM_OVERRIDE               0   // Shall zoom-override be used? default 0 becoz not implemented right now
 
 	#undef  DNG_SUPPORT						// Camera supports DNG format for saving of RAW images
-	#undef	DNG_DOUBLE_BUF					// Camera has two RAW buffers that can be used to optimise DNG creation
     
 	#undef  CAM_REAR_CURTAIN                // Camera do not have front/rear curtain flash sync in menu
     #undef  CAM_BRACKETING                // Cameras that have bracketing (focus & ev) in original firmware already, most likely s- & g-series (propcase for digic III not found yet!)
@@ -75,9 +74,6 @@
     // by nandoide sept-2009
     //zebra adjust buffer height: show use at sx200is: needed for save memory space
     #define ZEBRA_HMARGIN0  0
-
-	// Viewport memory buffer is wider than viewport (G12)
-	#undef CAM_VIEWPORT_BUFFER_WIDTH_FIX	// Set to 1 if viewport memory buffer width is not the same as the viewport width
 
     //aspect corrections
     #define CAM_USES_ASPECT_CORRECTION   0   //if true, camera uses a modified graphics primitives to draw with exact display aspect-ratio. 
@@ -3105,7 +3101,6 @@
 	#define CAM_UNCACHED_BIT			0x40000000
 
 	#define DNG_SUPPORT					1
-	#define	DNG_DOUBLE_BUF				1
 	// pattern
 	#define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
 	// color
@@ -3183,7 +3178,7 @@
    #undef EDGE_HMARGIN
    #define EDGE_HMARGIN 2
    #undef CAM_CHDK_PTP
-   //#define CAM_CHDK_PTP 1
+   #define CAM_CHDK_PTP 1
 	
 	#define	CAM_DATE_FOLDER_NAMING	1
 
@@ -3252,7 +3247,6 @@
     #define EDGE_HMARGIN 2
 
     #define DNG_SUPPORT		1
-	#define	DNG_DOUBLE_BUF	1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -3284,9 +3278,14 @@
 
 	#define CAM_ZEBRA_ASPECT_ADJUST 1
 
-	#define	CAM_VIEWPORT_BUFFER_WIDTH_FIX	1
+   //zebra letterbox for saving memory
+   #undef ZEBRA_HMARGIN0
+   #define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
 	
 	#define	CAM_DATE_FOLDER_NAMING	1
+
+	#define CAM_CHDK_PTP 1
+
 //----------------------------------------------------------
 
 

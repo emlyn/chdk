@@ -72,7 +72,7 @@ NHSTUB(time,							0xff88f66c)	// ok (comp sx30)
 NHSTUB(MakeAFScan,						0xFF98AA04)	// ok (comp s95)
 NHSTUB(ExpCtrlTool_StartContiAE,		0xFF8475EC)	// ok (comp s95)
 NHSTUB(UnsetZoomForMovie,				0xFF9C57D0)	// ok (comp s95)
-NHSTUB(LEDDrive,						0xFF987D80)	// ok (comp sx30)
+NHSTUB(LEDDrive,						0xFF8647EC)	// ok (comp sx30)
 NHSTUB(SetScriptMode,					0xFF89BF90)	// ok (comp sx30)
 NHSTUB(UnlockAndRefresh,				0xFF8B3A68)	// ok (comp sx30)
 NHSTUB(RefreshPhysicalScreen,			0xFF8B3A68) // alias for UnlockAndRefresh
@@ -113,7 +113,6 @@ NHSTUB(kbd_pwr_on,						0xFF810B1C)								// ??? not on sx20 or s95
 NSTUB(rand,								0xFF810B1C) // ??? could not find use C version from S95 wrappers
 NSTUB(srand,							0xFF810B1C) // ??? could not find use C version from S95 wrappers
 NHSTUB(UIFS_WriteFirmInfoToFile,		0xFF810B1C)	// Is this needed?
-NHSTUB(Restart,							0xFF810B1C)						// ??? auto address wrong ???
 NHSTUB(rewinddir,						0xFF810B1C)
 NHSTUB(SetZoomActuatorSpeedPercent,		0xFF810B1C)
 NHSTUB(Unmount_FileSystem,				0xFF810B1C)

@@ -110,7 +110,6 @@ NHSTUB(kbd_pwr_on,						0xFF810B1C)								// ??? not on sx20 or s95
 NSTUB(rand,								0xFF810B1C) // ??? could not find use C version from S95 wrappers
 NSTUB(srand,							0xFF810B1C) // ??? could not find use C version from S95 wrappers
 NHSTUB(UIFS_WriteFirmInfoToFile,		0xFF810B1C)	// Is this needed?
-NHSTUB(Restart,							0xFF810B1C)						// ??? auto address wrong ???
 NHSTUB(rewinddir,						0xFF810B1C)
 NHSTUB(SetZoomActuatorSpeedPercent,		0xFF810B1C)
 NHSTUB(Unmount_FileSystem,				0xFF810B1C)

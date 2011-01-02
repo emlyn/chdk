@@ -30,6 +30,8 @@ static int slice_height;    // the height of a single slice
 static int viewport_size;   // whole viewport size in bytes ??
 static int viewport_width;      // screenwidth * 3, width in bytes of one viewport line ??
 static int viewport_height;
+static int viewport_xoffset;	// used when image size != viewport size (e.g. wide screen image on 4:3 LCD)
+static int viewport_yoffset;	// used when image size != viewport size (e.g. wide screen image on 4:3 LCD)
 #if CAM_USES_ASPECT_CORRECTION
 static int viewportw; //nandoide , width of viewport (not necessarily equal to width of screen)
 #endif
@@ -41,17 +43,15 @@ static void get_viewport_size()
 
 #if CAM_USES_ASPECT_CORRECTION//nandoide sept-2009 get the viewport dimensions, not the screen dimensions, on sx200is they aren't the same.
     viewport_height = vid_get_viewport_height()-EDGE_HMARGIN*2; //don't trace bottom lines
-#if defined (CAM_VIEWPORT_BUFFER_WIDTH_FIX) // buffer is wider than viewport on G12
     viewportw = vid_get_viewport_width();
     viewport_width = vid_get_viewport_buffer_width() * 3;
-#else
-    viewportw = vid_get_viewport_width();
-    viewport_width = viewportw * 3;
-#endif
 #else
     viewport_height = screen_height;//vid_get_viewport_height();
     viewport_width = screen_width * 3;
 #endif
+
+	viewport_xoffset = vid_get_viewport_xoffset();
+	viewport_yoffset = vid_get_viewport_yoffset();
 
     viewport_size = viewport_height * viewport_width;
     slice_height = viewport_height / EDGE_SLICES;
@@ -212,12 +212,12 @@ static void average_filter_row(const unsigned char*  ptrh1,  // previous row
 {
     int x;
 #if CAM_USES_ASPECT_CORRECTION
-    const int x_max = (viewportw - 2) * 3;
+    const int x_max = (viewportw + viewport_xoffset - 2) * 3;
 #else
     const int x_max = (screen_width - 2) * 3;
 #endif
 
-    for (x=6; x<x_max; x+=6)
+    for (x=viewport_xoffset*3+6; x<x_max; x+=6)
     {
         *(smptr + x + 1) = (*(ptrh1 + x - 1) +
                             *(ptrh1 + x + 1) +
@@ -283,13 +283,13 @@ static int calc_edge_overlay()
     int x, y, xdiv3;
     int conv1, conv2;
 
-    const int y_min = EDGE_HMARGIN+ slice   *slice_height;
-    const int y_max = EDGE_HMARGIN+(slice+1)*slice_height;
-    const int x_min = 6;
+    const int y_min = viewport_yoffset + EDGE_HMARGIN+ slice   *slice_height;
+    const int y_max = viewport_yoffset + EDGE_HMARGIN+(slice+1)*slice_height;
+    const int x_min = viewport_xoffset*3 + 6;
 #if CAM_USES_ASPECT_CORRECTION
-    const int x_max = (viewportw - 2) * 3;
+    const int x_max = (viewportw + viewport_xoffset - 2) * 3;
 #else
-    const int x_max = (screen_width - 2) * 3;
+    const int x_max = (screen_width + viewport_xoffset - 2) * 3;
 #endif
 
     const int vp_width = viewport_width;
@@ -393,7 +393,7 @@ static int calc_edge_overlay()
 
             if (conv1 + conv2 > conf.edge_overlay_thresh)
             {
-                bv_set(edgebuf, (y-EDGE_HMARGIN)*vp_width + xdiv3, 1);
+                bv_set(edgebuf, (y-viewport_yoffset-EDGE_HMARGIN)*vp_width + xdiv3, 1);
             }
 
             // Do it once again for the next 'pixel'
@@ -423,7 +423,7 @@ static int calc_edge_overlay()
 
             if (conv1 + conv2 > conf.edge_overlay_thresh)
             {
-                bv_set(edgebuf, (y-EDGE_HMARGIN)*vp_width + xdiv3+1, 1);
+                bv_set(edgebuf, (y-viewport_yoffset-EDGE_HMARGIN)*vp_width + xdiv3+1, 1);
             }
         }   // for x
     }   // for y
@@ -503,15 +503,15 @@ static int draw_edge_overlay()
     int x_off, y_off;
 
     const color cl = conf.edge_overlay_color;
-    const int y_slice_min = EDGE_HMARGIN+ slice   *slice_height;
-    const int y_slice_max = EDGE_HMARGIN+(slice+1)*slice_height;
-    const int y_min = EDGE_HMARGIN;
-    const int y_max = EDGE_HMARGIN+viewport_height;
-    const int x_min = 2;
+    const int y_slice_min = viewport_yoffset+EDGE_HMARGIN+ slice   *slice_height;
+    const int y_slice_max = viewport_yoffset+EDGE_HMARGIN+(slice+1)*slice_height;
+    const int y_min = viewport_yoffset+EDGE_HMARGIN;
+    const int y_max = viewport_yoffset+EDGE_HMARGIN+viewport_height;
+    const int x_min = viewport_xoffset+2;
 #if CAM_USES_ASPECT_CORRECTION
-    const int x_max = (viewportw - 2);
+    const int x_max = (viewportw + viewport_xoffset - 2);
 #else
-    const int x_max = (screen_width - 2);
+    const int x_max = (screen_width + viewport_yoffset - 2);
 #endif
 
     if( !is_buffer_ready() ) return 0;

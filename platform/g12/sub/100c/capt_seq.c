@@ -651,7 +651,7 @@ void __attribute__((naked,noinline)) sub_FFB077C0_my(){
 //"                ADR     R0, nullsub_368 \n"
 "				 LDR	 R0, =0xFFB07594 \n"
 "                BL      sub_FF8C1CF0 \n"
-"                LDR     R0, =0x3BC24 \n"
+"                LDR     R0, =0x3BB24 \n"
 "                LDRH    R0, [R0] \n"
 "                SUB     R12, R0, #0x4000 \n"
 "                SUBS    R12, R12, #0x20C \n"
@@ -1136,7 +1136,7 @@ void __attribute__((naked,noinline)) exp_drv_task(){
 
 "loc_FF8CC658: \n"
 //"; jumptable FF8D0B70 entry 12           ; LOCATION: ExpDrv.c:2
-"                BL      sub_FF8CA048 \n"
+"                BL      sub_FF8CA228 \n"
 "                B       loc_FF8CC66C \n"
 
 "loc_FF8CC660: \n"

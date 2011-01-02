@@ -42,12 +42,10 @@ char* get_raw_image_addr(void){
  else return (char*) ((int)hook_raw_image_addr()&~CAM_UNCACHED_BIT);
 }
 
-#if DNG_DOUBLE_BUF
-char* get_alt_raw_image_addr(void){	// return inactive buffer
+char* get_alt_raw_image_addr(void){	// return inactive buffer for cameras with multiple RAW buffers (otherwise return active buffer)
  if (!conf.raw_cache) return hook_alt_raw_image_addr();
  else return (char*) ((int)hook_alt_raw_image_addr()&~CAM_UNCACHED_BIT);
 }
-#endif    
 
 //-------------------------------------------------------------------
 
@@ -119,10 +117,9 @@ int raw_savefile() {
 #endif    
     if (state_kbd_script_run && shot_histogram_isenabled()) build_shot_histogram();
 
-#if DNG_DOUBLE_BUF
+	// Get pointers to RAW buffers (will be the same on cameras that don't have two or more buffers)
 	char* rawadr = get_raw_image_addr();
 	char* altrawadr = get_alt_raw_image_addr();
-#endif    
 
     // ! ! ! exclusively for special script which creates badpixel.bin ! ! !
     if (conf.save_raw==255) conf.save_raw=get_bad_count_and_write_file("A/CHDK/bad_tmp.bin");
@@ -202,33 +199,26 @@ int timer; char txt[30];
                create_thumbnail(thumbnail_buf);
                write(fd, get_dng_header(), get_dng_header_size());
                write(fd, thumbnail_buf, DNG_TH_WIDTH*DNG_TH_HEIGHT*3);
-#if DNG_DOUBLE_BUF
                reverse_bytes_order2(rawadr, altrawadr, hook_raw_size());
-#else
-               reverse_bytes_order(get_raw_image_addr(), hook_raw_size());
-#endif
              }
             }
 #endif
-#if DNG_DOUBLE_BUF
             if (conf.dng_raw) {
+				// Write alternate (inactive) buffer that we reversed the bytes into above (if only one buffer then it will be the active buffer instead)
 		        write(fd, (char*)(((unsigned long)altrawadr)|CAM_UNCACHED_BIT), hook_raw_size());
 			}
 			else
 			{
+				// Write active RAW buffer
 	            write(fd, (char*)(((unsigned long)rawadr)|CAM_UNCACHED_BIT), hook_raw_size());
 			}
-#else
-            write(fd, get_raw_image_addr(), hook_raw_size());
-#endif
             close(fd);
             utime(fn, &t);
 #if DNG_SUPPORT
             if (conf.dng_raw) {
              if (get_dng_header() && thumbnail_buf) {
-#if !DNG_DOUBLE_BUF
-              reverse_bytes_order(get_raw_image_addr(), hook_raw_size());
-#endif
+				 if (rawadr == altrawadr)	// If only one RAW buffer then we have to swap the bytes back
+					reverse_bytes_order2(rawadr, altrawadr, hook_raw_size());
           //   unpatch_bad_pixels_b();
               }
              if (get_dng_header()) free_dng_header();

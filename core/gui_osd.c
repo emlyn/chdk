@@ -394,6 +394,9 @@ int gui_osd_draw_zebra(int show) {
     static int need_restore=0;
     int viewport_height;
     int viewport_width; 
+    int viewport_buffer_width; // for when viewport memory buffer is wider than viewport
+    int viewport_xoffset;	// used when image size != viewport size
+    int viewport_yoffset;	// used when image size != viewport size
     int mrec = ((mode_get()&MODE_MASK) == MODE_REC);
     int zebra_drawn=0;
     color cls[] = {
@@ -437,6 +440,9 @@ int gui_osd_draw_zebra(int show) {
     }
     viewport_height = vid_get_viewport_height();
     viewport_width = vid_get_viewport_width(); 
+    viewport_buffer_width = vid_get_viewport_buffer_width(); 
+	viewport_xoffset = vid_get_viewport_xoffset();
+	viewport_yoffset = vid_get_viewport_yoffset();
     switch (conf.zebra_mode) {
         case ZEBRA_MODE_ZEBRA_1:
             f = 4;
@@ -460,13 +466,21 @@ int gui_osd_draw_zebra(int show) {
     }
     // if not in no-zebra phase of blink mode zebra, draw zebra to buf[]
     if (f) {
+		if (viewport_yoffset > 0) { // clear top & bottom areas of buffer if image height if smaller than viewport
+			memset(buf, COLOR_TRANSPARENT, viewport_yoffset*screen_buffer_width);
+			memset(buf+(viewport_yoffset+viewport_height)*screen_buffer_width, COLOR_TRANSPARENT, viewport_yoffset*screen_buffer_width);
+		}
         int step_x, step_v, sy, sx;
         over = 255-conf.zebra_over;
             if (conf.zebra_multichannel) {step_x=2; step_v=6;} else {step_x=1; step_v=3;}
-            for (y=0, v=0; y<viewport_height; ++y) {
+            for (y=viewport_yoffset, v=(viewport_yoffset*viewport_buffer_width+viewport_xoffset)*3; y<viewport_yoffset+viewport_height; ++y) {
                 sy=y*screen_buffer_width;
-                sx=0;
-                for (x=0; x<viewport_width; x+=step_x, sx+=step_x, v+=step_v) {
+                sx=viewport_xoffset;
+				if (viewport_xoffset > 0) { // clear left & right areas of buffer if image width if smaller than viewport
+					memset(buf+sy, COLOR_TRANSPARENT, sx*2);
+					memset(buf+sy+(sx+viewport_width)*2, COLOR_TRANSPARENT, sx*2);
+				}
+                for (x=viewport_xoffset; x<viewport_xoffset+viewport_width; x+=step_x, sx+=step_x, v+=step_v) {
                     register int yy, uu, vv;
                     int sel;
                     yy = img_buf[v+1];
@@ -497,9 +511,8 @@ int gui_osd_draw_zebra(int show) {
                     if (mrec) {
                     }
 				}
-#if defined(CAM_VIEWPORT_BUFFER_WIDTH_FIX)
-				v += ((vid_get_viewport_buffer_width() - viewport_width) * 3);	// buffer is wider than viewport on G12
-#endif
+				// adjust for cases where buffer is wider than viewport (e.g. on G12)
+				v += ((viewport_buffer_width - viewport_width) * 3);
             }
         if (!zebra_drawn) f=0;
     }

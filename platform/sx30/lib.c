@@ -64,3 +64,27 @@ void JogDial_CW(void){
 void JogDial_CCW(void){
  _PostLogicalEventForNotPowerType(0x86F, 1);  // RotateJogDialLeft (in table @ FFC0E88C, fw 1.00h)
 }
+
+// Viewport and Bitmap values that shouldn't change across firmware versions.
+// Values that may change are in lib.c for each firmware version.
+
+long vid_get_bitmap_screen_width() { return 320; }
+long vid_get_bitmap_screen_height() { return 240; }
+long vid_get_bitmap_buffer_width() { return 960; }
+long vid_get_bitmap_buffer_height() { return 270; }
+
+int vid_get_viewport_width() { return 360; }
+
+long vid_get_viewport_height()
+{
+	if (shooting_get_prop(PROPCASE_ASPECT_RATIO) == 1)	// Wide screen top & bottom 30 pixels not used in viewport
+		return 180;
+	return 240;
+}
+
+int vid_get_viewport_yoffset()
+{
+	if (shooting_get_prop(PROPCASE_ASPECT_RATIO) == 1)	// Wide screen top & bottom 30 pixels not used in viewport
+		return 30;
+	return 0;
+}

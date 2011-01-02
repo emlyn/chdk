@@ -1006,6 +1006,27 @@ int __attribute__((weak)) vid_get_viewport_width() {
 	return vid_get_bitmap_screen_width();
 }
 
+// same as viewport width for most cameras, override in platform/sub/lib.c as needed
+int __attribute__((weak)) vid_get_viewport_buffer_width() {
+	return vid_get_viewport_width();
+}
+
+// viewport x offset - used when image size != viewport size (zebra, histogram, motion detect & edge overlay)
+int __attribute__((weak)) vid_get_viewport_xoffset() {
+	return 0;
+}
+
+// viewport y offset - used when image size != viewport size (zebra, histogram, motion detect & edge overlay)
+int __attribute__((weak)) vid_get_viewport_yoffset() {
+	return 0;
+}
+
+// for cameras with two (or more?) RAW buffers this can be used to speed up DNG creation by
+// calling reverse_bytes_order only once. Override in platform/sub/lib.c 
+char __attribute__((weak)) *hook_alt_raw_image_addr() {
+	return hook_raw_image_addr();
+}
+
 void __attribute__((weak)) vid_turn_off_updates()
 {
 }

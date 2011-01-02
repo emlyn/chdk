@@ -345,6 +345,7 @@ int md_detect_motion(void){
 	int *tmp;
 	unsigned char * img;
 	int viewport_size;
+	int img_offset;		// used as offset into img buffer when image size != viewport size (e.g. 16:9 image on 4:3 LCD)
 	int vp_w, vp_h, pix_N, idx, tmp2, tick, vp_w_mul_y, in_clipping_region, x_step, y_step, do_calc;
 	int val;
 
@@ -420,18 +421,11 @@ img += bufoff * 0x7E900;
 #endif
 
 	vp_h=vid_get_viewport_height();
-#if defined(CAM_VIEWPORT_BUFFER_WIDTH_FIX)
 	vp_w=vid_get_viewport_buffer_width();
+	img_offset = (vid_get_viewport_yoffset() * vp_w + vid_get_viewport_xoffset()) * 3;
 
 	x_step=vid_get_viewport_width()/motion_detector->columns;
 	y_step=vp_h/motion_detector->rows;
-#else
-	vp_w=vid_get_viewport_width();
-
-
-	x_step=vp_w/motion_detector->columns;
-	y_step=vp_h/motion_detector->rows;
-#endif
 
 	for(row=0, col=0; row < motion_detector->rows ; ){
 		do_calc=0;
@@ -464,17 +458,17 @@ img += bufoff * 0x7E900;
 				for(y=row*y_step;y<(row+1)*y_step;y+=motion_detector->pixels_step){
 					int cy,cv,cu;
 
-					cy=img[ (y*vp_w+x)*3 + 1];
+					cy=img[img_offset + (y*vp_w+x)*3 + 1];
 
 // ARRAY of UYVYYY values
 // 6 bytes - 4 pixels
 
 					if((x%2)==0){
-						cu=img[ (y*vp_w+x)*3];
-						cv=img[ (y*vp_w+x)*3 + 2];
+						cu=img[img_offset + (y*vp_w+x)*3];
+						cv=img[img_offset + (y*vp_w+x)*3 + 2];
 					} else {
-						cu=img[ (y*vp_w+x-1)*3];
-						cv=img[ (y*vp_w+x-1)*3 + 2];
+						cu=img[img_offset + (y*vp_w+x-1)*3];
+						cv=img[img_offset + (y*vp_w+x-1)*3 + 2];
 					}
 
 					switch(motion_detector->pixel_measure_mode){
@@ -602,14 +596,18 @@ int md_running(){
 
 void md_draw_grid(){
 	int x_step, y_step, col, row;
+	int xoffset, yoffset;
 	int do_draw_rect, i, tmp2, in_clipping_region, color, col_start, col_stop, row_start, row_stop;
 
 	if(!md_running() || motion_detector->draw_grid==0){
 		return ;
 	}
 
-	x_step=screen_width/motion_detector->columns;
-	y_step=screen_height/motion_detector->rows;
+	xoffset = ASPECT_VIEWPORT_XCORRECTION(vid_get_viewport_xoffset());	// used when image size != viewport size
+	yoffset = vid_get_viewport_yoffset();	// used when image size != viewport size
+
+	x_step=(screen_width-xoffset*2)/motion_detector->columns;
+	y_step=(screen_height-yoffset*2)/motion_detector->rows;
 #if 0
 	row_start=1;
 	row_stop=motion_detector->rows;
@@ -667,7 +665,7 @@ void md_draw_grid(){
 				if( tmp2 > motion_detector->threshold){
 					color=COLOR_RED;
 				}
-				draw_rect(x_step*col+2,y_step*row+2, x_step*(col+1)-2, y_step*(row+1)-2,color);
+				draw_rect(xoffset+x_step*col+2,yoffset+y_step*row+2, xoffset+x_step*(col+1)-2, yoffset+y_step*(row+1)-2,color);
 			}
 
 			col++;

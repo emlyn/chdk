@@ -234,9 +234,9 @@ void *vid_get_viewport_live_fb();
 void vid_bitmap_refresh();
 long vid_get_viewport_height();
 int vid_get_viewport_width();
-#if defined(CAM_VIEWPORT_BUFFER_WIDTH_FIX)
 int vid_get_viewport_buffer_width();
-#endif
+int vid_get_viewport_xoffset();
+int vid_get_viewport_yoffset();
 void vid_turn_off_updates();
 void vid_turn_on_updates();
 
@@ -245,9 +245,7 @@ void vid_turn_on_updates();
 void *hook_raw_fptr();
 void *hook_raw_ret_addr();
 char *hook_raw_image_addr();
-#if DNG_DOUBLE_BUF
 char *hook_alt_raw_image_addr();
-#endif
 long hook_raw_size();
 void hook_raw_install();
 void hook_raw_save_complete();

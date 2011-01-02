@@ -42,14 +42,22 @@ long hook_raw_size()
 	return 0x14EB7E0; // search CRAW BUF SIZE
 }
 
-void *vid_get_viewport_live_fb() // ???
+
+char *camera_jpeg_count_str()
 {
-    return 0x0;
+	return (char*)0xCF2FC; // loc_FFA3BA74 (search "9999", passed to sprintf)
 }
+
 
 void *vid_get_bitmap_fb()
 {
 	return (void*)0x40471000; // sub_FF93062C 
+}
+
+
+void *vid_get_viewport_live_fb() // ???
+{
+    return 0x0;
 }
 
 void *vid_get_viewport_fb()
@@ -57,39 +65,7 @@ void *vid_get_viewport_fb()
 	return (void*)0x40587700; // sub_FF8E8C58
 }
 
-// TODO - Check if this works.
 void *vid_get_viewport_fb_d()
 {
 	return (void*)(*(int*)(0x32B0+0x58)); // @FF878AB0 & FF878AE8 (comp to S95)
 }
-
-
-long vid_get_bitmap_screen_width() 
-{ 
-	return 320;
-}
-
-long vid_get_bitmap_screen_height()
-{
-	return 240;
-}
-
-int vid_get_viewport_width()
-{
-    return 360;                                               // stays at 360 as IN SD990
-}
-
-long vid_get_viewport_height()
-{
-	return 240;
-}
-
-// TODO - Check this works
-char *camera_jpeg_count_str()
-{
-	return (char*)0xCF2FC; // loc_FFA3BA74 (search "9999", passed to sprintf)
-}
-
-long vid_get_bitmap_buffer_width() { return 960; }
-
-long vid_get_bitmap_buffer_height() { return 270; }

@@ -60,3 +60,45 @@ void JogDial_CW(void){
 void JogDial_CCW(void){
  _PostLogicalEventForNotPowerType(0x86F, 1);  // RotateJogDialLeft (table @ FFC0BE90)
 }
+
+// Viewport and Bitmap values that shouldn't change across firmware versions.
+// Values that may change are in lib.c for each firmware version.
+
+long vid_get_bitmap_screen_width() { return 320; }
+long vid_get_bitmap_screen_height() { return 240; }
+long vid_get_bitmap_buffer_width() { return 960; }
+long vid_get_bitmap_buffer_height() { return 270; }
+
+int vid_get_viewport_buffer_width() { return 720; }	// G12 - buffer is twice as wide as viewport
+
+int vid_get_viewport_width()
+{
+	// viewport width table for each image size
+	// 0 = 4:3, 1 = 16:9, 2 = 3:2, 3 = 1:1, 4 = 4:5
+	static long vp_w[5] = { 360, 360, 360, 272, 216 };
+	return vp_w[shooting_get_prop(PROPCASE_ASPECT_RATIO)];
+}
+
+int vid_get_viewport_xoffset()
+{
+	// viewport width offset table for each image size
+	// 0 = 4:3, 1 = 16:9, 2 = 3:2, 3 = 1:1, 4 = 4:5
+	static long vp_w[5] = { 0, 0, 0, 44, 72 };				// should all be even values for edge overlay
+	return vp_w[shooting_get_prop(PROPCASE_ASPECT_RATIO)];
+}
+
+long vid_get_viewport_height()
+{
+	// viewport height table for each image size
+	// 0 = 4:3, 1 = 16:9, 2 = 3:2, 3 = 1:1, 4 = 4:5
+	static long vp_h[5] = { 240, 180, 214, 240, 240 };
+	return vp_h[shooting_get_prop(PROPCASE_ASPECT_RATIO)];
+}
+
+int vid_get_viewport_yoffset()
+{
+	// viewport height offset table for each image size
+	// 0 = 4:3, 1 = 16:9, 2 = 3:2, 3 = 1:1, 4 = 4:5
+	static long vp_h[5] = { 0, 30, 13, 0, 0 };
+	return vp_h[shooting_get_prop(PROPCASE_ASPECT_RATIO)];
+}
