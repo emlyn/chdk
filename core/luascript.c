@@ -800,7 +800,6 @@ static int luaCB_poke( lua_State* L )
   switch(size) {
     case 1: 
         *(unsigned char *)(addr) = (unsigned char)val;
-        lua_pushboolean(L,1);
         status=1;
     break;
     case 2:
