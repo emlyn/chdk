@@ -523,7 +523,7 @@ void free(void *p) {
 	if(exmem_heap)
 		suba_free(exmem_heap,p);
 	else
-		free(p);
+		_free(p);
 }
 // regular malloc
 #else
