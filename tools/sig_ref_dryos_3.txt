@@ -28,3 +28,5 @@ VbattGet 0xFF831E04 10
 GetFocusLensSubjectDistanceFromLens 0xFF9430E8 22
 Restart 0xFF83A130
 add_ptp_handler 0xFFA3F97C
+PB2Rec 0xFF8939DC
+Rec2PB 0xFF893A1C

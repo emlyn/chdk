@@ -58,6 +58,7 @@ NSTUB(MoveZoomLensWithPoint, 0xffa978d0)
 // Best match: 62%
 NSTUB(NewTaskShell, 0xff88edf0)
 NSTUB(Open, 0xff835224)
+// ERROR: PB2Rec is not found!
 // ERROR: PT_PlaySound is not found!
 // Best match: 86%
 NSTUB(PostLogicalEventForNotPowerType, 0xff894df8)
@@ -65,6 +66,8 @@ NSTUB(PostLogicalEventForNotPowerType, 0xff894df8)
 NSTUB(PostLogicalEventToUI, 0xff894e44)
 NSTUB(Read, 0xff81ab78)
 NSTUB(ReadFastDir, 0xffa7d6d4)
+// Best match: 51%
+NSTUB(Rec2PB, 0xff899e34)
 // ERROR: RefreshPhysicalScreen is not found!
 // ERROR: Remove is not found!
 // Best match: 53%
@@ -143,6 +146,8 @@ NSTUB(read, 0xff81ab78)
 // Best match: 82%
 NSTUB(reboot_fw_update, 0xffa82be4)
 // ERROR: rename is not found!
+// Best match: 93%
+NSTUB(set_control_event, 0xff8968a0)
 // Best match: 95%
 NSTUB(srand, 0xff8204d4)
 NSTUB(stat, 0xff8353d4)

@@ -67,6 +67,7 @@ NSTUB(MoveZoomLensWithPoint, 0xffa63974)
 // Best match: 62%
 NSTUB(NewTaskShell, 0xff879220)
 NSTUB(Open, 0xff823a3c)
+// ERROR: PB2Rec is not found!
 // Best match: 90%
 NSTUB(PT_PlaySound, 0xff865a7c)
 // Best match: 86%
@@ -75,6 +76,7 @@ NSTUB(PostLogicalEventForNotPowerType, 0xff87ed3c)
 NSTUB(PostLogicalEventToUI, 0xff87ed88)
 NSTUB(Read, 0xff819a4c)
 NSTUB(ReadFastDir, 0xffa491c4)
+// ERROR: Rec2PB is not found!
 // ERROR: RefreshPhysicalScreen is not found!
 NSTUB(Remove, 0xff823aac)
 // Best match: 93%
@@ -153,6 +155,8 @@ NSTUB(readfastdir, 0xffa491c4)
 // Best match: 86%
 NSTUB(reboot_fw_update, 0xffa50bc4)
 NSTUB(rename, 0xff823b38)
+// Best match: 93%
+NSTUB(set_control_event, 0xff88092c)
 // Best match: 95%
 NSTUB(srand, 0xff81cca0)
 NSTUB(stat, 0xff823c70)

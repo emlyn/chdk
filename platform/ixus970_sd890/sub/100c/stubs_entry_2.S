@@ -42,6 +42,8 @@ NHSTUB(WriteSDCard,                 0xFF9227E0)
 NHSTUB(PostLogicalEventForNotPowerType, 0xFF873274)
 NHSTUB(apex2us,                     0xFF9B2824)
 NHSTUB(SetScriptMode,               0xFF8751E4)
+NHSTUB(PB2Rec, 0xFF8784D0)
+NHSTUB(Rec2PB, 0xFF876ED4)
 
 //Nullsubs
 NHSTUB(Mount_FileSystem,            0xFF810948)

@@ -53,11 +53,13 @@ NSTUB(MoveFocusLensToDistance, 0xffdc0d60)
 NSTUB(MoveZoomLensWithPoint, 0xffd0ee74)
 NSTUB(NewTaskShell, 0xffc5b744)
 NSTUB(Open, 0xffc15024)
+// ERROR: PB2Rec is not found!
 // ERROR: PT_PlaySound is not found!
 NSTUB(PostLogicalEventForNotPowerType, 0xffc5d6e4)
 NSTUB(PostLogicalEventToUI, 0xffc5d730)
 NSTUB(Read, 0xffc0a440)
 NSTUB(ReadFastDir, 0xffddc6b0)
+// ERROR: Rec2PB is not found!
 NSTUB(RefreshPhysicalScreen, 0xffd79fd4)
 NSTUB(Remove, 0xffc15094)
 NSTUB(RenameFile_Fut, 0xffc14860)
@@ -122,6 +124,8 @@ NSTUB(read, 0xffc0a440)
 NSTUB(readfastdir, 0xffddc6b0)
 NSTUB(reboot_fw_update, 0xffde1050)
 NSTUB(rename, 0xffc15120)
+// Best match: 93%
+NSTUB(set_control_event, 0xffc5f184)
 NSTUB(srand, 0xffc0e9ec)
 NSTUB(stat, 0xffc15258)
 NSTUB(strcat, 0xffc765a4)

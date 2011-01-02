@@ -33,6 +33,8 @@ NHSTUB(LEDDrive,0xFF846818) // string LEDDrive
 NHSTUB(SetScriptMode,0xFF877B2C) // "SetScriptMode"
 NHSTUB(MakeAFScan,0xFF932820) // from sub_FF861864 called from CaptSeqTask jumptable entry 0
 NHSTUB(ExpCtrlTool_StartContiAE,0xFF83024C) // "StartContiAE"
+NHSTUB(PB2Rec, 0xFF87AD90)
+NHSTUB(Rec2PB, 0xFF8797FC)
 
 // These don't exist/aren't found in dryos
 NHSTUB(Mount_FileSystem,NULLSUB) // NULLSUB

@@ -53,11 +53,15 @@ NSTUB(MoveFocusLensToDistance, 0xffdb4cbc)
 NSTUB(MoveZoomLensWithPoint, 0xffd07ef0)
 NSTUB(NewTaskShell, 0xffc5a950)
 NSTUB(Open, 0xffc14ef8)
+// Best match: 88%
+NSTUB(PB2Rec, 0xffc600a8)
 // ERROR: PT_PlaySound is not found!
 NSTUB(PostLogicalEventForNotPowerType, 0xffc5c8f0)
 NSTUB(PostLogicalEventToUI, 0xffc5c93c)
 NSTUB(Read, 0xffc0a378)
 NSTUB(ReadFastDir, 0xffdd0640)
+// Best match: 85%
+NSTUB(Rec2PB, 0xffc600d8)
 // Best match: 85%
 NSTUB(RefreshPhysicalScreen, 0xffd6f958)
 NSTUB(Remove, 0xffc14f68)
@@ -119,6 +123,7 @@ NSTUB(read, 0xffc0a378)
 NSTUB(readfastdir, 0xffdd0640)
 NSTUB(reboot_fw_update, 0xffdd4fe0)
 NSTUB(rename, 0xffc14ff4)
+NSTUB(set_control_event, 0xffc5cd44)
 NSTUB(srand, 0xffc0e91c)
 NSTUB(stat, 0xffc1512c)
 NSTUB(strcat, 0xffc739c8)

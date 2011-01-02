@@ -82,6 +82,8 @@ NHSTUB(DoAFLock,						0xFF838AB8) // ok (comp 1.00h)
 NHSTUB(PT_MoveOpticalZoomAt,			0xFF883C08)	// ok (comp 1.00h)
 NHSTUB(GetImageFolder,					0xFF95F0F0)	// function before 'GetCameraObjectTmpPath ERROR' string
 NHSTUB(UpdateMBROnFlash,				0xFF8770CC) // Search for 'BOOTDISK', function branches to this at end (after setting up R0,R1,R2)
+NHSTUB(PB2Rec,                          0xFF8A30FC)
+NHSTUB(Rec2PB,                          0xFF8A1B40)
 
 # from stubs_entry_ida.S (only used in ARM code so do not need stub)
 DEF(_eventproc_export_PostLogicalEventToUI, 0xff89e078)

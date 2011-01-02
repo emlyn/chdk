@@ -61,6 +61,9 @@ NSTUB(MoveZoomLensWithPoint, 0xffa67c24)
 // Best match: 62%
 NSTUB(NewTaskShell, 0xff873d8c)
 NSTUB(Open, 0xff823cc8)
+// Best match: 53%
+NSTUB(PB2Rec, 0xff87ee10)
+// ALT: NSTUB(PB2Rec, 0xff87ee20) // 14/13
 // Best match: 72%
 NSTUB(PT_PlaySound, 0xff86046c)
 // Best match: 86%
@@ -69,6 +72,8 @@ NSTUB(PostLogicalEventForNotPowerType, 0xff879a08)
 NSTUB(PostLogicalEventToUI, 0xff879a54)
 NSTUB(Read, 0xff819ae4)
 NSTUB(ReadFastDir, 0xffa4794c)
+// Best match: 86%
+NSTUB(Rec2PB, 0xff87ee50)
 // ERROR: RefreshPhysicalScreen is not found!
 NSTUB(Remove, 0xff823d38)
 // Best match: 93%
@@ -142,6 +147,8 @@ NSTUB(readfastdir, 0xffa4794c)
 // Best match: 86%
 NSTUB(reboot_fw_update, 0xffa4effc)
 NSTUB(rename, 0xff823dc4)
+// Best match: 93%
+NSTUB(set_control_event, 0xff87b694)
 // Best match: 95%
 NSTUB(srand, 0xff81cd58)
 NSTUB(stat, 0xff823efc)
