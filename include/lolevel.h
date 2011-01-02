@@ -288,4 +288,8 @@ void _reboot_fw_update(const char* bootfile);
 extern int _add_ptp_handler(int, void*, int);
 #endif
 
+#ifdef OPT_EXMEM_MALLOC
+extern void *_exmem_alloc(int pool_id,int size,int unk);
+#endif
+
 #endif

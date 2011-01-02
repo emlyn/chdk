@@ -42,3 +42,7 @@ NHSTUB(SetZoomActuatorSpeedPercent,NULLSUB) // NULLSUB
 
 // useful for debugging with uart redirect or crash log
 NHSTUB(LogPrintf,0xFF86EF38)
+// allocate from given EXMEM pool
+NHSTUB(exmem_alloc, 0xFF86C810)
+// not needed yet
+//NHSTUB(exmem_free, 0xFF86C7B0)

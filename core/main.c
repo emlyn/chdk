@@ -69,6 +69,10 @@ void core_spytask() {
 
     spytask_can_start=0;
 
+#ifdef OPT_EXMEM_MALLOC
+	exmem_malloc_init();
+#endif
+
 #ifdef CAM_CHDK_PTP
     init_chdk_ptp_task();
 #endif

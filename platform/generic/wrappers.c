@@ -483,6 +483,50 @@ double _sqrt(double x) {
     return __sqrt(x);
 }
 
+#ifdef OPT_EXMEM_MALLOC
+// I set this up to 16 mb and it still booted...
+#define EXMEM_HEAP_SIZE (1024*1024*2)
+// these aren't currently needed elsewhere
+/*
+void * exmem_alloc(unsigned pool_id, unsigned size)
+{
+	return _exmem_alloc(pool_id,size,0);
+}
+
+void exmem_free(unsigned pool_id)
+{
+	_exmem_free(pool_id);
+}
+*/
+
+static void *exmem_heap;
+
+void *suba_init(void *heap, unsigned size, unsigned rst, unsigned mincell);
+void *suba_alloc(void *heap, unsigned size, unsigned zero);
+int suba_free(void *heap, void *p);
+
+void exmem_malloc_init() {
+	// pool zero is EXMEM_RAMDISK on d10
+	void *mem = _exmem_alloc(0,EXMEM_HEAP_SIZE,0);
+	if(mem) {
+		exmem_heap = suba_init(mem,EXMEM_HEAP_SIZE,1,1024);
+	}
+}
+
+void *malloc(unsigned size) {
+	if(exmem_heap)
+		return suba_alloc(exmem_heap,size,0);
+	else
+		return _malloc(size);
+}
+void free(void *p) {
+	if(exmem_heap)
+		suba_free(exmem_heap,p);
+	else
+		free(p);
+}
+// regular malloc
+#else
 void *malloc(long size) {
     return _malloc(size);
 }
@@ -490,6 +534,7 @@ void *malloc(long size) {
 void free(void *p) {
     return _free(p);
 }
+#endif
 
 void *memcpy(void *dest, const void *src, long n) {
     return _memcpy(dest, src, n);
@@ -1016,3 +1061,4 @@ void Restart(unsigned option) {
 	_Restart(option);
 }
 */
+

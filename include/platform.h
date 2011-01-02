@@ -547,4 +547,8 @@ int switch_mode_usb(int mode); // 0 = playback, 1 = record; return indicates suc
 
 void ExitTask();
 
+#ifdef OPT_EXMEM_MALLOC
+void exmem_malloc_init(void);
+#endif
+
 #endif
