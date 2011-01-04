@@ -31,15 +31,13 @@ void dump_memory();
 #include "motion_detector.h"
 #include "action_stack.h"
 #include "console.h"
+#include "keyboard.h"
 
 #include "gui.h"
 #include "gui_draw.h"
 
 
 #define MD_XY2IDX(x,y) ((y)*motion_detector->columns+x)
-
-void md_kbd_sched_immediate_shoot(int no_release);
-
 
 enum {
 
@@ -114,10 +112,19 @@ struct motion_detector_s {
 
 static struct motion_detector_s *motion_detector=NULL;
 
-
-//motion_detector->curr=NULL;
-
-
+static void md_kbd_sched_immediate_shoot(int no_release)
+{
+    action_pop();// REMOVE MD ITEM
+  
+    // stack operations are reversed!
+    if (!no_release)  // only release shutter if allowed
+    {
+      action_push_release(KEY_SHOOT_FULL);
+      action_push_delay(20);
+    }
+    action_push(AS_MOTION_DETECTOR); // it will removed right after exit from this function
+    kbd_key_press(KEY_SHOOT_FULL); // not a stack operation... pressing right now
+}
 
 static int clip(int v) {
     if (v<0) v=0;

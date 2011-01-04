@@ -3,12 +3,24 @@
 #include "platform.h"
 #include "stdlib.h"
 #include "ptp.h"
-#include "script.h"
 #include "action_stack.h"
 #include "lua.h"
 #include "kbd.h"
 
 #define BUF_SIZE 0x20000 // XXX what's a good camera-independent value?
+
+#include "script.h"
+
+static lua_State *get_lua_thread(lua_State *L)
+{
+  lua_State *Lt;
+
+  lua_getfield(L,LUA_REGISTRYINDEX,"Lt");
+  Lt = lua_tothread(L,-1);
+  lua_pop(L,1);
+
+  return Lt;
+}
 
 static int handle_ptp(
                 int h, ptp_data *data, int opcode, int sess_id, int trans_id,
@@ -75,17 +87,6 @@ static int send_ptp_data(ptp_data *data, const char *buf, int size)
   }
 
   return 1;
-}
-
-static lua_State *get_lua_thread(lua_State *L)
-{
-  lua_State *Lt;
-
-  lua_getfield(L,LUA_REGISTRYINDEX,"Lt");
-  Lt = lua_tothread(L,-1);
-  lua_pop(L,1);
-
-  return Lt;
 }
 
 static int handle_ptp(
@@ -400,7 +401,7 @@ static int handle_ptp(
           if ( param3 & PTP_CHDK_ES_RESULT )
           {
             lua_State *Lt;
-            temp_data.lua_state = lua_get_result();
+            temp_data.lua_state = lua_consume_result();
             Lt = get_lua_thread(temp_data.lua_state);
             temp_data_kind = 2;
             if ( lua_gettop(Lt) == 0 )

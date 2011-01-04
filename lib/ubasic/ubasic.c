@@ -253,7 +253,7 @@ case TOKENIZER_GET_VBATT:
     accept(TOKENIZER_IS_KEY);
     tokenizer_string(string, sizeof(string));
     tokenizer_next();
-    r = ubasic_camera_is_clicked(string);
+    r = camera_is_clicked(string);
     break;
 case TOKENIZER_SCRIPT_AUTOSTARTED:
     accept(TOKENIZER_SCRIPT_AUTOSTARTED);
@@ -279,14 +279,14 @@ case TOKENIZER_IS_PRESSED:
     accept(TOKENIZER_IS_PRESSED);
     tokenizer_string(string, sizeof(string));
     tokenizer_next();
-    r = ubasic_camera_is_pressed(string);
+    r = camera_is_pressed(string);
     break;
   case TOKENIZER_RANDOM:
     accept(TOKENIZER_RANDOM);
     int min = expr();
     int max = expr();
     srand((int)shooting_get_bv96()+(unsigned short)stat_get_vbatt()+get_tick_count());
-    ubasic_camera_sleep(rand()%10);
+    camera_sleep(rand()%10);
     r = min + rand()%(max-min+1);
   break;
   case TOKENIZER_GET_MOVIE_STATUS:
@@ -1423,7 +1423,7 @@ click_statement(void)
 {
   accept(TOKENIZER_CLICK);
   tokenizer_string(string, sizeof(string));
-  ubasic_camera_click(string);
+  camera_click(string);
   tokenizer_next();
   DEBUG_PRINTF("End of click\n");
   accept_cr();
@@ -1434,7 +1434,7 @@ press_statement(void)
 {
   accept(TOKENIZER_PRESS);
   tokenizer_string(string, sizeof(string));
-  ubasic_camera_press(string);
+  camera_press(string);
   tokenizer_next();
   DEBUG_PRINTF("End of press\n");
   accept_cr();
@@ -1445,7 +1445,7 @@ release_statement(void)
 {
   accept(TOKENIZER_RELEASE);
   tokenizer_string(string, sizeof(string));
-  ubasic_camera_release(string);
+  camera_release(string);
   tokenizer_next();
   DEBUG_PRINTF("End of release\n");
   accept_cr();
@@ -1457,7 +1457,7 @@ sleep_statement(void)
   int val;
   accept(TOKENIZER_SLEEP);
   val = expr();
-  ubasic_camera_sleep(val);
+  camera_sleep(val);
   DEBUG_PRINTF("End of sleep\n");
   accept_cr();
 }
@@ -1466,7 +1466,7 @@ static void
 shoot_statement(void)
 {
   accept(TOKENIZER_SHOOT);
-  ubasic_camera_shoot();
+  camera_shoot();
   DEBUG_PRINTF("End of shoot\n");
   accept_cr();
 }
@@ -2114,7 +2114,7 @@ static void wait_click_statement()
         tokenizer_token() != TOKENIZER_ELSE ) {
         timeout = expr();
     }
-    ubasic_camera_wait_click(timeout);
+    camera_wait_click(timeout);
     accept_cr();
 }
 
@@ -2126,7 +2126,7 @@ static void is_key_statement(void)
     accept(TOKENIZER_VARIABLE);
     tokenizer_string(string, sizeof(string));
     tokenizer_next();
-    ubasic_set_variable(var, ubasic_camera_is_clicked(string));
+    ubasic_set_variable(var, camera_is_clicked(string));
     DEBUG_PRINTF("End of is_key\n");
     accept_cr();
 }

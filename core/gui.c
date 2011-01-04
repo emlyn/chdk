@@ -4,7 +4,6 @@
 #include "keyboard.h"
 #include "conf.h"
 #include "camera.h"
-#include "ubasic.h"
 #include "font.h"
 #include "lang.h"
 #include "gui.h"
