@@ -3,6 +3,7 @@
 #include "platform.h"
 #include "conf.h"
 #include "math.h"
+#include "levent.h"
 
 #if CAM_DRYOS
 #define _U	0x01	/* upper */
@@ -1070,10 +1071,37 @@ void __attribute__((weak)) _reboot_fw_update(const char *fw_update)
 }
 #endif
 
+// TODO mode switch function should detect if USB is connected or not, 
+// and do regular or special switch as needed
+#ifdef CAM_DRYOS
 int __attribute__((weak)) switch_mode_usb(int mode)
 {
+#ifdef CAM_CHDK_PTP
+    if ( mode == 0 ) {
+        _Rec2PB();
+        _set_control_event(0x80000902); // 0x10A5 ConnectUSBCable
+    } else if ( mode == 1 ) {
+        _set_control_event(0x902); // 0x10A6 DisconnectUSBCable
+        _PB2Rec();
+    } else return 0;
+    return 1;
+#else
   return 0;
+#endif // CAM_CHDK_PTP
 }
+
+#else // vxworks
+// this doesn't need any special functions so it's defined even without CHDK_CAM_PTP
+int __attribute__((weak)) switch_mode_usb(int mode)
+{
+    if ( mode == 0 ) {
+        levent_set_play();
+    } else if ( mode == 1 ) {
+        levent_set_record();
+    } else return 0;
+    return 1;
+}
+#endif // vxworks
 /*
 // this wrapper isn't currently needed
 // 7 calls functions and sets some MMIOs, but doesn't disable caches and actually restart
