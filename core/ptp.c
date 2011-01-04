@@ -7,7 +7,9 @@
 #include "lua.h"
 #include "kbd.h"
 
-#define BUF_SIZE 0x20000 // XXX what's a good camera-independent value?
+#include "core.h"
+  
+static int buf_size=0;
 
 #include "script.h"
 
@@ -44,13 +46,13 @@ void init_chdk_ptp()
 static int recv_ptp_data(ptp_data *data, char *buf, int size)
   // repeated calls per transaction are ok
 {
-  while ( size >= BUF_SIZE )
+  while ( size >= buf_size )
   {
-    data->recv_data(data->handle,buf,BUF_SIZE,0,0);
+    data->recv_data(data->handle,buf,buf_size,0,0);
     // XXX check for success??
 
-    size -= BUF_SIZE;
-    buf += BUF_SIZE;
+    size -= buf_size;
+    buf += buf_size;
   }
   if ( size != 0 )
   {
@@ -67,16 +69,16 @@ static int send_ptp_data(ptp_data *data, const char *buf, int size)
   int tmpsize;
   
   tmpsize = size;
-  while ( size >= BUF_SIZE )
+  while ( size >= buf_size )
   {
-    if ( data->send_data(data->handle,buf,BUF_SIZE,tmpsize,0,0,0) )
+    if ( data->send_data(data->handle,buf,buf_size,tmpsize,0,0,0) )
     {
       return 0;
     }
 
     tmpsize = 0;
-    size -= BUF_SIZE;
-    buf += BUF_SIZE;
+    size -= buf_size;
+    buf += buf_size;
   }
   if ( size != 0 )
   {
@@ -107,6 +109,8 @@ static int handle_ptp(
   ptp.sess_id = sess_id;
   ptp.trans_id = trans_id;
   ptp.num_param = 0;
+  
+  buf_size=core_get_free_memory()>>1;
 
   // handle command
   switch ( param1 )
@@ -273,7 +277,7 @@ static int handle_ptp(
         }
         free(fn);
 
-        buf = (char *) malloc(BUF_SIZE);
+        buf = (char *) malloc(buf_size);
         if ( buf == NULL )
         {
           ptp.code = PTP_RC_GeneralError;
@@ -281,11 +285,11 @@ static int handle_ptp(
         }
         while ( s > 0 )
         {
-          if ( s >= BUF_SIZE )
+          if ( s >= buf_size )
           {
-            recv_ptp_data(data,buf,BUF_SIZE);
-            fwrite(buf,1,BUF_SIZE,f);
-            s -= BUF_SIZE;
+            recv_ptp_data(data,buf,buf_size);
+            fwrite(buf,1,buf_size,f);
+            s -= buf_size;
           } else {
             recv_ptp_data(data,buf,s);
             fwrite(buf,1,s,f);
@@ -338,7 +342,7 @@ static int handle_ptp(
         s = ftell(f);
         fseek(f,0,SEEK_SET);
 
-        buf = (char *) malloc(BUF_SIZE);
+        buf = (char *) malloc(buf_size);
         if ( buf == NULL )
         {
           ptp.code = PTP_RC_GeneralError;
@@ -347,7 +351,7 @@ static int handle_ptp(
 
         tmp = s;
         t = s;
-        while ( (r = fread(buf,1,(t<BUF_SIZE)?t:BUF_SIZE,f)) > 0 )
+        while ( (r = fread(buf,1,(t<buf_size)?t:buf_size,f)) > 0 )
         {
           t -= r;
           // cannot use send_ptp_data here

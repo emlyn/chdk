@@ -63,7 +63,7 @@ int script_params_has_changed=0;
  #define SHORTCUT_TOGGLE_HISTO        KEY_DOWN
  #define SHORTCUT_TOGGLE_ZEBRA        KEY_MENU
  #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
- #define SHORTCUT_DISABLE_OVERRIDES KEY_LEFT
+ #define SHORTCUT_DISABLE_OVERRIDES   KEY_LEFT
 //Alt mode & Manual mode    
  #define SHORTCUT_SET_INFINITY        KEY_DISPLAY
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
@@ -79,7 +79,7 @@ int script_params_has_changed=0;
  #define SHORTCUT_TOGGLE_HISTO        KEY_DOWN
  #define SHORTCUT_TOGGLE_ZEBRA        KEY_LEFT
  #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
- #define SHORTCUT_DISABLE_OVERRIDES KEY_UP
+ #define SHORTCUT_DISABLE_OVERRIDES   KEY_UP
 //Alt mode & Manual mode  
  #define SHORTCUT_SET_INFINITY        KEY_UP
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
@@ -91,7 +91,7 @@ int script_params_has_changed=0;
  #define SHORTCUT_TOGGLE_HISTO        KEY_UP
  #define SHORTCUT_TOGGLE_ZEBRA        KEY_DOWN
  #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
- #define SHORTCUT_DISABLE_OVERRIDES KEY_LEFT
+ #define SHORTCUT_DISABLE_OVERRIDES   KEY_LEFT
 //Alt mode & Manual mode  
  #define SHORTCUT_SET_INFINITY        KEY_UP
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
@@ -104,12 +104,12 @@ int script_params_has_changed=0;
  #define SHORTCUT_TOGGLE_HISTO        KEY_UP
  #define SHORTCUT_TOGGLE_ZEBRA        KEY_LEFT
  #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
- #define SHORTCUT_DISABLE_OVERRIDES KEY_DOWN
+ #define SHORTCUT_DISABLE_OVERRIDES   KEY_DOWN
 //Alt mode & Manual mode  
  #define SHORTCUT_SET_INFINITY        KEY_UP
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
  #ifndef CAM_HAS_MANUAL_FOCUS
- 	#define SHORTCUT_MF_TOGGLE           KEY_DISPLAY
+ #define SHORTCUT_MF_TOGGLE           KEY_DISPLAY
  #endif
 #endif
 
@@ -2624,40 +2624,8 @@ gui_mbox_init(LANG_MSG_BUILD_INFO_TITLE, (int)buf, MBOX_FUNC_RESTORE|MBOX_TEXT_L
 //-------------------------------------------------------------------
 void gui_show_memory_info(int arg) {
     static char buf[64];
-    int size, l_size, d;
-    char* ptr;
-
-    size = 16;
-    while (1) {
-        ptr= malloc(size);
-        if (ptr) {
-            free(ptr);
-            size <<= 1;
-        } else
-            break;
-    }
-
-    l_size = size;
-    size >>= 1;
-    d=1024;
-    while (d) {
-        ptr = malloc(size);
-        if (ptr) {
-            free(ptr);
-            d = l_size-size;
-            if (d<0) d=-d;
-            l_size = size;
-            size += d>>1;
-        } else {
-            d = size-l_size;
-            if (d<0) d=-d;
-            l_size = size;
-            size -= d>>1;
-        }
-        
-    }
     
-    sprintf(buf, lang_str(LANG_MSG_MEMORY_INFO_TEXT), size-1,MEMISOSIZE,&_start,&_end);
+    sprintf(buf, lang_str(LANG_MSG_MEMORY_INFO_TEXT), core_get_free_memory(), MEMISOSIZE, &_start, &_end);
     gui_mbox_init(LANG_MSG_MEMORY_INFO_TITLE, (int)buf, MBOX_FUNC_RESTORE|MBOX_TEXT_CENTER, NULL);
 }
 

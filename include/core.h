@@ -19,5 +19,7 @@ void core_spytask_can_start();
 
 long core_get_noise_reduction_value();
 
+int core_get_free_memory();
+
 #endif
 
