@@ -8,8 +8,6 @@
 
 #include "ubasic.h"
 #include "../core/luascript.h"
-#include "lualib.h"
-#include "lauxlib.h"
 
 //-------------------------------------------------------------------
 extern const char *script_source_str;

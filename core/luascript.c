@@ -63,6 +63,17 @@ int lua_script_start( char const* script )
   return 1;
 }
 
+// run the "restore" function at the end of a script
+void lua_run_restore()
+{
+	lua_getglobal(Lt, "restore");
+	if (lua_isfunction(Lt, -1)) {
+		if (lua_pcall( Lt, 0, 0, 0 )) {
+			script_console_add_line( lua_tostring( Lt, -1 ) );
+		}
+	}
+}
+
 #ifdef OPT_CURVES
 #include "curves.h"
 

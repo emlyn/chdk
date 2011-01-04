@@ -311,12 +311,7 @@ long kbd_process()
                 script_end();
             } else if (L) {
                 state_kbd_script_run = 2;
-                lua_getglobal(Lt, "restore");
-                if (lua_isfunction(Lt, -1)) {
-                    if (lua_pcall( Lt, 0, 0, 0 )) {
-                        script_console_add_line( lua_tostring( Lt, -1 ) );
-                    }
-                }
+				lua_run_restore();
                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
                 script_end();
             } else {
