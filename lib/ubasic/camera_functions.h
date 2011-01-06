@@ -1,12 +1,12 @@
 
-void ubasic_camera_press(const char *s);
-void ubasic_camera_release(const char *s);
-void ubasic_camera_wait_click(int timeout);
-int ubasic_camera_is_pressed(const char *s);
-int ubasic_camera_is_clicked(const char *s);
-void ubasic_camera_click(const char *s);
-void ubasic_camera_sleep(long v);
-void ubasic_camera_shoot();
+void camera_press(const char *s);
+void camera_release(const char *s);
+void camera_wait_click(int timeout);
+int camera_is_pressed(const char *s);
+int camera_is_clicked(const char *s);
+void camera_click(const char *s);
+void camera_sleep(long v);
+void camera_shoot();
 int md_detect_motion(void);
 int md_get_cell_diff(int column, int row);
 int md_init_motion_detector();

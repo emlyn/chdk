@@ -25,6 +25,19 @@
 #define KEY_FACE          22    // SX100IS
 #define KEY_DUMMY         23    // dummy key for pressing to disable energy saving in alt mode
 
+// SX30
+#define KEY_ZOOM_IN1	  24	// SX30 has three zoom speeds each way
+#define KEY_ZOOM_IN2	  25
+#define KEY_ZOOM_IN3	  26
+#define KEY_ZOOM_OUT1	  27
+#define KEY_ZOOM_OUT2	  28
+#define KEY_ZOOM_OUT3	  29
+#define	KEY_ZOOM_ASSIST	  30	// SX30 new button
+
+// G12
+#define	KEY_AE_LOCK		  31	// G12 AE/FE Lock button
+#define	KEY_METERING	  32	// G12 metering mode button
+
 #define JOGDIAL_LEFT      100
 #define JOGDIAL_RIGHT     101
 

@@ -174,3 +174,6 @@ NHSTUB(rewinddir,										0xFFC00940)
 
 NHSTUB(SetScriptMode,										0xFFC5C77C) // string
 NHSTUB(Restart, 0xFFC189EC) 
+
+NHSTUB(PB2Rec, 0xFFC5E3EC)
+NHSTUB(Rec2PB, 0xFFC5E440)

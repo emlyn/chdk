@@ -54,11 +54,15 @@ NSTUB(MoveZoomLensWithPoint, 0xffa25b04)
 // Best match: 62%
 NSTUB(NewTaskShell, 0xff86c8a0)
 NSTUB(Open, 0xff823d64)
+// Best match: 88%
+NSTUB(PB2Rec, 0xff876594)
 NSTUB(PT_PlaySound, 0xff85b034)
 NSTUB(PostLogicalEventForNotPowerType, 0xff872f60)
 NSTUB(PostLogicalEventToUI, 0xff872fac)
 NSTUB(Read, 0xff81a094)
 NSTUB(ReadFastDir, 0xffa0e2a0)
+// Best match: 75%
+NSTUB(Rec2PB, 0xff8765c4)
 // Best match: 62%
 NSTUB(RefreshPhysicalScreen, 0xff9ac06c)
 NSTUB(Remove, 0xff823dd4)
@@ -132,6 +136,8 @@ NSTUB(readfastdir, 0xffa0e2a0)
 // Best match: 93%
 NSTUB(reboot_fw_update, 0xffa15ca0)
 NSTUB(rename, 0xff823e60)
+// Best match: 93%
+NSTUB(set_control_event, 0xff8733e0)
 // Best match: 95%
 NSTUB(srand, 0xff81d940)
 NSTUB(stat, 0xff823f98)

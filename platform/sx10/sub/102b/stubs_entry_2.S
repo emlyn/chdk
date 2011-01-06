@@ -29,6 +29,8 @@ NHSTUB(PostLogicalEventForNotPowerType, 0xFF87ED3C)
 NHSTUB(apex2us, 0xFF9E01C8)
 NHSTUB(SetScriptMode, 0xFF880D20)
 NHSTUB(Restart, 0xFF829848)
+NHSTUB(PB2Rec, 0xFF884078)
+NHSTUB(Rec2PB, 0xFF882A00)
 
 // null sub
 // null sub - point these at nullsub_1 as labelled in IDA

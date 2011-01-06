@@ -14,7 +14,7 @@ ReadFastDir 0xFFA7E1E4
 stat 0xFF835560
 strlen 0xFF81400C
 strcpy 0xFF82038C
-UpdateMBROnFlash 0xFF813F74
+UpdateMBROnFlash 0xFF86B984
 Open 0xFF8353B0
 Close 0xFF835408
 Write 0xFF835498
@@ -28,3 +28,5 @@ VbattGet 0xFF831E04 10
 GetFocusLensSubjectDistanceFromLens 0xFF9430E8 22
 Restart 0xFF83A130
 add_ptp_handler 0xFFA3F97C
+PB2Rec 0xFF8939DC
+Rec2PB 0xFF893A1C
