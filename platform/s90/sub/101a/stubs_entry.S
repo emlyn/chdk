@@ -60,6 +60,8 @@ NSTUB(MoveZoomLensWithPoint, 0xffa9b1fc)
 // Best match: 62%
 NSTUB(NewTaskShell, 0xff88c53c)
 NSTUB(Open, 0xff8353bc)
+// Best match: 92%
+NSTUB(PB2Rec, 0xff8977f0)
 // ERROR: PT_PlaySound is not found!
 // Best match: 86%
 NSTUB(PostLogicalEventForNotPowerType, 0xff8924d4)
@@ -67,6 +69,8 @@ NSTUB(PostLogicalEventForNotPowerType, 0xff8924d4)
 NSTUB(PostLogicalEventToUI, 0xff892520)
 NSTUB(Read, 0xff81ab78)
 NSTUB(ReadFastDir, 0xffa7d79c)
+// Best match: 93%
+NSTUB(Rec2PB, 0xff897830)
 // ERROR: RefreshPhysicalScreen is not found!
 // ERROR: Remove is not found!
 // Best match: 53%
@@ -95,7 +99,7 @@ NSTUB(TakeSemaphore, 0xff838718)
 // ERROR: UIFS_WriteFirmInfoToFile is not found!
 // Best match: 93%
 NSTUB(UnlockMainPower, 0xff8945fc)
-NSTUB(UpdateMBROnFlash, 0xff813f74)
+NSTUB(UpdateMBROnFlash, 0xff86e200)
 NSTUB(VbattGet, 0xff831e04)
 NSTUB(Write, 0xff8354a4)
 NSTUB(_log, 0xffb3664c)
@@ -137,6 +141,8 @@ NSTUB(read, 0xff81ab78)
 // Best match: 82%
 NSTUB(reboot_fw_update, 0xffa82cac)
 // ERROR: rename is not found!
+// Best match: 93%
+NSTUB(set_control_event, 0xff89404c)
 // Best match: 95%
 NSTUB(srand, 0xff8204e4)
 NSTUB(stat, 0xff83556c)

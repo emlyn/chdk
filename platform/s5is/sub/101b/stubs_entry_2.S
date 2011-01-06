@@ -190,4 +190,4 @@ NHSTUB(UnlockAF, 0xff827c34)
 NHSTUB(apex2us, 0xFF9CAE4C)
 NHSTUB(SetScriptMode, 0xFF877B3C) // "SetScriptMode"
 NHSTUB(Restart, 0xFF82CD1C) // "Restart Called"
-
+NHSTUB(PB2Rec, 0xFF87B318) //finsig override
