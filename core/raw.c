@@ -43,6 +43,11 @@ char* get_raw_image_addr(void){
  else return (char*) ((int)hook_raw_image_addr()&~CAM_UNCACHED_BIT);
 }
 
+char* get_alt_raw_image_addr(void){	// return inactive buffer for cameras with multiple RAW buffers (otherwise return active buffer)
+ if (!conf.raw_cache) return hook_alt_raw_image_addr();
+ else return (char*) ((int)hook_alt_raw_image_addr()&~CAM_UNCACHED_BIT);
+}
+
 //-------------------------------------------------------------------
 
 unsigned int get_bad_count_and_write_file(char *fn){
@@ -67,7 +72,13 @@ static unsigned char gamma[256];
 void fill_gamma_buf(void){
  int i;
  if (gamma[255]) return;
+#if defined(CAMERA_sx30) || defined(CAMERA_g12)
+ for (i=0; i<12; i++) gamma[i]=255*pow(i/255.0, 0.5);
+ for (i=12; i<64; i++) gamma[i]=255*pow(i/255.0, 0.4);
+ for (i=64; i<=255; i++) gamma[i]=255*pow(i/255.0, 0.25);
+#else
  for (i=0; i<=255; i++) gamma[i]=255*pow(i/255.0, 0.5);
+#endif
 }
 
 
@@ -106,6 +117,10 @@ int raw_savefile() {
      if (conf.dng_raw) exif_data=capture_data_for_exif();
 #endif
     if (state_kbd_script_run && shot_histogram_isenabled()) build_shot_histogram();
+
+	// Get pointers to RAW buffers (will be the same on cameras that don't have two or more buffers)
+	char* rawadr = get_raw_image_addr();
+	char* altrawadr = get_alt_raw_image_addr();
 
     // ! ! ! exclusively for special script which creates badpixel.bin ! ! !
     if (conf.save_raw==255) conf.save_raw=get_bad_count_and_write_file("A/CHDK/bad_tmp.bin");
@@ -156,21 +171,14 @@ int timer; char txt[30];
         t.actime = t.modtime = time(NULL);
 
         mkdir("A/DCIM");
-        #if defined(CAMERA_sx210is) || defined(CAMERA_ixus1000_sd4500) || defined(CAMERA_ixus130_sd1400)
-          if (conf.raw_in_dir) {
-            int month;
-            struct tm *ttm;
-            unsigned long t;
-            t = time(NULL);
-            ttm = localtime(&t);
-            month = ttm->tm_mon + 1;
-            sprintf(dir, "A/DCIM/%03d___%02d", get_target_dir_num(), month);
-          }
-          else
-            sprintf(dir, "A/DCIM/%03dRAW", get_target_dir_num());
-        #else
-          sprintf(dir, RAW_TARGET_DIRECTORY, (conf.raw_in_dir)?get_target_dir_num():100);
-        #endif
+#if defined(CAM_DATE_FOLDER_NAMING)
+		if (conf.raw_in_dir)
+			get_target_dir_name(dir);
+		else
+			sprintf(dir, RAW_TARGET_DIRECTORY, 100);
+#else
+        sprintf(dir, RAW_TARGET_DIRECTORY, (conf.raw_in_dir)?get_target_dir_num():100);
+#endif
         mkdir(dir);
 
         sprintf(fn, "%s/", dir);
@@ -192,17 +200,26 @@ int timer; char txt[30];
                create_thumbnail(thumbnail_buf);
                write(fd, get_dng_header(), get_dng_header_size());
                write(fd, thumbnail_buf, DNG_TH_WIDTH*DNG_TH_HEIGHT*3);
-               reverse_bytes_order(get_raw_image_addr(), hook_raw_size());
+               reverse_bytes_order2(rawadr, altrawadr, hook_raw_size());
              }
             }
 #endif
-            write(fd, get_raw_image_addr(), hook_raw_size());
+            if (conf.dng_raw) {
+				// Write alternate (inactive) buffer that we reversed the bytes into above (if only one buffer then it will be the active buffer instead)
+		        write(fd, (char*)(((unsigned long)altrawadr)|CAM_UNCACHED_BIT), hook_raw_size());
+			}
+			else
+			{
+				// Write active RAW buffer
+	            write(fd, (char*)(((unsigned long)rawadr)|CAM_UNCACHED_BIT), hook_raw_size());
+			}
             close(fd);
             utime(fn, &t);
 #if DNG_SUPPORT
             if (conf.dng_raw) {
              if (get_dng_header() && thumbnail_buf) {
-              reverse_bytes_order(get_raw_image_addr(), hook_raw_size());
+				 if (rawadr == altrawadr)	// If only one RAW buffer then we have to swap the bytes back
+					reverse_bytes_order2(rawadr, altrawadr, hook_raw_size());
           //   unpatch_bad_pixels_b();
               }
              if (get_dng_header()) free_dng_header();

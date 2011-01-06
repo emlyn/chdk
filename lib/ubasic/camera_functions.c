@@ -9,37 +9,37 @@ int state_kbd_script_run=1;
 int zoom_points = 3;
 #define MODE_REC                0x0100
 
-void ubasic_camera_press(const char *s)
+void camera_press(const char *s)
 {
     printf("*** button press '%s' ***\n",s);
 }
 
-void ubasic_camera_release(const char *s)
+void camera_release(const char *s)
 {
     printf("*** button release '%s' ***\n",s);
 }
 
-void ubasic_camera_click(const char *s)
+void camera_click(const char *s)
 {
     printf("*** button click '%s' ***\n",s);
 }
 
-void ubasic_camera_sleep(int v)
+void camera_sleep(int v)
 {
     printf("*** sleep %d ***\n",v);
 }
 
-void ubasic_camera_shoot()
+void camera_shoot()
 {
     printf("*** shoot ***\n");
 }
 
-void ubasic_camera_wait_click(int t)
+void camera_wait_click(int t)
 {
     printf("*** wait_click %d ***\n", t);
 }
 
-int ubasic_camera_is_clicked(const char *s)
+int camera_is_clicked(const char *s)
 {
     printf("*** is_key '%s' ***\n", s);
     return 1;
@@ -440,9 +440,9 @@ int get_exposure_counter(void)
 }
 
 
-int ubasic_camera_is_pressed(const char *v) 
+int camera_is_pressed(const char *v) 
 {
-    printf("*** ubasic_camera_is_pressed %s ***\n", v);
+    printf("*** camera_is_pressed %s ***\n", v);
 	return 0;
 }
 

@@ -3,6 +3,7 @@
 #include "platform.h"
 #include "conf.h"
 #include "math.h"
+#include "levent.h"
 
 #if CAM_DRYOS
 #define _U	0x01	/* upper */
@@ -125,12 +126,23 @@ void lens_set_zoom_point(long newpt)
     } else if (newpt >= zoom_points) {
         newpt = zoom_points-1;
     }
+#if defined(CAMERA_sx30)
+// SX30 - Can't find zoom_status, _MoveZoomLensWithPoint crashes camera
+	extern void _PT_MoveOpticalZoomAt(long*);
+	if (lens_get_zoom_point() != newpt)
+		_PT_MoveOpticalZoomAt(&newpt);
+#elif defined(CAMERA_g12)
+// G12 - Can't find zoom_status, _MoveZoomLensWithPoint works anyway, and updates PROPCASE_OPTICAL_ZOOM_POSITION; but doesn't wait for zoom to finish
+	if (lens_get_zoom_point() != newpt)
+	    _MoveZoomLensWithPoint((short*)&newpt);
+#else
     _MoveZoomLensWithPoint((short*)&newpt);
     while (zoom_busy);
     if (newpt==0) zoom_status=ZOOM_OPTICAL_MIN;
     else if (newpt >= zoom_points) zoom_status=ZOOM_OPTICAL_MAX;
     else zoom_status=ZOOM_OPTICAL_MEDIUM; 
     _SetPropertyCase(PROPCASE_OPTICAL_ZOOM_POSITION, &newpt, sizeof(newpt));
+#endif
 }
 
 void lens_set_zoom_speed(long newspd)
@@ -472,6 +484,50 @@ double _sqrt(double x) {
     return __sqrt(x);
 }
 
+#ifdef OPT_EXMEM_MALLOC
+// I set this up to 16 mb and it still booted...
+#define EXMEM_HEAP_SIZE (1024*1024*2)
+// these aren't currently needed elsewhere
+/*
+void * exmem_alloc(unsigned pool_id, unsigned size)
+{
+	return _exmem_alloc(pool_id,size,0);
+}
+
+void exmem_free(unsigned pool_id)
+{
+	_exmem_free(pool_id);
+}
+*/
+
+static void *exmem_heap;
+
+void *suba_init(void *heap, unsigned size, unsigned rst, unsigned mincell);
+void *suba_alloc(void *heap, unsigned size, unsigned zero);
+int suba_free(void *heap, void *p);
+
+void exmem_malloc_init() {
+	// pool zero is EXMEM_RAMDISK on d10
+	void *mem = _exmem_alloc(0,EXMEM_HEAP_SIZE,0);
+	if(mem) {
+		exmem_heap = suba_init(mem,EXMEM_HEAP_SIZE,1,1024);
+	}
+}
+
+void *malloc(unsigned size) {
+	if(exmem_heap)
+		return suba_alloc(exmem_heap,size,0);
+	else
+		return _malloc(size);
+}
+void free(void *p) {
+	if(exmem_heap)
+		suba_free(exmem_heap,p);
+	else
+		_free(p);
+}
+// regular malloc
+#else
 void *malloc(long size) {
     return _malloc(size);
 }
@@ -479,6 +535,7 @@ void *malloc(long size) {
 void free(void *p) {
     return _free(p);
 }
+#endif
 
 void *memcpy(void *dest, const void *src, long n) {
     return _memcpy(dest, src, n);
@@ -678,6 +735,13 @@ void UnlockAF(void)
 static char *mbr_buf=(void*)0;
 static unsigned long drive_sectors;
 
+int is_mbr_loaded()
+{
+	return (mbr_buf == (void*)0) ? 0 : 1;
+}
+
+#ifndef	CAM_DRYOS
+
 int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long *part_start_sector,  unsigned long *part_length){
 // return value: 1 - success, 0 - fail
 // called only in VxWorks
@@ -710,6 +774,7 @@ int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long 
  return valid;
 }
 
+#else
 
 int mbr_read_dryos(unsigned long drive_total_sectors, char* mbr_sector ){
 // Called only in DRYOS
@@ -719,53 +784,64 @@ int mbr_read_dryos(unsigned long drive_total_sectors, char* mbr_sector ){
  return drive_total_sectors;
 }
 
+#endif
+
 int get_part_count(void){
  unsigned long part_start_sector, part_length;
  char part_status, part_type;
  int i;
  int count=0;
- for (i=0; i<=1;i++){
-  part_start_sector=(*(unsigned short*)(mbr_buf+i*16+0x1C8)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1C6); 
-  part_length=(*(unsigned short*)(mbr_buf+i*16+0x1CC)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1CA); 
-  part_status=mbr_buf[i*16+0x1BE];
-  part_type=mbr_buf[0x1C2+i*16];
-  if ( part_start_sector && part_length && part_type && ((part_status==0) || (part_status==0x80)) ) count++;
+ if (is_mbr_loaded())
+ {
+	 for (i=0; i<=1;i++){
+	  part_start_sector=(*(unsigned short*)(mbr_buf+i*16+0x1C8)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1C6); 
+	  part_length=(*(unsigned short*)(mbr_buf+i*16+0x1CC)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1CA); 
+	  part_status=mbr_buf[i*16+0x1BE];
+	  part_type=mbr_buf[0x1C2+i*16];
+	  if ( part_start_sector && part_length && part_type && ((part_status==0) || (part_status==0x80)) ) count++;
+	 }
  }
  return count;
 }
 
 void swap_partitions(void){
- int i;
- char c;
- for(i=0;i<16;i++){
-  c=mbr_buf[i+0x1BE];
-  mbr_buf[i+0x1BE]=mbr_buf[i+0x1CE];
-  mbr_buf[i+0x1CE]=c;
- }
- _WriteSDCard(0,0,1,mbr_buf);
+	if (is_mbr_loaded())
+	{
+	 int i;
+	 char c;
+	 for(i=0;i<16;i++){
+	  c=mbr_buf[i+0x1BE];
+	  mbr_buf[i+0x1BE]=mbr_buf[i+0x1CE];
+	  mbr_buf[i+0x1CE]=c;
+	 }
+	 _WriteSDCard(0,0,1,mbr_buf);
+	}
 }
 
 void create_partitions(void){
- unsigned long start, length;
- char type;
+	if (is_mbr_loaded())
+	{
+	 unsigned long start, length;
+	 char type;
 
- _memset(mbr_buf,0,SECTOR_SIZE);
- 
- start=1; length=2*1024*1024/SECTOR_SIZE; //2 Mb
- type=1; // FAT primary
- mbr_buf[0x1BE + 4]=type;
- mbr_buf[0x1BE + 8]=start;   mbr_buf[0x1BE + 9]=start>>8;   mbr_buf[0x1BE + 10]=start>>16;  mbr_buf[0x1BE + 11]=start>>24;
- mbr_buf[0x1BE + 12]=length; mbr_buf[0x1BE + 13]=length>>8; mbr_buf[0x1BE + 14]=length>>16; mbr_buf[0x1BE + 15]=length>>24;
+	 _memset(mbr_buf,0,SECTOR_SIZE);
+	 
+	 start=1; length=2*1024*1024/SECTOR_SIZE; //2 Mb
+	 type=1; // FAT primary
+	 mbr_buf[0x1BE + 4]=type;
+	 mbr_buf[0x1BE + 8]=start;   mbr_buf[0x1BE + 9]=start>>8;   mbr_buf[0x1BE + 10]=start>>16;  mbr_buf[0x1BE + 11]=start>>24;
+	 mbr_buf[0x1BE + 12]=length; mbr_buf[0x1BE + 13]=length>>8; mbr_buf[0x1BE + 14]=length>>16; mbr_buf[0x1BE + 15]=length>>24;
 
- start=start+length; length=drive_sectors-start-1; 
- type=0x0B;  //FAT32 primary;
- mbr_buf[0x1CE + 4]=type;
- mbr_buf[0x1CE + 8]=start;   mbr_buf[0x1CE + 9]=start>>8;   mbr_buf[0x1CE + 10]=start>>16;  mbr_buf[0x1CE + 11]=start>>24;
- mbr_buf[0x1CE + 12]=length; mbr_buf[0x1CE + 13]=length>>8; mbr_buf[0x1CE + 14]=length>>16; mbr_buf[0x1CE + 15]=length>>24;
+	 start=start+length; length=drive_sectors-start-1; 
+	 type=0x0B;  //FAT32 primary;
+	 mbr_buf[0x1CE + 4]=type;
+	 mbr_buf[0x1CE + 8]=start;   mbr_buf[0x1CE + 9]=start>>8;   mbr_buf[0x1CE + 10]=start>>16;  mbr_buf[0x1CE + 11]=start>>24;
+	 mbr_buf[0x1CE + 12]=length; mbr_buf[0x1CE + 13]=length>>8; mbr_buf[0x1CE + 14]=length>>16; mbr_buf[0x1CE + 15]=length>>24;
 
- mbr_buf[0x1FE]=0x55; mbr_buf[0x1FF]=0xAA; // signature;
+	 mbr_buf[0x1FE]=0x55; mbr_buf[0x1FF]=0xAA; // signature;
 
- _WriteSDCard(0,0,1,mbr_buf);
+	 _WriteSDCard(0,0,1,mbr_buf);
+	}
 }
 
 #endif
@@ -931,6 +1007,27 @@ int __attribute__((weak)) vid_get_viewport_width() {
 	return vid_get_bitmap_screen_width();
 }
 
+// same as viewport width for most cameras, override in platform/sub/lib.c as needed
+int __attribute__((weak)) vid_get_viewport_buffer_width() {
+	return vid_get_viewport_width();
+}
+
+// viewport x offset - used when image size != viewport size (zebra, histogram, motion detect & edge overlay)
+int __attribute__((weak)) vid_get_viewport_xoffset() {
+	return 0;
+}
+
+// viewport y offset - used when image size != viewport size (zebra, histogram, motion detect & edge overlay)
+int __attribute__((weak)) vid_get_viewport_yoffset() {
+	return 0;
+}
+
+// for cameras with two (or more?) RAW buffers this can be used to speed up DNG creation by
+// calling reverse_bytes_order only once. Override in platform/sub/lib.c 
+char __attribute__((weak)) *hook_alt_raw_image_addr() {
+	return hook_raw_image_addr();
+}
+
 void __attribute__((weak)) vid_turn_off_updates()
 {
 }
@@ -974,10 +1071,37 @@ void __attribute__((weak)) _reboot_fw_update(const char *fw_update)
 }
 #endif
 
+// TODO mode switch function should detect if USB is connected or not, 
+// and do regular or special switch as needed
+#ifdef CAM_DRYOS
 int __attribute__((weak)) switch_mode_usb(int mode)
 {
+#ifdef CAM_CHDK_PTP
+    if ( mode == 0 ) {
+        _Rec2PB();
+        _set_control_event(0x80000902); // 0x10A5 ConnectUSBCable
+    } else if ( mode == 1 ) {
+        _set_control_event(0x902); // 0x10A6 DisconnectUSBCable
+        _PB2Rec();
+    } else return 0;
+    return 1;
+#else
   return 0;
+#endif // CAM_CHDK_PTP
 }
+
+#else // vxworks
+// this doesn't need any special functions so it's defined even without CHDK_CAM_PTP
+int __attribute__((weak)) switch_mode_usb(int mode)
+{
+    if ( mode == 0 ) {
+        levent_set_play();
+    } else if ( mode == 1 ) {
+        levent_set_record();
+    } else return 0;
+    return 1;
+}
+#endif // vxworks
 /*
 // this wrapper isn't currently needed
 // 7 calls functions and sets some MMIOs, but doesn't disable caches and actually restart
@@ -986,3 +1110,4 @@ void Restart(unsigned option) {
 	_Restart(option);
 }
 */
+

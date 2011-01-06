@@ -51,6 +51,42 @@ void dump_memory() {
     finished();
 }
 
+int core_get_free_memory() {
+    int size, l_size, d;
+    char* ptr;
+
+    size = 16;
+    while (1) {
+        ptr= malloc(size);
+        if (ptr) {
+            free(ptr);
+            size <<= 1;
+        } else
+            break;
+    }
+
+    l_size = size;
+    size >>= 1;
+    d=1024;
+    while (d) {
+        ptr = malloc(size);
+        if (ptr) {
+            free(ptr);
+            d = l_size-size;
+            if (d<0) d=-d;
+            l_size = size;
+            size += d>>1;
+        } else {
+            d = size-l_size;
+            if (d<0) d=-d;
+            l_size = size;
+            size -= d>>1;
+        }
+        
+    }
+    return size-1;
+}
+
 static volatile long raw_data_available;
 
 // called from another process
@@ -69,6 +105,10 @@ void core_spytask() {
     raw_need_postprocess = 0;
 
     spytask_can_start=0;
+
+#ifdef OPT_EXMEM_MALLOC
+	exmem_malloc_init();
+#endif
 
 #ifdef CAM_CHDK_PTP
     init_chdk_ptp_task();

@@ -11,7 +11,9 @@ OPT_CALENDAR=1
 OPT_DEBUGGING=1
 OPT_EDGEOVERLAY=1
 OPT_LUA_STRLIB=1
-
+# experimental - allocate memory from alternate heap. Default 2MB from EXMEM_RAMDISK
+# See exmem_malloc_init in generic/wrappers.c
+#OPT_EXMEM_MALLOC=1
 # experimental PTP/USB interface
 OPT_PTP=1
 #allow Lua to call arbitrary ROM functions and eventprocs

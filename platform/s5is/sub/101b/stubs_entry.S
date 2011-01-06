@@ -59,12 +59,16 @@ NSTUB(MoveFocusLensToDistance, 0xffa0d41c)
 // ERROR: MoveZoomLensWithPoint is not found!
 // ERROR: NewTaskShell is not found!
 NSTUB(Open, 0xff825c9c)
+// Best match: 85%
+NSTUB(PB2Rec, 0xff87b328)
 // Best match: 54%
 NSTUB(PT_PlaySound, 0xff86417c)
 NSTUB(PostLogicalEventForNotPowerType, 0xff8760b4)
 NSTUB(PostLogicalEventToUI, 0xff876100)
 NSTUB(Read, 0xff81a200)
 NSTUB(ReadFastDir, 0xffa27900)
+// Best match: 75%
+NSTUB(Rec2PB, 0xff87b358)
 // Best match: 85%
 NSTUB(RefreshPhysicalScreen, 0xff8b2d90)
 NSTUB(Remove, 0xff825d0c)
@@ -90,7 +94,6 @@ NSTUB(TurnOnBackLight, 0xff888388)
 // Best match: 60%
 NSTUB(UnlockMainPower, 0xff877c84)
 NSTUB(UpdateMBROnFlash, 0xff856ad0)
-// ALT: NSTUB(UpdateMBROnFlash, 0xff8b3168) // 21/0
 // Best match: 78%
 NSTUB(VbattGet, 0xff82221c)
 NSTUB(Write, 0xff825d70)
@@ -132,6 +135,7 @@ NSTUB(read, 0xff81a200)
 NSTUB(readfastdir, 0xffa27900)
 NSTUB(reboot_fw_update, 0xffa2f75c)
 NSTUB(rename, 0xff825d98)
+NSTUB(set_control_event, 0xff8778c0)
 // Best match: 95%
 NSTUB(srand, 0xff81e760)
 NSTUB(stat, 0xff825ed0)

@@ -79,3 +79,5 @@ NHSTUB(utime,                  0xFF810948)
 //NHSTUB(j_unknown_libname_73,    0xFF810948)
 
 NHSTUB(SetScriptMode,           0xFF875438) // "SetScriptMode"
+NHSTUB(PB2Rec, 0xFF87871C)
+NHSTUB(Rec2PB, 0xFF877120)

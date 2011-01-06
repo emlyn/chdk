@@ -60,6 +60,10 @@ ifdef OPT_PTP
 #CFLAGS+=-DOPT_PTP
 OPT_OBJS+=ptp.o 
 endif 
+ifdef OPT_EXMEM_MALLOC
+#CFLAGS+=-DOPT_EXMEM_MALLOC
+OPT_OBJS+=suba.o
+endif
 
 OBJS=entry.o nothumb.o main.o gui_draw.o gui_menu.o gui_palette.o gui_mbox.o \
      gui_fselect.o gui.o kbd.o action_stack.o conf.o \

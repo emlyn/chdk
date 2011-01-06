@@ -6,7 +6,7 @@
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
-#include "../include/conf.h"
+#include "conf.h"
 #include "shot_histogram.h"
 #include "ubasic.h"
 #include "stdlib.h"
@@ -15,6 +15,64 @@
 #include "levent.h"
 #include "console.h"
 #include "action_stack.h"
+
+#include "../lib/lua/lstate.h"	// for L->nCcalls, baseCcalls
+
+lua_State* L;
+lua_State* Lt;
+int lua_keep_result;
+
+void *lua_consume_result()
+{
+  lua_State* r = L;
+  L = 0;
+  return r;
+}
+
+void lua_script_reset()
+{
+  if ( !lua_keep_result )
+  {
+    lua_close( L );
+    L = 0;
+  }
+  Lt = 0;
+}
+
+static void lua_count_hook(lua_State *L, lua_Debug *ar)
+{
+  if( L->nCcalls <= L->baseCcalls )
+    lua_yield( L, 0 );
+}
+
+int lua_script_start( char const* script )
+{
+  lua_keep_result = 0;
+  L = lua_open();
+  luaL_openlibs( L );
+  register_lua_funcs( L );
+
+  Lt = lua_newthread( L );
+  lua_setfield( L, LUA_REGISTRYINDEX, "Lt" );
+  if( luaL_loadstring( Lt, script ) != 0 ) {
+    script_console_add_line( lua_tostring( Lt, -1 ) );
+    lua_script_reset();
+    return 0;
+  }
+  lua_sethook(Lt, lua_count_hook, LUA_MASKCOUNT, 1000 );
+  return 1;
+}
+
+// run the "restore" function at the end of a script
+void lua_run_restore()
+{
+	lua_getglobal(Lt, "restore");
+	if (lua_isfunction(Lt, -1)) {
+		if (lua_pcall( Lt, 0, 0, 0 )) {
+			script_console_add_line( lua_tostring( Lt, -1 ) );
+		}
+	}
+}
 
 #ifdef OPT_CURVES
 #include "curves.h"
@@ -451,19 +509,19 @@ static int luaCB_set_zoom( lua_State* L )
 static int luaCB_wait_click( lua_State* L )
 {
   int timeout = luaL_optnumber( L, 1, 0 );
-  ubasic_camera_wait_click(timeout);
+  camera_wait_click(timeout);
   return lua_yield( L, 0 );
 }
 
 static int luaCB_is_pressed( lua_State* L )
 {
-  lua_pushboolean( L, ubasic_camera_is_pressed(luaL_checkstring( L, 1 )));
+  lua_pushboolean( L, camera_is_pressed(luaL_checkstring( L, 1 )));
   return 1;
 }
 
 static int luaCB_is_key( lua_State* L )
 {
-  lua_pushboolean( L, ubasic_camera_is_clicked(luaL_checkstring( L, 1 )));
+  lua_pushboolean( L, camera_is_clicked(luaL_checkstring( L, 1 )));
   return 1;
 }
 
@@ -800,7 +858,6 @@ static int luaCB_poke( lua_State* L )
   switch(size) {
     case 1: 
         *(unsigned char *)(addr) = (unsigned char)val;
-        lua_pushboolean(L,1);
         status=1;
     break;
     case 2:

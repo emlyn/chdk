@@ -26,6 +26,8 @@ NHSTUB(WriteSDCard, 0xFF93DD0C)
 NHSTUB(PostLogicalEventForNotPowerType, 0xFF88328C)
 NHSTUB(apex2us, 0xFF9FDBDC)
 NHSTUB(Restart, 0xFF8298F0)
+NHSTUB(PB2Rec, 0xFF888840)
+NHSTUB(Rec2PB, 0xFF8871B8)
 
 // null sub
 

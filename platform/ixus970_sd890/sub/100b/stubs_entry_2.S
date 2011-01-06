@@ -54,3 +54,5 @@ NHSTUB(unknown_libname_96,          0xFF810948)
 NHSTUB(j_unknown_libname_73,        0xFF810948)
 
 NHSTUB(SetScriptMode,        0xFF8751E4) // "SetScriptMode"
+NHSTUB(PB2Rec, 0xFF8784D0)
+NHSTUB(Rec2PB, 0xFF876ED4)

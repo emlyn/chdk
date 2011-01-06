@@ -33,6 +33,8 @@ NHSTUB(kbd_pwr_off,0xFF81093C) // NULLSUB ... pwr_on doesn't exist, last functio
 NHSTUB(strchr,0xFF897640) 
 //NHSTUB(vsprintf,0xFF81CAE8) // via CPrintf
 NHSTUB(Restart,0xFF8297B0)
+NHSTUB(PB2Rec, 0xFF880AC0)
+NHSTUB(Rec2PB, 0xFF87F458)
 
 // These don't exist/aren't found in dryos
 NHSTUB(Mount_FileSystem,0xFF81093C) // NULLSUB
