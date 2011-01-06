@@ -94,23 +94,3 @@ void vid_turn_on_updates()
 {
   _RefreshPhysicalScreen(1);
 }
-
-extern void _set_control_event(int);
-extern void _PB2Rec();
-extern void _Rec2PB();
-int switch_mode_usb(int mode)
-{
-  if ( mode == 0 )
-  {
-    _Rec2PB();
-    _set_control_event(0x80000902); // 0x10A5 ConnectUSBCable
-  } else if ( mode == 1 )
-  {
-    _set_control_event(0x902); // 0x10A6 DisconnectUSBCable
-    _PB2Rec();
-  } else {
-    return 0;
-  }
-
-  return 1;
-}

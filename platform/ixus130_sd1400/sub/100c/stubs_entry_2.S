@@ -60,3 +60,5 @@ NHSTUB(kbd_pwr_off, 0xff811800)
 // Fix screen redraw
 NHSTUB(LockAndRefresh, 0xff9f8a9c)               // (000005bc) near "Window.c"
 NHSTUB(UnlockAndRefresh, 0xff9f8ae0)             // ditto
+
+NHSTUB(GetImageFolder, 0xff9351a8)               // function before "GetCameraObjectTmpPath ERROR" string

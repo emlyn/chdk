@@ -202,3 +202,5 @@ NHSTUB(DoAFLock, 0xff8275cc)
 NHSTUB(UnlockAF, 0xff827638)
 NHSTUB(SetScriptMode, 0xFF872F78) // "SetScriptMode"
 NHSTUB(apex2us, 0xFF9BF09C) // from exp_drv_task
+NHSTUB(PB2Rec, 0xFF876664)
+NHSTUB(Rec2PB, 0xFF875024)

@@ -107,3 +107,6 @@ strtolx 0xFFC1FA10
 Restart 0xFFC1B8A4
 add_ptp_handler 0xFFCAD7D0
 reboot_fw_update 0xFFDC6538
+set_control_event 0xFFC5BAA4 20
+PB2Rec 0xFFC5ECF8
+Rec2PB 0xFFC5ED28

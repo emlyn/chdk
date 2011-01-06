@@ -42,7 +42,3 @@ NHSTUB(WriteSDCard,0xFFD01548)
 NHSTUB(SetScriptMode,0xFFC61F08) // string
 NHSTUB(TurnOnMic, 0xFFC35CFC)
 NHSTUB(TurnOffMic, 0xFFC35D28)
-
-NHSTUB(set_control_event, 0xFFC61C0C) // via eventproc_export_IsControlEventActive (last call) 
-NHSTUB(PB2Rec, 0xFFC64D3C) // via aAcPb2rec 
-NHSTUB(Rec2PB, 0xFFC64D6C) // via aAcRec2pb 

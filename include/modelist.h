@@ -97,9 +97,13 @@ enum {
     MODE_SCN_LONG_SHUTTER   , // only known on sx1, d10
     MODE_LOWLIGHT           , // g11
     MODE_SCN_NOSTALGIC      , // s90
-    MODE_SMART_SHUTTER      , // Ixus 130
-    MODE_MINIATURE          , // Ixus 130
-    MODE_FISHEYE            , // Ixus 130
+	MODE_SCN_SMART_SHUTTER	, // sx30
+	MODE_SCN_LOWLIGHT		, // sx30
+	MODE_SCN_SUPER_VIVID	, // sx30
+	MODE_SCN_POSTER_EFFECT	, // sx30
+	MODE_SCN_FISHEYE		, // sx30
+	MODE_SCN_MINIATURE		, // sx30
+	MODE_SCN_HDR			, // g12
 };
 
 #endif

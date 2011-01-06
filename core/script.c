@@ -7,6 +7,13 @@
 #include "conf.h"
 #include "script.h"
 #include "console.h"
+#include "action_stack.h"
+#include "luascript.h"
+#include "motion_detector.h"
+#include "shot_histogram.h"
+#include "lang.h"
+#include "gui_lang.h"
+#include "kbd.h"
 
 //-------------------------------------------------------------------
 
@@ -70,6 +77,8 @@ char script_params[SCRIPT_NUM_PARAMS][28];
 int script_param_order[SCRIPT_NUM_PARAMS];
 static char script_params_update[SCRIPT_NUM_PARAMS];
 static int script_loaded_params[SCRIPT_NUM_PARAMS];
+static long running_script_stack_name = -1;
+static int state_lua_kbd_first_call_to_resume;	// AUJ
 
 //-------------------------------------------------------------------
 static void process_title(const char *title) {
@@ -438,3 +447,206 @@ void script_console_add_line(const char *str)
         write(print_screen_d, &nl, 1);
     }
 }
+
+static int is_lua()
+{
+  int len;
+  char const* s;
+  s = conf.script_file;
+  len = strlen( s );
+  return len >= 4 && ( s[len-1] == 'a' || s[len-1] == 'A' )
+    && ( s[len-2] == 'u' || s[len-2] == 'U' )
+    && ( s[len-3] == 'l' || s[len-3] == 'L' )
+    && s[len-4] == '.';
+}
+
+static void wait_and_end(void)
+{
+	script_console_add_line("PRESS SHUTTER TO CLOSE");
+
+	// We're not running any more, but we have scheduled stuff that
+	// needs to finish. So keep the script marked as running, but don't
+	// call any more scripting functions.
+	state_kbd_script_run = 3;	
+}
+
+static void process_script()
+{   // Note: This function is called from an action stack for AS_SCRIPT_RUN.
+    
+    long t;
+    int Lres;
+
+    if (state_kbd_script_run != 3) {
+        if( L ) {
+            int top;
+            if (state_lua_kbd_first_call_to_resume) {
+                state_lua_kbd_first_call_to_resume = 0;
+                top = 0;
+            } else {
+                top = lua_gettop(Lt);
+            }
+            Lres = lua_resume( Lt, top );
+
+            if (Lres != LUA_YIELD && Lres != 0) {
+                script_console_add_line( lua_tostring( Lt, -1 ) );
+                if(conf.debug_lua_restart_on_error){
+                    lua_script_reset();
+                    script_start_gui(0);
+                } else {
+                    wait_and_end();
+                }
+                return;
+            }
+
+            if (Lres != LUA_YIELD) {
+                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
+                action_pop();
+                script_end();
+            }    
+        } else
+        {
+            ubasic_run();
+            if (ubasic_finished()) {
+                script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
+                action_pop();
+                script_end();
+            }    
+        }
+    }
+}
+
+static int script_action_stack(long p)
+{
+    // process stack operations
+    switch (p) {
+        case AS_SCRIPT_RUN:
+            if (state_kbd_script_run)
+                process_script();
+            else
+                action_pop();
+            break;
+        case AS_MOTION_DETECTOR:
+            if(md_detect_motion()==0)
+            {
+                action_pop();
+                if (L)
+                {
+                       // We need to recover the motion detector's
+                       // result and push
+                       // it onto the thread's stack.
+                       lua_pushnumber( Lt, md_get_result() );
+                } else
+                {
+                    ubasic_set_md_ret(md_get_result());
+                }
+            }
+            break;
+        default:
+            if (!action_stack_standard(p) && !state_kbd_script_run)
+            {
+                /*finished();*/
+                action_pop();
+                script_end();
+            }
+            break;
+    }
+    
+    return 1;
+}
+
+long script_stack_start()
+{
+    running_script_stack_name = action_stack_create(&script_action_stack, AS_SCRIPT_RUN);
+    return running_script_stack_name;
+}
+
+int script_is_running()
+{
+    return !action_stack_is_finished(running_script_stack_name);
+}
+
+void script_end()
+{
+    script_print_screen_end();
+    if( L ) {
+      lua_script_reset();
+    }
+    else {
+      ubasic_end();
+    }
+	md_close_motion_detector();
+	shot_histogram_set(0);
+    kbd_key_release_all();
+    state_kbd_script_run = 0;
+
+    conf_update_prevent_shutdown();
+
+    vid_bitmap_refresh();
+}
+
+long script_start_gui( int autostart )
+{
+    int i;
+
+    shot_histogram_set(0);
+    if (autostart)
+        auto_started = 1;
+    else
+        auto_started = 0;
+
+    kbd_last_clicked = 0;
+
+    /*if (!autostart)*/ kbd_key_release_all();
+
+    console_clear();
+    script_print_screen_init();
+
+    if (conf.script_param_save) {
+        save_params_values(0);
+    }
+    if( autostart )
+        script_console_add_line("***Autostart***");
+    else
+        script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
+
+    if( is_lua() ) {
+        if( !lua_script_start(script_source_str) ) {
+            script_print_screen_end();
+            wait_and_end();
+            return -1;
+        }
+        for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
+            if( script_params[i][0] ) {
+                char var = 'a'+i;
+                lua_pushlstring( L, &var, 1 );
+                lua_pushnumber( L, conf.ubasic_vars[i] );
+                lua_settable( L, LUA_GLOBALSINDEX );
+            }
+        }
+        state_lua_kbd_first_call_to_resume = 1;
+    } else { // ubasic
+        ubasic_init(script_source_str);
+
+        for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
+            ubasic_set_variable(i, conf.ubasic_vars[i]);
+        }
+    }
+
+    state_kbd_script_run = 1;
+
+    conf_update_prevent_shutdown();
+
+    return script_stack_start();
+}
+
+long script_start_ptp( char *script , int keep_result )
+{
+  lua_script_start(script);
+  lua_keep_result = keep_result;
+  state_lua_kbd_first_call_to_resume = 1;
+  state_kbd_script_run = 1;
+  kbd_set_block(1);
+  auto_started = 0;
+  return script_stack_start();
+}
+

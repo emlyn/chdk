@@ -4,7 +4,6 @@
 #include "keyboard.h"
 #include "conf.h"
 #include "camera.h"
-#include "ubasic.h"
 #include "font.h"
 #include "lang.h"
 #include "gui.h"
@@ -64,7 +63,7 @@ int script_params_has_changed=0;
  #define SHORTCUT_TOGGLE_HISTO        KEY_DOWN
  #define SHORTCUT_TOGGLE_ZEBRA        KEY_MENU
  #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
- #define SHORTCUT_DISABLE_OVERRIDES KEY_LEFT
+ #define SHORTCUT_DISABLE_OVERRIDES   KEY_LEFT
 //Alt mode & Manual mode    
  #define SHORTCUT_SET_INFINITY        KEY_DISPLAY
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
@@ -73,14 +72,14 @@ int script_params_has_changed=0;
  // KEY_DISPLAY is used for gui_subj_dist_override_koef_enum;
  // KEY_LEFT/KEY_RIGHT is used for gui_subj_dist_override_value_enum (because of no separate ZOOM_IN/OUT)
  
-#elif defined(CAMERA_g7) || defined(CAMERA_sx10) || defined(CAMERA_sx1) || defined(CAMERA_sx20)
+#elif defined(CAMERA_g7) || defined(CAMERA_sx10) || defined(CAMERA_sx1) || defined(CAMERA_sx20) || defined(CAMERA_sx30)
 //Alt mode
  #define SHORTCUT_TOGGLE_RAW          KEY_ERASE
 //Half press shoot button    
  #define SHORTCUT_TOGGLE_HISTO        KEY_DOWN
  #define SHORTCUT_TOGGLE_ZEBRA        KEY_LEFT
  #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
- #define SHORTCUT_DISABLE_OVERRIDES KEY_UP
+ #define SHORTCUT_DISABLE_OVERRIDES   KEY_UP
 //Alt mode & Manual mode  
  #define SHORTCUT_SET_INFINITY        KEY_UP
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
@@ -92,7 +91,7 @@ int script_params_has_changed=0;
  #define SHORTCUT_TOGGLE_HISTO        KEY_UP
  #define SHORTCUT_TOGGLE_ZEBRA        KEY_DOWN
  #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
- #define SHORTCUT_DISABLE_OVERRIDES KEY_LEFT
+ #define SHORTCUT_DISABLE_OVERRIDES   KEY_LEFT
 //Alt mode & Manual mode  
  #define SHORTCUT_SET_INFINITY        KEY_UP
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
@@ -105,12 +104,12 @@ int script_params_has_changed=0;
  #define SHORTCUT_TOGGLE_HISTO        KEY_UP
  #define SHORTCUT_TOGGLE_ZEBRA        KEY_LEFT
  #define SHORTCUT_TOGGLE_OSD          KEY_RIGHT
- #define SHORTCUT_DISABLE_OVERRIDES KEY_DOWN
+ #define SHORTCUT_DISABLE_OVERRIDES   KEY_DOWN
 //Alt mode & Manual mode  
  #define SHORTCUT_SET_INFINITY        KEY_UP
  #define SHORTCUT_SET_HYPERFOCAL      KEY_DOWN
  #ifndef CAM_HAS_MANUAL_FOCUS
- 	#define SHORTCUT_MF_TOGGLE           KEY_DISPLAY
+ #define SHORTCUT_MF_TOGGLE           KEY_DISPLAY
  #endif
 #endif
 
@@ -1260,7 +1259,7 @@ const char* gui_alt_mode_button_enum(int change, int arg) {
 #elif defined(CAMERA_sx100is) || defined(CAMERA_sx110is)
     static const char* names[]={ "Print", "Face"};
     static const int keys[]={ KEY_PRINT, KEY_FACE };
-#elif defined(CAMERA_sx10) || defined(CAMERA_sx1) || defined(CAMERA_sx20)
+#elif defined(CAMERA_sx10) || defined(CAMERA_sx1) || defined(CAMERA_sx20) || defined(CAMERA_sx30)
     static const char* names[]={ "Shrtcut", "Flash", "Video"};
     static const int keys[]={ KEY_PRINT, KEY_FLASH, KEY_VIDEO };
 #elif defined(CAMERA_a570) || defined(CAMERA_a590) || defined(CAMERA_a720)
@@ -1537,8 +1536,13 @@ const char* gui_user_menu_show_enum(int change, int arg) {
 }
  
 const char* gui_video_af_key_enum(int change, int arg){ 
+#if CAMERA_g12
+    static const char* names[]={ "", "Shutter", "Set", "AE Lock"}; 
+    static const int keys[]={0, KEY_SHOOT_HALF, KEY_SET, KEY_AE_LOCK }; 
+#else
     static const char* names[]={ "", "Shutter", "Set"}; 
     static const int keys[]={0, KEY_SHOOT_HALF, KEY_SET }; 
+#endif
     int i; 
  
     for (i=0; i<sizeof(names)/sizeof(names[0]); ++i) { 
@@ -2268,6 +2272,7 @@ void other_kbd_process(){
       get_property_case(PROPCASE_DIGITAL_ZOOM_POSITION, &x, sizeof(x));
 #if defined (CAMERA_s90)
 	  if (x==0) zoom_status=ZOOM_OPTICAL_MAX; //ERR99: No zoom back from digital to optical zoom possible if set to medium
+#elif defined (CAMERA_sx30)	|| defined (CAMERA_g12)		// can't find, crashes camera *******
 #else
 	  if (x==0) zoom_status=ZOOM_OPTICAL_MEDIUM;
 #endif
@@ -2619,40 +2624,8 @@ gui_mbox_init(LANG_MSG_BUILD_INFO_TITLE, (int)buf, MBOX_FUNC_RESTORE|MBOX_TEXT_L
 //-------------------------------------------------------------------
 void gui_show_memory_info(int arg) {
     static char buf[64];
-    int size, l_size, d;
-    char* ptr;
-
-    size = 16;
-    while (1) {
-        ptr= malloc(size);
-        if (ptr) {
-            free(ptr);
-            size <<= 1;
-        } else
-            break;
-    }
-
-    l_size = size;
-    size >>= 1;
-    d=1024;
-    while (d) {
-        ptr = malloc(size);
-        if (ptr) {
-            free(ptr);
-            d = l_size-size;
-            if (d<0) d=-d;
-            l_size = size;
-            size += d>>1;
-        } else {
-            d = size-l_size;
-            if (d<0) d=-d;
-            l_size = size;
-            size -= d>>1;
-        }
-        
-    }
     
-    sprintf(buf, lang_str(LANG_MSG_MEMORY_INFO_TEXT), size-1,MEMISOSIZE,&_start,&_end);
+    sprintf(buf, lang_str(LANG_MSG_MEMORY_INFO_TEXT), core_get_free_memory(), MEMISOSIZE, &_start, &_end);
     gui_mbox_init(LANG_MSG_MEMORY_INFO_TITLE, (int)buf, MBOX_FUNC_RESTORE|MBOX_TEXT_CENTER, NULL);
 }
 

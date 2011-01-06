@@ -128,9 +128,9 @@ static const CapturemodeMap modemap[] = {
   { MODE_VIDEO_COLOR_SWAP,   2611  },
   { MODE_LOWLIGHT,           32801 },
 // Ixus 130 extra modes:
-  { MODE_SMART_SHUTTER,      33321 },
-  { MODE_FISHEYE,            33323 },
-  { MODE_MINIATURE,          33324 },
+  { MODE_SCN_SMART_SHUTTER,  33321 },
+  { MODE_SCN_FISHEYE,        33323 },
+  { MODE_SCN_MINIATURE,      33324 },
 };
 
 #include "../generic/shooting.c"
@@ -147,13 +147,24 @@ long get_target_file_num() {
     return n;
 }
 
+#if defined(CAM_DATE_FOLDER_NAMING)
+// IXUS130 uses date to name directory
+void get_target_dir_name(char *out)
+{
+    extern void _GetImageFolder(char*,int,int,int);
+    out[0] = 'A';
+    _GetImageFolder(out+1,get_file_next_counter(),0x400,time(NULL));
+}
+#else
 long get_target_dir_num() {
     long n;
-    
+     
     n = get_file_next_counter();
     n = (n>>18)&0x3FF;
     return n;
 }
+#endif
+
 
 int circle_of_confusion = 5;
 

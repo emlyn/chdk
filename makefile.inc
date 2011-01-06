@@ -131,6 +131,10 @@ ifdef OPT_PTP
 CFLAGS+=-DOPT_PTP
 endif
 
+ifdef OPT_EXMEM_MALLOC
+CFLAGS+=-DOPT_EXMEM_MALLOC
+endif
+
 ifdef OPT_WARNINGS
      ifeq ($(GCC_VERSION_MAJOR),3)
            CFLAGS+=-Wwrite-strings -Wsign-compare -Wunused -Wno-unused-parameter
