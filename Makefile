@@ -82,8 +82,10 @@ ifdef PLATFORMOS
   endif
   ifeq ($(PLATFORMOS),dryos)
   ifdef OPT_FI2
+  ifdef FI2KEY
 	zip -9j $(topdir)bin/$(VER)-$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
 	rm -f $(topdir)bin/PS.FI2
+  endif
   endif
   endif
 endif
@@ -130,9 +132,11 @@ ifdef PLATFORMOS
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)doc/readme.txt  > $(DEVNULL)
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)doc/readme.txt  > $(DEVNULL)
 ifdef OPT_FI2
+  ifdef FI2KEY
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-full.zip $(topdir)bin/PS.FI2 > $(DEVNULL)
 	zip -9j $(topdir)bin/$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER).zip $(topdir)bin/PS.FI2 > $(DEVNULL)
 	rm -f $(topdir)bin/PS.FI2
+  endif
 endif
   endif
 endif
