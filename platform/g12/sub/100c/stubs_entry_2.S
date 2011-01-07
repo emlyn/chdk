@@ -96,10 +96,10 @@ NHSTUB(_eventproc_export_TakeSemaphore, 0xff83a87c)
 NHSTUB(_eventproc_export_HardwareDefect, 0xff89c4a8)
 
 # Misc - needs a stub anyway, to far for B/BL
-NTHSTUB(_DebugAssert,						0xFF81EB78)
-NTHSTUB(_PT_GetPropertyCaseString,			0xFF8954F0)
-NTHSTUB(_takeSemaphore,						0xFF83AD5C)
-NTHSTUB(_err_init_task,						0xFF815FD4)
+NHSTUB(_DebugAssert,						0xFF81EB78)
+NHSTUB(_PT_GetPropertyCaseString,			0xFF8954F0)
+NHSTUB(_takeSemaphore,						0xFF83AD5C)
+NHSTUB(_err_init_task,						0xFF815FD4)
 
 # Addresses for firmware task handlers (used in taskHook)
 DEF(task_CaptSeq,						0xFF88261C)
