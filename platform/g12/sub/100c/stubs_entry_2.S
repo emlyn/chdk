@@ -89,17 +89,17 @@ NHSTUB(UpdateMBROnFlash,				0xFF8767C8) // Search for 'BOOTDISK', function branc
 NHSTUB(exmem_alloc,						0xFF88FFD8)	// search for ExMem.AllocCacheable (from reyalp)
 
 # From stubs_entry_ida.s
-NHSTUB(_eventproc_export_PostLogicalEventToUI, 0xff899bbc)
-NHSTUB(_eventproc_export_SleepTask, 0xff83abb4)
-NHSTUB(_eventproc_export_ExitTask, 0xff81eb30)
-NHSTUB(_eventproc_export_TakeSemaphore, 0xff83a87c)
-NHSTUB(_eventproc_export_HardwareDefect, 0xff89c4a8)
+NHSTUB(eventproc_export_PostLogicalEventToUI, 0xff899bbc)
+NHSTUB(eventproc_export_SleepTask, 0xff83abb4)
+NHSTUB(eventproc_export_ExitTask, 0xff81eb30)
+NHSTUB(eventproc_export_TakeSemaphore, 0xff83a87c)
+NHSTUB(eventproc_export_HardwareDefect, 0xff89c4a8)
 
 # Misc - needs a stub anyway, to far for B/BL
-NHSTUB(_DebugAssert,						0xFF81EB78)
-NHSTUB(_PT_GetPropertyCaseString,			0xFF8954F0)
-NHSTUB(_takeSemaphore,						0xFF83AD5C)
-NHSTUB(_err_init_task,						0xFF815FD4)
+NHSTUB(DebugAssert,						0xFF81EB78)
+NHSTUB(PT_GetPropertyCaseString,			0xFF8954F0)
+NHSTUB(takeSemaphore,						0xFF83AD5C)
+NHSTUB(err_init_task,						0xFF815FD4)
 
 # Addresses for firmware task handlers (used in taskHook)
 DEF(task_CaptSeq,						0xFF88261C)
