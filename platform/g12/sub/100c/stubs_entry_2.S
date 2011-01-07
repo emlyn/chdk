@@ -86,7 +86,7 @@ NHSTUB(UnlockAF,						0xFF838978)	// ok (comp sx30)
 NHSTUB(DoAFLock,						0xFF838940)	// ok (comp sx30)
 NHSTUB(GetImageFolder,					0xFF95F2FC)	// function before 'GetCameraObjectTmpPath ERROR' string
 NHSTUB(UpdateMBROnFlash,				0xFF8767C8) // Search for 'BOOTDISK', function branches to this at end (after setting up R0,R1,R2)
-NHSTUB(exmem_alloc,						0xFF88FD1C)	// search for ExMem.AllocCacheable (from reyalp)
+NHSTUB(exmem_alloc,						0xFF88FFD8)	// search for ExMem.AllocCacheable (from reyalp)
 
 # From stubs_entry_ida.s
 DEF(_eventproc_export_PostLogicalEventToUI, 0xff899bbc)

@@ -237,6 +237,8 @@ int vid_get_viewport_width();
 int vid_get_viewport_buffer_width();
 int vid_get_viewport_xoffset();
 int vid_get_viewport_yoffset();
+int vid_get_viewport_image_offset();
+int vid_get_viewport_row_offset();
 void vid_turn_off_updates();
 void vid_turn_on_updates();
 

@@ -521,7 +521,7 @@ void *malloc(unsigned size) {
 		return _malloc(size);
 }
 void free(void *p) {
-	if(exmem_heap)
+	if(exmem_heap && (p >= exmem_heap))
 		suba_free(exmem_heap,p);
 	else
 		_free(p);
@@ -1019,6 +1019,20 @@ int __attribute__((weak)) vid_get_viewport_xoffset() {
 
 // viewport y offset - used when image size != viewport size (zebra, histogram, motion detect & edge overlay)
 int __attribute__((weak)) vid_get_viewport_yoffset() {
+	return 0;
+}
+
+// viewport image offset - used when image size != viewport size (zebra, histogram, motion detect & edge overlay)
+// returns the byte offset into the viewport buffer where the image pixels start (to skip any black borders)
+// see G12 port for sample implementation
+int __attribute__((weak)) vid_get_viewport_image_offset() {
+	return 0;
+}
+
+// viewport image offset - used when image size != viewport size (zebra, histogram, motion detect & edge overlay)
+// returns the byte offset to skip at the end of a viewport buffer row to get to the next row.
+// see G12 port for sample implementation
+int __attribute__((weak)) vid_get_viewport_row_offset() {
 	return 0;
 }
 

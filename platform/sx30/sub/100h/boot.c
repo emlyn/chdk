@@ -72,7 +72,7 @@ void taskHook(context_t **context)
 	018124C     MEMISOSTART             start of our data / bss
 
 	0400000                             raw buffers
-	83FFFFF                             end of raw buffers
+	8000000                             end of raw buffers
 
 	C0xxxxxx                            I/O
 
@@ -177,6 +177,7 @@ void __attribute__((naked,noinline)) boot() {
                  "CMP     R3, R1\n"
                  "STRCC   R2, [R3],#4\n"
                  "BCC     loc_FF810154\n"
+
                  "B       sub_FF810354_my" // -->
     );
 }

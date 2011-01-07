@@ -59,7 +59,7 @@ void taskHook(context_t **context)
 	016E820     MEMISOSTART             start of our data / bss
 
 	0400000                             raw buffers
-	83FFFFF                             end of raw buffers
+	8000000                             end of raw buffers
 
 	C0xxxxxx                            I/O
 

@@ -288,6 +288,20 @@ include $(topdir)buildconf.inc
 -include $(topdir)localbuildconf.inc
 include $(topdir)version.inc
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
+
+# Used in gui_debug.c for controlling memory browser allowed address ranges
+# override in platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc to set camera specific value
+ifdef MAXRAMADDR
+PLFLAGS+=-DMAXRAMADDR=$(MAXRAMADDR)
+else
+PLFLAGS+=-DMAXRAMADDR=0x2000000
+endif
+ifdef ROMBASEADDR
+PLFLAGS+=-DROMBASEADDR=$(ROMBASEADDR)
+else
+PLFLAGS+=-DROMBASEADDR=0xFFC00000
+endif
+
 ifdef OPT_FI2
 include $(topdir)/platform/fi2.inc
 endif

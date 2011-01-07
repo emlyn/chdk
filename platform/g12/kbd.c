@@ -417,9 +417,10 @@ int get_usb_power(int edge)
 	return x;
 }
 
-long kbd_use_zoom_as_mf() {
- return 0;
-}
+// ?? Not used ??
+//long kbd_use_zoom_as_mf() {
+// return 0;
+//}
 
 static int new_jogdial=0, old_jogdial=0;
 

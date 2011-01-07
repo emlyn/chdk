@@ -84,6 +84,7 @@ NHSTUB(GetImageFolder,					0xFF95F0F0)	// function before 'GetCameraObjectTmpPat
 NHSTUB(UpdateMBROnFlash,				0xFF8770CC) // Search for 'BOOTDISK', function branches to this at end (after setting up R0,R1,R2)
 NHSTUB(PB2Rec,                          0xFF8A30FC)
 NHSTUB(Rec2PB,                          0xFF8A1B40)
+NHSTUB(exmem_alloc,						0xFF8944F8)	// search for ExMem.AllocCacheable (from reyalp)
 
 # from stubs_entry_ida.S (only used in ARM code so do not need stub)
 DEF(_eventproc_export_PostLogicalEventToUI, 0xff89e078)
