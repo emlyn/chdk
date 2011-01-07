@@ -491,11 +491,11 @@ batch-zip-complete: version
 	mv $(topdir)bin/g12-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/g12-100e-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/g12-100e-$(BUILD_NUMBER).zip $(topdir)bin/g12-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/sx30-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx30-100e-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx30-100e-$(BUILD_NUMBER).zip $(topdir)bin/gsx30-100e-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/sx30-100e-$(BUILD_NUMBER).zip $(topdir)bin/sx30-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/sx30-100h-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx30-100h-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx30-100h-$(BUILD_NUMBER).zip $(topdir)bin/gsx30-100h-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/sx30-100h-$(BUILD_NUMBER).zip $(topdir)bin/sx30-100h-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/sx30-100l-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx30-100l-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx30-100l-$(BUILD_NUMBER).zip $(topdir)bin/gsx30-100l-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/sx30-100l-$(BUILD_NUMBER).zip $(topdir)bin/sx30-100l-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
