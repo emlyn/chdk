@@ -172,7 +172,7 @@ static void gui_raw_develop(int arg);
 #ifdef OPT_DEBUGGING
 static void gui_menuproc_break_card(int arg);
 #endif
-static void gui_menuproc_swap_patitons(int arg);
+static void gui_menuproc_swap_partitions(int arg);
 static void gui_menuproc_reset_files(int arg);
 #ifdef OPT_CURVES
 	static void gui_load_curve_selected(const char *fn);
@@ -442,7 +442,7 @@ static CMenuItem misc_submenu_items[] = {
     {0x80,LANG_MENU_MISC_MEMORY_INFO,        MENUITEM_PROC,    (int*)gui_show_memory_info },
     {0x33,LANG_MENU_DEBUG_MAKE_BOOTABLE,     MENUITEM_PROC,    (int*)gui_menuproc_mkbootdisk },
 #if CAM_MULTIPART
-    {0x33,LANG_MENU_DEBUG_SWAP_PART,         MENUITEM_PROC, 	    	(int*)gui_menuproc_swap_patitons },
+    {0x33,LANG_MENU_DEBUG_SWAP_PART,         MENUITEM_PROC, 	    	(int*)gui_menuproc_swap_partitions },
 #endif
     {0x2b,LANG_MENU_MAIN_RESET_OPTIONS,      MENUITEM_PROC,      (int*)gui_menuproc_reset },
 #ifdef OPT_DEBUGGING
@@ -1761,7 +1761,7 @@ static void gui_menuproc_break_card(int arg){
 }
 #endif
 
-static void gui_menuproc_swap_patitons(int arg){
+static void gui_menuproc_swap_partitions(int arg){
  if (get_part_count()<2) gui_mbox_init(LANG_ERROR, LANG_ONLY_ONE_PARTITION, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
  else 
  	{
