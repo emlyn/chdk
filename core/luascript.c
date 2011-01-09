@@ -8,7 +8,6 @@
 #include "lauxlib.h"
 #include "conf.h"
 #include "shot_histogram.h"
-#include "ubasic.h"
 #include "stdlib.h"
 #include "raw.h"
 #include "raw_merge.h"
@@ -565,7 +564,6 @@ static int luaCB_md_detect_motion( lua_State* L )
   int parameters = (luaL_optnumber(L,14,1));
   int pixels_step = (luaL_optnumber(L,15,6));
   int msecs_before_trigger = (luaL_optnumber(L,16,0));
-  ubasic_set_variable(0, 0);
   if(md_init_motion_detector(
     columns, rows, pixel_measure_mode, detection_timeout, 
     measure_interval, threshold, draw_grid, 0,

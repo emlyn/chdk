@@ -8,13 +8,15 @@
 #include "script.h"
 #include "console.h"
 #include "action_stack.h"
-#include "luascript.h"
-#include "lauxlib.h"
 #include "motion_detector.h"
 #include "shot_histogram.h"
 #include "lang.h"
 #include "gui_lang.h"
 #include "kbd.h"
+
+#ifdef OPT_LUA
+#include "lauxlib.h"
+#endif
 
 //-------------------------------------------------------------------
 
@@ -79,7 +81,10 @@ int script_param_order[SCRIPT_NUM_PARAMS];
 static char script_params_update[SCRIPT_NUM_PARAMS];
 static int script_loaded_params[SCRIPT_NUM_PARAMS];
 static long running_script_stack_name = -1;
+
+#ifdef OPT_LUA
 static int state_lua_kbd_first_call_to_resume;	// AUJ
+#endif
 
 //-------------------------------------------------------------------
 static void process_title(const char *title) {
@@ -449,6 +454,7 @@ void script_console_add_line(const char *str)
     }
 }
 
+#ifdef OPT_LUA
 static int is_lua()
 {
   int len;
@@ -460,6 +466,7 @@ static int is_lua()
     && ( s[len-3] == 'l' || s[len-3] == 'L' )
     && s[len-4] == '.';
 }
+#endif
 
 static void wait_and_end(void)
 {
@@ -478,6 +485,7 @@ static void process_script()
     int Lres;
 
     if (state_kbd_script_run != 3) {
+#ifdef OPT_LUA
         if( L ) {
             int top;
             if (state_lua_kbd_first_call_to_resume) {
@@ -505,13 +513,16 @@ static void process_script()
                 script_end();
             }    
         } else
+#endif
         {
+#ifdef OPT_UBASIC
             ubasic_run();
             if (ubasic_finished()) {
                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
                 action_pop();
                 script_end();
             }    
+#endif
         }
     }
 }
@@ -530,6 +541,7 @@ static int script_action_stack(long p)
             if(md_detect_motion()==0)
             {
                 action_pop();
+#ifdef OPT_LUA
                 if (L)
                 {
                        // We need to recover the motion detector's
@@ -537,8 +549,11 @@ static int script_action_stack(long p)
                        // it onto the thread's stack.
                        lua_pushnumber( Lt, md_get_result() );
                 } else
+#endif
                 {
+#ifdef OPT_UBASIC
                     ubasic_set_md_ret(md_get_result());
+#endif
                 }
             }
             break;
@@ -569,11 +584,15 @@ int script_is_running()
 void script_end()
 {
     script_print_screen_end();
+#ifdef OPT_LUA
     if( L ) {
       lua_script_reset();
-    }
-    else {
+    } else
+#endif
+    {
+#ifdef OPT_UBASIC
       ubasic_end();
+#endif
     }
 	md_close_motion_detector();
 	shot_histogram_set(0);
@@ -610,6 +629,7 @@ long script_start_gui( int autostart )
     else
         script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
 
+#ifdef OPT_LUA
     if( is_lua() ) {
         if( !lua_script_start(script_source_str) ) {
             script_print_screen_end();
@@ -625,12 +645,16 @@ long script_start_gui( int autostart )
             }
         }
         state_lua_kbd_first_call_to_resume = 1;
-    } else { // ubasic
+    } else
+#endif
+    { // ubasic
+#ifdef OPT_UBASIC
         ubasic_init(script_source_str);
 
         for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
             ubasic_set_variable(i, conf.ubasic_vars[i]);
         }
+#endif
     }
 
     state_kbd_script_run = 1;
@@ -640,6 +664,7 @@ long script_start_gui( int autostart )
     return script_stack_start();
 }
 
+#ifdef OPT_LUA
 long script_start_ptp( char *script , int keep_result )
 {
   lua_script_start(script);
@@ -650,7 +675,9 @@ long script_start_ptp( char *script , int keep_result )
   auto_started = 0;
   return script_stack_start();
 }
+#endif
 
+#ifndef UBASIC_TEST
 int camera_is_pressed(const char *s)
 {
     long k = keyid_by_name(s);
@@ -658,10 +685,16 @@ int camera_is_pressed(const char *s)
     if (k > 0) {
         return (kbd_is_key_pressed(k));
     } else {
-        if (is_lua())
+#ifdef OPT_LUA
+        if (is_lua()) {
             luaL_error( L, "unknown key" );
-        else
+        } else
+#endif
+        {
+#ifdef OPT_UBASIC
             ubasic_error = UBASIC_E_UNK_KEY;
+#endif
+        }
     }
     return 0;
 }
@@ -673,15 +706,21 @@ int camera_is_clicked(const char *s)
     if (k > 0) {
         return (kbd_last_clicked == k);
     } else {
-        if (is_lua())
+#ifdef OPT_LUA
+        if (is_lua()) {
             luaL_error( L, "unknown key" );
-        else
+        } else
+#endif
+        {
+#ifdef OPT_UBASIC
             ubasic_error = UBASIC_E_UNK_KEY;
+#endif
+        }
     }
     return 0;
 }
 
-
+#ifdef OPT_UBASIC
 void camera_press(const char *s)
 {
     // For Lua, luaCB_keyfunc handles this command.
@@ -732,4 +771,6 @@ void camera_wait_click(int t)
 {
     action_wait_for_click(t);
 }
+#endif
 
+#endif

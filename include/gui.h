@@ -32,6 +32,9 @@ extern void draw_pixel(coord x, coord y, color cl);
 
 extern enum Gui_Mode gui_get_mode();
 extern void gui_set_mode(enum Gui_Mode mode);
+
+#ifdef OPT_SCRIPTING
 extern void gui_update_script_submenu();
+#endif
 
 #endif

@@ -6,8 +6,13 @@
 #define SCRIPT_NUM_PARAMS           26
 #define SCRIPT_DATA_PATH            "A/CHDK/DATA/"
 
+#ifdef OPT_UBASIC
 #include "ubasic.h"
+#endif
+
+#ifdef OPT_LUA
 #include "../core/luascript.h"
+#endif
 
 //-------------------------------------------------------------------
 extern const char *script_source_str;
@@ -31,6 +36,9 @@ long script_stack_start();
 int script_is_running();
 void script_end();
 long script_start_gui( int autostart );
+
+#ifdef OPT_LUA
 long script_start_ptp( char *script , int keep_result );
+#endif
 
 #endif

@@ -106,6 +106,7 @@ static int nTxtbl[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13};
 static int nTxtbl[]={0,1,2,3,4,5,6,7,8,9};
 #endif
 
+#ifdef OPT_SCRIPTING
 // remote autostart
 void script_autostart()
 {
@@ -115,6 +116,8 @@ void script_autostart()
     script_console_add_line("***Autostart***"); //lang_str(LANG_CONSOLE_TEXT_STARTED));
     script_start_gui( 1 );
 }
+#endif
+
 void exit_alt()
 {
     kbd_blocked = 0;
@@ -233,6 +236,7 @@ long kbd_process()
             }
         }
 /*-------------------- Alex scriptless remote additions end ---------------------*/
+#ifdef OPT_SCRIPTING
         if (kbd_is_key_pressed(KEY_SHOOT_FULL)) {
             key_pressed = 100;
             if (!state_kbd_script_run) {
@@ -240,19 +244,26 @@ long kbd_process()
             } else if (state_kbd_script_run == 2 || state_kbd_script_run == 3) {
                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
                 script_end();
-            } else if (L) {
+            }
+#ifdef OPT_LUA
+            else if (L) {
                 state_kbd_script_run = 2;
 				lua_run_restore();
                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
                 script_end();
-            } else {
+            }
+#endif
+#ifdef OPT_UBASIC
+            else {
                 state_kbd_script_run = 2;
                 if (jump_label("restore") == 0) {
                     script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
                     script_end();
                 }
             }
+#endif
         }
+#endif
 
         action_stack_process_all();
         if (!state_kbd_script_run)

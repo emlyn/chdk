@@ -1,17 +1,18 @@
 #include "camera.h"
 #ifdef CAM_CHDK_PTP
+#include "stddef.h"
 #include "platform.h"
 #include "stdlib.h"
 #include "ptp.h"
-#include "action_stack.h"
-#include "lua.h"
 #include "kbd.h"
 
 #include "core.h"
   
 static int buf_size=0;
 
+#ifdef OPT_LUA
 #include "script.h"
+#include "action_stack.h"
 
 static lua_State *get_lua_thread(lua_State *L)
 {
@@ -23,6 +24,7 @@ static lua_State *get_lua_thread(lua_State *L)
 
   return Lt;
 }
+#endif
 
 static int handle_ptp(
                 int h, ptp_data *data, int opcode, int sess_id, int trans_id,
@@ -97,7 +99,9 @@ static int handle_ptp(
 {
   static union {
     char *str;
+#ifdef OPT_LUA
     lua_State *lua_state;
+#endif
   } temp_data;
   static int temp_data_kind = 0; // 0: nothing, 1: ascii string, 2: lua object
   static int temp_data_extra; // size (ascii string) or type (lua object)
@@ -127,7 +131,12 @@ static int handle_ptp(
       break;
     case PTP_CHDK_ScriptStatus:
       ptp.num_param = 1;
+// TODO script_is_running should always be defined, just ret 0 if script disabled
+#ifdef OPT_SCRIPTING
       ptp.param1 = script_is_running()?PTP_CHDK_SCRIPT_STATUS_RUN:0;
+#else
+      ptp.param1 = 0;
+#endif
       break;
     case PTP_CHDK_GetMemory:
       if ( param2 == 0 || param3 < 1 ) // null pointer or invalid size?
@@ -184,8 +193,8 @@ static int handle_ptp(
     case PTP_CHDK_TempData:
       if ( param2 & PTP_CHDK_TD_DOWNLOAD )
       {
-        const char *s;
-        size_t l;
+        const char *s = NULL;
+        size_t l = 0;
 
         if ( temp_data_kind == 0 )
         {
@@ -197,9 +206,12 @@ static int handle_ptp(
         {
           s = temp_data.str;
           l = temp_data_extra;
-        } else { // temp_data_kind == 2
+        }
+#ifdef OPT_LUA
+        else { // temp_data_kind == 2
           s = lua_tolstring(get_lua_thread(temp_data.lua_state),1,&l);
         }
+#endif
 
         if ( !send_ptp_data(data,s,l) )
         {
@@ -211,10 +223,13 @@ static int handle_ptp(
         if ( temp_data_kind == 1 )
         {
           free(temp_data.str);
-        } else if ( temp_data_kind == 2 )
+        }
+#ifdef OPT_LUA
+        else if ( temp_data_kind == 2 )
         {
           lua_close(temp_data.lua_state);
         }
+#endif
         temp_data_kind = 0;
 
         temp_data_extra = data->get_data_size(data->handle);
@@ -238,10 +253,13 @@ static int handle_ptp(
         if ( temp_data_kind == 1 )
         {
           free(temp_data.str);
-        } else if ( temp_data_kind == 2 )
+        }
+#ifdef OPT_LUA
+        else if ( temp_data_kind == 2 )
         {
           lua_close(temp_data.lua_state);
         }
+#endif
         temp_data_kind = 0;
       }
       break;
@@ -370,6 +388,7 @@ static int handle_ptp(
       }
       break;
 
+#ifdef OPT_LUA
     case PTP_CHDK_ExecuteScript:
       {
         int s;
@@ -450,6 +469,7 @@ static int handle_ptp(
 
         break;
       }
+#endif
 
     default:
       ptp.code = PTP_RC_ParameterNotSupported;
