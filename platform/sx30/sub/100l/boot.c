@@ -385,8 +385,6 @@ void __attribute__((naked,noinline)) task_Startup_my() {
 //		"BL		sub_FF83461C\n"	//taskcreate_PhySw\n"
 		"BL		taskcreatePhySw_my\n"  // we do this here rather than hook so we don't waste the original stack
 
-		//"BL		CreateTask_init_chdk_ptp\n"			// PTP initialization (done in core/main.c)
-
 		"B		sub_FF81FB24\n"		// Continue in firmware
      );
 }
@@ -423,12 +421,6 @@ void CreateTask_spytask() {
 }
 
  ///*----------------------------------------------------------------------
-	// CreateTask_init_chdk_ptp
- //-----------------------------------------------------------------------*/
- //void CreateTask_init_chdk_ptp() {
-	// _CreateTask("InitCHDKPTP", 0x19, 0x2000, init_chdk_ptp, 0);
- //};
-
 //@ FF8A3B50
 void __attribute__((naked,noinline)) init_file_modules_task() {
  asm volatile(
