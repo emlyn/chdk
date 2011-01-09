@@ -941,47 +941,6 @@ long kbd_process()
     return kbd_blocked;
 }
 
-static const struct Keynames {
-    int keyid;
-    char *keyname;
-} keynames[] = {
-    { KEY_UP,           "up"         },
-    { KEY_DOWN,         "down"       },
-    { KEY_LEFT,         "left"       },
-    { KEY_RIGHT,        "right"      },
-    { KEY_SET,          "set"        },
-    { KEY_SHOOT_HALF,   "shoot_half" },
-    { KEY_SHOOT_FULL,   "shoot_full" },
-    { KEY_ZOOM_IN,      "zoom_in"    },
-    { KEY_ZOOM_OUT,     "zoom_out"   },
-    { KEY_MENU,         "menu"       },
-    { KEY_DISPLAY,      "display"    },
-    { KEY_PRINT,        "print"      },
-    { KEY_ERASE,        "erase"      },
-    { KEY_ISO,          "iso"        },
-    { KEY_FLASH,        "flash"      },
-    { KEY_MF,           "mf"         },
-    { KEY_MACRO,        "macro"      },
-    { KEY_VIDEO,        "video"      },
-    { KEY_TIMER,        "timer"      },
-    { KEY_EXPO_CORR,    "expo_corr"  },
-    { KEY_MICROPHONE,   "fe"         },
-    { KEY_ZOOM_ASSIST,  "zoom_assist"},
-    { KEY_AE_LOCK,      "ae_lock"    },
-    { KEY_METERING,     "metering_mode"},
-    { 0xFF,             "remote"     },
-	{ 0xFFFF,           "no_key"     },
-};
-
-int keyid_by_name (const char *n)
-{
-    int i;
-    for (i=0;i<sizeof(keynames)/sizeof(keynames[0]);i++)
-	if (strcmp(keynames[i].keyname,n) == 0)
-	    return keynames[i].keyid;
-    return 0;
-}
-
 int kbd_is_blocked() {
 	return kbd_blocked;
 }

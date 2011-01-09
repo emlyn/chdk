@@ -37,6 +37,9 @@ int script_is_running();
 void script_end();
 long script_start_gui( int autostart );
 
+int script_key_is_pressed( int keyid );
+int script_key_is_clicked( int keyid );
+int script_keyid_by_name( const char *name );
 #ifdef OPT_LUA
 long script_start_ptp( char *script , int keep_result );
 #endif

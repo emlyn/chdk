@@ -1,5 +1,4 @@
 #include "luascript.h"
-#include "../lib/ubasic/camera_functions.h"
 #include "kbd.h"
 #include "platform.h"
 #include "script.h"
@@ -14,8 +13,9 @@
 #include "levent.h"
 #include "console.h"
 #include "action_stack.h"
+#include "motion_detector.h"
 
-#include "../lib/lua/lstate.h"	// for L->nCcalls, baseCcalls
+#include "../lib/lua/lstate.h"  // for L->nCcalls, baseCcalls
 
 lua_State* L;
 lua_State* Lt;
@@ -73,6 +73,15 @@ void lua_run_restore()
 	}
 }
 
+// get key ID of key name at arg, throw error if invalid
+static int lua_get_key_arg( lua_State * L, int narg )
+{
+    int k = script_keyid_by_name( luaL_checkstring( L, narg ) );
+    if(!k) 
+        luaL_error( L, "unknown key" );
+    return k;
+}
+
 #ifdef OPT_CURVES
 #include "curves.h"
 
@@ -109,13 +118,8 @@ static int luaCB_sleep( lua_State* L )
 // for press,release and click
 static int luaCB_keyfunc( lua_State* L )
 {
-  long k = keyid_by_name( luaL_checkstring( L, 1 ) );
-  if (k > 0 ) {
-    void* func = lua_touserdata( L, lua_upvalueindex(1) );
-    ((void(*)(long))func)( k );
-  }
-  else
-    luaL_error( L, "unknown key" );
+  void* func = lua_touserdata( L, lua_upvalueindex(1) );
+  ((void(*)(long))func)( lua_get_key_arg( L, 1 ) );
   return lua_yield( L, 0 );
 }
 
@@ -514,13 +518,13 @@ static int luaCB_wait_click( lua_State* L )
 
 static int luaCB_is_pressed( lua_State* L )
 {
-  lua_pushboolean( L, camera_is_pressed(luaL_checkstring( L, 1 )));
+  lua_pushboolean( L, script_key_is_pressed(lua_get_key_arg( L, 1 )));
   return 1;
 }
 
 static int luaCB_is_key( lua_State* L )
 {
-  lua_pushboolean( L, camera_is_clicked(luaL_checkstring( L, 1 )));
+  lua_pushboolean( L, script_key_is_clicked(lua_get_key_arg( L, 1 )));
   return 1;
 }
 
@@ -566,7 +570,7 @@ static int luaCB_md_detect_motion( lua_State* L )
   int msecs_before_trigger = (luaL_optnumber(L,16,0));
   if(md_init_motion_detector(
     columns, rows, pixel_measure_mode, detection_timeout, 
-    measure_interval, threshold, draw_grid, 0,
+    measure_interval, threshold, draw_grid,
     clipping_region_mode,
     clipping_region_column1, clipping_region_row1,
     clipping_region_column2, clipping_region_row2,

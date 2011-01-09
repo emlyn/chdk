@@ -677,100 +677,62 @@ long script_start_ptp( char *script , int keep_result )
 }
 #endif
 
-#ifndef UBASIC_TEST
-int camera_is_pressed(const char *s)
+int script_key_is_pressed(int k)
 {
-    long k = keyid_by_name(s);
-    if (k==0xFF) return get_usb_power(1);
-    if (k > 0) {
-        return (kbd_is_key_pressed(k));
-    } else {
-#ifdef OPT_LUA
-        if (is_lua()) {
-            luaL_error( L, "unknown key" );
-        } else
-#endif
-        {
-#ifdef OPT_UBASIC
-            ubasic_error = UBASIC_E_UNK_KEY;
-#endif
-        }
-    }
+    if (k==0xFF)
+        return get_usb_power(1);
+    if (k > 0)
+        return kbd_is_key_pressed(k);
     return 0;
 }
 
-int camera_is_clicked(const char *s)
+int script_key_is_clicked(int k)
 {
-    long k = keyid_by_name(s);
-    if (k==0xFF) return get_usb_power(1);
-    if (k > 0) {
+    if (k==0xFF)
+        return get_usb_power(1);
+    if (k > 0)
         return (kbd_last_clicked == k);
-    } else {
-#ifdef OPT_LUA
-        if (is_lua()) {
-            luaL_error( L, "unknown key" );
-        } else
-#endif
-        {
-#ifdef OPT_UBASIC
-            ubasic_error = UBASIC_E_UNK_KEY;
-#endif
-        }
-    }
     return 0;
 }
 
-#ifdef OPT_UBASIC
-void camera_press(const char *s)
-{
-    // For Lua, luaCB_keyfunc handles this command.
+static const struct Keynames {
+    int keyid;
+    char *keyname;
+} keynames[] = {
+    { KEY_UP,           "up"         },
+    { KEY_DOWN,         "down"       },
+    { KEY_LEFT,         "left"       },
+    { KEY_RIGHT,        "right"      },
+    { KEY_SET,          "set"        },
+    { KEY_SHOOT_HALF,   "shoot_half" },
+    { KEY_SHOOT_FULL,   "shoot_full" },
+    { KEY_ZOOM_IN,      "zoom_in"    },
+    { KEY_ZOOM_OUT,     "zoom_out"   },
+    { KEY_MENU,         "menu"       },
+    { KEY_DISPLAY,      "display"    },
+    { KEY_PRINT,        "print"      },
+    { KEY_ERASE,        "erase"      },
+    { KEY_ISO,          "iso"        },
+    { KEY_FLASH,        "flash"      },
+    { KEY_MF,           "mf"         },
+    { KEY_MACRO,        "macro"      },
+    { KEY_VIDEO,        "video"      },
+    { KEY_TIMER,        "timer"      },
+    { KEY_EXPO_CORR,    "expo_corr"  },
+    { KEY_MICROPHONE,   "fe"         },
+    { KEY_ZOOM_ASSIST,  "zoom_assist"},
+    { KEY_AE_LOCK,      "ae_lock"    },
+    { KEY_METERING,     "metering_mode"},
+    { 0xFF,             "remote"     },
+    { 0xFFFF,           "no_key"     },
+};
 
-    long k = keyid_by_name(s);
-    if (k > 0) {
-        action_push_press(k);
-    } else {
-        ubasic_error = UBASIC_E_UNK_KEY;
-    }
+int script_keyid_by_name (const char *n)
+{
+    int i;
+    for (i=0;i<sizeof(keynames)/sizeof(keynames[0]);i++)
+    if (strcmp(keynames[i].keyname,n) == 0)
+        return keynames[i].keyid;
+    return 0;
 }
 
-void camera_release(const char *s)
-{
-    // For Lua, luaCB_keyfunc handles this command.
-
-    long k = keyid_by_name(s);
-    if (k > 0) {
-        action_push_release(k);
-    } else {
-        ubasic_error = UBASIC_E_UNK_KEY;
-    }
-}
-
-void camera_click(const char *s)
-{
-    // For Lua, luaCB_keyfunc handles this command.
-
-    long k = keyid_by_name(s);
-    if (k > 0) {
-        action_push_click(k);
-    } else {
-        ubasic_error = UBASIC_E_UNK_KEY;
-    }
-}
-
-void camera_shoot()
-{
-    action_push(AS_SHOOT);
-}
-
-void camera_sleep(long v)
-{
-    action_push_delay(v);
-}
-
-void camera_wait_click(int t)
-{
-    action_wait_for_click(t);
-}
-#endif
-
-#endif

@@ -46,6 +46,7 @@
 #include <fcntl.h>
 #include <io.h>
 #include <stdlib.h> /* rand,srand */
+#include "camera_functions.h"
 #else
 #include "ubasic.h"
 #include "platform.h"
@@ -55,13 +56,14 @@
 #include "stdlib.h"
 #include "levent.h"
 #include "console.h"
+#include "../../core/motion_detector.h"
 #endif
+#include "../../core/action_stack.h"
 #include "tokenizer.h"
 
 
 #include "../../include/conf.h"
 
-#include "camera_functions.h"
 
 
 #define INCLUDE_OLD_GET__SYNTAX
@@ -161,6 +163,18 @@ ubasic_init(const char *program)
   ubasic_error = UBASIC_E_NONE;
 }
 /*---------------------------------------------------------------------------*/
+// read a key name and return key id, 
+// set error and return 0 if key invalid
+static int ubasic_get_key_arg() {
+  int k;
+  tokenizer_string(string, sizeof(string));
+  tokenizer_next();
+  k = script_keyid_by_name(string);
+  if (k <= 0)
+    ubasic_error = UBASIC_E_UNK_KEY;
+  return k;
+}
+/*---------------------------------------------------------------------------*/
 static void
 accept(int token)
 {
@@ -251,9 +265,7 @@ case TOKENIZER_GET_VBATT:
     break;
  case TOKENIZER_IS_KEY:
     accept(TOKENIZER_IS_KEY);
-    tokenizer_string(string, sizeof(string));
-    tokenizer_next();
-    r = camera_is_clicked(string);
+    r = script_key_is_clicked(ubasic_get_key_arg());
     break;
 case TOKENIZER_SCRIPT_AUTOSTARTED:
     accept(TOKENIZER_SCRIPT_AUTOSTARTED);
@@ -277,16 +289,16 @@ case TOKENIZER_GET_EXP_COUNT:
     break;
 case TOKENIZER_IS_PRESSED:
     accept(TOKENIZER_IS_PRESSED);
-    tokenizer_string(string, sizeof(string));
-    tokenizer_next();
-    r = camera_is_pressed(string);
+    r = script_key_is_pressed(ubasic_get_key_arg());
     break;
   case TOKENIZER_RANDOM:
     accept(TOKENIZER_RANDOM);
     int min = expr();
     int max = expr();
+    // shouldn't srand every time...
     srand((int)shooting_get_bv96()+(unsigned short)stat_get_vbatt()+get_tick_count());
-    camera_sleep(rand()%10);
+    // wtf
+    action_push_delay(rand()%10);
     r = min + rand()%(max-min+1);
   break;
   case TOKENIZER_GET_MOVIE_STATUS:
@@ -1421,10 +1433,10 @@ end_statement(void)
 static void
 click_statement(void)
 {
-  accept(TOKENIZER_CLICK);
-  tokenizer_string(string, sizeof(string));
-  camera_click(string);
-  tokenizer_next();
+  int k = ubasic_get_key_arg();
+  if (k > 0)
+    action_push_click(k);
+
   DEBUG_PRINTF("End of click\n");
   accept_cr();
 }
@@ -1432,10 +1444,9 @@ click_statement(void)
 static void
 press_statement(void)
 {
-  accept(TOKENIZER_PRESS);
-  tokenizer_string(string, sizeof(string));
-  camera_press(string);
-  tokenizer_next();
+  int k = ubasic_get_key_arg();
+  if (k > 0)
+    action_push_press(k);
   DEBUG_PRINTF("End of press\n");
   accept_cr();
 }
@@ -1443,10 +1454,9 @@ press_statement(void)
 static void
 release_statement(void)
 {
-  accept(TOKENIZER_RELEASE);
-  tokenizer_string(string, sizeof(string));
-  camera_release(string);
-  tokenizer_next();
+  int k = ubasic_get_key_arg();
+  if (k > 0)
+    action_push_release(k);
   DEBUG_PRINTF("End of release\n");
   accept_cr();
 }
@@ -1457,7 +1467,7 @@ sleep_statement(void)
   int val;
   accept(TOKENIZER_SLEEP);
   val = expr();
-  camera_sleep(val);
+  action_push_delay(val);
   DEBUG_PRINTF("End of sleep\n");
   accept_cr();
 }
@@ -1466,7 +1476,7 @@ static void
 shoot_statement(void)
 {
   accept(TOKENIZER_SHOOT);
-  camera_shoot();
+  action_push(AS_SHOOT);
   DEBUG_PRINTF("End of shoot\n");
   accept_cr();
 }
@@ -2114,7 +2124,7 @@ static void wait_click_statement()
         tokenizer_token() != TOKENIZER_ELSE ) {
         timeout = expr();
     }
-    camera_wait_click(timeout);
+    action_wait_for_click(timeout);
     accept_cr();
 }
 
@@ -2124,9 +2134,7 @@ static void is_key_statement(void)
     accept(TOKENIZER_IS_KEY);
     var = tokenizer_variable_num();
     accept(TOKENIZER_VARIABLE);
-    tokenizer_string(string, sizeof(string));
-    tokenizer_next();
-    ubasic_set_variable(var, camera_is_clicked(string));
+    ubasic_set_variable(var, script_key_is_clicked(ubasic_get_key_arg()));
     DEBUG_PRINTF("End of is_key\n");
     accept_cr();
 }
@@ -2710,6 +2718,7 @@ line_statement(void)
   statement();
   return;
 }
+
 /*---------------------------------------------------------------------------*/
 void
 ubasic_run(void)
