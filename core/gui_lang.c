@@ -579,6 +579,8 @@ static char* gui_lang_default = \
 "456 \"Filter edges\"\n"
 "457 \"Always show\"\n"
 "458 \"   Pano overlap (%)\"\n"
+"459 \"Create badpixel.bin\"\n"
+"460 \"You need to be in REC-mode\\nfor this operation.\"\n"
 ;
 
 //-------------------------------------------------------------------

@@ -568,9 +568,11 @@
 #define LANG_MENU_EDGE_FILTER        456
 #define LANG_MENU_EDGE_SHOW        457
 #define LANG_MENU_EDGE_PANO_OVERLAP  458
+#define LANG_MENU_BADPIXEL_CREATE  459
+#define LANG_MSG_RECMODE_REQUIRED  460
 //-------------------------------------------------------------------
 
-#define GUI_LANG_ITEMS                  458
+#define GUI_LANG_ITEMS                  460
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();

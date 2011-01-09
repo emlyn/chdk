@@ -6,6 +6,11 @@
 #if DNG_SUPPORT
 	#include "dng.h"
 	#include "math.h"
+	#include "keyboard.h"
+    #include "action_stack.h"
+    #include "gui_draw.h"
+    #include "gui_mbox.h"
+    #include "gui_lang.h"
 #endif
 #ifdef OPT_CURVES
 	#include "curves.h"
@@ -49,7 +54,7 @@ char* get_alt_raw_image_addr(void){	// return inactive buffer for cameras with m
 
 //-------------------------------------------------------------------
 
-unsigned int get_bad_count_and_write_file(char *fn){
+unsigned int get_bad_count_and_write_file(const char *fn){
  int count=0;
  unsigned short c[2];
  FILE*f;
@@ -122,6 +127,8 @@ int raw_savefile() {
 	char* altrawadr = get_alt_raw_image_addr();
 
     // ! ! ! exclusively for special script which creates badpixel.bin ! ! !
+    // NOTE: get_bad_count_and_write_file() must be called from here and cannot be called
+    // outside of this function.
     if (conf.save_raw==255) conf.save_raw=get_bad_count_and_write_file("A/CHDK/bad_tmp.bin");
     //
 
@@ -441,4 +448,90 @@ void unpatch_bad_pixels_b(void){
 int badpixel_list_loaded_b(void){
  return binary_count;
 }
+
+// -----------------------------------------------
+
+enum BadpixelFSM
+{
+    BADPIX_START,
+    BADPIX_S1,
+    BADPIX_S2
+};
+
+int badpixel_task_stack(long p)
+{
+    static unsigned int badpix_cnt1, badpix_cnt2;
+    static int raw_conf_bck;
+
+    switch(p)
+    {
+
+    case BADPIX_START:
+        action_pop();
+
+        console_clear();
+        console_add_line("Wait please... ");
+        console_add_line("This takes a few seconds,");
+        console_add_line("don't panic!");
+        
+        raw_conf_bck = conf.save_raw;
+        conf.save_raw = 255;
+        
+        shooting_set_tv96_direct(96, SET_LATER);
+        action_push(BADPIX_S1);
+        action_push(AS_SHOOT);
+        action_push_delay(3000);
+        break;
+    case BADPIX_S1:
+        action_pop();        
+
+        badpix_cnt1 = conf.save_raw;
+        shooting_set_tv96_direct(96, SET_LATER);
+
+        action_push(BADPIX_S2);
+        action_push(AS_SHOOT);
+        break;
+    case BADPIX_S2:
+        action_pop();
+
+        badpix_cnt2 = conf.save_raw;
+        conf.save_raw = raw_conf_bck;
+
+        console_clear();
+        if (badpix_cnt1 == badpix_cnt2)
+        {
+            char msg[32];
+            console_add_line("badpixel.bin created.");
+            sprintf(msg, "Bad pixel count: %d", badpix_cnt1);
+            console_add_line(msg);
+        }
+        else
+        {
+            console_add_line("badpixel.bin failed.");
+            console_add_line("Please try again.");
+        }
+        
+        action_push_delay(3000);
+        break;
+    default:
+        action_stack_standard(p);
+        break;
+    }
+   
+    return 1;
+}
+
+
+void create_badpixel_bin()
+{
+    if (!(mode_get() & MODE_REC))
+    {
+        gui_mbox_init(LANG_ERROR, LANG_MSG_RECMODE_REQUIRED, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
+        return;
+    }
+        
+    gui_set_mode(GUI_MODE_ALT);
+    action_stack_create(&badpixel_task_stack, BADPIX_START);
+}
+
 #endif
