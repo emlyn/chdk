@@ -509,7 +509,7 @@ static int luaCB_set_zoom( lua_State* L )
 static int luaCB_wait_click( lua_State* L )
 {
   int timeout = luaL_optnumber( L, 1, 0 );
-  camera_wait_click(timeout);
+  action_wait_for_click(timeout);
   return lua_yield( L, 0 );
 }
 

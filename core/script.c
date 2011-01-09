@@ -9,6 +9,7 @@
 #include "console.h"
 #include "action_stack.h"
 #include "luascript.h"
+#include "lauxlib.h"
 #include "motion_detector.h"
 #include "shot_histogram.h"
 #include "lang.h"
@@ -648,5 +649,87 @@ long script_start_ptp( char *script , int keep_result )
   kbd_set_block(1);
   auto_started = 0;
   return script_stack_start();
+}
+
+int camera_is_pressed(const char *s)
+{
+    long k = keyid_by_name(s);
+    if (k==0xFF) return get_usb_power(1);
+    if (k > 0) {
+        return (kbd_is_key_pressed(k));
+    } else {
+        if (is_lua())
+            luaL_error( L, "unknown key" );
+        else
+            ubasic_error = UBASIC_E_UNK_KEY;
+    }
+    return 0;
+}
+
+int camera_is_clicked(const char *s)
+{
+    long k = keyid_by_name(s);
+    if (k==0xFF) return get_usb_power(1);
+    if (k > 0) {
+        return (kbd_last_clicked == k);
+    } else {
+        if (is_lua())
+            luaL_error( L, "unknown key" );
+        else
+            ubasic_error = UBASIC_E_UNK_KEY;
+    }
+    return 0;
+}
+
+
+void camera_press(const char *s)
+{
+    // For Lua, luaCB_keyfunc handles this command.
+
+    long k = keyid_by_name(s);
+    if (k > 0) {
+        action_push_press(k);
+    } else {
+        ubasic_error = UBASIC_E_UNK_KEY;
+    }
+}
+
+void camera_release(const char *s)
+{
+    // For Lua, luaCB_keyfunc handles this command.
+
+    long k = keyid_by_name(s);
+    if (k > 0) {
+        action_push_release(k);
+    } else {
+        ubasic_error = UBASIC_E_UNK_KEY;
+    }
+}
+
+void camera_click(const char *s)
+{
+    // For Lua, luaCB_keyfunc handles this command.
+
+    long k = keyid_by_name(s);
+    if (k > 0) {
+        action_push_click(k);
+    } else {
+        ubasic_error = UBASIC_E_UNK_KEY;
+    }
+}
+
+void camera_shoot()
+{
+    action_push(AS_SHOOT);
+}
+
+void camera_sleep(long v)
+{
+    action_push_delay(v);
+}
+
+void camera_wait_click(int t)
+{
+    action_wait_for_click(t);
 }
 

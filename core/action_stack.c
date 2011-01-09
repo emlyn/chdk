@@ -142,6 +142,12 @@ void action_push_click(long key)
     action_push_press(key);
 }
 
+void action_wait_for_click(int timeout)
+{
+    action_push(timeout);
+    action_push(AS_WAIT_CLICK);
+}
+
 // Can only be called from an action stack
 void action_push(long p)
 {
