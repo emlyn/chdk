@@ -23,6 +23,9 @@
 #define RAW_TARGET_FILENAME     "%s%04d%s"
 #define RAW_BRACKETING_FILENAME "%s%04d_%02d%s" 
 
+#define PATH_BADPIXEL_BIN "A/CHDK/badpixel.bin"
+#define PATH_BAD_TMP_BIN "A/CHDK/bad_tmp.bin"
+
 //-------------------------------------------------------------------
 static char fn[64];
 static char dir[32];
@@ -126,10 +129,12 @@ int raw_savefile() {
 	char* rawadr = get_raw_image_addr();
 	char* altrawadr = get_alt_raw_image_addr();
 
-    // ! ! ! exclusively for special script which creates badpixel.bin ! ! !
+    // ! ! ! exclusively for badpixel creation ! ! !
     // NOTE: get_bad_count_and_write_file() must be called from here and cannot be called
     // outside of this function.
-    if (conf.save_raw==255) conf.save_raw=get_bad_count_and_write_file("A/CHDK/bad_tmp.bin");
+    // TODO now that we make badpixel in code, special use of save_raw is not needed
+    // also don't need to actually save a raw when making bad pixel
+    if (conf.save_raw==255) conf.save_raw=get_bad_count_and_write_file(PATH_BAD_TMP_BIN);
     //
 
     if (develop_raw) {
@@ -486,6 +491,7 @@ int badpixel_task_stack(long p)
         action_pop();        
 
         badpix_cnt1 = conf.save_raw;
+        conf.save_raw = 255;
         shooting_set_tv96_direct(96, SET_LATER);
 
         action_push(BADPIX_S2);
@@ -500,17 +506,23 @@ int badpixel_task_stack(long p)
         console_clear();
         if (badpix_cnt1 == badpix_cnt2)
         {
+            // TODO script asked confirmation first
+            // should sanity check bad pixel count at least,
+            /// wrong buffer address could make badpixel bigger than available mem
             char msg[32];
             console_add_line("badpixel.bin created.");
             sprintf(msg, "Bad pixel count: %d", badpix_cnt1);
             console_add_line(msg);
+            DeleteFile_Fut(PATH_BADPIXEL_BIN);
+            RenameFile_Fut(PATH_BAD_TMP_BIN,PATH_BADPIXEL_BIN);
         }
         else
         {
             console_add_line("badpixel.bin failed.");
             console_add_line("Please try again.");
         }
-        
+        DeleteFile_Fut(PATH_BAD_TMP_BIN);
+
         action_push_delay(3000);
         break;
     default:
