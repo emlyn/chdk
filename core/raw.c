@@ -4,16 +4,16 @@
 #include "raw.h"
 #include "console.h"
 #if DNG_SUPPORT
-	#include "dng.h"
-	#include "math.h"
-	#include "keyboard.h"
+    #include "dng.h"
+    #include "math.h"
+    #include "keyboard.h"
     #include "action_stack.h"
     #include "gui_draw.h"
     #include "gui_mbox.h"
     #include "gui_lang.h"
 #endif
 #ifdef OPT_CURVES
-	#include "curves.h"
+    #include "curves.h"
 #endif
 #include "shot_histogram.h"
 
@@ -50,7 +50,7 @@ char* get_raw_image_addr(void){
  else return (char*) ((int)hook_raw_image_addr()&~CAM_UNCACHED_BIT);
 }
 
-char* get_alt_raw_image_addr(void){	// return inactive buffer for cameras with multiple RAW buffers (otherwise return active buffer)
+char* get_alt_raw_image_addr(void){    // return inactive buffer for cameras with multiple RAW buffers (otherwise return active buffer)
  if (!conf.raw_cache) return hook_alt_raw_image_addr();
  else return (char*) ((int)hook_alt_raw_image_addr()&~CAM_UNCACHED_BIT);
 }
@@ -125,9 +125,9 @@ int raw_savefile() {
 #endif    
     if (state_kbd_script_run && shot_histogram_isenabled()) build_shot_histogram();
 
-	// Get pointers to RAW buffers (will be the same on cameras that don't have two or more buffers)
-	char* rawadr = get_raw_image_addr();
-	char* altrawadr = get_alt_raw_image_addr();
+    // Get pointers to RAW buffers (will be the same on cameras that don't have two or more buffers)
+    char* rawadr = get_raw_image_addr();
+    char* altrawadr = get_alt_raw_image_addr();
 
     // ! ! ! exclusively for badpixel creation ! ! !
     // NOTE: get_bad_count_and_write_file() must be called from here and cannot be called
@@ -173,9 +173,18 @@ int raw_savefile() {
     
     state_shooting_progress = SHOOTING_PROGRESS_PROCESSING;
 
-	if (conf.save_raw && (!(shooting_get_prop(PROPCASE_RESOLUTION)==5)) && (!((movie_status > 1) && conf.save_raw_in_video   )) && (!((m==MODE_SPORTS) && conf.save_raw_in_sports)) && (!((m==MODE_AUTO) && conf.save_raw_in_auto)) && (!(conf.edge_overlay_enable && conf.save_raw_in_edgeoverlay)) && (!((shooting_get_drive_mode()==1) && conf.save_raw_in_burst && !(m==MODE_SPORTS))) && (!((shooting_get_drive_mode()>=2) && conf.save_raw_in_timer)) && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) ) {
+    if (conf.save_raw
+        && (!(shooting_get_prop(PROPCASE_RESOLUTION)==5))
+        && (!((movie_status > 1) && conf.save_raw_in_video)) 
+        && (!((m==MODE_SPORTS) && conf.save_raw_in_sports)) 
+        && (!((m==MODE_AUTO) && conf.save_raw_in_auto)) 
+        && (!(conf.edge_overlay_enable && conf.save_raw_in_edgeoverlay))
+        && (!((shooting_get_drive_mode()==1) && conf.save_raw_in_burst && !(m==MODE_SPORTS))) 
+        && (!((shooting_get_drive_mode()>=2) && conf.save_raw_in_timer))
+        && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) )
+    {
         long v;
-int timer; char txt[30];
+        int timer; char txt[30];
 
         started();
 
@@ -183,21 +192,30 @@ int timer; char txt[30];
 
         mkdir("A/DCIM");
 #if defined(CAM_DATE_FOLDER_NAMING)
-		if (conf.raw_in_dir)
-			get_target_dir_name(dir);
-		else
-			sprintf(dir, RAW_TARGET_DIRECTORY, 100);
+        if (conf.raw_in_dir)
+            get_target_dir_name(dir);
+        else
+            sprintf(dir, RAW_TARGET_DIRECTORY, 100);
 #else
         sprintf(dir, RAW_TARGET_DIRECTORY, (conf.raw_in_dir)?get_target_dir_num():100);
 #endif
         mkdir(dir);
 
         sprintf(fn, "%s/", dir);
-		if(br_counter && conf.bracketing_add_raw_suffix && (shooting_get_drive_mode()!=0))
-            sprintf(fn+strlen(fn), RAW_BRACKETING_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(), br_counter,conf.dng_raw&&conf.raw_dng_ext ? ".DNG" : img_exts[conf.raw_ext]);
-        else
-            sprintf(fn+strlen(fn), RAW_TARGET_FILENAME, img_prefixes[conf.raw_prefix], get_target_file_num(),
-            conf.dng_raw&&conf.raw_dng_ext ? ".DNG" : img_exts[conf.raw_ext]); 
+        if(br_counter && conf.bracketing_add_raw_suffix && (shooting_get_drive_mode()!=1)) {
+            sprintf(fn+strlen(fn), 
+                    RAW_BRACKETING_FILENAME,
+                    img_prefixes[conf.raw_prefix],
+                    get_target_file_num(),
+                    br_counter,
+                    conf.dng_raw&&conf.raw_dng_ext ? ".DNG" : img_exts[conf.raw_ext]);
+        } else {
+            sprintf(fn+strlen(fn),
+                    RAW_TARGET_FILENAME,
+                    img_prefixes[conf.raw_prefix],
+                    get_target_file_num(),
+                    conf.dng_raw&&conf.raw_dng_ext ? ".DNG" : img_exts[conf.raw_ext]); 
+        }
         fd = open(fn, O_WRONLY|O_CREAT, 0777);
         if (fd>=0) {
             timer=get_tick_count();
@@ -216,21 +234,21 @@ int timer; char txt[30];
             }
 #endif
             if (conf.dng_raw) {
-				// Write alternate (inactive) buffer that we reversed the bytes into above (if only one buffer then it will be the active buffer instead)
-		        write(fd, (char*)(((unsigned long)altrawadr)|CAM_UNCACHED_BIT), hook_raw_size());
-			}
-			else
-			{
-				// Write active RAW buffer
-	            write(fd, (char*)(((unsigned long)rawadr)|CAM_UNCACHED_BIT), hook_raw_size());
-			}
+                // Write alternate (inactive) buffer that we reversed the bytes into above (if only one buffer then it will be the active buffer instead)
+                write(fd, (char*)(((unsigned long)altrawadr)|CAM_UNCACHED_BIT), hook_raw_size());
+            }
+            else
+            {
+                // Write active RAW buffer
+                write(fd, (char*)(((unsigned long)rawadr)|CAM_UNCACHED_BIT), hook_raw_size());
+            }
             close(fd);
             utime(fn, &t);
 #if DNG_SUPPORT
             if (conf.dng_raw) {
              if (get_dng_header() && thumbnail_buf) {
-				 if (rawadr == altrawadr)	// If only one RAW buffer then we have to swap the bytes back
-					reverse_bytes_order2(rawadr, altrawadr, hook_raw_size());
+                 if (rawadr == altrawadr)    // If only one RAW buffer then we have to swap the bytes back
+                    reverse_bytes_order2(rawadr, altrawadr, hook_raw_size());
           //   unpatch_bad_pixels_b();
               }
              if (get_dng_header()) free_dng_header();
@@ -395,9 +413,9 @@ void load_bad_pixels_list(const char* filename){
             int rcnt = read(fd, buf, PIXELS_BUF_SIZE);
             if (rcnt > 0) {
                 if (rcnt == PIXELS_BUF_SIZE) 
-        	    buf[PIXELS_BUF_SIZE-1] = 0;
+                buf[PIXELS_BUF_SIZE-1] = 0;
                 else
-        	    buf[rcnt] = 0;
+                buf[rcnt] = 0;
             }
             close(fd);
         }
