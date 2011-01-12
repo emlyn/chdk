@@ -26,7 +26,7 @@ OPT_LUA_OSLIB=1
 # experimental PTP/USB interface
 #OPT_PTP=1
 #OPT_MD_DEBUG=1
-# needs proper fi2.inc in platform/ !!! see http://chdk.setepontos.com/index.php/topic,2995.0.html
+# require correct FI2 keys in platform/fi2.inc , see http://chdk.wikia.com/wiki/For_Developers/fi2offsets and http://chdk.setepontos.com/index.php/topic,2995.0.html
 #OPT_FI2=1
 # if enabled, compiler will produce a lot of warnings, maybe not always correct ones, see http://chdk.setepontos.com/index.php/topic,2509.msg32191.html#msg32191
 #OPT_WARNINGS=1
