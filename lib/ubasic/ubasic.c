@@ -1433,7 +1433,9 @@ end_statement(void)
 static void
 click_statement(void)
 {
-  int k = ubasic_get_key_arg();
+  int k;
+  accept(TOKENIZER_CLICK);
+  k = ubasic_get_key_arg();
   if (k > 0)
     action_push_click(k);
 
@@ -1444,7 +1446,9 @@ click_statement(void)
 static void
 press_statement(void)
 {
-  int k = ubasic_get_key_arg();
+  int k;
+  accept(TOKENIZER_PRESS);
+  k = ubasic_get_key_arg();
   if (k > 0)
     action_push_press(k);
   DEBUG_PRINTF("End of press\n");
@@ -1454,7 +1458,9 @@ press_statement(void)
 static void
 release_statement(void)
 {
-  int k = ubasic_get_key_arg();
+  int k;
+  accept(TOKENIZER_RELEASE);
+  k = ubasic_get_key_arg();
   if (k > 0)
     action_push_release(k);
   DEBUG_PRINTF("End of release\n");
