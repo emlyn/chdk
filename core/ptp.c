@@ -127,15 +127,17 @@ static int handle_ptp(
       break;
     case PTP_CHDK_ScriptSupport:
       ptp.num_param = 1;
-      ptp.param1 = PTP_CHDK_SCRIPT_SUPPORT_LUA;
+      ptp.param1 = 0;
+#ifdef OPT_LUA
+      ptp.param1 |= PTP_CHDK_SCRIPT_SUPPORT_LUA;
+#endif
       break;
     case PTP_CHDK_ScriptStatus:
       ptp.num_param = 1;
 // TODO script_is_running should always be defined, just ret 0 if script disabled
-#ifdef OPT_SCRIPTING
-      ptp.param1 = script_is_running()?PTP_CHDK_SCRIPT_STATUS_RUN:0;
-#else
       ptp.param1 = 0;
+#ifdef OPT_SCRIPTING
+      ptp.param1 |= script_is_running()?PTP_CHDK_SCRIPT_STATUS_RUN:0;
 #endif
       break;
     case PTP_CHDK_GetMemory:
