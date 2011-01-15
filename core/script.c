@@ -454,7 +454,6 @@ void script_console_add_line(const char *str)
     }
 }
 
-#ifdef OPT_LUA
 static int is_lua()
 {
   int len;
@@ -466,7 +465,6 @@ static int is_lua()
     && ( s[len-3] == 'l' || s[len-3] == 'L' )
     && s[len-4] == '.';
 }
-#endif
 
 static void wait_and_end(void)
 {
@@ -629,8 +627,8 @@ long script_start_gui( int autostart )
     else
         script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
 
-#ifdef OPT_LUA
     if( is_lua() ) {
+#ifdef OPT_LUA
         if( !lua_script_start(script_source_str) ) {
             script_print_screen_end();
             wait_and_end();
@@ -645,8 +643,13 @@ long script_start_gui( int autostart )
             }
         }
         state_lua_kbd_first_call_to_resume = 1;
-    } else
+#else
+        console_add_line("Cannot run script.");
+        console_add_line("There is no Lua");
+        console_add_line("support in this build.");
+        return -1;
 #endif
+    } else
     { // ubasic
 #ifdef OPT_UBASIC
         ubasic_init(script_source_str);
@@ -654,6 +657,11 @@ long script_start_gui( int autostart )
         for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
             ubasic_set_variable(i, conf.ubasic_vars[i]);
         }
+#else
+        console_add_line("Cannot run script.");
+        console_add_line("There is no UBasic");
+        console_add_line("support in this build.");
+        return -1;
 #endif
     }
 
