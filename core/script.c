@@ -644,9 +644,9 @@ long script_start_gui( int autostart )
         }
         state_lua_kbd_first_call_to_resume = 1;
 #else
-        console_add_line("Cannot run script.");
-        console_add_line("There is no Lua");
-        console_add_line("support in this build.");
+        char msg[64];
+        sprintf(msg,lang_str(LANG_CONSOLE_SCRIPT_DISABLED_IN_BUILD),"Lua");
+        console_add_line(msg);
         return -1;
 #endif
     } else
@@ -658,9 +658,9 @@ long script_start_gui( int autostart )
             ubasic_set_variable(i, conf.ubasic_vars[i]);
         }
 #else
-        console_add_line("Cannot run script.");
-        console_add_line("There is no UBasic");
-        console_add_line("support in this build.");
+        char msg[64];
+        sprintf(msg,lang_str(LANG_CONSOLE_SCRIPT_DISABLED_IN_BUILD),"UBASIC");
+        console_add_line(msg);
         return -1;
 #endif
     }

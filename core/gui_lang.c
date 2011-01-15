@@ -544,7 +544,7 @@ static char* gui_lang_default = \
 "423 \"Rear curtain flash sync\"\n"
 "424 \"DNG format\"\n"
 "425 \"RAW buffer cached\"\n"
-"426 \"Cannot load CHDK/badpixel.bin\\nPlease run \\nCHDK/SCRIPTS/TEST/badpixel.lua\"\n"
+"426 \"Cannot load CHDK/badpixel.bin\\nUse 'Create badpixel.bin' first\"\n"
 "427 \"Show saving time\"\n"
 
 "428 \"Connect 4\"\n"
@@ -581,6 +581,7 @@ static char* gui_lang_default = \
 "458 \"   Pano overlap (%)\"\n"
 "459 \"Create badpixel.bin\"\n"
 "460 \"You need to be in REC-mode\\nfor this operation.\"\n"
+"461 \"%s disabled in build\"\n"
 ;
 
 //-------------------------------------------------------------------
