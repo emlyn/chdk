@@ -58,16 +58,38 @@ char* get_alt_raw_image_addr(void){    // return inactive buffer for cameras wit
 //-------------------------------------------------------------------
 
 #if DNG_SUPPORT
-unsigned int get_bad_count_and_write_file(const char *fn){
- int count=0;
- unsigned short c[2];
- FILE*f;
- f=fopen(fn,"w+b");
- for (c[1]=CAM_ACTIVE_AREA_Y1; c[1]<CAM_ACTIVE_AREA_Y2; c[1]++)
-   for (c[0]=CAM_ACTIVE_AREA_X1; c[0]<CAM_ACTIVE_AREA_X2; c[0]++)
-    if (get_raw_pixel(c[0],c[1])==0) { fwrite(c, 1, 4, f); count++;}
- fclose(f);
- return count;
+#define INIT_BADPIXEL_COUNT -1
+#define INIT_BADPIXEL_FILE -2
+
+int init_badpixel_bin_flag; // contants above to count/create file, > 0 num bad pixel
+int raw_init_badpixel_bin(){
+  int count;
+  unsigned short c[2];
+  FILE*f;
+  if(init_badpixel_bin_flag == INIT_BADPIXEL_FILE) {
+    f=fopen(PATH_BAD_TMP_BIN,"w+b");
+  } else if (init_badpixel_bin_flag == INIT_BADPIXEL_COUNT){
+    f=NULL;
+  } else {
+    return 0;
+  }
+  count = 0;
+  for (c[1]=CAM_ACTIVE_AREA_Y1; c[1]<CAM_ACTIVE_AREA_Y2; c[1]++) {
+    for (c[0]=CAM_ACTIVE_AREA_X1; c[0]<CAM_ACTIVE_AREA_X2; c[0]++) {
+      if (get_raw_pixel(c[0],c[1])==0) {
+        if(f) {
+          fwrite(c, 1, 4, f);
+        }
+        count++;
+      }
+    }
+  }
+  if(f) {
+    fclose(f);
+  }
+  init_badpixel_bin_flag = count;
+  state_shooting_progress = SHOOTING_PROGRESS_PROCESSING;
+  return 1;
 }
 
 unsigned short get_raw_pixel(unsigned int x,unsigned  int y);
@@ -108,6 +130,8 @@ void create_thumbnail(char* buf){
     *buf++=r; *buf++=g; *buf++=b; 
    }
 }
+#else // no DNG_SUPPORT
+static inline int __attribute__((always_inline)) raw_init_badpixel_bin(void) {return 0;}
 #endif
 //-------------------------------------------------------------------
 
@@ -127,15 +151,10 @@ int raw_savefile() {
     char* rawadr = get_raw_image_addr();
     char* altrawadr = get_alt_raw_image_addr();
 
-    // ! ! ! exclusively for badpixel creation ! ! !
-    // NOTE: get_bad_count_and_write_file() must be called from here and cannot be called
-    // outside of this function.
-    // TODO now that we make badpixel in code, special use of save_raw is not needed
-    // also don't need to actually save a raw when making bad pixel
-#if DNG_SUPPORT
-    if (conf.save_raw==255) conf.save_raw=get_bad_count_and_write_file(PATH_BAD_TMP_BIN);
-#endif
-    //
+    // count/save badpixels if requested
+    if(raw_init_badpixel_bin()) {
+      return 0;
+    }
 
     if (develop_raw) {
      started();
@@ -183,7 +202,6 @@ int raw_savefile() {
         && (!((shooting_get_drive_mode()>=2) && conf.save_raw_in_timer))
         && (!((shooting_get_prop(PROPCASE_BRACKET_MODE)==1) && conf.save_raw_in_ev_bracketing)) )
     {
-        long v;
         int timer; char txt[30];
 
         started();
@@ -483,8 +501,7 @@ enum BadpixelFSM
 
 int badpixel_task_stack(long p)
 {
-    static unsigned int badpix_cnt1, badpix_cnt2;
-    static int raw_conf_bck;
+    static unsigned int badpix_cnt1;
 
     switch(p)
     {
@@ -496,10 +513,9 @@ int badpixel_task_stack(long p)
         console_add_line("Wait please... ");
         console_add_line("This takes a few seconds,");
         console_add_line("don't panic!");
-        
-        raw_conf_bck = conf.save_raw;
-        conf.save_raw = 255;
-        
+
+        init_badpixel_bin_flag = INIT_BADPIXEL_COUNT;
+
         shooting_set_tv96_direct(96, SET_LATER);
         action_push(BADPIX_S1);
         action_push(AS_SHOOT);
@@ -508,8 +524,8 @@ int badpixel_task_stack(long p)
     case BADPIX_S1:
         action_pop();        
 
-        badpix_cnt1 = conf.save_raw;
-        conf.save_raw = 255;
+        badpix_cnt1 = init_badpixel_bin_flag;
+        init_badpixel_bin_flag = INIT_BADPIXEL_FILE;
         shooting_set_tv96_direct(96, SET_LATER);
 
         action_push(BADPIX_S2);
@@ -518,11 +534,8 @@ int badpixel_task_stack(long p)
     case BADPIX_S2:
         action_pop();
 
-        badpix_cnt2 = conf.save_raw;
-        conf.save_raw = raw_conf_bck;
-
         console_clear();
-        if (badpix_cnt1 == badpix_cnt2)
+        if (badpix_cnt1 == init_badpixel_bin_flag)
         {
             // TODO script asked confirmation first
             // should sanity check bad pixel count at least,
@@ -539,6 +552,7 @@ int badpixel_task_stack(long p)
             console_add_line("badpixel.bin failed.");
             console_add_line("Please try again.");
         }
+        init_badpixel_bin_flag = 0;
         DeleteFile_Fut(PATH_BAD_TMP_BIN);
 
         action_push_delay(3000);
@@ -547,7 +561,7 @@ int badpixel_task_stack(long p)
         action_stack_standard(p);
         break;
     }
-   
+
     return 1;
 }
 
