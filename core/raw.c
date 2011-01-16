@@ -57,21 +57,19 @@ char* get_alt_raw_image_addr(void){    // return inactive buffer for cameras wit
 
 //-------------------------------------------------------------------
 
+#if DNG_SUPPORT
 unsigned int get_bad_count_and_write_file(const char *fn){
  int count=0;
  unsigned short c[2];
  FILE*f;
  f=fopen(fn,"w+b");
- for (c[1]=0; c[1]<CAM_RAW_ROWS; c[1]++)
-   for (c[0]=0; c[0]<CAM_RAW_ROWPIX; c[0]++)
+ for (c[1]=CAM_ACTIVE_AREA_Y1; c[1]<CAM_ACTIVE_AREA_Y2; c[1]++)
+   for (c[0]=CAM_ACTIVE_AREA_X1; c[0]<CAM_ACTIVE_AREA_X2; c[0]++)
     if (get_raw_pixel(c[0],c[1])==0) { fwrite(c, 1, 4, f); count++;}
  fclose(f);
  return count;
 }
 
-
-//-------------------------------------------------------------------
-#if DNG_SUPPORT
 unsigned short get_raw_pixel(unsigned int x,unsigned  int y);
 
 static unsigned char gamma[256];
@@ -134,7 +132,9 @@ int raw_savefile() {
     // outside of this function.
     // TODO now that we make badpixel in code, special use of save_raw is not needed
     // also don't need to actually save a raw when making bad pixel
+#if DNG_SUPPORT
     if (conf.save_raw==255) conf.save_raw=get_bad_count_and_write_file(PATH_BAD_TMP_BIN);
+#endif
     //
 
     if (develop_raw) {
