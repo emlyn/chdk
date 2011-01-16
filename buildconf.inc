@@ -8,6 +8,8 @@ OPT_TEXTREADER=1
 OPT_CALENDAR=1
 OPT_DEBUGGING=1
 OPT_EDGEOVERLAY=1
+# experimental PTP/USB interface. Enabled/disabled for individual cameras in camera.h
+OPT_PTP=1
 
 # Scripting components
 OPT_UBASIC=1
@@ -23,8 +25,6 @@ OPT_LUA_OSLIB=1
 # experimental - allocate memory from alternate heap. Default 2MB from EXMEM_RAMDISK
 # See exmem_malloc_init in generic/wrappers.c
 #OPT_EXMEM_MALLOC=1
-# experimental PTP/USB interface
-#OPT_PTP=1
 #OPT_MD_DEBUG=1
 # require correct FI2 keys in platform/fi2.inc , see http://chdk.wikia.com/wiki/For_Developers/fi2offsets and http://chdk.setepontos.com/index.php/topic,2995.0.html
 #OPT_FI2=1

@@ -679,6 +679,7 @@
     #define PARAM_CAMERA_NAME 3 // parameter number for GetParameterData
 
     #define DNG_EXT_FROM ".DPS"
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 //----------------------------------------------------------
 
 #elif defined (CAMERA_a620)
@@ -1879,6 +1880,7 @@
     #define CAM_SENSOR_BITS_PER_PIXEL   12
     #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
     #define CAM_BLACK_LEVEL             127
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 //----------------------------------------------------------
 
 #elif defined (CAMERA_ixus980_sd990)
@@ -2295,6 +2297,7 @@
     #define CAM_ZEBRA_ASPECT_ADJUST 1
 	// camera has very little free memory
     #define CAM_ZEBRA_NOBUF 1
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 
 //----------------------------------------------------------
 
@@ -2406,6 +2409,7 @@
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
     #define CAM_BRACKETING              1 
     #define DNG_EXT_FROM ".DPS"
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 //----------------------------------------------------------
 
 
@@ -2737,6 +2741,7 @@
    #define CAM_QUALITY_OVERRIDE 1
    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
    #define CAM_ZEBRA_ASPECT_ADJUST 1
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 //----------------------------------------------------------
 
 #elif defined (CAMERA_g11)
@@ -3119,7 +3124,6 @@
   
    #undef EDGE_HMARGIN
    #define EDGE_HMARGIN 2
-   #undef CAM_CHDK_PTP
    #define CAM_CHDK_PTP 1
 	
 	#define	CAM_DATE_FOLDER_NAMING	1
