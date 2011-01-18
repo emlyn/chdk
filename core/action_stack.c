@@ -268,6 +268,7 @@ int action_stack_standard(long p)
 
         action_push(AS_WAIT_SAVE);
 
+        action_push_release(KEY_SHOOT_HALF);
         action_push_release(KEY_SHOOT_FULL);
 
         action_push_press(KEY_SHOOT_FULL);
