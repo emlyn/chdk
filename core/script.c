@@ -675,7 +675,7 @@ long script_start_gui( int autostart )
 #ifdef OPT_LUA
 long script_start_ptp( char *script , int keep_result )
 {
-  lua_script_start(script);
+  if (!lua_script_start(script)) return -1;
   lua_keep_result = keep_result;
   state_lua_kbd_first_call_to_resume = 1;
   state_kbd_script_run = 1;

@@ -416,55 +416,64 @@ static int handle_ptp(
         long script_action_stack = script_start_ptp(buf, param3&PTP_CHDK_ES_RESULT);
 
         free(buf);
-
-        if ( param3 & PTP_CHDK_ES_WAIT )
+        
+        if (script_action_stack < 0)
+        {
+          ptp.code = PTP_RC_InvalidParameter;
+          break;
+        }
+        else
         {
 
-          while ( script_is_running() )
-            msleep(100);
-
-          if ( param3 & PTP_CHDK_ES_RESULT )
+          if ( param3 & PTP_CHDK_ES_WAIT )
           {
-            lua_State *Lt;
-            temp_data.lua_state = lua_consume_result();
-            Lt = get_lua_thread(temp_data.lua_state);
-            temp_data_kind = 2;
-            if ( lua_gettop(Lt) == 0 )
+
+            while ( script_is_running() )
+              msleep(100);
+
+            if ( param3 & PTP_CHDK_ES_RESULT )
             {
-              temp_data_extra = PTP_CHDK_TYPE_NOTHING;
-            } else if ( lua_isnil(Lt,1) )
-            {
-              temp_data_extra = PTP_CHDK_TYPE_NIL;
-            } else if ( lua_isboolean(Lt,1) )
-            {
-              temp_data_extra = PTP_CHDK_TYPE_BOOLEAN;
-            } else if ( lua_isnumber(Lt,1) )
-            {
-              temp_data_extra = PTP_CHDK_TYPE_INTEGER;
-            } else if ( lua_isstring(Lt,1) )
-            {
-              temp_data_extra = PTP_CHDK_TYPE_STRING;
-            } else {
-              temp_data_extra = PTP_CHDK_TYPE_NOTHING;
-            }
-            ptp.num_param = 1;
-            ptp.param1 = temp_data_extra;
-            if ( temp_data_extra != PTP_CHDK_TYPE_STRING )
-            {
-              if ( temp_data_extra == PTP_CHDK_TYPE_BOOLEAN )
+              lua_State *Lt;
+              temp_data.lua_state = lua_consume_result();
+              Lt = get_lua_thread(temp_data.lua_state);
+              temp_data_kind = 2;
+              if ( lua_gettop(Lt) == 0 )
               {
-                ptp.num_param = 2;
-                ptp.param2 = lua_toboolean(Lt,1);
-              } if ( temp_data_extra == PTP_CHDK_TYPE_INTEGER )
+                temp_data_extra = PTP_CHDK_TYPE_NOTHING;
+              } else if ( lua_isnil(Lt,1) )
               {
-                ptp.num_param = 2;
-                ptp.param2 = lua_tonumber(Lt,1);
+                temp_data_extra = PTP_CHDK_TYPE_NIL;
+              } else if ( lua_isboolean(Lt,1) )
+              {
+                temp_data_extra = PTP_CHDK_TYPE_BOOLEAN;
+              } else if ( lua_isnumber(Lt,1) )
+              {
+                temp_data_extra = PTP_CHDK_TYPE_INTEGER;
+              } else if ( lua_isstring(Lt,1) )
+              {
+                temp_data_extra = PTP_CHDK_TYPE_STRING;
+              } else {
+                temp_data_extra = PTP_CHDK_TYPE_NOTHING;
               }
-              lua_close(Lt);
-              temp_data_kind = 0;
-            } else {
-              ptp.num_param = 2;
-              ptp.param2 = lua_objlen(Lt,1);
+              ptp.num_param = 1;
+              ptp.param1 = temp_data_extra;
+              if ( temp_data_extra != PTP_CHDK_TYPE_STRING )
+              {
+                if ( temp_data_extra == PTP_CHDK_TYPE_BOOLEAN )
+                {
+                  ptp.num_param = 2;
+                  ptp.param2 = lua_toboolean(Lt,1);
+                } if ( temp_data_extra == PTP_CHDK_TYPE_INTEGER )
+                {
+                  ptp.num_param = 2;
+                  ptp.param2 = lua_tonumber(Lt,1);
+                }
+                lua_close(Lt);
+                temp_data_kind = 0;
+              } else {
+                ptp.num_param = 2;
+                ptp.param2 = lua_objlen(Lt,1);
+              }
             }
           }
         }
