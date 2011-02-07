@@ -59,7 +59,7 @@ void taskHook(context_t **context)
 	016E820     MEMISOSTART             start of our data / bss
 
 	0400000                             raw buffers
-	83FFFFF                             end of raw buffers
+	8000000                             end of raw buffers
 
 	C0xxxxxx                            I/O
 
@@ -164,6 +164,7 @@ void __attribute__((naked,noinline)) boot() {
                  "CMP     R3, R1\n"
                  "STRCC   R2, [R3],#4\n"
                  "BCC     loc_FF810154\n"
+				
                  "B       sub_FF810354_my" // -->
     );
 }
@@ -374,8 +375,6 @@ void __attribute__((naked,noinline)) task_Startup_my() {
 //		"BL		sub_FF834620\n"	//taskcreate_PhySw\n"
 		"BL		taskcreatePhySw_my\n"  // we do this here rather than hook so we don't waste the original stack
 
-		//"BL		CreateTask_init_chdk_ptp\n"			// PTP initialization (done in core/main.c)
-
 		"B		sub_FF81FB24\n"		// Continue in firmware
      );
 }
@@ -412,11 +411,6 @@ void CreateTask_spytask() {
 }
 
  ///*----------------------------------------------------------------------
-	// CreateTask_init_chdk_ptp
- //-----------------------------------------------------------------------*/
- //void CreateTask_init_chdk_ptp() {
-	// _CreateTask("InitCHDKPTP", 0x19, 0x2000, init_chdk_ptp, 0);
- //};
 
 // @ FF89FC7C
 void __attribute__((naked,noinline)) init_file_modules_task() {

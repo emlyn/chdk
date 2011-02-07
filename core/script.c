@@ -8,12 +8,15 @@
 #include "script.h"
 #include "console.h"
 #include "action_stack.h"
-#include "luascript.h"
 #include "motion_detector.h"
 #include "shot_histogram.h"
 #include "lang.h"
 #include "gui_lang.h"
 #include "kbd.h"
+
+#ifdef OPT_LUA
+#include "lauxlib.h"
+#endif
 
 //-------------------------------------------------------------------
 
@@ -78,7 +81,10 @@ int script_param_order[SCRIPT_NUM_PARAMS];
 static char script_params_update[SCRIPT_NUM_PARAMS];
 static int script_loaded_params[SCRIPT_NUM_PARAMS];
 static long running_script_stack_name = -1;
+
+#ifdef OPT_LUA
 static int state_lua_kbd_first_call_to_resume;	// AUJ
+#endif
 
 //-------------------------------------------------------------------
 static void process_title(const char *title) {
@@ -477,6 +483,7 @@ static void process_script()
     int Lres;
 
     if (state_kbd_script_run != 3) {
+#ifdef OPT_LUA
         if( L ) {
             int top;
             if (state_lua_kbd_first_call_to_resume) {
@@ -504,13 +511,16 @@ static void process_script()
                 script_end();
             }    
         } else
+#endif
         {
+#ifdef OPT_UBASIC
             ubasic_run();
             if (ubasic_finished()) {
                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
                 action_pop();
                 script_end();
             }    
+#endif
         }
     }
 }
@@ -529,6 +539,7 @@ static int script_action_stack(long p)
             if(md_detect_motion()==0)
             {
                 action_pop();
+#ifdef OPT_LUA
                 if (L)
                 {
                        // We need to recover the motion detector's
@@ -536,8 +547,11 @@ static int script_action_stack(long p)
                        // it onto the thread's stack.
                        lua_pushnumber( Lt, md_get_result() );
                 } else
+#endif
                 {
+#ifdef OPT_UBASIC
                     ubasic_set_md_ret(md_get_result());
+#endif
                 }
             }
             break;
@@ -568,11 +582,15 @@ int script_is_running()
 void script_end()
 {
     script_print_screen_end();
+#ifdef OPT_LUA
     if( L ) {
       lua_script_reset();
-    }
-    else {
+    } else
+#endif
+    {
+#ifdef OPT_UBASIC
       ubasic_end();
+#endif
     }
 	md_close_motion_detector();
 	shot_histogram_set(0);
@@ -610,6 +628,7 @@ long script_start_gui( int autostart )
         script_console_add_line(lang_str(LANG_CONSOLE_TEXT_STARTED));
 
     if( is_lua() ) {
+#ifdef OPT_LUA
         if( !lua_script_start(script_source_str) ) {
             script_print_screen_end();
             wait_and_end();
@@ -624,12 +643,26 @@ long script_start_gui( int autostart )
             }
         }
         state_lua_kbd_first_call_to_resume = 1;
-    } else { // ubasic
+#else
+        char msg[64];
+        sprintf(msg,lang_str(LANG_CONSOLE_SCRIPT_DISABLED_IN_BUILD),"Lua");
+        console_add_line(msg);
+        return -1;
+#endif
+    } else
+    { // ubasic
+#ifdef OPT_UBASIC
         ubasic_init(script_source_str);
 
         for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
             ubasic_set_variable(i, conf.ubasic_vars[i]);
         }
+#else
+        char msg[64];
+        sprintf(msg,lang_str(LANG_CONSOLE_SCRIPT_DISABLED_IN_BUILD),"UBASIC");
+        console_add_line(msg);
+        return -1;
+#endif
     }
 
     state_kbd_script_run = 1;
@@ -639,14 +672,75 @@ long script_start_gui( int autostart )
     return script_stack_start();
 }
 
+#ifdef OPT_LUA
 long script_start_ptp( char *script , int keep_result )
 {
-  lua_script_start(script);
+  if (!lua_script_start(script)) return -1;
   lua_keep_result = keep_result;
   state_lua_kbd_first_call_to_resume = 1;
   state_kbd_script_run = 1;
   kbd_set_block(1);
   auto_started = 0;
   return script_stack_start();
+}
+#endif
+
+int script_key_is_pressed(int k)
+{
+    if (k==0xFF)
+        return get_usb_power(1);
+    if (k > 0)
+        return kbd_is_key_pressed(k);
+    return 0;
+}
+
+int script_key_is_clicked(int k)
+{
+    if (k==0xFF)
+        return get_usb_power(1);
+    if (k > 0)
+        return (kbd_last_clicked == k);
+    return 0;
+}
+
+static const struct Keynames {
+    int keyid;
+    char *keyname;
+} keynames[] = {
+    { KEY_UP,           "up"         },
+    { KEY_DOWN,         "down"       },
+    { KEY_LEFT,         "left"       },
+    { KEY_RIGHT,        "right"      },
+    { KEY_SET,          "set"        },
+    { KEY_SHOOT_HALF,   "shoot_half" },
+    { KEY_SHOOT_FULL,   "shoot_full" },
+    { KEY_ZOOM_IN,      "zoom_in"    },
+    { KEY_ZOOM_OUT,     "zoom_out"   },
+    { KEY_MENU,         "menu"       },
+    { KEY_DISPLAY,      "display"    },
+    { KEY_PRINT,        "print"      },
+    { KEY_ERASE,        "erase"      },
+    { KEY_ISO,          "iso"        },
+    { KEY_FLASH,        "flash"      },
+    { KEY_MF,           "mf"         },
+    { KEY_MACRO,        "macro"      },
+    { KEY_VIDEO,        "video"      },
+    { KEY_TIMER,        "timer"      },
+    { KEY_EXPO_CORR,    "expo_corr"  },
+    { KEY_MICROPHONE,   "fe"         },
+    { KEY_ZOOM_ASSIST,  "zoom_assist"},
+    { KEY_AE_LOCK,      "ae_lock"    },
+    { KEY_METERING,     "metering_mode"},
+    { 0xFF,             "remote"     },
+    { 0xFFFF,           "no_key"     },
+};
+
+int script_keyid_by_name (const char *n)
+{
+    int i;
+    for (i=0;i<sizeof(keynames)/sizeof(keynames[0]);i++)
+    if (strcmp(keynames[i].keyname,n) == 0)
+        return keynames[i].keyid;
+    return 0;
 }
 

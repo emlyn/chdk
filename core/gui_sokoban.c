@@ -15,7 +15,6 @@
 #define FIELD_WIDTH             15
 #define FIELD_HEIGHT            15
 
-#define SCREEN_COLOR            0xF7
 #define WALL_COLOR_1            COLOR_GREY
 #define WALL_COLOR_2            COLOR_BLACK
 #define BOX_COLOR_1             0x26

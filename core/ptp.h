@@ -17,6 +17,7 @@ protocol version history
 #define PTP_RC_OK 0x2001
 #define PTP_RC_GeneralError 0x2002
 #define PTP_RC_ParameterNotSupported 0x2006
+#define PTP_RC_InvalidParameter 0x201D
 
 // N.B.: unused parameters should be set to 0
 enum {

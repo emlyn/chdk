@@ -113,7 +113,7 @@ if(conf.ricoh_ca1_mode && conf.remote_enable)			//ricoh_ca1_mode
 			 while(nSW<20);
 			 }
 		} 		//continuous-shooting mode 
-		else{		//nomal mode 
+		else{		// normal mode
 			shoot_counter=0;
 			if(conf.bracket_type>2){
 				shoot_counter=(conf.bracket_type-2)*2;
@@ -127,7 +127,7 @@ if(conf.ricoh_ca1_mode && conf.remote_enable)			//ricoh_ca1_mode
 		// ------ modif by Masuji SUTO (start) --------------
 		        while(((((usb_physw[2] & USB_MASK)!=USB_MASK) && (nMode==0)) || (((usb_physw[2] & USB_MASK)==USB_MASK) && (nMode==1))) && ((int)get_tick_count()-tick < DELAY_TIMEOUT));
 		// ------ modif by Masuji SUTO (end)   --------------
-		} 		//nomal mode 
+		} 		// normal mode
 	}		//ricoh_ca1_mode
 else		//ricoh_ca1_mode disebale
    {

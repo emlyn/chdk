@@ -415,10 +415,6 @@ static void conf_change_histo_layout() {
   }
 }
 
-//static void conf_change_script_file() {
-//  script_load(conf.script_file, 2);
-//}
-
 static void conf_change_alt_mode_button() {
 #if CAM_ADJUSTABLE_ALT_BUTTON
   kbd_set_alt_mode_key_mask(conf.alt_mode_button);
@@ -430,6 +426,12 @@ static void conf_change_alt_mode_button() {
 static void conf_change_font_cp() {
   font_init();
   font_set(conf.font_cp);
+}
+
+static void conf_change_script_file() {
+#ifdef OPT_SCRIPTING
+    script_load(conf.script_file, 2);
+#endif
 }
 
 static void conf_change_menu_rbf_file() {
@@ -448,10 +450,6 @@ static void conf_change_video_bitrate() {
 
 static void conf_change_menu_symbol_rbf_file() {
   if (!rbf_load_symbol(conf.menu_symbol_rbf_file)) conf.menu_symbol_enable=0;		//AKA
-}
-
-static void conf_change_script_file() {
-  script_load(conf.script_file, 2);
 }
 
 void conf_change_dng(void){

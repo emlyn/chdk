@@ -114,7 +114,7 @@ void wait_until_remote_button_is_released(void)
 					while(nSW<20);
 				}
 			} 		//continuous-shooting mode
-			else{		//nomal mode
+			else{		// normal mode
 				shoot_counter=0;
 				if(conf.bracket_type>2){
 					shoot_counter=(conf.bracket_type-2)*2;

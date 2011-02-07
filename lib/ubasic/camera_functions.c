@@ -8,40 +8,51 @@ int shot_histogram_enabled=0;
 int state_kbd_script_run=1;
 int zoom_points = 3;
 #define MODE_REC                0x0100
-
-void camera_press(const char *s)
-{
-    printf("*** button press '%s' ***\n",s);
+#define AS_SHOOT 1
+int script_keyid_by_name(const char *s) {
+	return 1;
 }
 
-void camera_release(const char *s)
-{
-    printf("*** button release '%s' ***\n",s);
+void console_set_autoredraw(int n) {
+    printf("*** console_set_auto_redraw %d ***\n",n);
 }
 
-void camera_click(const char *s)
+void action_push_press(int k)
 {
-    printf("*** button click '%s' ***\n",s);
+    printf("*** button press %d ***\n",k);
 }
 
-void camera_sleep(int v)
+void action_push_release(int k)
+{
+    printf("*** button release %d ***\n",k);
+}
+
+void action_push_click(int k)
+{
+    printf("*** button click %d ***\n",k);
+}
+
+void action_push_delay(int v)
 {
     printf("*** sleep %d ***\n",v);
 }
 
-void camera_shoot()
+void action_push(int id)
 {
-    printf("*** shoot ***\n");
+	if(id == AS_SHOOT)
+		printf("*** shoot ***\n");
+	else
+		printf("*** action_push(%d) ***\n",id);
 }
 
-void camera_wait_click(int t)
+void action_wait_for_click(int t)
 {
     printf("*** wait_click %d ***\n", t);
 }
 
-int camera_is_clicked(const char *s)
+int script_key_is_clicked(int k)
 {
-    printf("*** is_key '%s' ***\n", s);
+    printf("*** is_clicked %d ***\n", k);
     return 1;
 }
 
@@ -136,11 +147,9 @@ void console_set_layout(int x1, int y1, int x2, int y2) {
     printf(">>> set console layout to %d %d %d %d\n", x1,y1,x2,y2);
 }
 
-/*
 void script_console_set_autoredraw(int value) {
     printf(">>> set console auto_redraw to %d\n", value);
 }
-*/
 
 void console_redraw() {
     printf("*** console redraw ***\n");
@@ -440,9 +449,9 @@ int get_exposure_counter(void)
 }
 
 
-int camera_is_pressed(const char *v) 
+int script_key_is_pressed(const char *v) 
 {
-    printf("*** camera_is_pressed %s ***\n", v);
+    printf("*** script_key_is_pressed %s ***\n", v);
 	return 0;
 }
 

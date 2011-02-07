@@ -63,3 +63,4 @@ NHSTUB(UnlockAndRefresh, 0xFF9F8A3C)//ff9f8ae0)             // ditto
 
 NHSTUB(GetImageFolder, 0xff935158)               // function before "GetCameraObjectTmpPath ERROR" string
 
+NHSTUB(exmem_alloc, 0xff8370f0)                  // Search for "ExMem.AllocCacheable"

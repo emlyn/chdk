@@ -88,3 +88,9 @@ int vid_get_viewport_yoffset()
 		return 30;
 	return 0;
 }
+
+// viewport image offset - used when image size != viewport size (zebra, histogram, motion detect & edge overlay)
+// returns the byte offset into the viewport buffer where the image pixels start (to skip any black borders)
+int vid_get_viewport_image_offset() {
+	return (vid_get_viewport_yoffset() * vid_get_viewport_buffer_width()) * 3;
+}

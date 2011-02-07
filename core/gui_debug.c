@@ -17,9 +17,6 @@ static long dummy=0;
 static unsigned int step;
 
 //-------------------------------------------------------------------
-#define SCREEN_COLOR    0xF7
-
-//-------------------------------------------------------------------
 void gui_debug_init(void *st_addr) {
     addr = st_addr;
     debug_to_draw = 1;
@@ -32,7 +29,7 @@ void gui_debug_init(void *st_addr) {
 static void gui_debug_draw_values(const coord y, void* addr) {
     int i;
 
-    if (!(addr<(void*)0x2000000 || addr>(void*)0xFFC00000)) { addr = &dummy; };
+    if (!(addr<=(void*)MAXRAMADDR || addr>=(void*)ROMBASEADDR)) { addr = &dummy; };
 
     sprintf(buf, "0x%08X (%10u)", *((unsigned int*)addr), *((unsigned int*)addr));
     draw_txt_string(10, y, buf, MAKE_COLOR(COLOR_BLACK, COLOR_WHITE));

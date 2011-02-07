@@ -29,6 +29,7 @@ void action_push_delay(long msec);
 void action_push_press(long key);
 void action_push_release(long key);
 void action_push_click(long key);
+void action_wait_for_click(int timeout);
 void action_pop();
 long action_get_prev(int p);
 int action_stack_standard(long p);

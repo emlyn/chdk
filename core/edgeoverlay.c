@@ -214,7 +214,7 @@ static void average_filter_row(const unsigned char*  ptrh1,  // previous row
 #if CAM_USES_ASPECT_CORRECTION
     const int x_max = (viewportw + viewport_xoffset - 2) * 3;
 #else
-    const int x_max = (screen_width - 2) * 3;
+    const int x_max = (screen_width + viewport_xoffset - 2) * 3;
 #endif
 
     for (x=viewport_xoffset*3+6; x<x_max; x+=6)
@@ -511,7 +511,7 @@ static int draw_edge_overlay()
 #if CAM_USES_ASPECT_CORRECTION
     const int x_max = (viewportw + viewport_xoffset - 2);
 #else
-    const int x_max = (screen_width + viewport_yoffset - 2);
+    const int x_max = (screen_width + viewport_xoffset - 2);
 #endif
 
     if( !is_buffer_ready() ) return 0;
