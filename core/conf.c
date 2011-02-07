@@ -421,7 +421,9 @@ static void conf_change_font_cp() {
 }
 
 static void conf_change_script_file() {
+#ifdef OPT_SCRIPTING
     script_load(conf.script_file, 2);
+#endif
 }
 
 static void conf_change_menu_rbf_file() {

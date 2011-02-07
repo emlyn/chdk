@@ -259,17 +259,26 @@ PLATFORMSUB=100a
 #PLATFORM=sx20
 #PLATFORMSUB=102b
 
-PLATFORM=ixus85_sd770
-PLATFORMSUB=100a
+#PLATFORM=ixus85_sd770
+#PLATFORMSUB=100a
 
-PLATFORM=ixus95_sd1200
-PLATFORMSUB=100c
+#PLATFORM=ixus95_sd1200
+#PLATFORMSUB=100c
+
+#PLATFORM=sx30
+#PLATFORMSUB=100e
 
 #PLATFORM=sx30
 #PLATFORMSUB=100h
 
+#PLATFORM=sx30
+#PLATFORMSUB=100l
+
 #PLATFORM=g12
 #PLATFORMSUB=100c
+
+#PLATFORM=g12
+#PLATFORMSUB=100e
 
 #PLATFORM=a430
 #PLATFORMSUB=100b
@@ -288,6 +297,20 @@ include $(topdir)buildconf.inc
 -include $(topdir)localbuildconf.inc
 include $(topdir)version.inc
 include $(topdir)platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc
+
+# Used in gui_debug.c for controlling memory browser allowed address ranges
+# override in platform/$(PLATFORM)/sub/$(PLATFORMSUB)/makefile.inc to set camera specific value
+ifdef MAXRAMADDR
+PLFLAGS+=-DMAXRAMADDR=$(MAXRAMADDR)
+else
+PLFLAGS+=-DMAXRAMADDR=0x2000000
+endif
+ifdef ROMBASEADDR
+PLFLAGS+=-DROMBASEADDR=$(ROMBASEADDR)
+else
+PLFLAGS+=-DROMBASEADDR=0xFFC00000
+endif
+
 ifdef OPT_FI2
 include $(topdir)/platform/fi2.inc
 endif
@@ -402,6 +425,20 @@ endif
 
 ifdef OPT_PTP
 CFLAGS+=-DOPT_PTP
+endif
+
+ifdef OPT_LUA
+CFLAGS+=-DOPT_LUA
+OPT_SCRIPTING=1
+endif
+
+ifdef OPT_UBASIC
+CFLAGS+=-DOPT_UBASIC
+OPT_SCRIPTING=1
+endif
+
+ifdef OPT_SCRIPTING 
+CFLAGS+=-DOPT_SCRIPTING
 endif
 
 ifdef OPT_EXMEM_MALLOC

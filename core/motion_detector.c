@@ -429,7 +429,7 @@ img += bufoff * 0x7E900;
 
 	vp_h=vid_get_viewport_height();
 	vp_w=vid_get_viewport_buffer_width();
-	img_offset = (vid_get_viewport_yoffset() * vp_w + vid_get_viewport_xoffset()) * 3;
+	img_offset = vid_get_viewport_image_offset();		// offset into viewport for when image size != viewport size (e.g. 16:9 image on 4:3 LCD)
 
 	x_step=vid_get_viewport_width()/motion_detector->columns;
 	y_step=vp_h/motion_detector->rows;

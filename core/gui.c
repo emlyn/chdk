@@ -36,7 +36,6 @@
 #endif
 #include "gui_grid.h"
 #include "histogram.h"
-#include "script.h"
 #include "motion_detector.h"
 #include "raw.h"
 #ifdef OPT_CURVES
@@ -45,12 +44,15 @@
 #ifdef OPT_EDGEOVERLAY
 	#include "edgeoverlay.h"
 #endif
+#ifdef OPT_SCRIPTING
+    #include "script.h"
+    int script_params_has_changed=0;
+#endif
 //-------------------------------------------------------------------
 
 #define OPTIONS_AUTOSAVE
 #define SPLASH_TIME               20
 
-int script_params_has_changed=0;
 //shortcuts
 //------------------------------------------------------------------
 // #define KEY_NONE (KEY_DUMMY+1)
@@ -144,8 +146,6 @@ static void gui_draw_mastermind(int arg);
 #endif
 static void gui_draw_fselect(int arg);
 static void gui_draw_osd_le(int arg);
-static void gui_load_script(int arg);
-static void gui_load_script_default(int arg);
 #ifdef OPT_TEXTREADER
 static void gui_draw_read(int arg);
 static void gui_draw_read_last(int arg);
@@ -172,7 +172,7 @@ static void gui_raw_develop(int arg);
 #ifdef OPT_DEBUGGING
 static void gui_menuproc_break_card(int arg);
 #endif
-static void gui_menuproc_swap_patitons(int arg);
+static void gui_menuproc_swap_partitions(int arg);
 static void gui_menuproc_reset_files(int arg);
 #ifdef OPT_CURVES
 	static void gui_load_curve_selected(const char *fn);
@@ -243,8 +243,6 @@ static const char* gui_space_warn_type_enum(int change, int arg);
 static const char* gui_bad_pixel_enum(int change, int arg);
 static const char* gui_video_af_key_enum(int change, int arg);
 static const char* gui_show_movie_time(int change, int arg);
-static const char* gui_script_autostart_enum(int change, int arg);
-static const char* gui_script_param_set_enum(int change, int arg);
 static const char* gui_override_disable_enum(int change, int arg);
 #ifdef OPT_CURVES
 	static const char* gui_conf_curve_enum(int change, int arg);
@@ -259,6 +257,13 @@ static const char* gui_override_disable_enum(int change, int arg);
 static void gui_menuproc_edge_save(int arg);
 static void gui_menuproc_edge_load(int arg);
 static const char* gui_edge_pano_enum(int change, int arg);
+#endif
+
+#ifdef OPT_SCRIPTING
+static void gui_load_script(int arg);
+static void gui_load_script_default(int arg);
+static const char* gui_script_autostart_enum(int change, int arg);
+static const char* gui_script_param_set_enum(int change, int arg);
 #endif
 
 void rinit();
@@ -276,6 +281,7 @@ static void cb_zebra_restore_screen();
 static void cb_zebra_restore_osd();
 #if DNG_SUPPORT
 static void cb_change_dng(); 
+void gui_menuproc_badpixel_create(int arg);
 #endif
 #if defined (DNG_EXT_FROM)
 static void cb_change_dng_usb_ext(); 
@@ -305,6 +311,8 @@ static CMenuItem remote_submenu_items[] = {
 };
 static CMenu remote_submenu = {0x86,LANG_MENU_REMOTE_PARAM_TITLE, NULL, remote_submenu_items };
 
+
+#ifdef OPT_SCRIPTING
 static CMenuItem script_submenu_items_top[] = {
     {0x35,LANG_MENU_SCRIPT_LOAD,             MENUITEM_PROC,                      (int*)gui_load_script },
     {0x5f,LANG_MENU_SCRIPT_DELAY,            MENUITEM_INT|MENUITEM_F_UNSIGNED,   &conf.script_shoot_delay },
@@ -332,7 +340,7 @@ static CMenuItem script_submenu_items_bottom[] = {
 static CMenuItem script_submenu_items[sizeof(script_submenu_items_top)/sizeof(script_submenu_items_top[0])+SCRIPT_NUM_PARAMS+
                                sizeof(script_submenu_items_bottom)/sizeof(script_submenu_items_bottom[0])];
 static CMenu script_submenu = {0x27,LANG_MENU_SCRIPT_TITLE, NULL, script_submenu_items };
-
+#endif
 
 static CMenuItem games_submenu_items[] = {
 #ifdef OPT_GAME_REVERSI
@@ -393,7 +401,9 @@ static CMenuItem debug_submenu_items[] = {
     {0x2a,LANG_MENU_DEBUG_BENCHMARK,         MENUITEM_PROC,          (int*)gui_draw_bench },
     {0x5c,LANG_MENU_DEBUG_SHORTCUT_ACTION,   MENUITEM_ENUM,          (int*)gui_debug_shortcut_enum },
     {0x5c,LANG_MENU_RAW_TIMER,               MENUITEM_BOOL,          &conf.raw_timer },
+#ifdef OPT_LUA
     {0x5c,LANG_MENU_LUA_RESTART,             MENUITEM_BOOL,          &conf.debug_lua_restart_on_error },
+#endif
 #if CAM_MULTIPART
     {0x33,LANG_MENU_DEBUG_CREATE_MULTIPART , MENUITEM_PROC, 	    	(int*)gui_menuproc_break_card },
 #endif
@@ -432,7 +442,7 @@ static CMenuItem misc_submenu_items[] = {
     {0x80,LANG_MENU_MISC_MEMORY_INFO,        MENUITEM_PROC,    (int*)gui_show_memory_info },
     {0x33,LANG_MENU_DEBUG_MAKE_BOOTABLE,     MENUITEM_PROC,    (int*)gui_menuproc_mkbootdisk },
 #if CAM_MULTIPART
-    {0x33,LANG_MENU_DEBUG_SWAP_PART,         MENUITEM_PROC, 	    	(int*)gui_menuproc_swap_patitons },
+    {0x33,LANG_MENU_DEBUG_SWAP_PART,         MENUITEM_PROC, 	    	(int*)gui_menuproc_swap_partitions },
 #endif
     {0x2b,LANG_MENU_MAIN_RESET_OPTIONS,      MENUITEM_PROC,      (int*)gui_menuproc_reset },
 #ifdef OPT_DEBUGGING
@@ -812,6 +822,7 @@ static CMenuItem raw_submenu_items[] = {
 #if DNG_SUPPORT
     {0x5c,LANG_MENU_DNG_FORMAT,              MENUITEM_BOOL | MENUITEM_ARG_CALLBACK, &conf.dng_raw , (int)cb_change_dng },
     {0x5c,LANG_MENU_RAW_DNG_EXT,             MENUITEM_BOOL,      &conf.raw_dng_ext},
+    {0x2a,LANG_MENU_BADPIXEL_CREATE,         MENUITEM_PROC,      (int*)gui_menuproc_badpixel_create },
 #endif
     {0x5c,LANG_MENU_RAW_CACHED,              MENUITEM_BOOL,      &conf.raw_cache },
     {0x51,LANG_MENU_BACK,                    MENUITEM_UP },
@@ -858,7 +869,9 @@ static CMenuItem root_menu_items[] = {
     {0x26,LANG_MENU_MAIN_ZEBRA_PARAM,        MENUITEM_SUBMENU,   (int*)&zebra_submenu },
     {0x22,LANG_MENU_MAIN_OSD_PARAM,          MENUITEM_SUBMENU,   (int*)&osd_submenu },
     {0x28,LANG_MENU_MAIN_VISUAL_PARAM,       MENUITEM_SUBMENU,   (int*)&visual_submenu },
+#ifdef OPT_SCRIPTING
     {0x27,LANG_MENU_MAIN_SCRIPT_PARAM,       MENUITEM_SUBMENU,   (int*)&script_submenu },
+#endif
     {0x29,LANG_MENU_MAIN_MISC,               MENUITEM_SUBMENU,   (int*)&misc_submenu },
 #ifndef OPTIONS_AUTOSAVE
     {0x33,LANG_MENU_MAIN_SAVE_OPTIONS,       MENUITEM_PROC,      (int*)gui_menuproc_save },
@@ -997,6 +1010,10 @@ void cb_change_dng(){
  conf_change_dng();
  if ((old==1) && (conf.dng_raw==0)) gui_mbox_init(LANG_ERROR, LANG_CANNOT_OPEN_BADPIXEL_FILE, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
 }
+
+void gui_menuproc_badpixel_create(int arg) {
+    create_badpixel_bin();
+}
 #endif
 
 #if defined (DNG_EXT_FROM)
@@ -1034,6 +1051,8 @@ const char* gui_conf_curve_enum(int change, int arg) {
     return modes[conf.curve_enable];
 }
 #endif
+
+#ifdef OPT_SCRIPTING
 //-------------------------------------------------------------------
 const char* gui_script_autostart_enum(int change, int arg) {
     static const char* modes[]={ "Off", "On", "Once"};
@@ -1058,6 +1077,55 @@ const char* gui_script_param_set_enum(int change, int arg) {
     return modes[conf.script_param_set];
 }
 
+//-------------------------------------------------------------------
+void gui_update_script_submenu() {
+    register int p=0, i;
+
+    for (i=0; i<sizeof(script_submenu_items_top)/sizeof(script_submenu_items_top[0]); ++p, ++i) {
+        script_submenu_items[p]=script_submenu_items_top[i];
+    }
+    for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
+        if (script_param_order[i]) {
+            script_submenu_items[p].symbol=0x0;
+            script_submenu_items[p].text=(int)script_params[script_param_order[i]-1];
+            script_submenu_items[p].type=MENUITEM_INT;
+            script_submenu_items[p].value=&conf.ubasic_vars[script_param_order[i]-1];
+            ++p;
+        }
+    }
+    for (i=0; i<sizeof(script_submenu_items_bottom)/sizeof(script_submenu_items_bottom[0]); ++p, ++i) {
+        script_submenu_items[p]=script_submenu_items_bottom[i];
+    }
+}
+
+//-------------------------------------------------------------------
+static void gui_load_script_selected(const char *fn) {
+    if (fn)
+        script_load(fn, 1);
+}
+
+void gui_load_script(int arg) {
+    DIR   *d;
+    char  *path="A/CHDK/SCRIPTS";
+
+    // if exists "A/CHDK/SCRIPTS" go into
+    d=opendir(path);
+    if (d) {
+        closedir(d);
+    } else {
+        path="A";
+    }
+
+    gui_fselect_init(LANG_STR_SELECT_SCRIPT_FILE, path, gui_load_script_selected);
+}
+
+void gui_load_script_default(int arg) {
+    script_load(conf.script_file, 0);
+    if (conf.script_param_save) {
+        save_params_values(1);
+    }
+}
+#endif
 
 //-------------------------------------------------------------------
 const char* gui_override_disable_enum(int change, int arg) {
@@ -1290,7 +1358,9 @@ const char* gui_alt_mode_button_enum(int change, int arg) {
 
 //-------------------------------------------------------------------
 const char* gui_alt_power_enum(int change, int arg) {
-    static const char* modes[]={ "Never", "Alt", "Script","Always" };
+// Script option is retained even if scripting is disabled, otherwise conf values will change
+// Equivalent to ALT
+    static const char* modes[]={ "Never", "Alt", "Script", "Always" };
 	gui_enum_value_change(&conf.alt_prevent_shutdown,change,sizeof(modes)/sizeof(modes[0]));
 	
 	conf_update_prevent_shutdown();
@@ -1565,27 +1635,6 @@ const char* gui_bad_pixel_enum(int change, int arg) {
     int modes[]={LANG_MENU_BAD_PIXEL_OFF, LANG_MENU_BAD_PIXEL_INTERPOLATION, LANG_MENU_BAD_PIXEL_RAW_CONVERTER}; 
     return lang_str((int)gui_change_simple_enum(&conf.bad_pixel_removal,change,(const char **)modes,sizeof(modes)/sizeof(modes[0])));
 } 
- 
-//-------------------------------------------------------------------
-void gui_update_script_submenu() {
-    register int p=0, i;
-
-    for (i=0; i<sizeof(script_submenu_items_top)/sizeof(script_submenu_items_top[0]); ++p, ++i) {
-        script_submenu_items[p]=script_submenu_items_top[i];
-    }
-    for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
-        if (script_param_order[i]) {
-            script_submenu_items[p].symbol=0x0;
-            script_submenu_items[p].text=(int)script_params[script_param_order[i]-1];
-            script_submenu_items[p].type=MENUITEM_INT;
-            script_submenu_items[p].value=&conf.ubasic_vars[script_param_order[i]-1];
-            ++p;
-        }
-    }
-    for (i=0; i<sizeof(script_submenu_items_bottom)/sizeof(script_submenu_items_bottom[0]); ++p, ++i) {
-        script_submenu_items[p]=script_submenu_items_bottom[i];
-    }
-}
 
 //-------------------------------------------------------------------
 
@@ -1712,7 +1761,7 @@ static void gui_menuproc_break_card(int arg){
 }
 #endif
 
-static void gui_menuproc_swap_patitons(int arg){
+static void gui_menuproc_swap_partitions(int arg){
  if (get_part_count()<2) gui_mbox_init(LANG_ERROR, LANG_ONLY_ONE_PARTITION, MBOX_BTN_OK|MBOX_TEXT_CENTER, NULL);
  else 
  	{
@@ -1873,6 +1922,7 @@ void gui_redraw()
         case GUI_MODE_ALT:
             gui_draw_osd();
             draw_txt_string(20, 14, "<ALT>", MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
+#ifdef OPT_SCRIPTING
             if ((mode_get()&MODE_MASK) == MODE_REC) {
                 draw_txt_string(0, 14, script_title, MAKE_COLOR(COLOR_ALT_BG, COLOR_FG));
                 if (state_kbd_script_run) show_md_grid=5;
@@ -1881,6 +1931,7 @@ void gui_redraw()
                     md_draw_grid();
                 }
             }
+#endif
             console_draw();
             break;
         case GUI_MODE_NONE:
@@ -2070,10 +2121,12 @@ void gui_kbd_process()
    #endif
 				}
 #endif
+#ifdef OPT_SCRIPTING
             } else if (kbd_is_key_clicked(KEY_SET)) {
                 gui_menu_init(&script_submenu);
                 gui_mode = GUI_MODE_MENU;
                 draw_restore();
+#endif
             } else {
 #if !CAM_HAS_MANUAL_FOCUS && CAM_CAN_SD_OVERRIDE
 	          	if (kbd_is_key_clicked(SHORTCUT_MF_TOGGLE)) {
@@ -2236,7 +2289,9 @@ void gui_kbd_leave()
 #ifdef OPTIONS_AUTOSAVE
     conf_save_new_settings_if_changed();
 #endif
-    ubasic_error = 0;
+#ifdef OPT_UBASIC
+    ubasic_error = UBASIC_E_NONE;
+#endif
     draw_restore();
     if (gui_mode == GUI_MODE_READ && !rbf_load(conf.menu_rbf_file))
         rbf_load_from_8x16(current_font);
@@ -2564,6 +2619,7 @@ void gui_draw_osd() {
 
 	gui_draw_debug_vals_osd();
 
+#ifdef OPT_UBASIC
     if (ubasic_error){
 	const char *msg;
         if (ubasic_error >= UBASIC_E_ENDMARK) {
@@ -2574,6 +2630,7 @@ void gui_draw_osd() {
 	sprintf(osd_buf, "uBASIC:%d %s ", ubasic_linenumber(), msg);
 	draw_txt_string(0, 0, osd_buf, MAKE_COLOR(COLOR_RED, COLOR_YELLOW));
     }
+#endif
 }
 
 #ifndef OPTIONS_AUTOSAVE
@@ -2770,34 +2827,6 @@ void gui_draw_splash(char* logo, int logo_size) {
 void gui_draw_fselect(int arg) {
     gui_fselect_init(LANG_STR_FILE_BROWSER, "A", NULL);
 }
-
-//-------------------------------------------------------------------
-static void gui_load_script_selected(const char *fn) {
-    if (fn)
-        script_load(fn, 1);
-}
-void gui_load_script(int arg) {
-    DIR   *d;
-    char  *path="A/CHDK/SCRIPTS";
-
-    // if exists "A/CHDK/SCRIPTS" go into
-    d=opendir(path);
-    if (d) {
-        closedir(d);
-    } else {
-        path="A";
-    }
-
-    gui_fselect_init(LANG_STR_SELECT_SCRIPT_FILE, path, gui_load_script_selected);
-}
-
-void gui_load_script_default(int arg) {
-    script_load(conf.script_file, 0);
-    if (conf.script_param_save) {
-        save_params_values(1);
-    }
-}
-
 
 //-------------------------------------------------------------------
 static void gui_grid_lines_load_selected(const char *fn) {

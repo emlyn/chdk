@@ -65,7 +65,7 @@ void histogram_process()
     static unsigned char *img;
     int i, hi, c;
     int y, v, u;
-	static int x, vp_w, vp_bw, img_offset;
+	static int x, img_offset;
     static int viewport_size;
     unsigned int histo_fill[5];
 
@@ -76,10 +76,8 @@ void histogram_process()
         	if (img==NULL){
 	    	  img = vid_get_viewport_fb();
 		    }
-			vp_w = vid_get_viewport_width();
-			vp_bw = vid_get_viewport_buffer_width();
-			img_offset = (vid_get_viewport_yoffset() * vp_bw + vid_get_viewport_xoffset()) * 3;	// offset into viewport where image size != viewport size (e.g. 16:9 image on 4:3 LCD)
-            viewport_size = vid_get_viewport_height() * vp_bw;
+			img_offset = vid_get_viewport_image_offset();		// offset into viewport for when image size != viewport size (e.g. 16:9 image on 4:3 LCD)
+            viewport_size = vid_get_viewport_height() * vid_get_viewport_buffer_width();
             for (c=0; c<5; ++c) {
                 for (i=0; i<HISTO_WIDTH; ++i) {
                     histogram_proc[c][i]=0;
@@ -112,9 +110,9 @@ void histogram_process()
 
 				// Handle case where viewport memory buffer is wider than the actual buffer.
 				x++;
-				if (x == vp_w)
+				if (x == vid_get_viewport_width())
 				{
-					i += ((vp_bw - vp_w) * 3);
+					i += vid_get_viewport_row_offset();
 					x = 0;
 				}
 			}

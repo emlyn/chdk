@@ -142,6 +142,12 @@ void action_push_click(long key)
     action_push_press(key);
 }
 
+void action_wait_for_click(int timeout)
+{
+    action_push(timeout);
+    action_push(AS_WAIT_CLICK);
+}
+
 // Can only be called from an action stack
 void action_push(long p)
 {
@@ -262,6 +268,7 @@ int action_stack_standard(long p)
 
         action_push(AS_WAIT_SAVE);
 
+        action_push_release(KEY_SHOOT_HALF);
         action_push_release(KEY_SHOOT_FULL);
 
         action_push_press(KEY_SHOOT_FULL);

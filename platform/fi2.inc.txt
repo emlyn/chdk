@@ -1,6 +1,10 @@
-#if you turned on OPT_FI2 option in /buildconf.inc, rename this file to fi2.inc and insert correct keys values.
-#the keys are not hosted in svn, read more about it in this thread: http://chdk.setepontos.com/index.php/topic,2995.0.html
+# FI2 keys are required to correctly encode firmware update binary to start CHDK via "Firmware Update" Methode.
+# Enable OPT_FI2 option in /buildconf.inc, rename this file to fi2.inc and insert correct keys values.
+# http://chdk.wikia.com/wiki/For_Developers/fi2offsets
+# the keys are not hosted in svn, read more about it:
+# http://chdk.setepontos.com/index.php/topic,2995.0.html
 
+# g9
 ifeq ($(KEYSYS), d3)
 FI2KEY=
 FI2IV =
@@ -16,6 +20,7 @@ FI2KEY=
 FI2IV =
 endif
 
+# ixus300_sd4000, sx210
 ifeq ($(KEYSYS), d4a)
 FI2KEY=
 FI2IV =
@@ -25,4 +30,3 @@ ifeq ($(KEYSYS), d4b)
 FI2KEY=
 FI2IV =
 endif
-

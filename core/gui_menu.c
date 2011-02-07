@@ -3,7 +3,6 @@
 #include "core.h"
 #include "keyboard.h"
 #include "conf.h"
-#include "ubasic.h"
 #include "font.h"
 #include "lang.h"
 #include "gui.h"

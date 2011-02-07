@@ -95,8 +95,6 @@ function md_get_cell_diff (
 
 #include "../include/platform.h"
 #include "../include/stdlib.h"
-#include "../include/script.h"
-
 
 #define MOTION_DETECTOR_CELLS 1024
 

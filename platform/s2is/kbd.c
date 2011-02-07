@@ -119,7 +119,7 @@ _kbd_read_keys_r2(x);
 			 while(nSW<20);
 			 }
 		} 		//continuous-shooting mode 
-		else{		//nomal mode 
+		else{		// normal mode
 			shoot_counter=0;
 			if(conf.bracket_type>2){
 				shoot_counter=(conf.bracket_type-2)*2;
@@ -133,7 +133,7 @@ _kbd_read_keys_r2(x);
 		// ------ modif by Masuji SUTO (start) --------------
 		        while(((((x[2]&USB_MASK)!=USB_MASK) && (nMode==0)) || (((x[2]&USB_MASK)==USB_MASK) && (nMode==1))) && ((int)get_tick_count()-tick < DELAY_TIMEOUT));
 		// ------ modif by Masuji SUTO (end)   --------------
-		} 		//nomal mode 
+		} 		// normal mode
 	}		//ricoh_ca1_mode
 else		//ricoh_ca1_mode disebale
    {

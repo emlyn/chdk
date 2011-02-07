@@ -106,75 +106,7 @@ static int nTxtbl[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13};
 static int nTxtbl[]={0,1,2,3,4,5,6,7,8,9};
 #endif
 
-void camera_press(const char *s)
-{
-    long k = keyid_by_name(s);
-    if (k > 0) {
-        action_push_press(k);
-    } else {
-        ubasic_error = 3;
-    }
-}
-
-void camera_release(const char *s)
-{
-    long k = keyid_by_name(s);
-    if (k > 0) {
-        action_push_release(k);
-    } else {
-        ubasic_error = 3;
-    }
-}
-
-void camera_click(const char *s)
-{
-    long k = keyid_by_name(s);
-    if (k > 0) {
-        action_push_click(k);
-    } else {
-        ubasic_error = 3;
-    }
-}
-
-void camera_wait_click(int timeout)
-{
-    action_push(timeout);
-    action_push(AS_WAIT_CLICK);
-}
-
-int camera_is_pressed(const char *s)
-{
-    long k = keyid_by_name(s);
-    if (k==0xFF) return get_usb_power(1);
-        if (k > 0) {
-        return (kbd_is_key_pressed(k));
-    } else {
-        ubasic_error = 3;
-    }
-    return 0;
-}
-
-int camera_is_clicked(const char *s)
-{
-    long k = keyid_by_name(s);
-    if (k==0xFF) return get_usb_power(1);
-        if (k > 0) {
-        return (kbd_last_clicked == k);
-    } else {
-        ubasic_error = 3;
-    }
-    return 0;
-}
-
-void camera_sleep(long v)
-{
-    action_push_delay(v);
-}
-
-void camera_shoot()
-{
-    action_push(AS_SHOOT);
-}
+#ifdef OPT_SCRIPTING
 // remote autostart
 void script_autostart()
 {
@@ -184,6 +116,8 @@ void script_autostart()
     script_console_add_line("***Autostart***"); //lang_str(LANG_CONSOLE_TEXT_STARTED));
     script_start_gui( 1 );
 }
+#endif
+
 void exit_alt()
 {
     kbd_blocked = 0;
@@ -302,6 +236,7 @@ long kbd_process()
             }
         }
 /*-------------------- Alex scriptless remote additions end ---------------------*/
+#ifdef OPT_SCRIPTING
         if (kbd_is_key_pressed(KEY_SHOOT_FULL)) {
             key_pressed = 100;
             if (!state_kbd_script_run) {
@@ -309,19 +244,26 @@ long kbd_process()
             } else if (state_kbd_script_run == 2 || state_kbd_script_run == 3) {
                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
                 script_end();
-            } else if (L) {
+            }
+#ifdef OPT_LUA
+            else if (L) {
                 state_kbd_script_run = 2;
 				lua_run_restore();
                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
                 script_end();
-            } else {
+            }
+#endif
+#ifdef OPT_UBASIC
+            else {
                 state_kbd_script_run = 2;
                 if (jump_label("restore") == 0) {
                     script_console_add_line(lang_str(LANG_CONSOLE_TEXT_INTERRUPTED));
                     script_end();
                 }
             }
+#endif
         }
+#endif
 
         action_stack_process_all();
         if (!state_kbd_script_run)
@@ -997,47 +939,6 @@ long kbd_process()
     }
 
     return kbd_blocked;
-}
-
-static const struct Keynames {
-    int keyid;
-    char *keyname;
-} keynames[] = {
-    { KEY_UP,           "up"         },
-    { KEY_DOWN,         "down"       },
-    { KEY_LEFT,         "left"       },
-    { KEY_RIGHT,        "right"      },
-    { KEY_SET,          "set"        },
-    { KEY_SHOOT_HALF,   "shoot_half" },
-    { KEY_SHOOT_FULL,   "shoot_full" },
-    { KEY_ZOOM_IN,      "zoom_in"    },
-    { KEY_ZOOM_OUT,     "zoom_out"   },
-    { KEY_MENU,         "menu"       },
-    { KEY_DISPLAY,      "display"    },
-    { KEY_PRINT,        "print"      },
-    { KEY_ERASE,        "erase"      },
-    { KEY_ISO,          "iso"        },
-    { KEY_FLASH,        "flash"      },
-    { KEY_MF,           "mf"         },
-    { KEY_MACRO,        "macro"      },
-    { KEY_VIDEO,        "video"      },
-    { KEY_TIMER,        "timer"      },
-    { KEY_EXPO_CORR,    "expo_corr"  },
-    { KEY_MICROPHONE,   "fe"         },
-    { KEY_ZOOM_ASSIST,  "zoom_assist"},
-    { KEY_AE_LOCK,      "ae_lock"    },
-    { KEY_METERING,     "metering_mode"},
-    { 0xFF,             "remote"     },
-	{ 0xFFFF,           "no_key"     },
-};
-
-int keyid_by_name (const char *n)
-{
-    int i;
-    for (i=0;i<sizeof(keynames)/sizeof(keynames[0]);i++)
-	if (strcmp(keynames[i].keyname,n) == 0)
-	    return keynames[i].keyid;
-    return 0;
 }
 
 int kbd_is_blocked() {

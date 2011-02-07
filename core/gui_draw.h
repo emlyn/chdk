@@ -2,6 +2,12 @@
 #define GUI_DRAW_H
 //-------------------------------------------------------------------
 
+// Moved from gui_bench.c, gui_debug.c, gui_calendar.c, gui_reversi.c & gui_sokoban.c so it can be overridden
+// Default value is white in SX30 & G12 palette making white text hard to read
+#define SCREEN_COLOR            0xF7
+
+//-------------------------------------------------------------------
+
 #if CAM_BITMAP_PALETTE==1
 #define COLOR_TRANSPARENT   0x00
 #define COLOR_WHITE         0x11
@@ -217,6 +223,8 @@
 #define COLOR_HISTO_RB_PLAY COLOR_HISTO_RB
 #define COLOR_HISTO_BG_PLAY COLOR_BLUE_LT
 #define COLOR_HISTO_RG_PLAY COLOR_YELLOW
+#undef SCREEN_COLOR
+#define SCREEN_COLOR            0x1D
 #else
 #error CAM_BITMAP_PALETTE not defined
 #endif

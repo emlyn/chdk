@@ -4,7 +4,6 @@
 #include "keyboard.h"
 #include "conf.h"
 #include "font.h"
-#include "ubasic.h"
 #include "gui_draw.h"
 
 //-------------------------------------------------------------------

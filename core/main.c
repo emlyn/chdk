@@ -6,7 +6,6 @@
 #include "gui.h"
 #include "histogram.h"
 #include "raw.h"
-#include "motion_detector.h"
 #ifdef OPT_EDGEOVERLAY
     #include "edgeoverlay.h"
 #endif
@@ -144,12 +143,14 @@ void core_spytask() {
 #endif
     auto_started = 0;
 
+#ifdef OPT_SCRIPTING
     if (conf.script_startup==1) script_autostart();    // remote autostart
     if (conf.script_startup==2) {
         conf.script_startup=0;
         conf_save();
         script_autostart();
     }
+#endif
 
     while (1) {
         if (raw_data_available) {
