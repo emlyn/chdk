@@ -22,7 +22,6 @@ char *hook_raw_image_addr()
 		return (char*) 0x4235F6B0;	// found at (0xFFB59F40) [search CRAW BUF]
 }
 
-#if DNG_SUPPORT
 char *hook_alt_raw_image_addr()
 {
 	// Appears to be two raw buffers (this returns inactive buffer)
@@ -35,7 +34,6 @@ char *hook_alt_raw_image_addr()
 	else
 		return (char*) 0x4235F6B0;	// found at (0xFFB59F40) [search CRAW BUF]
 }
-#endif    
 
 long hook_raw_size()
 {

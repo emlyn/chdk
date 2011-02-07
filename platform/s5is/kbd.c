@@ -191,7 +191,7 @@ if (conf.synch_enable && conf.ricoh_ca1_mode && conf.remote_enable && (!shooting
 			 while(nSW<20);
 			 }
 		} 		//continuous-shooting mode 
-		else{		//nomal mode 
+		else{		// normal mode
 			shoot_counter=0;
 			if(conf.bracket_type>2){
 				shoot_counter=(conf.bracket_type-2)*2;

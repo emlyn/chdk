@@ -23,9 +23,6 @@ static char buf[32];
 static int bench_to_draw;
 
 //-------------------------------------------------------------------
-#define SCREEN_COLOR            0xF7
-
-//-------------------------------------------------------------------
 void gui_bench_init() {
     bench.screen_input_bps=-1;
     bench.screen_output_bps=-1;

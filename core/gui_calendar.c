@@ -10,7 +10,6 @@
 #include "gui_calendar.h"
 
 //-------------------------------------------------------------------
-#define SCREEN_COLOR            0xF7
 #define TITLE_COLOR             (MAKE_COLOR(COLOR_BLACK, COLOR_WHITE))
 #define CALENDAR_COLOR          (MAKE_COLOR(COLOR_GREY, COLOR_WHITE))
 #define WEEKEND_COLOR           (MAKE_COLOR(0x6E, COLOR_RED))

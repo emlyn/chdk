@@ -52,7 +52,7 @@
 
     #define ZOOM_OVERRIDE               0   // Shall zoom-override be used? default 0 becoz not implemented right now
 
-	#undef  DNG_SUPPORT						// Camera supports DNG format for saving of RAW images
+	#define DNG_SUPPORT                 1 // Camera supports DNG format for saving of RAW images
     
 	#undef  CAM_REAR_CURTAIN                // Camera do not have front/rear curtain flash sync in menu
     #undef  CAM_BRACKETING                // Cameras that have bracketing (focus & ev) in original firmware already, most likely s- & g-series (propcase for digic III not found yet!)
@@ -117,7 +117,6 @@
     #define CAM_HAS_ND_FILTER           1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_HAS_JOGDIAL             1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -160,7 +159,6 @@
 	// camera name
 	#define PARAM_CAMERA_NAME					4	// parameter number for GetParameterData
 
-	#define DNG_SUPPORT							1
 	// pattern
 	#define cam_CFAPattern						0x02010100	// Red  Green  Green  Blue
 	// color (alternativ: http://lclevy.free.fr/cr2/)
@@ -203,7 +201,6 @@
 	#define CAM_CAN_MUTE_MICROPHONE			1
 	#define CAM_AF_SCAN_DURING_VIDEO_RECORD	1
 	#define CAM_EV_IN_VIDEO					1
-	#define DNG_SUPPORT						1
 	// pattern
 	#define cam_CFAPattern 0x01000201  // Green Blue Red Green
 	// color
@@ -246,7 +243,6 @@
 	#define CAM_CAN_MUTE_MICROPHONE			1
 	#define CAM_AF_SCAN_DURING_VIDEO_RECORD	1
 	#define CAM_EV_IN_VIDEO					1
-	#define DNG_SUPPORT						1
 	// pattern
 	#define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
 	// color
@@ -286,7 +282,6 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_EV_IN_VIDEO             1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -327,7 +322,6 @@
 	#define CAM_CAN_MUTE_MICROPHONE     1
 	#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
 	#define CAM_EV_IN_VIDEO             1
-	#define DNG_SUPPORT                 1
 	#define CAM_MULTIPART               1
 	
 	// pattern
@@ -374,7 +368,6 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_EV_IN_VIDEO             1
 
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -425,7 +418,6 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 2
     #define CAM_EV_IN_VIDEO             1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -466,7 +458,6 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 2
     #define CAM_EV_IN_VIDEO             1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -510,7 +501,6 @@
     #undef  CAM_HAS_IS
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -551,7 +541,6 @@
     #undef  CAM_HAS_IS
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -585,7 +574,6 @@
 	#define CAM_ADJUSTABLE_ALT_BUTTON   1
 	#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
 	#define CAM_EV_IN_VIDEO             1
-	#define DNG_SUPPORT                 1
 	#define CAM_REAR_CURTAIN            1
 	// pattern
 	#define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
@@ -628,7 +616,6 @@
 
 #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
 //#define CAM_EV_IN_VIDEO             1      // not working on 101b!!!
-#define DNG_SUPPORT                 1
 // pattern
 #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green 
 // color                                                      
@@ -672,7 +659,6 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 2
     #define CAM_EV_IN_VIDEO             1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -693,6 +679,7 @@
     #define PARAM_CAMERA_NAME 3 // parameter number for GetParameterData
 
     #define DNG_EXT_FROM ".DPS"
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 //----------------------------------------------------------
 
 #elif defined (CAMERA_a620)
@@ -707,7 +694,6 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 2
     #define CAM_EV_IN_VIDEO             1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -742,7 +728,6 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_EV_IN_VIDEO             1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -778,7 +763,6 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_EV_IN_VIDEO             1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -815,7 +799,6 @@
     #define CAM_EMUL_KEYPRESS_DURATION  10
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_EV_IN_VIDEO             1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -848,7 +831,6 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 2
     #define CAM_EV_IN_VIDEO             1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -880,7 +862,6 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_EV_IN_VIDEO             1
-    #define DNG_SUPPORT                 1
     #define CAM_REAR_CURTAIN            1 // http://chdk.setepontos.com/index.php/topic,650.msg54434.html#msg54434 
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
@@ -919,7 +900,6 @@
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_EV_IN_VIDEO             1
     #undef  CAM_VIDEO_CONTROL
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
     // color
@@ -956,7 +936,6 @@
     #define CAM_JPEG_WIDTH  3648
     #define CAM_JPEG_HEIGHT 2736
 
-    #define DNG_SUPPORT                 1
 
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
 
@@ -1027,7 +1006,6 @@
     #undef  CAM_VIDEO_CONTROL
     #define CAM_VIDEO_QUALITY_ONLY      1
 
-    #define DNG_SUPPORT                 1
 
 //    #define CAM_EXT_TV_RANGE            1
 
@@ -1128,7 +1106,6 @@
     #undef CAM_CONSOLE_LOG_ENABLED
 
 
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -1166,7 +1143,6 @@
     #undef  CAM_HAS_IS
 	//#define CAM_CONSOLE_LOG_ENABLED     1
     #undef  CAM_VIDEO_CONTROL
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -1204,6 +1180,7 @@
     #undef  CAM_HAS_IS
 	//#define CAM_CONSOLE_LOG_ENABLED     1
     #undef  CAM_VIDEO_CONTROL
+	#undef  DNG_SUPPORT
 //----------------------------------------------------------
 
 #elif defined (CAMERA_ixus55_sd450)
@@ -1221,7 +1198,6 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 2
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -1263,7 +1239,6 @@
 //    #define CAM_CONSOLE_LOG_ENABLED     1  //100a won't compile if this is defined ("undefined reference to `_iosDevFind'")
     #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
     #undef  CAM_HAS_IS
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -1304,7 +1279,6 @@
     #define CAM_CONSOLE_LOG_ENABLED     1
     #undef  CAM_HAS_IS
     #undef  CAM_CHDK_HAS_EXT_VIDEO_MENU
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -1364,7 +1338,6 @@
     #undef CAM_HAS_IS                     // Camera has image stabilizer
 
 //    #define  CAM_CONSOLE_LOG_ENABLED   1      // Development: internal camera stdout -> A/stdout.txt        
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -1402,7 +1375,6 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_HAS_IS
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
-    #define DNG_SUPPORT                 1
     #define CAM_MULTIPART               1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
@@ -1447,7 +1419,6 @@
 	#define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
     #undef  CAM_CAN_MUTE_MICROPHONE
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 0
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
     // color
@@ -1489,7 +1460,6 @@
     #undef  CAM_HAS_IS
     #define CAM_MULTIPART               1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -1529,7 +1499,6 @@
     #undef  CAM_HAS_IS
     #define CAM_MULTIPART              1 
     #undef CAM_SYNCH 
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -1565,7 +1534,6 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 2
-    #define DNG_SUPPORT                 1
 
  // Warning! DNG4PS2 has both ixus800 and sd700 support with different CFA patterns and color matrices. 
  // Used settings for IXUS800
@@ -1606,7 +1574,6 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_MULTIPART               1 
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -1650,7 +1617,6 @@
     //#define CAM_CONSOLE_LOG_ENABLED     1   // ToDo: LOG stuff is disabled/removed
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_MULTIPART               1
-    #define DNG_SUPPORT                 1
 
     // pattern
     #define cam_CFAPattern 0x02010100   // Red  Green  Green  Blue
@@ -1700,7 +1666,6 @@
   	#define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
     #undef  CAM_CAN_MUTE_MICROPHONE
     #undef  CAM_VIDEO_CONTROL
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
     // color
@@ -1787,7 +1752,6 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  DEFAULT_RAW_EXT 
     #define DEFAULT_RAW_EXT             2   // use .CR2 
-    #define DNG_SUPPORT                 1
     
     #undef  CAM_ADJUSTABLE_ALT_BUTTON
     #undef  CAM_CONSOLE_LOG_ENABLED 
@@ -1813,7 +1777,6 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #define CAM_MULTIPART               1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
     // color
@@ -1849,7 +1812,6 @@
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -1888,7 +1850,6 @@
     #define CAM_HAS_JOGDIAL             1
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
-    #define DNG_SUPPORT                 1
     #define CAM_EXT_TV_RANGE            1
 
     // pattern
@@ -1919,6 +1880,7 @@
     #define CAM_SENSOR_BITS_PER_PIXEL   12
     #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
     #define CAM_BLACK_LEVEL             127
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 //----------------------------------------------------------
 
 #elif defined (CAMERA_ixus980_sd990)
@@ -1954,7 +1916,6 @@
 	#undef CAM_WHITE_LEVEL
     #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
 
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
     // color preliminary
@@ -2047,7 +2008,6 @@
 
     #undef  CAM_VIDEO_CONTROL
     #define CAM_VIDEO_QUALITY_ONLY      1
-    #define DNG_SUPPORT                 1
 
     #define CAM_EXT_TV_RANGE            1
 
@@ -2155,7 +2115,6 @@
     #undef CAM_VIDEO_CONTROL
     #define CAM_EXT_TV_RANGE            1          // CHDK can make exposure time longer than 64s
 
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -2204,7 +2163,6 @@
 	#undef CAM_VIDEO_CONTROL
 	#define CAM_EXT_TV_RANGE            1          // CHDK can make exposure time longer than 64s
 
-	#define DNG_SUPPORT                 1
 	// pattern
 	#define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
 	// color
@@ -2262,7 +2220,6 @@
 
 	#undef   CAM_VIDEO_CONTROL
 	#define  CAM_VIDEO_QUALITY_ONLY		 	1
-	#define  DNG_SUPPORT                 1
 
 	//#define CAM_EXT_TV_RANGE            1
 
@@ -2340,6 +2297,7 @@
     #define CAM_ZEBRA_ASPECT_ADJUST 1
 	// camera has very little free memory
     #define CAM_ZEBRA_NOBUF 1
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 
 //----------------------------------------------------------
 
@@ -2359,7 +2317,6 @@
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
     #define  CAM_HAS_VIDEO_BUTTON       1
     #undef  CAM_VIDEO_CONTROL
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -2395,7 +2352,6 @@
     #undef  CAM_CAN_SD_OVER_NOT_IN_MF
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
     #define  CAM_HAS_VIDEO_BUTTON       1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -2433,7 +2389,6 @@
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO
     #define CAM_HAS_VIDEO_BUTTON       1
     #define CAM_EXT_TV_RANGE            1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
     // color
@@ -2454,6 +2409,7 @@
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
     #define CAM_BRACKETING              1 
     #define DNG_EXT_FROM ".DPS"
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 //----------------------------------------------------------
 
 
@@ -2474,7 +2430,6 @@
     #define CAM_MULTIPART               1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define  CAM_HAS_VIDEO_BUTTON       1
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -2512,7 +2467,6 @@
     #define CAM_ADJUSTABLE_ALT_BUTTON   1
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #undef  CAM_VIDEO_CONTROL
-    #define DNG_SUPPORT                 1
     #define CAM_REAR_CURTAIN            1
     #define CAM_HAS_JOGDIAL             1
     // pattern
@@ -2559,7 +2513,6 @@
     #undef  CAM_UNCACHED_BIT  // shut up compiler
     #define CAM_UNCACHED_BIT    0x40000000
 
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -2610,7 +2563,6 @@
     #undef  CAM_UNCACHED_BIT  // shut up compiler
     #define CAM_UNCACHED_BIT    0x40000000
 
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -2679,7 +2631,6 @@
 	// black level set to 128 per reports on the forum
     #undef  CAM_BLACK_LEVEL
     #define CAM_BLACK_LEVEL             128
-    #define DNG_SUPPORT                 1
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     #define cam_CalibrationIlluminant1 1 // Daylight
@@ -2709,7 +2660,6 @@
     #undef  CAM_USE_ZOOM_FOR_MF
     #undef  CAM_UNCACHED_BIT  // shut up compiler
     #define CAM_UNCACHED_BIT    0x40000000
-    #define DNG_SUPPORT                 1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -2791,6 +2741,7 @@
    #define CAM_QUALITY_OVERRIDE 1
    #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
    #define CAM_ZEBRA_ASPECT_ADJUST 1
+    #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 //----------------------------------------------------------
 
 #elif defined (CAMERA_g11)
@@ -2863,7 +2814,6 @@
     #define EDGE_HMARGIN 28
 
 	/**** From SX200IS, ok for G11 ?*/
-    #define DNG_SUPPORT    1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -2956,7 +2906,6 @@
     #define EDGE_HMARGIN 28
 
 	/**** From SX200IS, ok for S90 ?*/
-    #define DNG_SUPPORT    1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -3001,7 +2950,6 @@
 	#undef  CAM_UNCACHED_BIT			// shut up compiler
 	#define CAM_UNCACHED_BIT			0x40000000
 
-	#define DNG_SUPPORT					1
 	// pattern
 	#define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
 	// color
@@ -3100,7 +3048,6 @@
 	#undef  CAM_UNCACHED_BIT			// shut up compiler
 	#define CAM_UNCACHED_BIT			0x40000000
 
-	#define DNG_SUPPORT					1
 	// pattern
 	#define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
 	// color
@@ -3177,7 +3124,6 @@
   
    #undef EDGE_HMARGIN
    #define EDGE_HMARGIN 2
-   #undef CAM_CHDK_PTP
    #define CAM_CHDK_PTP 1
 	
 	#define	CAM_DATE_FOLDER_NAMING	1
@@ -3246,7 +3192,6 @@
     #undef EDGE_HMARGIN
     #define EDGE_HMARGIN 2
 
-    #define DNG_SUPPORT		1
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color

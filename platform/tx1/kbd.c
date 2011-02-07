@@ -118,7 +118,7 @@ static long usb_physw[3];
 			 while(nSW<20);
 			 }
 		} 		//continuous-shooting mode 
-		else{		//nomal mode 
+		else{		// normal mode
 			shoot_counter=0;
 			if(conf.bracket_type>2){
 				shoot_counter=(conf.bracket_type-2)*2;

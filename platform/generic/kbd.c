@@ -165,7 +165,7 @@ if(conf.ricoh_ca1_mode && conf.remote_enable)
 
 		  } 		//continuous-shooting mode
  
-		 else{		//nomal mode 
+		 else{		// normal mode
 			shoot_counter=0;
 			if(conf.bracket_type>2)
                        {

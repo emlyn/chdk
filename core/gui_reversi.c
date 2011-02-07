@@ -17,7 +17,6 @@
 #define COMPUTER_ONLY           3
 
 
-#define SCREEN_COLOR            0xF7
 #define FIELD_COLOR_WHITE       0xF3
 #define FIELD_COLOR_BLACK       0xFE
 #define MARKER_COLOR_WHITE      0x33

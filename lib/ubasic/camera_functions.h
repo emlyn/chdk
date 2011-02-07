@@ -1,10 +1,14 @@
+/*
+header for building ubasic_test.exe,
+contains prototypes for functions that would be
+inconvenient to get from real header files
+see dummy functions in camera_functions.c 
+*/
+int script_key_is_clicked(int keyid);
+int script_key_is_pressed(int keyid);
 
-void camera_press(const char *s);
-void camera_release(const char *s);
-void camera_wait_click(int timeout);
-int camera_is_pressed(const char *s);
-int camera_is_clicked(const char *s);
-void camera_click(const char *s);
+int camera_is_pressed(int i);
+int camera_is_clicked(int i);
 void camera_sleep(long v);
 void camera_shoot();
 int md_detect_motion(void);

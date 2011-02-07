@@ -540,7 +540,7 @@
 
 424 "DNG-Format"
 425 "RAW-Puffer nutzen"
-426 "Datei badpixel.bin fehlt!\nBitte starte \nCHDK/SCRIPTS/TEST/badpixel.lua"
+426 "Datei badpixel.bin fehlt!\nFühre 'badpixel.bin erstellen' aus"
 427 "Zeige RAW Speicherzeit"
 
 428 "4 Gewinnt"
@@ -576,3 +576,5 @@
 456 "Konturenfilterung"
 457 "Kontinuierlich anz."
 458 "   Pano-Überlappung (%)"
+459 "badpixel.bin erstellen"
+460 "REC-Modus erforderlich."

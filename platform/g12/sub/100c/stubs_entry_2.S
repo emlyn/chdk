@@ -86,20 +86,20 @@ NHSTUB(UnlockAF,						0xFF838978)	// ok (comp sx30)
 NHSTUB(DoAFLock,						0xFF838940)	// ok (comp sx30)
 NHSTUB(GetImageFolder,					0xFF95F2FC)	// function before 'GetCameraObjectTmpPath ERROR' string
 NHSTUB(UpdateMBROnFlash,				0xFF8767C8) // Search for 'BOOTDISK', function branches to this at end (after setting up R0,R1,R2)
-NHSTUB(exmem_alloc,						0xFF88FD1C)	// search for ExMem.AllocCacheable (from reyalp)
+NHSTUB(exmem_alloc,						0xFF88FFD8)	// search for ExMem.AllocCacheable (from reyalp)
 
 # From stubs_entry_ida.s
-DEF(_eventproc_export_PostLogicalEventToUI, 0xff899bbc)
-DEF(_eventproc_export_SleepTask, 0xff83abb4)
-DEF(_eventproc_export_ExitTask, 0xff81eb30)
-DEF(_eventproc_export_TakeSemaphore, 0xff83a87c)
-DEF(_eventproc_export_HardwareDefect, 0xff89c4a8)
+NHSTUB(eventproc_export_PostLogicalEventToUI, 0xff899bbc)
+NHSTUB(eventproc_export_SleepTask, 0xff83abb4)
+NHSTUB(eventproc_export_ExitTask, 0xff81eb30)
+NHSTUB(eventproc_export_TakeSemaphore, 0xff83a87c)
+NHSTUB(eventproc_export_HardwareDefect, 0xff89c4a8)
 
-# Misc (only used in ARM code so do not need stub)
-DEF(_DebugAssert,						0xFF81EB78)
-DEF(_PT_GetPropertyCaseString,			0xFF8954F0)
-DEF(_takeSemaphore,						0xFF83AD5C)
-DEF(_err_init_task,						0xFF815FD4)
+# Misc - needs a stub anyway, to far for B/BL
+NHSTUB(DebugAssert,						0xFF81EB78)
+NHSTUB(PT_GetPropertyCaseString,			0xFF8954F0)
+NHSTUB(takeSemaphore,						0xFF83AD5C)
+NHSTUB(err_init_task,						0xFF815FD4)
 
 # Addresses for firmware task handlers (used in taskHook)
 DEF(task_CaptSeq,						0xFF88261C)
