@@ -53,14 +53,6 @@ int get_flash_params_count(void){
  return 120;
 }
 
-void JogDial_CW(void){
- _PostLogicalEventForNotPowerType(0x874, 2);  // RotateJogDialRight
-}
-
-void JogDial_CCW(void){
- _PostLogicalEventForNotPowerType(0x875, 2);  // RotateJogDialLeft
-}
-
 void vid_turn_off_updates()
 {
   _ScreenLock();
