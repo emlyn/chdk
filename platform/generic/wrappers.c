@@ -38,7 +38,7 @@ _L,_L,_L,_P,_P,_P,_P,_C,			/* 120-127 */
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 192-207 */
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 208-223 */
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 224-239 */
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};		/* 240-255 */ 
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};		/* 240-255 */
 #endif
 
 void msleep(long msec)
@@ -188,7 +188,7 @@ void play_sound(unsigned sound)
                                 0x2003, //button press sound
                                 0x2004, //self-timer sound
                                 0xC211, //short beep
-                                50000,  // AF confirmation 
+                                50000,  // AF confirmation
                                 0xC507, // error beep imo
                                 0x400D, // LONG ERROR BEEP CONTINIUOUS- warning, cannot be stopped (yet)
                             };
@@ -415,7 +415,7 @@ long sprintf(char *s, const char *st, ...)
     return res;
 }
 
-// strerror exists on vxworks cams, 
+// strerror exists on vxworks cams,
 // but it does about the same thing as this
 const char *strerror(int en) {
 #if !CAM_DRYOS
@@ -477,7 +477,7 @@ void *localtime(const unsigned long *_tod) {
 #else
 // for DRYOS cameras do something with this!  - sizeof(x[]) must be >= sizeof(struct tm) :  'static int x[9];'
   static int x[9];
-  return _LocalTime(_tod, &x);   
+  return _LocalTime(_tod, &x);
 #endif
 }
 
@@ -658,7 +658,7 @@ int i;
 //#if CAM_DRYOS
 //#else
 _SetAutoShutdownTime(1); // 1 sec
-for (i=0;i<200;i++) _UnlockMainPower(); // set power unlock counter to 200 or more, because every keyboard function call try to lock power again ( if "Disable LCD off" menu is "alt" or "script"). 
+for (i=0;i<200;i++) _UnlockMainPower(); // set power unlock counter to 200 or more, because every keyboard function call try to lock power again ( if "Disable LCD off" menu is "alt" or "script").
 //#endif
 }
 long MakeDirectory_Fut(const char *dirname) {
@@ -775,23 +775,23 @@ int is_mbr_loaded()
 int mbr_read(char* mbr_sector, unsigned long drive_total_sectors, unsigned long *part_start_sector,  unsigned long *part_length){
 // return value: 1 - success, 0 - fail
 // called only in VxWorks
- 
+
  int offset=0x10; // points to partition #2
  int valid;
-  
- if ((mbr_sector[0x1FE]!=0x55) || (mbr_sector[0x1FF]!=0xAA)) return 0; // signature check 
+
+ if ((mbr_sector[0x1FE]!=0x55) || (mbr_sector[0x1FF]!=0xAA)) return 0; // signature check
 
  mbr_buf=_AllocateUncacheableMemory(SECTOR_SIZE);
  _memcpy(mbr_buf,mbr_sector,SECTOR_SIZE);
  drive_sectors=drive_total_sectors;
 
  while(offset>=0) {
- 
-  *part_start_sector=(*(unsigned short*)(mbr_sector+offset+0x1C8)<<16) | *(unsigned short*)(mbr_sector+offset+0x1C6); 
-  *part_length=(*(unsigned short*)(mbr_sector+offset+0x1CC)<<16) | *(unsigned short*)(mbr_sector+offset+0x1CA); 
+
+  *part_start_sector=(*(unsigned short*)(mbr_sector+offset+0x1C8)<<16) | *(unsigned short*)(mbr_sector+offset+0x1C6);
+  *part_length=(*(unsigned short*)(mbr_sector+offset+0x1CC)<<16) | *(unsigned short*)(mbr_sector+offset+0x1CA);
 
   valid= (*part_start_sector) && (*part_length) &&
-         (*part_start_sector<=drive_total_sectors) && 
+         (*part_start_sector<=drive_total_sectors) &&
          (*part_start_sector+*part_length<=drive_total_sectors) &&
          ((mbr_sector[offset+0x1BE]==0) || (mbr_sector[offset+0x1BE]==0x80)); // status: 0x80 (active) or 0 (non-active)
 
@@ -824,8 +824,8 @@ int get_part_count(void){
  if (is_mbr_loaded())
  {
 	 for (i=0; i<=1;i++){
-	  part_start_sector=(*(unsigned short*)(mbr_buf+i*16+0x1C8)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1C6); 
-	  part_length=(*(unsigned short*)(mbr_buf+i*16+0x1CC)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1CA); 
+	  part_start_sector=(*(unsigned short*)(mbr_buf+i*16+0x1C8)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1C6);
+	  part_length=(*(unsigned short*)(mbr_buf+i*16+0x1CC)<<16) | *(unsigned short*)(mbr_buf+i*16+0x1CA);
 	  part_status=mbr_buf[i*16+0x1BE];
 	  part_type=mbr_buf[0x1C2+i*16];
 	  if ( part_start_sector && part_length && part_type && ((part_status==0) || (part_status==0x80)) ) count++;
@@ -855,14 +855,14 @@ void create_partitions(void){
 	 char type;
 
 	 _memset(mbr_buf,0,SECTOR_SIZE);
-	 
+
 	 start=1; length=2*1024*1024/SECTOR_SIZE; //2 Mb
 	 type=1; // FAT primary
 	 mbr_buf[0x1BE + 4]=type;
 	 mbr_buf[0x1BE + 8]=start;   mbr_buf[0x1BE + 9]=start>>8;   mbr_buf[0x1BE + 10]=start>>16;  mbr_buf[0x1BE + 11]=start>>24;
 	 mbr_buf[0x1BE + 12]=length; mbr_buf[0x1BE + 13]=length>>8; mbr_buf[0x1BE + 14]=length>>16; mbr_buf[0x1BE + 15]=length>>24;
 
-	 start=start+length; length=drive_sectors-start-1; 
+	 start=start+length; length=drive_sectors-start-1;
 	 type=0x0B;  //FAT32 primary;
 	 mbr_buf[0x1CE + 4]=type;
 	 mbr_buf[0x1CE + 8]=start;   mbr_buf[0x1CE + 9]=start>>8;   mbr_buf[0x1CE + 10]=start>>16;  mbr_buf[0x1CE + 11]=start>>24;
@@ -927,8 +927,8 @@ typedef int(*p_some_f)(char*, int);
 extern p_some_f some_f_for_dng;  // camera variable!
 extern char* second_ext_for_dng; // camera variable!
 
-p_some_f default_some_f;         
-char *   default_second_ext;     
+p_some_f default_some_f;
+char *   default_second_ext;
 
 char *_strstr (const char *s1, const char *s2)
 {
@@ -958,7 +958,7 @@ void save_ext_for_dng(void){
 
 void change_ext_to_dng(void){
  some_f_for_dng=my_some_f;
- second_ext_for_dng=DNG_EXT_TO; 
+ second_ext_for_dng=DNG_EXT_TO;
 }
 
 void change_ext_to_default(void){
@@ -980,7 +980,7 @@ void drv_self_hide()
 {
 #if !CAM_DRYOS
     long drvnum;
-    
+
     drvnum = _iosDrvInstall(dh_err,dh_err,dh_err,dh_err,dh_err,dh_err,dh_err);
     if (drvnum >= 0)
 	_iosDevAdd(drv_struct, "A/DISKBOOT.BIN", drvnum);
@@ -1067,7 +1067,7 @@ int __attribute__((weak)) vid_get_viewport_row_offset() {
 }
 
 // for cameras with two (or more?) RAW buffers this can be used to speed up DNG creation by
-// calling reverse_bytes_order only once. Override in platform/sub/lib.c 
+// calling reverse_bytes_order only once. Override in platform/sub/lib.c
 char __attribute__((weak)) *hook_alt_raw_image_addr() {
 	return hook_raw_image_addr();
 }
@@ -1115,7 +1115,7 @@ void __attribute__((weak)) _reboot_fw_update(const char *fw_update)
 }
 #endif
 
-// TODO mode switch function should detect if USB is connected or not, 
+// TODO mode switch function should detect if USB is connected or not,
 // and do regular or special switch as needed
 #ifdef CAM_DRYOS
 int __attribute__((weak)) switch_mode_usb(int mode)

@@ -49,7 +49,7 @@
 #define COLOR_BLUE          0x87
 #define COLOR_YELLOW        0x44
 #define COLOR_BLACK         0xFF
-#define COLOR_BG            0x22 
+#define COLOR_BG            0x22
 #define COLOR_FG            COLOR_WHITE
 #define COLOR_SELECTED_BG   COLOR_RED
 #define COLOR_SELECTED_FG   COLOR_WHITE
@@ -57,7 +57,7 @@
 #define COLOR_SPLASH_RED    0x58
 #define COLOR_SPLASH_PINK   0x4C
 #define COLOR_SPLASH_GREY   0x16
-// colors for blended histo 
+// colors for blended histo
 // many of these probably wrong on this cam
 #define COLOR_HISTO_R       COLOR_RED
 #define COLOR_HISTO_R_PLAY  COLOR_RED
@@ -301,12 +301,12 @@ extern void draw_ellipse(coord xc, coord yc, unsigned int a, unsigned int b, col
 extern void draw_filled_ellipse(coord xc, coord yc, unsigned int a, unsigned int b, color cl);
 
 
-#if CAM_USES_ASPECT_CORRECTION //nandoide sept-2009 
+#if CAM_USES_ASPECT_CORRECTION //nandoide sept-2009
 void draw_set_aspect_xcorrection_proc(unsigned int (*xcorrection_proc)(unsigned int x));
 void draw_set_aspect_ycorrection_proc(unsigned int (*ycorrection_proc)(unsigned int y));
 unsigned int aspect_xcorrection_games_360(unsigned int x);
 unsigned int aspect_ycorrection_games_360(unsigned int y);
-void draw_set_environment(unsigned int (*xcorrection_proc)(unsigned int x), 
+void draw_set_environment(unsigned int (*xcorrection_proc)(unsigned int x),
                                        unsigned int (*ycorrection_proc)(unsigned int y),
                                        int screenx, int screeny );
 #endif

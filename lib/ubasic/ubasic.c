@@ -123,7 +123,7 @@ static void statement(void);
 static int relation(void);
 
 int ubasic_error;
-const char *ubasic_errstrings[UBASIC_E_ENDMARK] = 
+const char *ubasic_errstrings[UBASIC_E_ENDMARK] =
 {
     "No err",
     "Parse err",
@@ -142,7 +142,7 @@ const char *ubasic_errstrings[UBASIC_E_ENDMARK] =
     "bad until",
     "while: Stack ful",
     "bad wend",
-    "Unk err" 
+    "Unk err"
 };
 
 /*---------------------------------------------------------------------------*/
@@ -249,7 +249,7 @@ case TOKENIZER_GET_VBATT:
     break;
  case TOKENIZER_GET_TICK_COUNT:
     accept(TOKENIZER_GET_TICK_COUNT);
-    r = shooting_get_tick_count();     
+    r = shooting_get_tick_count();
    break;
  case TOKENIZER_GET_MODE:
     accept(TOKENIZER_GET_MODE);
@@ -261,7 +261,7 @@ case TOKENIZER_GET_VBATT:
    break;
  case TOKENIZER_GET_RAW_NR:
     accept(TOKENIZER_GET_RAW_NR);
-    r = camera_get_nr();     
+    r = camera_get_nr();
     break;
  case TOKENIZER_IS_KEY:
     accept(TOKENIZER_IS_KEY);
@@ -275,13 +275,13 @@ case TOKENIZER_GET_SCRIPT_AUTOSTART:
     accept(TOKENIZER_GET_SCRIPT_AUTOSTART);
 #ifdef UBASIC_TEST
 	r = 0;
-#else	
+#else
     r = conf.script_startup;
 #endif
     break;
 case TOKENIZER_GET_USB_POWER:
     accept(TOKENIZER_GET_USB_POWER);
-    r = get_usb_power(0);     
+    r = get_usb_power(0);
     break;
 case TOKENIZER_GET_EXP_COUNT:
     accept(TOKENIZER_GET_EXP_COUNT);
@@ -380,7 +380,7 @@ case TOKENIZER_IS_PRESSED:
   case TOKENIZER_GET_USER_TV96:
     accept(TOKENIZER_GET_USER_TV96);
     r = shooting_get_user_tv96();
-    break;   
+    break;
   case TOKENIZER_GET_USER_TV_ID:
     accept(TOKENIZER_GET_USER_TV_ID);
     r = shooting_get_user_tv_id();
@@ -388,11 +388,11 @@ case TOKENIZER_IS_PRESSED:
   case TOKENIZER_GET_AV96:
     accept(TOKENIZER_GET_AV96);
     r = shooting_get_av96();
-    break;  
+    break;
   case TOKENIZER_GET_USER_AV96:
     accept(TOKENIZER_GET_USER_AV96);
     r = shooting_get_user_av96();
-    break;    
+    break;
   case TOKENIZER_GET_USER_AV_ID:
     accept(TOKENIZER_GET_USER_AV_ID);
     r = shooting_get_user_av_id();
@@ -412,7 +412,7 @@ case TOKENIZER_IS_PRESSED:
   case TOKENIZER_GET_FAR_LIMIT:
     accept(TOKENIZER_GET_FAR_LIMIT);
     r = shooting_get_far_limit_of_acceptable_sharpness();
-    break;  
+    break;
    case TOKENIZER_GET_DOF:
     accept(TOKENIZER_GET_DOF);
     r = shooting_get_depth_of_field();
@@ -420,7 +420,7 @@ case TOKENIZER_IS_PRESSED:
   case TOKENIZER_GET_HYPERFOCAL_DIST:
     accept(TOKENIZER_GET_HYPERFOCAL_DIST);
     r = shooting_get_hyperfocal_distance();
-    break;  
+    break;
   case TOKENIZER_GET_ISO_MARKET:
     accept(TOKENIZER_GET_ISO_MARKET);
     r = (int)shooting_get_iso_market();
@@ -432,11 +432,11 @@ case TOKENIZER_IS_PRESSED:
   case TOKENIZER_GET_BV96:
     accept(TOKENIZER_GET_BV96);
     r = (int)shooting_get_bv96();
-    break;  
+    break;
   case TOKENIZER_GET_SV96:
     accept(TOKENIZER_GET_SV96);
     r = (int)shooting_get_sv96();
-    break;    
+    break;
   case TOKENIZER_GET_ISO_MODE:
     accept(TOKENIZER_GET_ISO_MODE);
     r = shooting_get_iso_mode();
@@ -484,10 +484,10 @@ case TOKENIZER_IS_PRESSED:
     switch (temp)
     {
     	case 0:
-    		r = get_optical_temp(); 
+    		r = get_optical_temp();
     		break;
      	case 1:
-    		r = get_ccd_temp(); 
+    		r = get_ccd_temp();
     		break;
     	case 2:
     		r = get_battery_temp();
@@ -514,16 +514,16 @@ case TOKENIZER_IS_PRESSED:
     accept(TOKENIZER_GET_RAW);
 #ifdef UBASIC_TEST
 	r = 1;
-#else	
+#else
     r = conf.save_raw;
-#endif    
+#endif
     break;
  // get CHDK capture mode value, or 0 if in playback or unknown (broken modemap)
  // NOTE: different from get_mode, since this returns the actual value
  case TOKENIZER_GET_CAPTURE_MODE:
     accept(TOKENIZER_GET_CAPTURE_MODE);
     r = mode_get();
-    if ( (r&MODE_MASK) == MODE_REC) 
+    if ( (r&MODE_MASK) == MODE_REC)
         r &= MODE_SHOOTING_MASK;
     else
         r = 0;
@@ -562,7 +562,7 @@ term(void)
 	op == TOKENIZER_LE ||
 	op == TOKENIZER_NE ||
 	op == TOKENIZER_EQ ||
-	op == TOKENIZER_XOR || 
+	op == TOKENIZER_XOR ||
         op == TOKENIZER_OR ||
 	op == TOKENIZER_MOD) {
     tokenizer_next();
@@ -614,7 +614,7 @@ expr(void)
 {
   int t1, t2;
   int op;
-  
+
   t1 = term();
   op = tokenizer_token();
   DEBUG_PRINTF("expr: token %d\n", op);
@@ -651,7 +651,7 @@ relation(void)
 {
   int r1, r2;
   int op;
-  
+
   r1 = expr();
   op = tokenizer_token();
   DEBUG_PRINTF("relation: token %d\n", op);
@@ -723,7 +723,7 @@ jump_label(char * label)
     }
   }
   if (tokenizer_token() == TOKENIZER_ENDOFINPUT) {
-    if (state_kbd_script_run == 1) {  
+    if (state_kbd_script_run == 1) {
       DEBUG_PRINTF("Label %s not found", label);
       ubasic_error = UBASIC_E_UNK_LABEL;
     }
@@ -805,7 +805,7 @@ static void
 if_statement(void)
 {
   int r, else_cntr,endif_cntr,f_nt,f_sl;
-  
+
   accept(TOKENIZER_IF);
   DEBUG_PRINTF("if_statement: get_relation\n");
   r = relation();
@@ -833,11 +833,11 @@ if_statement(void)
       return;
     }else {
       DEBUG_PRINTF("if_statement: result false\n");
-      
+
       else_cntr=endif_cntr=0; // number of else/endif possible in current nesting
       f_nt=f_sl=0; // f_nt nested then ?, f_fs flag single line
 
-      while(((tokenizer_token() != TOKENIZER_ELSE &&  tokenizer_token() != TOKENIZER_ENDIF) 
+      while(((tokenizer_token() != TOKENIZER_ELSE &&  tokenizer_token() != TOKENIZER_ENDIF)
            || else_cntr || endif_cntr) && tokenizer_token() != TOKENIZER_ENDOFINPUT){
         f_nt=0;
         // nested if
@@ -859,7 +859,7 @@ if_statement(void)
         if(tokenizer_token() == TOKENIZER_ELSE) {
           else_cntr--;
           DEBUG_PRINTF("ELSE: line %d, token %d, else %d, end %d\n", tokenizer_line_number(),tokenizer_token(),else_cntr,endif_cntr);
-          if (else_cntr<0) { 
+          if (else_cntr<0) {
             DEBUG_PRINTF("ubasic.c: if_statement(): else without if-statement\n");
             ended = 1;
             ubasic_error = UBASIC_E_UNMATCHED_IF;
@@ -894,7 +894,7 @@ if_statement(void)
       if(tokenizer_token() == TOKENIZER_ELSE) {
         return;
       }
-    }      
+    }
     endif_statement();
   }else {
   // Singleline IF-Statement
@@ -907,7 +907,7 @@ if_statement(void)
         tokenizer_token() != TOKENIZER_CR &&
         tokenizer_token() != TOKENIZER_ENDOFINPUT);
       if(tokenizer_token() == TOKENIZER_ELSE) {
-        accept(TOKENIZER_ELSE); 
+        accept(TOKENIZER_ELSE);
         statement();
       } else {
         accept(TOKENIZER_CR);
@@ -920,7 +920,7 @@ static void
 else_statement(void)
 {
   int r=0, endif_cntr, f_nt;
-  
+
   accept(TOKENIZER_ELSE);
   if(if_stack_ptr > 0) {
     r = if_stack[if_stack_ptr-1];
@@ -932,7 +932,7 @@ else_statement(void)
     return;
   }
   DEBUG_PRINTF("else_statement: relation %d\n", r);
-  
+
   if (tokenizer_token() == TOKENIZER_CR) {
     accept(TOKENIZER_CR);
     if(!r) {
@@ -941,7 +941,7 @@ else_statement(void)
     } else {
       DEBUG_PRINTF("else_statement: result false\n");
       endif_cntr=0;
-      while(((tokenizer_token() != TOKENIZER_ENDIF ) 
+      while(((tokenizer_token() != TOKENIZER_ENDIF )
            || endif_cntr) && tokenizer_token() != TOKENIZER_ENDOFINPUT){
         f_nt=0;
         if( tokenizer_token() == TOKENIZER_IF) {
@@ -954,7 +954,7 @@ else_statement(void)
             f_nt=1;
           } else { // single line
             endif_cntr--;
-            while(tokenizer_token() != TOKENIZER_ENDIF && tokenizer_token() != TOKENIZER_CR 
+            while(tokenizer_token() != TOKENIZER_ENDIF && tokenizer_token() != TOKENIZER_CR
                  && tokenizer_token() != TOKENIZER_ENDOFINPUT){
               tokenizer_next();
             }
@@ -1018,16 +1018,16 @@ case_statement(void)
   int select_value, case_value_1, case_value_2, case_value_eq;
   short case_run, case_goto = 0, case_gosub = 0;
   int cur_ln, gosub_ln = 0;
-  
+
   accept(TOKENIZER_CASE);
   if(select_stack_ptr > 0) {
     select_value = select_stack[select_stack_ptr - 1].select_value;
     case_run = select_stack[select_stack_ptr - 1].case_run;
-  
+
     if (!case_run) {
       case_value_1 = expr();
       case_value_eq = (select_value == case_value_1);
-      if (case_value_eq) { DEBUG_PRINTF("case_statement: case_value_eq %d, case_value %d\n", case_value_eq, case_value_1); }  
+      if (case_value_eq) { DEBUG_PRINTF("case_statement: case_value_eq %d, case_value %d\n", case_value_eq, case_value_1); }
 
       if(tokenizer_token() == TOKENIZER_TO) {
         accept(TOKENIZER_TO);
@@ -1051,7 +1051,7 @@ case_statement(void)
         } while (tokenizer_token() == TOKENIZER_COMMA);
         DEBUG_PRINTF("case_statement: case_value_eq %d, case_value_comma %d\n", case_value_eq, case_value_1);
       }
-      
+
       accept(TOKENIZER_SEMICOLON);
       if (case_value_eq) {
         case_goto = (tokenizer_token() == TOKENIZER_GOTO);
@@ -1061,7 +1061,7 @@ case_statement(void)
 //GOSUB
         statement();
 //GOSUB  - save new linenumber, reset to curr linenumber
-      if (case_gosub) { 
+      if (case_gosub) {
         gosub_ln = tokenizer_line_number();
         jump_line(cur_ln+1);
         DEBUG_PRINTF("case_statement: GOSUB: toLN=%d, nextLN=%d\n", gosub_ln, cur_ln+1);
@@ -1079,12 +1079,12 @@ case_statement(void)
     while ((tokenizer_token() == TOKENIZER_REM) && (!case_goto)) {statement();}
 //REM
     if (case_goto) { dec_select_stack(); } else {
-      if ((tokenizer_token() != TOKENIZER_CASE) && (tokenizer_token() != TOKENIZER_CASE_ELSE) && 
+      if ((tokenizer_token() != TOKENIZER_CASE) && (tokenizer_token() != TOKENIZER_CASE_ELSE) &&
          (tokenizer_token() != TOKENIZER_END_SELECT)) {
          DEBUG_PRINTF("ubasic.c: select_statement(): don't found case, case_else or end_select\n");
          ended = 1;
          ubasic_error = UBASIC_E_PARSE;
-      } else { 
+      } else {
 //GOSUB test for end_select and set to gosub-linenumber
         if (tokenizer_token() == TOKENIZER_END_SELECT) { end_select_statement(); }
         if (case_gosub) {
@@ -1092,8 +1092,8 @@ case_statement(void)
           jump_line(gosub_ln);
           DEBUG_PRINTF("end_select_statement: GOSUB: returnLN=%d\n", gosub_stack[gosub_stack_ptr-1]);
         }
-      }  
-//GOSUB        
+      }
+//GOSUB
     }
   } else {
     DEBUG_PRINTF("case_statement: SELECT-Stack fail\n");
@@ -1107,18 +1107,18 @@ case_else_statement(void)
 {
   short case_goto = 0, case_gosub = 0;
   int cur_ln, gosub_ln = 0;
-  
+
   accept(TOKENIZER_CASE_ELSE);
   if(select_stack_ptr > 0) {
     if (!select_stack[select_stack_ptr - 1].case_run) {
-      case_goto = (tokenizer_token() == TOKENIZER_GOTO); 
-      case_gosub = (tokenizer_token() == TOKENIZER_GOSUB); 
+      case_goto = (tokenizer_token() == TOKENIZER_GOTO);
+      case_gosub = (tokenizer_token() == TOKENIZER_GOSUB);
 //GOSUB - save curr linenumber
       cur_ln = tokenizer_line_number();
 //GOSUB
       statement();
 //GOSUB  - save new linenumber, reset to curr linenumber
-      if (case_gosub) { 
+      if (case_gosub) {
         gosub_ln = tokenizer_line_number();
         jump_line(cur_ln+1);
         DEBUG_PRINTF("case_else_statement: GOSUB: toLN=%d, nextLN=%d\n", gosub_ln, cur_ln+1);
@@ -1132,21 +1132,21 @@ case_else_statement(void)
 //REM
     while ((tokenizer_token() == TOKENIZER_REM) && (!case_goto)) {statement();}
 //REM
-    if (case_goto) { dec_select_stack(); } else { 
+    if (case_goto) { dec_select_stack(); } else {
 //GOSUB test for end_select and set to gosub-linenumber
       if (tokenizer_token() != TOKENIZER_END_SELECT) {
         DEBUG_PRINTF("ubasic.c: select_statement(): don't found end_select\n");
         ended = 1;
         ubasic_error = UBASIC_E_PARSE;
-      } else { 
-          end_select_statement(); 
+      } else {
+          end_select_statement();
         if (case_gosub) {
           gosub_stack[gosub_stack_ptr-1] = tokenizer_line_number();
           jump_line(gosub_ln);
           DEBUG_PRINTF("end_select_statement: GOSUB: returnLN=%d\n", gosub_stack[gosub_stack_ptr-1]);
         }
-      }  
-//GOSUB      
+      }
+//GOSUB
     }
   } else {
     DEBUG_PRINTF("case_else_statement: SELECT-Stack fault\n");
@@ -1158,16 +1158,16 @@ case_else_statement(void)
 static void
 select_statement(void)
 {
- 
+
   int select_value;
-  
+
   accept(TOKENIZER_SELECT);
-  select_value = expr();  
+  select_value = expr();
   accept(TOKENIZER_CR);
 //REM
     while (tokenizer_token() == TOKENIZER_REM) {statement();}
 //REM
-  
+
   if(select_stack_ptr < MAX_SELECT_STACK_DEPTH) {
     select_stack[select_stack_ptr].select_value = select_value;
     select_stack[select_stack_ptr].case_run = 0;
@@ -1190,7 +1190,7 @@ select_statement(void)
 static void
 let_statement(void)
 {
- 
+
   int var;
 
   var = tokenizer_variable_num();
@@ -1264,7 +1264,7 @@ static void
 next_statement(void)
 {
   int var, value;
-  
+
   accept(TOKENIZER_NEXT);
   var = tokenizer_variable_num();
   accept(TOKENIZER_VARIABLE);
@@ -1272,10 +1272,10 @@ next_statement(void)
      var == for_stack[for_stack_ptr - 1].for_variable) {
     value = ubasic_get_variable(var) + for_stack[for_stack_ptr - 1].step;
     ubasic_set_variable(var, value);
-    
+
     if(((for_stack[for_stack_ptr - 1].step > 0) && (value <= for_stack[for_stack_ptr - 1].to)) ||
        ((for_stack[for_stack_ptr - 1].step < 0) && (value >= for_stack[for_stack_ptr - 1].to)))
-        jump_line(for_stack[for_stack_ptr - 1].line_after_for); 
+        jump_line(for_stack[for_stack_ptr - 1].line_after_for);
     else {
       for_stack_ptr--;
       accept(TOKENIZER_CR);
@@ -1292,18 +1292,18 @@ static void
 for_statement(void)
 {
   int for_variable, to, step;
-  
+
   accept(TOKENIZER_FOR);
   for_variable = tokenizer_variable_num();
   accept(TOKENIZER_VARIABLE);
   accept(TOKENIZER_EQ);
   ubasic_set_variable(for_variable, expr());
   accept(TOKENIZER_TO);
-  to = expr();                     
+  to = expr();
   step = 1;
   if (tokenizer_token() != TOKENIZER_CR) {
 	  accept(TOKENIZER_STEP);
-	  step = expr();         
+	  step = expr();
   }
   accept(TOKENIZER_CR);
 
@@ -1315,7 +1315,7 @@ for_statement(void)
     DEBUG_PRINTF("for_statement: new for, var %d to %d\n",
 		 for_stack[for_stack_ptr].for_variable,
 		 for_stack[for_stack_ptr].to);
-		 
+
     for_stack_ptr++;
   } else {
     DEBUG_PRINTF("for_statement: for stack depth exceeded\n");
@@ -1343,7 +1343,7 @@ static void
 until_statement(void)
 {
   int r;
-  
+
   accept(TOKENIZER_UNTIL);
   r = relation();
   if(do_stack_ptr > 0) {
@@ -1364,7 +1364,7 @@ static void
 while_statement(void)
 {
   int r, while_cntr;
-  
+
   accept(TOKENIZER_WHILE);
   if(while_stack_ptr < MAX_WHILE_STACK_DEPTH) {
     if ((while_stack_ptr == 0)||((while_stack_ptr > 0) && (while_stack[while_stack_ptr-1] != tokenizer_line_number()))){
@@ -1382,18 +1382,18 @@ while_statement(void)
   if(while_stack_ptr > 0) {
     if(!r) {
     	while_cntr=0;
-      while((tokenizer_token() != TOKENIZER_WEND  || while_cntr ) && 
-	      tokenizer_token() != TOKENIZER_ENDOFINPUT){   
+      while((tokenizer_token() != TOKENIZER_WEND  || while_cntr ) &&
+	      tokenizer_token() != TOKENIZER_ENDOFINPUT){
 	      if (tokenizer_token() == TOKENIZER_WHILE) while_cntr+=1;
-	      if (tokenizer_token() == TOKENIZER_WEND) while_cntr-=1;           
+	      if (tokenizer_token() == TOKENIZER_WEND) while_cntr-=1;
 	      tokenizer_next();
-	    }  
+	    }
       while_stack_ptr--;
-    
+
       accept(TOKENIZER_WEND);
-      accept(TOKENIZER_CR);  	
+      accept(TOKENIZER_CR);
     } else {
-  	  accept_cr();        
+  	  accept_cr();
     }
   } else {
     DEBUG_PRINTF("while_statement: unmatched wend\n");
@@ -1676,7 +1676,7 @@ static void get_vbatt_statement()
     var = tokenizer_variable_num();
     accept(TOKENIZER_VARIABLE);
     ubasic_set_variable(var, (unsigned short)stat_get_vbatt());
-	
+
     accept_cr();
 }
 
@@ -1688,7 +1688,7 @@ static void get_prop_statement()
     var1 = tokenizer_variable_num();
     accept(TOKENIZER_VARIABLE);
     ubasic_set_variable(var1, shooting_get_prop(var));
-	
+
     accept_cr();
 }
 
@@ -1961,8 +1961,8 @@ static void set_focus_statement()
     else shooting_set_focus(to, SET_LATER);
 #else
     if (mode_video) shooting_set_focus(to, SET_NOW);
-    else shooting_set_focus(to, SET_LATER);    
-#endif    
+    else shooting_set_focus(to, SET_LATER);
+#endif
     accept_cr();
 }
 
@@ -2086,7 +2086,7 @@ static void set_capture_mode_canon_statement()
     accept(TOKENIZER_SET_CAPTURE_MODE_CANON);
     to = expr();
     // if the value as negative, assume it is a mistakenly sign extended PROPCASE_SHOOTING_MODE value
-    if( to < 0) 
+    if( to < 0)
         to &= 0xFFFF;
     shooting_set_mode_canon(to);
     accept_cr();
@@ -2195,7 +2195,7 @@ static void md_get_cell_diff_statement()
 
     var = tokenizer_variable_num();
     accept(TOKENIZER_VARIABLE);
-	
+
     ubasic_set_variable(var, md_get_cell_diff(col,row));
     accept_cr();
 }
@@ -2252,12 +2252,12 @@ static void md_detect_motion_statement()
 
 
     if (tokenizer_token() != TOKENIZER_CR && tokenizer_token() != TOKENIZER_ELSE) {
-			// eat COMA	
+			// eat COMA
 //			tokenizer_next();
 		}
 
 
-		
+
     if (tokenizer_token() != TOKENIZER_CR && tokenizer_token() != TOKENIZER_ELSE) {
 				tokenizer_next();
         clipping_region_mode = expr();
@@ -2291,7 +2291,7 @@ static void md_detect_motion_statement()
 				tokenizer_next();
         msecs_before_trigger = expr();
     }
-			
+
 
     accept_cr();
 
@@ -2305,7 +2305,7 @@ static void md_detect_motion_statement()
 //		script_console_add_line(buf);
 
 	md_init_motion_detector(
-			columns, rows, pixel_measure_mode, detection_timeout, 
+			columns, rows, pixel_measure_mode, detection_timeout,
 			measure_interval, threshold, draw_grid,
 			clipping_region_mode,
 			clipping_region_column1, clipping_region_row1,
@@ -2378,19 +2378,19 @@ statement(void)
 #ifdef INCLUDE_OLD_GET__SYNTAX
   case TOKENIZER_GET_TV96:
     get_tv96_statement();
-    break; 
+    break;
   case TOKENIZER_GET_USER_TV96:
     get_user_tv96_statement();
-    break;   
+    break;
   case TOKENIZER_GET_USER_TV_ID:
     get_user_tv_id_statement();
     break;
   case TOKENIZER_GET_AV96:
     get_av96_statement();
-    break;  
+    break;
   case TOKENIZER_GET_USER_AV96:
     get_user_av96_statement();
-    break;    
+    break;
   case TOKENIZER_GET_USER_AV_ID:
     get_user_av_id_statement();
     break;
@@ -2405,13 +2405,13 @@ statement(void)
     break;
   case TOKENIZER_GET_FAR_LIMIT:
     get_far_limit_statement();
-    break;  
+    break;
   case TOKENIZER_GET_DOF:
     get_dof_statement();
     break;
   case TOKENIZER_GET_HYPERFOCAL_DIST:
     get_hyperfocal_distance_statement();
-    break;  
+    break;
   case TOKENIZER_GET_ISO_MARKET:
     get_iso_market_statement();
     break;
@@ -2420,10 +2420,10 @@ statement(void)
     break;
   case TOKENIZER_GET_BV96:
     get_bv96_statement();
-    break;  
+    break;
   case TOKENIZER_GET_SV96:
     get_sv96_statement();
-    break;    
+    break;
   case TOKENIZER_GET_ISO_MODE:
     get_iso_mode_statement();
     break;
@@ -2448,19 +2448,19 @@ statement(void)
 #endif
   case TOKENIZER_SET_TV96_DIRECT:
     set_tv96_direct_statement();
-    break;    
+    break;
   case TOKENIZER_SET_TV96:
     set_tv96_statement();
-    break;  
+    break;
   case TOKENIZER_PLAY_SOUND:
     play_sound_statement();
-    break;  
+    break;
   case TOKENIZER_SET_SHUTTER_SPEED:
     set_shutter_speed_statement();
-    break;    
+    break;
   case TOKENIZER_SET_USER_TV96:
     set_user_tv96_statement();
-    break;    
+    break;
   case TOKENIZER_SET_USER_TV_BY_ID:
     set_user_tv_by_id_statement();
     break;
@@ -2469,25 +2469,25 @@ statement(void)
     break;
   case TOKENIZER_SET_AV96_DIRECT:
     set_av96_direct_statement();
-    break;    
+    break;
   case TOKENIZER_SET_AV96:
     set_av96_statement();
-    break;  
-    
+    break;
+
   case TOKENIZER_SET_USER_AV96:
     set_user_av96_statement();
-    break;    
+    break;
   case TOKENIZER_SET_USER_AV_BY_ID:
     set_user_av_by_id_statement();
     break;
   case TOKENIZER_SET_USER_AV_BY_ID_REL:
     set_user_av_by_id_rel_statement();
     break;
-   
+
   case TOKENIZER_SET_ND_FILTER:
     set_nd_filter_statement();
-    break;  
-  
+    break;
+
   case TOKENIZER_SET_ZOOM:
     set_zoom_statement();
     break;
@@ -2507,17 +2507,17 @@ statement(void)
     break;
   case TOKENIZER_SET_ISO_DL_F_B:
     set_iso_real_delta_from_base_statement();
-    break;*/  
+    break;*/
   case TOKENIZER_SET_ISO_REAL:
     set_iso_real_statement();
     break;
   case TOKENIZER_SET_SV96:
     set_sv96_statement();
-    break;  
-  
+    break;
+
   //ARM End
-  
-    
+
+
 
   case TOKENIZER_SET_ISO_MODE:
     set_iso_mode_statement();
@@ -2533,7 +2533,7 @@ statement(void)
   case TOKENIZER_SET_EV:
         set_ev_statement();
    break;
-   
+
     case TOKENIZER_SET_MOVIE_STATUS:
         set_movie_status_statement();
    break;
@@ -2693,7 +2693,7 @@ line_statement(void)
       accept(TOKENIZER_CR);
       return;
   }
-#endif 
+#endif
   /* reyalp - eat up to 100 labels or rems at a time so they don't cost 10ms each */
   int count = 100;
   do {

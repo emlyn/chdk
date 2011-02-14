@@ -72,7 +72,7 @@ static int nTxtbl[]={0,1,2,3,4,5,6,7};
 static int nTxtbl[]={0,1,2,3,4,5,6,7,8};
 #endif
 
-#if defined (CAMERA_a700) || defined(CAMERA_a710) || defined (CAMERA_a720) || defined (CAMERA_a2000) 
+#if defined (CAMERA_a700) || defined(CAMERA_a710) || defined (CAMERA_a720) || defined (CAMERA_a2000)
 #define ZSTEP_TABLE_SIZE 8
 static int nTxtbl[]={0,2,4,6,8,10,12,14};
 #endif
@@ -112,7 +112,7 @@ void script_autostart()
 {
     kbd_blocked = 1;
     gui_kbd_enter();
-    console_clear(); 
+    console_clear();
     script_console_add_line("***Autostart***"); //lang_str(LANG_CONSOLE_TEXT_STARTED));
     script_start_gui( 1 );
 }
@@ -138,7 +138,7 @@ static int remoteHalfShutter=0, remoteFullShutter=0, remoteShooting=0, remoteCli
 #define REMOTE_MAX_CLICK_LENGTH	50
 /*-------------------- Alex scriptless remote additions end ---------------------*/
 
-/* 
+/*
     main kb processing
     this monster needs to be broken up and documented, remote stuff should go in it's own functions
 */
@@ -166,17 +166,17 @@ long kbd_process()
         if (kbd_is_key_pressed(conf.alt_mode_button)
                 || ((key_pressed >= CAM_EMUL_KEYPRESS_DELAY)
                 && (key_pressed < CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION))) {
-            if (key_pressed <= CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION) 
+            if (key_pressed <= CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION)
                 key_pressed++;
-            if (key_pressed == CAM_EMUL_KEYPRESS_DELAY) 
+            if (key_pressed == CAM_EMUL_KEYPRESS_DELAY)
                 kbd_key_press(conf.alt_mode_button);
-            else if (key_pressed == +CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION) 
+            else if (key_pressed == +CAM_EMUL_KEYPRESS_DELAY+CAM_EMUL_KEYPRESS_DURATION)
                 kbd_key_release(conf.alt_mode_button);
             return 1;
         } else if (kbd_get_pressed_key() == 0) {
             if (key_pressed != 100 && (key_pressed < CAM_EMUL_KEYPRESS_DELAY)) {
                 kbd_blocked = 1-kbd_blocked;
-                if (kbd_blocked) 
+                if (kbd_blocked)
                     gui_kbd_enter();
                 else
                     gui_kbd_leave();
@@ -186,16 +186,16 @@ long kbd_process()
         }
         return 1;
     }
-       
+
     // auto iso shift
-    if (kbd_is_key_pressed(KEY_SHOOT_HALF) && kbd_is_key_pressed(conf.alt_mode_button)) 
+    if (kbd_is_key_pressed(KEY_SHOOT_HALF) && kbd_is_key_pressed(conf.alt_mode_button))
         return 0;
 
     if (kbd_is_key_pressed(conf.alt_mode_button)) {
         if (conf.ricoh_ca1_mode && conf.remote_enable)
             conf.synch_enable=1;
         key_pressed = 1;
-        kbd_key_release_all();          
+        kbd_key_release_all();
         return 1;
     }
 
@@ -282,14 +282,14 @@ long kbd_process()
                     nSW=1;
                     nWt=10;
                     kbd_key_release_all();
-                    kbd_key_press(KEY_SHOOT_HALF); 
+                    kbd_key_press(KEY_SHOOT_HALF);
                     soft_half_press = 1;
                     set_key_press(1);
                     return 1;
                 } else if(nSW==1) {
                     nSW=2;
                     nWt=10;
-                    kbd_key_release(KEY_SHOOT_HALF); 
+                    kbd_key_release(KEY_SHOOT_HALF);
                     soft_half_press = 0;
                     set_key_press(1);
                     return 1;
@@ -417,7 +417,7 @@ long kbd_process()
                     nSW=0;
                     nCa=0;
                     return 1;
-                }                                       
+                }
                 if(nSW==109) {
 //                  nSW=110;
                     nCER=0;
@@ -458,7 +458,7 @@ long kbd_process()
                     nSW=110;
                     nWt=2;
                     kbd_key_release_all();
-                    kbd_key_press(KEY_SHOOT_HALF); 
+                    kbd_key_press(KEY_SHOOT_HALF);
 //                  key_pressed = 1;
 //                  kbd_blocked = 1;
 //                  nRmt=1;
@@ -483,7 +483,7 @@ long kbd_process()
                             return 1;
                         }
                     }
-                    if(nReczoom==0 && ((nTxzname==KEY_ZOOM_IN && nCrzpos>=nTxtbl[nTxtblcr]) 
+                    if(nReczoom==0 && ((nTxzname==KEY_ZOOM_IN && nCrzpos>=nTxtbl[nTxtblcr])
                             || (nTxzname==KEY_ZOOM_OUT && nCrzpos<=nTxtbl[nTxtblcr]))) {
                         if(get_usb_power(1)) {
                             i=1;
@@ -512,7 +512,7 @@ long kbd_process()
                         return 1;
                     }
                     kbd_key_release_all();
-                    kbd_key_press(nTxzname); 
+                    kbd_key_press(nTxzname);
                     set_key_press(1);
                     nCER++;
                     return 1;
@@ -585,7 +585,7 @@ long kbd_process()
                 }
                 if(nTxzoom>0 && nSW==120 && conf.remote_zoom_enable) {
                     nCrzpos=lens_get_zoom_point();
-                    if((nTxzname==KEY_ZOOM_IN && nCrzpos<=nTxtbl[nTxtblcr]) 
+                    if((nTxzname==KEY_ZOOM_IN && nCrzpos<=nTxtbl[nTxtblcr])
                             || (nTxzname==KEY_ZOOM_OUT && nCrzpos>=nTxtbl[nTxtblcr])) {
                         kbd_key_release_all();
                         set_key_press(0);
@@ -599,9 +599,9 @@ long kbd_process()
                     lens_set_zoom_speed(5);
                     kbd_key_release_all();
                     if(nTxzname==KEY_ZOOM_IN)
-                        kbd_key_press(KEY_ZOOM_OUT); 
+                        kbd_key_press(KEY_ZOOM_OUT);
                     else
-                        kbd_key_press(KEY_ZOOM_IN); 
+                        kbd_key_press(KEY_ZOOM_IN);
                     set_key_press(1);
                     return 1;
                 }
@@ -610,7 +610,7 @@ long kbd_process()
                     nSW=115;
                     nWt=2;
                     shutter_int=0;
-                    kbd_key_press(KEY_SHOOT_FULL); 
+                    kbd_key_press(KEY_SHOOT_FULL);
                     set_key_press(1);
 //                  kbd_blocked = 1;
 //                  nRmt=1;
@@ -624,7 +624,7 @@ long kbd_process()
                     }
                     nSW=116;
                     nWt=2;
-                    kbd_key_release(KEY_SHOOT_FULL); 
+                    kbd_key_release(KEY_SHOOT_FULL);
                     set_key_press(1);
                     soft_half_press = 0;
 //                  kbd_blocked = 1;
@@ -691,7 +691,7 @@ long kbd_process()
                     nSW=110;
                     nWt=2;
                     kbd_key_release_all();
-                    kbd_key_press(KEY_SHOOT_HALF); 
+                    kbd_key_press(KEY_SHOOT_HALF);
 //                  debug_led(1);
                     soft_half_press = 1;
                     set_key_press(1);
@@ -777,7 +777,7 @@ long kbd_process()
                             return 1;
                         }
                     }
-                    if(nReczoom==0 && ((nTxzname==KEY_ZOOM_IN && nCrzpos>=nTxtbl[nTxtblcr]) 
+                    if(nReczoom==0 && ((nTxzname==KEY_ZOOM_IN && nCrzpos>=nTxtbl[nTxtblcr])
                                 || (nTxzname==KEY_ZOOM_OUT && nCrzpos<=nTxtbl[nTxtblcr]))) {
                         if(nCount==0) {
                             i=1;
@@ -806,7 +806,7 @@ long kbd_process()
                         return 1;
                     }
                     kbd_key_release_all();
-                    kbd_key_press(nTxzname); 
+                    kbd_key_press(nTxzname);
                     set_key_press(1);
                     nCER++;
                     return 1;
@@ -829,9 +829,9 @@ long kbd_process()
                     lens_set_zoom_speed(5);
                     kbd_key_release_all();
                     if(nTxzname==KEY_ZOOM_IN)
-                        kbd_key_press(KEY_ZOOM_OUT); 
+                        kbd_key_press(KEY_ZOOM_OUT);
                     else
-                        kbd_key_press(KEY_ZOOM_IN); 
+                        kbd_key_press(KEY_ZOOM_IN);
                     set_key_press(1);
                     return 1;
                 }
@@ -856,7 +856,7 @@ long kbd_process()
                         }
                         nSW=125;
                         nWt=10;
-                        kbd_key_release(KEY_SHOOT_HALF); 
+                        kbd_key_release(KEY_SHOOT_HALF);
                         soft_half_press = 0;
                         set_key_press(1);
 //                      kbd_blocked = 1;
@@ -873,7 +873,7 @@ long kbd_process()
                         nWt=2;
                         shutter_int=0;
 //                      debug_led(0);
-                        kbd_key_press(KEY_SHOOT_FULL); 
+                        kbd_key_press(KEY_SHOOT_FULL);
                         set_key_press(1);
 //                      kbd_blocked = 1;
 //                      nRmt=1;
@@ -931,11 +931,11 @@ long kbd_process()
             return 1;
         }
 #endif // ifdef CAM_USE_ZOOM_FOR_MF
-        if ((conf.fast_ev || conf.fast_movie_control || conf.fast_movie_quality_control) 
+        if ((conf.fast_ev || conf.fast_movie_control || conf.fast_movie_quality_control)
                 && kbd_use_up_down_left_right_as_fast_switch()) {
             return 1;
         }
-        other_kbd_process(); // processed other keys in not <alt> mode 
+        other_kbd_process(); // processed other keys in not <alt> mode
     }
 
     return kbd_blocked;
@@ -951,13 +951,13 @@ void kbd_set_block(int bEnableBlock) {
 
 long kbd_use_up_down_left_right_as_fast_switch() {
     static long key_pressed = 0; // ??? static masking a global
-    int m=mode_get(); 
+    int m=mode_get();
     int mode_video = MODE_IS_VIDEO(m) || (movie_status > 1);
     int ev_video=0;
     int jogdial;
 
 #if CAM_EV_IN_VIDEO
-    ev_video=get_ev_video_avail(); 
+    ev_video=get_ev_video_avail();
 #endif
 
     if (!(kbd_is_key_pressed(KEY_UP)) && !(kbd_is_key_pressed(KEY_DOWN))) key_pressed = 0;
@@ -972,11 +972,11 @@ long kbd_use_up_down_left_right_as_fast_switch() {
             shooting_set_prop(PROPCASE_EV_CORRECTION_2,shooting_get_prop(PROPCASE_EV_CORRECTION_2)+(conf.fast_ev_step+1)*16);
             EnterToCompensationEVF();
             key_pressed = KEY_UP;
-                
+
             return 1;
         }
 
-    } 
+    }
 
     if (kbd_is_key_pressed(KEY_DOWN) && ((m&MODE_SHOOTING_MASK) != MODE_M) && !mode_video) {
         if (conf.fast_ev && key_pressed == 0) {
@@ -987,7 +987,7 @@ long kbd_use_up_down_left_right_as_fast_switch() {
             EnterToCompensationEVF();
             return 1;
         }
-    } 
+    }
 
 #else
     jogdial=get_jogdial_direction();
@@ -1003,7 +1003,7 @@ long kbd_use_up_down_left_right_as_fast_switch() {
             shooting_set_prop(PROPCASE_EV_CORRECTION_2,shooting_get_prop(PROPCASE_EV_CORRECTION_2)-(conf.fast_ev_step+1)*16);
             EnterToCompensationEVF();
         }
-     
+
 
 #endif
 
@@ -1017,21 +1017,21 @@ long kbd_use_up_down_left_right_as_fast_switch() {
                 shooting_video_bitrate_change(conf.video_bitrate);
                 movie_reset = 1;
 #endif
-            }    
+            }
             else if (conf.video_mode==1) {
                 conf.video_quality+=1;
                 if (conf.video_quality>VIDEO_MAX_QUALITY)
                     conf.video_quality=VIDEO_MAX_QUALITY;
                 movie_reset = 1;
-            }              
+            }
             key_pressed = KEY_UP;
             return 1;
         }
-    } 
-    
+    }
+
     if (kbd_is_key_pressed(KEY_DOWN) && mode_video && movie_status == 4) {
         if (conf.fast_movie_quality_control && key_pressed == 0) {
-            if (conf.video_mode==0) {                
+            if (conf.video_mode==0) {
 #if !CAM_VIDEO_QUALITY_ONLY
                 conf.video_bitrate-=1;
                 if (conf.video_bitrate<0)
@@ -1046,23 +1046,23 @@ long kbd_use_up_down_left_right_as_fast_switch() {
                 if (conf.video_quality<1)
                     conf.video_quality=1;
                 movie_reset = 1;
-            }          
+            }
             key_pressed = KEY_DOWN;
             return 1;
         }
-    } 
-    
+    }
+
     if (kbd_is_key_pressed(KEY_LEFT) && mode_video && (movie_status == 4) && !ev_video) {
         if (conf.fast_movie_control && key_pressed == 0) {
             movie_status = VIDEO_RECORD_STOPPED;
             key_pressed = KEY_LEFT;
             return 1;
         }
-    } 
+    }
 	// reyalp - HACK for cams that can do video in any mode
 	// note that this means this will probably run whenever you press right
     if (kbd_is_key_pressed(KEY_RIGHT) &&
-#ifndef CAM_HAS_VIDEO_BUTTON 
+#ifndef CAM_HAS_VIDEO_BUTTON
             mode_video &&
 #endif
 	        (movie_status == 1) && !ev_video) {
@@ -1073,7 +1073,7 @@ long kbd_use_up_down_left_right_as_fast_switch() {
             key_pressed = KEY_RIGHT;
             return 1;
         }
-    } 
+    }
 
     return 0;
 }

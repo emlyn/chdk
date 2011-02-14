@@ -55,24 +55,24 @@ static int shoot_counter=0;
 
 long get_mmio(void)
 {
-long x;	
+long x;
 
 #if defined(CAMERA_a530) || defined(CAMERA_a540)
     x = (long)*mmio2;
 #endif
-	
-#if defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_ixus800_sd700) 
+
+#if defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_ixus800_sd700)
         x = (long)*mmio1;
 #endif
 
 #if defined(CAMERA_a710) || defined(CAMERA_a700)
         x = (long)*mmio0;
 #endif
-	
-return x;	
+
+return x;
 }
 
-#if defined(CAMERA_a530) || defined(CAMERA_a540) || defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_a700)|| defined(CAMERA_a710) || defined (CAMERA_ixus800_sd700)  
+#if defined(CAMERA_a530) || defined(CAMERA_a540) || defined(CAMERA_a610) || defined(CAMERA_a620) || defined(CAMERA_a630) || defined(CAMERA_a640) || defined(CAMERA_a700)|| defined(CAMERA_a710) || defined (CAMERA_ixus800_sd700)
 void wait_until_remote_button_is_released(void)
 {
 long x;
@@ -117,7 +117,7 @@ if(conf.ricoh_ca1_mode && conf.remote_enable)
 			prev_usb_power=0;
 			nSW = 0;
 			do
-				{     
+				{
 				x=get_mmio();
 				cur_usb_power = x&USB_MASK;
 				if(cur_usb_power)
@@ -136,14 +136,14 @@ if(conf.ricoh_ca1_mode && conf.remote_enable)
 					if(prev_usb_power)
                                 {
 						tick3 = (int)get_tick_count()-tick2;
-						if(nSW==10) 
+						if(nSW==10)
                                          {
 							 if(tick3>50) shutter_int=1;
 							 nSW=20;
 							}
-						if(nSW==0 && tick3>0) 
+						if(nSW==0 && tick3>0)
                                           {
-							 if(tick3<50) 
+							 if(tick3<50)
                                              {
 							    nSW=10;
 							   }
@@ -164,7 +164,7 @@ if(conf.ricoh_ca1_mode && conf.remote_enable)
 			 }    // lighter/darker
 
 		  } 		//continuous-shooting mode
- 
+
 		 else{		// normal mode
 			shoot_counter=0;
 			if(conf.bracket_type>2)
@@ -175,7 +175,7 @@ if(conf.ricoh_ca1_mode && conf.remote_enable)
              x=get_mmio();
 
 //   while((x&USB_MASK) &&  ((int)get_tick_count()-tick < DELAY_TIMEOUT));
- 
+
 // ------ modif by Masuji SUTO (start) --------------
         while(((!(x&USB_MASK) && (nMode==0)) || ((x&USB_MASK) && (nMode==1))) &&  ((int)get_tick_count()-tick < DELAY_TIMEOUT));
 // ------ modif by Masuji SUTO (end)   --------------
@@ -316,7 +316,7 @@ void my_kbd_read_keys()
     }
     remote_key = (kbd_new_state[USB_REG] & USB_MASK)==USB_MASK;
 
-			if (remote_key) 
+			if (remote_key)
 				remote_count += 1;
 			else if (remote_count) {
 				usb_power = remote_count;
