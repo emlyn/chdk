@@ -21,7 +21,7 @@ NHSTUB(platformsub_kbd_fetch_data, 0xFF858DF8)
 
 
 // not 100% by finsig
-NHSTUB(set_control_event, 0xFF88A7DC)
+NHSTUB(set_control_event, 0xff88a500)   // *SD940 102c accept stubs_entry.s value per http://chdk.setepontos.com/index.php?topic=4338.msg61396#msg61396
 NHSTUB(ExitTask, 0xFF81E844)
 NHSTUB(FreeUncacheableMemory, 0xFF8388D8)
 NHSTUB(GetBatteryTemperature, 0xFF85BD0C)

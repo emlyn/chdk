@@ -45,7 +45,7 @@ NHSTUB(platformsub_kbd_fetch_data, 0xFF858DF8)	//????????????
 
 //** subs with less than 100% match
 
-NHSTUB(set_control_event, 0xff88A83)			// *SD940 103c matched SX30 100e (SD90 101a was 0xff88a55c = best match: 93%
+NHSTUB(set_control_event, 0xff88a55c)			// *SD940 103c accept stubs_entry.s value per http://chdk.setepontos.com/index.php?topic=4338.msg61396#msg61396
 NHSTUB(closefastdir, 0xFFA4D148)				// *SD940 103c matched with SD90 101a was 0xffa4d45c = best match: 71%
 NHSTUB(ExitTask, 0xff81e844)					//	SD940 103c matched with SD90 101a & finsig best match: 57%
 NHSTUB(free, 0xff814138)						//	SD940 103c matched with SD90 101a & finsig best match: 95%
