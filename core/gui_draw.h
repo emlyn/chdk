@@ -225,6 +225,37 @@
 #define COLOR_HISTO_RG_PLAY COLOR_YELLOW
 #undef SCREEN_COLOR
 #define SCREEN_COLOR            0x1D
+#elif CAM_BITMAP_PALETTE==8			// s95
+#define COLOR_TRANSPARENT   0x00
+#define COLOR_WHITE         0x01
+#define COLOR_RED           0x66
+#define COLOR_GREY          0x6D
+#define COLOR_GREEN         0x69
+#define COLOR_BLUE_LT       0x68
+#define COLOR_BLUE          0x67
+#define COLOR_YELLOW        0x60
+#define COLOR_BLACK         0xFF
+#define COLOR_BG            0x20
+#define COLOR_FG            COLOR_WHITE
+#define COLOR_SELECTED_BG   COLOR_RED
+#define COLOR_SELECTED_FG   COLOR_WHITE
+#define COLOR_ALT_BG        0x20
+#define COLOR_SPLASH_RED    COLOR_RED
+#define COLOR_SPLASH_PINK   COLOR_GREY
+#define COLOR_SPLASH_GREY   0xDE
+#define COLOR_HISTO_R       COLOR_RED
+#define COLOR_HISTO_R_PLAY  COLOR_RED
+#define COLOR_HISTO_B       COLOR_BLUE
+#define COLOR_HISTO_G       COLOR_GREEN
+#define COLOR_HISTO_G_PLAY  COLOR_GREEN
+#define COLOR_HISTO_BG      COLOR_BLUE_LT
+#define COLOR_HISTO_RG      COLOR_YELLOW
+#define COLOR_HISTO_RB      COLOR_RED
+#define COLOR_HISTO_RB_PLAY COLOR_HISTO_RB
+#define COLOR_HISTO_B_PLAY  COLOR_HISTO_B
+#define COLOR_HISTO_BG_PLAY COLOR_BLUE_LT
+#define COLOR_HISTO_RG_PLAY COLOR_YELLOW
+
 #else
 #error CAM_BITMAP_PALETTE not defined
 #endif

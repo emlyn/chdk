@@ -121,6 +121,10 @@ long lens_get_zoom_point()
 
 void lens_set_zoom_point(long newpt)
 {
+#if defined (CAMERA_s95)
+	long startTime;
+#endif
+
     if (newpt < 0) {
         newpt = 0;
     } else if (newpt >= zoom_points) {
@@ -137,10 +141,22 @@ void lens_set_zoom_point(long newpt)
 	    _MoveZoomLensWithPoint((short*)&newpt);
 #else
     _MoveZoomLensWithPoint((short*)&newpt);
-    while (zoom_busy);
+
+#if defined (CAMERA_s95)
+	// this will hang sometimes on s95 when zoom_busy gets stuck as a 1
+	// we add a timeout as a work-around for this problem
+	startTime = get_tick_count();
+	while (get_tick_count() < (startTime + 2000)) {
+		if (!zoom_busy)
+			break;
+	}
+#else
+	while (zoom_busy) ;
+#endif
+
     if (newpt==0) zoom_status=ZOOM_OPTICAL_MIN;
     else if (newpt >= zoom_points) zoom_status=ZOOM_OPTICAL_MAX;
-    else zoom_status=ZOOM_OPTICAL_MEDIUM; 
+    else zoom_status=ZOOM_OPTICAL_MEDIUM;
     _SetPropertyCase(PROPCASE_OPTICAL_ZOOM_POSITION, &newpt, sizeof(newpt));
 #endif
 }
@@ -345,7 +361,21 @@ char *strcat(char *dest, const char *app) {
 }
 
 char *strrchr(const char *s, int c) {
+#if defined (CAMERA_s95)
+	// unable to find strrchr in s95 - we use our own fn
+	char *result = 0;
+
+	c = (char) c;
+
+	do {
+		if (c == *s)
+			result = (char*) s;
+	} while (*s++ != '\0');
+
+	return result;
+#else
     return _strrchr(s, c);
+#endif
 }
 
 long strtol(const char *nptr, char **endptr, int base) {
