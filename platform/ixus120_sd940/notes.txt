@@ -1,2 +1,4 @@
-none
-
+Alt button for this camera is DISP, hold down to access original function.
+Camera does not have an adjustable aperture, only ND filter.
+Fast MD is not currently implemented.
+Extra long exposure (>64 seconds) is implemented.
