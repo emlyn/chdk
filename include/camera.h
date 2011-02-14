@@ -3339,10 +3339,10 @@
     #define CAM_RAW_ROWS                3048  //  "     "    "    "    "
 											
     #undef CAM_SWIVEL_SCREEN
-    #define CAM_ADJUSTABLE_ALT_BUTTON   0
+    #undef CAM_ADJUSTABLE_ALT_BUTTON
     #define CAM_CAN_SD_OVER_NOT_IN_MF	1
     #define CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO 1
-    #define CAM_HAS_VIDEO_BUTTON       1
+    #undef CAM_HAS_VIDEO_BUTTON
     #define CAM_VIDEO_QUALITY_ONLY          1
 	#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_BRACKETING              1
