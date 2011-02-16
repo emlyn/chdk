@@ -2623,8 +2623,6 @@
     #define CAM_MULTIPART               1
     #define CAM_HAS_JOGDIAL             1
     #undef  CAM_USE_ZOOM_FOR_MF
-    #undef  CAM_UNCACHED_BIT  // shut up compiler
-    #define CAM_UNCACHED_BIT    0x40000000
 	#undef CAM_SENSOR_BITS_PER_PIXEL
     #define CAM_SENSOR_BITS_PER_PIXEL   12
 	#undef CAM_WHITE_LEVEL
