@@ -604,9 +604,6 @@ void __attribute__((naked,noinline)) sub_FFB077C0_my(){
 "                ADD     R1, SP, #0x4 \n"
 "                MOV     R0, R5 \n"
 "                BL      sub_FFB07624 \n"
-
-"		BL      capt_seq_hook_raw_here\n"      		// added
-
 "                B       loc_FFB0788C \n"
 
 "loc_FFB07860: \n"
@@ -625,6 +622,9 @@ void __attribute__((naked,noinline)) sub_FFB077C0_my(){
 "                BL      sub_FFB07A1C \n"
 
 "loc_FFB0788C: \n"
+
+"		BL      capt_seq_hook_raw_here\n"      		// added (16/2/2011, moved here so that long exposures work)
+
 "                MOV     R6, R0 \n"
 "                B       loc_FFB078BC \n"
 
