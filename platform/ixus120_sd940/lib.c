@@ -7,18 +7,15 @@
 
 extern int enabled_refresh_physical_screen;
 
-extern unsigned int screen_width, screen_height, screen_size;
-extern void draw_filled_rect( int, int, int, int, int );
-
 void vid_bitmap_refresh()
 {
-	// this erase should not be needed but it is
-	draw_filled_rect(0, 0, screen_width, screen_height, 0x00) ;
-/*
-	_ScreenLock();
 	enabled_refresh_physical_screen=1;
+	
+	*(int*)0x8BB0=3;	// apparently not firmware specific (checked in 1.02c,1.03b,1.03c)
+						// set in three function called by RefreshPhysicalScreen
+
 	_RefreshPhysicalScreen(1);
-*/
+
 }
 
 

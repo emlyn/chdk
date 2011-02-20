@@ -20,7 +20,7 @@ NHSTUB(PT_PlaySound , 0xFF879764)				// SD940 103c matched with SD90 101a
 NHSTUB(openfastdir , 0xFFA4D18C)				// SD940 103c matched with SD90 101a
 NHSTUB(readfastdir , 0xFFA4D2C0)				// SD940 103c matched with SD90 101a
 
-NHSTUB(RefreshPhysicalScreen , 0xFF9D206C)		// SD940 103c matched with SD90 101a
+NHSTUB(RefreshPhysicalScreen , 0xFF9D206C)		// SD940 103c matched with SD90 101a & SD980 1.01c
 NHSTUB(ScreenLock, 0xFF9D1E44)					// SD940 103c close to SD90 101a (extra code in SD940 sub)
 NHSTUB(ScreenUnlock,0xFF9D1E84) 				// SD940 103c matched with SD90 101a
 

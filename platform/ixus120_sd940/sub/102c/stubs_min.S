@@ -13,7 +13,7 @@ DEF(recreview_hold, 0x74A0) 				// @FF96CB78   0x73D0 + 0xD0
 DEF(some_flag_for_af_scan, 0x673C) 			// @FF940D14
 DEF(levent_table, 0xFFB41F38)
 DEF(playrec_mode, 0x2A7C) 					// @FF877AE4   0x2A78 + 0x04
-DEF(enabled_refresh_physical_screen, 0x8BB0) // @FF9CF9C0
+DEF(enabled_refresh_physical_screen, 0x8C20+0x20)   // SD940 102C routine @ FF9D1EA8 per IXUS200-SD980 @ FF9F8298 RefreshPhysicalScreen
 
 // will need to fix these if we care about dng support
 DEF(some_f_for_dng, 0xDEAD) 				// TODO NOT FOUND!

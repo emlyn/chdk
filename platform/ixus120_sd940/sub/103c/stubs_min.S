@@ -13,8 +13,7 @@ DEF(recreview_hold, 0x73D0 + 0xD0)      			// SD940 103c routine @ FF96CD3C
 DEF(some_flag_for_af_scan, 0x673C) 					// SD940 103C @FF940EDC
 DEF(levent_table,0xFFB42100) 						// SD940 103c routine @ FF966F20
 DEF(playrec_mode, 0x2A78+0x4)						// SD940 103c routine @ FF877E9
-DEF(enabled_refresh_physical_screen, 0x8BB0)   		// SD940 103C routine @ FF9CFB88	
-
+DEF(enabled_refresh_physical_screen, 0x8C20+0x20)   // SD940 103C routine @ FF9D2070 per IXUS200-SD980 @ FF9F8298 RefreshPhysicalScreen
 
 
 

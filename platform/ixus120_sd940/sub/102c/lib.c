@@ -13,14 +13,11 @@ long hook_raw_size()
 }
 
 void *vid_get_viewport_live_fb()
-{
-// TODO - implement
-	return (void*) 0;
-
-
-    void **fb=(void **)0x1043;
-
-    unsigned char buff = *((unsigned char*)0x497C); // __LiveImage.c__  ok
+{													// Matched IXUS100-SD780 100c code at 0xFF8B02F4 with IXUS120-SD940 at address 0xFF8D9014
+													// Matched IXUS200-SD980 101c code at 0xFF8E0788 with IXUS120-SD940 at address 0xFF8D9014 
+	// return (void*) 0;							// __LiveImage.c__  ok
+    void **fb=(void **)0x4B34; 			  			// SD940 102C @ 0xFF8D9280  
+    unsigned char buff = *((unsigned char*)0x497C); // SD940 103C @ 0xFF8D9018
     if (buff == 0) {
         buff = 2;
     }
