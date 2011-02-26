@@ -3222,6 +3222,10 @@
 	
 	#define	CAM_DATE_FOLDER_NAMING	1
 
+	// EXMEM memory allocation values
+	#define EXMEM_HEAP_SKIP (0x08000000-0x07D08A00)			// G12 & SX30 uses movie memory buffers at the top of the memory allocated by exmem_alloc
+	#define EXMEM_BUFFER_SIZE (1024*1024*2)					// desired amount of exmem memory to allocate
+
 //----------------------------------------------------------
 #elif defined (CAMERA_g12)
     #define CAM_PROPSET                 4
@@ -3324,6 +3328,10 @@
 	#define	CAM_DATE_FOLDER_NAMING	1
 
 	#define CAM_CHDK_PTP 1
+
+	// EXMEM memory allocation values
+	#define EXMEM_HEAP_SKIP (0x08000000-0x07D08A00)			// G12 & SX30 uses movie memory buffers at the top of the memory allocated by exmem_alloc
+	#define EXMEM_BUFFER_SIZE (1024*1024*2)					// desired amount of exmem memory to allocate
 
 //----------------------------------------------------------
 

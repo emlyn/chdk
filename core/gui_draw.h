@@ -202,7 +202,7 @@
 #define COLOR_BLUE_LT       0x10
 #define COLOR_BLUE          0x14
 #define COLOR_YELLOW        0x16
-#define COLOR_BLACK         0x1d
+#define COLOR_BLACK         0xFF
 #define COLOR_BG            0x62
 #define COLOR_FG            COLOR_WHITE
 #define COLOR_SELECTED_BG   0x0e

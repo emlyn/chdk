@@ -132,14 +132,22 @@ void lens_set_zoom_point(long newpt)
     }
 #if defined(CAMERA_sx30)
 // SX30 - Can't find zoom_status, _MoveZoomLensWithPoint crashes camera
+// _PT_MoveOpticalZoomAt works, and updates PROPCASE_OPTICAL_ZOOM_POSITION; but doesn't wait for zoom to finish
 	extern void _PT_MoveOpticalZoomAt(long*);
 	if (lens_get_zoom_point() != newpt)
+	{
 		_PT_MoveOpticalZoomAt(&newpt);
+		while (zoom_busy) msleep(10);
+	}
 #elif defined(CAMERA_g12)
-// G12 - Can't find zoom_status, _MoveZoomLensWithPoint works anyway, and updates PROPCASE_OPTICAL_ZOOM_POSITION; but doesn't wait for zoom to finish
+// G12 - Can't find zoom_status, _MoveZoomLensWithPoint works anyway; but doesn't wait for zoom to finish
 	if (lens_get_zoom_point() != newpt)
+	{
 	    _MoveZoomLensWithPoint((short*)&newpt);
-#else
+		while (zoom_busy) msleep(10);
+	    _SetPropertyCase(PROPCASE_OPTICAL_ZOOM_POSITION, &newpt, sizeof(newpt));
+	}
+#else	// !CAMERA_g12
     _MoveZoomLensWithPoint((short*)&newpt);
 
 #if defined (CAMERA_s95)
@@ -150,15 +158,15 @@ void lens_set_zoom_point(long newpt)
 		if (!zoom_busy)
 			break;
 	}
-#else
+#else	// !CAMERA_s95
 	while (zoom_busy) ;
-#endif
+#endif	// CAMERA_s95
 
     if (newpt==0) zoom_status=ZOOM_OPTICAL_MIN;
     else if (newpt >= zoom_points) zoom_status=ZOOM_OPTICAL_MAX;
     else zoom_status=ZOOM_OPTICAL_MEDIUM;
     _SetPropertyCase(PROPCASE_OPTICAL_ZOOM_POSITION, &newpt, sizeof(newpt));
-#endif
+#endif	// CAMERA_g12
 }
 
 void lens_set_zoom_speed(long newspd)
@@ -516,7 +524,13 @@ double _sqrt(double x) {
 
 #ifdef OPT_EXMEM_MALLOC
 // I set this up to 16 mb and it still booted...
-#define EXMEM_HEAP_SIZE (1024*1024*2)
+#ifndef EXMEM_HEAP_SKIP
+#define EXMEM_HEAP_SKIP 0
+#endif
+#ifndef EXMEM_BUFFER_SIZE
+#define EXMEM_BUFFER_SIZE (1024*1024*2) // default size if not specified by camera
+#endif
+#define EXMEM_HEAP_SIZE (EXMEM_BUFFER_SIZE+EXMEM_HEAP_SKIP)	// desired space + amount to skip for the movie buffers (if needed)
 // these aren't currently needed elsewhere
 /*
 void * exmem_alloc(unsigned pool_id, unsigned size)
@@ -540,7 +554,7 @@ void exmem_malloc_init() {
 	// pool zero is EXMEM_RAMDISK on d10
 	void *mem = _exmem_alloc(0,EXMEM_HEAP_SIZE,0);
 	if(mem) {
-		exmem_heap = suba_init(mem,EXMEM_HEAP_SIZE,1,1024);
+		exmem_heap = suba_init(mem,EXMEM_HEAP_SIZE-EXMEM_HEAP_SKIP,1,1024);
 	}
 }
 
