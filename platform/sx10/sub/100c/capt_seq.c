@@ -1077,7 +1077,7 @@ void __attribute__((naked,noinline)) sub_FF89D0A4_my(){ //
                  "STRH    R4, [R5,#2]\n"
                  "BLEQ    sub_FF81B1CC\n" //checked
                  "MOV     R0, R4\n"
-           //    "BL      sub_FF9E0128\n"  // -
+           //    "BL      sub_FF9E0118\n"  // -
                  "BL      apex2us\n"  // +
                  "MOV     R4, R0\n"
            //    "BL      nullsub_228\n"

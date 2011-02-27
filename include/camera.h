@@ -660,6 +660,8 @@
     #define CAM_CAN_MUTE_MICROPHONE     1
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 2
     #define CAM_EV_IN_VIDEO             1
+    #define CAM_EXT_TV_RANGE            1
+
     // pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
     // color
@@ -901,6 +903,8 @@
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_EV_IN_VIDEO             1
     #undef  CAM_VIDEO_CONTROL
+    #define CAM_EXT_TV_RANGE            1
+
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
     // color
