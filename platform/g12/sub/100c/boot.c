@@ -175,7 +175,7 @@ void __attribute__((naked,noinline)) sub_FF810354_my() {
 	*(int*)0x1938=(int)taskHook;
     
 	// replacement of sub_FF864BE0 for correct power-on.
-	*(int*)(0x25E0) = (*(int*)0xC0220108)&1 ? 0x200000 : 0x100000; 
+	*(int*)(0x25E0) = (*(int*)0xC0220108)&1 ? 0x100000 : 0x200000; 
 
 	asm volatile (
                  "LDR     R0, =0xFF8103CC\n"
