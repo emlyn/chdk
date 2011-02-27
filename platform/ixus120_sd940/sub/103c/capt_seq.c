@@ -676,6 +676,7 @@ void __attribute__((naked,noinline)) exp_drv_task() {
 "loc_FF8B3318:		B	loc_FF8B3494\n"
 "loc_FF8B331C:		B	loc_FF8B349C\n"
 "loc_FF8B3320:		B	loc_FF8B349C\n"
+"loc_FF8B3324:		B   loc_FF8B349C\n"
 "loc_FF8B3328:		B	loc_FF8B349C\n"
 "loc_FF8B332C:		B	loc_FF8B34A0\n"
 "loc_FF8B3330:		B	loc_FF8B34A0\n"

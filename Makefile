@@ -291,7 +291,7 @@ batch-zip: version
 	mv $(topdir)bin/$(VER)-s90-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-s90-101b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-s90-101c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-s90-101c-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus100_sd780-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus100_sd780-100c-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-ixus120_sd940-103c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus120_sd940-102c-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/$(VER)-ixus120_sd940-102c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus120_sd940-102c-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus120_sd940-103c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus120_sd940-103c-$(BUILD_NUMBER)_BETA.zip
 
 	mv $(topdir)bin/$(VER)-ixus85_sd770-100a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus85_sd770-100a-$(BUILD_NUMBER)_BETA.zip
