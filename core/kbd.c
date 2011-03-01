@@ -42,7 +42,7 @@ static int nFirst=1;
 
 #if defined(CAMERA_a450) || defined(CAMERA_ixus50_sd400) || defined(CAMERA_ixusizoom_sd30) || defined(CAMERA_ixus40_sd300) || defined(CAMERA_ixus55_sd450) || defined(CAMERA_ixus60_sd600) || defined(CAMERA_ixus65_sd630) || defined(CAMERA_ixus70_sd1000) || defined(CAMERA_ixus700_sd500) || defined(CAMERA_ixus750_sd550) || defined(CAMERA_ixus850_sd800) || defined(CAMERA_ixus900_sd900) || defined(CAMERA_ixus75_sd750) || defined(CAMERA_a470) || defined(CAMERA_ixus90_sd790) || defined(CAMERA_ixus100_sd780) || defined(CAMERA_ixus120_sd940) || defined(CAMERA_a480) || defined(CAMERA_d10) || defined(CAMERA_ixus85_sd770) || defined(CAMERA_ixus95_sd1200)
 #define ZSTEP_TABLE_SIZE 7
-static int nTxtbl[]={0,1,2,3,4,5,6};    // remote zoom steps (needs a distinct number of steps, even if the camera zooms smoothly)
+static int nTxtbl[]={0,1,2,3,4,5,6};    // remote zoom steps (we need a distinct number of steps, even if the camera zooms smoothly)
 #endif
 
 #if defined(CAMERA_s2is) || defined(CAMERA_s3is) || defined(CAMERA_s5is) || defined(CAMERA_sx10) || defined(CAMERA_sx1)  || defined(CAMERA_sx20)
