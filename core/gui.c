@@ -600,8 +600,9 @@ static CMenuItem exposure_submenu_items[] = {
 static CMenu exposure_submenu = {0x2a,LANG_MENU_EXPOSURE_TITLE, NULL, exposure_submenu_items };
 */
 
+// "Extra Photo Operations" Menu
 static CMenuItem operation_submenu_items[] = {
-      {0x5c,LANG_MENU_OVERRIDE_DISABLE,         MENUITEM_ENUM,    (int*)gui_override_disable_enum},//&conf.override_disable },
+      {0x5f,LANG_MENU_OVERRIDE_DISABLE,         MENUITEM_ENUM,    (int*)gui_override_disable_enum},//&conf.override_disable },
       {0x5c,LANG_MENU_OVERRIDE_DISABLE_ALL,     MENUITEM_BOOL,    &conf.override_disable_all },
 	  {0x61,LANG_MENU_OVERRIDE_TV_VALUE,        MENUITEM_ENUM,    (int*)gui_tv_override_value_enum},
 	  {0x5f,LANG_MENU_OVERRIDE_TV_KOEF,         MENUITEM_ENUM,    (int*)gui_tv_override_koef_enum},
@@ -610,7 +611,7 @@ static CMenuItem operation_submenu_items[] = {
 	  {0x62,LANG_MENU_OVERRIDE_AV_VALUE,        MENUITEM_ENUM,    (int*)gui_av_override_enum },
 #endif
 #if CAM_HAS_ND_FILTER
-      {0x62,LANG_MENU_OVERRIDE_ND_FILTER,       MENUITEM_ENUM,    (int*)gui_nd_filter_state_enum },
+      {0x5f,LANG_MENU_OVERRIDE_ND_FILTER,       MENUITEM_ENUM,    (int*)gui_nd_filter_state_enum },
 #endif
 #if CAM_CAN_SD_OVERRIDE
       {0x5e,LANG_MENU_OVERRIDE_SUBJ_DIST_VALUE, MENUITEM_ENUM,    (int*)gui_subj_dist_override_value_enum},
