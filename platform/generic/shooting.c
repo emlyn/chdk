@@ -1446,3 +1446,16 @@ int /*__attribute__((weak))*/ mode_get(void) {
 
     return (mode);
 }
+
+/*
+char* shooting_get_iso_str() {
+    short int isov;
+    long i;
+    _GetPropertyCase(PROPCASE_ISO_MODE, &isov, sizeof(isov));
+    for(i=0; i<ISO_SIZE; i++) {
+        if(iso_table[i].prop_id == isov)
+            return (char*)iso_table[i].name;
+    }
+    return (char*) "?";
+}
+*/
