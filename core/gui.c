@@ -2681,7 +2681,7 @@ gui_mbox_init(LANG_MSG_BUILD_INFO_TITLE, (int)buf, MBOX_FUNC_RESTORE|MBOX_TEXT_L
 
 //-------------------------------------------------------------------
 void gui_show_memory_info(int arg) {
-    static char buf[64];
+    static char buf[96];    // buffer size was 64, size increased for none english language
 
     sprintf(buf, lang_str(LANG_MSG_MEMORY_INFO_TEXT), core_get_free_memory(), MEMISOSIZE, &_start, &_end);
     gui_mbox_init(LANG_MSG_MEMORY_INFO_TITLE, (int)buf, MBOX_FUNC_RESTORE|MBOX_TEXT_CENTER, NULL);
