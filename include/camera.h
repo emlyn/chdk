@@ -98,7 +98,7 @@
                                                     // also used by some cameras with normal bitmap layouts for memory saving ?
     #undef CAM_ZEBRA_NOBUF                          // zebra draws directly on bitmap buffer. Requires above as well
 
-    #undef CAM_DATE_FOLDER_NAMING                   // set if camera uses date based folder naming and get_target_dir_name is implemented
+    #undef CAM_DATE_FOLDER_NAMING                   // set if camera uses date based folder naming (Option "Create Folder" in Canon Menu) and get_target_dir_name is implemented
 
 //----------------------------------------------------------
 // Override Default values for Camera if necessary
