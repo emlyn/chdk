@@ -49,6 +49,7 @@
     #undef  CAM_HAS_VIDEO_BUTTON                    // Camera can take stills in video mode, and vice versa
     #undef  CAM_EV_IN_VIDEO                         // CHDK can change exposure in video mode
     #define CAM_VIDEO_CONTROL           1           // pause / unpause video recordings
+    #undef  CAM_VIDEO_QUALITY_ONLY                  // Override Video Bitrate is not supported
 
     #define ZOOM_OVERRIDE               0           // Shall zoom-override be used? default 0 becoz not implemented right now
 
