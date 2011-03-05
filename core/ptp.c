@@ -452,6 +452,73 @@ static int handle_ptp(
               } else if ( lua_isstring(Lt,1) )
               {
                 temp_data_extra = PTP_CHDK_TYPE_STRING;
+              } else if ( lua_istable(Lt,1) )
+              {
+                temp_data_extra = PTP_CHDK_TYPE_NOTHING;
+                int i;
+                int count = 0;
+                lua_pushstring(Lt,"");
+                lua_pushnil(Lt);
+                while (lua_next(Lt,1) )
+                {
+                  lua_pushvalue(Lt,-2);
+                  lua_insert(Lt,-4);
+                  if ( lua_istable(Lt,-1) && (lua_objlen(Lt,-1) > 0) )
+                  {
+                    lua_pushstring(Lt,"");
+                    for ( i = 1; i <= lua_objlen(Lt,-2); i++ )
+                    {
+                      lua_rawgeti(Lt,-2,i);
+                      if ( lua_isnil(Lt,-1) )
+                      {
+                        lua_pushstring(Lt,"nil");
+                        lua_remove(Lt,-2);
+                      }
+                      if ( lua_isboolean(Lt,-1) )
+                      {
+                        lua_pushstring(Lt,lua_toboolean(Lt,-1)?"true":"false");
+                        lua_remove(Lt,-2);
+                      }
+                      if ( !lua_isstring(Lt,-1) )
+                      {
+                        lua_pop(Lt,1);
+                        lua_pushstring(Lt,"");
+                      }
+                      if ( lua_objlen(Lt,-2) > 0 )
+                      {
+                        lua_pushlstring(Lt,"\t",1);
+                        lua_insert(Lt,-2);
+                        lua_concat(Lt,3);
+                      }
+                      else lua_concat(Lt,2);
+                    }
+                    lua_remove(Lt,-2);
+                  }
+                  if ( lua_isboolean(Lt,-1) )
+                  {
+                    lua_pushstring(Lt,lua_toboolean(Lt,-1)?"true":"false");
+                    lua_remove(Lt,-2);
+                  }
+                  if ( lua_isstring(Lt,-1) )
+                  {
+                    lua_pushlstring(Lt,"\t",1);
+                    lua_insert(Lt,-2);
+                    if ( lua_objlen(Lt,-4) > 0 )
+                    {
+                      lua_pushlstring(Lt,"\n",1);
+                      lua_insert(Lt,-4);
+                      lua_concat(Lt, 5);
+                    }
+                    else lua_concat(Lt, 4);
+                  }
+                  else lua_pop(Lt,2);
+                  lua_insert(Lt,-2);
+                  lua_pushvalue(Lt,-1);  //set entry to nil for save memory
+                  lua_pushnil(Lt);
+                  lua_settable(Lt,1);
+                }
+                if ( lua_gettop(Lt) == 2 ) lua_remove(Lt,1);
+                if ( lua_isstring(Lt,1) && ( lua_objlen(Lt,1) > 0 )) temp_data_extra = PTP_CHDK_TYPE_STRING;
               } else {
                 temp_data_extra = PTP_CHDK_TYPE_NOTHING;
               }
