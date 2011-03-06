@@ -1025,7 +1025,8 @@ void __attribute__((naked,noinline)) sub_FFC5E6C0_my() { //#fs
         "loc_FFC5E8EC:\n"
                 "MOV     R0, R6\n"
                 "LDMFD   SP!, {R4-R8,LR}\n"
-                "B       sub_FFC5E380_my\n"  //---------->
+//                "B       sub_FFC5E380_my\n"  //----------> old hook for movie task
+                "B       sub_FFC5E380\n"
         "loc_FFC5E8F8:\n"
                 "LDR     R12, =0x10B0\n"
                 "CMP     R6, R12\n"

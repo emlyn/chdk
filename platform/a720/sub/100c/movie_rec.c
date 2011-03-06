@@ -1,3 +1,4 @@
+/*
 void __attribute__((naked,noinline)) sub_FFC5E380_my(){
 asm volatile(
                  "LDR     R12, =0x201E\n"
@@ -1608,7 +1609,7 @@ void __attribute__((naked,noinline)) sub_FFC49C20_my(){
                 "LDMFD   SP!, {R3-R9,PC}\n"
  );
 } 
-
+*/
 
 void __attribute__((naked,noinline)) MovieRecord_Task_my(){ 
  asm volatile(
