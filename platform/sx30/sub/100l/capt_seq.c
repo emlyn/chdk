@@ -3,7 +3,7 @@
 #include "core.h"
 
 // TODO ????
-static long *nrflag = (long*)0xE15C; // probably wrong FFAEC840 (comp s95)
+static long *nrflag = (long*)0xE15C; // in sub_FFAEC6E8 (comp D10)
 
 #include "../../../generic/capt_seq.c"
 

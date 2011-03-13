@@ -32,15 +32,15 @@ void JogDial_task_my(void);
 //	);
 //}
 
+extern void task_CaptSeq();
+extern void task_InitFileModules();
+extern void task_RotaryEncoder();
+extern void task_MovieRecord();
+extern void task_ExpDrv();
+
 void taskHook(context_t **context)
 { 
 	task_t *tcb=(task_t*)((char*)context-offsetof(task_t, context));
-
-	extern void task_CaptSeq();
-	extern void task_InitFileModules();
-	extern void task_RotaryEncoder();
-	extern void task_MovieRecord();
-	extern void task_ExpDrv();
 
 	// Replace firmware task addresses with ours
 	if(tcb->entry == (void*)task_CaptSeq)			tcb->entry = (void*)capt_seq_task; 

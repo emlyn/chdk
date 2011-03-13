@@ -32,15 +32,15 @@ void JogDial_task_my(void);
 //	);
 //}
 
+extern void task_CaptSeq();
+extern void task_InitFileModules();
+extern void task_RotaryEncoder();
+extern void task_MovieRecord();
+extern void task_ExpDrv();
+
 void taskHook(context_t **context)
 { 
 	task_t *tcb=(task_t*)((char*)context-offsetof(task_t, context));
-
-	extern void task_CaptSeq();
-	extern void task_InitFileModules();
-	extern void task_RotaryEncoder();
-	extern void task_MovieRecord();
-	extern void task_ExpDrv();
 
 	// Replace firmware task addresses with ours
 	if(tcb->entry == (void*)task_CaptSeq)			tcb->entry = (void*)capt_seq_task; 
@@ -48,6 +48,10 @@ void taskHook(context_t **context)
 	if(tcb->entry == (void*)task_RotaryEncoder)		tcb->entry = (void*)JogDial_task_my;
 	if(tcb->entry == (void*)task_MovieRecord)		tcb->entry = (void*)movie_record_task;
 	if(tcb->entry == (void*)task_ExpDrv)			tcb->entry = (void*)exp_drv_task;
+}
+
+void taskHook2(context_t **context)
+{ 
 }
 
 /*---------------------------------------------------------------------
@@ -172,6 +176,7 @@ void __attribute__((naked,noinline)) sub_FF810354_my() {
 
 	//http://chdk.setepontos.com/index.php/topic,4194.0.html
 	*(int*)0x1938=(int)taskHook;
+	*(int*)0x193C=(int)taskHook2; // setting this to an empty function seems to fix startup crash in movie mode ???
     
 	// replacement of sub_FF864BE0 for correct power-on.
 	*(int*)(0x25E0) = (*(int*)0xC0220108)&1 ? 0x100000 : 0x200000; 

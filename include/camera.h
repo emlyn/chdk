@@ -3122,10 +3122,8 @@
 
    // todo - we may need this to save memory
     //#define CAM_ZEBRA_NOBUF 1
-//==========================================================
-// END of Camera-dependent settings
-//==========================================================
 
+//----------------------------------------------------------
 #elif defined (CAMERA_sx30)
 	#define CAM_PROPSET					4
 	#define CAM_DRYOS					1
@@ -3252,6 +3250,7 @@
     #define CAM_MULTIPART               1
     #define CAM_HAS_JOGDIAL             1
 	#undef  CAM_USE_ZOOM_FOR_MF
+    #define CAM_HAS_ND_FILTER               1
     #undef  CAM_CONSOLE_LOG_ENABLED         // Development: internal camera stdout -> A/stdout.txt
     #define CAM_BRACKETING              1
 	#undef  CAM_VIDEO_CONTROL
