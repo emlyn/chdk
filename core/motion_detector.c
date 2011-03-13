@@ -351,17 +351,11 @@ static void mx_dump_memory(void *img){
 int md_detect_motion(void){
 	int *tmp;
 	unsigned char * img;
-	int viewport_size;
-	int img_offset;		// used as offset into img buffer when image size != viewport size (e.g. 16:9 image on 4:3 LCD)
-	int vp_w, vp_h, pix_N, idx, tmp2, tick, vp_w_mul_y, in_clipping_region, x_step, y_step, do_calc;
+    int vp_w, vp_h, idx, tmp2, tick, in_clipping_region, x_step, y_step, x_end, y_end;
 	int val;
+    int cy,cv,cu;
 
-	register int i, col, row, x, y;
-
-//	static char buf[128];
-	double vp_hr, vp_wr;
-
-
+	register int col, row, x, y;
 
 	if(!md_running()){ 
 		return 0;
@@ -395,14 +389,13 @@ int md_detect_motion(void){
 
 //	memset(motion_detector->points,0, sizeof(motion_detector->points));
 // WARNING. maybe not optimized
-	for(i=0 ; i<motion_detector->rows*motion_detector->columns ; i++ ){
-		motion_detector->points[i]=0;
-		motion_detector->curr[i]=0;
-	}
+	//for(i=0 ; i<motion_detector->rows*motion_detector->columns ; i++ ){
+	//	motion_detector->points[i]=0;
+	//	motion_detector->curr[i]=0;
+	//}
 
 
 	// >> fill "curr" array
- 
 
 //  if (strcmp(PLATFORM,"a610")==0 || strcmp(PLATFORM,"a710")==0) {
 	 img = vid_get_viewport_live_fb();
@@ -427,94 +420,81 @@ img += bufoff * 0x7E900;
 	}
 #endif
 
-	vp_h=vid_get_viewport_height();
-	vp_w=vid_get_viewport_buffer_width();
-	img_offset = vid_get_viewport_image_offset();		// offset into viewport for when image size != viewport size (e.g. 16:9 image on 4:3 LCD)
+	vp_h = vid_get_viewport_height();
+	vp_w = vid_get_viewport_buffer_width();
+	img += vid_get_viewport_image_offset();		// offset into viewport for when image size != viewport size (e.g. 16:9 image on 4:3 LCD)
 
 	x_step=vid_get_viewport_width()/motion_detector->columns;
 	y_step=vp_h/motion_detector->rows;
 
-	for(row=0, col=0; row < motion_detector->rows ; ){
-		do_calc=0;
-		in_clipping_region=0;
+	for (idx=0, row=0; row < motion_detector->rows; row++)
+	{
+		for (col=0; col < motion_detector->columns; col++, idx++)
+		{
+			motion_detector->points[idx] = 0;
+			motion_detector->curr[idx] = 0;
 
-		if (
-				 col+1 >= motion_detector->clipping_region_column1 
-			&& col+1 <= motion_detector->clipping_region_column2
-			&& row+1 >= motion_detector->clipping_region_row1
-			&& row+1 <= motion_detector->clipping_region_row2
-			){
+			in_clipping_region=0;
+
+			if (col+1 >= motion_detector->clipping_region_column1 &&
+				col+1 <= motion_detector->clipping_region_column2 &&
+				row+1 >= motion_detector->clipping_region_row1 &&
+				row+1 <= motion_detector->clipping_region_row2)
+			{
 				in_clipping_region=1;
-		}
+			}
 
-		if(motion_detector->clipping_region_mode==MD_REGION_EXCLUDE && in_clipping_region==0){
-			do_calc=1;
-		} 
+			if (
+				(motion_detector->clipping_region_mode==MD_REGION_NONE) ||
+				(motion_detector->clipping_region_mode==MD_REGION_EXCLUDE && in_clipping_region==0) ||
+				(motion_detector->clipping_region_mode==MD_REGION_INCLUDE && in_clipping_region==1)
+			   )
+			{
+				x_end=(col+1)*x_step;
+				y_end=(row+1)*y_step*vp_w;
+				for(y=row*y_step*vp_w; y<y_end; y+=motion_detector->pixels_step*vp_w){
+					for(x=col*x_step; x<x_end; x+=motion_detector->pixels_step){
 
-		if(motion_detector->clipping_region_mode==MD_REGION_INCLUDE && in_clipping_region==1){
-			do_calc=1;
-		}
+						// ARRAY of UYVYYY values
+						// 6 bytes - 4 pixels
 
-		if(motion_detector->clipping_region_mode==MD_REGION_NONE){
-			do_calc=1;
-		}
-
-		if(do_calc==1){
-		  idx=MD_XY2IDX(col,row);
-			for(x=col*x_step;x<(col+1)*x_step;x+=motion_detector->pixels_step){
-				for(y=row*y_step;y<(row+1)*y_step;y+=motion_detector->pixels_step){
-					int cy,cv,cu;
-
-					cy=img[img_offset + (y*vp_w+x)*3 + 1];
-
-// ARRAY of UYVYYY values
-// 6 bytes - 4 pixels
-
-					if((x%2)==0){
-						cu=img[img_offset + (y*vp_w+x)*3];
-						cv=img[img_offset + (y*vp_w+x)*3 + 2];
-					} else {
-						cu=img[img_offset + (y*vp_w+x-1)*3];
-						cv=img[img_offset + (y*vp_w+x-1)*3 + 2];
-					}
-
-					switch(motion_detector->pixel_measure_mode){
-						MD_MEASURE_MODE_Y:
-							val=cy;
-							break;
-						MD_MEASURE_MODE_U:
-							val=cu;
-							break;
-						MD_MEASURE_MODE_V:
-								val = cv;
-							break;
-
-						MD_MEASURE_MODE_R:
-                val = clip(((cy<<12)           + cv*5743 + 2048)/4096); // R
-							break;
-
-						MD_MEASURE_MODE_G:
-                val = clip(((cy<<12) - cu*1411 - cv*2925 + 2048)/4096); // G
-							break;
-
-						MD_MEASURE_MODE_B:
-                val = clip(((cy<<12) + cu*7258           + 2048)/4096); // B
-							break;
-
+						switch(motion_detector->pixel_measure_mode){
 						default:
-								val=cy;
+						case MD_MEASURE_MODE_Y:
+							val = img[(y+x)*3 + 1];				//Y
 							break;
+						case MD_MEASURE_MODE_U:
+							val = img[(y+(x&0xFFFFFFFE))*3];		//U
+							break;
+						case MD_MEASURE_MODE_V:
+							val = img[(y+(x&0xFFFFFFFE))*3 + 2];	//V
+							break;
+
+						case MD_MEASURE_MODE_R:
+							cy=img[(y+x)*3 + 1];
+							cv=img[(y+(x&0xFFFFFFFE))*3 + 2];
+							val = clip(((cy<<12)           + cv*5743 + 2048)>>12); // R
+							break;
+
+						case MD_MEASURE_MODE_G:
+							cy=img[(y+x)*3 + 1];
+							cu=img[(y+(x&0xFFFFFFFE))*3];
+							cv=img[(y+(x&0xFFFFFFFE))*3 + 2];
+							val = clip(((cy<<12) - cu*1411 - cv*2925 + 2048)>>12); // G
+							break;
+
+						case MD_MEASURE_MODE_B:
+							cy=img[(y+x)*3 + 1];
+							cu=img[(y+(x&0xFFFFFFFE))*3];
+							val = clip(((cy<<12) + cu*7258           + 2048)>>12); // B
+							break;
+						}
+
+						motion_detector->curr[ idx ] += val;
+						motion_detector->points[ idx ]++;
 					}
-					motion_detector->curr[ idx ]+=val;
-					motion_detector->points[ idx ]++;
 				}
 			}
-		}
-
-		col++;
-		if(col>=motion_detector->columns){
-			col=0;
-			row++;
 		}
 	}
 	// << fill "curr" array
@@ -529,28 +509,20 @@ img += bufoff * 0x7E900;
 
 
 	// >> compare arrays here
+	for (idx=0; idx < motion_detector->rows*motion_detector->columns; idx++)
+	{
+		tmp2=0;
+		if(motion_detector->points[idx]>0){
+			motion_detector->prev[idx] = (motion_detector->curr[idx]-motion_detector->prev[idx])/motion_detector->points[idx];
+			tmp2 = ( motion_detector->prev[idx] < 0 ) ? -motion_detector->prev[idx] : motion_detector->prev[idx] ;
+		}
 
-		for ( col=0, row=0; row < motion_detector->rows; ){
-		  idx=MD_XY2IDX(col,row);
-			tmp2=0;
-			if(motion_detector->points[idx]>0){
-				motion_detector->prev[idx] = (motion_detector->curr[idx]-motion_detector->prev[idx])/motion_detector->points[idx];
-				tmp2 = ( motion_detector->prev[idx] < 0 ) ? -motion_detector->prev[idx] : motion_detector->prev[idx] ;
-			}
-	
-			if( tmp2 > motion_detector->threshold ){
-				if (motion_detector->start_time+motion_detector->msecs_before_trigger < tick){
-					motion_detector->detected_cells++;
-				}
-			}
-
-			col++;
-			if(col>=motion_detector->columns){
-				col=0;
-				row++;
+		if( tmp2 > motion_detector->threshold ){
+			if (motion_detector->start_time+motion_detector->msecs_before_trigger < tick){
+				motion_detector->detected_cells++;
 			}
 		}
-		
+	}
 	// << compare arrays here
 
 
