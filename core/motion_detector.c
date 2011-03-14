@@ -66,9 +66,6 @@ enum {
 
 
 
-//#define MD_XY2IDX(x,y) ((y)*motion_detector->columns+x)
-
-
 struct motion_detector_s {
 	int *curr; // points to buff1 or buff2
 	int *prev; // points to buff2 or buff1
@@ -387,32 +384,10 @@ int md_detect_motion(void){
 	motion_detector->curr=motion_detector->prev;
 	motion_detector->prev=tmp;
 
-//	memset(motion_detector->points,0, sizeof(motion_detector->points));
-// WARNING. maybe not optimized
-	//for(i=0 ; i<motion_detector->rows*motion_detector->columns ; i++ ){
-	//	motion_detector->points[i]=0;
-	//	motion_detector->curr[i]=0;
-	//}
-
-
-	// >> fill "curr" array
-
-//  if (strcmp(PLATFORM,"a610")==0 || strcmp(PLATFORM,"a710")==0) {
 	 img = vid_get_viewport_live_fb();
 		if(img==NULL){
 			img = vid_get_viewport_fb();
         }
-/* the following is commented because of a bugreport: http://chdk.kernreaktor.org/mantis/view.php?id=70
-#if defined (CAMERA_s5is)
-long bufoff = *((long *) 0x218C);
-if(bufoff == 0) {
-    bufoff = 2;
-} else {
-    bufoff--;
-}
-img += bufoff * 0x7E900;
-#endif
-*/
 
 #ifdef OPT_MD_DEBUG
 	if(motion_detector->comp_calls_cnt==50 && (motion_detector->parameters & MD_MAKE_RAM_DUMP_FILE) != 0 ){
@@ -431,6 +406,8 @@ img += bufoff * 0x7E900;
 	{
 		for (col=0; col < motion_detector->columns; col++, idx++)
 		{
+			// clear cur and points, previously down in it's own loop
+			// might be able to avoid clearing all, since some are overwritten below
 			motion_detector->points[idx] = 0;
 			motion_detector->curr[idx] = 0;
 
@@ -537,7 +514,6 @@ img += bufoff * 0x7E900;
 //			md_save_calls_history();
 			if( ( motion_detector->parameters&MD_DO_IMMEDIATE_SHOOT ) !=0){
 				//make shoot
-				//kbd_sched_shoot();
 				md_kbd_sched_immediate_shoot(motion_detector->parameters&MD_NO_SHUTTER_RELEASE_ON_SHOOT);
 			}
 			return 0;
