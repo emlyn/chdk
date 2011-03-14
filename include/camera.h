@@ -2754,6 +2754,7 @@
     #define CAM_PROPSET                 3
     #define CAM_DRYOS                   1
     #undef  CAM_USE_ZOOM_FOR_MF
+    #define CAM_HAS_ND_FILTER           1
     #define CAM_RAW_ROWPIX              3744   // See g11 lib.c
     #define CAM_RAW_ROWS                2784   // See g11 lib.c
     #undef  CAM_EMUL_KEYPRESS_DURATION
