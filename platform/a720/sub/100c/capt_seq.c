@@ -243,6 +243,7 @@ void __attribute__((naked,noinline)) task_CaptSeqTask_my() //#fs
     );
 } //#fe
 
+/*
 void __attribute__((naked,noinline)) exp_drv_task(){
  asm volatile(
                 "STMFD   SP!, {R4-R8,LR}\n"
@@ -282,7 +283,7 @@ void __attribute__((naked,noinline)) exp_drv_task(){
                 "LDR     R0, [R7,#0x1C]\n"
                 "MOV     R1, #1\n"
                 "BL      sub_FFC18DEC\n"
-                "BL      ExitTask\n"
+                "BL      _ExitTask\n"
                 "ADD     SP, SP, #0x20\n"
                 "LDMFD   SP!, {R4-R8,PC}\n"
 "loc_FFC914EC:\n"
@@ -698,14 +699,14 @@ void __attribute__((naked,noinline)) exp_drv_task(){
                 "CMP     R0, #0xB\n"
                 "BNE     loc_FFC91A70\n"
                 "MOV     R3, #0\n"
-                "STR     R3, [SP,#0x0]\n"
+                "STR     R3, [SP]\n"
                 "MOV     R3, #1\n"
                 "MOV     R2, #1\n"
                 "MOV     R1, #1\n"
                 "MOV     R0, #0\n"
                 "BL      sub_FFC8E1F0\n"
                 "MOV     R3, #0\n"
-                "STR     R3, [SP,#0x0]\n"
+                "STR     R3, [SP]\n"
                 "MOV     R3, #1\n"
                 "MOV     R2, #1\n"
                 "MOV     R1, #1\n"
@@ -716,13 +717,13 @@ void __attribute__((naked,noinline)) exp_drv_task(){
                 "MOV     R2, #1\n"
                 "MOV     R1, #1\n"
                 "MOV     R0, #1\n"
-                "STR     R3, [SP,#0x0]\n"
+                "STR     R3, [SP]\n"
                 "BL      sub_FFC8E1F0\n"
                 "MOV     R3, #1\n"
                 "MOV     R2, #1\n"
                 "MOV     R1, #1\n"
                 "MOV     R0, #1\n"
-                "STR     R3, [SP,#0x0]\n"
+                "STR     R3, [SP]\n"
 "loc_FFC91A9C:\n"
                 "BL      sub_FFC8E330\n"
 "loc_FFC91AA0:\n"
@@ -852,3 +853,4 @@ void __attribute__((naked,noinline)) sub_FFC7330C_my(){
                 "LDMFD   SP!, {R4-R6,PC}\n"
 	 );
 }
+*/

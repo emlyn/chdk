@@ -905,7 +905,8 @@
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define CAM_EV_IN_VIDEO             1
     #undef  CAM_VIDEO_CONTROL
-    #define CAM_EXT_TV_RANGE            1
+// disabled for now, see http://chdk.setepontos.com/index.php?topic=6182.0
+//    #define CAM_EXT_TV_RANGE            1
 
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green

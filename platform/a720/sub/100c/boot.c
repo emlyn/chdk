@@ -23,13 +23,7 @@ void taskCreateHook(int *p) {
 // if (p[0]==0xFFC0BE50)  p[0]=(int)mykbd_task; //done
 // if (p[0]==0xFFC5F754)  p[0]=(int)task_InitFileModules_my; //done
  if (p[0]==0xFFC49B18)  p[0]=(int)MovieRecord_Task_my; //done
- if (p[0]==0xFFC91454)  p[0]=(int)exp_drv_task; //done
-}
-
-void taskCreateHook2(int *p) { 
- p-=16;
- if (p[0]==0xFFC49B18)  p[0]=(int)MovieRecord_Task_my; //done
- if (p[0]==0xFFC91454)  p[0]=(int)exp_drv_task; //done
+// if (p[0]==0xFFC91454)  p[0]=(int)exp_drv_task; //done
 }
 
 #define DEBUG_LED 0xC02200C4
@@ -66,8 +60,8 @@ void boot() { //#fs
 	"MCR     p15, 0, R0,c1,c0\n"
     :::"r0");
 */
-   *(int*)0x1930=(int)taskCreateHook;
-   *(int*)0x1934=(int)taskCreateHook2;
+    *(int*)0x1930=(int)taskCreateHook;
+    *(int*)0x1934=(int)taskCreateHook;
 
     // jump to init-sequence that follows the data-copy-routine 
     asm volatile ("B      sub_FFC001a4_my\n");
