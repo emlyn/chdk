@@ -99,6 +99,8 @@ extern int isupper(int c);
 extern int islower(int c);
 extern int ispunct(int c);
 extern int isxdigit(int c);
+extern int iscntrl(int c);
+extern int isalnum(int c);
 
 extern long sprintf(char *s, const char *st, ...);
 

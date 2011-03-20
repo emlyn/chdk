@@ -14,7 +14,8 @@
 #define _S	0x20	/* white space (space/lf/tab) */
 #define _X	0x40	/* hex digit */
 #define _SP	0x80	/* hard space (0x20) */
-unsigned char _ctype[] = {
+static int _ctype(int c,int t) {
+static unsigned char ctypes[] = {
 _C,_C,_C,_C,_C,_C,_C,_C,			/* 0-7 */
 _C,_C|_S,_C|_S,_C|_S,_C|_S,_C|_S,_C,_C,		/* 8-15 */
 _C,_C,_C,_C,_C,_C,_C,_C,			/* 16-23 */
@@ -39,6 +40,12 @@ _L,_L,_L,_P,_P,_P,_P,_C,			/* 120-127 */
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 208-223 */
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 224-239 */
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};		/* 240-255 */
+    // have to handle EOF (-1)
+    if( (unsigned)c >= sizeof(ctypes)) {
+        return 0;
+    }
+    return ctypes[c] & t;
+}
 #endif
 
 void msleep(long msec)
@@ -285,7 +292,7 @@ int isdigit(int c) {
 #if !CAM_DRYOS
     return _isdigit(c);
 #else
-    return _ctype[c]&_D;
+    return _ctype(c,_D);
 #endif
 }
 
@@ -293,7 +300,7 @@ int isspace(int c) {
 #if !CAM_DRYOS
     return _isspace(c);
 #else
-    return _ctype[c]&_S;
+    return _ctype(c,_S);
 #endif
 
 }
@@ -302,7 +309,7 @@ int isalpha(int c) {
 #if !CAM_DRYOS
     return _isalpha(c);
 #else
-    return _ctype[c]&(_U|_L);
+    return _ctype(c,(_U|_L));
 #endif
 }
 
@@ -310,7 +317,7 @@ int isupper(int c) {
 #if !CAM_DRYOS
     return _isupper(c);
 #else
-    return _ctype[c]&_U;
+    return _ctype(c,_U);
 #endif
 
 }
@@ -319,7 +326,7 @@ int islower(int c) {
 #if !CAM_DRYOS
     return _islower(c);
 #else
-    return _ctype[c]&_L;
+    return _ctype(c,_L);
 #endif
 
 }
@@ -328,7 +335,7 @@ int ispunct(int c) {
 #if !CAM_DRYOS
     return _ispunct(c);
 #else
-    return _ctype[c]&_P;
+    return _ctype(c,_P);
 #endif
 }
 
@@ -336,7 +343,19 @@ int isxdigit(int c) {
 #if !CAM_DRYOS
     return _isxdigit(c);
 #else
-    return _ctype[c]&(_X|_D);
+    return _ctype(c,(_X|_D));
+#endif
+}
+
+int isalnum(int c) {
+    return (isdigit(c) || isalpha(c));
+}
+
+int iscntrl(int c) {
+#if !CAM_DRYOS
+    return ((c >=0 && c <32) || c == 127); // don't want to require the whole ctype table on vxworks just for this one
+#else
+    return _ctype(c,_C);
 #endif
 }
 
