@@ -466,7 +466,7 @@ static int is_lua()
     && s[len-4] == '.';
 }
 
-static void wait_and_end(void)
+void script_wait_and_end(void)
 {
 	script_console_add_line("PRESS SHUTTER TO CLOSE");
 
@@ -495,17 +495,13 @@ static void process_script()
             Lres = lua_resume( Lt, top );
 
             if (Lres != LUA_YIELD && Lres != 0) {
-                script_console_add_line( lua_tostring( Lt, -1 ) );
-                if(conf.debug_lua_restart_on_error){
-                    lua_script_reset();
-                    script_start_gui(0);
-                } else {
-                    wait_and_end();
-                }
+                lua_script_error(Lt,1);
                 return;
             }
 
             if (Lres != LUA_YIELD) {
+                // add ptp result
+                lua_script_finish(Lt);
                 script_console_add_line(lang_str(LANG_CONSOLE_TEXT_FINISHED));
                 action_pop();
                 script_end();
@@ -555,6 +551,36 @@ static int script_action_stack(long p)
                 }
             }
             break;
+#if defined(OPT_LUA) && defined(CAM_CHDK_PTP)
+        case AS_SCRIPT_READ_USB_MSG:
+            if(L) { // only lua supported for now
+                ptp_script_msg *msg = ptp_script_read_msg();
+                if(action_process_delay(2) || msg) {
+                    if(msg) {
+                        lua_pushlstring( Lt,msg->data,msg->size);
+                    } else {
+                        lua_pushnil(Lt);
+                    }
+                    action_clear_delay();
+                    action_pop();
+                    action_pop();
+                }
+            }
+            break;
+        case AS_SCRIPT_WRITE_USB_MSG:
+            if(L) { // only lua supported for now
+                ptp_script_msg *msg = (ptp_script_msg *)action_get_prev(2);
+                int r = ptp_script_write_msg(msg);
+                if(action_process_delay(3) || r) {
+                    action_clear_delay();
+                    action_pop();
+                    action_pop();
+                    action_pop();
+                    lua_pushboolean(Lt,r);
+                }
+            }
+            break;
+#endif
         default:
             if (!action_stack_standard(p) && !state_kbd_script_run)
             {
@@ -629,9 +655,7 @@ long script_start_gui( int autostart )
 
     if( is_lua() ) {
 #ifdef OPT_LUA
-        if( !lua_script_start(script_source_str) ) {
-            script_print_screen_end();
-            wait_and_end();
+        if( !lua_script_start(script_source_str,0) ) {
             return -1;
         }
         for (i=0; i<SCRIPT_NUM_PARAMS; ++i) {
@@ -672,11 +696,10 @@ long script_start_gui( int autostart )
     return script_stack_start();
 }
 
-#ifdef OPT_LUA
-long script_start_ptp( char *script , int keep_result )
+#if defined(OPT_LUA) && defined(CAM_CHDK_PTP)
+long script_start_ptp( char *script )
 {
-  if (!lua_script_start(script)) return -1;
-  lua_keep_result = keep_result;
+  if (!lua_script_start(script,1)) return -1;
   state_lua_kbd_first_call_to_resume = 1;
   state_kbd_script_run = 1;
   kbd_set_block(1);
