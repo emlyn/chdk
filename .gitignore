@@ -1,6 +1,7 @@
 *.o
 *.a
 *.elf
+*.orig
 main.bin
 main.dump
 main.elf.syms
