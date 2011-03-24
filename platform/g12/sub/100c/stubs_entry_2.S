@@ -37,7 +37,7 @@ NHSTUB(MakeDirectory_Fut,				0xff836acc)	// ok (comp sx30)
 NHSTUB(MoveFocusLensToDistance,			0xffb71f98)	// ok (comp sx30)
 NHSTUB(MoveZoomLensWithPoint,			0xffb05008)	// ok (comp sx30)
 NHSTUB(NewTaskShell,					0xff894f0c)	// ok (comp sx30)
-NHSTUB(Open,							0xFF873BFC)	// ok (comp sx30)
+NHSTUB(Open,							0xFF81AADC)	// update 5/3/2011 to fix crash startup
 NHSTUB(PostLogicalEventForNotPowerType, 0xff899b70)	// ok (comp sx30)
 NHSTUB(PostLogicalEventToUI,			0xff899bbc)	// ok (comp sx30)
 NHSTUB(RenameFile_Fut,					0xFF8369C4)	// ok (comp sx30)
@@ -87,6 +87,8 @@ NHSTUB(DoAFLock,						0xFF838940)	// ok (comp sx30)
 NHSTUB(GetImageFolder,					0xFF95F2FC)	// function before 'GetCameraObjectTmpPath ERROR' string
 NHSTUB(UpdateMBROnFlash,				0xFF8767C8) // Search for 'BOOTDISK', function branches to this at end (after setting up R0,R1,R2)
 NHSTUB(exmem_alloc,						0xFF88FFD8)	// search for ExMem.AllocCacheable (from reyalp)
+NHSTUB(PutInNdFilter,                   0xFFB04E6C)
+NHSTUB(PutOutNdFilter,                  0xFFB04E90)
 
 # From stubs_entry_ida.s
 NHSTUB(eventproc_export_PostLogicalEventToUI, 0xff899bbc)

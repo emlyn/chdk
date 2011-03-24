@@ -14,39 +14,145 @@
 #include "console.h"
 #include "action_stack.h"
 #include "motion_detector.h"
+#include "ptp.h"
 
 #include "../lib/lua/lstate.h"  // for L->nCcalls, baseCcalls
 
 lua_State* L;
 lua_State* Lt;
-int lua_keep_result;
 
-void *lua_consume_result()
-{
-  lua_State* r = L;
-  L = 0;
-  return r;
+static int lua_script_is_ptp;
+
+static int yield_hook_enabled;
+
+static void lua_script_disable_yield_hook(void) {
+    yield_hook_enabled = 0;
 }
+static void lua_script_enable_yield_hook(void) {
+    yield_hook_enabled = 1;
+}
+
+#ifdef CAM_CHDK_PTP
+// create a ptp message from the given stack index
+// incompatible types will return a TYPE_UNSUPPORTED message
+static ptp_script_msg *lua_create_usb_msg( lua_State* L, int index, unsigned msgtype) {
+    // TODO maybe we should just pass the lua type constants
+    unsigned datatype, datasize = 4;
+    int ivalue = 0;
+    void *data = &ivalue;
+    int ltype = lua_type(L,index);
+    switch(ltype) {
+        case LUA_TNONE:
+            return NULL; // nothing on the stack, no message generated
+        break;
+        case LUA_TNIL:
+            datatype = PTP_CHDK_TYPE_NIL;
+        break;
+        case LUA_TBOOLEAN:
+            datatype = PTP_CHDK_TYPE_BOOLEAN;
+            ivalue = lua_toboolean(L,index);
+        break;
+        case LUA_TNUMBER:
+            datatype = PTP_CHDK_TYPE_INTEGER;
+            ivalue = lua_tonumber(L,index);
+        break;
+        case LUA_TSTRING:
+            datatype = PTP_CHDK_TYPE_STRING;
+            data = (char *)lua_tolstring(L,index,&datasize);
+        break;
+        // TODO this converts to a string and returns as STRING, format as described at 
+        // http://chdk.setepontos.com/index.php?topic=4338.msg62606#msg62606
+        // for compatibility with current PTPCAM/PTPCAMGUI implementation
+        // later we should switch to a proper serialized table with it's own return type
+        case LUA_TTABLE: 
+            lua_script_disable_yield_hook(); // don't want to yeild while converting
+            lua_getglobal(L, "usb_msg_table_to_string"); // push function
+            lua_pushvalue(L, index); // copy specified index to top of stack
+            lua_pcall(L,1,1,0); // this will leave an error message as a string on the stack if call fails
+            lua_script_enable_yield_hook();
+            // an empty table will be returned as an empty string
+            // a non-string should never show up here
+            if ( !(lua_isstring(L,-1) /*&& ( lua_objlen(L,-1) > 0 )*/)) { 
+                return NULL;
+            }
+            datatype = PTP_CHDK_TYPE_STRING;
+            data = (char *)lua_tolstring(L,-1,&datasize);
+            lua_pop(L,1);
+        break;
+        default:
+            datatype = PTP_CHDK_TYPE_UNSUPPORTED;
+            data = (char *)lua_typename(L,ltype); // return type name as message data
+            datasize = strlen(data);
+    }
+    return ptp_script_create_msg(msgtype,datatype,datasize,data);
+}
+
+void lua_script_error_ptp(int runtime, const char *err) {
+    if(runtime) {
+        ptp_script_write_error_msg(PTP_CHDK_S_ERRTYPE_RUN, err);
+        script_end();
+    } else {
+        ptp_script_write_error_msg(PTP_CHDK_S_ERRTYPE_COMPILE, err);
+        lua_script_reset();
+    }
+}
+#endif
 
 void lua_script_reset()
 {
-  if ( !lua_keep_result )
-  {
-    lua_close( L );
-    L = 0;
-  }
-  Lt = 0;
+  lua_close( L );
+  L = 0;
 }
 
 static void lua_count_hook(lua_State *L, lua_Debug *ar)
 {
-  if( L->nCcalls <= L->baseCcalls )
+  if( L->nCcalls <= L->baseCcalls && yield_hook_enabled )
     lua_yield( L, 0 );
 }
 
-int lua_script_start( char const* script )
+void lua_script_error(lua_State *Lt,int runtime)
 {
-  lua_keep_result = 0;
+    const char *err = lua_tostring( Lt, -1 );
+    script_console_add_line( err );
+    if(lua_script_is_ptp) {
+#ifdef CAM_CHDK_PTP
+        lua_script_error_ptp(runtime,err);
+#endif
+    } else {
+        if(runtime) {
+            if(conf.debug_lua_restart_on_error) {
+                lua_script_reset();
+                script_start_gui(0);
+            } else {
+                script_wait_and_end();
+            }
+        } else {
+            script_print_screen_end();
+            script_wait_and_end();
+        }
+    }
+}
+
+
+// TODO more stuff from script.c should be moved here
+void lua_script_finish(lua_State *L) 
+{
+#ifdef CAM_CHDK_PTP
+    if(lua_script_is_ptp) {
+        // send all return values as RET messages
+        int i,end = lua_gettop(L);
+        for(i=1;i<=end; i++) {
+            // if the queue is full return values will be silently discarded
+            // incompatible types will be returned as TYPE_UNSUPPORTED to preserve expected number and order of return values
+            ptp_script_write_msg(lua_create_usb_msg(L,i,PTP_CHDK_S_MSGTYPE_RET)); 
+        }
+    }
+#endif
+}
+
+int lua_script_start( char const* script, int ptp )
+{
+  lua_script_is_ptp = ptp;
   L = lua_open();
   luaL_openlibs( L );
   register_lua_funcs( L );
@@ -54,11 +160,11 @@ int lua_script_start( char const* script )
   Lt = lua_newthread( L );
   lua_setfield( L, LUA_REGISTRYINDEX, "Lt" );
   if( luaL_loadstring( Lt, script ) != 0 ) {
-    script_console_add_line( lua_tostring( Lt, -1 ) );
-    lua_script_reset();
+    lua_script_error(Lt,0);
     return 0;
   }
   lua_sethook(Lt, lua_count_hook, LUA_MASKCOUNT, 1000 );
+  lua_script_enable_yield_hook();
   return 1;
 }
 
@@ -1387,6 +1493,68 @@ static int luaCB_reboot( lua_State* L )
 	return 1;
 }
 
+#ifdef CAM_CHDK_PTP
+/*
+msg = read_usb_msg([timeout])
+read a message from the CHDK ptp interface.
+Returns the next available message as a string, or nil if no messages are available
+If timeout is given and not zero, wait until a message is available or timeout expires
+*/
+static int luaCB_read_usb_msg( lua_State* L )
+{
+  int timeout = luaL_optnumber( L, 1, 0 );
+  if(timeout) {
+    action_push(timeout);
+    action_push(AS_SCRIPT_READ_USB_MSG);
+    return lua_yield( L, 0 );
+  }
+  ptp_script_msg *msg = ptp_script_read_msg();
+  if(msg) {
+    lua_pushlstring(L,msg->data,msg->size);
+    return 1;
+  }
+  lua_pushnil(L);
+  return 1;
+}
+
+/*
+status = write_usb_msg(msg,[timeout])
+writes a message to the CHDK ptp interface
+msg may be nil, boolean, number, string or table (table has some restrictions, will be converted to string)
+returns true if the message was queued successfully, otherwise false
+if timeout is set and not zero, wait until message is written or timeout expires
+NOTE strings will not include a terminating NULL, must be handled by recipient
+*/
+static int luaCB_write_usb_msg( lua_State* L )
+{
+  ptp_script_msg *msg;
+  int timeout = luaL_optnumber( L, 2, 0 );
+  // TODO would it be better to either ignore this or return nil ?
+  // a write_usb_msg(function_which_returns_no_value()) is an error in this case
+  // replacing with nil might be more luaish
+  if(lua_gettop(L) < 1) {
+    return luaL_error(L,"missing argument");
+  }
+  msg=lua_create_usb_msg(L,1,PTP_CHDK_S_MSGTYPE_USER);
+  // for user messages, trying to create a message from an incompatible type throws an error
+  if(msg->subtype == PTP_CHDK_TYPE_UNSUPPORTED) {
+    free(msg);
+    return luaL_error(L,"unsupported type");
+  }
+  if(!msg) {
+    return luaL_error(L,"failed to create message");
+  }
+  if(timeout) {
+    action_push(timeout);
+    action_push((int)msg);
+    action_push(AS_SCRIPT_WRITE_USB_MSG);
+    return lua_yield( L, 0 );
+  }
+  lua_pushboolean(L,ptp_script_write_msg(msg)); 
+  return 1;
+}
+#endif
+
 void register_lua_funcs( lua_State* L )
 {
 #define FUNC( X )			\
@@ -1553,4 +1721,30 @@ void register_lua_funcs( lua_State* L )
    FUNC(call_func_ptr);
 #endif
    FUNC(reboot);
+#ifdef CAM_CHDK_PTP
+   FUNC(read_usb_msg);
+   FUNC(write_usb_msg);
+   luaL_dostring(L,"function usb_msg_table_to_string(t)"
+                    " local v2s=function(v)"
+                        " local t=type(v)"
+                        " if t=='string' then return v end"
+                        " if t=='number' or t=='boolean' or t=='nil' then return tostring(v) end"
+                        " return '' end"
+                    " local r=''"
+                    " for k,v in pairs(t) do"
+                        " local s,vs=''"
+                        " if type(v)=='table' then"
+                            " for i=1,table.maxn(v) do"
+                            " s=s..'\\t'..v2s(v[i]) end"
+                        " else"
+                            " vs=v2s(v)"
+                            " if #vs then s=s..'\\t'..vs end"
+                        " end"
+                        " vs=v2s(k)"
+                        " if #vs>0 and #s>0 then r=r..vs..s..'\\n' end"
+                    " end"
+                    " return r"
+                   " end");
+
+#endif
 }

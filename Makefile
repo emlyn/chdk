@@ -255,6 +255,9 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100j NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100l NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus100_sd780  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus120_sd940  PLATFORMSUB=102c NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=ixus120_sd940  PLATFORMSUB=103c NO_INC_BUILD=1 firzipsub
+
 	$(MAKE) -s --no-print-directory PLATFORM=a480  PLATFORMSUB=100b NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=s90  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=s90  PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
@@ -305,6 +308,9 @@ batch-zip: version
 	mv $(topdir)bin/$(VER)-s90-101b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-s90-101b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-s90-101c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-s90-101c-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus100_sd780-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus100_sd780-100c-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/$(VER)-ixus120_sd940-102c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus120_sd940-102c-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/$(VER)-ixus120_sd940-103c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus120_sd940-103c-$(BUILD_NUMBER)_BETA.zip
+
 	mv $(topdir)bin/$(VER)-ixus85_sd770-100a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus85_sd770-100a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-d10-100a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-d10-100a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus95_sd1200-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus95_sd1200-100c-$(BUILD_NUMBER)_BETA.zip
@@ -415,6 +421,9 @@ batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100j NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100l NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus100_sd780  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=ixus120_sd940  PLATFORMSUB=102c NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=ixus120_sd940  PLATFORMSUB=103c NO_INC_BUILD=1 firzipsubcomplete
+
 	$(MAKE) -s --no-print-directory PLATFORM=a480  PLATFORMSUB=100b NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=s90  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=s90  PLATFORMSUB=101a NO_INC_BUILD=1 firzipsubcomplete
@@ -487,6 +496,11 @@ batch-zip-complete: version
 	mv $(topdir)bin/g11-100l-$(BUILD_NUMBER).zip $(topdir)bin/g11-100l-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus100_sd780-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus100_sd780-100c-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/ixus100_sd780-100c-$(BUILD_NUMBER).zip $(topdir)bin/ixus100_sd780-100c-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/ixus120_sd940-102c-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus120_sd940-102c-$(BUILD_NUMBER)-full_BETA.zip
+	mv $(topdir)bin/ixus120_sd940-102c-$(BUILD_NUMBER).zip $(topdir)bin/ixus120_sd940-102c-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/ixus120_sd940-103c-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus120_sd940-103c-$(BUILD_NUMBER)-full_BETA.zip
+	mv $(topdir)bin/ixus120_sd940-103c-$(BUILD_NUMBER).zip $(topdir)bin/ixus120_sd940-103c-$(BUILD_NUMBER)_BETA.zip
+
 	mv $(topdir)bin/s90-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/s90-100c-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/s90-100c-$(BUILD_NUMBER).zip $(topdir)bin/s90-100c-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/s90-101a-$(BUILD_NUMBER)-full.zip $(topdir)bin/s90-101a-$(BUILD_NUMBER)-full_BETA.zip
@@ -610,6 +624,9 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100j NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=g11  PLATFORMSUB=100l NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus100_sd780  PLATFORMSUB=100c NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus120_sd940  PLATFORMSUB=102c NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=ixus120_sd940  PLATFORMSUB=103c NO_INC_BUILD=1 clean
+
 	$(MAKE) -s --no-print-directory PLATFORM=a480  PLATFORMSUB=100b NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=s90  PLATFORMSUB=100c NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=s90  PLATFORMSUB=101a NO_INC_BUILD=1 clean

@@ -54,10 +54,11 @@ void *vid_get_bitmap_fb()
 }
 
 
-// TODO - ??? Is this needed ???
 void *vid_get_viewport_live_fb()
 {
-    return 0x0;
+	return (void*)(*(int*)(0x21F8));	// Found by searching RAM locations that referenced 0x40587700 (viewport buffer)
+										// and also changed to the other buffer addresses over time. Then used each here
+										// and selected value that gave the fastest Motion Detect response using http://dataghost.com/chdk/md_meter.html.
 }
 
 void *vid_get_viewport_fb()
@@ -65,7 +66,6 @@ void *vid_get_viewport_fb()
     return (void *)0x40587700; // search on VRAM Address
 }
 
-// TODO - check that this works
 void *vid_get_viewport_fb_d()
 {
 	return (void*)(*(int*)(0x2C10+0x58)); // @FF8781AC & FF8781E4 (comp S95)

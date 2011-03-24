@@ -1,10 +1,10 @@
-#ifndef PROPSET3_H
-#define PROPSET3_H
+#ifndef PROPSET4_H
+#define PROPSET4_H
 
 /*
 constants for propset 4
 WARNING:
-The build uses tools/gen_propset_lua.sed to generate propset3.lua from this file
+The build uses tools/gen_propset_lua.sed to generate propset4.lua from this file
 */
 
 #define PROPCASE_FLASH_SYNC_CURTAIN              64

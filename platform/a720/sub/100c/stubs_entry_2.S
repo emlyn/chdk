@@ -190,10 +190,11 @@ NHSTUB(GetCCDTemperature, 0xFFC39108)
 NHSTUB(GetOpticalTemperature, 0xFFC391E8)
 NHSTUB(PT_PlaySound, 0xFFC50F40)
 
-
 NHSTUB(EnterToCompensationEVF, 0xffc170a4) 
 NHSTUB(ExitFromCompensationEVF, 0xffc170f4) 
 NHSTUB(DoAFLock, 0xffc16d2c)
 NHSTUB(UnlockAF, 0xffc16d7c)
 NHSTUB(SetScriptMode, 0xFFC5BD20)
 NHSTUB(WriteSDCard,0xFFCF51B0)
+
+NHSTUB(apex2us, 0xFFD6363C) //for extra long exposures

@@ -13,17 +13,9 @@ static int buf_size=0;
 #ifdef OPT_LUA
 #include "script.h"
 #include "action_stack.h"
-
-static lua_State *get_lua_thread(lua_State *L)
-{
-  lua_State *Lt;
-
-  lua_getfield(L,LUA_REGISTRYINDEX,"Lt");
-  Lt = lua_tothread(L,-1);
-  lua_pop(L,1);
-
-  return Lt;
-}
+// process id for scripts, increments before each attempt to run script
+// does not handle wraparound
+static unsigned script_run_id; 
 #endif
 
 static int handle_ptp(
@@ -65,6 +57,26 @@ static int recv_ptp_data(ptp_data *data, char *buf, int size)
   return 1;
 }
 
+// camera will shut down if you ignore a recv data phase
+static void flush_recv_ptp_data(ptp_data *data,int size) {
+  char *buf;
+  buf = malloc((size > buf_size) ? buf_size:size);
+  if(!buf) // buf_size should always be less then available memory
+    return;
+  while ( size > 0 )
+  {
+    if ( size >= buf_size )
+    {
+      recv_ptp_data(data,buf,buf_size);
+      size -= buf_size;
+    } else {
+      recv_ptp_data(data,buf,size);
+      size = 0;
+    }
+  }
+  free(buf);
+}
+
 static int send_ptp_data(ptp_data *data, const char *buf, int size)
   // repeated calls per transaction are *not* ok
 {
@@ -93,15 +105,116 @@ static int send_ptp_data(ptp_data *data, const char *buf, int size)
   return 1;
 }
 
+#ifdef OPT_LUA
+// TODO this could be a generic ring buffer of words
+#define PTP_SCRIPT_MSG_Q_LEN 16
+typedef struct {
+  unsigned r; // index of current read value
+  unsigned w; // index of next write value, if w == r, empty TODO "full" currently wastes a slot
+  ptp_script_msg *q[PTP_SCRIPT_MSG_Q_LEN];
+} ptp_script_msg_q;
+
+// TODO it would be better to allocate these only when needed
+ptp_script_msg_q msg_q_in; // messages to pc from script
+ptp_script_msg_q msg_q_out; // messages to script from pc
+
+unsigned script_msg_q_next(unsigned i) {
+  if(i == PTP_SCRIPT_MSG_Q_LEN - 1) {
+    return 0;
+  }
+  return i+1;
+}
+
+unsigned script_msg_q_full(ptp_script_msg_q *q) {
+  return (script_msg_q_next(q->w) == q->r);
+}
+
+unsigned script_msg_q_empty(ptp_script_msg_q *q) {
+  return (q->w == q->r);
+}
+
+int enqueue_script_msg(ptp_script_msg_q *q,ptp_script_msg *msg) {
+  unsigned w = script_msg_q_next(q->w);
+  if(w == q->r) {
+    return 0;
+  }
+  // zero size messages don't make any sense
+  if(msg == NULL || msg->size == 0) {
+    return 0;
+  }
+  q->q[q->w] = msg;
+  q->w = w;
+  return 1;
+}
+
+ptp_script_msg* dequeue_script_msg(ptp_script_msg_q *q) {
+  ptp_script_msg *msg;
+  if(script_msg_q_empty(q)) {
+    return NULL;
+  }
+  msg = q->q[q->r];
+  q->r = script_msg_q_next(q->r);
+  return msg;
+}
+
+// public interface for script
+ptp_script_msg* ptp_script_create_msg(unsigned type, unsigned subtype, unsigned datasize, const void *data) {
+  ptp_script_msg *msg;
+  if(!datasize) {
+    return NULL;
+  }
+  msg = malloc(sizeof(ptp_script_msg) + datasize);
+  msg->size = datasize;
+  msg->type = type;
+  msg->subtype = subtype;
+  // caller may fill in data themselves
+  if(data) {
+      memcpy(msg->data,data,msg->size);
+  }
+  return msg;
+}
+
+int ptp_script_write_msg(ptp_script_msg *msg) {
+  msg->script_id = script_run_id;
+  return enqueue_script_msg(&msg_q_out,msg);
+}
+
+ptp_script_msg* ptp_script_read_msg(void) {
+  ptp_script_msg *msg;
+  while(1) {
+    msg = dequeue_script_msg(&msg_q_in); 
+    // no messages
+    if(!msg) {
+        return NULL;
+    }
+    // does message belong to our script
+    if(!msg->script_id || msg->script_id == script_run_id) {
+      return msg;
+    } else {
+    // no: discard and keep looking
+      free(msg);
+    }
+  }
+}
+int ptp_script_write_error_msg(unsigned errtype, const char *err) {
+  if(script_msg_q_full(&msg_q_out)) {
+    return 0;
+  }
+  ptp_script_msg *msg = ptp_script_create_msg(PTP_CHDK_S_MSGTYPE_ERR,errtype,strlen(err),err);
+  if(!msg) {
+    return 0;
+  }
+  return ptp_script_write_msg(msg);
+}
+
+#endif
+
 static int handle_ptp(
                int h, ptp_data *data, int opcode, int sess_id, int trans_id,
                int param1, int param2, int param3, int param4, int param5)
 {
   static union {
     char *str;
-#ifdef OPT_LUA
-    lua_State *lua_state;
-#endif
   } temp_data;
   static int temp_data_kind = 0; // 0: nothing, 1: ascii string, 2: lua object
   static int temp_data_extra; // size (ascii string) or type (lua object)
@@ -114,6 +227,8 @@ static int handle_ptp(
   ptp.trans_id = trans_id;
   ptp.num_param = 0;
   
+  // TODO calling this on every PTP command is not good,
+  // since it figures out free memory by repeatedly malloc'ing!
   buf_size=core_get_free_memory()>>1;
 
   // handle command
@@ -138,6 +253,9 @@ static int handle_ptp(
       ptp.param1 = 0;
 #ifdef OPT_SCRIPTING
       ptp.param1 |= script_is_running()?PTP_CHDK_SCRIPT_STATUS_RUN:0;
+#ifdef OPT_LUA
+      ptp.param1 |= (!script_msg_q_empty(&msg_q_out))?PTP_CHDK_SCRIPT_STATUS_MSG:0;
+#endif
 #endif
       break;
     case PTP_CHDK_GetMemory:
@@ -209,11 +327,6 @@ static int handle_ptp(
           s = temp_data.str;
           l = temp_data_extra;
         }
-#ifdef OPT_LUA
-        else { // temp_data_kind == 2
-          s = lua_tolstring(get_lua_thread(temp_data.lua_state),1,&l);
-        }
-#endif
 
         if ( !send_ptp_data(data,s,l) )
         {
@@ -226,12 +339,6 @@ static int handle_ptp(
         {
           free(temp_data.str);
         }
-#ifdef OPT_LUA
-        else if ( temp_data_kind == 2 )
-        {
-          lua_close(temp_data.lua_state);
-        }
-#endif
         temp_data_kind = 0;
 
         temp_data_extra = data->get_data_size(data->handle);
@@ -256,12 +363,6 @@ static int handle_ptp(
         {
           free(temp_data.str);
         }
-#ifdef OPT_LUA
-        else if ( temp_data_kind == 2 )
-        {
-          lua_close(temp_data.lua_state);
-        }
-#endif
         temp_data_kind = 0;
       }
       break;
@@ -391,10 +492,15 @@ static int handle_ptp(
       break;
 
 #ifdef OPT_LUA
+    // TODO this should flush data even if scripting isn't supported
     case PTP_CHDK_ExecuteScript:
       {
         int s;
         char *buf;
+
+        script_run_id++;
+        ptp.num_param = 2;
+        ptp.param1 = script_run_id;
 
         if ( param2 != PTP_CHDK_SL_LUA )
         {
@@ -413,73 +519,89 @@ static int handle_ptp(
 
         recv_ptp_data(data,buf,s);
 
-        long script_action_stack = script_start_ptp(buf, param3&PTP_CHDK_ES_RESULT);
+        // error details will be passed in a message
+        if (script_start_ptp(buf) < 0) {
+          ptp.param2 = PTP_CHDK_S_ERRTYPE_COMPILE;
+        } else {
+          ptp.param2 = PTP_CHDK_S_ERRTYPE_NONE;
+        }
 
         free(buf);
         
-        if (script_action_stack < 0)
-        {
-          ptp.code = PTP_RC_InvalidParameter;
-          break;
-        }
-        else
-        {
-
-          if ( param3 & PTP_CHDK_ES_WAIT )
-          {
-
-            while ( script_is_running() )
-              msleep(100);
-
-            if ( param3 & PTP_CHDK_ES_RESULT )
-            {
-              lua_State *Lt;
-              temp_data.lua_state = lua_consume_result();
-              Lt = get_lua_thread(temp_data.lua_state);
-              temp_data_kind = 2;
-              if ( lua_gettop(Lt) == 0 )
-              {
-                temp_data_extra = PTP_CHDK_TYPE_NOTHING;
-              } else if ( lua_isnil(Lt,1) )
-              {
-                temp_data_extra = PTP_CHDK_TYPE_NIL;
-              } else if ( lua_isboolean(Lt,1) )
-              {
-                temp_data_extra = PTP_CHDK_TYPE_BOOLEAN;
-              } else if ( lua_isnumber(Lt,1) )
-              {
-                temp_data_extra = PTP_CHDK_TYPE_INTEGER;
-              } else if ( lua_isstring(Lt,1) )
-              {
-                temp_data_extra = PTP_CHDK_TYPE_STRING;
-              } else {
-                temp_data_extra = PTP_CHDK_TYPE_NOTHING;
-              }
-              ptp.num_param = 1;
-              ptp.param1 = temp_data_extra;
-              if ( temp_data_extra != PTP_CHDK_TYPE_STRING )
-              {
-                if ( temp_data_extra == PTP_CHDK_TYPE_BOOLEAN )
-                {
-                  ptp.num_param = 2;
-                  ptp.param2 = lua_toboolean(Lt,1);
-                } if ( temp_data_extra == PTP_CHDK_TYPE_INTEGER )
-                {
-                  ptp.num_param = 2;
-                  ptp.param2 = lua_tonumber(Lt,1);
-                }
-                lua_close(Lt);
-                temp_data_kind = 0;
-              } else {
-                ptp.num_param = 2;
-                ptp.param2 = lua_objlen(Lt,1);
-              }
-            }
-          }
-        }
-
         break;
       }
+    case PTP_CHDK_ReadScriptMsg:
+    {
+      ptp_script_msg *msg = dequeue_script_msg(&msg_q_out);
+      ptp.num_param = 4;
+      if(!msg) {
+        // return a fully formed message for easier handling
+        ptp.param1 = PTP_CHDK_S_MSGTYPE_NONE;
+        ptp.param2 = 0;
+        ptp.param3 = 0;
+        ptp.param4 = 4;
+        // looks like we need to send some data no matter what
+        if ( !send_ptp_data(data,"\0\0\0",4) )
+        {
+          ptp.code = PTP_RC_GeneralError;
+        }
+        break;
+      }
+      ptp.param1 = msg->type;
+      ptp.param2 = msg->subtype;
+      ptp.param3 = msg->script_id;
+      ptp.param4 = msg->size;
+
+      // NOTE message is lost if sending failed
+      if ( !send_ptp_data(data,msg->data,msg->size) )
+      {
+        ptp.code = PTP_RC_GeneralError;
+      }
+      free(msg);
+      break;
+    }
+    case PTP_CHDK_WriteScriptMsg:
+    {
+      int msg_size;
+      ptp_script_msg *msg;
+      ptp.num_param = 1;
+      ptp.param1 = PTP_CHDK_S_MSGSTATUS_OK;
+      if (!script_is_running()) {
+        ptp.param1 = PTP_CHDK_S_MSGSTATUS_NOTRUN;
+      } else if(param2 && param2 != script_run_id) {// check if target script for message is running
+        ptp.param1 = PTP_CHDK_S_MSGSTATUS_BADID;
+      } else if(script_msg_q_full(&msg_q_in)) {
+        ptp.param1 = PTP_CHDK_S_MSGSTATUS_QFULL;
+      }
+
+      msg_size = data->get_data_size(data->handle);
+
+      // if something was wrong, don't bother creating message, just flush
+      if(ptp.param1 != PTP_CHDK_S_MSGSTATUS_OK) {
+        flush_recv_ptp_data(data,msg_size);
+        break;
+      }
+      msg = ptp_script_create_msg(PTP_CHDK_S_MSGTYPE_USER,PTP_CHDK_TYPE_STRING,msg_size,NULL);
+      if ( !msg ) // malloc error or zero size
+      {
+        // if size is zero, things will get hosed no matter what
+        flush_recv_ptp_data(data,msg_size);
+        ptp.code = PTP_RC_GeneralError;
+        break;
+      }
+      msg->script_id = param2;
+      if ( !recv_ptp_data(data,msg->data,msg->size) )
+      {
+        ptp.code = PTP_RC_GeneralError;
+        free(msg);
+        break;
+      }
+      if( !enqueue_script_msg(&msg_q_in,msg) ) {
+        ptp.code = PTP_RC_GeneralError;
+        free(msg);
+      }
+      break;
+    }
 #endif
 
     default:

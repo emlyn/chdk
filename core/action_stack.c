@@ -168,6 +168,32 @@ long action_get_prev(int p)
     return task->stack[task->stack_ptr-(p-1)];
 }
 
+// handle initializing and checking a timeout value on the stack
+// p is the how far up the stack the timout value is
+// returns zero if the timeout has not expired, 1 if it has
+// does not pop the delay value off the stack or clear the delay value
+int action_process_delay(int p)
+{
+    int t = get_tick_count();
+    // FIXME take care if overflow occurs
+    if (action_stacks[active_stack]->delay_target_ticks == 0)
+    {
+        /* setup timer */
+        action_stacks[active_stack]->delay_target_ticks = t+action_get_prev(p);
+        return 0;
+    }
+    if (action_stacks[active_stack]->delay_target_ticks <= t)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+void action_clear_delay(void)
+{
+    action_stacks[active_stack]->delay_target_ticks = 0;
+}
+
 // Defines some standard operations. Returns false if it could not process anything.
 // Can only be called from an action stack
 int action_stack_standard(long p)
@@ -187,23 +213,11 @@ int action_stack_standard(long p)
         action_pop();
         break;
     case AS_SLEEP:
-        t = get_tick_count();
-        // FIXME take care if overflow occurs
-        if (action_stacks[active_stack]->delay_target_ticks == 0)
+        if(action_process_delay(2))
         {
-            /* setup timer */
-            action_stacks[active_stack]->delay_target_ticks = t+action_get_prev(2);
-        }
-        else
-        {
-            if (action_stacks[active_stack]->delay_target_ticks <= t)
-            {
-                action_stacks[active_stack]->delay_target_ticks = 0;
-
-                // pop sleep op.
-                action_pop();
-                action_pop();
-            }
+            action_clear_delay();
+            action_pop();
+            action_pop();
         }
         break;
     case AS_PR_WAIT_SAVE:
@@ -238,26 +252,13 @@ int action_stack_standard(long p)
         }
         break;
     case AS_WAIT_CLICK:
-        t = get_tick_count();
-        if (action_stacks[active_stack]->delay_target_ticks == 0)
+        if(action_process_delay(2) || (kbd_last_clicked = kbd_get_clicked_key()))
         {
-            /* setup timer */
-            action_stacks[active_stack]->delay_target_ticks = t+((action_get_prev(2))?action_get_prev(2):86400000);
-        }
-        else
-        {
-            kbd_last_clicked = kbd_get_clicked_key();
-            if (kbd_last_clicked || (action_stacks[active_stack]->delay_target_ticks <= t))
-            {
-                if (!kbd_last_clicked) 
-                    kbd_last_clicked=0xFFFF;
-            
-                action_stacks[active_stack]->delay_target_ticks = 0;
-
-                // pop up
-                action_pop();
-                action_pop();
-            }
+            if (!kbd_last_clicked) 
+                kbd_last_clicked=0xFFFF;
+            action_clear_delay();
+            action_pop();
+            action_pop();
         }
         break;
     case AS_SHOOT:

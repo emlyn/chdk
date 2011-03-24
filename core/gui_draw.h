@@ -49,7 +49,7 @@
 #define COLOR_BLUE          0x87
 #define COLOR_YELLOW        0x44
 #define COLOR_BLACK         0xFF
-#define COLOR_BG            0x22 
+#define COLOR_BG            0x22
 #define COLOR_FG            COLOR_WHITE
 #define COLOR_SELECTED_BG   COLOR_RED
 #define COLOR_SELECTED_FG   COLOR_WHITE
@@ -57,7 +57,7 @@
 #define COLOR_SPLASH_RED    0x58
 #define COLOR_SPLASH_PINK   0x4C
 #define COLOR_SPLASH_GREY   0x16
-// colors for blended histo 
+// colors for blended histo
 // many of these probably wrong on this cam
 #define COLOR_HISTO_R       COLOR_RED
 #define COLOR_HISTO_R_PLAY  COLOR_RED
@@ -202,7 +202,7 @@
 #define COLOR_BLUE_LT       0x10
 #define COLOR_BLUE          0x14
 #define COLOR_YELLOW        0x16
-#define COLOR_BLACK         0x1d
+#define COLOR_BLACK         0xFF
 #define COLOR_BG            0x62
 #define COLOR_FG            COLOR_WHITE
 #define COLOR_SELECTED_BG   0x0e
@@ -225,6 +225,37 @@
 #define COLOR_HISTO_RG_PLAY COLOR_YELLOW
 #undef SCREEN_COLOR
 #define SCREEN_COLOR            0x1D
+#elif CAM_BITMAP_PALETTE==8			// s95
+#define COLOR_TRANSPARENT   0x00
+#define COLOR_WHITE         0x01
+#define COLOR_RED           0x66
+#define COLOR_GREY          0x6D
+#define COLOR_GREEN         0x69
+#define COLOR_BLUE_LT       0x68
+#define COLOR_BLUE          0x67
+#define COLOR_YELLOW        0x60
+#define COLOR_BLACK         0xFF
+#define COLOR_BG            0x20
+#define COLOR_FG            COLOR_WHITE
+#define COLOR_SELECTED_BG   COLOR_RED
+#define COLOR_SELECTED_FG   COLOR_WHITE
+#define COLOR_ALT_BG        0x20
+#define COLOR_SPLASH_RED    COLOR_RED
+#define COLOR_SPLASH_PINK   COLOR_GREY
+#define COLOR_SPLASH_GREY   0xDE
+#define COLOR_HISTO_R       COLOR_RED
+#define COLOR_HISTO_R_PLAY  COLOR_RED
+#define COLOR_HISTO_B       COLOR_BLUE
+#define COLOR_HISTO_G       COLOR_GREEN
+#define COLOR_HISTO_G_PLAY  COLOR_GREEN
+#define COLOR_HISTO_BG      COLOR_BLUE_LT
+#define COLOR_HISTO_RG      COLOR_YELLOW
+#define COLOR_HISTO_RB      COLOR_RED
+#define COLOR_HISTO_RB_PLAY COLOR_HISTO_RB
+#define COLOR_HISTO_B_PLAY  COLOR_HISTO_B
+#define COLOR_HISTO_BG_PLAY COLOR_BLUE_LT
+#define COLOR_HISTO_RG_PLAY COLOR_YELLOW
+
 #else
 #error CAM_BITMAP_PALETTE not defined
 #endif
@@ -270,12 +301,12 @@ extern void draw_ellipse(coord xc, coord yc, unsigned int a, unsigned int b, col
 extern void draw_filled_ellipse(coord xc, coord yc, unsigned int a, unsigned int b, color cl);
 
 
-#if CAM_USES_ASPECT_CORRECTION //nandoide sept-2009 
+#if CAM_USES_ASPECT_CORRECTION //nandoide sept-2009
 void draw_set_aspect_xcorrection_proc(unsigned int (*xcorrection_proc)(unsigned int x));
 void draw_set_aspect_ycorrection_proc(unsigned int (*ycorrection_proc)(unsigned int y));
 unsigned int aspect_xcorrection_games_360(unsigned int x);
 unsigned int aspect_ycorrection_games_360(unsigned int y);
-void draw_set_environment(unsigned int (*xcorrection_proc)(unsigned int x), 
+void draw_set_environment(unsigned int (*xcorrection_proc)(unsigned int x),
                                        unsigned int (*ycorrection_proc)(unsigned int y),
                                        int screenx, int screeny );
 #endif
