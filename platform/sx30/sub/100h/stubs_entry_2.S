@@ -37,7 +37,7 @@ NHSTUB(MakeDirectory_Fut,				0xff836ac8) // ok (comp sx20)
 NHSTUB(MoveFocusLensToDistance,			0xffb52e10) // ok (comp sx20 / s95)
 NHSTUB(MoveZoomLensWithPoint,			0xffae950c)	// ok (from function table @FFC4F0AC)
 NHSTUB(NewTaskShell,					0xff8993e4) // ok (comp sx20)
-NHSTUB(Open,							0xff874500) // ok
+NHSTUB(Open,							0xFF81AADC)	// update 5/3/2011 to fix crash startup
 NHSTUB(PostLogicalEventForNotPowerType, 0xff89e028) // ok (comp sx20)
 NHSTUB(PostLogicalEventToUI,			0xff89e074) // ok
 NHSTUB(RenameFile_Fut,					0xFF8369C0) // ok (comp sx20)

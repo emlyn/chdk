@@ -188,6 +188,8 @@ function domenu()
 	local lastitem=table.maxn(curmenu)
 	while true do
 		local sel=curmenu[curitem]
+		-- demonstrates flicker free redraw
+		set_console_autoredraw(0)
 		cls()
 		print("[/\\][\\/] [SET]")
 		print_status()
@@ -202,6 +204,8 @@ function domenu()
 		else
 			print("--------------------")
 		end
+		console_redraw()
+		set_console_autoredraw(1)
 		wait_click(5000)
 		if is_pressed("down") then
 			if curmenu[curitem+1] then

@@ -540,6 +540,18 @@ int add_ptp_handler(int opcode, ptp_handler handler, int unknown);
 void init_chdk_ptp();
 void init_chdk_ptp_task();
 
+typedef struct {
+    unsigned size;
+    unsigned script_id; // id of script message is to/from 
+    unsigned type;
+    unsigned subtype;
+    char data[];
+} ptp_script_msg;
+int ptp_script_write_msg(ptp_script_msg *msg);
+ptp_script_msg* ptp_script_read_msg(void);
+ptp_script_msg* ptp_script_create_msg(unsigned type, unsigned subtype, unsigned datasize, const void *data);
+int ptp_script_write_error_msg(unsigned errtype, const char *err);
+
 #endif // CAM_CHDK_PTP
 
 int switch_mode_usb(int mode); // 0 = playback, 1 = record; return indicates success

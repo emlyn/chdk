@@ -521,9 +521,6 @@ void __attribute__((naked,noinline)) sub_FFAECA3C_my(){
 "                ADD     R1, SP, #0x4 \n"
 "                MOV     R0, R5 \n"
 "                BL      sub_FFAEC8A0 \n"
-
-"		BL      capt_seq_hook_raw_here\n"      		// added
-
 "                B       loc_FFAECB08 \n"
 
 "loc_FFAECADC: \n"
@@ -542,6 +539,9 @@ void __attribute__((naked,noinline)) sub_FFAECA3C_my(){
 "                BL      sub_FFAECC98 \n"
 
 "loc_FFAECB08: \n"
+
+"		BL      capt_seq_hook_raw_here\n"      		// added (16/2/2011, moved here so that long exposures work)
+
 "                MOV     R6, R0 \n"
 "                B       loc_FFAECB38 \n"
 

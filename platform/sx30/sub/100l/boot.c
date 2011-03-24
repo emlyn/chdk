@@ -32,28 +32,15 @@ void JogDial_task_my(void);
 //	);
 //}
 
-int done_delay = 0;
+extern void task_CaptSeq();
+extern void task_InitFileModules();
+extern void task_RotaryEncoder();
+extern void task_MovieRecord();
+extern void task_ExpDrv();
 
 void taskHook(context_t **context)
 { 
 	task_t *tcb=(task_t*)((char*)context-offsetof(task_t, context));
-
-	if ((tcb->entry == (void*)mykbd_task) && (done_delay == 0))
-	{
-		done_delay = 1;
-		int i;
-		// Wait a while, otherwise init_file_modules_task doesn't get hooked when starting in play mode
-		for (i=0; i<0x100000; i++)
-		{
-			asm volatile ( "nop\n" );
-		}
-	}
-
-	extern void task_CaptSeq();
-	extern void task_InitFileModules();
-	extern void task_RotaryEncoder();
-	extern void task_MovieRecord();
-	extern void task_ExpDrv();
 
 	// Replace firmware task addresses with ours
 	if(tcb->entry == (void*)task_CaptSeq)			tcb->entry = (void*)capt_seq_task; 
@@ -185,6 +172,7 @@ void __attribute__((naked,noinline)) sub_FF810354_my() {
 
 	//http://chdk.setepontos.com/index.php/topic,4194.0.html
 	*(int*)0x1938=(int)taskHook;
+	*(int*)0x193C=(int)taskHook;	// need this for startup in Playback mode (otherwise init_file_modules_task doesn't hook properly)
     
 	// replacement of sub_FF834740 for correct power-on.
 	*(int*)(0x2574) = (*(int*)0xC0220128)&1 ? 0x200000 : 0x100000; 

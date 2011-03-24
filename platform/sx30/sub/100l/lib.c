@@ -53,9 +53,13 @@ void *vid_get_bitmap_fb()
 }
 
 
-void *vid_get_viewport_live_fb() // ???
+void *vid_get_viewport_live_fb()
 {
-    return 0x0;
+	// Values below found by searching firmware for references & usage of viewport buffer address 0x40587700
+	// then experimenting to see what gave best Motion Detector speed results using http://dataghost.com/chdk/md_meter.html.
+	long* t = (long*)0xFFB96A6C;						// Table of viewport buffer addresses (@FF853F24 in _sub_FF853DC0__LiveImage.c__10)
+	unsigned char i = *((unsigned char*)(0x20a8));		// Index value (byte) stored here (@FF853F50 in _sub_FF853DC0__LiveImage.c__10)
+	return (void*)t[(i-1)&3];							// Appears to be 4 buffers, current index - 1 seems best
 }
 
 void *vid_get_viewport_fb()

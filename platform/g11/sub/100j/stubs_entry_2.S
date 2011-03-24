@@ -20,8 +20,6 @@ NHSTUB(WriteSDCard, 0xFF94B750)    //                                   v.c"
 NHSTUB(UnlockAF, 0xFF837190)
 NHSTUB(DoAFLock, 0xFF837158)
 NHSTUB(UnsetZoomForMovie,0xFF99CE28)
-NHSTUB(PutInNdFilter, 0xFFB00F1C)
-NHSTUB(PutOutNdFilter, 0xFFB00F54)
 NHSTUB(closefastdir, 0xFFA840F8)
 NHSTUB(openfastdir, 0xFFA8413C)
 NHSTUB(kbd_p1_sub, 0xFF833584)
@@ -41,6 +39,8 @@ NHSTUB(Lseek, 0xff835acc) // same address as lseek
 NHSTUB(rename, 0xFF835A8C) 
 NHSTUB(RenameFile_Fut, 0xFF8352A8)
 NHSTUB(Restart, 0xFF83AB70)
+NHSTUB(PutInNdFilter, 0xFFAA09C4)
+NHSTUB(PutOutNdFilter, 0xFFAA09E8)
 
 // nullsubs
 NHSTUB(kbd_pwr_on, 0xFF810B04) // nullsub

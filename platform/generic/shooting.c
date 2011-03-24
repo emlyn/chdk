@@ -33,9 +33,9 @@ static short sv96_base=0;
 static short svm96_base=0;
 static short sv96_base_tmp=0;
 //static short override_iso=0;
-static const double sqrt2=1.4142135623731;//square root from 2 
+static const double sqrt2=1.4142135623731;//square root from 2
 static const double log_2=0.6931471805599;//natural logarithm of 2
-static const double k=12.5;//K is the reflected-light meter calibration constant 
+static const double k=12.5;//K is the reflected-light meter calibration constant
 static const short koef[] = {0, 1,10,100,1000};
 static const float shutter_koef[] = {0, 0.00001, 0.0001,0.001,0.01,0.1,1,10,100,1000};
 static const char * expo_shift[] = { "Off", "1/3Ev","2/3Ev", "1Ev", "1 1/3Ev", "1 2/3Ev", "2Ev", "2 1/3Ev", "2 2/3Ev", "3Ev", "3 1/3Ev", "3 2/3Ev", "4Ev"};
@@ -102,7 +102,7 @@ char * get_debug()
 
 int shooting_get_user_tv_id()
 {
-#if CAM_HAS_USER_TV_MODES 
+#if CAM_HAS_USER_TV_MODES
     short tvv;
     long i;
     _GetPropertyCase(PROPCASE_USER_TV, &tvv, sizeof(tvv));
@@ -110,7 +110,7 @@ int shooting_get_user_tv_id()
 	if (shutter_speeds_table[i].prop_id == tvv)
 	    return shutter_speeds_table[i].id;
     }
-#endif        
+#endif
     return 0;
 }
 
@@ -150,7 +150,7 @@ if ((mode_get()&MODE_MASK) != MODE_PLAY){
 	 }
  }
 }
-#endif 
+#endif
 }
 void shooting_set_prop(int id, int v)
 {
@@ -193,7 +193,7 @@ if ((mode_get()&MODE_MASK) != MODE_PLAY){
     int cv = shooting_get_user_tv_id();
     shooting_set_user_tv_by_id(cv+v);
 }
-#endif    
+#endif
 }
 
 int shooting_get_user_av_id()
@@ -206,7 +206,7 @@ int shooting_get_user_av_id()
 			if (aperture_sizes_table[i].prop_id == avv)
 	   		 return aperture_sizes_table[i].id;
     }
-#endif    
+#endif
     return 0;
 }
 
@@ -240,7 +240,7 @@ short shooting_get_iso_real()
 {
     short sv;
     _GetPropertyCase(PROPCASE_SV, &sv, sizeof(sv));
-    if (sv == 0) { 
+    if (sv == 0) {
      return 0;
     }
     return shooting_get_iso_from_sv96(sv);
@@ -263,7 +263,7 @@ short shooting_get_sv96()
 short shooting_get_base_sv96()
 {
    short dsv,sv;
-   if (shooting_get_canon_iso_mode()<50) { 	
+   if (shooting_get_canon_iso_mode()<50) {
        _GetPropertyCase(PROPCASE_DELTA_SV, &dsv, sizeof(dsv));
        _GetPropertyCase(PROPCASE_SV, &sv, sizeof(sv));
        sv96_base=(sv-dsv);
@@ -273,22 +273,22 @@ short shooting_get_base_sv96()
 
 short shooting_get_sv96_from_iso(short iso)
 {
-  if  (iso>0) 
+  if  (iso>0)
     return (short)(log(pow(2.0,(-7.0/4.0))*(double)(iso))*96.0/(log_2));
-  return 0;  
+  return 0;
 }
 
 short shooting_get_svm96_from_iso(short iso)
 {
    if  (iso>0) return (short)(log((double)(iso)*32.0/100.0)*96.0/(log_2));
-   return 0;   
-}  
+   return 0;
+}
 
 short shooting_get_iso_market_from_svm96(short svm96)
 {
 	if (svm96>0 )
 		return (short)((double)pow(2, (((double)svm96)/96.0))*100.0/32.0);
-	return 0;	
+	return 0;
 }
 
 short shooting_get_iso_market_base()
@@ -301,7 +301,7 @@ short shooting_get_iso_market_base()
       if (ISO_MIN_VALUE==50) iso_market_base=50;
       else iso_market_base=100;
      }
-  return iso_market_base; 	
+  return iso_market_base;
 }
 
 short shooting_get_svm96_base()
@@ -322,7 +322,7 @@ short shooting_get_iso_market()
 {
     //double koef;
     short iso_mode=shooting_get_canon_iso_mode();
-    if ((iso_mode < 50) || (conf.iso_override_koef && conf.iso_override_value) || (conf.iso_bracket_koef && conf.iso_bracket_value)) 
+    if ((iso_mode < 50) || (conf.iso_override_koef && conf.iso_override_value) || (conf.iso_bracket_koef && conf.iso_bracket_value))
      {
       short iso_b=shooting_get_iso_base();
       if (iso_b) return (short)((shooting_get_iso_market_base()*shooting_get_iso_real())/iso_b);
@@ -331,17 +331,17 @@ short shooting_get_iso_market()
 }
 
 void shooting_set_sv96(short sv96, short is_now){
-  short dsv96=0, iso_mode=shooting_get_canon_iso_mode(); 	
+  short dsv96=0, iso_mode=shooting_get_canon_iso_mode();
 if ((mode_get()&MODE_MASK) != MODE_PLAY){
   if (is_now)  {
     if (iso_mode<50) dsv96 =sv96-shooting_get_base_sv96();
     else if (sv96_base) dsv96=sv96-sv96_base;
-	else if (sv96_base_tmp) dsv96=sv96-sv96_base_tmp;  
+	else if (sv96_base_tmp) dsv96=sv96-sv96_base_tmp;
 	else
-	 { 
-	 sv96_base_tmp= (short)((shooting_get_svm96_base()*shooting_get_sv96())/shooting_get_svm96());   
+	 {
+	 sv96_base_tmp= (short)((shooting_get_svm96_base()*shooting_get_sv96())/shooting_get_svm96());
 	 dsv96=sv96-sv96_base_tmp;
-	 }	 
+	 }
     while ((shooting_is_flash_ready()!=1) || (focus_busy));
     short svm96_base =shooting_get_svm96_base();
     if (iso_mode>=50) shooting_set_iso_mode(0);
@@ -357,7 +357,7 @@ if ((mode_get()&MODE_MASK) != MODE_PLAY){
 {
  return;
  int iso=(int)((short)shooting_get_iso_base()+diso);
- 
+
  if (iso>0) {
     shooting_set_sv96((short)(shooting_get_sv96_from_iso(iso)));
   }
@@ -421,7 +421,7 @@ int shooting_get_lens_to_focal_plane_width()
 int shooting_get_hyperfocal_distance_()
 {
   int av=shooting_get_real_aperture();
-  int fl=get_focal_length(lens_get_zoom_point());	
+  int fl=get_focal_length(lens_get_zoom_point());
   if ((av>0) && (fl>0)) return (fl*fl)/(10*circle_of_confusion*av);
   else return (-1);
 }
@@ -429,7 +429,7 @@ int shooting_get_hyperfocal_distance_()
 int shooting_get_hyperfocal_distance()
 {
  int h=shooting_get_hyperfocal_distance_();
- if ((h>0) && (conf.dof_dist_from_lens)) 
+ if ((h>0) && (conf.dof_dist_from_lens))
    return (h-shooting_get_lens_to_focal_plane_width());
  else return h;
 }
@@ -451,8 +451,8 @@ int shooting_get_subject_distance_()
    if (!conf.dof_subj_dist_as_near_limit) return shooting_get_canon_subject_distance();
    else {
     	int h, v, m;
-   		int fl=get_focal_length(lens_get_zoom_point()); 
-    	int near=shooting_get_canon_subject_distance();	
+   		int fl=get_focal_length(lens_get_zoom_point());
+    	int near=shooting_get_canon_subject_distance();
         int v1=(fl*fl);
       	int av_min=shooting_get_min_real_aperture();
         int c_of_c=circle_of_confusion*10;
@@ -461,7 +461,7 @@ int shooting_get_subject_distance_()
     	    if ((near>0) && (near<MAX_DIST)) {
     		  v=(h-near);
     		  m=h*near;
-    		  if ((v>0) && (m>0)) return m/v;  
+    		  if ((v>0) && (m>0)) return m/v;
        	     }
         }
        	return (-1);
@@ -471,17 +471,17 @@ int shooting_get_subject_distance_()
 int shooting_get_subject_distance()
 {
  int h=shooting_get_subject_distance_();
- if ((h>0) && (conf.dof_dist_from_lens)) 
+ if ((h>0) && (conf.dof_dist_from_lens))
    return (h-shooting_get_lens_to_focal_plane_width());
  else return h;
 }
 
 int shooting_get_near_limit_of_acceptable_sharpness_()
 {
-	int s=shooting_get_canon_subject_distance();	
+	int s=shooting_get_canon_subject_distance();
 	if (conf.dof_subj_dist_as_near_limit) return s;
     else {
-      int h = shooting_get_hyperfocal_distance_();	
+      int h = shooting_get_hyperfocal_distance_();
       int m = h*s;
       int v = h+s;
       if ((m>0) && (v>0)) return (m/v);
@@ -492,14 +492,14 @@ int shooting_get_near_limit_of_acceptable_sharpness_()
 int shooting_get_near_limit_of_acceptable_sharpness()
 {
  int h=shooting_get_near_limit_of_acceptable_sharpness_();
- if ((h>0) && (conf.dof_dist_from_lens)) 
+ if ((h>0) && (conf.dof_dist_from_lens))
    return (h-shooting_get_lens_to_focal_plane_width());
  else return h;
 }
 
 int shooting_get_near_limit_f(int s, int a, int fl)
 {
-      int h = shooting_get_hyperfocal_distance_f(a, fl);	
+      int h = shooting_get_hyperfocal_distance_f(a, fl);
       int m = h*s;
       int v = h+s;
       if ((m>0) && (v>0)) return (m/v);
@@ -508,7 +508,7 @@ int shooting_get_near_limit_f(int s, int a, int fl)
 
 int shooting_get_far_limit_of_acceptable_sharpness_()
 {
-	int s=shooting_get_subject_distance_(), h=shooting_get_hyperfocal_distance_();	
+	int s=shooting_get_subject_distance_(), h=shooting_get_hyperfocal_distance_();
     int v = h-s;
     int m = h*s;
     if ((m>0) && (v>0)) return (m/v);
@@ -518,7 +518,7 @@ int shooting_get_far_limit_of_acceptable_sharpness_()
 int shooting_get_far_limit_of_acceptable_sharpness()
 {
  int h=shooting_get_far_limit_of_acceptable_sharpness_();
- if ((h>0) && (conf.dof_dist_from_lens)) 
+ if ((h>0) && (conf.dof_dist_from_lens))
    return (h-shooting_get_lens_to_focal_plane_width());
  else return h;
 }
@@ -532,13 +532,13 @@ int shooting_get_depth_of_field()
 
 short shooting_get_tv96_from_shutter_speed(float t)
 {
-  if (t>0) return (short) (96.0*log(1.0/t)/log_2);  
+  if (t>0) return (short) (96.0*log(1.0/t)/log_2);
   else return (-10000);
 }
 
 float shooting_get_shutter_speed_from_tv96(short tv)
 {
-  return  pow(2,(float)((-1)*tv)/96.0 );  
+  return  pow(2,(float)((-1)*tv)/96.0 );
 }
 
 short shooting_get_tv96()
@@ -554,9 +554,9 @@ short shooting_get_user_tv96()
     short tv;
     _GetPropertyCase(PROPCASE_USER_TV, &tv, sizeof(tv));
     return tv;
-#else       
+#else
     return 0;
-#endif    
+#endif
 }
 
 void shooting_set_user_tv96(short v)
@@ -574,7 +574,7 @@ long i;
 	  }
   }
 }
-#endif  
+#endif
 }
 
 void shooting_set_tv96(short v, short is_now)
@@ -598,20 +598,20 @@ if ((mode_get()&MODE_MASK) != MODE_PLAY){
    	if(is_now) {
 	   _SetPropertyCase(PROPCASE_TV, &v, sizeof(v));
    	}
-   	else photo_param_put_off.tv96=v; 
+   	else photo_param_put_off.tv96=v;
 }
 }
 
 
 void shooting_set_shutter_speed(float t, short is_now)
 {
-	if (t>0) shooting_set_tv96_direct((short) 96.0*log(1/t)/log_2, is_now);  
+	if (t>0) shooting_set_tv96_direct((short) 96.0*log(1/t)/log_2, is_now);
 }
 
 void shooting_set_shutter_speed_ubasic(int t, short is_now)
 {
 if ((mode_get()&MODE_MASK) != MODE_PLAY){
-	if (t>0) shooting_set_tv96_direct((short) (96.0*log(100000.0/(double)t)/log_2), is_now);  
+	if (t>0) shooting_set_tv96_direct((short) (96.0*log(100000.0/(double)t)/log_2), is_now);
 }
 }
 
@@ -655,7 +655,7 @@ short shooting_get_user_av96()
     short av;
     _GetPropertyCase(PROPCASE_USER_AV, &av, sizeof(av));
     return av;
-#else     
+#else
     return 0;
 #endif
 }
@@ -663,7 +663,7 @@ short shooting_get_user_av96()
 
 void shooting_set_av96(short v, short is_now)
 {
-#if CAM_HAS_IRIS_DIAPHRAGM	
+#if CAM_HAS_IRIS_DIAPHRAGM
 if ((mode_get()&MODE_MASK) != MODE_PLAY){
  long i;
 //    if ((v<ASID_MIN) || (v>ASID_MAX))
@@ -675,7 +675,7 @@ if ((mode_get()&MODE_MASK) != MODE_PLAY){
 	}
   }
 }
-#endif  
+#endif
 }
 
 void shooting_set_nd_filter_state(short v, short is_now)
@@ -688,13 +688,13 @@ if ((mode_get()&MODE_MASK) != MODE_PLAY){
 	}
 	else photo_param_put_off.nd_filter=v;
 }
-#endif	
+#endif
 }
 
 
 
 void shooting_set_av96_direct(short v, short is_now)
-{  
+{
 #if CAM_HAS_IRIS_DIAPHRAGM
 if ((mode_get()&MODE_MASK) != MODE_PLAY){
  if(is_now) {
@@ -722,7 +722,7 @@ if ((mode_get()&MODE_MASK) != MODE_PLAY){
 	}
  }
 }
-#endif		   
+#endif
 }
 
 short shooting_get_drive_mode()
@@ -736,7 +736,9 @@ short shooting_get_drive_mode()
 	defined (CAMERA_a480) || \
 	defined (CAMERA_s90) || \
 	defined (CAMERA_sx20) || \
-	defined (CAMERA_d10)
+	defined (CAMERA_d10) || \
+	defined (CAMERA_s95) || \
+	defined	(CAMERA_g12) || defined (CAMERA_sx30)
    short n;
    // unlike other cameras, sx200 does set PROPCASE_DRIVE_MODE when in custom timer mode
    // SX 200 IS 0,1,2,3,4=Off, 2 Second, Custom, Face Detection
@@ -758,29 +760,29 @@ short shooting_can_focus()
 {
 #if !CAM_CAN_SD_OVER_NOT_IN_MF && CAM_CAN_SD_OVERRIDE
  int m=mode_get()&MODE_SHOOTING_MASK;
- int mode_video=((m==MODE_VIDEO_STD) || 
-			    (m==MODE_VIDEO_SPEED) ||  
+ int mode_video=((m==MODE_VIDEO_STD) ||
+			    (m==MODE_VIDEO_SPEED) ||
 			    (m==MODE_VIDEO_COMPACT) ||
-			    (m==MODE_VIDEO_MY_COLORS) || 
+			    (m==MODE_VIDEO_MY_COLORS) ||
 			    (m==MODE_VIDEO_TIME_LAPSE) ||
 			    (m==MODE_VIDEO_COLOR_ACCENT));
   return (shooting_get_focus_mode() || mode_video);
 #elif !CAM_CAN_SD_OVERRIDE
  int m=mode_get()&MODE_SHOOTING_MASK;
- int mode_video=((m==MODE_VIDEO_STD) || 
-			    (m==MODE_VIDEO_SPEED) ||  
+ int mode_video=((m==MODE_VIDEO_STD) ||
+			    (m==MODE_VIDEO_SPEED) ||
 			    (m==MODE_VIDEO_COMPACT) ||
-			    (m==MODE_VIDEO_MY_COLORS) || 
+			    (m==MODE_VIDEO_MY_COLORS) ||
     	        (m==MODE_VIDEO_TIME_LAPSE) ||
 			    (m==MODE_VIDEO_COLOR_ACCENT));
   return mode_video;
-#elif defined (CAMERA_ixus800_sd700)                				   
+#elif defined (CAMERA_ixus800_sd700)
  int m=mode_get()&MODE_SHOOTING_MASK;
 // TODO whats the reason for this ?!?
   return (shooting_get_zoom()<8) && (m!=MODE_AUTO) && (m!=MODE_SCN_UNDERWATER);
-#else 
-  return 1;  
-#endif 			  
+#else
+  return 1;
+#endif
 }
 
 short shooting_get_common_focus_mode()
@@ -789,9 +791,9 @@ short shooting_get_common_focus_mode()
   return shooting_get_subject_distance_override_koef();
 #elif !CAM_CAN_SD_OVERRIDE
   return 0;
-#else 
+#else
   return shooting_get_focus_mode();
-#endif 			  
+#endif
 }
 
 short shooting_get_focus_mode()
@@ -828,7 +830,7 @@ if ((mode_get()&MODE_MASK) != MODE_PLAY){
 		}
   }
 }
-#endif	      
+#endif
 }
 
 void shooting_set_user_av_by_id_rel(int v)
@@ -838,7 +840,7 @@ if ((mode_get()&MODE_MASK) != MODE_PLAY){
     int cv = shooting_get_user_av_id();
     shooting_set_user_av_by_id(cv+v);
 }
-#endif    
+#endif
 }
 
 
@@ -877,7 +879,7 @@ int shooting_in_progress()
 
 int shooting_is_flash()
 {
- int t = 0;	
+ int t = 0;
  _GetPropertyCase(PROPCASE_IS_FLASH_READY, &t,sizeof(&t));
  return t;
 }
@@ -972,10 +974,10 @@ void shooting_set_focus(int v, short is_now) {
 if ((mode_get()&MODE_MASK) != MODE_PLAY){
 	if ((is_now) && shooting_can_focus()) {
 	  if (conf.dof_dist_from_lens) s+=shooting_get_lens_to_focal_plane_width();
-	  if ((!conf.dof_subj_dist_as_near_limit) && (s>0)) lens_set_focus_pos((s<MAX_DIST)?s:MAX_DIST); 
+	  if ((!conf.dof_subj_dist_as_near_limit) && (s>0)) lens_set_focus_pos((s<MAX_DIST)?s:MAX_DIST);
 	  else {
         int near=shooting_get_near_limit_f(s,shooting_get_min_real_aperture(),get_focal_length(lens_get_zoom_point()));
-        if (near>0) lens_set_focus_pos((near<MAX_DIST)?near:MAX_DIST); 
+        if (near>0) lens_set_focus_pos((near<MAX_DIST)?near:MAX_DIST);
 	  }
 	}
 	else photo_param_put_off.subj_dist=v;
@@ -999,9 +1001,9 @@ void shooting_set_autoiso(int iso_mode) {
 	if (m==MODE_M || m==MODE_TV || m==MODE_STITCH) return; //Only operate outside of M and Tv
 	static const short shutter[]={0, 8, 15, 30, 60, 125, 250, 500, 1000};
 	float current_shutter = shooting_get_shutter_speed_from_tv96(shooting_get_tv96());
-	
+
 	short current_iso=shooting_get_iso_real();
-		
+
 	short min_shutter = shutter[conf.autoiso_shutter];
 	if (min_shutter == 0)
 		{
@@ -1012,18 +1014,18 @@ void shooting_set_autoiso(int iso_mode) {
 
 	short target_iso = current_iso * min_shutter * current_shutter;
 	short min_iso = conf.autoiso_min_iso*10;
-	
+
 	if (target_iso > max_iso)
 		{ target_iso = max_iso; }
 	else if (target_iso < min_iso)
 		{ target_iso = min_iso; }
-	
+
 	float target_shutter = current_shutter *  current_iso / target_iso;
-	
+
 	shooting_set_shutter_speed(target_shutter, SET_NOW);
-	
+
     shooting_set_iso_real(target_iso, SET_NOW);
-	
+
 }
 
 void shooting_video_bitrate_change(int v){
@@ -1036,7 +1038,7 @@ void shooting_video_bitrate_change(int v){
 
 float shooting_get_shutter_speed_override_value()
 {
-  return (float)conf.tv_override_value*shutter_koef[conf.tv_override_koef];  
+  return (float)conf.tv_override_value*shutter_koef[conf.tv_override_koef];
 }
 
 const char * shooting_get_tv_bracket_value()
@@ -1052,18 +1054,18 @@ const char * shooting_get_tv_override_value()
 
 const char * shooting_get_bracket_type()
 {
-  return expo_type[conf.bracket_type];  
+  return expo_type[conf.bracket_type];
 }
 
 
 short shooting_get_iso_override_value()
 {
-  return conf.iso_override_value*koef[conf.iso_override_koef];  
+  return conf.iso_override_value*koef[conf.iso_override_koef];
 }
 
 short shooting_get_iso_bracket_value()
 {
-  return conf.iso_bracket_value*koef[conf.iso_bracket_koef];  
+  return conf.iso_bracket_value*koef[conf.iso_bracket_koef];
 }
 
 
@@ -1076,7 +1078,7 @@ short shooting_get_av96_override_value()
 
 const char * shooting_get_av_bracket_value()
 {
-  return expo_shift[conf.av_bracket_value];  
+  return expo_shift[conf.av_bracket_value];
 }
 
 
@@ -1103,22 +1105,22 @@ void shooting_tv_bracketing(){
   if (bracketing.shoot_counter==0) { // first shoot
     bracketing.shoot_counter=1;
     // if Tv override is enabled... (this was adapted from function shooting_expo_param_override() )
-    if ( ((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef) && !(conf.override_disable==1) ) { 
+    if ( ((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef) && !(conf.override_disable==1) ) {
       // ...use Tv override value as seed for bracketing:
-      if (conf.tv_enum_type) 
+      if (conf.tv_enum_type)
         bracketing.tv96 = 32*(conf.tv_override_value-tv_override_zero_shift);
-      else 
+      else
         bracketing.tv96 = shooting_get_tv96_from_shutter_speed(shooting_get_shutter_speed_override_value());
     }
     // Tv override is disabled, use camera's opinion of Tv for bracketing seed value.
     else {
-      if (!(m==MODE_M || m==MODE_TV || m==MODE_LONG_SHUTTER)) bracketing.tv96=shooting_get_tv96(); 
+      if (!(m==MODE_M || m==MODE_TV || m==MODE_LONG_SHUTTER)) bracketing.tv96=shooting_get_tv96();
       else bracketing.tv96=shooting_get_user_tv96();
     }
     bracketing.tv96_step=32*conf.tv_bracket_value;
   }
   // other shoots
-   bracketing.shoot_counter++;   
+   bracketing.shoot_counter++;
    is_odd=(bracketing.shoot_counter&1);
    if ((!is_odd) || (conf.bracket_type>0)) bracketing.dtv96+=bracketing.tv96_step;
    if (((!is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==1))  value=bracketing.tv96-bracketing.dtv96;
@@ -1133,14 +1135,14 @@ void shooting_av_bracketing(){
     bracketing.shoot_counter=1;
     //short av_override_value=shooting_get_av96_override_value;
     //if (av_override_value) bracketing.av96=av_override_value;
-    if (!(m==MODE_M || m==MODE_AV)) bracketing.av96=shooting_get_av96(); 
+    if (!(m==MODE_M || m==MODE_AV)) bracketing.av96=shooting_get_av96();
 	else bracketing.av96=shooting_get_user_av96();
     bracketing.av96_step=32*conf.av_bracket_value;
   }
   // other shoots
-   bracketing.shoot_counter++;   
+   bracketing.shoot_counter++;
    is_odd=(bracketing.shoot_counter&1);
-   if (((!is_odd) || (conf.bracket_type>0)) || (((is_odd) && (conf.bracket_type==0)) && ((bracketing.av96-bracketing.dav96)<AV96_MIN))) 
+   if (((!is_odd) || (conf.bracket_type>0)) || (((is_odd) && (conf.bracket_type==0)) && ((bracketing.av96-bracketing.dav96)<AV96_MIN)))
        bracketing.dav96+=bracketing.av96_step;
    if ((((!is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==1)) && ((bracketing.av96-bracketing.dav96)>=AV96_MIN))
      {
@@ -1148,7 +1150,7 @@ void shooting_av_bracketing(){
      shooting_set_av96_direct(value, SET_NOW);
      }
    else if (((is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==2)  || (((!is_odd) && (conf.bracket_type==0)) && ((bracketing.av96-bracketing.dav96)<AV96_MIN)))
-     { 
+     {
      value=bracketing.av96+bracketing.dav96;
      shooting_set_av96_direct(value, SET_NOW);
      }
@@ -1163,10 +1165,10 @@ void shooting_iso_bracketing(){
     bracketing.iso_step=shooting_get_iso_bracket_value();
     }
   // other shoots
-   bracketing.shoot_counter++;   
+   bracketing.shoot_counter++;
    is_odd=(bracketing.shoot_counter&1);
-   
-   if (((!is_odd) || (conf.bracket_type>0)) || (((is_odd) && (conf.bracket_type==0)) && (bracketing.iso<=bracketing.diso))) 
+
+   if (((!is_odd) || (conf.bracket_type>0)) || (((is_odd) && (conf.bracket_type==0)) && (bracketing.iso<=bracketing.diso)))
     {
    	   bracketing.diso+=bracketing.iso_step;
     }
@@ -1190,7 +1192,7 @@ void shooting_subject_distance_bracketing(){
     bracketing.subj_dist_step=shooting_get_subject_distance_bracket_value();
  }
   // other shoots
-   bracketing.shoot_counter++;   
+   bracketing.shoot_counter++;
    is_odd=(bracketing.shoot_counter&1);
    if (((!is_odd) || (conf.bracket_type>0)) || (((is_odd) && (conf.bracket_type==0)) && (bracketing.subj_dist<=bracketing.dsubj_dist)))
    {
@@ -1210,12 +1212,12 @@ void shooting_subject_distance_bracketing(){
 
 
 void shooting_bracketing(void){
-  
+
   short drive_mode=shooting_get_drive_mode();
   if (shooting_get_drive_mode()!=0)  {
      int m=mode_get()&MODE_SHOOTING_MASK;
      if (m!=MODE_STITCH) {
-       if (state_shooting_progress != SHOOTING_PROGRESS_PROCESSING) { 
+       if (state_shooting_progress != SHOOTING_PROGRESS_PROCESSING) {
            bracketing.shoot_counter=0;
            bracketing.av96=0;
            bracketing.dav96=0;
@@ -1229,8 +1231,8 @@ void shooting_bracketing(void){
            bracketing.dsubj_dist=0;
            bracketing.type=0;
        }
-           if (conf.tv_bracket_value && !(conf.override_disable==1 && conf.override_disable_all))  shooting_tv_bracketing(); 
-    	      else if (conf.av_bracket_value && !(conf.override_disable==1 && conf.override_disable_all)) shooting_av_bracketing(); 
+           if (conf.tv_bracket_value && !(conf.override_disable==1 && conf.override_disable_all))  shooting_tv_bracketing();
+    	      else if (conf.av_bracket_value && !(conf.override_disable==1 && conf.override_disable_all)) shooting_av_bracketing();
     	      else if ((conf.iso_bracket_value && !(conf.override_disable==1 && conf.override_disable_all)) && (conf.iso_bracket_koef)) {
 			  shooting_iso_bracketing();
    	       }
@@ -1282,19 +1284,19 @@ void __attribute__((naked,noinline)) shooting_expo_param_override(void){
  }*/
  //int m=mode_get()&MODE_SHOOTING_MASK;
  if ((state_kbd_script_run) && (photo_param_put_off.tv96)) {
-  shooting_set_tv96_direct(photo_param_put_off.tv96, SET_NOW);	
+  shooting_set_tv96_direct(photo_param_put_off.tv96, SET_NOW);
   photo_param_put_off.tv96=0;
  }
    else if (((conf.tv_enum_type) || (conf.tv_override_value)) && (conf.tv_override_koef) && !(conf.override_disable==1))
-   { 
-   if (conf.tv_enum_type) 
+   {
+   if (conf.tv_enum_type)
      shooting_set_tv96_direct(32*(conf.tv_override_value-(tv_override_zero_shift)),SET_NOW);
-   else   
-    shooting_set_tv96_direct(shooting_get_tv96_from_shutter_speed(shooting_get_shutter_speed_override_value()), SET_NOW); 
+   else
+    shooting_set_tv96_direct(shooting_get_tv96_from_shutter_speed(shooting_get_shutter_speed_override_value()), SET_NOW);
    }
  if ((state_kbd_script_run) && (photo_param_put_off.sv96)) {
   shooting_set_sv96(photo_param_put_off.sv96, SET_NOW);
-  photo_param_put_off.sv96=0; 
+  photo_param_put_off.sv96=0;
   }
 else if ((conf.iso_override_value) && (conf.iso_override_koef) && !(conf.override_disable==1))
   shooting_set_iso_real(shooting_get_iso_override_value(), SET_NOW);
@@ -1308,18 +1310,18 @@ else if ((conf.iso_override_value) && (conf.iso_override_koef) && !(conf.overrid
  shooting_set_av96_direct(shooting_get_av96_override_value(), SET_NOW);
  if ((state_kbd_script_run) && (photo_param_put_off.subj_dist)) {
   shooting_set_focus(photo_param_put_off.subj_dist, SET_NOW);
-  photo_param_put_off.subj_dist=0;  
+  photo_param_put_off.subj_dist=0;
   }
   else if ((conf.subj_dist_override_value) && (conf.subj_dist_override_koef) && !(conf.override_disable==1))
    shooting_set_focus(shooting_get_subject_distance_override_value(), SET_NOW);
 #if CAM_HAS_ND_FILTER
  if ((state_kbd_script_run) && (photo_param_put_off.nd_filter)) {
    shooting_set_nd_filter_state(photo_param_put_off.nd_filter, SET_NOW);
-   photo_param_put_off.nd_filter=0;  
+   photo_param_put_off.nd_filter=0;
   }
- else if (conf.nd_filter_state && !(conf.override_disable==1)) 
+ else if (conf.nd_filter_state && !(conf.override_disable==1))
    shooting_set_nd_filter_state(conf.nd_filter_state, SET_NOW);
-#endif  
+#endif
 
 #if CAM_REAR_CURTAIN
   shooting_set_flash_sync_curtain(conf.flash_sync_curtain);
@@ -1328,7 +1330,7 @@ else if ((conf.iso_override_value) && (conf.iso_override_koef) && !(conf.overrid
 
   shooting_set_flash_video_override(conf.flash_manual_override,conf.flash_video_override_power);
 #if CAM_QUALITY_OVERRIDE
- // this doesn't really need to be set in the override hook. 
+ // this doesn't really need to be set in the override hook.
  // should only need to be set once if the users doesn't change back, but doing it here ensures it is set
  shooting_set_image_quality(conf.fast_image_quality);
 #endif
@@ -1392,7 +1394,7 @@ void set_ev_video(int x){
 int shooting_mode_canon2chdk(int canonmode) {
 	int i;
 	for (i=0; i < MODESCNT; i++) {
-		if (modemap[i].canonmode == canonmode) 
+		if (modemap[i].canonmode == canonmode)
 			return modemap[i].hackmode;
 	}
 	return 0;
@@ -1401,7 +1403,7 @@ int shooting_mode_canon2chdk(int canonmode) {
 int shooting_mode_chdk2canon(int hackmode) {
 	int i;
 	for (i=0; i < MODESCNT; i++) {
-		if (modemap[i].hackmode == hackmode) 
+		if (modemap[i].hackmode == hackmode)
 			return modemap[i].canonmode;
 	}
 	return -1; // 0 is a valid mode on old cameras!
@@ -1445,3 +1447,16 @@ int /*__attribute__((weak))*/ mode_get(void) {
 
     return (mode);
 }
+
+/*
+char* shooting_get_iso_str() {
+    short int isov;
+    long i;
+    _GetPropertyCase(PROPCASE_ISO_MODE, &isov, sizeof(isov));
+    for(i=0; i<ISO_SIZE; i++) {
+        if(iso_table[i].prop_id == isov)
+            return (char*)iso_table[i].name;
+    }
+    return (char*) "?";
+}
+*/
