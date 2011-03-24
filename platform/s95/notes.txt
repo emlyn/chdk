@@ -1,0 +1,6 @@
+S95 NOTES
+
+- S95 hardware and firmware is similar to S90
+- Uses DRYOS version 2.3, release #0045
+- S95 uses different propset from previous cameras
+- S95 uses new fi2 keys

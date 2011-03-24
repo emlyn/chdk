@@ -57,7 +57,7 @@ int get_effective_focal_length(int zp) {
 
 int get_focal_length(int zp) {
 	if (zp < 0) zp = 0;
-	else if (zp > NUM_FL) zp = NUM_FL;
+	else if (zp >= NUM_FL) zp = NUM_FL-1;
 	return focus_len_table[zp];
 }
 

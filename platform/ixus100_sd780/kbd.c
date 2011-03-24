@@ -35,7 +35,7 @@ extern long aHookNum;
 #define SD_READONLY_FLAG (0x20000)  // 1 << 0x11
 #define SD_READONLY_REG 2
 
-#define USB_MASK (0x40000)
+#define USB_MASK (0x80000)
 
 volatile int jogdial_stopped=0;
 

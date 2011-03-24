@@ -27,3 +27,5 @@ NHSTUB(DoAFLock, 0xffd3341c)
 NHSTUB(UnlockAF, 0xffd3345c)
 NHSTUB(SetScriptMode,0xFFD4736C) // by find_eventproc name @ 0xFFD6D764
 NHSTUB(WriteSDCard, 0xFFC6B188)
+
+NHSTUB(apex2us, 0xFFC98B74) //for extra long exposures
